@@ -1,52 +1,232 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV + Cover Letter Prompt Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  .container{max-width:680px;padding:1.5rem 0}
-  .hero{margin-bottom:1.5rem}
-  .hero h1{font-size:20px;font-weight:500;margin-bottom:5px}
-  .hero p{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
-  .tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
-  .tab-btn{font-size:13px;font-weight:500;padding:6px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s}
-  .tab-btn.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
-  .tab-btn:hover:not(.active){background:var(--color-background-secondary)}
-  .tab-content{display:none}
-  .tab-content.active{display:block}
-  .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
-  .lbl{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:10px}
-  .prompt-wrap{position:relative}
-  .prompt-block{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem 1.25rem 1rem 1rem;font-size:12.5px;line-height:1.75;color:var(--color-text-primary);font-family:var(--font-mono);white-space:pre-wrap;word-break:break-word;border:0.5px solid var(--color-border-tertiary);padding-right:80px}
-  .copy-btn{position:absolute;top:10px;right:10px;font-size:12px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;white-space:nowrap}
-  .copy-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
-  .copy-btn.copied{color:#0F6E56;border-color:#5DCAA5}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-  .fg{display:flex;flex-direction:column;gap:5px}
-  .fl{font-size:12px;font-weight:500;color:var(--color-text-secondary)}
-  .fi{font-size:13px;padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans);width:100%}
-  .fi:focus{outline:none;border-color:var(--color-border-primary)}
-  .gen-btn{width:100%;padding:10px;font-size:14px;font-weight:500;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);cursor:pointer;transition:all 0.15s;margin-top:4px}
-  .gen-btn:hover{background:var(--color-background-tertiary)}
-  .irow{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
-  .irow:last-child{border-bottom:none}
-  .inum{min-width:22px;height:22px;border-radius:50%;background:var(--color-background-secondary);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);flex-shrink:0;margin-top:1px}
-  .itext{font-size:13px;color:var(--color-text-primary);line-height:1.6}
-  .badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:10px;margin-right:4px}
-  .b-blue{background:#E6F1FB;color:#0C447C}
-  .b-teal{background:#E1F5EE;color:#085041}
-  .b-purple{background:#EEEDFE;color:#3C3489}
-  .b-coral{background:#FAECE7;color:#712B13}
-  .b-amber{background:#FAEEDA;color:#633806}
-  .prompt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-  .prompt-title{font-size:15px;font-weight:500}
-  .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .tip-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;border:0.5px solid var(--color-border-tertiary)}
-  .tip-icon{font-size:16px;color:var(--color-text-secondary);margin-bottom:5px}
-  .tip-t{font-size:12px;font-weight:500;margin-bottom:3px}
-  .tip-d{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
-  .step-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
-  .step-pill{font-size:12px;font-weight:500;padding:4px 10px;border-radius:12px;white-space:nowrap}
-  .step-arrow{color:var(--color-text-tertiary);font-size:14px}
-  @media(max-width:480px){.row2{grid-template-columns:1fr}.tips-grid{grid-template-columns:1fr}}
+  :root {
+    --color-background-primary: rgba(15,23,42,0.75);
+    --color-background-secondary: rgba(30,41,59,0.60);
+    --color-background-tertiary: rgba(51,65,85,0.50);
+    --color-text-primary: #e2e8f0;
+    --color-text-secondary: #94a3b8;
+    --color-text-tertiary: #64748b;
+    --color-border-primary: rgba(14,165,233,0.55);
+    --color-border-secondary: rgba(255,255,255,0.10);
+    --color-border-tertiary: rgba(255,255,255,0.06);
+    --border-radius-lg: 14px;
+    --border-radius-md: 8px;
+    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --font-sans: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+    --accent: #0ea5e9;
+    --accent-light: rgba(14,165,233,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #060913;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(14,165,233,0.07) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(99,102,241,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+  /* ── Page header ── */
+  .page-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,9,19,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 14px 24px;
+  }
+  .page-header-inner {
+    max-width: 740px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #64748b; font-size: 12px; font-weight: 600; text-decoration: none;
+    padding: 5px 12px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    transition: all .2s; white-space: nowrap;
+  }
+  .back-btn:hover { color: #e2e8f0; border-color: rgba(14,165,233,0.4); }
+  .header-brand { display: flex; align-items: center; gap: 10px; }
+  .brand-icon-wrap { position: relative; }
+  .brand-icon-glow {
+    position: absolute; inset: -3px;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    border-radius: 10px; opacity: 0.6; filter: blur(4px);
+  }
+  .brand-icon-inner {
+    position: relative; background: #060913;
+    padding: 8px 10px; border-radius: 10px;
+    border: 1px solid rgba(14,165,233,0.3);
+  }
+
+  /* ── Content wrapper ── */
+  .container { max-width: 740px; margin: 0 auto; padding: 36px 24px 0; }
+
+  .hero { margin-bottom: 28px; }
+  .hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; color: #f1f5f9; }
+  .hero p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.65; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab-btn {
+    font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 20px;
+    border: 1px solid var(--color-border-secondary);
+    background: transparent; color: var(--color-text-secondary);
+    cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .tab-btn.active {
+    background: var(--accent-light); color: #7dd3fc;
+    border-color: rgba(14,165,233,0.4);
+    box-shadow: 0 0 10px rgba(14,165,233,0.15);
+  }
+  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.04); color: var(--color-text-primary); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 18px; margin-bottom: 12px;
+    backdrop-filter: blur(8px);
+  }
+  .lbl {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px;
+  }
+
+  /* ── Prompts ── */
+  .prompt-wrap { position: relative; }
+  .prompt-block {
+    background: rgba(6,9,19,0.80); border-radius: var(--border-radius-md);
+    padding: 14px 80px 14px 14px;
+    font-size: 12px; line-height: 1.8; color: #94a3b8;
+    font-family: var(--font-mono); white-space: pre-wrap; word-break: break-word;
+    border: 1px solid var(--color-border-tertiary);
+  }
+  .copy-btn {
+    position: absolute; top: 10px; right: 10px;
+    font-size: 11px; padding: 4px 10px;
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+    cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit;
+  }
+  .copy-btn:hover { background: var(--color-background-tertiary); color: var(--color-text-primary); }
+  .copy-btn.copied { color: #34d399; border-color: #6ee7b7; }
+
+  /* ── Form inputs ── */
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .fg { display: flex; flex-direction: column; gap: 5px; }
+  .fl { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); }
+  .fi {
+    font-size: 13px; padding: 8px 10px;
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: rgba(6,9,19,0.6);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans); width: 100%;
+    transition: border-color .2s;
+  }
+  .fi:focus { outline: none; border-color: var(--color-border-primary); box-shadow: 0 0 0 2px rgba(14,165,233,0.1); }
+  .fi::placeholder { color: #475569; }
+  select.fi option { background: #0f172a; color: #e2e8f0; }
+
+  /* ── Workflow step pills ── */
+  .step-flow {
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    padding: 12px 0; border-bottom: 1px solid var(--color-border-tertiary);
+  }
+  .step-pill { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; white-space: nowrap; }
+  .step-arrow { color: var(--color-text-tertiary); font-size: 12px; }
+
+  /* ── Instruction rows ── */
+  .irow {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 9px 0; border-bottom: 1px solid var(--color-border-tertiary);
+  }
+  .irow:last-child { border-bottom: none; }
+  .inum {
+    min-width: 22px; height: 22px; border-radius: 50%;
+    background: var(--color-background-secondary);
+    font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+    color: var(--color-text-secondary); flex-shrink: 0; margin-top: 1px;
+  }
+  .itext { font-size: 13px; color: var(--color-text-primary); line-height: 1.6; }
+
+  /* ── Badges ── */
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-right: 4px; }
+  .b-blue  { background: rgba(56,189,248,0.12); color: #7dd3fc; }
+  .b-teal  { background: rgba(52,211,153,0.12); color: #6ee7b7; }
+  .b-purple{ background: rgba(168,85,247,0.12); color: #d8b4fe; }
+  .b-coral { background: rgba(251,113,133,0.12); color: #fda4af; }
+  .b-amber { background: rgba(251,191,36,0.12); color: #fde68a; }
+
+  /* ── Prompt header ── */
+  .prompt-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .prompt-title { font-size: 14px; font-weight: 600; color: #f1f5f9; }
+
+  /* ── Tips grid ── */
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tip-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md); padding: 12px;
+    border: 1px solid var(--color-border-tertiary);
+  }
+  .tip-icon { font-size: 16px; color: #0ea5e9; margin-bottom: 6px; }
+  .tip-t { font-size: 12px; font-weight: 600; margin-bottom: 3px; color: #f1f5f9; }
+  .tip-d { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+  @media(max-width:520px) {
+    .row2 { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+  }
 </style>
+</head>
+<body>
+
+<!-- Sticky top nav -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <a href="index.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left" style="font-size:9px;"></i> Home
+    </a>
+    <div class="header-brand">
+      <div class="brand-icon-wrap">
+        <div class="brand-icon-glow"></div>
+        <div class="brand-icon-inner">
+          <i class="fa-solid fa-file-invoice" style="color:#7dd3fc;font-size:15px;"></i>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#0ea5e9;text-transform:uppercase;">CAREER TOOL</div>
+        <div style="font-size:15px;font-weight:800;color:#f1f5f9;letter-spacing:-0.3px;">CV + Cover Letter Prompt Builder</div>
+      </div>
+    </div>
+    <div style="width:80px;"></div><!-- spacer to keep brand centred -->
+  </div>
+</header>
 
 <div class="container">
   <div class="hero">
@@ -90,7 +270,7 @@
         <textarea class="fi" id="fjd" rows="7" style="resize:vertical" placeholder="Paste the complete job posting text..." oninput="upd()"></textarea>
       </div>
     </div>
-    <div class="card" style="background:var(--color-background-secondary);border-style:dashed">
+    <div class="card" style="background:rgba(14,165,233,0.04);border-color:rgba(14,165,233,0.15);border-style:dashed">
       <div class="lbl">Workflow — use the prompts in this order</div>
       <div class="step-flow">
         <span class="step-pill b-blue">1 · Attach CV_Database_Trilingue.docx</span>
@@ -117,17 +297,17 @@
     <div class="card">
       <div class="prompt-header"><span class="prompt-title">CV Analysis prompt</span><span class="badge b-teal">~800 tokens</span></div>
       <div class="prompt-wrap">
-        <button class="copy-btn" id="cb1" onclick="cp('pt1','cb1')"><i class="ti ti-copy" aria-hidden="true"></i> Copy</button>
+        <button class="copy-btn" id="cb1" onclick="cp('pt1','cb1')">Copy</button>
         <div class="prompt-block"><span id="pt1"></span></div>
       </div>
     </div>
     <div class="card">
       <div class="lbl">What you receive</div>
-      <div class="irow"><div class="inum"><i class="ti ti-layout-align-top" aria-hidden="true"></i></div><div class="itext"><strong>Section 1</strong> — Profile fit verdict, strengths table, gaps table, ATS & structural recommendations</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-quote" aria-hidden="true"></i></div><div class="itext"><strong>Section 2</strong> — 3 tailored accroche versions (analytical / strategic / impact-focused) with positioning notes</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-briefcase" aria-hidden="true"></i></div><div class="itext"><strong>Section 3</strong> — Bullet-by-bullet rewrite tables: original vs. Version A vs. Version B, with JD requirement mapped</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-tools" aria-hidden="true"></i></div><div class="itext"><strong>Section 4</strong> — Reorganized skills section with added/missing skills flagged</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-trophy" aria-hidden="true"></i></div><div class="itext"><strong>Section 5</strong> — Top 15 ATS keywords ranked, differentiation strategy, final section order</div></div>
+      <div class="irow"><div class="inum">1</div><div class="itext"><strong>Section 1</strong> — Profile fit verdict, strengths table, gaps table, ATS & structural recommendations</div></div>
+      <div class="irow"><div class="inum">2</div><div class="itext"><strong>Section 2</strong> — 3 tailored accroche versions (analytical / strategic / impact-focused) with positioning notes</div></div>
+      <div class="irow"><div class="inum">3</div><div class="itext"><strong>Section 3</strong> — Bullet-by-bullet rewrite tables: original vs. Version A vs. Version B, with JD requirement mapped</div></div>
+      <div class="irow"><div class="inum">4</div><div class="itext"><strong>Section 4</strong> — Reorganized skills section with added/missing skills flagged</div></div>
+      <div class="irow"><div class="inum">5</div><div class="itext"><strong>Section 5</strong> — Top 15 ATS keywords ranked, differentiation strategy, final section order</div></div>
     </div>
   </div>
 
@@ -142,17 +322,17 @@
     <div class="card">
       <div class="prompt-header"><span class="prompt-title">CV Perfection prompt</span><span class="badge b-purple">Final polish pass</span></div>
       <div class="prompt-wrap">
-        <button class="copy-btn" id="cb2" onclick="cp('pt2','cb2')"><i class="ti ti-copy" aria-hidden="true"></i> Copy</button>
+        <button class="copy-btn" id="cb2" onclick="cp('pt2','cb2')">Copy</button>
         <div class="prompt-block"><span id="pt2"></span></div>
       </div>
     </div>
     <div class="card">
       <div class="lbl">What you receive</div>
-      <div class="irow"><div class="inum"><i class="ti ti-check" aria-hidden="true"></i></div><div class="itext"><strong>Line-by-line corrections</strong> — grammar, syntax, verb tense consistency, punctuation in all three languages</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-bolt" aria-hidden="true"></i></div><div class="itext"><strong>Impact amplification</strong> — weak verbs replaced, vague phrases made quantified and concrete</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-equal" aria-hidden="true"></i></div><div class="itext"><strong>Tone & consistency audit</strong> — tense, register, and bullet structure unified across all sections</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-eye" aria-hidden="true"></i></div><div class="itext"><strong>Recruiter-eye scan</strong> — what a recruiter sees in 10 seconds, what's missing above the fold</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-file-check" aria-hidden="true"></i></div><div class="itext"><strong>Final clean version</strong> — full CV rewritten and ready to paste into your Word document</div></div>
+      <div class="irow"><div class="inum">1</div><div class="itext"><strong>Line-by-line corrections</strong> — grammar, syntax, verb tense consistency, punctuation in all three languages</div></div>
+      <div class="irow"><div class="inum">2</div><div class="itext"><strong>Impact amplification</strong> — weak verbs replaced, vague phrases made quantified and concrete</div></div>
+      <div class="irow"><div class="inum">3</div><div class="itext"><strong>Tone & consistency audit</strong> — tense, register, and bullet structure unified across all sections</div></div>
+      <div class="irow"><div class="inum">4</div><div class="itext"><strong>Recruiter-eye scan</strong> — what a recruiter sees in 10 seconds, what's missing above the fold</div></div>
+      <div class="irow"><div class="inum">5</div><div class="itext"><strong>Final clean version</strong> — full CV rewritten and ready to paste into your Word document</div></div>
     </div>
   </div>
 
@@ -167,17 +347,17 @@
     <div class="card">
       <div class="prompt-header"><span class="prompt-title">Cover Letter prompt</span><span class="badge b-amber">French · 350–420 words</span></div>
       <div class="prompt-wrap">
-        <button class="copy-btn" id="cb3" onclick="cp('pt3','cb3')"><i class="ti ti-copy" aria-hidden="true"></i> Copy</button>
+        <button class="copy-btn" id="cb3" onclick="cp('pt3','cb3')">Copy</button>
         <div class="prompt-block"><span id="pt3"></span></div>
       </div>
     </div>
     <div class="card">
       <div class="lbl">Letter structure</div>
-      <div class="irow"><div class="inum"><i class="ti ti-file-text" aria-hidden="true"></i></div><div class="itext"><strong>Header</strong> — your details / company / date / subject line</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-bulb" aria-hidden="true"></i></div><div class="itext"><strong>Hook (Moi–Vous)</strong> — emlyon PGE M1 + sectoral conviction linking your skills to the company's mission</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-chart-line" aria-hidden="true"></i></div><div class="itext"><strong>Proof</strong> — 2–3 quantified achievements from the most relevant experiences</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-users" aria-hidden="true"></i></div><div class="itext"><strong>Contribution (Nous)</strong> — daily value-add + company ecosystem understanding</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-send" aria-hidden="true"></i></div><div class="itext"><strong>Close</strong> — professional sign-off + direct interview invitation</div></div>
+      <div class="irow"><div class="inum">H</div><div class="itext"><strong>Header</strong> — your details / company / date / subject line</div></div>
+      <div class="irow"><div class="inum">P1</div><div class="itext"><strong>Hook (Moi–Vous)</strong> — emlyon PGE M1 + sectoral conviction linking your skills to the company's mission</div></div>
+      <div class="irow"><div class="inum">P2</div><div class="itext"><strong>Proof</strong> — 2–3 quantified achievements from the most relevant experiences</div></div>
+      <div class="irow"><div class="inum">P3</div><div class="itext"><strong>Contribution (Nous)</strong> — daily value-add + company ecosystem understanding</div></div>
+      <div class="irow"><div class="inum">C</div><div class="itext"><strong>Close</strong> — professional sign-off + direct interview invitation</div></div>
     </div>
   </div>
 
@@ -186,20 +366,20 @@
     <div class="card">
       <div class="lbl">Best practices</div>
       <div class="tips-grid">
-        <div class="tip-card"><div class="tip-icon"><i class="ti ti-file-plus" aria-hidden="true"></i></div><div class="tip-t">Always attach the CV database</div><div class="tip-d">Claude needs the trilingual file to extract the most relevant bullets per language.</div></div>
-        <div class="tip-card"><div class="tip-icon"><i class="ti ti-language" aria-hidden="true"></i></div><div class="tip-t">Language = job posting language</div><div class="tip-d">If the JD is in English, set English in the Builder — analysis and bullets will match.</div></div>
-        <div class="tip-card"><div class="tip-icon"><i class="ti ti-messages" aria-hidden="true"></i></div><div class="tip-t">All prompts = same conversation</div><div class="tip-d">Analysis → Perfection → Cover Letter in one thread. Claude keeps full context.</div></div>
-        <div class="tip-card"><div class="tip-icon"><i class="ti ti-refresh" aria-hidden="true"></i></div><div class="tip-t">Iterate on the accroche</div><div class="tip-d">"Give me a version 4 more suited to a startup / more international / more technical."</div></div>
-        <div class="tip-card"><div class="tip-icon"><i class="ti ti-search" aria-hidden="true"></i></div><div class="tip-t">ATS keyword check after Perfection</div><div class="tip-d">"Verify that all 15 top keywords from Section 5 appear in the final version."</div></div>
-        <div class="tip-card"><div class="tip-icon"><i class="ti ti-edit" aria-hidden="true"></i></div><div class="tip-t">Save one prompt set per application</div><div class="tip-d">Keep a record of which builder config you used for each company.</div></div>
+        <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-file-plus"></i></div><div class="tip-t">Always attach the CV database</div><div class="tip-d">Claude needs the trilingual file to extract the most relevant bullets per language.</div></div>
+        <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-language"></i></div><div class="tip-t">Language = job posting language</div><div class="tip-d">If the JD is in English, set English in the Builder — analysis and bullets will match.</div></div>
+        <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-comments"></i></div><div class="tip-t">All prompts = same conversation</div><div class="tip-d">Analysis → Perfection → Cover Letter in one thread. Claude keeps full context.</div></div>
+        <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-rotate"></i></div><div class="tip-t">Iterate on the accroche</div><div class="tip-d">"Give me a version 4 more suited to a startup / more international / more technical."</div></div>
+        <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-magnifying-glass"></i></div><div class="tip-t">ATS keyword check after Perfection</div><div class="tip-d">"Verify that all 15 top keywords from Section 5 appear in the final version."</div></div>
+        <div class="tip-card"><div class="tip-icon"><i class="fa-solid fa-pen-to-square"></i></div><div class="tip-t">Save one prompt set per application</div><div class="tip-d">Keep a record of which builder config you used for each company.</div></div>
       </div>
     </div>
     <div class="card">
       <div class="lbl">Quick follow-up prompts after analysis</div>
-      <div class="irow"><div class="inum"><i class="ti ti-arrow-right" aria-hidden="true"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"Now rewrite the full Professional Experience section ready to paste into Word."</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-arrow-right" aria-hidden="true"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"Give me a 4th accroche — startup tone, more international, shorter."</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-arrow-right" aria-hidden="true"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"Score my updated CV out of 10 for ATS compatibility and explain remaining gaps."</div></div>
-      <div class="irow"><div class="inum"><i class="ti ti-arrow-right" aria-hidden="true"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"What are 3 likely interview questions and how should I answer them given my profile?"</div></div>
+      <div class="irow"><div class="inum"><i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"Now rewrite the full Professional Experience section ready to paste into Word."</div></div>
+      <div class="irow"><div class="inum"><i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"Give me a 4th accroche — startup tone, more international, shorter."</div></div>
+      <div class="irow"><div class="inum"><i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"Score my updated CV out of 10 for ATS compatibility and explain remaining gaps."</div></div>
+      <div class="irow"><div class="inum"><i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></div><div class="itext" style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">"What are 3 likely interview questions and how should I answer them given my profile?"</div></div>
     </div>
   </div>
 </div>
@@ -290,35 +470,24 @@ PASS 1 — LINE-BY-LINE LANGUAGE CORRECTIONS
 For every bullet and sentence that needs fixing, present:
 | Original | Corrected | Issue type (grammar / syntax / tense / punctuation / register) |
 
-Flag issues specific to ${v.la} conventions (e.g. French: accord, temps, ponctuation ; English: tense consistency, article usage).
+Flag issues specific to ${v.la} conventions.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PASS 2 — IMPACT AMPLIFICATION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Identify every bullet that:
-- Uses a weak or passive verb → replace with a strong action verb
-- Contains a vague claim → add a number, scope, or outcome
-- Is too long (>2 lines) → condense without losing the metric
+Identify every bullet that uses a weak verb, vague claim, or is too long (>2 lines).
 
-Present as:
-| Original | Amplified version | Change made |
+Present as: | Original | Amplified version | Change made |
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PASS 3 — CONSISTENCY & TONE AUDIT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Check and correct:
-- Verb tense: all bullets in the same tense within each experience block
-- Bullet structure: parallel grammatical form throughout
-- Register: consistent professional tone (no mixing of formal and casual)
-- Punctuation: consistent use of periods, capitals, dashes
-- Formatting: uniform spacing, dash style, date format
-
+Check: verb tense, bullet structure, register, punctuation, formatting.
 List every inconsistency found and the fix applied.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PASS 4 — RECRUITER-EYE SCAN (10-second test)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Answer these four questions about the draft:
 1. What is the first thing a recruiter reads? Is it the strongest possible hook?
 2. Are the top 3 assets for this role visible above the fold?
 3. What is the weakest element that a recruiter will notice negatively?
@@ -327,7 +496,7 @@ Answer these four questions about the draft:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FINAL OUTPUT — CLEAN SUBMISSION VERSION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Output the complete, corrected CV in ${v.la}, fully formatted and ready to paste into Word. Apply all corrections from Passes 1–3. Mark any remaining optional changes with [OPT].`}
+Output the complete, corrected CV in ${v.la}, fully formatted and ready to paste into Word. Mark any remaining optional changes with [OPT].`}
 
 function p3(v){return `You are an expert in professional writing for the French job market. Based on the CV analysis and perfection pass above, write a complete, ready-to-send cover letter in French.
 
@@ -350,7 +519,7 @@ PARAGRAPH 1 — Hook / Moi–Vous (4–5 lines)
 Open with emlyon PGE M1. Immediately state a strong sectoral conviction that links my profile to the company's core mission. Never open with "Je me permets de vous contacter."
 
 PARAGRAPH 2 — Proof (5–7 lines)
-Select the 2–3 most relevant quantified achievements from the CV that directly address the main responsibilities of this role. Use action verbs in passé composé or present.
+Select the 2–3 most relevant quantified achievements from the CV that directly address the main responsibilities of this role.
 
 PARAGRAPH 3 — Contribution / Nous (4–5 lines)
 Explain concretely what I will contribute on a daily basis. Reference a specific aspect of ${v.co}'s activity, product, or market that shows genuine research.
@@ -364,8 +533,7 @@ STYLE RULES
 - Tone: professional, analytical, results-driven
 - Short active sentences — no passive constructions
 - Action verbs: piloter, concevoir, traduire, structurer, garantir, déployer
-- No em dash (—) in body text
-- No bullet points inside the letter body
+- No em dash (—) in body text; no bullet points inside the letter body
 - Target length: 350–420 words`}
 
 function upd(){
@@ -386,11 +554,13 @@ function cp(spanId,btnId){
   const text=g(spanId).textContent;
   const btn=g(btnId);
   navigator.clipboard.writeText(text.trim()).then(()=>{
-    btn.innerHTML='<i class="ti ti-check" aria-hidden="true"></i> Copied';
+    btn.textContent='✓ Copied';
     btn.classList.add('copied');
-    setTimeout(()=>{btn.innerHTML='<i class="ti ti-copy" aria-hidden="true"></i> Copy';btn.classList.remove('copied')},2000);
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
   });
 }
 
 upd();
 </script>
+</body>
+</html>
