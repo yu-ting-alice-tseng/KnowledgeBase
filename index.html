@@ -84,22 +84,15 @@
 
     <!-- Full-screen Viewer -->
     <div id="module-viewer">
-        <div class="flex flex-col h-full">
-            <div class="bg-slate-900/90 border-b border-slate-800 p-4 flex justify-between items-center px-8">
-                <div class="flex items-center gap-4">
-                    <button onclick="closeViewer()" class="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 transition-colors">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                    <h2 id="viewer-title" class="font-bold text-white uppercase tracking-wider">Module Name</h2>
-                </div>
-                <div class="flex gap-2">
-                    <span class="text-xs text-slate-500 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
-                        Interactive Sandbox
-                    </span>
-                </div>
-            </div>
-            <iframe id="viewer-frame" class="flex-1 w-full border-none" src=""></iframe>
-        </div>
+        <iframe id="viewer-frame" class="w-full h-full border-none" src=""></iframe>
+        <!-- Floating back button -->
+        <button id="viewer-back" onclick="closeViewer()" title="Back to Knowledge Galaxy"
+            style="position:fixed;top:16px;left:16px;z-index:200;display:flex;align-items:center;gap:8px;padding:8px 14px 8px 10px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:rgba(6,9,19,0.85);backdrop-filter:blur(12px);color:#94a3b8;font-size:12px;font-weight:700;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;font-family:'Plus Jakarta Sans',sans-serif;"
+            onmouseover="this.style.color='#f8fafc';this.style.borderColor='rgba(255,255,255,0.25)';this.style.background='rgba(15,23,42,0.95)'"
+            onmouseout="this.style.color='#94a3b8';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(6,9,19,0.85)'">
+            <i class="fa-solid fa-chevron-left" style="font-size:10px;"></i>
+            Back
+        </button>
     </div>
 
     <script>
