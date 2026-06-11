@@ -647,14 +647,26 @@
 <script>
   const buttons = document.querySelectorAll('.lang-btn');
   const panels = document.querySelectorAll('.panel');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.dataset.lang;
-      buttons.forEach(b => b.classList.toggle('active', b === btn));
-      panels.forEach(p => p.classList.toggle('active', p.id === lang));
-      document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
-      window.scrollTo({top:0, behavior:'smooth'});
+  const hdrBtns = {
+    zh: document.getElementById('hdr-zh'),
+    en: document.getElementById('hdr-en'),
+    fr: document.getElementById('hdr-fr')
+  };
+
+  function switchLang(lang) {
+    buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    panels.forEach(p => p.classList.toggle('active', p.id === lang));
+    document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
+    Object.entries(hdrBtns).forEach(([k, btn]) => {
+      if (!btn) return;
+      if (k === lang) { btn.style.background = 'rgba(236,72,153,0.15)'; btn.style.color = '#f0abca'; }
+      else { btn.style.background = 'transparent'; btn.style.color = '#64748b'; }
     });
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => switchLang(btn.dataset.lang));
   });
 </script>
 </body>
