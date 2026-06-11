@@ -4,132 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coty & Perfume Market Intelligence Mind Map</title>
-    <!-- Load D3.js v7 securely -->
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            margin: 0;
-            padding: 0;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', -apple-system, sans-serif;
+            background-color: #060913;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(217,70,239,0.07) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236,72,153,0.05) 0px, transparent 50%);
+            color: #cbd5e1;
+            margin: 0; padding: 0;
             overflow: hidden;
-            width: 100vw;
-            height: 100vh;
+            width: 100vw; height: 100vh;
         }
         header {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(to bottom, rgba(13,17,23,0.95), rgba(13,17,23,0));
+            top: 0; left: 0; width: 100%;
+            padding: 14px 24px;
+            background: rgba(6,9,19,0.90);
+            backdrop-filter: blur(12px);
             z-index: 10;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(240,246,252,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            gap: 12px;
         }
-        h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #f0f6fc;
+        .header-brand { display: flex; align-items: center; gap: 10px; }
+        .brand-icon {
+            position: relative; flex-shrink: 0;
         }
-        .controls {
-            display: flex;
-            gap: 10px;
+        .brand-icon-glow {
+            position: absolute; inset: -3px;
+            background: linear-gradient(135deg, #d946ef, #ec4899);
+            border-radius: 10px; opacity: 0.6; filter: blur(4px);
         }
+        .brand-icon-inner {
+            position: relative; background: #060913;
+            padding: 8px 10px; border-radius: 10px;
+            border: 1px solid rgba(217,70,239,0.35);
+        }
+        .brand-icon-inner i { color: #e879f9; font-size: 16px; }
+        .brand-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #d946ef; text-transform: uppercase; opacity: 0.85; }
+        .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.3px; }
+        #title { display: none; }
+        .controls { display: flex; gap: 6px; padding: 4px; background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
         button {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            color: #c9d1d9;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.2s ease-in-out;
+            background: transparent;
+            border: none; color: #64748b;
+            padding: 5px 14px; border-radius: 8px;
+            cursor: pointer; font-size: 11px; font-weight: 700;
+            transition: all 0.2s; font-family: inherit; letter-spacing: 0.03em;
         }
-        button:hover {
-            background-color: #30363d;
-            border-color: #8b949e;
-            color: #f0f6fc;
-        }
+        button:hover { background: rgba(217,70,239,0.10); color: #e2e8f0; }
         button.active {
-            background-color: #1f6feb;
-            border-color: #58a6ff;
-            color: #ffffff;
-            box-shadow: 0 0 10px rgba(31,111,235,0.4);
+            background: rgba(217,70,239,0.18); color: #e879f9;
+            box-shadow: 0 0 10px rgba(217,70,239,0.2);
         }
-        #mindmap-container {
-            width: 100vw;
-            height: 100vh;
-            cursor: grab;
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 5px;
+            color: #64748b; font-size: 11px; font-weight: 600; text-decoration: none;
+            padding: 5px 12px; border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03); transition: all .2s; white-space: nowrap;
         }
-        #mindmap-container:active {
-            cursor: grabbing;
-        }
-        .node circle {
-            fill: #1f6feb;
-            stroke: #58a6ff;
-            stroke-width: 2px;
-            transition: r 0.2s ease;
-        }
-        .node--internal circle {
-            fill: #238636;
-            stroke: #2ea043;
-        }
-        .node--root circle {
-            fill: #8957e5;
-            stroke: #bc8cff;
-            r: 10px !important;
-        }
-        .node text {
-            font-size: 0.85rem;
-            fill: #f0f6fc;
-            font-weight: 400;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-        .link {
-            fill: none;
-            stroke: #30363d;
-            stroke-width: 1.5px;
-            stroke-opacity: 0.8;
-            transition: stroke 0.2s, stroke-width 0.2s;
-        }
-        .node:hover circle {
-            r: 8px;
-            filter: brightness(1.2);
-        }
-        /* Help Tip */
+        .back-btn:hover { color: #e2e8f0; border-color: rgba(217,70,239,0.4); }
+        #mindmap-container { width: 100vw; height: 100vh; cursor: grab; }
+        #mindmap-container:active { cursor: grabbing; }
+        .node circle { fill: #d946ef; stroke: #e879f9; stroke-width: 2px; transition: r 0.2s ease; }
+        .node--internal circle { fill: #9333ea; stroke: #a855f7; }
+        .node--root circle { fill: #ec4899; stroke: #f9a8d4; }
+        .node text { font-size: 0.82rem; fill: #f1f5f9; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.9); font-family: 'Plus Jakarta Sans', sans-serif; }
+        .link { fill: none; stroke: rgba(217,70,239,0.25); stroke-width: 1.5px; stroke-opacity: 0.8; }
+        .node:hover circle { filter: brightness(1.3); }
         .tip {
-            position: absolute;
-            bottom: 15px;
-            left: 20px;
-            font-size: 0.8rem;
-            color: #8b949e;
-            pointer-events: none;
-            z-index: 5;
-            background: rgba(22,27,34,0.8);
-            padding: 6px 12px;
-            border-radius: 4px;
-            border: 1px solid #30363d;
+            position: absolute; bottom: 18px; left: 22px;
+            font-size: 0.78rem; color: #64748b; pointer-events: none; z-index: 5;
+            background: rgba(6,9,19,0.85); padding: 7px 14px;
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px); font-family: inherit;
         }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="header-brand">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left" style="font-size:9px;"></i> Home</a>
+            <div class="brand-icon">
+                <div class="brand-icon-glow"></div>
+                <div class="brand-icon-inner"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+            </div>
+            <div>
+                <div class="brand-tag">MARKET INTELLIGENCE</div>
+                <div class="brand-title">Coty & Perfume Market</div>
+            </div>
+        </div>
         <h1 id="title">Coty & Perfume Market Intelligence</h1>
-        <div class="controls">
-            <button id="btn-en" class="active" onclick="switchLanguage('en')">English</button>
-            <button id="btn-fr" onclick="switchLanguage('fr')">Français</button>
-            <button id="btn-cn" onclick="switchLanguage('cn')">中文</button>
+        <div class="header-right">
+            <div class="controls">
+                <button id="btn-en" class="active" onclick="switchLanguage('en')">EN</button>
+                <button id="btn-fr" onclick="switchLanguage('fr')">FR</button>
+                <button id="btn-cn" onclick="switchLanguage('cn')">中文</button>
+            </div>
         </div>
     </header>
 
