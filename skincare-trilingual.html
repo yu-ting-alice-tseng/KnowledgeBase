@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美妝保養｜核心活性成分與市場趨勢</title>
+<style>
+  :root{
+    --bg:#ffffff; --text:#37352f; --muted:#787774; --border:#e9e9e7;
+    --blue-bg:#e7f3f8; --yellow-bg:#fbf3db; --green-bg:#edf3ec; --orange-bg:#faebdd;
+    --purple-bg:#f4f0f7; --red-bg:#fbe4e4; --code-bg:#f1f0ee; --code-text:#eb5757;
+    --accent:#d4a0a7;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:#f7f6f3; color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Noto Sans",Helvetica,Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:840px; margin:0 auto; padding:0 24px 80px;}
+  header.page-head{padding:48px 0 8px;}
+  .emoji{font-size:46px; line-height:1;}
+  h1.title{font-size:34px; font-weight:700; margin:10px 0 4px;}
+  .subtitle{color:var(--muted); font-size:14px; margin-bottom:18px;}
+  .lang-bar{
+    position:sticky; top:0; z-index:10; background:#f7f6f3;
+    display:flex; gap:8px; padding:14px 0; border-bottom:1px solid var(--border); margin-bottom:8px; flex-wrap:wrap;
+  }
+  .lang-btn{
+    border:1px solid var(--border); background:#fff; color:var(--text);
+    padding:8px 18px; border-radius:8px; cursor:pointer; font-size:15px; font-weight:600;
+    transition:all .15s ease;
+  }
+  .lang-btn:hover{background:#f1f0ee;}
+  .lang-btn.active{background:var(--text); color:#fff; border-color:var(--text);}
+  .panel{display:none; animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+  h2{font-size:24px; font-weight:700; margin:34px 0 6px; padding-bottom:6px; border-bottom:1px solid var(--border);}
+  h3{font-size:19px; font-weight:700; margin:26px 0 6px;}
+  h4{font-size:16px; font-weight:700; margin:20px 0 4px; color:#4a4843;}
+  p{margin:8px 0;}
+  ul,ol{margin:8px 0; padding-left:24px;}
+  li{margin:5px 0;}
+  code{background:var(--code-bg); color:var(--code-text); padding:1px 5px; border-radius:4px; font-size:.88em; font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;}
+  .hl-blue{background:var(--blue-bg); border-radius:3px; padding:1px 3px;}
+  .hl-yellow{background:var(--yellow-bg); border-radius:3px; padding:1px 3px;}
+  .hl-green{background:var(--green-bg); border-radius:3px; padding:1px 3px;}
+  .hl-red{background:var(--red-bg); border-radius:3px; padding:1px 3px;}
+  .red-text{color:#e03e3e;}
+  .callout{display:flex; gap:12px; padding:16px; border-radius:8px; margin:14px 0; align-items:flex-start;}
+  .callout .ico{font-size:20px; line-height:1.4;}
+  .callout .body{flex:1;}
+  .callout .body > :first-child{margin-top:0;}
+  .callout .body > :last-child{margin-bottom:0;}
+  .c-yellow{background:var(--yellow-bg);}
+  .c-orange{background:var(--orange-bg);}
+  .c-green{background:var(--green-bg);}
+  .c-purple{background:var(--purple-bg);}
+  .c-plain{background:var(--code-bg);}
+  a{color:#2e7cd1; text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  hr{border:none; border-top:1px solid var(--border); margin:14px 0;}
+  .muted{color:var(--muted);}
+  footer{margin-top:40px; padding-top:16px; border-top:1px solid var(--border); color:var(--muted); font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page-head">
+    <div class="emoji">💄</div>
+    <h1 class="title">美妝保養｜核心活性成分與市場趨勢</h1>
+    <div class="subtitle">Skincare · Active Ingredients &amp; Market Trends — 中文 / English / Français</div>
+  </header>
+
+  <nav class="lang-bar">
+    <button class="lang-btn active" data-lang="zh">🇹🇼 中文</button>
+    <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+    <button class="lang-btn" data-lang="fr">🇫🇷 Français</button>
+  </nav>
+
+  <!-- ============ 中文 ============ -->
+  <section class="panel active" id="zh">
+    <h2>主題概覽</h2>
+    <div class="callout c-yellow"><div class="ico">💡</div><div class="body">
+      本頁從「科學核心 → 實際應用」整理美妝保養（Skincare）知識：<code>成分與機制</code> → <code>訴求 (claim)</code> → <code>配方邏輯</code> → <code>法規與安全</code> → <code>產業趨勢</code>。重點是能把行銷話術翻譯成成分、機制與證據的語言。
+    </div></div>
+    <ol>
+      <li><strong>成分與機制</strong>：依訴求（抗老、保濕、亮白、屏障修護、抗痘控油、舒緩、防曬）整理核心活性成分與其<code>作用機制 (mechanism of action)</code></li>
+      <li><strong>配方邏輯</strong>：從行銷訴求拆解到真實配方（訴求 → 成分與濃度 → 載體系統 → 證據）</li>
+      <li><strong>法規與安全</strong>：歐盟與美國法規、<code>INCI</code> 標示、過敏原、安全評估</li>
+      <li><strong>產業趨勢</strong>：B2B 資訊來源與重要趨勢（微生態、潔淨美妝、護膚化、外曝體、永續）</li>
+      <li><strong>整合</strong>：常見問題與面試自我檢核</li>
+    </ol>
+
+    <h3>一、核心活性成分（依訴求分類）</h3>
+    <p class="muted">每個成分以「訴求／英文／法文」三語呈現，並標出關鍵機制與搭配。</p>
+    <h4>1. 抗老（Anti-aging／anti-âge）</h4>
+    <ul>
+      <li><strong>視黃醇類／Retinoids／rétinoïdes</strong>：<span class="hl-blue">維生素 A 衍生物，能加速角質更新並促進膠原合成</span>。效力序列約為 <code>rétinol &lt; rétinal (retinaldehyde) &lt; trétinoïne</code>，後者多屬藥品等級。需注意<code>光敏性 (photosensitivity)</code>與刺激，須循序<code>建立耐受 (retinization)</code>。</li>
+      <li><strong>胜肽／Peptides／peptides</strong>：<span class="hl-blue">由胺基酸組成的短鏈訊號分子</span>，多走<code>訊號型 (signal peptides)</code>或<code>載體型 (carrier peptides)</code>宣稱路徑；務必區分「宣稱」與「臨床證據」。</li>
+      <li><strong>補骨脂酚／Bakuchiol</strong>：<span class="hl-yellow">常被定位為視黃醇的溫和替代</span>，刺激性較低、可日間使用。</li>
+      <li><strong>抗氧化劑／Antioxidants</strong>：如<code>維生素 C (vitamine C)</code>、<code>維生素 E</code>、<code>阿魏酸 (ferulic acid)</code>，中和<code>自由基 (free radicals)</code>、對抗光老化。</li>
+    </ul>
+    <h4>2. 保濕與屏障修護（Hydration &amp; Barrier）</h4>
+    <ul>
+      <li><strong>吸濕劑／Humectants</strong>：<span class="hl-blue">從環境或深層吸水到角質層的成分</span>，如<code>玻尿酸 (acide hyaluronique)</code>、<code>甘油 (glycérine)</code>、<code>泛醇 (panthénol)</code>。</li>
+      <li><strong>潤膚劑／Emollients</strong>：<span class="hl-blue">填補角質細胞間隙、改善膚觸的脂質</span>，如<code>角鯊烷 (squalane)</code>。</li>
+      <li><strong>封閉劑／Occlusives</strong>：<span class="hl-blue">在表面形成薄膜、減少經皮水分散失 (TEWL) 的成分</span>。</li>
+      <li><strong>神經醯胺／Ceramides／céramides</strong>：<span class="hl-red">角質層脂質的關鍵成分</span>，常與<code>膽固醇</code>、<code>脂肪酸</code>以約 <code>1:1:1</code> 比例搭配，談「屏障三要素」。</li>
+    </ul>
+    <h4>3. 亮白／淡斑（Brightening／éclat）</h4>
+    <ul>
+      <li><strong>維生素 C／Vitamin C／vitamine C</strong>：抗氧化、抑制<code>酪胺酸酶 (tyrosinase)</code>、淡化暗沉；不同<code>衍生物</code>在穩定性與刺激性差異大（L-AA 最有效但最不穩定）。</li>
+      <li><strong>菸鹼醯胺／Niacinamide</strong>：<span class="hl-yellow">多功能成分</span>，抑制黑色素傳遞、強化屏障、控油。</li>
+      <li><strong>熊果素／Arbutin、傳明酸／Tranexamic acid、麴酸／Kojic acid、杜鵑花酸／Azelaic acid</strong>：不同路徑抑制黑色素生成或傳遞。</li>
+    </ul>
+    <h4>4. 抗痘與控油（Acne &amp; Oil control）</h4>
+    <ul>
+      <li><strong>水楊酸／Salicylic Acid (BHA)</strong>：<span class="hl-blue">親脂性、可深入毛孔溶解角栓的去角質酸</span>。</li>
+      <li><strong>過氧化苯／Benzoyl Peroxide</strong>：抗痤瘡桿菌。</li>
+      <li><strong>菸鹼醯胺、鋅</strong>：控油、抗發炎。</li>
+    </ul>
+    <h4>5. 舒緩抗敏（Soothing／apaisant）</h4>
+    <ul>
+      <li><strong>積雪草／Centella Asiatica (Cica)</strong>：含<code>積雪草苷 (madecassoside)</code>，舒緩、修護。</li>
+      <li><strong>尿囊素／Allantoin、紅沒藥醇／Bisabolol</strong>：鎮定、減少刺激。</li>
+    </ul>
+    <h4>6. 防曬（Sun protection／protection solaire）</h4>
+    <ul>
+      <li><strong>紫外線濾劑／UV filters</strong>：分<code>有機 (organic/chemical)</code>與<code>無機 (inorganic/mineral)</code>兩類。</li>
+      <li><code>SPF</code> 對應 UVB、<code>PA／UVA</code> 對應 UVA；廣譜防曬同時涵蓋兩者。</li>
+    </ul>
+
+    <h3>二、成分機制深入</h3>
+    <div class="callout c-orange"><div class="ico">📎</div><div class="body">
+      <strong>為什麼分子量、載體與穩定性很重要？</strong>同一個成分，效果取決於它能否「到達作用位置」且「維持活性」。
+      <ul>
+        <li><code>分子量 (molecular weight)</code>：影響滲透深度（高分子玻尿酸停留表層、低分子可深入）。</li>
+        <li><code>載體／包裹 (encapsulation)</code>：保護易氧化成分（維生素 C、視黃醇），控制釋放、降低刺激。</li>
+        <li><code>pH 值</code>：影響酸類活性與皮膚耐受（純維 C 需低 pH 才穩定有效）。</li>
+      </ul>
+    </div></div>
+
+    <h3>三、如何拆解產品本質：從行銷詞到配方語言</h3>
+    <ol>
+      <li><strong>先定義訴求（claim）</strong>：抗老／亮白／修護／抗痘／舒緩等</li>
+      <li><strong>對應成分與濃度區間</strong>：能說出合理範圍即可，不必硬背單一數字</li>
+      <li><strong>看載體與系統</strong>：水相、油相、乳化、包裹是否影響穩定性與釋放</li>
+      <li><strong>用證據說話</strong>：<code>體外 (in vitro)</code>、<code>人體 (in vivo)</code>、<code>儀器測量</code>、<code>消費者測試</code>各能支持什麼結論</li>
+    </ol>
+    <div class="callout c-green"><div class="ico">📄</div><div class="body">
+      <strong>練習：拆解一支「抗老精華」</strong>
+      <ol>
+        <li>訴求：減少細紋、提亮</li>
+        <li>可能成分：<code>rétinol</code> + <code>peptides</code> + <code>niacinamide</code> + <code>acide hyaluronique</code></li>
+        <li>系統：包裹型視黃醇以降低刺激、延長穩定性</li>
+        <li>證據：宣稱「8 週改善細紋」應對應人體儀器測試，而非僅體外數據</li>
+      </ol>
+    </div></div>
+
+    <h3>四、法規與安全</h3>
+    <ul>
+      <li>歐盟：<span class="hl-green"><code>Regulation (EC) No 1223/2009 (EU Cosmetics Regulation)</code></span> 規範成分安全、標示與宣稱，由 <a href="https://health.ec.europa.eu/scientific-committees/scientific-committee-consumer-safety-sccs_en" target="_blank">SCCS</a>（消費者安全科學委員會）做安全評估。</li>
+      <li>標示：全球通用 <a href="https://incidecoder.com/" target="_blank">INCI</a>（International Nomenclature of Cosmetic Ingredients）成分命名；歐盟另要求標示特定<code>過敏原 (allergens)</code>。</li>
+      <li>美國：<a href="https://www.fda.gov/cosmetics" target="_blank">FDA</a> 監管，新法 <code>MoCRA (2022)</code> 強化設施登記與不良反應通報。</li>
+    </ul>
+
+    <h3>五、趨勢與資訊來源（偏 B2B）</h3>
+    <ul>
+      <li><a href="https://wwd.com/beauty-industry-news/" target="_blank">WWD Beauty Inc</a>：偏產業與品牌動態，適合抓「發生了什麼」</li>
+      <li><a href="https://www.cosmeticsdesign-europe.com/" target="_blank">CosmeticsDesign-Europe</a>：偏原料、供應鏈、法規與技術，適合抓「為什麼／怎麼做」</li>
+      <li><strong>重要趨勢</strong>：<code>皮膚微生態 (skin microbiome)</code>、<code>潔淨美妝 (clean beauty)</code>、<code>護膚化 (skinification)</code>、<code>外曝體 (exposome)</code>、<code>永續與升級回收原料</code>、<code>AI 個人化</code>。</li>
+    </ul>
+
+    <h3>六、常見問題</h3>
+    <div class="callout c-purple"><div class="ico">❓</div><div class="body">
+      <strong>「天然」就比較安全嗎？</strong> 不必然。安全取決於<code>劑量 (dose)</code>與<code>安全評估</code>，而非來源；許多天然萃取也可能含過敏原。<br>
+      <strong>酸類可以疊加視黃醇嗎？</strong> 通常建議分開時段使用以降低刺激，視膚況與耐受而定。
+    </div></div>
+
+    <h3>七、面試／工作可用的自我檢核</h3>
+    <ul>
+      <li>我能否用一句話說明某產品的核心賣點對應哪些成分與機制？</li>
+      <li>我能否說清楚某成分的風險、適用族群與使用情境（敏感肌、孕期等）？</li>
+      <li>我能否分辨「行銷宣稱」與「臨床／儀器證據」的差別？</li>
+    </ul>
+  </section>
+
+  <!-- ============ English ============ -->
+  <section class="panel" id="en">
+    <h2>Overview</h2>
+    <div class="callout c-yellow"><div class="ico">💡</div><div class="body">
+      This page moves from <strong>scientific core → real application</strong> for skincare: <code>ingredients &amp; mechanisms</code> → <code>claims</code> → <code>formulation logic</code> → <code>regulation &amp; safety</code> → <code>industry trends</code>. The goal is to translate marketing language into the language of ingredients, mechanisms and evidence.
+    </div></div>
+    <ol>
+      <li><strong>Ingredients &amp; mechanisms</strong>: hero actives organized by claim (anti-aging, hydration, brightening, barrier repair, acne, soothing, sun) with their <code>mechanism of action</code></li>
+      <li><strong>Formulation logic</strong>: from a marketing claim down to the real formula (claim → ingredient &amp; dosage → vehicle → evidence)</li>
+      <li><strong>Regulation &amp; safety</strong>: EU vs US frameworks, <code>INCI</code> labeling, allergens, safety assessment</li>
+      <li><strong>Trends &amp; sources</strong>: B2B sources and key movements (microbiome, clean beauty, skinification, exposome, sustainability)</li>
+      <li><strong>Consolidation</strong>: common questions + interview self-check</li>
+    </ol>
+
+    <h3>1. Hero actives by claim (terms in 3 languages)</h3>
+    <h4>Anti-aging（抗老／anti-âge）</h4>
+    <ul>
+      <li><strong>Retinoids（視黃醇類／rétinoïdes）</strong>: <span class="hl-blue">vitamin A derivatives that speed cell turnover and stimulate collagen</span>. Potency roughly <code>retinol &lt; retinal &lt; tretinoin</code>. Watch for <code>photosensitivity</code> and irritation; build tolerance gradually (<code>retinization</code>).</li>
+      <li><strong>Peptides（胜肽／peptides）</strong>: <span class="hl-blue">short amino-acid chains acting as signal molecules</span>; separate <code>claims</code> from <code>clinical evidence</code>.</li>
+      <li><strong>Bakuchiol（補骨脂酚）</strong>: <span class="hl-yellow">positioned as a gentler retinol alternative</span>, usable in daytime.</li>
+      <li><strong>Antioxidants</strong>: e.g. <code>vitamin C</code>, <code>vitamin E</code>, <code>ferulic acid</code> — neutralize <code>free radicals</code> and fight photo-aging.</li>
+    </ul>
+    <h4>Hydration &amp; barrier repair（保濕與屏障修護）</h4>
+    <ul>
+      <li><strong>Humectants</strong>: <span class="hl-blue">draw water into the stratum corneum</span> — <code>hyaluronic acid</code>, <code>glycerin</code>, <code>panthenol</code>.</li>
+      <li><strong>Emollients</strong>: <span class="hl-blue">lipids that fill gaps between corneocytes and smooth skin</span> — e.g. <code>squalane</code>.</li>
+      <li><strong>Occlusives</strong>: <span class="hl-blue">form a surface film to reduce transepidermal water loss (TEWL)</span>.</li>
+      <li><strong>Ceramides（神經醯胺／céramides）</strong>: <span class="hl-red">key stratum-corneum lipids</span>, often paired with <code>cholesterol</code> and <code>fatty acids</code> (~<code>1:1:1</code>) for the barrier triad.</li>
+    </ul>
+    <h4>Brightening（亮白／éclat）</h4>
+    <ul>
+      <li><strong>Vitamin C</strong>: antioxidant, inhibits <code>tyrosinase</code>; derivatives differ in stability/tolerability (pure L-AA is most effective but least stable).</li>
+      <li><strong>Niacinamide</strong>: <span class="hl-yellow">multifunctional</span> — blocks melanin transfer, strengthens barrier, controls oil.</li>
+      <li><strong>Arbutin, Tranexamic acid, Kojic acid, Azelaic acid</strong>: inhibit melanin synthesis/transfer via different paths.</li>
+    </ul>
+    <h4>Acne &amp; oil control（抗痘控油）</h4>
+    <ul>
+      <li><strong>Salicylic Acid (BHA)</strong>: <span class="hl-blue">lipophilic exfoliant that penetrates pores to dissolve plugs</span>.</li>
+      <li><strong>Benzoyl Peroxide</strong>: targets acne bacteria.</li>
+      <li><strong>Niacinamide, Zinc</strong>: oil control and anti-inflammatory.</li>
+    </ul>
+    <h4>Soothing（舒緩／apaisant）</h4>
+    <ul>
+      <li><strong>Centella Asiatica (Cica)</strong>: contains <code>madecassoside</code>; soothing and repairing.</li>
+      <li><strong>Allantoin, Bisabolol</strong>: calming, reduce irritation.</li>
+    </ul>
+    <h4>Sun protection（防曬／protection solaire）</h4>
+    <ul>
+      <li><strong>UV filters</strong>: <code>organic/chemical</code> vs <code>inorganic/mineral</code>.</li>
+      <li><code>SPF</code> addresses UVB; <code>PA／UVA</code> addresses UVA; broad-spectrum covers both.</li>
+    </ul>
+
+    <h3>2. Mechanisms in depth</h3>
+    <div class="callout c-orange"><div class="ico">📎</div><div class="body">
+      <strong>Why molecular weight, vehicle and stability matter</strong> — the same active works only if it reaches its target and stays active.
+      <ul>
+        <li><code>Molecular weight</code>: governs penetration depth (high-MW HA stays superficial; low-MW penetrates).</li>
+        <li><code>Encapsulation</code>: protects unstable actives (vitamin C, retinol), controls release, lowers irritation.</li>
+        <li><code>pH</code>: drives acid activity and tolerance (pure vitamin C needs low pH to stay effective).</li>
+      </ul>
+    </div></div>
+
+    <h3>3. From marketing to formulation thinking</h3>
+    <ol>
+      <li>Define the <strong>claim</strong></li>
+      <li>Map it to <strong>ingredients &amp; realistic dosage ranges</strong></li>
+      <li>Check the <strong>vehicle/system</strong> (emulsion, encapsulation, stability)</li>
+      <li>Evaluate <strong>evidence</strong>: <code>in vitro</code> vs <code>in vivo</code> vs <code>instrumental</code> vs <code>consumer tests</code></li>
+    </ol>
+    <div class="callout c-green"><div class="ico">📄</div><div class="body">
+      <strong>Exercise: deconstruct an anti-aging serum</strong>
+      <ol>
+        <li>Claim: reduce fine lines, brighten</li>
+        <li>Likely actives: <code>retinol</code> + <code>peptides</code> + <code>niacinamide</code> + <code>hyaluronic acid</code></li>
+        <li>System: encapsulated retinol to lower irritation and improve stability</li>
+        <li>Evidence: a "fine lines improved in 8 weeks" claim should map to in vivo instrumental data, not just in vitro</li>
+      </ol>
+    </div></div>
+
+    <h3>4. Regulation &amp; safety</h3>
+    <ul>
+      <li>EU: <span class="hl-green"><code>Regulation (EC) No 1223/2009 (EU Cosmetics Regulation)</code></span> governs ingredient safety, labeling and claims; safety is assessed by the <a href="https://health.ec.europa.eu/scientific-committees/scientific-committee-consumer-safety-sccs_en" target="_blank">SCCS</a>.</li>
+      <li>Labeling: global <a href="https://incidecoder.com/" target="_blank">INCI</a> naming; EU also requires labeling of specific <code>allergens</code>.</li>
+      <li>US: regulated by <a href="https://www.fda.gov/cosmetics" target="_blank">FDA</a>; <code>MoCRA (2022)</code> adds facility registration and adverse-event reporting.</li>
+    </ul>
+
+    <h3>5. Trends &amp; sources (B2B)</h3>
+    <ul>
+      <li><a href="https://wwd.com/beauty-industry-news/" target="_blank">WWD Beauty Inc</a>: market/brand movements — "what happened"</li>
+      <li><a href="https://www.cosmeticsdesign-europe.com/" target="_blank">CosmeticsDesign-Europe</a>: ingredients, suppliers, regulation, technology — "why / how"</li>
+      <li><strong>Key trends</strong>: <code>skin microbiome</code>, <code>clean beauty</code>, <code>skinification</code>, <code>exposome</code>, <code>sustainability / upcycled ingredients</code>, <code>AI personalization</code>.</li>
+    </ul>
+
+    <h3>6. Common questions</h3>
+    <div class="callout c-purple"><div class="ico">❓</div><div class="body">
+      <strong>Is "natural" automatically safer?</strong> Not necessarily — safety depends on <code>dose</code> and <code>safety assessment</code>, not origin; many botanicals contain allergens.<br>
+      <strong>Can I layer acids with retinol?</strong> Usually best separated by time of day to limit irritation, depending on skin tolerance.
+    </div></div>
+
+    <h3>7. Interview / work self-check</h3>
+    <ul>
+      <li>Can I state a product's hero claim and map it to ingredients and mechanisms in one sentence?</li>
+      <li>Can I explain an ingredient's risks, target users and usage context (sensitive skin, pregnancy)?</li>
+      <li>Can I distinguish a marketing claim from clinical/instrumental evidence?</li>
+    </ul>
+  </section>
+
+  <!-- ============ Français ============ -->
+  <section class="panel" id="fr">
+    <h2>Aperçu</h2>
+    <div class="callout c-yellow"><div class="ico">💡</div><div class="body">
+      Cette page va du <strong>cœur scientifique → application concrète</strong> pour le soin de la peau : <code>actifs &amp; mécanismes</code> → <code>promesses (claims)</code> → <code>logique de formulation</code> → <code>réglementation &amp; sécurité</code> → <code>tendances</code>. L'objectif : traduire le marketing en langage d'ingrédients, de mécanismes et de preuves.
+    </div></div>
+    <ol>
+      <li><strong>Actifs &amp; mécanismes</strong> : actifs phares classés par promesse (anti-âge, hydratation, éclat, réparation barrière, acné, apaisant, solaire) et leur <code>mécanisme d'action</code></li>
+      <li><strong>Logique de formulation</strong> : de la promesse marketing à la formule réelle (claim → ingrédient &amp; dosage → système galénique → preuves)</li>
+      <li><strong>Réglementation &amp; sécurité</strong> : cadres UE vs US, étiquetage <code>INCI</code>, allergènes, évaluation de sécurité</li>
+      <li><strong>Tendances &amp; sources</strong> : sources B2B et grands courants (microbiome, clean beauty, skinification, exposome, durabilité)</li>
+      <li><strong>Consolidation</strong> : questions fréquentes + auto-évaluation entretien</li>
+    </ol>
+
+    <h3>1. Actifs phares par promesse (termes en 3 langues)</h3>
+    <h4>Anti-âge（抗老／Anti-aging）</h4>
+    <ul>
+      <li><strong>Rétinoïdes（視黃醇類／Retinoids）</strong> : <span class="hl-blue">dérivés de la vitamine A qui accélèrent le renouvellement cellulaire et stimulent le collagène</span>. Puissance ≈ <code>rétinol &lt; rétinal &lt; trétinoïne</code>. Attention à la <code>photosensibilité</code> et à l'irritation ; introduction progressive (<code>rétinisation</code>).</li>
+      <li><strong>Peptides（胜肽）</strong> : <span class="hl-blue">courtes chaînes d'acides aminés agissant comme molécules de signal</span> ; distinguer la <code>promesse</code> des <code>preuves cliniques</code>.</li>
+      <li><strong>Bakuchiol（補骨脂酚）</strong> : <span class="hl-yellow">alternative plus douce au rétinol</span>, utilisable le jour.</li>
+      <li><strong>Antioxydants</strong> : <code>vitamine C</code>, <code>vitamine E</code>, <code>acide férulique</code> — neutralisent les <code>radicaux libres</code> et luttent contre le photovieillissement.</li>
+    </ul>
+    <h4>Hydratation &amp; réparation de la barrière（保濕與屏障修護）</h4>
+    <ul>
+      <li><strong>Humectants</strong> : <span class="hl-blue">attirent l'eau vers la couche cornée</span> — <code>acide hyaluronique</code>, <code>glycérine</code>, <code>panthénol</code>.</li>
+      <li><strong>Émollients</strong> : <span class="hl-blue">lipides qui comblent les espaces entre cornéocytes et lissent la peau</span> — ex. <code>squalane</code>.</li>
+      <li><strong>Occlusifs</strong> : <span class="hl-blue">forment un film de surface réduisant la perte insensible en eau (PIE / TEWL)</span>.</li>
+      <li><strong>Céramides（神經醯胺）</strong> : <span class="hl-red">lipides clés de la couche cornée</span>, souvent associés au <code>cholestérol</code> et aux <code>acides gras</code> (~<code>1:1:1</code>) — le trio de la barrière.</li>
+    </ul>
+    <h4>Éclat / dépigmentant（亮白）</h4>
+    <ul>
+      <li><strong>Vitamine C</strong> : antioxydant, inhibe la <code>tyrosinase</code> ; les <code>dérivés</code> varient en stabilité/tolérance (la L-AA pure est la plus efficace mais la moins stable).</li>
+      <li><strong>Niacinamide</strong> : <span class="hl-yellow">multifonction</span> — bloque le transfert de mélanine, renforce la barrière, régule le sébum.</li>
+      <li><strong>Arbutine, Acide tranexamique, Acide kojique, Acide azélaïque</strong> : inhibent la synthèse/le transfert de mélanine par différentes voies.</li>
+    </ul>
+    <h4>Acné &amp; contrôle du sébum（抗痘控油）</h4>
+    <ul>
+      <li><strong>Acide salicylique (BHA)</strong> : <span class="hl-blue">exfoliant lipophile qui pénètre les pores pour dissoudre les bouchons</span>.</li>
+      <li><strong>Peroxyde de benzoyle</strong> : cible les bactéries de l'acné.</li>
+      <li><strong>Niacinamide, Zinc</strong> : séborégulateur, anti-inflammatoire.</li>
+    </ul>
+    <h4>Apaisant（舒緩）</h4>
+    <ul>
+      <li><strong>Centella Asiatica (Cica)</strong> : contient le <code>madécassoside</code> ; apaise et répare.</li>
+      <li><strong>Allantoïne, Bisabolol</strong> : calment, réduisent l'irritation.</li>
+    </ul>
+    <h4>Protection solaire（防曬）</h4>
+    <ul>
+      <li><strong>Filtres UV</strong> : <code>organiques/chimiques</code> vs <code>inorganiques/minéraux</code>.</li>
+      <li>Le <code>SPF</code> couvre les UVB ; <code>PA／UVA</code> couvre les UVA ; un large spectre couvre les deux.</li>
+    </ul>
+
+    <h3>2. Mécanismes en profondeur</h3>
+    <div class="callout c-orange"><div class="ico">📎</div><div class="body">
+      <strong>Pourquoi la masse moléculaire, le système galénique et la stabilité comptent</strong> — un actif n'agit que s'il atteint sa cible et reste actif.
+      <ul>
+        <li><code>Masse moléculaire</code> : détermine la profondeur de pénétration (le HA de haute masse reste en surface, le bas pénètre).</li>
+        <li><code>Encapsulation</code> : protège les actifs instables (vitamine C, rétinol), contrôle la libération, réduit l'irritation.</li>
+        <li><code>pH</code> : conditionne l'activité des acides et la tolérance (la vitamine C pure exige un pH bas).</li>
+      </ul>
+    </div></div>
+
+    <h3>3. Passer du marketing à la formulation</h3>
+    <ol>
+      <li>Clarifier la <strong>promesse (claim)</strong></li>
+      <li>Associer <strong>ingrédients</strong> et <strong>plages de dosage</strong> réalistes</li>
+      <li>Examiner le <strong>système galénique</strong> (émulsion, encapsulation, stabilité)</li>
+      <li>Évaluer les <strong>preuves</strong> : <code>in vitro</code> vs <code>in vivo</code> vs <code>mesures instrumentales</code> vs <code>tests consommateurs</code></li>
+    </ol>
+    <div class="callout c-green"><div class="ico">📄</div><div class="body">
+      <strong>Exercice : décomposer un sérum anti-âge</strong>
+      <ol>
+        <li>Promesse : réduire les ridules, éclat</li>
+        <li>Actifs probables : <code>rétinol</code> + <code>peptides</code> + <code>niacinamide</code> + <code>acide hyaluronique</code></li>
+        <li>Système : rétinol encapsulé pour limiter l'irritation et améliorer la stabilité</li>
+        <li>Preuves : une promesse « ridules réduites en 8 semaines » doit reposer sur des mesures in vivo, pas seulement in vitro</li>
+      </ol>
+    </div></div>
+
+    <h3>4. Réglementation &amp; sécurité</h3>
+    <ul>
+      <li>UE : <span class="hl-green"><code>Règlement (CE) No 1223/2009 (Règlement Cosmétiques UE)</code></span> encadre la sécurité des ingrédients, l'étiquetage et les allégations ; l'évaluation est faite par le <a href="https://health.ec.europa.eu/scientific-committees/scientific-committee-consumer-safety-sccs_en" target="_blank">SCCS</a>.</li>
+      <li>Étiquetage : nomenclature mondiale <a href="https://incidecoder.com/" target="_blank">INCI</a> ; l'UE impose en plus l'étiquetage de certains <code>allergènes</code>.</li>
+      <li>US : régulé par la <a href="https://www.fda.gov/cosmetics" target="_blank">FDA</a> ; le <code>MoCRA (2022)</code> renforce l'enregistrement des sites et la déclaration des effets indésirables.</li>
+    </ul>
+
+    <h3>5. Tendances &amp; sources (B2B)</h3>
+    <ul>
+      <li><a href="https://wwd.com/beauty-industry-news/" target="_blank">WWD Beauty Inc</a> : mouvements marché/marques — « ce qui se passe »</li>
+      <li><a href="https://www.cosmeticsdesign-europe.com/" target="_blank">CosmeticsDesign-Europe</a> : ingrédients, fournisseurs, réglementation, technologie — « pourquoi / comment »</li>
+      <li><strong>Tendances clés</strong> : <code>microbiome cutané</code>, <code>clean beauty</code>, <code>skinification</code>, <code>exposome</code>, <code>durabilité / ingrédients upcyclés</code>, <code>personnalisation par IA</code>.</li>
+    </ul>
+
+    <h3>6. Questions fréquentes</h3>
+    <div class="callout c-purple"><div class="ico">❓</div><div class="body">
+      <strong>« Naturel » est-il forcément plus sûr ?</strong> Pas nécessairement — la sécurité dépend du <code>dosage</code> et de l'<code>évaluation</code>, pas de l'origine ; beaucoup d'extraits végétaux contiennent des allergènes.<br>
+      <strong>Peut-on superposer acides et rétinol ?</strong> Mieux vaut généralement les séparer dans la journée pour limiter l'irritation, selon la tolérance.
+    </div></div>
+
+    <h3>7. Auto-évaluation entretien / travail</h3>
+    <ul>
+      <li>Puis-je relier en une phrase la promesse phare d'un produit à ses ingrédients et mécanismes ?</li>
+      <li>Puis-je expliquer les risques d'un actif, ses publics cibles et contextes d'usage (peau sensible, grossesse) ?</li>
+      <li>Puis-je distinguer une allégation marketing d'une preuve clinique/instrumentale ?</li>
+    </ul>
+  </section>
+
+  <footer>美妝保養｜核心活性成分與市場趨勢 · 中文 / English / Français · 點上方按鈕切換語言 / Click the buttons above to switch language.</footer>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.lang-btn');
+  const panels = document.querySelectorAll('.panel');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === lang));
+      document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>

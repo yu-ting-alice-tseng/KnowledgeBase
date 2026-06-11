@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商業與金融跨領域整合智庫地圖 | Cross-Domain Knowledge Map</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Noto Sans TC', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow-finance': '0 0 20px rgba(16, 185, 129, 0.35)',
+            'glow-accounting': '0 0 20px rgba(244, 63, 94, 0.35)',
+            'glow-marketing': '0 0 20px rgba(168, 85, 247, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 深邃太空格調背景 */
+    body {
+      background-color: #060913;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 40%),
+        radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.05) 0px, transparent 40%),
+        radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.03) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* 隱藏滾動條但保持滾動 */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* SVG 連接線動畫 */
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -40;
+      }
+    }
+    .active-connection-line {
+      stroke-dasharray: 8, 8;
+      animation: dash 1.5s linear infinite;
+    }
+
+    .gradient-border {
+      position: relative;
+    }
+    .gradient-border::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-12 overflow-x-hidden antialiased selection:bg-teal-500 selection:text-white">
+
+  <!-- 頂部綜合導航欄 -->
+  <header class="border-b border-slate-900/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      
+      <!-- 標題區域 -->
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 via-pink-500 to-purple-500 rounded-xl blur opacity-75 animate-pulse"></div>
+          <div class="relative bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+            <i class="fa-solid fa-graduation-cap text-teal-400 text-xl"></i>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-teal-400 uppercase bg-teal-500/10 rounded-full border border-teal-500/20">
+              CROSS-DOMAIN PLATFORM
+            </span>
+            <span id="header-subtitle" class="text-xs text-slate-400 font-light">商學與金融跨域地圖</span>
+          </div>
+          <h1 id="header-title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight">
+            商業與金融整合智庫地圖
+          </h1>
+        </div>
+      </div>
+
+      <!-- 跨領域快速切換器 -->
+      <div class="flex p-1 bg-slate-900/80 border border-slate-800 rounded-xl w-full lg:w-auto overflow-x-auto gap-1">
+        <button id="tab-btn-finance" onclick="switchDomain('finance')" class="flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.15)] w-full lg:w-auto whitespace-nowrap">
+          <i class="fa-solid fa-sack-dollar text-emerald-400"></i> <span id="tab-btn-finance-text">金融學 (Finance)</span>
+        </button>
+        <button id="tab-btn-accounting" onclick="switchDomain('accounting')" class="flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200 w-full lg:w-auto whitespace-nowrap">
+          <i class="fa-solid fa-calculator"></i> <span id="tab-btn-accounting-text">會計學 (Accounting)</span>
+        </button>
+        <button id="tab-btn-marketing" onclick="switchDomain('marketing')" class="flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200 w-full lg:w-auto whitespace-nowrap">
+          <i class="fa-solid fa-bullseye"></i> <span id="tab-btn-marketing-text">市場行銷 (Marketing)</span>
+        </button>
+      </div>
+
+      <!-- 搜尋及語言切換控制列 -->
+      <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+        <!-- 語言切換按鈕組 -->
+        <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+          <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 bg-teal-500/15 text-teal-400 border border-teal-500/20">繁中</button>
+          <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">EN</button>
+          <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">FR</button>
+        </div>
+
+        <!-- 全局搜尋 -->
+        <div class="relative w-full sm:w-56 lg:w-64">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500 text-sm">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input 
+            id="global-search-input"
+            type="text" 
+            placeholder="搜尋工具、技術、能力..." 
+            class="w-full pl-9 pr-8 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-500/80 focus:ring-2 focus:ring-teal-500/10 transition-all duration-300"
+          >
+          <!-- 下拉聯想搜尋結果區 -->
+          <div id="search-results-dropdown" class="absolute top-full left-0 right-0 mt-2 bg-slate-950/95 border border-slate-800 rounded-xl shadow-2xl z-50 max-h-60 overflow-y-auto backdrop-blur-md hidden no-scrollbar">
+            <!-- 動態渲染聯想結果 -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 主體內容區 -->
+  <main class="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
+    
+    <!-- 第一部分：地圖互動看板 -->
+    <section class="relative gradient-border bg-slate-950/30 rounded-3xl p-6 md:p-10 border border-slate-900 overflow-hidden shadow-2xl">
+      <!-- 裝飾背景格網 -->
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b08_1px,transparent_1px),linear-gradient(to_bottom,#1e293b08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+      
+      <!-- 控制指引 -->
+      <div class="flex items-center justify-between mb-8 relative z-10">
+        <div class="flex items-center gap-2">
+          <i id="domain-indicator-icon" class="fa-solid fa-circle-nodes text-emerald-400 animate-pulse"></i>
+          <span id="domain-indicator-text" class="text-xs md:text-sm font-semibold tracking-wider text-slate-400 uppercase">現代金融學核心知識圖譜</span>
+        </div>
+        <span id="instructions-container" class="text-xs text-slate-500 hidden sm:inline bg-slate-900/60 px-3 py-1 rounded-full border border-slate-800/40">
+          <i class="fa-solid fa-circle-info mr-1.5 text-teal-500"></i><span id="label-instructions">點擊子節點，展開下方跨維度詳細面板</span>
+        </span>
+      </div>
+
+      <!-- 連接線 SVG 層 -->
+      <svg id="svg-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></svg>
+
+      <!-- 地圖節點架構 -->
+      <div class="relative z-10 flex flex-col items-center gap-10 md:gap-14">
+        
+        <!-- 中心核心節點 (Domain Hub) -->
+        <div id="central-hub" class="relative group">
+          <div id="central-hub-glow" class="absolute -inset-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl blur-lg opacity-60 group-hover:opacity-100 transition duration-500"></div>
+          <div class="relative bg-slate-950 px-10 py-5 rounded-2xl border border-white/5 text-center flex flex-col items-center justify-center min-w-[200px]">
+            <span id="central-zh" class="text-lg md:text-xl font-black text-white tracking-wider">現代金融</span>
+            <span id="central-en" class="text-[10px] text-emerald-400 tracking-widest font-bold mt-1 uppercase">Modern Finance</span>
+            <div id="central-badge" class="absolute -bottom-2 bg-slate-900 text-[10px] text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full font-bold">
+              5 大核心分支
+            </div>
+          </div>
+        </div>
+
+        <!-- 分支子節點網格區 -->
+        <div id="nodes-grid" class="grid grid-cols-2 md:grid-cols-5 gap-4 lg:gap-6 w-full max-w-6xl mt-2">
+          <!-- 節點資料將由 JS 動態渲染並計算連線 -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 第二部分：詳細解析雙欄面板 -->
+    <section id="detail-panel" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      
+      <!-- 左側/上方欄：定義、子領域與核心能力 -->
+      <div class="lg:col-span-2 gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-8 relative">
+        
+        <!-- 頂部：標籤、主題與英文 -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-800/50 gap-4">
+          <div class="flex items-center gap-4">
+            <div id="detail-icon-box" class="p-3.5 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20">
+              <i id="detail-icon" class="fa-solid fa-building-columns text-2xl"></i>
+            </div>
+            <div>
+              <span id="detail-tag" class="text-xs uppercase tracking-wider text-emerald-400 font-bold font-sans">Corporate Finance</span>
+              <h2 id="detail-title" class="text-xl md:text-2xl font-black text-white mt-0.5">企業金融</h2>
+            </div>
+          </div>
+          <span class="text-[10px] text-slate-500 font-mono tracking-widest bg-slate-900/60 px-3 py-1 rounded-lg border border-slate-800">
+            <span id="label-metadata">INTELLIGENCE</span> / <span id="detail-meta">FINANCE</span>
+          </span>
+        </div>
+
+        <!-- 核心定義 -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-compass text-xs"></i> <span id="label-core-def">核心定義與定位</span>
+          </h4>
+          <p id="detail-desc" class="text-slate-300 text-sm md:text-base leading-relaxed font-light">
+            載入中...
+          </p>
+        </div>
+
+        <!-- 子領域網格 (Subfields) -->
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-cubes text-xs"></i> <span id="label-subfields">核心探究板塊 (Subfields)</span>
+          </h4>
+          <div id="detail-subfields" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- 動態生成 -->
+          </div>
+        </div>
+
+        <!-- 核心職能 (Skills) -->
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-graduation-cap text-xs"></i> <span id="label-skills">關鍵必備專業技能</span>
+          </h4>
+          <ul id="detail-skills" class="space-y-3">
+            <!-- 動態生成 -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- 右側/下方欄：工具與情境挑戰互動器 -->
+      <div class="space-y-8">
+        
+        <!-- 工具箱卡片 -->
+        <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900 space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-screwdriver-wrench text-xs"></i> <span id="label-tools">行業主流軟體與平台</span>
+          </h4>
+          <div id="detail-tools" class="flex flex-wrap gap-2 pt-2">
+            <!-- 動態生成 -->
+          </div>
+        </div>
+
+        <!-- 實戰模擬 / 情境測試 Widget -->
+        <div id="scenario-widget" class="gradient-border bg-slate-950/60 rounded-3xl p-6 border border-slate-800/80 space-y-4 shadow-xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full blur-xl"></div>
+          
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-brain text-teal-400 animate-pulse"></i>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <span id="label-scenario">實戰情境挑戰 (Interactive Scenario)</span>
+            </h4>
+          </div>
+
+          <!-- 情境問題 -->
+          <div class="bg-slate-900/50 rounded-2xl p-4 border border-slate-800/80">
+            <p id="scenario-question" class="text-xs md:text-sm text-slate-200 leading-relaxed font-semibold">
+              載入中...
+            </p>
+          </div>
+
+          <!-- 選項 -->
+          <div id="scenario-options" class="space-y-2.5">
+            <!-- 動態生成 -->
+          </div>
+
+          <!-- 反饋區 -->
+          <div id="scenario-feedback" class="hidden rounded-xl p-3.5 text-xs leading-relaxed transition-all duration-300">
+            <!-- 動態生成 -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 綜合聲明 -->
+  <footer class="max-w-7xl mx-auto px-6 mt-16 text-center text-slate-600 text-xs">
+    <p id="footer-text">© 2026 商業與金融跨領域整合互動智庫平台 ． 多維度學科融合架構</p>
+  </footer>
+
+  <script>
+    // 1. 三語靜態介面文本定義
+    const uiTranslations = {
+      zh: {
+        title: "商業與金融整合智庫地圖",
+        subtitle: "商學與金融跨域地圖",
+        searchPlaceholder: "搜尋工具、技術、能力 (如 SAP, Python, SEO)...",
+        searchResults: "搜尋結果",
+        clickToJump: "點擊自動跳轉領域",
+        noResults: "找不到匹配的工具、技能或子學科。",
+        domainFinance: "金融學 (Finance)",
+        domainAccounting: "會計學 (Accounting)",
+        domainMarketing: "市場行銷 (Marketing)",
+        coreDefinition: "核心定義與定位",
+        exploreBlocks: "核心探究板塊 (Subfields)",
+        essentialSkills: "關鍵必備專業技能",
+        industryTools: "行業主流軟體與平台",
+        scenarioChallenge: "實戰情境挑戰 (Interactive Scenario)",
+        answerCorrect: "回答正確！",
+        answerAnalysis: "解答分析：",
+        retryBtn: "重試這道題",
+        indicatorFinance: "現代金融學核心知識圖譜",
+        indicatorAccounting: "現代會計學分支與實戰地圖",
+        indicatorMarketing: "現代市場行銷分支與技能地圖",
+        instructions: "點擊子節點，展開下方跨維度詳細面板",
+        footer: "© 2026 商業與金融跨領域整合互動智庫平台 ． 多維度學科融合架構",
+        loading: "載入中...",
+        metadataLabel: "INTELLIGENCE",
+        branchDetail: "BRANCH DETAIL"
+      },
+      en: {
+        title: "Business & Finance Integrated Knowledge Map",
+        subtitle: "Cross-Domain Business Strategy Map",
+        searchPlaceholder: "Search tools, skills, subfields (e.g., SAP, Python, SEO)...",
+        searchResults: "Search Results",
+        clickToJump: "Click to jump dynamically",
+        noResults: "No matching tools, skills, or subfields found.",
+        domainFinance: "Finance",
+        domainAccounting: "Accounting",
+        domainMarketing: "Marketing",
+        coreDefinition: "Core Definition & Position",
+        exploreBlocks: "Core Subfields (Subfields)",
+        essentialSkills: "Key Required Professional Skills",
+        industryTools: "Industry Software & Platforms",
+        scenarioChallenge: "Interactive Scenario Challenge",
+        answerCorrect: "Correct Answer!",
+        answerAnalysis: "Solution Analysis:",
+        retryBtn: "Retry this question",
+        indicatorFinance: "Modern Finance Core Knowledge Map",
+        indicatorAccounting: "Modern Accounting Branches & Map",
+        indicatorMarketing: "Modern Marketing Branches & Skills Map",
+        instructions: "Click any sub-node to expand the detailed analysis panel below",
+        footer: "© 2026 Integrated Business & Finance Interactive Platform. All Rights Reserved.",
+        loading: "Loading...",
+        metadataLabel: "INTELLIGENCE",
+        branchDetail: "BRANCH DETAIL"
+      },
+      fr: {
+        title: "Carte d'Intelligence Intégrée en Finance & Gestion",
+        subtitle: "Carte Pluridisciplinaire Stratégique",
+        searchPlaceholder: "Rechercher outils, compétences, sous-domaines (ex. SAP, Python, SEO)...",
+        searchResults: "Résultats de recherche",
+        clickToJump: "Cliquer pour accéder au domaine",
+        noResults: "Aucun outil, compétence ou sous-domaine trouvé.",
+        domainFinance: "Finance",
+        domainAccounting: "Comptabilité",
+        domainMarketing: "Marketing",
+        coreDefinition: "Définition Principale & Positionnement",
+        exploreBlocks: "Sous-domaines d'Exploration Clés",
+        essentialSkills: "Compétences Professionnelles Requises",
+        industryTools: "Logiciels & Outils Industriels Majeurs",
+        scenarioChallenge: "Défi Scénario Interactif",
+        answerCorrect: "Bonne réponse !",
+        answerAnalysis: "Analyse de la solution :",
+        retryBtn: "Réessayer cette question",
+        indicatorFinance: "Carte des Connaissances en Finance Moderne",
+        indicatorAccounting: "Carte des Branches de la Comptabilité Moderne",
+        indicatorMarketing: "Carte des Branches et Compétences en Marketing",
+        instructions: "Cliquez sur un sous-nœud pour afficher le panneau d'analyse ci-dessous",
+        footer: "© 2026 Plateforme Interactive Intégrée de Finance & Gestion. Tous droits réservés.",
+        loading: "Chargement...",
+        metadataLabel: "INTELLIGENCE",
+        branchDetail: "DÉTAIL DE LA BRANCHE"
+      }
+    };
+
+    // 目前選取的語言，預設為 'zh'
+    let currentLang = 'zh';
+
+    // 2. 跨領域三語整合資料庫
+    const domainDatabase = {
+      // 1. 金融學領域
+      finance: {
+        indicatorText: {
+          zh: '現代金融學核心知識圖譜',
+          en: 'Modern Finance Core Knowledge Map',
+          fr: 'Carte des Connaissances en Finance Moderne'
+        },
+        indicatorIcon: 'fa-circle-nodes',
+        themeColor: 'emerald',
+        rgbColor: '16, 185, 129',
+        hexColor: '#10b981',
+        centralNode: {
+          zh: { zh: '現代金融', en: 'Modern Finance', fr: 'Finance Moderne' },
+          en: { zh: 'Modern Finance', en: 'Modern Finance', fr: 'Finance Moderne' },
+          badge: { zh: '5 大核心分支', en: '5 Core Branches', fr: '5 Branches Clés' }
+        },
+        branches: {
+          corporate: {
+            id: 'corporate',
+            title: { zh: '企業金融', en: 'Corporate Finance', fr: 'Finance d\'Entreprise' },
+            englishTitle: { zh: 'Corporate Finance', en: 'Corporate Finance', fr: 'Finance d\'Entreprise' },
+            badge: { zh: '公司決策', en: 'Corporate Decisions', fr: 'Décisions' },
+            icon: 'fa-building-columns',
+            description: {
+              zh: '專注於企業內部的資金決策。核心在於如何籌集資金（融資）、如何分配資金到高價值的項目（投資），以及如何管理日常營運資金，最終極大化企業與股東的價值。',
+              en: 'Focuses on financial decisions within a corporation. The core lies in capital raising (financing), allocating capital to high-value projects (investing), and managing working capital to maximize shareholder value.',
+              fr: 'Se concentre sur les décisions financières au sein d\'une entreprise. Le cœur réside dans la levée de fonds (financement), l\'allocation de capital à des projets à forte valeur (investissement), et la gestion du besoin en fonds de roulement pour maximiser la valeur actionnariale.'
+            },
+            subfields: [
+              {
+                name: { zh: '資本預算 (Capital Budgeting)', en: 'Capital Budgeting', fr: 'Choix des Investissements' },
+                desc: { zh: '評估與決策企業長期投資項目（如建廠、新產品研發）的預期回報。', en: 'Evaluating and deciding on long-term corporate investment projects (e.g., factories, R&D) based on expected returns.', fr: 'Évaluation et prise de décision sur les projets d\'investissement à long terme (ex. usines, R&D) basés sur les rendements attendus.' }
+              },
+              {
+                name: { zh: '企業併購 (M&A)', en: 'Mergers & Acquisitions (M&A)', fr: 'Fusions & Acquisitions (M&A)' },
+                desc: { zh: '進行企業合併、收購與資產重組，以達成規模經濟或市場擴張。', en: 'Executing corporate mergers, acquisitions, and asset restructurings to achieve economies of scale or market expansion.', fr: 'Réalisation de fusions, d\'acquisitions et de restructurations d\'actifs pour réaliser des économies d\'échelle ou une expansion du marché.' }
+              },
+              {
+                name: { zh: '資本結構優化', en: 'Capital Structure Optimization', fr: 'Structure Financière' },
+                desc: { zh: '權衡股權（發行股票）與債權（發行債券、貸款）比例，以降低資金成本。', en: 'Balancing the ratio of equity (issuing stocks) and debt (issuing bonds, loans) to reduce the weighted average cost of capital.', fr: 'Équilibrage de la part des capitaux propres (actions) et de la dette (obligations, emprunts) pour minimiser le coût global du capital.' }
+              },
+              {
+                name: { zh: '營運資金管理', en: 'Working Capital Management', fr: 'Gestion du BFR' },
+                desc: { zh: '管理流動資產（現金、存貨）與流動負債，確保企業日常運轉無虞。', en: 'Managing current assets (cash, inventory) and current liabilities to ensure smooth day-to-day operations.', fr: 'Gestion de l\'actif circulant (trésorerie, stocks) et du passif circulant pour assurer un fonctionnement quotidien sans risque.' }
+              }
+            ],
+            skills: [
+              { zh: '**財務報表分析 (FSA)**：擁有快速拆解上市公司三張表、研判經營狀況的核心能力。', en: '**Financial Statement Analysis (FSA)**: Mastery in dissecting balance sheets, income statements, and cash flows to assess operational health.', fr: '**Analyse des États Financiers (FSA)**: Maîtrise de la dissection des bilans, comptes de résultat et flux de trésorerie pour évaluer la santé opérationnelle.' },
+              { zh: '**企業估值與建模**：熟練運用 DCF、可比公司分析法 (Comps) 建立財務模型。', en: '**Corporate Valuation & Modeling**: Proficiency in building financial models using DCF and Comparable Company Analysis (Comps).', fr: '**Évaluation & Modélisation d\'Entreprise**: Maîtrise de la construction de modèles financiers via DCF et l\'analyse de comparables (Comps).' },
+              { zh: '**資本成本 WACC 計算**：掌握精算加權平均資金成本、進行投資評估的基本框架。', en: '**WACC Computation**: Mastering the frameworks to compute the weighted average cost of capital and evaluate project hurdle rates.', fr: '**Calcul du CMPC (WACC)**: Maîtrise des cadres d\'évaluation pour calculer le coût moyen pondéré du capital et fixer les taux de rendement requis.' }
+            ],
+            tools: ['Excel (VBA)', 'Bloomberg Terminal', 'Capital IQ / S&P', 'SAP ERP / Oracle'],
+            scenario: {
+              question: {
+                zh: '台積電在評估一項耗資百億美金、預計回收期達15年的全新進階晶圓廠建置案。此決策在企業金融中屬於哪項範疇，最適合用什麼工具評估？',
+                en: 'TSMC is evaluating a $10B high-end semiconductor fab project with a 15-year payback period. Which corporate finance subfield does this decision belong to, and what tool is best for evaluation?',
+                fr: 'TSMC évalue un projet de fonderie de semi-conducteurs haut de gamme de 10 milliards de dollars avec une période de récupération de 15 ans. À quel sous-domaine de la finance d\'entreprise cette décision appartient-elle, et quel outil est le plus adapté ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 營運資金管理；採用 Excel 的週轉率分析模型', en: 'A. Working Capital Management; using Excel turnover models', fr: 'A. Gestion du BFR ; en utilisant les modèles de rotation sur Excel' },
+                  correct: false,
+                  reason: { zh: '不對，高達百億、長達15年的專案顯然是大型、長期戰略性投資，並非短期日常資金運轉管理。', en: 'Incorrect. A $10B project spanning 15 years is a major, long-term strategic investment, not short-term liquidity management.', fr: 'Incorrect. Un projet de 10 milliards de dollars sur 15 ans est un investissement stratégique majeur à long terme, pas de la trésorerie à court terme.' }
+                },
+                {
+                  text: { zh: 'B. 資本結構優化；採用 WACC 融資加權計算工具', en: 'B. Capital Structure Optimization; using WACC weight calculators', fr: 'B. Optimisation de la structure financière ; en utilisant les outils de calcul du CMPC' },
+                  correct: false,
+                  reason: { zh: '融資比例設計雖然相關，但建廠評估核心是針對「專案本身的投資報酬與現金流折現」進行決策。', en: 'Incorrect. Although financing structure is relevant, the core of evaluating a factory is deciding on the discounted cash flows and project returns.', fr: 'Incorrect. Bien que la structure de financement soit liée, l\'évaluation d\'une nouvelle usine repose sur l\'actualisation des flux de trésorerie et la rentabilité du projet.' }
+                },
+                {
+                  text: { zh: 'C. 資本預算 (Capital Budgeting)；採用 NPV (淨現值) 與 IRR (內部報酬率) 計算模型', en: 'C. Capital Budgeting; using Net Present Value (NPV) and Internal Rate of Return (IRR) models', fr: 'C. Choix des investissements (Capital Budgeting) ; en utilisant les calculs de la VAN (NPV) et du TRI (IRR)' },
+                  correct: true,
+                  reason: { zh: '完全正確！對於長期大額投資，評估其未來各期現金流折現是否大於零（NPV > 0），屬於資本預算的核心工作。', en: 'Exactly! For major long-term investments, evaluating whether the discounted future cash flows exceed zero (NPV > 0) is the core work of Capital Budgeting.', fr: 'Exactement ! Pour les investissements à long terme, évaluer si la valeur actuelle nette des flux futurs dépasse zéro (VAN > 0) est le cœur du Capital Budgeting.' }
+                }
+              ]
+            }
+          },
+          investments: {
+            id: 'investments',
+            title: { zh: '投資與金融市場', en: 'Investments & Markets', fr: 'Investissements & Marchés' },
+            englishTitle: { zh: 'Investments & Markets', en: 'Investments & Markets', fr: 'Investissements & Marchés' },
+            badge: { zh: '證券定價', en: 'Asset Pricing', fr: 'Titres & Marchés' },
+            icon: 'fa-chart-line',
+            description: {
+              zh: '研究金融資產（股票、債券、衍生性金融商品）的定價機制、市場交易規則，以及如何透過投資組合（Portfolio）的科學化建構，在風險與報酬之間取得最佳平衡。',
+              en: 'Studies the pricing mechanisms of financial assets (stocks, bonds, derivatives), market trading rules, and how to scientifically construct investment portfolios to achieve the optimal balance of risk and return.',
+              fr: 'Étudie les mécanismes d\'évaluation des actifs financiers (actions, obligations, produits dérivés), les règles de négociation, et la construction scientifique de portefeuilles d\'investissement pour équilibrer au mieux le risque et le rendement.'
+            },
+            subfields: [
+              {
+                name: { zh: '證券分析 (Equity Research)', en: 'Securities Analysis (Equity Research)', fr: 'Analyse Financière (Equity Research)' },
+                desc: { zh: '對個別股票或債券進行深度基本面或技術面分析，撰寫研究報告。', en: 'In-depth fundamental or technical analysis of individual stocks or bonds, producing research reports.', fr: 'Analyse fondamentale ou technique approfondie d\'actions ou d\'obligations individuelles pour produire des rapports de recherche.' }
+              },
+              {
+                name: { zh: '投資組合管理', en: 'Portfolio Management', fr: 'Gestion de Portefeuille' },
+                desc: { zh: '為機構或個人客戶代操基金，調配不同資產比例以達到分散風險。', en: 'Managing funds for institutional or individual clients, allocating assets dynamically to diversify risks.', fr: 'Gestion de fonds pour le compte de clients institutionnels ou privés, allouant des actifs de manière à diversifier les risques.' }
+              },
+              {
+                name: { zh: '金融衍生品與避險', en: 'Financial Derivatives & Hedging', fr: 'Produits Dérivés & Couverture' },
+                desc: { zh: '利用期權、期貨、選擇權等衍生性商品對沖市場波動風險或進行套利。', en: 'Utilizing financial options, futures, and swaps to hedge market volatility risks or perform arbitrage.', fr: 'Utilisation d\'options, de contrats à terme et de swaps pour couvrir les risques liés à la volatilité ou réaliser des arbitrages.' }
+              },
+              {
+                name: { zh: '市場微觀結構與交易', en: 'Market Microstructure & Trading', fr: 'Microstructure de Marché' },
+                desc: { zh: '研究市場買賣報價（Order Book）、流動性以及最優執行策略。', en: 'Analyzing order books, transaction flows, liquidity dynamics, and optimal order execution strategies.', fr: 'Analyse des carnets d\'ordres, des flux de transactions, de la liquidité et des stratégies optimales d\'exécution des ordres.' }
+              }
+            ],
+            skills: [
+              { zh: '**資產配置與模型**：掌握現代馬克維茲 (Markowitz) 均值-方差優化理論。', en: '**Asset Allocation & Portfolio Models**: Mastery of modern Markowitz Mean-Variance Optimization and Asset Allocation theories.', fr: '**Allocation d\'Actifs & Portefeuilles**: Maîtrise de la théorie moderne du portefeuille de Markowitz et de l\'optimisation Moyenne-Variance.' },
+              { zh: '**衍生品定價**：了解 Black-Scholes 模型及二叉樹模型在期權定價中的運算邏輯。', en: '**Derivatives Pricing**: Understanding the mathematical logic of the Black-Scholes model and binomial trees for option valuation.', fr: '**Évaluation des Dérivés**: Comprendre la logique mathématique du modèle de Black-Scholes et des arbres binomiaux pour valoriser les options.' },
+              { zh: '**總體經濟與產業趨勢研判**：具備從聯準會降息、全球供應鏈調整解讀對金融市場波動之預測力。', en: '**Macro & Industry Trend Analysis**: Interpreting Fed rate cuts and global supply chain disruptions to forecast asset price volatility.', fr: '**Analyse Macroéconomique & Sectorielle**: Interpréter les baisses de taux de la Fed et les perturbations des chaînes d\'approvisionnement pour anticiper la volatilité.' }
+            ],
+            tools: ['Bloomberg Terminal', 'Reuters Eikon', 'Python (Pandas, NumPy)', 'Morningstar Direct'],
+            scenario: {
+              question: {
+                zh: '某大型退休基金希望規避未來三個月股市大幅下跌風險，但不想賣出手中持股。投資部門應如何操作？',
+                en: 'A pension fund wants to hedge against a potential stock market crash over the next three months without selling its physical holdings. What action should they take?',
+                fr: 'Un fonds de pension souhaite se couvrir contre un krach boursier potentiel au cours des trois prochains mois sans vendre ses actions physiques. Quelle action doit-il entreprendre ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 在現貨市場慢慢拋售股票以變現避險', en: 'A. Gradually sell equities in the spot market to cash out', fr: 'A. Vendre progressivement les actions sur le marché au comptant' },
+                  correct: false,
+                  reason: { zh: '題目限制了「不想賣出手中持股」，且現貨市場拋售會有交易滑點與稅務成本。', en: 'Incorrect. The prompt states they do not want to sell physical holdings, and doing so would incur market slippage and tax costs.', fr: 'Incorrect. L\'énoncé indique qu\'ils ne veulent pas vendre leurs titres physiques, et le faire entraînerait des frais de slippage et des coûts fiscaux.' }
+                },
+                {
+                  text: { zh: 'B. 買入對應股價指數的看跌期權 (Put Option) 或賣出股指期貨 (Short Futures)', en: 'B. Purchase stock index Put Options or short stock index Futures', fr: 'B. Acheter des options de vente (Puts) ou vendre à découvert des contrats à terme (Futures) sur indices' },
+                  correct: true,
+                  reason: { zh: '正確！買入看跌期權能鎖定下行風險，賣出期貨亦可對沖系統性股災风险，且不需要變賣現貨。', en: 'Correct! Buying put options locks in the downside protection, and shorting index futures offsets systematic risk without triggering asset sales.', fr: 'Correct ! L\'achat d\'options de vente garantit une protection contre la baisse, et la vente de contrats à terme couvre le risque systématique sans vendre d\'actifs.' }
+                },
+                {
+                  text: { zh: 'C. 將資金全數轉入短期美國國債', en: 'C. Move all portfolio capital into short-term U.S. Treasury bills', fr: 'C. Transférer tout le capital du portefeuille vers des bons du Trésor américain à court terme' },
+                  correct: false,
+                  reason: { zh: '不賣出持股的前提下，是沒有多餘大額資金能「全數」轉入國債的。', en: 'Incorrect. Without selling the current equities, there is no major cash balance to move entirely into treasury bills.', fr: 'Incorrect. Sans vendre les actions actuelles, il n\'y a pas de liquidités disponibles pour acheter massivement des bons du Trésor.' }
+                }
+              ]
+            }
+          },
+          personal: {
+            id: 'personal',
+            title: { zh: '個人金融與財富管理', en: 'Personal & Wealth', fr: 'Gestion de Patrimoine' },
+            englishTitle: { zh: 'Personal & Wealth', en: 'Personal & Wealth', fr: 'Gestion de Patrimoine' },
+            badge: { zh: '資產配置', en: 'Wealth Planning', fr: 'Patrimoine' },
+            icon: 'fa-user-group',
+            description: {
+              zh: '以個人、家庭或高淨值客戶為核心。根據其生命週期、風險承受度、財務目標（如買房、教育、退休），客製化資產配置、保險保障、稅務優化與遺產規劃。',
+              en: 'Centered on individual, household, or High-Net-Worth (HNW) clients. Tailors asset allocation, insurance coverage, tax structures, and estate succession plan according to life stages and financial goals.',
+              fr: 'Centré sur les particuliers, les ménages ou les clients fortunés (HNWI). Personnalise l\'allocation d\'actifs, la couverture d\'assurance, l\'optimisation fiscale et successorale en fonction de l\'âge et des objectifs financiers.'
+            },
+            subfields: [
+              {
+                name: { zh: '私人銀行與財富管理', en: 'Private Banking & Wealth Management', fr: 'Banque Privée & Gestion de Fortune' },
+                desc: { zh: '為高資產人士提供尊榮、專屬且高度隱密的資產增值與傳承規劃。', en: 'Providing high-end, bespoke, and highly confidential asset growth and estate transfer plans for affluent clients.', fr: 'Services haut de gamme, sur-mesure et hautement confidentiels d\'accroissement d\'actifs et de transmission pour les clients fortunés.' }
+              },
+              {
+                name: { zh: '退休與理財規劃', en: 'Retirement & Financial Planning', fr: 'Planification Financière & Retraite' },
+                desc: { zh: '推算退休後的現金流需求，制定穩健的年金、信託與基金投資計畫。', en: 'Estimating post-retirement cash flow needs, and setting up robust annuity, trust, and fund portfolios.', fr: 'Estimation des besoins de flux de trésorerie après la retraite et mise en place de portefeuilles de rentes, de fiducies et de fonds.' }
+              },
+              {
+                name: { zh: '保險與風險保障', en: 'Insurance & Risk Protection', fr: 'Assurance & Prévoyance' },
+                desc: { zh: '利用人壽、醫療或失能保險，分散人生各階段中突發的系統性與非系統性風險。', en: 'Leveraging life, health, or disability insurance to mitigate unexpected risks in different life stages.', fr: 'Utilisation d\'assurances vie, maladie ou invalidité pour atténuer les risques inattendus au cours des différentes étapes de la vie.' }
+              },
+              {
+                name: { zh: '稅務與遺產優化', en: 'Tax & Estate Optimization', fr: 'Optimisation Successorale & Fiscale' },
+                desc: { zh: '在合法合規前提下，進行贈與稅、遺產稅規劃，確保財富能順利跨代傳承。', en: 'Structuring legally compliant gift and estate tax frameworks to ensure smooth multigenerational wealth transfers.', fr: 'Structuration légale de la fiscalité des donations et des successions pour assurer un transfert de patrimoine intergénérationnel fluide.' }
+              }
+            ],
+            skills: [
+              { zh: '**客戶關係建立與深度諮詢**：具備高EQ溝通與發現客戶潛在財務擔憂的敏感度。', en: '**Client Relationship Management**: High emotional intelligence and advisory skills to uncover underlying financial concerns.', fr: '**Gestion de la Relation Client (CRM)**: Forte intelligence émotionnelle et compétences de conseil pour déceler les besoins de patrimoine réels.' },
+              { zh: '**稅法與信託法規理解**：通曉跨國資產移轉、生前信託、家族辦公室設計的法學常識。', en: '**Trust & Tax Law Knowledge**: Mastery of estate structures, living trusts, and regulatory parameters of family offices.', fr: '**Droit Fiscal & des Fiducies**: Maîtrise des structures successorales, des fiducies (trusts) et des règles fiscales des family offices.' },
+              { zh: '**KYC與風險合規**：確保理財規劃符合洗錢防制法及監管規定。', en: '**KYC & Risk Compliance**: Ensuring all financial plans align strictly with Anti-Money Laundering (AML) and compliance regulations.', fr: '**KYC & Conformité des Risques**: S\'assurer que tous les plans financiers respectent strictement la conformité et la lutte contre le blanchiment d\'argent.' }
+            ],
+            tools: ['Salesforce CRM', 'eMoney / MoneyGuidePro', 'Tax Estimators & Simulators', 'Private Banking Portals'],
+            scenario: {
+              question: {
+                zh: '一位 55 歲的企業高階主管客戶，預計五年後退休，目前資產高度集中在單一科技公司股票上。財富管理顧問的第一首要建議是？',
+                en: 'A 55-year-old corporate executive client plans to retire in 5 years. Currently, their assets are heavily concentrated in a single tech stock. What is the wealth advisor\'s primary recommendation?',
+                fr: 'Un client cadre supérieur de 55 ans prévoit de prendre sa retraite dans 5 ans. Actuellement, ses actifs sont fortement concentrés sur une seule action technologique. Quelle est la recommandation prioritaire du conseiller ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 繼續持有該股票，因為過去十年該股票回報驚人，可繼續賺取超額回報', en: 'A. Continue holding, since past performance suggests high potential returns', fr: 'A. Continuer à conserver le titre, car les rendements passés indiquent un fort potentiel' },
+                  correct: false,
+                  reason: { zh: '這違反了分散風險原則，單一持股在退休前夕面臨極高的非系統性風險。', en: 'Incorrect. This violates the diversification principle. Holding a single stock near retirement exposes the client to excessive non-systematic risk.', fr: 'Incorrect. Cela viole le principe de diversification. Détenir une seule action à l\'approche de la retraite expose le client à un risque non systématique excessif.' }
+                },
+                {
+                  text: { zh: 'B. 建議分批獲利了結該公司股票，並將資產分散配置到全球多元化資產組合中', en: 'B. Gradually liquidate the tech stock to diversify into a globally diversified asset portfolio', fr: 'B. Vendre progressivement l\'action technologique pour diversifier le capital vers un portefeuille d\'actifs global' },
+                  correct: true,
+                  reason: { zh: '非常標準！臨近退休應專注資產穩健度（分散風險），減少集中度，並建立穩定產生被動收入的資產包。', en: 'Exactly! Near retirement, the focus should shift to stability, risk reduction, and creating a cash-flowing diversified asset base.', fr: 'Exactement ! À l\'approche de la retraite, l\'accent doit être mis sur la stabilité, la réduction du risque et la création d\'une base d\'actifs diversifiée.' }
+                },
+                {
+                  text: { zh: 'C. 將所有資產全數提現，放在活期存款賺取利息', en: 'C. Liquidate everything into cash and leave it in a checking account for safety', fr: 'C. Tout liquider en espèces et le laisser sur un compte courant pour la sécurité' },
+                  correct: false,
+                  reason: { zh: '活期存款無法抵禦通貨膨脹，五年內可能導致購買力大幅縮水。', en: 'Incorrect. Cash checking accounts fail to hedge against inflation, risking loss of real purchasing power over 5 years.', fr: 'Incorrect. Les comptes de dépôt ne protègent pas de l\'inflation, risquant d\'éroder le pouvoir d\'achat sur 5 ans.' }
+                }
+              ]
+            }
+          },
+          public: {
+            id: 'public',
+            title: { zh: '公共金融與財政', en: 'Public Finance', fr: 'Finances Publiques' },
+            englishTitle: { zh: 'Public Finance', en: 'Public Finance', fr: 'Finances Publiques' },
+            badge: { zh: '國家政策', en: 'Fiscal Policy', fr: 'Politique Publique' },
+            icon: 'fa-globe',
+            description: {
+              zh: '研究政府與公共機構如何發揮市場干預與宏觀調控角色。關注國家稅收政策、公共支出預算編制、地方債券發行，以及利用財政政策調節國家經濟發展。',
+              en: 'Studies how governments and public institutions utilize market interventions and macro controls. Focuses on tax policy, government budget appropriation, sovereign/municipal bonds issuance, and the use of fiscal policy to regulate the economy.',
+              fr: 'Étudie comment les gouvernements et institutions interviennent sur le marché. Se concentre sur la politique fiscale, l\'allocation des budgets de l\'État, l\'émission d\'obligations souveraines et l\'utilisation de la politique budgétaire pour stabiliser l\'économie.'
+            },
+            subfields: [
+              {
+                name: { zh: '稅收體系設計 (Taxation Policy)', en: 'Taxation Policy Design', fr: 'Conception de la Politique Fiscale' },
+                desc: { zh: '研究如何合理課徵所得稅、消費稅，兼顧政府財源與社會財富分配正義。', en: 'Designing fair income and consumption taxes to fund government services while striving for distributive justice.', fr: 'Élaboration de règles d\'impôts sur le revenu et la consommation pour financer les services publics tout en veillant à la justice sociale.' }
+              },
+              {
+                name: { zh: '政府預算編制與審查', en: 'Government Budgeting & Audit', fr: 'Budgétisation & Contrôle des Dépenses' },
+                desc: { zh: '妥善分配國防、教育、社會福利及公共建設的年度財政支出。', en: 'Managing budget appropriations for defense, public infrastructure, healthcare, education, and social welfare.', fr: 'Gestion de l\'allocation des dépenses publiques pour l\'éducation, l\'infrastructure publique, la santé et la défense.' }
+              },
+              {
+                name: { zh: '公共債務發行 (Sovereign/Municipal Debt)', en: 'Sovereign & Municipal Debt Issuance', fr: 'Émission de Dette Souveraine' },
+                desc: { zh: '發行國債、地方政府債券，以低成本融資國家大型基礎建設。', en: 'Issuing treasury bonds and municipal debt to fund large-scale public utility and infrastructure projects cost-effectively.', fr: 'Émission d\'obligations d\'État et de dettes locales pour financer à moindre coût des projets d\'utilité publique majeurs.' }
+              },
+              {
+                name: { zh: '宏觀經濟穩定與反週期調節', en: 'Macro Stabilization & Counter-cyclical Policy', fr: 'Stabilisation Conjoncturelle' },
+                desc: { zh: '在景氣蕭條時擴大公共支出（凱因斯主義），刺激經濟增長。', en: 'Leveraging Keynesian economic frameworks to expand public spending during economic downturns to stimulate aggregate demand.', fr: 'Utilisation des politiques d\'expansion budgétaire pendant les récessions (Keynésianisme) pour soutenir la demande globale.' }
+              }
+            ],
+            skills: [
+              { zh: '**計量經濟學 (Econometrics)**：能從宏觀變數（GDP、通膨、失業率）中進行多變量迴歸。', en: '**Econometrics**: Conducting multi-variable regression analysis using macroeconomic indicators like GDP, inflation, and unemployment.', fr: '**Économétrie**: Réalisation d\'analyses de régression multivariée sur des indicateurs macroéconomiques (PIB, inflation, chômage).' },
+              { zh: '**宏觀經濟模型預測**：掌握 IS-LM、DSGE 模型在分析政府支出乘數時的應用。', en: '**Macro Forecast Modeling**: Applying IS-LM and DSGE models to predict fiscal multipliers and tax incidence.', fr: '**Modélisation Macroéconomique**: Utilisation de modèles IS-LM ou DSGE pour anticiper les effets des multiplicateurs budgétaires.' },
+              { zh: '**公共政策與效益評估**：具備大數據統計分析能力，測算政策實施的社會淨邊際效用。', en: '**Cost-Benefit Evaluation**: Quantitative evaluation of public policy initiatives to calculate net social marginal utility.', fr: '**Évaluation des Politiques Publiques**: Évaluation quantitative des projets de loi pour en mesurer l\'utilité marginale sociale nette.' }
+            ],
+            tools: ['Stata / EViews / R', 'Tableau / Power BI', 'National Budget Systems', 'OECD / World Bank Database'],
+            scenario: {
+              question: {
+                zh: '在經濟陷入嚴重蕭條、失業率飆高時，根據凱因斯主義，政府財政部門最可能採取什麼反週期措施？',
+                en: 'During a severe economic depression with soaring unemployment, what counter-cyclical fiscal measure is a government most likely to execute?',
+                fr: 'Lors d\'une grave dépression économique avec une forte hausse du chômage, quelle mesure budgétaire conjoncturelle l\'État doit-il prioritairement appliquer ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 減少公共工程預算，提高公司所得稅率以平抑國庫赤字', en: 'A. Cut public works budgets and raise corporate income tax to reduce the national deficit', fr: 'A. Réduire le budget des travaux publics et augmenter l\'impôt sur les sociétés pour réduire le déficit' },
+                  correct: false,
+                  reason: { zh: '這是緊縮性財政政策，在蕭條時期這樣做會進一步打擊消費與就業，導致經濟更蕭條。', en: 'Incorrect. This is contractionary fiscal policy. Doing so during a recession further dampens consumer spending and employment, worsening the depression.', fr: 'Incorrect. C\'est une politique d\'austérité. L\'appliquer en période de crise freine encore plus la consommation et l\'emploi, aggravant la situation.' }
+                },
+                {
+                  text: { zh: 'B. 擴大政府採購與公共建設支出，並實行結構性減稅政策', en: 'B. Expand government procurement and infrastructure spending while implementing structured tax cuts', fr: 'B. Augmenter les dépenses d\'infrastructure et mettre en place des baisses d\'impôts ciblées' },
+                  correct: true,
+                  reason: { zh: '沒錯！政府此時扮演「最後消費者」角色，藉由基礎建設支出（創造就業）與減稅（刺激企業與民生消費）拉動乘數效應。', en: 'Correct! The government acts as the consumer of last resort, stimulating the multiplier effect through infrastructure projects (creating jobs) and tax relief (boosting corporate and household demand).', fr: 'Correct ! L\'État agit comme consommateur de dernier ressort, stimulant l\'effet multiplicateur par les travaux publics (emplois) et les allégements fiscaux (demande).' }
+                },
+                {
+                  text: { zh: 'C. 降低中央銀行基本利率，減少法幣發行量', en: 'C. Decrease central bank interest rates and contract fiat currency circulation', fr: 'C. Baisser les taux de la banque centrale et réduire la masse monétaire en circulation' },
+                  correct: false,
+                  reason: { zh: '那是「貨幣政策」範疇，且「減少法幣發行」與擴張流動性正好相反。', en: 'Incorrect. This falls under monetary policy, and contracting fiat currency is the opposite of expansionary easing.', fr: 'Incorrect. Cela relève de la politique monétaire, et contracter la masse monétaire est à l\'opposé d\'une relance de la liquidité.' }
+                }
+              ]
+            }
+          },
+          fintech: {
+            id: 'fintech',
+            title: { zh: '金融科技與量化金融', en: 'Fintech & Quant', fr: 'Fintech & Quantitative' },
+            englishTitle: { zh: 'Fintech & Quant', en: 'Fintech & Quant', fr: 'Fintech & Quantitative' },
+            badge: { zh: '科技融合', en: 'Tech Fusion', fr: 'Technologie' },
+            icon: 'fa-microchip',
+            description: {
+              zh: '傳統金融與尖端科技（人工智慧、大數據、區塊鏈）的跨界融合。利用演算法、統計物理模型及雲端運算，創造革命性的新型金融服務並進行自動化、高頻度的程式化交易。',
+              en: 'The multidisciplinary fusion of finance and advanced technology (AI, big data, blockchain). Leverages mathematical models, algorithms, and cloud computing to create next-gen financial services and program trading.',
+              fr: 'La fusion multidisciplinaire de la finance et des technologies de pointe (IA, Big Data, Blockchain). Utilise des modèles mathématiques et des algorithmes pour concevoir de nouveaux services et automatiser le trading.'
+            },
+            subfields: [
+              {
+                name: { zh: '量化交易與高頻交易 (Quant)', en: 'Quantitative & High-Frequency Trading', fr: 'Trading Quantitatif & Haute Fréquence' },
+                desc: { zh: '利用數學模型在毫秒內尋找市場定價微小偏差，由電腦自動下單獲利。', en: 'Using math models to capture micro price discrepancies within milliseconds, executing automated algorithmic orders.', fr: 'Utilisation de modèles statistiques pour déceler des écarts de prix en millisecondes et exécuter des ordres automatisés.' }
+              },
+              {
+                name: { zh: '去中心化金融 (DeFi & Web3)', en: 'Decentralized Finance (DeFi & Web3)', fr: 'Finance Décentralisée (DeFi & Web3)' },
+                desc: { zh: '利用智能合約重構支付、借貸及清算流程，省去傳統金融中介。', en: 'Restructuring lending, clearing, and transaction systems via blockchain smart contracts, cutting out middlemen.', fr: 'Restructuration des processus de prêt, de compensation et d\'échange via les contrats intelligents, supprimant les intermédiaires.' }
+              },
+              {
+                name: { zh: '智能投顧 (Robo-Advisory)', en: 'Robo-Advisory Systems', fr: 'Robo-Advisors & Robot-Conseil' },
+                desc: { zh: '基於機器學習演算法，為大眾自動化生成低成本、高效率的基金資產包。', en: 'Leveraging machine learning to automatically generate highly tailored, low-cost asset portfolios for the mass market.', fr: 'Algorithmes d\'apprentissage automatique pour générer de manière autonome des portefeuilles d\'actifs à bas coût pour le grand public.' }
+              },
+              {
+                name: { zh: '大數據風控與防欺詐', en: 'Big Data Risk & Fraud Control', fr: 'Contrôle des Risques & Anti-Fraude' },
+                desc: { zh: '透過機器學習分析海量非結構化數據，即時判斷信用卡盜刷或核貸風險。', en: 'Analyzing unstructured real-time transaction data via machine learning to identify fraud and manage credit risk.', fr: 'Analyse en temps réel de données de transaction volumineuses via l\'IA pour identifier les fraudes et évaluer les risques de crédit.' }
+              }
+            ],
+            skills: [
+              { zh: '**Python / C++ 程式開發**：極高難度代碼實現能力，能撰寫低延遲交易架構或量化回測框架。', en: '**Python / C++ Engineering**: Advanced software skills to develop low-latency trading engines or algorithmic backtesting frameworks.', fr: '**Ingénierie Python / C++**: Fortes compétences en développement pour concevoir des moteurs de trading à faible latence et du backtesting.' },
+              { zh: '**機器學習與深度學習**：掌握隨機森林、XGBoost、神經網路在金融時間序列預測中的技巧。', en: '**Machine Learning in Finance**: Implementing Random Forests, XGBoost, and neural networks on financial time series forecasting.', fr: '**Machine Learning en Finance**: Mise en œuvre de forêts d\'arbres décisionnels, XGBoost et réseaux de neurones pour l\'analyse de séries temporelles.' },
+              { zh: '**隨機微積分與高階統計**：具備過硬數學底子，能計算衍生性金融商品定價或波動率。', en: '**Stochastic Calculus & Statistics**: Deep mathematical foundation for complex derivative valuation and modeling market volatility.', fr: '**Calcul Stochastique & Statistiques**: Solides bases en mathématiques pour l\'évaluation de dérivés complexes et la modélisation de la volatilité.' }
+            ],
+            tools: ['Python (PyTorch, Pandas)', 'C++ / CUDA (Trading Engine)', 'SQL / NoSQL (MongoDB)', 'Git / Docker / Airflow'],
+            scenario: {
+              question: {
+                zh: '某量化交易公司想要設計一個能「在毫秒內捕捉全球不同交易所相同衍生商品價差」的套利策略，最應該注重哪項指標？',
+                en: 'A quantitative fund wants to design an arbitrage strategy capturing price discrepancies of derivatives across global exchanges in milliseconds. What key parameter must be optimized?',
+                fr: 'Un fonds quantitatif souhaite concevoir une stratégie d\'arbitrage capturant les écarts de prix de dérivés sur les bourses mondiales en millisecondes. Quel paramètre clé doit être optimisé ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 基本面研報的撰寫厚度與深度', en: 'A. The length and depth of qualitative fundamental analyst reports', fr: 'A. La longueur et la profondeur des analyses de recherche fondamentale' },
+                  correct: false,
+                  reason: { zh: '高頻套利核心在於「速度」與「模型」，基本面研究跟不上毫秒級的市場波動。', en: 'Incorrect. High-frequency arbitrage is built on execution speed and statistics. Qualitative research cannot match millisecond execution.', fr: 'Incorrect. L\'arbitrage haute fréquence repose sur la vitesse d\'exécution et les statistiques. La recherche qualitative ne suit pas les millisecondes.' }
+                },
+                {
+                  text: { zh: 'B. 代碼執行速度與極低的網絡/硬體延遲 (Low-Latency)', en: 'B. Code execution speed and ultra-low network/hardware latency (Low-Latency)', fr: 'B. La vitesse d\'exécution du code et la latence réseau/matériel ultra-faible (Low-Latency)' },
+                  correct: true,
+                  reason: { zh: '正確！高頻套利（HFT）是速度的軍備競賽，差一毫秒價差就會被其他對手吃掉，因此系統底層的延遲優化（C++ / 專線部署）最為關鍵。', en: 'Correct! High-frequency trading (HFT) is a race of speeds. A delay of a single millisecond means missing the opportunity, hence why hardware optimization (C++/colocation) is crucial.', fr: 'Correct ! Le trading haute fréquence (HFT) est une course de vitesse. Un retard d\'une seule milliseconde signifie rater l\'écart, d\'où l\'importance critique de l\'optimisation (C++/colocalisation).' }
+                },
+                {
+                  text: { zh: 'C. 定期人工審視每筆交易手動確認', en: 'C. Regular manual review and manual approval of each transaction', fr: 'C. Un examen manuel régulier et une validation manuelle de chaque transaction' },
+                  correct: false,
+                  reason: { zh: '人工操作的反應速度大約需要數百毫秒，完全無法勝任毫秒級的高頻量化套利。', en: 'Incorrect. Human reactions require hundreds of milliseconds, which is completely obsolete in millisecond-level high-frequency arbitrage.', fr: 'Incorrect. Les réactions humaines nécessitent des centaines de millisecondes, ce qui est totalement obsolète pour le trading milliseconde.' }
+                }
+              ]
+            }
+          }
+        }
+      },
+      // 2. 會計學領域
+      accounting: {
+        indicatorText: {
+          zh: '現代會計學分支與實戰地圖',
+          en: 'Modern Accounting Branches & Map',
+          fr: 'Carte des Branches de la Comptabilité Moderne'
+        },
+        indicatorIcon: 'fa-calculator',
+        themeColor: 'pink',
+        rgbColor: '244, 63, 94',
+        hexColor: '#f43f5e',
+        centralNode: {
+          zh: { zh: '現代會計', en: 'Modern Accounting', fr: 'Comptabilité Moderne' },
+          en: { zh: 'Modern Accounting', en: 'Modern Accounting', fr: 'Comptabilité Moderne' },
+          badge: { zh: '6 大核心分支', en: '6 Core Branches', fr: '6 Branches Clés' }
+        },
+        branches: {
+          financial: {
+            id: 'financial',
+            title: { zh: '財務會計', en: 'Financial Accounting', fr: 'Comptabilité Financière' },
+            englishTitle: { zh: 'Financial Accounting', en: 'Financial Accounting', fr: 'Comptabilité Financière' },
+            badge: { zh: '外部申報', en: 'External Reporting', fr: 'Reporting Externe' },
+            icon: 'fa-chart-pie',
+            description: {
+              zh: '主要針對企業的外部利益關係人（如股東、債權人、政府機構、潛在投資人）提供標準化、制度化的財務報表。其著重於記錄並呈現「過去已發生的經濟歷史交易」，必須嚴格遵守會計恆等式：Assets = Liabilities + Equity。',
+              en: 'Compiles standardized, compliance-based financial reports for external stakeholders (e.g., shareholders, creditors, tax authorities, and potential investors). Focuses on recording "historical transactions" and adheres strictly to the balance equation: Assets = Liabilities + Equity.',
+              fr: 'Conçoit des états financiers normalisés pour les parties prenantes externes (actionnaires, créanciers, administrations, investisseurs). Se concentre sur l\'enregistrement des "flux passés" et respecte l\'équation : Actif = Passif + Capitaux Propres.'
+            },
+            subfields: [
+              {
+                name: { zh: '財務報表編製', en: 'Financial Statements Preparation', fr: 'Préparation des États Financiers' },
+                desc: { zh: '產出資產負債表、損益表、現金流量表與權益變動表。', en: 'Generating balance sheets, income statements, cash flow statements, and statements of changes in equity.', fr: 'Production des bilans, comptes de résultat, tableaux de flux de trésorerie et états des variations de capitaux.' }
+              },
+              {
+                name: { zh: '合併報表 (Consolidation)', en: 'Consolidation Accounting', fr: 'Consolidation des Comptes' },
+                desc: { zh: '將母公司與所有子公司的財務狀況合併申報。', en: 'Combining the financial portfolios of a parent company and all subsidiaries into a unified group statement.', fr: 'Combinaison des états financiers d\'une société mère et de ses filiales en un rapport unique.' }
+              },
+              {
+                name: { zh: '會計準則研究', en: 'Accounting Standards Research', fr: 'Veille & Normes Comptables' },
+                desc: { zh: '確保核算符合國際財務報導準則 (IFRS) 或當地 GAAP (如 US GAAP)。', en: 'Ensuring absolute compliance with International Financial Reporting Standards (IFRS) or local GAAP (e.g., US GAAP).', fr: 'Garantir la conformité absolue avec les normes comptables internationales (IFRS) ou locales (ex. US GAAP).' }
+              },
+              {
+                name: { zh: '日常日記簿與過帳', en: 'Daybook Journaling & Ledger Posting', fr: 'Saisie Journalière & Grand Livre' },
+                desc: { zh: '記錄各項原始憑證，執行基礎借貸記帳流程。', en: 'Recording source documents and maintaining general ledgers through standard double-entry bookkeeping.', fr: 'Enregistrement des pièces justificatives et tenue des journaux de comptabilité via le principe de la partie double.' }
+              }
+            ],
+            skills: [
+              { zh: '**精密借貸平衡邏輯**：確保每筆分錄「借貸平衡」，具備深厚的複式記帳底子。', en: '**Double-Entry Mastery**: Flawless precision in balancing debit and credit accounts, built on deep double-entry logic.', fr: '**Partie Double & Équilibre**: Précision sans faille dans les écritures de débit/crédit, basée sur la logique rigoureuse de la partie double.' },
+              { zh: '**法規與公報解讀力**：能追蹤、分析並導入最新的 IFRS 國際會計準則公報。', en: '**Accounting Standards Interpretation**: Analyzing and implementing updates from the IASB regarding International Financial Reporting Standards (IFRS).', fr: '**Analyse des Normes IFRS/GAAP**: Suivre et intégrer les évolutions techniques publiées par l\'IASB (normes IFRS).' },
+              { zh: '**嚴謹跨國合規意識**：對多幣別、外幣調整與合併申報流程有通盤掌握。', en: '**Multinational Compliance**: Managing multi-currency adjustments, foreign translations, and complex cross-border consolidations.', fr: '**Conformité Multinationale**: Maîtrise des ajustements multi-devises, des écarts de conversion et des consolidations de groupes.' }
+            ],
+            tools: ['SAP FI CO', 'Oracle NetSuite', 'Microsoft Excel', 'QuickBooks'],
+            scenario: {
+              question: {
+                zh: '公司購買一台價值 100 萬元的設備，預計可使用 5 年，無殘值。若採用直線法，第一年的折舊分錄應為？',
+                en: 'A firm purchases equipment valued at $1M with a 5-year useful life and zero salvage value. Under straight-line depreciation, what is the accounting entry for Year 1?',
+                fr: 'Une entreprise acquiert un équipement d\'une valeur de 1 M$ avec une durée de vie utile de 5 ans et aucune valeur résiduelle. Selon la méthode linéaire, quelle est l\'écriture de dotation de l\'année 1 ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 借：累計折舊 20 萬；貸：折舊費用 20 萬', en: 'A. Debit: Accumulated Depreciation 200k; Credit: Depreciation Expense 200k', fr: 'A. Débit : Amortissement Cumulé 200k ; Crédit : Dotation aux Amortissements 200k' },
+                  correct: false,
+                  reason: { zh: '不對。累計折舊是資產的減項（通常在貸方），折舊費用是費損類（通常在借方）。此選項借貸方向剛好相反了。', en: 'Incorrect. Accumulated Depreciation is a contra-asset account (normally credited), and Depreciation Expense is an expense account (normally debited). This entry is reversed.', fr: 'Incorrect. L\'amortissement cumulé est un compte de contre-actif (crédité par nature), et la dotation est une charge (débitée). Les sens de cette écriture sont inversés.' }
+                },
+                {
+                  text: { zh: 'B. 借：折舊費用 20 萬；貸：累計折舊-設備 20 萬', en: 'B. Debit: Depreciation Expense 200k; Credit: Accumulated Depreciation-Equipment 200k', fr: 'B. Débit : Dotation aux Amortissements 200k ; Crédit : Amortissement Cumulé-Matériel 200k' },
+                  correct: true,
+                  reason: { zh: '完全正確！第一年的折舊額為 100萬 / 5 = 20萬。借記折舊費用增加，貸記累計折舊作為設備的減項。', en: 'Spot on! Year 1 depreciation is $1M / 5 = $200k. We debit Depreciation Expense (increasing expense) and credit Accumulated Depreciation (reducing net asset carrying value).', fr: 'Excellent ! La dotation de l\'an 1 est de 1 M$ / 5 = 200 k$. On débite le compte de charge (Dotation aux Amortissements) et on crédite le compte d\'amortissement (compte soustractif d\'actif).' }
+                },
+                {
+                  text: { zh: 'C. 借：設備 100 萬；貸：現金 100 萬', en: 'C. Debit: Equipment $1M; Credit: Cash $1M', fr: 'C. Débit : Équipements 1 M$ ; Crédit : Trésorerie 1 M$' },
+                  correct: false,
+                  reason: { zh: '這是「購買設備」當下的會計分錄，而非年底提列「折舊」的分錄。', en: 'Incorrect. This records the initial "purchase of equipment," not the periodic year-end "depreciation" adjustment.', fr: 'Incorrect. Cette écriture enregistre l\'acquisition initiale de l\'équipement, et non la constatation de l\'amortissement périodique.' }
+                }
+              ]
+            }
+          },
+          managerial: {
+            id: 'managerial',
+            title: { zh: '管理會計', en: 'Management Accounting', fr: 'Comptabilité de Gestion' },
+            englishTitle: { zh: 'Management Accounting', en: 'Management Accounting', fr: 'Comptabilité de Gestion' },
+            badge: { zh: '內部決策', en: 'Internal Control', fr: 'Gestion' },
+            icon: 'fa-chart-line',
+            description: {
+              zh: '專為企業內部管理階層（如 CEO、各部門主管）提供決策依據。其內容通常不對外公開，屬於商業機密，且著重於「未來的預測、規劃、預算編製與成本控制」。',
+              en: 'Tailored for internal executives (CEOs, line managers) to support strategic decisions. Unreleased to the public (confidential) and emphasizes future-oriented forecasting, budget formulation, cost controls, and cost-volume-profit relations.',
+              fr: 'Conçue pour les dirigeants internes (CEO, directeurs). Les données sont confidentielles (secret d\'affaires) et orientées vers le futur : prévisions, budgets de fonctionnement, contrôle de gestion et analyse des coûts.'
+            },
+            subfields: [
+              {
+                name: { zh: '成本會計 (Costing)', en: 'Cost Accounting (Costing)', fr: 'Comptabilité Analytique (Coûts)' },
+                desc: { zh: '精算產品、服務或特定研發專案的真實生產與營運成本。', en: 'Accurately tracking and calculating product, service, or specific project development costs.', fr: 'Calcul précis des coûts réels de fabrication ou d\'exploitation d\'un produit, d\'un service ou d\'un projet.' }
+              },
+              {
+                name: { zh: '預算控制與預測', en: 'Budgetary Control & Forecast', fr: 'Élaboration Budgétaire & Prévision' },
+                desc: { zh: '設定年度營運目標，預估未來現金流與各部門營運獲利。', en: 'Formulating fiscal targets, planning projected cash flows, and managing departmental spending controls.', fr: 'Définition des cibles d\'activité annuelles, prévision des flux de trésorerie et suivi des dépenses par service.' }
+              },
+              {
+                name: { zh: '差異分析 (Variance Analysis)', en: 'Variance Analysis', fr: 'Analyse des Écarts (Variance)' },
+                desc: { zh: '比較實際支出與預算目標的差距，找出原因以修正管理決策。', en: 'Comparing actual performance with projected budgets, auditing major deviations to optimize management responses.', fr: 'Comparaison des dépenses et revenus réels avec le budget prévisionnel, analyse des écarts pour réajuster la gestion.' }
+              },
+              {
+                name: { zh: '資本預算與投資決策', en: 'Capital Budgeting Decisions', fr: 'Décisions d\'Investissements' },
+                desc: { zh: '評估大型設備購置、擴廠或併購專案的回收期與 IRR。', en: 'Evaluating payback periods, Net Present Value (NPV), and IRR for major equipment acquisitions or facility expansions.', fr: 'Évaluation du délai de récupération, de la VAN et du TRI pour l\'acquisition d\'équipements ou de nouveaux locaux.' }
+              }
+            ],
+            skills: [
+              { zh: '**商業敏銳度 (Business Acumen)**：能理解數字背後的營運實體，協助高層進行策略定價。', en: '**Business Acumen**: Translating accounting data into operational reality to assist management in pricing and cost strategy.', fr: '**Sens des Affaires (Business Acumen)**: Traduire les coûts en leviers d\'exploitation pour guider la direction dans la tarification.' },
+              { zh: '**多維度數據分析**：精準解構混合成本、固定成本與變動成本，計算盈虧平衡點。', en: '**Multi-dimensional Analysis**: Categorizing fixed, variable, and mixed cost elements to compute contribution margins and breakeven thresholds.', fr: '**Analyse Décisionnelle des Coûts**: Segmentation des charges fixes et variables pour calculer les seuils de rentabilité.' },
+              { zh: '**前瞻性情境規劃**：擅長進行敏感度分析 (Sensitivity Analysis) 與模擬決策。', en: '**Scenario Planning**: Creating sensitivity models and simulations to predict the impact of changing business climates on margins.', fr: '**Scénarios Optionnels**: Création de modèles de sensibilité et simulations pour anticiper l\'impact d\'une fluctuation d\'activité.' }
+            ],
+            tools: ['Anaplan', 'Power BI / Tableau', 'SAP Controlling (CO)', 'Excel Advanced Modeling'],
+            scenario: {
+              question: {
+                zh: '某產品售價 $100，單位變動成本 $60，公司每月固定成本為 $40,000。請問損益兩平點 (Break-Even Point) 的銷貨量為多少件？',
+                en: 'A product sells for $100, variable cost is $60 per unit, and the company\'s monthly fixed cost is $40,000. What is the breakeven point (in units)?',
+                fr: 'Un produit est vendu 100 $, le coût variable est de 60 $ par unité et la charge fixe mensuelle est de 40 000 $. Quel est le seuil de rentabilité (en unités) ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 400 件', en: 'A. 400 units', fr: 'A. 400 unités' },
+                  correct: false,
+                  reason: { zh: '答錯囉。計算公式為：固定成本 / (售價 - 單位變動成本)，即 40,000 / (100 - 60) = 1,000件。', en: 'Incorrect. The formula is: Fixed Costs / (Price - Unit Variable Cost), which is 40,000 / (100 - 60) = 1,000 units.', fr: 'Incorrect. La formule est : Charges Fixes / (Prix - Coût Variable Unitaire), soit 40 000 / (100 - 60) = 1 000 unités.' }
+                },
+                {
+                  text: { zh: 'B. 1,000 件', en: 'B. 1,000 units', fr: 'B. 1 000 unités' },
+                  correct: true,
+                  reason: { zh: '正確！單位邊際貢獻 = 100 - 60 = 40 元。損益兩平點 = 固定成本 $40,000 / 邊際貢獻 $40 = 1,000 件。', en: 'Correct! Contribution margin per unit is $100 - $60 = $40. Breakeven quantity = Fixed Costs $40,000 / $40 margin = 1,000 units.', fr: 'Correct ! La marge sur coût variable unitaire est de 100 - 60 = 40 $. Seuil de rentabilité = Charges Fixes 40 000 $ / Marge 40 $ = 1 000 unités.' }
+                },
+                {
+                  text: { zh: 'C. 2,500 件', en: 'C. 2,500 units', fr: 'C. 2 500 unités' },
+                  correct: false,
+                  reason: { zh: '算多囉。2,500 件是將固定成本直接除以單位變動成本的錯誤結果。', en: 'Incorrect. 2,500 is the erroneous result of dividing fixed costs directly by the unit variable cost instead of unit contribution margin.', fr: 'Incorrect. 2 500 est le résultat erroné de la division directe des charges fixes par le coût variable unitaire.' }
+                }
+              ]
+            }
+          },
+          auditing: {
+            id: 'auditing',
+            title: { zh: '審計學', en: 'Auditing', fr: 'Audit' },
+            englishTitle: { zh: 'Auditing', en: 'Auditing', fr: 'Audit' },
+            badge: { zh: '獨立驗證', en: 'Verification', fr: 'Validation' },
+            icon: 'fa-shield-halved',
+            description: {
+              zh: '由獨立的第三方（如外部會計師事務所）或內部獨立審計部門，對企業的財務報表、會計帳簿以及內部控制制度進行系統性檢查，以提供客觀的合規與真實性保證。',
+              en: 'Systematic examination of financial statements, records, and internal control frameworks by an independent party (external firm or internal auditor) to verify conformity, accuracy, and reliability.',
+              fr: 'Examen systématique des comptes, registres et structures de contrôle interne par un tiers indépendant (audit externe ou interne) pour valider la conformité, l\'absence d\'anomalies significatives et la sincérité.'
+            },
+            subfields: [
+              {
+                name: { zh: '外部審計 (External Audit)', en: 'External Audit', fr: 'Audit Externe' },
+                desc: { zh: '通常由四大會計師事務所執行，向公眾與投資人出具審計意見書。', en: 'Conducted by independent firms (like the Big 4) to issue unbiased audit opinions to shareholders and the public.', fr: 'Réalisé par des cabinets indépendants (ex. Big 4) pour formuler une opinion d\'audit impartiale destinée aux actionnaires.' }
+              },
+              {
+                name: { zh: '內部審計 (Internal Audit)', en: 'Internal Audit', fr: 'Audit Interne' },
+                desc: { zh: '隸屬公司董事會，評估日常營運效率、資產安全與風險控制。', en: 'Reporting directly to the board of directors, evaluating operational efficiency, compliance, and asset safeguards.', fr: 'Rattaché au conseil d\'administration, évaluant l\'efficacité opérationnelle, la gestion des risques et la conformité.' }
+              },
+              {
+                name: { zh: '合規審計 (Compliance)', en: 'Compliance Auditing', fr: 'Audit de Conformité' },
+                desc: { zh: '檢查企業經營是否嚴格符合特定環保、資安或特許產業法規。', en: 'Assessing operational conformity to environmental, cyber-security, and sector-specific financial regulations.', fr: 'Contrôle du respect des réglementations environnementales, de cybersécurité ou de secteurs hautement régulés.' }
+              },
+              {
+                name: { zh: '內部控制制度評估', en: 'Internal Control Review', fr: 'Évaluation du Contrôle Interne' },
+                desc: { zh: '審查企業職能分工、授權流程是否完善，防範員工舞弊風險。', en: 'Reviewing corporate segregation of duties, delegation limits, and access controls to mitigate fraud and material errors.', fr: 'Examen de la séparation des tâches, des délégations de signatures et des flux de travail pour éviter la fraude.' }
+              }
+            ],
+            skills: [
+              { zh: '**職業懷疑態度**：不輕信表象，能敏銳察覺數字之間的矛盾與邏輯漏洞。', en: '**Professional Skepticism**: Maintaining a questioning mindset, actively looking beyond face-value assertions to spot logical leaks.', fr: '**Scepticisme Professionnel**: Esprit d\'interrogation méthodique, cherchant au-delà des apparences pour déceler des incohérences.' },
+              { zh: '**嚴密取證與推理能力**：懂得遵循審計抽樣技術，建立完整且合規的審計工作底稿。', en: '**Audit Evidential Reasoning**: Proficiency in sampling methodologies and constructing compliant, airtight audit workpapers.', fr: '**Méthode d\'Échantillonnage**: Maîtrise des techniques de sondages et constitution de dossiers de travail conformes aux normes (ISA).' },
+              { zh: '**跨部門溝通協商**：需要頻繁與不同部門的受審對象進行訪談並取得關鍵證據。', en: '**Interdepartmental Negotiation**: High-level communication skills to interview auditees and procure necessary internal evidence.', fr: '**Aisance Relationnelle**: Capacité à mener des entretiens avec des audités et à obtenir les pièces probantes indispensables.' }
+            ],
+            tools: ['Caseware Working Papers', 'ACL Analytics', 'TeamMate', 'Excel Auditing Templates'],
+            scenario: {
+              question: {
+                zh: '在進行年度庫存實地盤點時，發現倉庫實物數量少於帳面紀錄，此時審計人員的最佳首要行動是？',
+                en: 'During the year-end physical inventory count, an auditor finds that physical stock is significantly lower than ledger records. What is the optimal first action?',
+                fr: 'Lors de l\'inventaire physique annuel, l\'auditeur constate que le stock physique est nettement inférieur au stock comptable. Quelle est la meilleure action initiale ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 立即要求管理階層修改財報利潤，判定為財報造假', en: 'A. Instantly demand management revise earnings and record it as fraud', fr: 'A. Exiger immédiatement que la direction modifie les résultats et qualifier cela de fraude' },
+                  correct: false,
+                  reason: { zh: '太魯莽了。在未釐清短缺原因前，不能隨意斷定其為造假，也無權直接干涉客戶調整。', en: 'Incorrect. An auditor cannot conclude fraud or demand accounting changes before thoroughly identifying the cause of the discrepancy.', fr: 'Incorrect. Un auditeur ne peut pas conclure à une fraude ni exiger des corrections comptables sans en analyser préalablement la cause.' }
+                },
+                {
+                  text: { zh: 'B. 直接通報檢調單位懷疑有員工偷竊', en: 'B. Directly notify legal authorities of suspected employee theft', fr: 'B. Alerter directement la police pour vol présumé d\'employé' },
+                  correct: false,
+                  reason: { zh: '審計講求程序與證據，在沒有確鑿犯罪證據前，直接報警不符合審計作業常規。', en: 'Incorrect. Auditors follow rigorous standards. Contacting the police without concrete proof of a crime violates audit procedures.', fr: 'Incorrect. L\'audit repose sur des normes strictes. Appeler la police sans preuve formelle de délit enfreindrait la procédure.' }
+                },
+                {
+                  text: { zh: 'C. 詢問倉庫主管，擴大抽盤範圍，並覆核盤點紀錄與在途物資', en: 'C. Interview the warehouse manager, expand the audit sample size, and review transit inventory records', fr: 'C. Mener un entretien avec le responsable d\'entrepôt, élargir l\'échantillon physique et passer en revue les stocks en transit' },
+                  correct: true,
+                  reason: { zh: '非常專業！第一步應保持職業懷疑，向管理人員詢問，並擴大盤點範圍，確認是否為登帳時間差或內部流程疏失。', en: 'Correct! Maintaining professional skepticism, inquiring with managers, and expanding physical test-counts is the textbook first response to identify cutoff errors or control failures.', fr: 'Correct ! Conserver son scepticisme professionnel, interroger les opérationnels et élargir l\'échantillon permet de confirmer d\'éventuels écarts de cut-off ou vols.' }
+                }
+              ]
+            }
+          },
+          tax: {
+            id: 'tax',
+            title: { zh: '稅務會計', en: 'Tax Accounting', fr: 'Fiscalité' },
+            englishTitle: { zh: 'Tax Accounting', en: 'Tax Accounting', fr: 'Fiscalité' },
+            badge: { zh: '合法規劃', en: 'Tax Compliance', fr: 'Optimisation' },
+            icon: 'fa-scale-unbalanced',
+            description: {
+              zh: '專注於企業或個人的稅務申報與規劃。依據各國稅法規定，將財務會計的「帳面利潤」調整為稅法認可的「課稅所得」，並在合法的框架內，規劃最佳節稅策略。',
+              en: 'Specializes in tax reporting and planning for corporate or individual clients. Reconciles bookkeeping "book profits" with tax-compliant "taxable income" and designs tax-avoidance strategies under legal frameworks.',
+              fr: 'Spécialisation dans la conformité et la planification fiscale pour les entreprises et les particuliers. Réconcilie le résultat comptable et le résultat fiscal (impôt sur les sociétés) et structure l\'optimisation légale.'
+            },
+            subfields: [
+              {
+                name: { zh: '稅務合規申報', en: 'Tax Compliance Filing', fr: 'Déclarations Fiscales & Conformité' },
+                desc: { zh: '處理日常營業稅 (VAT/GST)、年度營利事業所得稅與扣繳申報。', en: 'Managing everyday VAT/GST compliance, annual corporate tax returns, and payroll tax withholdings.', fr: 'Gestion quotidienne de la TVA/déclarations fiscales, liasse fiscale annuelle et retenues à la source.' }
+              },
+              {
+                name: { zh: '跨國移轉訂價 (Transfer Pricing)', en: 'Multinational Transfer Pricing', fr: 'Prix de Transfert (Transfer Pricing)' },
+                desc: { zh: '規劃跨國關係企業間的交易定價，以符合各國反避稅法規要求。', en: 'Determining purchase rates for transactions between cross-border related parties to satisfy anti-tax avoidance regulations.', fr: 'Structuration des transactions entre filiales d\'un même groupe pour respecter les règles anti-évasion des administrations.' }
+              },
+              {
+                name: { zh: '稅務策略與籌劃', en: 'Corporate Tax Strategy', fr: 'Planification & Ingénierie Fiscale' },
+                desc: { zh: '善用各產業租稅優惠政策或國際租稅協定，合理化降低稅務成本。', en: 'Utilizing industry-specific incentives, credits, and international tax treaties to optimize global corporate tax liability legally.', fr: 'Utilisation des incitations fiscales d\'activité et des traités fiscaux bilatéraux pour minimiser légalement l\'impôt global.' }
+              },
+              {
+                name: { zh: '稅務行政救濟', en: 'Tax Audit Representation & Appeals', fr: 'Contentieux Fiscal & Recours' },
+                desc: { zh: '當企業與稅務機關發生認知爭議時，代表企業進行覆核、訴願。', en: 'Representing clients during tax audits and managing appeals against assessments in administrative hearings.', fr: 'Défense des intérêts de l\'entreprise lors de contrôles fiscaux et dépôt de recours devant les tribunaux administratifs.' }
+              }
+            ],
+            skills: [
+              { zh: '**法律條文極致解讀力**：稅法多且變動極其频繁，需在法律條文中理清邏輯架構。', en: '**Legal Text Interpretation**: Navigating complex, highly volatile statutory tax codes and matching provisions precisely.', fr: '**Lecture de Textes Législatifs**: Analyser des codes fiscaux denses et complexes, sujets à de fréquentes modifications.' },
+              { zh: '**租稅架構規劃能力**：對企業購併、跨國合資的稅務影響具有敏銳的空間分析思維。', en: '**International Tax Structuring**: Deep spatial planning skills regarding cross-border mergers, permanent establishments, and treaties.', fr: '**Ingénierie de Structure**: Compétences de planification pour optimiser les fusions-acquisitions, filiales et traités internationaux.' },
+              { zh: '**精準的申報合規控制**：清楚各項申報時效，避免因程序瑕疵導致高額罰鍰。', en: '**Compliance Deadline Discipline**: Rigorous schedule management to prevent clerical errors and costly late-filing fees.', fr: '**Rigueur des Calendriers**: Suivi absolu des dates de dépôts pour éviter les pénalités administratives.' }
+            ],
+            tools: ['Local e-Tax Filing Systems', 'RIA Checkpoint', 'Vertex Tax Engine', 'Excel Tax Models'],
+            scenario: {
+              question: {
+                zh: '跨國企業將高利潤研發中心的專利以「超低價」授權給設立在低稅率國家的子公司使用，各國稅局通常會引用什麼原則來要求補稅？',
+                en: 'A multinational firm licenses patented IP from its high-tax headquarters to a low-tax subsidiary at an artificially low price. Under what principle will tax authorities demand audit adjustments?',
+                fr: 'Une multinationale concède une licence de brevet à une filiale située dans un paradis fiscal à un prix sous-évalué. Quel principe les administrations fiscales appliqueront-elles pour redresser l\'entreprise ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 雙重課稅原則', en: 'A. Double taxation relief treaties', fr: 'A. Les conventions d\'élimination de la double imposition' },
+                  correct: false,
+                  reason: { zh: '雙重課稅是指同一筆所得被重覆徵稅，並非稅局用來防範利潤移轉的反避稅原則。', en: 'Incorrect. Double taxation treaties prevent a single income stream from being taxed twice, not a mechanism used to challenge transfer pricing.', fr: 'Incorrect. Les conventions bilatérales évitent qu\'un même revenu soit taxé deux fois, ce n\'est pas un outil anti-évasion.' }
+                },
+                {
+                  text: { zh: 'B. 常規交易原則 (Arm\'s Length Principle)', en: 'B. Arm\'s Length Principle', fr: 'B. Le principe de pleine concurrence (Arm\'s Length Principle)' },
+                  correct: true,
+                  reason: { zh: '沒錯！移轉訂價的核心為「常規交易原則」，即關係企業間的交易條件必須比照不具關係的獨立第三方，否則稅局可重新評估並追繳稅款。', en: 'Exactly! The Arm\'s Length Principle requires transaction pricing between related affiliates to mirror pricing between unrelated entities, allowing adjustments otherwise.', fr: 'Exactement ! Le principe de pleine concurrence exige que les transactions intra-groupe soient valorisées aux prix du marché d\'un tiers indépendant.' }
+                },
+                {
+                  text: { zh: 'C. 破產清算免稅原則', en: 'C. Bankruptcy liquidation tax-exempt provisions', fr: 'C. Les clauses d\'exemption fiscale en cas de liquidation judiciaire' },
+                  correct: false,
+                  reason: { zh: '這與移轉訂價及避稅行為無涉。', en: 'Incorrect. This has zero relation with transfer pricing audits and base erosion.', fr: 'Incorrect. Les exceptions liées aux liquidations n\'ont aucun rapport avec la valorisation des transferts.' }
+                }
+              ]
+            }
+          },
+          ais: {
+            id: 'ais',
+            title: { zh: '會計資訊系統', en: 'Accounting Info Systems', fr: 'Systèmes d\'Info Comptable' },
+            englishTitle: { zh: 'Accounting Info Systems', en: 'Accounting Info Systems', fr: 'Systèmes d\'Info Comptable' },
+            badge: { zh: '系統核心', en: 'ERP Systems', fr: 'SIC' },
+            icon: 'fa-network-wired',
+            description: {
+              zh: '會計學與資訊科技 (IT) 的完美結合。負責設計、導入、管理與優化會計數據的搜集、儲存與流程，是現代企業「會計數位轉型」與流程自動化 (RPA) 的核心骨幹。',
+              en: 'The cross-disciplinary intersection of accounting and IT. Responsible for designing, implementing, and optimizing accounting databases, driving corporate accounting digital transformation and Robotic Process Automation (RPA).',
+              fr: 'Intersection entre comptabilité et technologies d\'information. Gère le déploiement et l\'optimisation de bases de données, moteur de la transformation numérique comptable et de la RPA.'
+            },
+            subfields: [
+              {
+                name: { zh: 'ERP 系統導入與對接', en: 'ERP Integration & Deployment', fr: 'Déploiement d\'ERP & Intégration' },
+                desc: { zh: '串聯業務端（採購、銷售、倉儲）與後端會計分錄的自動過帳。', en: 'Mapping real-time operational transactions (purchasing, inventory, invoicing) with automated ledger posting.', fr: 'Liaison en temps réel des transactions opérationnelles (achats, stocks) avec les écritures du Grand Livre.' }
+              },
+              {
+                name: { zh: '會計流程自動化 (RPA)', en: 'Robotic Process Automation (RPA)', fr: 'Automatisation RPA des Processus' },
+                desc: { zh: '利用軟體機器人自動處理重複性高的銀行對帳、發票核銷等流程。', en: 'Developing software robots to automate repetitive accounting flows like bank reconciliations and account matches.', fr: 'Développement de robots logiciels pour automatiser les tâches répétitives (rapprochement bancaire, lettrage).' }
+              },
+              {
+                name: { zh: '系統一般控制 (ITGC)', en: 'IT General Controls (ITGC)', fr: 'Contrôles Généraux Informatiques' },
+                desc: { zh: '設計與審查系統權限控管、備份機制，確保財務數據不可篡改。', en: 'Designing systems security policies, user access rules, and backup auditing to secure financial data integrity.', fr: 'Mise en œuvre des règles de sécurité système, de la séparation des accès et des politiques de sauvegardes.' }
+              },
+              {
+                name: { zh: '財務數據倉儲與可視化', en: 'Financial Data Warehousing', fr: 'Entrepôts de Données & BI' },
+                desc: { zh: '清洗並結構化財務大數據，打造即時戰情室看板。', en: 'Extracting, transforming, and loading (ETL) financial datasets into centralized databases and visual KPI dashboards.', fr: 'Extraction, traitement (ETL) des données comptables et conception de tableaux de bord financiers interactifs.' }
+              }
+            ],
+            skills: [
+              { zh: '**跨領域轉換溝通**：聽懂會計部門的痛點需求，並能將其精準轉譯為 IT 系統設計。', en: '**Technical Translation**: Translating complex financial compliance needs into rigorous system specifications for IT development.', fr: '**Traduction Technique**: Traduire les exigences de conformité comptable en spécifications d\'architecture pour la DSI.' },
+              { zh: '**流程梳理與圖表編製**：擅長使用 Flowchart 設計高效率、防呆的系統控制點。', en: '**Workflow Mapping**: Exceptional ability to design intuitive, high-security flowcharts to control automation process points.', fr: '**Modélisation de Flux**: Capacité à schématiser les workflows et flux opérationnels pour insérer des points de contrôle.' },
+              { zh: '**大數據基礎開發邏輯**：具備基本的資料庫概念與程式思維，實現無紙化與自動對帳。', en: '**Database Logic**: Strong query skills and database concepts (SQL) to audit and align automated ledgers.', fr: '**Logique de Base de Données**: Solide compréhension des requêtes SQL et des schémas de données pour auditer les écritures.' }
+            ],
+            tools: ['SQL Databases', 'UiPath RPA', 'Python / Scripting', 'SAP S/4HANA / Oracle'],
+            scenario: {
+              question: {
+                zh: '公司希望大幅縮短每月「應收帳款對帳」的時間，最適合導入哪項技術來自動化處理高重複性、且有固定规则的跨系統複製貼上工作？',
+                en: 'An enterprise wants to reduce the time spent on monthly Accounts Receivable reconciliations. Which tech is best suited to automate this repetitive, rule-based copying and pasting?',
+                fr: 'Une entreprise souhaite accélérer le rapprochement mensuel des comptes clients. Quelle technologie est la plus adaptée pour automatiser ces tâches de saisie répétitives ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. RPA (機器人流程自動化)', en: 'A. RPA (Robotic Process Automation)', fr: 'A. RPA (Robotic Process Automation)' },
+                  correct: true,
+                  reason: { zh: '答對了！RPA 最適合用於規則明確、高重覆性、且需要跨不同軟體系統操作的例行公事（如對帳與複製資料）。', en: 'Spot on! Robotic Process Automation is built exactly to handle cross-system copy-pasting and rule-based tasks with perfect precision.', fr: 'Parfait ! L\'automatisation RPA est conçue spécifiquement pour accomplir les copier-coller multi-logiciels et les tâches répétitives.' }
+                },
+                {
+                  text: { zh: 'B. 區塊鏈智能合約 (Smart Contract)', en: 'B. Blockchain Smart Contracts', fr: 'B. Les contrats intelligents de la Blockchain' },
+                  correct: false,
+                  reason: { zh: '區塊鏈成本極高且需要外部共識，用來處理內部系統複製貼上顯然是過度設計。', en: 'Incorrect. Smart contracts are high-cost and require multi-party decentralized networks. This is massive over-engineering for simple internal data transfers.', fr: 'Incorrect. Déployer de la blockchain pour du simple transfert de données interne représenterait une sur-ingénierie inutile.' }
+                },
+                {
+                  text: { zh: 'C. AI 深度學習預測模型', en: 'C. AI Deep Learning Predictive Models', fr: 'C. Les modèles prédictifs du Deep Learning (IA)' },
+                  correct: false,
+                  reason: { zh: 'AI 預測適合用在銷售預估等模糊決策，不適合用在「規則絕對、不容許一絲錯誤」的對帳資料串接。', en: 'Incorrect. AI models specialize in probabilistic predictions, not deterministic, zero-tolerance reconciliation matching.', fr: 'Incorrect. L\'IA prédictive convient pour des prévisions d\'activité, pas pour des tâches déterministes d\'appariement à tolérance zéro.' }
+                }
+              ]
+            }
+          },
+          forensic: {
+            id: 'forensic',
+            title: { zh: '鑑識會計', en: 'Forensic Accounting', fr: 'Comptabilité Judiciaire' },
+            englishTitle: { zh: 'Forensic Accounting', en: 'Forensic Accounting', fr: 'Comptabilité Judiciaire' },
+            badge: { zh: '法律調查', en: 'Investigation', fr: 'Légal' },
+            icon: 'fa-magnifying-glass-chart',
+            description: {
+              zh: '結合會計、審計、法律與犯罪調查技術，專門用來預防、追查與舉證企業內部的貪腐、舞弊、洗錢或詐欺行為。其編製的鑑識報告往往會作為法庭上的關鍵诉訟證據。',
+              en: 'Combines accounting, auditing, legal parameters, and investigative techniques to detect, reconstruct, and gather evidence on corporate fraud, corruption, and money laundering. Reports serve as expert litigation support.',
+              fr: 'Associe comptabilité, audit, droit et techniques d\'enquête criminelle pour prévenir, traquer et prouver les délits financiers (fraudes, blanchiment). Les rapports servent de preuves lors de procès.'
+            },
+            subfields: [
+              {
+                name: { zh: '企業舞弊與貪腐調查', en: 'Corporate Fraud & Anti-Corruption', fr: 'Fraude Interne & Corruption' },
+                desc: { zh: '追查高階主管做假帳、掏空資產，或員工收受廠商回扣之蛛絲馬跡。', en: 'Investigating financial misstatements, asset misappropriations, or employee procurement kickbacks.', fr: 'Enquêtes sur la falsification de résultats financiers, les détournements d\'actifs ou les pots-de-vin.' }
+              },
+              {
+                name: { zh: '訴訟支援與經濟損失估算', en: 'Litigation Support & Economic Damage Claim', fr: 'Support de Litige & Estimation des Dommages' },
+                desc: { zh: '在專利侵權或商業糾紛中，精算並證明受害方的實際經濟損失。', en: 'Quantifying precise economic loss, lost profits, or intellectual property damages for civil litigation.', fr: 'Évaluation financière des pertes réelles, pertes de bénéfices ou vols de brevets dans le cadre de procès.' }
+              },
+              {
+                name: { zh: '反洗錢與合規調查 (AML/KYC)', en: 'Anti-Money Laundering & KYC', fr: 'Lutte Anti-Blanchiment (AML/KYC)' },
+                desc: { zh: '審查金融交易大數據，設計異常資金流動防制網。', en: 'Auditing transactions data, mapping cash structures, and designing AML compliance networks for banks.', fr: 'Audit des flux monétaires massifs et implémentation de systèmes de surveillance contre le blanchiment d\'argent.' }
+              },
+              {
+                name: { zh: '電子數據鑑識 (e-Discovery)', en: 'e-Discovery & Digital Forensics', fr: 'Preuve Électronique (e-Discovery)' },
+                desc: { zh: '在不破壞檔案結構的前提下，搜集、復原與分析硬碟中的電子證據。', en: 'Recovering, reconstructing, and analyzing deleted electronic accounting data under strict evidentiary standards.', fr: 'Récupération, préservation et analyse de fichiers comptables supprimés pour un usage juridique.' }
+              }
+            ],
+            skills: [
+              { zh: '**數位調查與數據獵手**：能從上百萬筆流水帳中，運用演算法篩選出異常的關聯交易。', en: '**Data Mining Detective**: Sifting through millions of transaction records to spot suspicious correlations and deviations.', fr: '**Data Mining de Fraude**: Capacité à auditer des millions de lignes d\'écritures pour identifier des schémas inhabituels.' },
+              { zh: '**犯罪心理與面談技巧**：能對涉嫌對象進行有技巧的問訊，突破心防獲取證詞。', en: '**Investigative Interviewing**: Mastery of behavioral analysis and strategic interviewing to obtain critical facts during inquiries.', fr: '**Entretien d\'Enquête**: Techniques d\'interrogatoire stratégiques et lecture comportementale pour obtenir des aveux.' },
+              { zh: '**法庭證據鏈安全法規**：極度了解民刑事訴訟法對於「證據能力」之規範，確保證據合規。', en: '**Legal Chain of Custody**: Mastery of legal rules of evidence, ensuring gathered proof is admissible in court.', fr: '**Chaîne de Preuves Légale**: Respect absolu des normes d\'administration de la preuve pour l\'admissibilité en justice.' }
+            ],
+            tools: ['CaseWare IDEA', 'EnCase / FTK', 'Tableau / Maltego', 'Excel Advanced Audit'],
+            scenario: {
+              question: {
+                zh: '懷疑某採購主管與特定供應商勾結收取高額回扣，在取得合法授權前提下，財政及鑑識專家最首要採取的客觀調查手段是？',
+                en: 'An executive is suspected of colluding with a vendor to receive procurement kickbacks. With legal authorization, what is the best initial investigation method?',
+                fr: 'Un cadre des achats est soupçonné de collusion et de versement de pots-de-vin avec un fournisseur. Avec l\'autorisation légale, quelle est la meilleure action initiale ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 在公司佈告欄公告請同仁匿名檢舉該主管', en: 'A. Post a public bulletin asking employees to anonymously report the executive', fr: 'A. Publier une note générale demandant des signalements anonymes sur ce cadre' },
+                  correct: false,
+                  reason: { zh: '這會打草驚蛇，使嫌犯有機會銷毀通訊紀錄與外存硬碟。', en: 'Incorrect. This acts as a tip-off, giving the suspect time to erase hard drives and destroy critical communication logs.', fr: 'Incorrect. Cela donnerait l\'alerte, offrant au suspect le temps de nettoyer son poste et de détruire les preuves.' }
+                },
+                {
+                  text: { zh: 'B. 當面直接指控該主管犯罪，逼迫他當場坦白', en: 'B. Confront the executive directly and force an immediate confession', fr: 'B. Confronter directement le cadre pour obtenir des aveux immédiats' },
+                  correct: false,
+                  reason: { zh: '在無確鑿客觀證據下，當面指控通常只會得到否認，且不符合鑑識調查的科學程序。', en: 'Incorrect. Confronting a suspect without evidence typically leads to denial and fails standard scientific forensic protocols.', fr: 'Incorrect. L\'interroger de front sans pièces à conviction mènera au déni et enfreint la rigueur méthodologique.' }
+                },
+                {
+                  text: { zh: 'C. 調閱並分析其公務電子郵件關鍵字，並交叉比對其核准的採購價格是否異常偏離市場常軌', en: 'C. Review corporate email archives for keywords and audit corresponding purchase contracts against market price rates', fr: 'C. Analyser les archives de messagerie électronique professionnelle et corréler les prix d\'achat validés avec les tarifs du marché' },
+                  correct: true,
+                  reason: { zh: '完全正確！結合「數位郵件取證」與「數據庫採購價格比對」，能夠建立一條客觀且具有法律效力的證據鏈。', en: 'Correct! Merging digital forensics (keyword audits) with database queries (identifying off-market price rates) establishes an objective and legally admissible chain of evidence.', fr: 'Correct ! Croiser la preuve électronique (mots-clés des emails) avec l\'audit des écritures (achats hors-marché) construit un dossier à charge admissible devant les tribunaux.' }
+                }
+              ]
+            }
+          }
+        }
+      },
+      // 3. 行銷領域
+      marketing: {
+        indicatorText: {
+          zh: '現代市場行銷分支與技能地圖',
+          en: 'Modern Marketing Branches & Skills Map',
+          fr: 'Carte des Branches et Compétences en Marketing'
+        },
+        indicatorIcon: 'fa-bullseye',
+        themeColor: 'purple',
+        rgbColor: '168, 85, 247',
+        hexColor: '#a855f7',
+        centralNode: {
+          zh: { zh: '市場行銷', en: 'Marketing Strategy', fr: 'Marketing Global' },
+          en: { zh: 'Marketing Strategy', en: 'Marketing Strategy', fr: 'Marketing Global' },
+          badge: { zh: '5 大核心分支', en: '5 Core Branches', fr: '5 Branches Clés' }
+        },
+        branches: {
+          digital_mkt: {
+            id: 'digital_mkt',
+            title: { zh: '數位與績效行銷', en: 'Digital & Performance', fr: 'Comptabilité & Performance' },
+            englishTitle: { zh: 'Digital & Performance', en: 'Digital & Performance', fr: 'Marketing Digital' },
+            badge: { zh: '流量投放', en: 'Performance', fr: 'Acquisition' },
+            icon: 'fa-laptop',
+            description: {
+              zh: '透過網際網路、行動裝置、搜尋引擎、社群媒體與電子郵件等數位管道觸及潛在客戶。其特色在於高數據導向、精準定位，能夠依據即時成效動態調整預算與廣告素材，極大化 ROI。',
+              en: 'Reaching out and nurturing prospects through search engines, paid ads, programmatic, social channels, and email. Strongly data-driven, focusing on real-time optimization of media spend and CPA to maximize ROAS.',
+              fr: 'Cibler et acquérir des prospects via les moteurs de recherche, le programmatique, les réseaux sociaux payants et l\'emailing. Hautement analytique, orienté vers l\'optimisation en temps réel des budgets pour maximiser le ROI.'
+            },
+            subfields: [
+              {
+                name: { zh: 'SEO (搜尋引擎最佳化)', en: 'Search Engine Optimization (SEO)', fr: 'Optimisation SEO (Référencement Naturel)' },
+                desc: { zh: '優化網站結構與高價值內容，提升網站在 Google 等搜尋引擎的自然排名與免費流量。', en: 'Optimizing web pages structure and content to achieve high organic ranks on search engines and secure steady free traffic.', fr: 'Optimisation technique et sémantique de pages pour s\'élever sur les moteurs de recherche et attirer du trafic organique gratuit.' }
+              },
+              {
+                name: { zh: '付費搜尋廣告 (SEM / PPC)', en: 'Paid Search Advertising (SEM / PPC)', fr: 'Publicité Payante (SEM / PPC)' },
+                desc: { zh: '操作 Google Ads 等競價平台，攔截具高度購買意圖的搜尋受眾。', en: 'Managing Google Ads and search bids to intercept high-intent buyers searching specific query intent.', fr: 'Gestion des enchères de mots-clés sur Google Ads pour cibler l\'intention d\'achat immédiate.' }
+              },
+              {
+                name: { zh: '社群與聯播網廣告', en: 'Paid Social & Programmatic', fr: 'Régies Publicitaires Payantes' },
+                desc: { zh: '操作 Meta、TikTok、LinkedIn 等社群平台廣告，進行精準受眾定向與轉換優化。', en: 'Buying paid ads on Facebook, Instagram, LinkedIn, and TikTok using pixel tracking and target lookalike segments.', fr: 'Achat publicitaire sur Instagram, Facebook, TikTok et LinkedIn par ciblage de données comportementales (pixels).' }
+              },
+              {
+                name: { zh: '電郵與自動化行銷 (EDM)', en: 'Email & Marketing Automation (EDM)', fr: 'Campagnes Emailing & Automation' },
+                desc: { zh: '利用名單分眾，投遞高度個人化的追蹤郵件以培育潛在客戶。', en: 'Segmenting lead subscriber lists to send highly personalized nurture email triggers at various customer journey touchpoints.', fr: 'Segmentation de bases de contacts pour déployer des séquences d\'e-mails automatisées selon le parcours client.' }
+              }
+            ],
+            skills: [
+              { zh: '**數據敏銳度與分析**：能解構各項轉換指標（CTR、CPC、CPA、ROAS）並進行優化。', en: '**Analytics & Metric Mastery**: Exceptional understanding of traffic metrics, cost structures (CPC, CPA), and ROAS analytics.', fr: '**Analyse Métrique**: Interprétation des taux de clics (CTR), coûts d\'acquisition (CPA) et calculs de ROAS.' },
+              { zh: '**A/B 測試與 CRO 轉換率優化**：懂得透過控制變數實驗，找出最具轉換效益的頁面佈局。', en: '**A/B Testing & CRO**: Applying strict conversion rate optimization parameters through continuous multivariate design landing page tests.', fr: '**A/B Testing & CRO**: Amélioration des taux de conversion par l\'évaluation comparative de différentes interfaces de destination (landing pages).' },
+              { zh: '**媒體採購與廣告競價邏輯**：精通機器學習競價機制與受眾像素追蹤。', en: '**Media Buying & Bidding Logic**: Proficient in ad network auction logic, targeting algorithms, and retargeting pixels.', fr: '**Achat Média & Enchères**: Compréhension des algorithmes d\'enchères programmatiques et des balises de reciblage.' }
+            ],
+            tools: ['Google Analytics 4', 'Google Ads Manager', 'Semrush / Ahrefs', 'Google Tag Manager'],
+            scenario: {
+              question: {
+                zh: '某電商網站發現廣告點擊率 (CTR) 很高，但著陸頁 (Landing Page) 的轉換率 (CR) 卻只有 0.2%（低於行業均值 2%），數位行銷師最優先執行的動作是？',
+                en: 'An e-commerce site experiences excellent CTR on its ads, but the Landing Page Conversion Rate is only 0.2% (well below the 2% industry average). What should the marketer optimize first?',
+                fr: 'Un site e-commerce enregistre un excellent taux de clic (CTR) sur ses publicités, mais le taux de conversion (CR) de sa page d\'arrivée n\'est que de 0,2 % (la moyenne sectorielle est de 2 %). Que faire ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 立即提高廣告預算，導入更多點擊流量', en: 'A. Instantly increase ad budgets to drive higher click traffic', fr: 'A. Augmenter le budget publicitaire pour attirer plus de trafic' },
+                  correct: false,
+                  reason: { zh: '點擊率高說明廣告沒問題，問題出在著陸頁留不住人。加預算只會流失更多預算。', en: 'Incorrect. High CTR indicates ads work fine. The bottleneck is page drop-off. Increasing budget only wastes capital.', fr: 'Incorrect. Un CTR élevé prouve que les pubs fonctionnent. Le problème vient de la page. Augmenter le budget ne ferait que gaspiller du capital.' }
+                },
+                {
+                  text: { zh: 'B. 進行著陸頁 A/B 測試，優化載入速度、簡化結帳流程與排版設計', en: 'B. Perform landing page A/B tests to optimize loading speed, simplify checkout, and rewrite visual layouts', fr: 'B. Lancer des tests A/B sur la page, accélérer le chargement, simplifier le panier et épurer le design' },
+                  correct: true,
+                  reason: { zh: '正確！轉換率低代表用戶進入網頁後遇到障礙。最有效的方式是優化載入時間，清除干擾結帳的摩擦力，並強化產品價值主張。', en: 'Correct! A low conversion rate suggests major user friction. Optimizing page speed, simplifying checkout forms, and strengthening the USP directly solves this bottleneck.', fr: 'Correct ! Un faible taux de conversion indique des frictions. Optimiser les temps de chargement, réduire les étapes du panier et clarifier la valeur du produit résout ce blocage.' }
+                },
+                {
+                  text: { zh: 'C. 改寫廣告文案以降低點擊率', en: 'C. Rewrite the ad copy to decrease the CTR intentionally', fr: 'C. Modifier le message de l\'annonce pour réduire intentionnellement le CTR' },
+                  correct: false,
+                  reason: { zh: '廣告點擊率高是好事，不應該刻意去降低點擊率。', en: 'Incorrect. A high CTR is an asset. Lowering it would reduce the volume of qualified visits and won\'t fix page drop-offs.', fr: 'Incorrect. Un CTR élevé est bénéfique. Le réduire ne réglerait en rien la fuite d\'internautes sur la page.' }
+                }
+              ]
+            }
+          },
+          brand_mkt: {
+            id: 'brand_mkt',
+            title: { zh: '品牌與內容行銷', en: 'Brand & Content', fr: 'Marque & Contenu' },
+            englishTitle: { zh: 'Brand & Content', en: 'Brand & Content', fr: 'Image de Marque' },
+            badge: { zh: '情感信任', en: 'Brand Affinity', fr: 'Identité' },
+            icon: 'fa-feather-pointed',
+            description: {
+              zh: '專注於塑造、傳達並保護品牌的核心價值、個性與視覺形象。強調與消費者建立深刻的情感連結，透過優質、有價值的知識與故事，培育長效信任感與心智佔有。',
+              en: 'Focuses on designing, communicating, and safeguarding the brand\'s identity, mission, and visual assets. Establishes long-term customer emotional bonds, positioning the brand to capture organic brand equity and trust.',
+              fr: 'Se consacre au design, à la communication et à la protection de l\'identité, des valeurs et du design de marque. Vise à nouer un lien émotionnel fort avec les clients pour maximiser le capital sympathie à long terme.'
+            },
+            subfields: [
+              {
+                name: { zh: '品牌定位與策略', en: 'Brand Strategy & Positioning', fr: 'Stratégie de Positionnement de Marque' },
+                desc: { zh: '定義品牌核心存在價值、價值主張與在目標受眾心智中的差異化定位。', en: 'Defining core purpose, style guides, value propositions, and competitor differentiations in the target mind.', fr: 'Définition de l\'identité profonde de la marque, de sa proposition de valeur et de sa différenciation concurrentielle.' }
+              },
+              {
+                name: { zh: '內容行銷 (Content Marketing)', en: 'Content Marketing', fr: 'Stratégies de Contenus' },
+                desc: { zh: '撰寫深度知識文章、白皮書、案例分析以吸引並教育潛在受眾。', en: 'Authoring high-value blogs, white papers, and research reports to pull in and educate organic leads.', fr: 'Rédaction d\'articles de blog détaillés, de livres blancs et d\'études de cas pour attirer de nouveaux prospects.' }
+              },
+              {
+                name: { zh: '社群有機經營', en: 'Organic Social Media', fr: 'Animation Organique de Communautés' },
+                desc: { zh: '在原生平台建立社群話題、維持高熱度互動，培養核心鐵粉群。', en: 'Growing non-paid social communities on platforms, curating high-relevance assets to drive organic reach.', fr: 'Création d\'engagements sur les réseaux sociaux officiels pour animer et fédérer une communauté d\'utilisateurs.' }
+              },
+              {
+                name: { zh: '公共關係與 KOL 口碑 (PR)', en: 'Public Relations & Influencers (PR)', fr: 'Relations Publiques & Influenceurs' },
+                desc: { zh: '主導媒體發稿與維繫意見領袖關係，推動第三方權威推薦與高公信力背書。', en: 'Formulating press releases, managing media relations, and scaling key opinion leader (KOL) endorsements.', fr: 'Rédaction de communiqués de presse, relations avec les journalistes et partenariats de parrainage (KOL).' }
+              }
+            ],
+            skills: [
+              { zh: '**故事敘事力 (Storytelling)**：能將生硬的產品規格，化為具備情感共鳴與擴散力的故事文案。', en: '**Brand Storytelling**: Translating dry product specs into compelling, narrative-driven copy that builds emotional affinity.', fr: '**Storytelling d\'Impact**: Convertir des spécifications techniques en récits porteurs d\'émotion et d\'adhésion.' },
+              { zh: '**視覺感知與美學鑑賞力**：對品牌標準色、網格佈局與整體調性具備高敏銳度。', en: '**Aesthetic Design Sensibility**: Keen eyes for corporate style consistency, visual balance, typography, and mood guidelines.', fr: '**Direction Artistique Cohérente**: Sens aiguisé du design visuel, de la typographie, des palettes de couleurs et de l\'harmonie de marque.' },
+              { zh: '**定性研究與受眾心理洞察**：善於洞悉消費者字面底下的真實不滿與渴望。', en: '**Qualitative Research**: Exploring qualitative user personas to uncover deep-seated aspirations and subconscious pain points.', fr: '**Enquêtes Qualitatives**: Analyse en profondeur de l\'expérience client pour déceler les aspirations inconscientes et frustrations.' }
+            ],
+            tools: ['Canva / Adobe Creative', 'Midjourney / ChatGPT', 'BuzzSumo (Trends)', 'Notion / Figma'],
+            scenario: {
+              question: {
+                zh: '一家主打高性價比的平價環保水壺品牌，在品牌創立初期，公關部門最適合發佈哪種故事切入點以吸引第一批核心鐵粉？',
+                en: 'A start-up eco-friendly water bottle brand wants to launch its initial PR campaign. What is the most compelling narrative to capture the first batch of advocates?',
+                fr: 'Une jeune marque de gourdes écoresponsables souhaite lancer sa première campagne de RP. Quel angle narratif est le plus percutant pour fédérer sa première communauté ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 詳盡列印水壺塑膠射出的工業化化學檢驗報告', en: 'A. Publish dense, industrial laboratory chemical testing safety sheets', fr: 'A. Diffuser des fiches d\'analyses chimiques industrielles de laboratoire' },
+                  correct: false,
+                  reason: { zh: '化學報告過於生硬，無法與大眾消費者建立情感連結。', en: 'Incorrect. Lab sheets are dry technical specs and fail to trigger emotional connection or brand affinity.', fr: 'Incorrect. Les fiches d\'analyse sont froides et n\'éveillent aucune émotion ou attachement à la marque.' }
+                },
+                {
+                  text: { zh: 'B. 創辦人分享「看見海龜因塑膠垃圾受苦而決心創業」的初心故事，並承諾每賣出一個水壺就捐贈海洋保護基金', en: 'B. The founder shares their story: deciding to start up after seeing marine wildlife suffer from plastic waste, promising a donation for every sale', fr: 'B. Le fondateur partage sa vision : créer la marque après avoir vu la détresse de la faune marine face au plastique, s\'engageant à verser un don par achat' },
+                  correct: true,
+                  reason: { zh: '非常棒！品牌行銷需要故事（Storytelling）來啟發共鳴，結合環境倡議與具體行動能快速收穫環保理念認同者之支持。', en: 'Spot on! Effective brand building leverages narratives to drive value alignment. Environmental purpose coupled with actions wins early advocates.', fr: 'Excellent ! Construire une marque forte requiert un récit inspirant. Un objectif écologique fort incarné par des actes concrets séduit les premiers adeptes.' }
+                },
+                {
+                  text: { zh: 'C. 比較同業水壺在極端壓力測試下的損壞數據', en: 'C. Show charts comparing competitor bottle damage under high-pressure tests', fr: 'C. Publier des graphiques de résistance comparatifs face aux concurrents' },
+                  correct: false,
+                  reason: { zh: '這偏向產品行銷或競爭對手對標，並非建立品牌故事感與信念認同的核心手段。', en: 'Incorrect. This falls into competitive product feature analysis and does not cultivate brand belief or emotional identity.', fr: 'Incorrect. Cela relève d\'un comparatif technique de caractéristiques et ne suscite aucun attachement affectif.' }
+                }
+              ]
+            }
+          },
+          growth_mkt: {
+            id: 'growth_mkt',
+            title: { zh: '產品與增長行銷', en: 'Product & Growth', fr: 'Produit & Croissance' },
+            englishTitle: { zh: 'Product & Growth', en: 'Product & Growth', fr: 'Produit & Croissance' },
+            badge: { zh: '數據增長', en: 'Growth Loop', fr: 'Optimisation' },
+            icon: 'fa-seedling',
+            description: {
+              zh: '融會「產品、數據與行銷」的科學化門派。以 AARRR (獲客、激活、留存、收益、傳播) 漏斗模型為基石，將產品本身設計為增長引擎，追求快速、低成本的爆發性用戶拓展。',
+              en: 'The conversion intersection of product, tech, and marketing. Uses the AARRR (Acquisition, Activation, Retention, Revenue, Referral) funnel to leverage the product itself as the growth engine for scalable expansion.',
+              fr: 'La fusion méthodologique de la tech, du produit et du marketing. Utilise l\'entonnoir AARRR pour faire du produit lui-même le principal moteur de croissance organique.'
+            },
+            subfields: [
+              {
+                name: { zh: '產品行銷 (PMM)', en: 'Product Marketing (PMM)', fr: 'Marketing de Produit (PMM)' },
+                desc: { zh: '制定 GTM (Go-to-Market) 策略，包裝產品賣點，為銷售與通路進行全面知識賦能。', en: 'Designing Go-to-Market (GTM) frameworks, messaging USPs, and creating product collateral to empower sales.', fr: 'Conception des stratégies de Go-to-Market (GTM), clarification du message clé (USP) et création d\'outils d\'aide à la vente.' }
+              },
+              {
+                name: { zh: '用戶留存與生命週期優化', en: 'Retention & Lifecycle Optimization', fr: 'Fidélisation & Rétention' },
+                desc: { zh: '分析並引導用戶體驗「頓悟時刻 (Aha Moment)」，降低流失率，提高回訪頻度。', en: 'Guiding users to experience their "Aha Moment" quickly, driving up the retention curve and preventing churn.', fr: 'Inciter les nouveaux utilisateurs à ressentir l\'effet "Aha Moment" dès le départ pour stabiliser la rétention.' }
+              },
+              {
+                name: { zh: '增長駭客 (Growth Hacking)', en: 'Growth Hacking Loops', fr: 'Growth Hacking' },
+                desc: { zh: '透過工程與行銷跨部門實驗，設計如「邀請好友得回饋金」的病毒式擴散機制。', en: 'Structuring viral marketing loops (e.g., referral incentives) through agile, cross-departmental product experiments.', fr: 'Mise en place de boucles virales (ex. primes de parrainage) via des expérimentations conjointes produit-marketing.' }
+              }
+            ],
+            skills: [
+              { zh: '**漏斗模型拆解分析**：能找出用戶流失率最高的核心關卡並進行針對性優化。', en: '**AARRR Funnel Diagnostics**: Analyzing step-by-step user drop-offs to pinpoint operational leaks in the conversion funnel.', fr: '**Diagnostic de l\'Entonnoir AARRR**: Analyser l\'attrition des utilisateurs à chaque étape de conversion pour identifier les fuites.' },
+              { zh: '**跨學科溝通敏銳度**：在產品經理、軟體工程師與傳統營銷人員之間扮演無縫橋樑。', en: '**Multidisciplinary Translation**: Bridging engineering, product management (PM), and marketing teams through shared metrics.', fr: '**Traduction Transverse**: Fluidifier la collaboration entre les développeurs, chefs de produit et communicants.' },
+              { zh: '**競爭情報與差異化包裝**：提煉產品複雜功能轉化為白話優勢的商業翻譯力。', en: '**Competitive Positioning**: Packaging complex technical features into intuitive value benefits that resonate in crowded fields.', fr: '**Positionnement Concurrentiel**: Convertir des caractéristiques d\'ingénierie complexes en bénéfices d\'usage évidents.' }
+            ],
+            tools: ['Amplitude / Mixpanel', 'Hotjar', 'Jira / Asana', 'HubSpot'],
+            scenario: {
+              question: {
+                zh: '一款全新的專案管理 App 剛上線，增長團隊發現「註冊用戶高達 80% 在第一天之後就再也沒有開啟過 App」。增長黑客的首要任務應是？',
+                en: 'An agile project management App just launched. The growth team notices that "80% of registered signups never return after Day 1." What is their first priority?',
+                fr: 'Une nouvelle application SaaS vient de sortir. L\'équipe note que « 80 % des nouveaux inscrits ne reviennent jamais après le Jour 1 ». Quelle est la priorité ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 在 Facebook 投放更多折扣廣告，吸引新註冊', en: 'A. Spend more budget on Facebook discount ads to drive higher registration volume', fr: 'A. Injecter du budget sur Facebook Ads pour attirer un plus grand volume d\'inscriptions' },
+                  correct: false,
+                  reason: { zh: '漏斗底部正在嚴重漏水（不留存），此時導入新用戶只會浪費更多行銷預算。', en: 'Incorrect. The bottom of the funnel is leaking. Pouring new paid users into a non-retaining app only burns budget.', fr: 'Incorrect. Le fond de la corbeille fuit (pas de rétention). Injecter du trafic payant ne fait qu\'accélérer la perte de trésorerie.' }
+                },
+                {
+                  text: { zh: 'B. 分析註冊流程與新手引導，讓用戶在首日5分鐘內創建第一個專案（體驗「Aha Moment」）', en: 'B. Audit onboarding flows to guide users to create their first project within 5 minutes (enabling the "Aha Moment")', fr: 'B. Analyser le parcours d\'onboarding pour aider les utilisateurs à créer leur premier projet en 5 minutes ("Aha Moment")' },
+                  correct: true,
+                  reason: { zh: '完全正確！留存率低的關鍵在於用戶未在黃金期體驗到產品價值。優化新手引導引領其體驗核心功能（Aha Moment），能極大提升長期留存率。', en: 'Correct! Poor retention suggests users did not realize values early. Streamlining onboarding to prompt active engagement (Aha Moment) stabilizes retention curves.', fr: 'Correct ! Une mauvaise rétention indique que la valeur n\'est pas perçue. Faciliter l\'onboarding pour provoquer la première action utile (Aha Moment) pérennise la rétention.' }
+                },
+                {
+                  text: { zh: 'C. 重新聘請設計師更換 App 的 Logo 顏色', en: 'C. Retain a design agency to rebrand the App logo color palette', fr: 'C. Embaucher une agence artistique pour modifier les couleurs du Logo de l\'application' },
+                  correct: false,
+                  reason: { zh: '換顏色是治標不治本，無法解決新手體驗障礙這一核心流程痛點。', en: 'Incorrect. Rebranding fails to resolve functional onboarding friction or structural engagement challenges.', fr: 'Incorrect. Un changement esthétique n\'élimine en rien les frictions ergonomiques lors de l\'inscription.' }
+                }
+              ]
+            }
+          },
+          martech_mkt: {
+            id: 'martech_mkt',
+            title: { zh: '數據、科技與 CRM', en: 'Data, Tech & CRM', fr: 'Données, Tech & CRM' },
+            englishTitle: { zh: 'Data, Tech & CRM', en: 'Data, Tech & CRM', fr: 'Marketing Relationnel' },
+            badge: { zh: '自動化運營', en: 'Automated CRM', fr: 'Fidélisation' },
+            icon: 'fa-database',
+            description: {
+              zh: '利用行銷科技（MarTech）軟體堆疊與會員數據庫，設計並自動化運營千人千面的客戶生命週期旅程。注重忠誠度計劃、提升用戶回購與 LTV 終身價值。',
+              en: 'Utilizes marketing technology (MarTech) stacks and customer databases to build and automate personalized lifecycles. Enhances customer retention, referral loyalty, and optimizes LTV.',
+              fr: 'Exploite les solutions technologiques (MarTech) et bases de données pour orchestrer des parcours clients personnalisés. Vise à fidéliser l\'audience, provoquer le réachat et optimiser la LTV.'
+            },
+            subfields: [
+              {
+                name: { zh: '客戶關係管理 (CRM)', en: 'Customer Relationship Management (CRM)', fr: 'Gestion de la Relation Client (CRM)' },
+                desc: { zh: '維護會員生命週期、分群經營，設計點數回饋或分級權益制度。', en: 'Managing customer lifecycles, and engineering tiered rewards program to increase repeat purchases.', fr: 'Suivi de la relation client, conception de programmes de fidélité par paliers pour générer de la récurrence.' }
+              },
+              {
+                name: { zh: '行銷自動化旅程', en: 'Marketing Automation Workflows', fr: 'Scénarios Marketing Automatisés' },
+                desc: { zh: '設計「購物車未結帳」自動觸發 E-mail / Push / 短訊等全通路喚醒旅程。', en: 'Designing multi-channel triggers (email, push, SMS) to recover abandoned carts and nudge dormant users.', fr: 'Modélisation de déclencheurs automatiques (SMS, push, email) pour réactiver les paniers abandonnés.' }
+              },
+              {
+                name: { zh: '行銷科技系統架構 (MarTech Stack)', en: 'MarTech System Architecture', fr: 'Écosystème Technologique (MarTech)' },
+                desc: { zh: '串接 CDP (客戶數據平台)、CRM 系統與第三方廣告追蹤介面，消除數據孤島。', en: 'Integrating Customer Data Platforms (CDP) and CRMs with analytics to eliminate internal data silos.', fr: 'Intégration d\'une plateforme de données clients (CDP) et des CRM pour supprimer les silos d\'information.' }
+              }
+            ],
+            skills: [
+              { zh: '**行銷自動化流程圖編製**：具備邏輯清晰的條件分支設計思維。', en: '**Automation Flowcharting**: Exceptional logical thinking to map complex conditional multi-path branch triggers.', fr: '**Conception de Workflows**: Esprit d\'analyse rigoureux pour dessiner des embranchements de scénarios à conditions multiples.' },
+              { zh: '**數據庫查詢基礎**：了解 SQL 語法或資料分析語言，從大數據中撈取高價值顧客名單。', en: '**Database Queries (SQL)**: Understanding SQL syntax to query, extract, and segment high-value customer datasets.', fr: '**Requêtage de Données (SQL)**: Maîtriser le SQL élémentaire pour extraire et cibler des groupes de clients à haute valeur.' },
+              { zh: '**標籤與標記體系設計**：為用戶行為建立精細標籤，進行個性化行銷。', en: '**User Tagging Taxonomy**: Structuring modular tag systems based on behavioral triggers for micro-targeted delivery.', fr: '**Taxonomie de Tagging**: Création d\'architectures de balises comportementales pour un adressage chirurgical.' }
+            ],
+            tools: ['Salesforce / HubSpot', 'Braze / Klaviyo', 'Segment (CDP)', 'Looker Studio'],
+            scenario: {
+              question: {
+                zh: '某連鎖服飾線上商城希望提升顧客的「二次回購率」，MarTech 團隊應該首選哪種策略？',
+                en: 'A retail fashion e-commerce store wants to increase its secondary repeat purchase rate. Which strategy should the MarTech team prioritize?',
+                fr: 'Une boutique de mode e-commerce souhaite augmenter son taux de réachat. Quelle stratégie l\'équipe MarTech doit-elle privilégier ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 每天向資料庫所有用戶無差別發送推銷簡訊', en: 'A. Send promotional SMS broadcasts to the entire user database daily', fr: 'A. Envoyer quotidiennement des SMS promotionnels en masse à toute la base de données' },
+                  correct: false,
+                  reason: { zh: '無差別簡訊會對非目標用戶造成騷擾，引發高退訂率，且行銷成本極高。', en: 'Incorrect. Unsegmented daily blasts irritate subscribers, trigger high unsubscribe rates, and burn marketing budget.', fr: 'Incorrect. Les envois de masse non ciblés agacent, provoquent des désabonnements massifs et coûtent cher.' }
+                },
+                {
+                  text: { zh: 'B. 設定自動化事件：當顧客購買後第 30 天，系統自動篩選「已開信用戶」發送該購買品類相關的穿搭推薦與優惠券', en: 'B. Build automation triggers: on Day 30 post-purchase, automatically send high-engagement buyers segment-specific style tips with a discount coupon', fr: 'B. Programmer un scénario automatisé : 30 jours après l\'achat, filtrer les acheteurs actifs pour leur envoyer des conseils personnalisés assortis d\'un bon d\'achat' },
+                  correct: true,
+                  reason: { zh: '精準且科技化！依據用戶購買紀錄與時間週期（生命週期），自動觸發個性化關懷，最符合 MarTech 高效、低成本運營之宗旨。', en: 'Correct! Designing context-rich, automated triggers based on transactional history and elapsed time is the core purpose of scalable CRM systems.', fr: 'Correct ! Déclencher un envoi automatisé contextuel basé sur l\'historique d\'achat et la temporalité est l\'essence même d\'un CRM performant.' }
+                },
+                {
+                  text: { zh: 'C. 建立大型實體路跑活動吸引大眾報名', en: 'C. Organize a large-scale physical city marathon event to drive public registrations', fr: 'C. Organiser un grand marathon physique urbain pour accroître la notoriété générale' },
+                  correct: false,
+                  reason: { zh: '實體活動屬於品牌或傳統行銷範疇，對線上已購客的「精準二次回購」針對性不足，且不具備系統自動化優勢。', en: 'Incorrect. Experiential events drive general brand awareness, but lack precision and automation to resolve transactional conversion goals.', fr: 'Incorrect. Les événements expérientiels renforcent la notoriété de marque mais manquent de ciblage et d\'automatisation pour générer du réachat direct.' }
+                }
+              ]
+            }
+          },
+          traditional_mkt: {
+            id: 'traditional_mkt',
+            title: { zh: '傳統與實體行銷', en: 'Traditional & Experiential', fr: 'Traditionnel & Physique' },
+            englishTitle: { zh: 'Traditional & Trade', en: 'Traditional & Trade', fr: 'Traditionnel & Terrain' },
+            badge: { zh: '實體體驗', en: 'Physical Experience', fr: 'Événement' },
+            icon: 'fa-store',
+            description: {
+              zh: '在實體物理世界與消費者建立接觸。透過線下活動、創意包裝、通路陳列、大眾媒體（電視、大看板）建立無可替代的感官品牌體驗，並推進通路經銷網絡。',
+              en: 'Formulating touchpoints in the physical world. Engages consumers through experiential offline campaigns, point-of-sale materials (POSM) design, trade marketing, and out-of-home (OOH) mass media.',
+              fr: 'Tisser des liens dans l\'espace physique. Conçoit des expériences sensorielles mémorables via des boutiques éphémères, de la PLV, du trade marketing et des campagnes d\'affichage de masse (OOH).'
+            },
+            subfields: [
+              {
+                name: { zh: '活動與體驗行銷 (Event)', en: 'Experiential & Event Marketing', fr: 'Événementiel & Expérientiel' },
+                desc: { zh: '規劃線下快閃店、商務博覽會、新車/新機發表會與實體派樣體驗。', en: 'Executing offline pop-up events, trade exhibitions, new product launches, and street sampling.', fr: 'Déploiement de concept-stores temporaires, stands de foires commerciales et lancements de produits physiques.' }
+              },
+              {
+                name: { zh: '通路與零售行銷 (Trade)', en: 'Trade & Retail Marketing', fr: 'Trade Marketing & Distribution' },
+                desc: { zh: '與實體大通路（量販、連鎖店）進行進貨、貨架陳列與檔期談判。', en: 'Negotiating pricing, shelf positioning, and seasonal sales plans with major physical distributors.', fr: 'Négociation d\'emplacements en linéaires (têtes de gondoles) et promotions conjointes avec la grande distribution.' }
+              },
+              {
+                name: { zh: '戶外與大眾媒體 (OOH / ATL)', en: 'Out-Of-Home & Mass Media (OOH)', fr: 'Affichage & Médias de Masse (OOH)' },
+                desc: { zh: '投放公車/捷運廣告、商業地標大型看板、電視與廣播廣告。', en: 'Purchasing high-impact billboard slots, transit ads, TV commercials, and radio broadcasts.', fr: 'Achat d\'espaces publicitaires sur panneaux urbains, rames de métro, spots TV ou ondes de radio.' }
+              }
+            ],
+            skills: [
+              { zh: '**專案時程與大型預算控制**：面對複雜實體搭建工程與高成本預算能確保零紕漏。', en: '**Project & Budget Management**: Rigorous control over complex construction deadlines and costly supplier deliverables.', fr: '**Gestion Budgétaire & de Chantiers**: Maîtrise absolue des calendriers de déploiement événementiel et suivi des budgets d\'achats.' },
+              { zh: '**硬底子商務談判**：面對強勢通路採購經理 (Buyer)，能極大化維持公司利潤。', en: '**B2B Commercial Negotiation**: Strong business negotiation skills with major retail buyers to defend product margins.', fr: '**Négociation Commerciale**: Capacité à négocier les conditions de distribution avec les acheteurs pour protéger les marges.' },
+              { zh: '**線下執行與危機突發處理**：實體活動現場突發電力中斷、天氣變化等事故的應變力。', en: '**On-site Contingency Management**: Exceptional problem-solving during active offline crisis scenarios (e.g., weather shifts, power outages).', fr: '**Gestion de Crise sur le Terrain**: Capacité à réagir face aux aléas de l\'événementiel (intempéries, pannes de courant).' }
+            ],
+            tools: ['Excel Budget Sheets', 'Eventbrite / Accupass', 'Monday.com PM', 'CAD Layout Review'],
+            scenario: {
+              question: {
+                zh: '某國際美妝品牌要在市中心黃金地段舉辦一場耗資百萬的「櫻花主題快閃店」活動。傳統行銷專案經理最關鍵的工作任務是？',
+                en: 'An international cosmetics brand is launching a massive cherry blossom themed pop-up store in a premium downtown district. What is the PM\'s primary responsibility?',
+                fr: 'Une marque de cosmétique lance un concept-store éphémère de luxe au cœur d\'une grande avenue. Quelle est la mission prioritaire du chef de projet ?'
+              },
+              options: [
+                {
+                  text: { zh: 'A. 在後台寫代碼建立網站追蹤像素', en: 'A. Write backend scripts to embed web tracking pixels', fr: 'A. Configurer du code en back-office pour insérer des balises de suivi Web' },
+                  correct: false,
+                  reason: { zh: '這屬於數位或 MarTech 的工作範疇，並非實體大型專案經理的核心工作。', en: 'Incorrect. This belongs to digital or MarTech teams, not the primary focus of an offline experiential project manager.', fr: 'Incorrect. Cela relève des missions du pôle digital ou MarTech, pas d\'un chef de projet terrain événementiel.' }
+                },
+                {
+                  text: { zh: 'B. 協同多方供應商、公關與政府環保單位，制定縝密的現場防雨、用電、搭建排程與人流安全疏導方案', en: 'B. Coordinate multiple general contractors, PR agencies, and municipal authorities to secure rain-proofing, power grids, build timelines, and crowd control permits', fr: 'B. Coordonner les prestataires techniques, l\'agence RP et la préfecture pour valider la sécurité électrique, le montage et le plan d\'évacuation' },
+                  correct: true,
+                  reason: { zh: '完全正確！實體活動面臨極高物理不確定性。專案經理（PM）的核心價值在於確保供應商履約、搭建合規、人流安全以及突發天氣的防範。', en: 'Exactly! Offline projects run on physical operational risks. The PM\'s primary value lies in vendor accountability, safety compliances, scheduling, and active contingency mapping.', fr: 'Exactement ! L\'événementiel comporte d\'importants risques physiques. La valeur du PM réside dans la gestion des prestataires, la sécurité, le planning et la prévention des risques météo.' }
+                },
+                {
+                  text: { zh: 'C. 寫作長篇大論的 SEO 部落格文章', en: 'C. Write long-form SEO-friendly blog articles', fr: 'C. Rédiger de longs articles de blog optimisés pour le SEO' },
+                  correct: false,
+                  reason: { zh: '這是內容行銷團隊的主戰場。', en: 'Incorrect. Content marketing teams specialize in SEO copywriting, which has no operational effect on live offline event operations.', fr: 'Incorrect. C\'est la mission de l\'équipe éditoriale, sans incidence sur le bon déroulement opérationnel du chantier.' }
+                }
+              ]
+            }
+          }
+        }
+      }
+    };
+
+    // 目前選取的領域 & 分支 ID
+    let currentDomainKey = 'finance';
+    let activeBranchId = 'corporate';
+
+    // 3. 多語言切換的核心控制邏輯
+    function setLanguage(lang) {
+      if (!uiTranslations[lang]) return;
+      currentLang = lang;
+      
+      // 更新語言按鈕樣式
+      ['zh', 'en', 'fr'].forEach(l => {
+        const btn = document.getElementById(`lang-${l}`);
+        if (l === lang) {
+          btn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 bg-teal-500/15 text-teal-400 border border-teal-500/20";
+        } else {
+          btn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200";
+        }
+      });
+
+      // 更新 HTML 中的靜態標籤 (流暢翻譯)
+      document.title = uiTranslations[lang].title;
+      document.getElementById('header-title').innerText = uiTranslations[lang].title;
+      document.getElementById('header-subtitle').innerText = uiTranslations[lang].subtitle;
+      document.getElementById('global-search-input').placeholder = uiTranslations[lang].searchPlaceholder;
+      
+      // 切換領域 Tabs 的中文名稱
+      document.getElementById('tab-btn-finance-text').innerText = uiTranslations[lang].domainFinance;
+      document.getElementById('tab-btn-accounting-text').innerText = uiTranslations[lang].domainAccounting;
+      document.getElementById('tab-btn-marketing-text').innerText = uiTranslations[lang].domainMarketing;
+      
+      // 詳細解析版塊靜態標籤
+      document.getElementById('label-metadata').innerText = uiTranslations[lang].metadataLabel;
+      document.getElementById('label-core-def').innerText = uiTranslations[lang].coreDefinition;
+      document.getElementById('label-subfields').innerText = uiTranslations[lang].exploreBlocks;
+      document.getElementById('label-skills').innerText = uiTranslations[lang].essentialSkills;
+      document.getElementById('label-tools').innerText = uiTranslations[lang].industryTools;
+      document.getElementById('label-scenario').innerText = uiTranslations[lang].scenarioChallenge;
+      document.getElementById('label-instructions').innerText = uiTranslations[lang].instructions;
+      
+      // Footer 與版權
+      document.getElementById('footer-text').innerText = uiTranslations[lang].footer;
+
+      // 重新渲染動態組件與目前選取的分支
+      renderDomainMindmap(currentDomainKey);
+      selectBranch(activeBranchId);
+    }
+
+    // 4. 動態屬性語系翻譯助手 (Helper)
+    function t(obj) {
+      if (!obj) return '';
+      if (typeof obj === 'string') return obj;
+      return obj[currentLang] || obj['zh'] || '';
+    }
+
+    // 5. 初始化載入
+    window.addEventListener('load', () => {
+      // 預設為繁體中文、金融領域、企業金融分支
+      setLanguage('zh');
+      
+      // 全局搜尋監聽
+      const searchInput = document.getElementById('global-search-input');
+      searchInput.addEventListener('input', (e) => {
+        handleGlobalSearch(e.target.value.trim());
+      });
+
+      // 監聽視窗尺寸改變，即時重繪連接線
+      window.addEventListener('resize', drawConnections);
+      
+      // 點擊外部自動關閉搜尋下拉框
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#global-search-input') && !e.target.closest('#search-results-dropdown')) {
+          document.getElementById('search-results-dropdown').classList.add('hidden');
+        }
+      });
+    });
+
+    // 6. 切換學科領域
+    function switchDomain(domainKey) {
+      if (!domainDatabase[domainKey]) return;
+      currentDomainKey = domainKey;
+
+      // 更新 Tab 啟動外觀
+      const domains = ['finance', 'accounting', 'marketing'];
+      domains.forEach(key => {
+        const btn = document.getElementById(`tab-btn-${key}`);
+        if (key === domainKey) {
+          const themeColor = domainDatabase[key].themeColor;
+          btn.className = `flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 bg-${themeColor}-500/10 text-${themeColor}-400 border border-${themeColor}-500/20 shadow-[0_0_12px_rgba(${domainDatabase[key].rgbColor},0.15)] w-full lg:w-auto whitespace-nowrap`;
+        } else {
+          btn.className = "flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200 w-full lg:w-auto whitespace-nowrap";
+        }
+      });
+
+      // 重繪選取領域的心智圖
+      renderDomainMindmap(domainKey);
+
+      // 預設選取該領域的第一個分支子節點
+      const firstBranchId = Object.keys(domainDatabase[domainKey].branches)[0];
+      selectBranch(firstBranchId);
+    }
+
+    // 7. 渲染心智圖 (動態重構)
+    function renderDomainMindmap(domainKey) {
+      const data = domainDatabase[domainKey];
+      
+      // 更新標題引導與指示器
+      document.getElementById('domain-indicator-text').innerText = t(data.indicatorText);
+      
+      const indicatorIcon = document.getElementById('domain-indicator-icon');
+      indicatorIcon.className = `fa-solid ${data.indicatorIcon} text-${data.themeColor}-400 animate-pulse`;
+
+      // 設置中心節點 (Hub)
+      document.getElementById('central-zh').innerText = t(data.centralNode.zh);
+      document.getElementById('central-en').innerText = t(data.centralNode.en);
+      
+      const badge = document.getElementById('central-badge');
+      badge.innerText = t(data.centralNode.badge);
+      badge.className = `absolute -bottom-2 bg-slate-900 text-[10px] text-${data.themeColor}-400 border border-${data.themeColor}-500/20 px-2.5 py-0.5 rounded-full font-bold`;
+
+      const hubGlow = document.getElementById('central-hub-glow');
+      hubGlow.className = `absolute -inset-1.5 bg-gradient-to-r from-${data.themeColor}-500 to-${data.themeColor}-700 rounded-2xl blur-lg opacity-60 group-hover:opacity-100 transition duration-500`;
+
+      // 渲染子節點
+      const grid = document.getElementById('nodes-grid');
+      grid.innerHTML = '';
+
+      const branches = Object.values(data.branches);
+      grid.className = `grid grid-cols-2 md:grid-cols-${branches.length} gap-4 lg:gap-6 w-full max-w-6xl mt-2`;
+
+      branches.forEach((branch) => {
+        const btn = document.createElement('button');
+        btn.id = `node-${branch.id}`;
+        btn.onclick = () => selectBranch(branch.id);
+        
+        btn.className = `col-span-1 text-left flex flex-col justify-between p-4 rounded-2xl bg-slate-950/40 border border-slate-900 hover:border-${data.themeColor}-500/30 transition-all duration-300 relative group cursor-pointer`;
+        
+        btn.innerHTML = `
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-${data.themeColor}-500/10 to-${data.themeColor}-500/5 border border-white/5 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <i class="fa-solid ${branch.icon} text-${data.themeColor}-400 text-sm md:text-base"></i>
+            </div>
+            <span class="text-[9px] bg-slate-900 text-${data.themeColor}-400 border border-${data.themeColor}-500/10 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">${t(branch.badge)}</span>
+          </div>
+          <div>
+            <h4 class="text-xs md:text-sm font-bold text-slate-100 group-hover:text-white">${t(branch.title)}</h4>
+            <p class="text-[9px] text-slate-500 font-semibold truncate mt-0.5 uppercase tracking-wide font-mono">${t(branch.englishTitle)}</p>
+          </div>
+          <div id="glow-bar-${branch.id}" class="absolute bottom-0 left-4 right-4 h-0.5 rounded-full transition-all duration-300 opacity-0" style="background-color: ${data.hexColor}" />
+        `;
+
+        grid.appendChild(btn);
+      });
+
+      // 繪製連接線
+      setTimeout(drawConnections, 150);
+    }
+
+    // 8. 選取特定分支子節點
+    function selectBranch(branchId) {
+      activeBranchId = branchId;
+      const data = domainDatabase[currentDomainKey];
+      const branch = data.branches[branchId];
+      if (!branch) return;
+
+      // A. 更新地圖節點的高亮狀態
+      const allNodes = document.querySelectorAll('#nodes-grid button');
+      allNodes.forEach(node => {
+        const id = node.id.replace('node-', '');
+        const glowBar = document.getElementById(`glow-bar-${id}`);
+        if (id === branchId) {
+          node.className = `col-span-1 text-left flex flex-col justify-between p-4 rounded-2xl bg-slate-900 border border-${data.themeColor}-500/60 ring-2 ring-${data.themeColor}-500/30 shadow-glow-${data.themeColor} scale-[1.03] transition-all duration-300 relative group cursor-pointer`;
+          if (glowBar) glowBar.classList.remove('opacity-0');
+        } else {
+          node.className = `col-span-1 text-left flex flex-col justify-between p-4 rounded-2xl bg-slate-950/40 border border-slate-900 hover:border-${data.themeColor}-500/30 transition-all duration-300 relative group cursor-pointer`;
+          if (glowBar) glowBar.classList.add('opacity-0');
+        }
+      });
+
+      // B. 重繪連接線
+      drawConnections();
+
+      // C. 載入詳細資訊板塊的翻譯文本
+      document.getElementById('detail-title').innerText = t(branch.title);
+      document.getElementById('detail-tag').innerText = t(branch.englishTitle);
+      document.getElementById('detail-meta').innerText = currentDomainKey.toUpperCase();
+      document.getElementById('detail-desc').innerText = t(branch.description);
+
+      // 更新 Icon 主題與配色
+      const iconBox = document.getElementById('detail-icon-box');
+      iconBox.className = `p-3.5 rounded-2xl transition-all duration-300 bg-${data.themeColor}-500/10 text-${data.themeColor}-400 border border-${data.themeColor}-500/20`;
+      
+      const iconEl = document.getElementById('detail-icon');
+      iconEl.className = `fa-solid ${branch.icon} text-2xl`;
+
+      const detailTag = document.getElementById('detail-tag');
+      detailTag.className = `text-xs uppercase tracking-wider font-bold font-sans text-${data.themeColor}-400`;
+
+      // D. 渲染子領域 (Subfields)
+      const subfieldsContainer = document.getElementById('detail-subfields');
+      subfieldsContainer.innerHTML = '';
+      branch.subfields.forEach(sub => {
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl bg-slate-900/40 border border-slate-900 hover:border-slate-800 transition-all duration-300`;
+        card.innerHTML = `
+          <h5 class="text-xs md:text-sm font-bold text-white mb-1.5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full" style="background-color: ${data.hexColor}"></span>
+            ${t(sub.name)}
+          </h5>
+          <p class="text-[11px] text-slate-400 leading-relaxed font-light">${t(sub.desc)}</p>
+        `;
+        subfieldsContainer.appendChild(card);
+      });
+
+      // E. 渲染專業技能 (Skills) 
+      const skillsContainer = document.getElementById('detail-skills');
+      skillsContainer.innerHTML = '';
+      branch.skills.forEach(skillObj => {
+        const li = document.createElement('li');
+        li.className = 'flex items-start gap-3 text-xs md:text-sm text-slate-300 font-light leading-relaxed';
+        
+        // 解析簡單 Markdown 的 ** 粗體語法
+        const skillText = t(skillObj);
+        const formattedSkill = skillText.replace(/\*\*(.*?)\*\*/g, `<strong class="text-white font-semibold">$1</strong>`);
+        
+        li.innerHTML = `
+          <span class="mt-1" style="color: ${data.hexColor}"><i class="fa-solid fa-circle-check"></i></span>
+          <div>${formattedSkill}</div>
+        `;
+        skillsContainer.appendChild(li);
+      });
+
+      // F. 渲染工具
+      const toolsContainer = document.getElementById('detail-tools');
+      toolsContainer.innerHTML = '';
+      branch.tools.forEach(tool => {
+        const tag = document.createElement('span');
+        tag.className = `px-3 py-1.5 bg-slate-900 border border-slate-850 hover:border-${data.themeColor}-500/30 rounded-xl text-xs font-semibold text-slate-300 cursor-default transition-all duration-200`;
+        tag.innerText = tool;
+        toolsContainer.appendChild(tag);
+      });
+
+      // G. 渲染情境題目
+      document.getElementById('scenario-question').innerText = t(branch.scenario.question);
+      const optionsContainer = document.getElementById('scenario-options');
+      optionsContainer.innerHTML = '';
+
+      const feedbackEl = document.getElementById('scenario-feedback');
+      feedbackEl.className = 'hidden';
+
+      branch.scenario.options.forEach((opt, idx) => {
+        const optBtn = document.createElement('button');
+        optBtn.className = 'w-full text-left p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs md:text-sm text-slate-300 hover:bg-slate-900 hover:border-slate-700/80 transition-all duration-200';
+        optBtn.innerText = t(opt.text);
+        optBtn.onclick = () => submitScenario(idx, branch.scenario.options, data.themeColor);
+        optionsContainer.appendChild(optBtn);
+      });
+    }
+
+    // 9. 提報情境答案與解析
+    function submitScenario(selectedIndex, options, themeColor) {
+      const feedbackEl = document.getElementById('scenario-feedback');
+      const optionButtons = document.querySelectorAll('#scenario-options button');
+      const selectedOpt = options[selectedIndex];
+
+      optionButtons.forEach((btn, idx) => {
+        btn.className = 'w-full text-left p-3.5 rounded-xl text-xs md:text-sm transition-all duration-200 ';
+        if (idx === selectedIndex) {
+          if (selectedOpt.correct) {
+            btn.classList.add('bg-emerald-950/40', 'border-emerald-500/80', 'text-emerald-300');
+          } else {
+            btn.classList.add('bg-rose-950/40', 'border-rose-500/80', 'text-rose-300');
+          }
+        } else {
+          btn.classList.add('bg-slate-900/40', 'border-slate-800/40', 'text-slate-500', 'cursor-not-allowed');
+          btn.disabled = true;
+        }
+      });
+
+      feedbackEl.className = 'block rounded-xl p-4 text-xs md:text-sm leading-relaxed transition-all duration-300 ';
+      
+      const correctLabel = uiTranslations[currentLang].answerCorrect;
+      const analysisLabel = uiTranslations[currentLang].answerAnalysis;
+      const retryLabel = uiTranslations[currentLang].retryBtn;
+
+      if (selectedOpt.correct) {
+        feedbackEl.classList.add('bg-emerald-950/30', 'border', 'border-emerald-500/30', 'text-emerald-300');
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-base mr-1.5 align-middle"></i> <strong>${correctLabel}</strong> ${t(selectedOpt.reason)}`;
+      } else {
+        feedbackEl.classList.add('bg-rose-950/30', 'border', 'border-rose-500/30', 'text-rose-300');
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-base mr-1.5 align-middle"></i> <strong>${analysisLabel}</strong> ${t(selectedOpt.reason)}`;
+        
+        const retryBtn = document.createElement('button');
+        retryBtn.className = `mt-3 block text-xs bg-slate-900 hover:bg-slate-850 border border-slate-800 px-3 py-1.5 rounded-lg text-slate-300 font-medium transition-colors`;
+        retryBtn.innerText = retryLabel;
+        retryBtn.onclick = () => { selectBranch(activeBranchId); };
+        feedbackEl.appendChild(retryBtn);
+      }
+    }
+
+    // 10. 繪製動態 SVG 連接線 (響應式完美定位)
+    function drawConnections() {
+      const canvas = document.getElementById('svg-canvas');
+      const hub = document.getElementById('central-hub');
+      const childNodes = document.querySelectorAll('#nodes-grid button');
+
+      if (!canvas || !hub || childNodes.length === 0) return;
+
+      canvas.innerHTML = '';
+
+      const canvasRect = canvas.getBoundingClientRect();
+      const hubRect = hub.getBoundingClientRect();
+
+      // 計算中心點
+      const startX = hubRect.left + hubRect.width / 2 - canvasRect.left;
+      const startY = hubRect.bottom - canvasRect.top;
+
+      childNodes.forEach(child => {
+        const childRect = child.getBoundingClientRect();
+        
+        // 計算子節點頂部起點
+        const endX = childRect.left + childRect.width / 2 - canvasRect.left;
+        const endY = childRect.top - canvasRect.top;
+
+        const childId = child.id.replace('node-', '');
+        const isSelected = (childId === activeBranchId);
+
+        // 建立貝氏曲線
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const midY = (startY + endY) / 2;
+        const d = `M ${startX} ${startY} C ${startX} ${midY}, ${endX} ${midY}, ${endX} ${endY}`;
+        
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+
+        const activeColor = domainDatabase[currentDomainKey].hexColor;
+
+        if (isSelected) {
+          path.setAttribute('stroke', activeColor);
+          path.setAttribute('stroke-width', '2.5');
+          path.setAttribute('class', 'active-connection-line opacity-100 transition-all duration-300');
+          
+          const glowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          glowPath.setAttribute('d', d);
+          glowPath.setAttribute('fill', 'none');
+          glowPath.setAttribute('stroke', activeColor);
+          glowPath.setAttribute('stroke-width', '6');
+          glowPath.setAttribute('class', 'opacity-20 blur-sm pointer-events-none');
+          canvas.appendChild(glowPath);
+        } else {
+          path.setAttribute('stroke', '#1e293b');
+          path.setAttribute('stroke-width', '1.5');
+          path.setAttribute('stroke-dasharray', '4,4');
+          path.setAttribute('class', 'opacity-40 transition-all duration-300');
+        }
+
+        canvas.appendChild(path);
+      });
+    }
+
+    // 11. 跨領域/語言智能搜尋引擎 (模糊多語言檢索)
+    function handleGlobalSearch(query) {
+      const dropdown = document.getElementById('search-results-dropdown');
+      if (!query) {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+        return;
+      }
+
+      const q = query.toLowerCase();
+      const results = [];
+
+      // 橫跨三大領域、全語言庫索引
+      Object.keys(domainDatabase).forEach(domainKey => {
+        const domain = domainDatabase[domainKey];
+        Object.keys(domain.branches).forEach(branchId => {
+          const branch = domain.branches[branchId];
+          
+          // 將中文、英文、法文之資訊全數彙整，建立全語系索引
+          const textPool = [
+            branch.title.zh, branch.title.en, branch.title.fr,
+            branch.englishTitle.zh, branch.englishTitle.en, branch.englishTitle.fr,
+            branch.description.zh, branch.description.en, branch.description.fr,
+            ...branch.subfields.flatMap(s => [s.name.zh, s.name.en, s.name.fr, s.desc.zh, s.desc.en, s.desc.fr]),
+            ...branch.skills.flatMap(s => [s.zh, s.en, s.fr]),
+            ...branch.tools
+          ].join(' ').toLowerCase();
+
+          if (textPool.includes(q)) {
+            results.push({
+              domainKey: domainKey,
+              branchId: branchId,
+              title: branch.title,
+              englishTitle: branch.englishTitle,
+              themeColor: domain.themeColor,
+              domainName: {
+                zh: domainKey === 'finance' ? '金融學' : domainKey === 'accounting' ? '會計學' : '市場行銷',
+                en: domainKey === 'finance' ? 'Finance' : domainKey === 'accounting' ? 'Accounting' : 'Marketing',
+                fr: domainKey === 'finance' ? 'Finance' : domainKey === 'accounting' ? 'Comptabilité' : 'Marketing'
+              }
+            });
+          }
+        });
+      });
+
+      // 渲染聯想選單
+      if (results.length > 0) {
+        dropdown.classList.remove('hidden');
+        
+        const resultsLabel = uiTranslations[currentLang].searchResults;
+        const clickToJumpLabel = uiTranslations[currentLang].clickToJump;
+
+        dropdown.innerHTML = `
+          <div class="p-2 border-b border-slate-800/60 flex items-center justify-between sticky top-0 bg-slate-950 z-10">
+            <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">${resultsLabel} (${results.length})</span>
+            <span class="text-[10px] text-teal-400 font-bold">${clickToJumpLabel}</span>
+          </div>
+        `;
+
+        results.forEach(res => {
+          const row = document.createElement('button');
+          row.className = 'w-full text-left px-3.5 py-3 hover:bg-slate-900/60 flex items-center justify-between border-b border-slate-900 last:border-0 transition-colors gap-3';
+          row.onclick = () => {
+            // 自動跳轉至對應學科與分支
+            switchDomain(res.domainKey);
+            selectBranch(res.branchId);
+            
+            // 滾動導航到詳細解析卡片
+            document.getElementById('detail-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // 隱藏搜尋結果
+            dropdown.classList.add('hidden');
+            document.getElementById('global-search-input').value = '';
+          };
+
+          row.innerHTML = `
+            <div>
+              <div class="text-xs font-bold text-slate-200">${t(res.title)}</div>
+              <div class="text-[10px] text-slate-400 mt-0.5 truncate max-w-[180px]">${t(res.englishTitle)}</div>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 font-bold rounded bg-${res.themeColor}-500/10 text-${res.themeColor}-400 border border-${res.themeColor}-500/20 whitespace-nowrap">
+              ${t(res.domainName)}
+            </span>
+          `;
+          dropdown.appendChild(row);
+        });
+      } else {
+        dropdown.classList.remove('hidden');
+        dropdown.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-500">
+            ${uiTranslations[currentLang].noResults}
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

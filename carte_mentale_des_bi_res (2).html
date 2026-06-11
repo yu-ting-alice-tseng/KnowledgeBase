@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zymos - Beer Styles & Science Mind Map</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(215, 60%, 15%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(35, 40%, 12%, 1) 0px, transparent 50%);
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        /* Node visual connections container */
+        #svg-canvas {
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        /* Drag and pan styles */
+        .mindmap-viewport {
+            cursor: grab;
+        }
+        .mindmap-viewport:active {
+            cursor: grabbing;
+        }
+        .node-active {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+            border-color: #f59e0b !important;
+        }
+    </style>
+</head>
+<body class="h-full overflow-hidden text-slate-200 flex flex-col">
+
+    <!-- Navigation / Header -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 px-6 py-4 flex flex-wrap items-center justify-between gap-4 z-20">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 text-xl font-bold shadow-lg shadow-amber-500/20">
+                <i class="fa-solid fa-beer-mug-empty"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight text-white flex items-center gap-2">
+                    <span id="nav-title-fr">Zymos - Carte de la Bière & Science</span>
+                    <span id="nav-title-en" class="hidden">Zymos - Beer Styles & Brewing Science</span>
+                    <span id="nav-title-zh" class="hidden">Zymos - 啤酒風格與釀造科學地圖</span>
+                </h1>
+                <p class="text-xs text-slate-400">
+                    <span id="nav-sub-fr">Explorez les fermentations, étapes de brassage et secrets des robes</span>
+                    <span id="nav-sub-en" class="hidden">Explore fermentations, brewing stages and visual profiles</span>
+                    <span id="nav-sub-zh" class="hidden">探索發酵類型、釀造工藝步驟與色澤風味密碼</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Controls: Language & Search -->
+        <div class="flex items-center gap-4 flex-wrap">
+            <!-- Search bar -->
+            <div class="relative">
+                <input type="text" id="search-input" placeholder="Rechercher / Search..." class="bg-slate-800 text-sm rounded-lg pl-9 pr-4 py-2 w-48 focus:w-64 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all border border-slate-700 text-slate-200">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+            </div>
+
+            <!-- Language Switcher Buttons -->
+            <div class="bg-slate-950 p-1 rounded-lg border border-slate-800 flex gap-1">
+                <button onclick="setLanguage('fr')" id="btn-lang-fr" class="px-3 py-1 rounded text-xs font-semibold uppercase transition-all bg-amber-500 text-slate-950">
+                    FR
+                </button>
+                <button onclick="setLanguage('en')" id="btn-lang-en" class="px-3 py-1 rounded text-xs font-semibold uppercase transition-all text-slate-400 hover:text-white">
+                    EN
+                </button>
+                <button onclick="setLanguage('zh')" id="btn-lang-zh" class="px-3 py-1 rounded text-xs font-semibold uppercase transition-all text-slate-400 hover:text-white">
+                    中文
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Interactive Area -->
+    <main class="flex-1 flex overflow-hidden relative">
+        
+        <!-- Left Workspace: Scrollable Mind Map Container -->
+        <div class="flex-1 overflow-auto p-8 relative mindmap-viewport select-none" id="viewport">
+            <!-- Dynamic SVG Canvas for Node connectors -->
+            <svg id="svg-canvas"></svg>
+
+            <!-- Mind Map Layout Structure -->
+            <div class="min-w-[1400px] min-h-[1150px] flex items-center justify-center relative py-12" id="mindmap-container">
+                
+                <!-- Bilateral Grid System (Central root in the middle) -->
+                <div class="grid grid-cols-5 gap-x-12 items-center w-full max-w-7xl relative z-10">
+                    
+                    <!-- COLUMN 1: LEFT SUB-BRANCHES (Lagers, Sours & Brewing Process) -->
+                    <div class="flex flex-col gap-8 justify-around h-full py-4">
+                        <!-- Lager Subs -->
+                        <div class="flex flex-col gap-2 items-end">
+                            <div class="node-item bg-slate-900 border border-amber-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-amber-950/20 hover:border-amber-500 transition-all w-48 shadow-lg" id="node-pilsner" onclick="selectNode('pilsner')">
+                                <span class="text-[10px] text-amber-400 font-bold tracking-wide uppercase">Lager</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Pilsner" data-en="Pilsner" data-zh="皮爾森">Pilsner</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Amère & Rafraîchissante" data-en="Crisp & Refreshing" data-zh="草本苦味、清爽">Amère & Rafraîchissante</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-amber-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-amber-950/20 hover:border-amber-500 transition-all w-48 shadow-lg" id="node-helles" onclick="selectNode('helles')">
+                                <span class="text-[10px] text-amber-400 font-bold tracking-wide uppercase">Lager</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Helles" data-en="Helles" data-zh="慕尼黑清亮">Helles</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Douce & Maltée" data-en="Smooth & Malty" data-zh="麥芽微甜、純淨">Douce & Maltée</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-amber-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-amber-950/20 hover:border-amber-500 transition-all w-48 shadow-lg" id="node-marzen" onclick="selectNode('marzen')">
+                                <span class="text-[10px] text-amber-400 font-bold tracking-wide uppercase">Lager</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Märzen" data-en="Märzen" data-zh="三月啤酒">Märzen</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Caramel & Pain grillé" data-en="Toasty & Rich" data-zh="慶典風格、焦糖香">Caramel & Pain grillé</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-amber-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-amber-950/20 hover:border-amber-500 transition-all w-48 shadow-lg" id="node-dunkel" onclick="selectNode('dunkel')">
+                                <span class="text-[10px] text-amber-400 font-bold tracking-wide uppercase">Lager</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Dunkel & Schwarz" data-en="Dunkel / Schwarzbier" data-zh="德式黑拉格">Dunkel & Schwarz</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Sombre mais légère" data-en="Dark but Light" data-zh="深色輕盈、烘烤微香">Sombre mais légère</span>
+                            </div>
+                        </div>
+
+                        <!-- Sour/Wild Subs -->
+                        <div class="flex flex-col gap-2 items-end">
+                            <div class="node-item bg-slate-900 border border-emerald-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-emerald-950/20 hover:border-emerald-500 transition-all w-48 shadow-lg" id="node-lambic" onclick="selectNode('lambic')">
+                                <span class="text-[10px] text-emerald-400 font-bold tracking-wide uppercase">Wild/Sour</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Lambic & Gueuze" data-en="Lambic & Gueuze" data-zh="蘭比克與貴茲">Lambic & Gueuze</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Acide, terroir & bois" data-en="Wild, tart & complex" data-zh="比利時國寶、自然野香">Acide, terroir & bois</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-emerald-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-emerald-950/20 hover:border-emerald-500 transition-all w-48 shadow-lg" id="node-gose" onclick="selectNode('gose')">
+                                <span class="text-[10px] text-emerald-400 font-bold tracking-wide uppercase">Wild/Sour</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Gose & Sour" data-en="Gose & Sour" data-zh="古斯與酸艾爾">Gose & Sour</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Acidulée & fruitée" data-en="Tart, salty & fruity" data-zh="礦物微鹹、清新水果">Acidulée & fruitée</span>
+                            </div>
+                        </div>
+
+                        <!-- Process Steps (New) -->
+                        <div class="flex flex-col gap-2 items-end">
+                            <div class="node-item bg-slate-900 border border-cyan-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-cyan-950/20 hover:border-cyan-500 transition-all w-48 shadow-lg" id="node-brewing_step1" onclick="selectNode('brewing_step1')">
+                                <span class="text-[10px] text-cyan-400 font-bold tracking-wide uppercase" data-fr="Étape 1" data-en="Step 1" data-zh="步驟 1">Étape 1</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Maltage & Empâtage" data-en="Malting & Mashing" data-zh="製麥與糖化">Maltage & Empâtage</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Extraction des sucres" data-en="Sugar extraction" data-zh="激活酵素與澱粉轉化">Extraction des sucres</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-cyan-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-cyan-950/20 hover:border-cyan-500 transition-all w-48 shadow-lg" id="node-brewing_step2" onclick="selectNode('brewing_step2')">
+                                <span class="text-[10px] text-cyan-400 font-bold tracking-wide uppercase" data-fr="Étape 2" data-en="Step 2" data-zh="步驟 2">Étape 2</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Ébullition & Houblons" data-en="Boiling & Hopping" data-zh="煮沸與酒花投放">Ébullition & Houblons</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Amertume & Arômes" data-en="Bitterness & Aroma" data-zh="釋放阿爾法酸與精油">Amertume & Arômes</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-cyan-500/30 p-2.5 rounded-lg text-right cursor-pointer hover:bg-cyan-950/20 hover:border-cyan-500 transition-all w-48 shadow-lg" id="node-brewing_step3" onclick="selectNode('brewing_step3')">
+                                <span class="text-[10px] text-cyan-400 font-bold tracking-wide uppercase" data-fr="Étape 3" data-en="Step 3" data-zh="步驟 3">Étape 3</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Fermentation & Garde" data-en="Ferment & Condition" data-zh="發酵與低溫熟成">Fermentation & Garde</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Alcool, bulles & repos" data-en="Alcohol, bubbles & aging" data-zh="酵母運作與風味澄清">Alcool, bulles & repos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUMN 2: LEFT MAIN BRANCHES (Lager, Wild, Process) -->
+                    <div class="flex flex-col gap-24 justify-center items-end h-full">
+                        <!-- Branch LAGER -->
+                        <div class="node-item bg-amber-500 text-slate-950 p-3.5 rounded-xl text-right cursor-pointer hover:scale-105 transition-all w-52 shadow-xl shadow-amber-500/10 border-2 border-transparent" id="node-lager" onclick="selectNode('lager')">
+                            <div class="flex items-center justify-end gap-2">
+                                <span class="text-[10px] font-black uppercase tracking-wider" data-fr="Fermentation Basse" data-en="Bottom Fermentation" data-zh="下層低溫發酵">Fermentation Basse</span>
+                                <i class="fa-solid fa-snowflake text-xs"></i>
+                            </div>
+                            <h3 class="font-extrabold text-base mt-0.5" data-fr="LAGER" data-en="LAGER" data-zh="拉格啤酒">LAGER</h3>
+                            <p class="text-[9px] opacity-80" data-fr="Profil pur, axé sur les malts et houblons classiques." data-en="Clean profile, highlighting classic malts and hops." data-zh="口感乾爽純淨，展現經典麥芽與酒花風味。">Profil pur, axé sur les malts et houblons classiques.</p>
+                        </div>
+
+                        <!-- Branch WILD & SOUR -->
+                        <div class="node-item bg-emerald-500 text-slate-950 p-3.5 rounded-xl text-right cursor-pointer hover:scale-105 transition-all w-52 shadow-xl shadow-emerald-500/10 border-2 border-transparent" id="node-sour" onclick="selectNode('sour')">
+                            <div class="flex items-center justify-end gap-2">
+                                <span class="text-[10px] font-black uppercase tracking-wider" data-fr="Fermentation Spontanée" data-en="Spontaneous" data-zh="自然/混合發酵">Fermentation Spontanée</span>
+                                <i class="fa-solid fa-wind text-xs"></i>
+                            </div>
+                            <h3 class="font-extrabold text-base mt-0.5" data-fr="SANS LEVURE AJOUTÉE" data-en="WILD & SOUR" data-zh="酸啤酒 & 野生菌">WILD & SOUR</h3>
+                            <p class="text-[9px] opacity-80" data-fr="Micro-organismes sauvages, acidité fruitée rafraîchissante." data-en="Wild microorganisms, refreshing fruity tartness." data-zh="野生環境酵母，令人驚豔的清爽乳酸微酸。">Micro-organismes sauvages, acidité fruitée rafraîchissante.</p>
+                        </div>
+
+                        <!-- Branch PROCESS (New) -->
+                        <div class="node-item bg-cyan-500 text-slate-950 p-3.5 rounded-xl text-right cursor-pointer hover:scale-105 transition-all w-52 shadow-xl shadow-cyan-500/10 border-2 border-transparent" id="node-process" onclick="selectNode('process')">
+                            <div class="flex items-center justify-end gap-2">
+                                <span class="text-[10px] font-black uppercase tracking-wider" data-fr="L'art du brassage" data-en="Art of Brewing" data-zh="物理與生化科學">L'art du brassage</span>
+                                <i class="fa-solid fa-gears text-xs"></i>
+                            </div>
+                            <h3 class="font-extrabold text-base mt-0.5" data-fr="FABRICATION" data-en="BREWING SCIENCE" data-zh="釀造工藝流程">FABRICATION</h3>
+                            <p class="text-[9px] opacity-80" data-fr="De la céréale jusqu'au conditionnement final." data-en="From harvest grains to sparkling pints." data-zh="解析大麥糖化、沸騰投花與發酵熟成步驟。">De la céréale jusqu'au conditionnement final.</p>
+                        </div>
+                    </div>
+
+                    <!-- COLUMN 3: CENTRAL ROOT NODE -->
+                    <div class="flex justify-center">
+                        <div class="node-item bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 text-slate-950 p-5 rounded-2xl text-center shadow-2xl shadow-amber-500/20 border-4 border-amber-300 w-64 transform hover:scale-105 transition-all duration-300 relative" id="node-root" onclick="selectNode('root')">
+                            <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-slate-950 text-amber-400 flex items-center justify-center border-2 border-amber-400 text-lg shadow-lg">
+                                <i class="fa-solid fa-beer-mug-empty"></i>
+                            </div>
+                            <h2 class="serif-title font-extrabold text-xl mt-3 tracking-tight leading-tight" data-fr="SCIENCE ET STYLES" data-en="THE BEER TREE" data-zh="啤酒科學與風格地圖">SCIENCE ET STYLES</h2>
+                            <p class="text-[10px] font-semibold opacity-90 mt-1 uppercase tracking-widest" data-fr="Classification & Brassage" data-en="Classification & Brewing" data-zh="探秘釀造與風味分類">Classification & Brassage</p>
+                            <div class="mt-3 pt-2.5 border-t border-amber-400/40 text-[9px] font-bold opacity-80 flex justify-center gap-1">
+                                <span data-fr="Cliquez sur un nœud pour explorer" data-en="Click a node to explore" data-zh="點擊節點探索細節">Cliquez sur un nœud pour explorer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUMN 4: RIGHT MAIN BRANCHES (Ales & Color Myth) -->
+                    <div class="flex flex-col gap-24 justify-center items-start h-full">
+                        <!-- Branch ALE -->
+                        <div class="node-item bg-orange-500 text-slate-950 p-3.5 rounded-xl text-left cursor-pointer hover:scale-105 transition-all w-52 shadow-xl shadow-orange-500/10 border-2 border-transparent" id="node-ale" onclick="selectNode('ale')">
+                            <div class="flex items-center justify-start gap-2">
+                                <i class="fa-solid fa-temperature-three-quarters text-xs"></i>
+                                <span class="text-[10px] font-black uppercase tracking-wider" data-fr="Fermentation Haute" data-en="Top Fermentation" data-zh="上層高溫發酵">Fermentation Haute</span>
+                            </div>
+                            <h3 class="font-extrabold text-base mt-0.5" data-fr="ALE" data-en="ALE" data-zh="艾爾啤酒">ALE</h3>
+                            <p class="text-[9px] opacity-80" data-fr="Arômes riches, fruités, épicés et grande variété moderne." data-en="Rich, fruity, spicy aromas and massive modern variety." data-zh="酵母香氣濃郁，具豐富水果與辛香味，品類最廣。">Arômes riches, fruités, épicés et grande variété moderne.</p>
+                        </div>
+
+                        <!-- Branch COLOR MYTH -->
+                        <div class="node-item bg-rose-500 text-white p-3.5 rounded-xl text-left cursor-pointer hover:scale-105 transition-all w-52 shadow-xl shadow-rose-500/10 border-2 border-transparent" id="node-myth" onclick="selectNode('myth')">
+                            <div class="flex items-center justify-start gap-2">
+                                <i class="fa-solid fa-eye-dropper text-xs"></i>
+                                <span class="text-[10px] font-black uppercase tracking-wider" data-fr="Le Profil des Couleurs" data-en="Color & Real Flavors" data-zh="顏色與風味科學">Le Profil des Couleurs</span>
+                            </div>
+                            <h3 class="font-extrabold text-base mt-0.5" data-fr="COULEUR & GOÛT" data-en="COLOR & TASTES" data-zh="啤酒顏色 ≠ 風格">COULEUR & GOÛT</h3>
+                            <p class="text-[9px] opacity-90" data-fr="La couleur n'est pas un style. Décryptage aromatique." data-en="Color is not a style! Read the Maillard flavors." data-zh="解密因烘焙度（美拉德反應）帶來的不同口味特徵。">La couleur n'est pas un style. Décryptage aromatique.</p>
+                        </div>
+                    </div>
+
+                    <!-- COLUMN 5: RIGHT SUB-BRANCHES (Ales & Colors/Maillard Steps) -->
+                    <div class="flex flex-col gap-8 justify-around h-full py-4">
+                        <!-- Ale Subs -->
+                        <div class="flex flex-col gap-2 items-start">
+                            <div class="node-item bg-slate-900 border border-orange-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-orange-950/20 hover:border-orange-500 transition-all w-48 shadow-lg" id="node-ipa" onclick="selectNode('ipa')">
+                                <span class="text-[10px] text-orange-400 font-bold tracking-wide uppercase">Ale</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="IPA & Hops" data-en="IPA & Hops" data-zh="印度淡色艾爾 (IPA)">IPA & Hops</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Amertume, Agrumes & Résine" data-en="Bitter, Citrusy & Piney" data-zh="酒花香氣炸裂、具水果松脂香">Amertume, Agrumes & Résine</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-orange-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-orange-950/20 hover:border-orange-500 transition-all w-48 shadow-lg" id="node-stout" onclick="selectNode('stout')">
+                                <span class="text-[10px] text-orange-400 font-bold tracking-wide uppercase">Ale</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Stout & Porter" data-en="Stout & Porter" data-zh="波特與世濤">Stout & Porter</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Café grillé & Chocolat" data-en="Roasted coffee & Cocoa" data-zh="重烘焙麥芽、咖啡與黑巧克力味">Café grillé & Chocolat</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-orange-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-orange-950/20 hover:border-orange-500 transition-all w-48 shadow-lg" id="node-wheat" onclick="selectNode('wheat')">
+                                <span class="text-[10px] text-orange-400 font-bold tracking-wide uppercase">Ale</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Bières de Blé (Blanches)" data-en="Wheat Beers" data-zh="小麥啤酒 (白啤酒)">Bières de Blé</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Levure, banane & orange" data-en="Yeast, banana & clove" data-zh="蓬鬆爽口、酵母感與香蕉橘皮香">Levure, banane & orange</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-orange-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-orange-950/20 hover:border-orange-500 transition-all w-48 shadow-lg" id="node-belgian" onclick="selectNode('belgian')">
+                                <span class="text-[10px] text-orange-400 font-bold tracking-wide uppercase">Ale</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Styles Belges" data-en="Belgian Abbey Styles" data-zh="比利時艾爾 / 修道院">Styles Belges</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Alcool, épices & fruits" data-en="Spiced, dried fruit & strong" data-zh="層次繁繁、高酒精度、果香辛香">Alcool, épices & fruits</span>
+                            </div>
+                        </div>
+
+                        <!-- Color/Maillard Tastes Subs (New) -->
+                        <div class="flex flex-col gap-2 items-start">
+                            <div class="node-item bg-slate-900 border border-rose-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-rose-950/20 hover:border-rose-500 transition-all w-48 shadow-lg" id="node-col_blonde" onclick="selectNode('col_blonde')">
+                                <span class="text-[10px] text-rose-400 font-bold tracking-wide uppercase" data-fr="Blonde" data-en="Golden / Pale" data-zh="淡色 / 金黃色系">Blonde</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Céréales & Miel" data-en="Bready & Crisp" data-zh="麵包、小麥與花蜜香">Céréales & Miel</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Paille fraîche, biscuit léger" data-en="Fresh straw, light honey" data-zh="低溫烘乾，酒花香最突出">Paille fraîche, biscuit léger</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-rose-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-rose-950/20 hover:border-rose-500 transition-all w-48 shadow-lg" id="node-col_amber" onclick="selectNode('col_amber')">
+                                <span class="text-[10px] text-rose-400 font-bold tracking-wide uppercase" data-fr="Ambrée" data-en="Amber / Red" data-zh="琥珀 / 紅銅色系">Ambrée</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Caramel & Toffee" data-en="Caramel & Toasty" data-zh="太妃糖、堅果與果乾">Caramel & Toffee</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Sucre roux, fruits secs" data-en="Hazelnut, rich butterscotch" data-zh="中高溫結晶烘烤，微甜飽滿">Sucre roux, fruits secs</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-rose-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-rose-950/20 hover:border-rose-500 transition-all w-48 shadow-lg" id="node-col_dark" onclick="selectNode('col_dark')">
+                                <span class="text-[10px] text-rose-400 font-bold tracking-wide uppercase" data-fr="Brune / Noire" data-en="Dark / Black" data-zh="深色 / 黑色系">Brune / Noire</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Café & Chocolat Noir" data-en="Espresso & Cocoa" data-zh="炭焙咖啡、純黑巧克力">Café & Chocolat Noir</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Réaction de Maillard forte" data-en="Licorice, highly roasted char" data-zh="高溫焦化，乾爽或厚實苦感">Réaction de Maillard forte</span>
+                            </div>
+                            <div class="node-item bg-slate-900 border border-rose-500/30 p-2.5 rounded-lg text-left cursor-pointer hover:bg-rose-950/20 hover:border-rose-500 transition-all w-48 shadow-lg" id="node-kilning" onclick="selectNode('kilning')">
+                                <span class="text-[10px] text-rose-400 font-bold tracking-wide uppercase" data-fr="Technique" data-en="Roasting Tech" data-zh="烘焙科學">Technique</span>
+                                <h4 class="font-bold text-xs text-white block mt-1" data-fr="Le Touraillage" data-en="Malt Kilning" data-zh="麥芽窯乾與熱反應">Le Touraillage</h4>
+                                <span class="text-[9px] text-slate-400 block" data-fr="Cuisson et chimie du grain" data-en="Chemical Maillard magic" data-zh="加熱溫度與時間控制">Cuisson et chimie du grain</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Sidebar: Interactive Info & Details Panel -->
+        <aside class="w-96 bg-slate-900/90 backdrop-blur-md border-l border-slate-800 p-6 overflow-y-auto flex flex-col justify-between z-10 shadow-2xl relative">
+            
+            <div id="no-selection-msg" class="h-full flex flex-col items-center justify-center text-center py-12">
+                <div class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-slate-500 mb-4 animate-bounce">
+                    <i class="fa-solid fa-hand-pointer text-xl"></i>
+                </div>
+                <h3 class="font-bold text-slate-200 text-lg" data-fr="Sélectionnez un style" data-en="Select a Style" data-zh="選擇一個風格節點">Sélectionnez un style</h3>
+                <p class="text-sm text-slate-400 mt-2 px-4" data-fr="Cliquez sur n'importe quel nœud de la carte mentale pour explorer sa fiche technique, ses profils de goût ou les étapes de brassage." data-en="Click on any mind map node to reveal its full technical details, profile, or brewing step science." data-zh="點擊心智圖中的任意節點，解鎖全方位的原料、歷史、釀造步驟及香氣風味分析。">Cliquez sur n'importe quel nœud pour explorer sa fiche.</p>
+            </div>
+
+            <!-- Detailed Content Card (initially hidden) -->
+            <div id="details-card" class="hidden flex-col gap-6 h-full">
+                <!-- Title & Badge -->
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span id="detail-category" class="px-2.5 py-1 rounded text-[10px] font-black uppercase tracking-widest text-slate-950 bg-amber-500">CATEGORY</span>
+                        <span id="detail-abv" class="text-xs font-bold text-amber-400 flex items-center gap-1">
+                            <i class="fa-solid fa-percent"></i> ABV: 5.0%
+                        </span>
+                    </div>
+                    <h3 id="detail-title" class="serif-title font-extrabold text-2xl text-white">Beer Style Name</h3>
+                    <p id="detail-tagline" class="text-xs text-slate-400 italic mt-1">Short engaging tagline summarizing flavor profile.</p>
+                </div>
+
+                <!-- Description -->
+                <div class="border-t border-b border-slate-800 py-4">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-file-invoice"></i> 
+                        <span data-fr="Description" data-en="Description" data-zh="風格特徵">Description</span>
+                    </h4>
+                    <p id="detail-desc" class="text-sm text-slate-300 leading-relaxed">Detailed sensory descriptors, production insights, and unique attributes regarding brewing this style.</p>
+                </div>
+
+                <!-- Technical Radar Sim (Flavor Profile) -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span data-fr="Profil de Saveur" data-en="Flavor Profile" data-zh="風味強弱度">Profil de Saveur</span>
+                    </h4>
+                    <div class="space-y-2">
+                        <!-- Amertume -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-400" id="label-bitter" data-fr="Amertume" data-en="Bitterness" data-zh="啤酒花苦度">Amertume</span>
+                                <span id="val-bitter" class="font-bold text-amber-500">Low</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                <div id="bar-bitter" class="h-full bg-amber-500" style="width: 20%"></div>
+                            </div>
+                        </div>
+                        <!-- Malt/Douceur -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-400" id="label-sweet" data-fr="Malt / Douceur" data-en="Malt Sweetness" data-zh="麥芽甜感">Malt / Douceur</span>
+                                <span id="val-sweet" class="font-bold text-amber-500">Medium</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                <div id="bar-sweet" class="h-full bg-amber-500" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <!-- Acidite -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-400" id="label-sour" data-fr="Acidité" data-en="Acidity / Tartness" data-zh="乳酸酸感">Acidité</span>
+                                <span id="val-sour" class="font-bold text-amber-500">None</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                <div id="bar-sour" class="h-full bg-amber-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <!-- Torrefaction -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-400" id="label-roast" data-fr="Torréfaction" data-en="Roastiness" data-zh="烘烤焦味">Torréfaction</span>
+                                <span id="val-roast" class="font-bold text-amber-500">None</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                <div id="bar-roast" class="h-full bg-amber-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Specs: Glassware & Food Pairing -->
+                <div class="grid grid-cols-2 gap-3 bg-slate-950 p-3 rounded-lg border border-slate-800">
+                    <div class="flex flex-col gap-1">
+                        <span class="text-[10px] text-slate-500 uppercase font-black" data-fr="Verre Idéal" data-en="Ideal Glass" data-zh="推薦酒杯">Verre Idéal</span>
+                        <span id="detail-glass" class="text-xs font-semibold text-white flex items-center gap-1.5">
+                            <i class="fa-solid fa-whiskey-glass text-amber-500"></i> Pint Glass
+                        </span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <span class="text-[10px] text-slate-500 uppercase font-black" data-fr="Accord Mets" data-en="Food Pairing" data-zh="食物搭配">Accord Mets</span>
+                        <span id="detail-pair" class="text-xs font-semibold text-white flex items-center gap-1.5">
+                            <i class="fa-solid fa-utensils text-amber-500"></i> Grilled meats
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Famous Examples -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-award"></i>
+                        <span data-fr="Exemples / Clés" data-en="Examples / Keys" data-zh="經典代表 / 核心概念">Exemples / Clés</span>
+                    </h4>
+                    <p id="detail-examples" class="text-sm text-slate-300 font-medium">Guinness Draught, Urquell, Duvel</p>
+                </div>
+
+                <!-- Interactive Color & Flavor Spectrum (Visible for color/malt nodes) -->
+                <div id="color-spectrum-container" class="hidden border-t border-slate-800 pt-4 mt-2">
+                    <h4 class="text-xs font-bold text-rose-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-palette"></i>
+                        <span data-fr="Spectre de Couleur & Goût" data-en="Color & Flavor Spectrum" data-zh="互動式色彩風味光譜">Spectre de Couleur & Goût</span>
+                    </h4>
+                    <p class="text-[11px] text-slate-400 mb-3 leading-snug" data-fr="Cliquez sur les nuances pour révéler la chimie gustative issue du touraillage de l'orge :" data-en="Click on the shades to reveal the precise flavor chemistry from barley kilning:" data-zh="點擊各個色度，探索麥芽高溫烘焙所釋放的精準化學反應與風味特徵：">Cliquez sur les nuances pour révéler la chimie gustative issue du touraillage de l'orge :</p>
+                    
+                    <!-- Color Bar Steps -->
+                    <div class="flex justify-between gap-1 p-1 bg-slate-950 rounded-lg border border-slate-800 mb-3" id="spectrum-steps-bar">
+                        <!-- Generates via JavaScript -->
+                    </div>
+
+                    <!-- Color Info Panel -->
+                    <div id="spectrum-info-box" class="p-3.5 rounded-xl border transition-all duration-300 shadow-lg flex flex-col gap-2.5">
+                        <div class="flex justify-between items-center">
+                            <span id="spec-name" class="font-extrabold text-sm">Couleur</span>
+                            <span id="spec-srm" class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-slate-950/20">SRM</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] border-b border-black/10 pb-2" id="spec-meta">
+                            <div>
+                                <span class="font-bold block uppercase tracking-wider text-[8px] opacity-75" data-fr="Température" data-en="Temperature" data-zh="烘烤溫度">Température</span>
+                                <span id="spec-temp" class="font-semibold">0°C</span>
+                            </div>
+                            <div>
+                                <span class="font-bold block uppercase tracking-wider text-[8px] opacity-75" data-fr="Malts Clés" data-en="Key Malts" data-zh="核心麥芽">Malts Clés</span>
+                                <span id="spec-malts" class="font-semibold">Malt</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-bold block uppercase tracking-wider text-[8px] opacity-75 mb-0.5" data-fr="Profil Gustatif" data-en="Taste Profile" data-zh="風味特寫">Profil Gustatif</span>
+                            <p id="spec-tastes" class="text-xs leading-normal font-medium">Description</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Custom Interactive Mini-quiz to engage users -->
+            <div class="border-t border-slate-800 pt-4 mt-6">
+                <div class="bg-slate-950/40 p-4 rounded-xl border border-amber-500/10">
+                    <h4 class="text-xs font-black text-amber-500 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <i class="fa-regular fa-lightbulb"></i>
+                        <span data-fr="Le Saviez-vous ?" data-en="Did you know?" data-zh="冷知識專區">Le Saviez-vous ?</span>
+                    </h4>
+                    <p id="quiz-fact" class="text-xs text-slate-400 leading-normal">La couleur de la bière est déterminée par la température d'exposition du malt lors du maltage.</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Scripts & Logic -->
+    <script>
+        // Language Database
+        const beerStylesData = {
+            root: {
+                category: { fr: "Origine", en: "Origin", zh: "起源" },
+                abv: "N/A",
+                title: { fr: "L'Arbre des Bières", en: "The Beer Tree", zh: "啤酒工藝樹" },
+                tagline: { fr: "La grande famille des fermentations et de la science", en: "The deep science of fermentation and colors", zh: "發酵工藝與色彩風味的科學交融" },
+                desc: {
+                    fr: "La bière est l'une des boissons brassées les plus anciennes du monde. Elle se définit par sa méthode de fermentation (basse pour les lagers, haute pour les ales, spontanée pour les sours) et par les réactions de caramélisation thermique (Maillard) qui lui confèrent ses couleurs et goûts magiques.",
+                    en: "Beer is one of the oldest fermented beverages in human history. To fully master beer, understand both the fermentation method (Lagers vs Ales vs Wild) and the thermal caramelization (Maillard) reactions which dictate its volatile esters, phenols, and color spectrums.",
+                    zh: "啤酒是人類歷史上最悠久的發酵飲品之一。要真正理解啤酒，需要掌握兩大核心維度：依靠「發酵類型」（拉格、艾爾、野生自然酸釀）決定的酒體骨架，以及通過「美拉德反應」烘焙麥芽決定的外觀色彩與焦糖、咖啡風味。"
+                },
+                profile: { bitter: 10, sweet: 10, sour: 10, roast: 10 },
+                glass: { fr: "Chope classique", en: "Classic Mug", zh: "傳統大啤酒杯" },
+                pairings: { fr: "À partager !", en: "Good times!", zh: "歡聚時刻！" },
+                examples: "La bière est universelle / Worldwide Heritage"
+            },
+            lager: {
+                category: { fr: "Grande Famille", en: "Major Branch", zh: "主要發酵型" },
+                abv: "4.0% - 6.0%",
+                title: { fr: "Lager (Basse Fermentation)", en: "Lager (Bottom Fermenting)", zh: "拉格啤酒 (下層低溫)" },
+                tagline: { fr: "Pureté, fraîcheur et netteté en bouche", en: "Cleanliness, crispness, and malt focus", zh: "爽脆乾爽、極致純淨" },
+                desc: {
+                    fr: "La famille des Lagers est brassée à des températures très fraîches (8-12°C) avec des souches de levure 'Saccharomyces pastorianus' qui coulent vers le bas de la cuve. Après fermentation, elles subissent une garde à froid (lagering) qui affine le profil de la bière, éliminant les arômes fruités pour laisser place à la céréale brute et au houblon pur.",
+                    en: "Lagers are brewed at low temperatures (8-12°C) using top-tier Saccharomyces pastorianus yeast strains which settle at the bottom. The extended cold conditioning (lagering) clarifies the beer and ensures a clean, crisp profile where esters are negligible, bringing grain and pristine hops to the front.",
+                    zh: "拉格啤酒是在極低溫（8-12°C）下，由沉澱於底部的「巴斯德酵母」發酵而成。低溫發酵結束後，通常需要長達數週甚至數月的「低溫熟成（Lagering）」，沉澱雜質，剔除艾爾酵母常有的水果酯香，讓最純淨的麥芽甜與酒花香氣更為突出。"
+                },
+                profile: { bitter: 25, sweet: 35, sour: 5, roast: 5 },
+                glass: { fr: "Pilsner flûte", en: "Pilsner Flute", zh: "皮爾森杯" },
+                pairings: { fr: "Légumes grillés, volailles, charcuterie", en: "Grilled chicken, salty pretzels, light sausages", zh: "烤雞、椒鹽脆餅、白香腸" },
+                examples: "Spaten Helles, Pilsner Urquell, Heineken"
+            },
+            ale: {
+                category: { fr: "Grande Famille", en: "Major Branch", zh: "主要發酵型" },
+                abv: "4.5% - 10%+",
+                title: { fr: "Ale (Haute Fermentation)", en: "Ale (Top Fermenting)", zh: "艾爾啤酒 (上層高溫)" },
+                tagline: { fr: "La diversité des arômes fruités et épicés", en: "Esters, spices, and incredible history", zh: "馥郁香氣、種類萬千" },
+                desc: {
+                    fr: "Les Ales utilisent des levures 'Saccharomyces cerevisiae' qui travaillent à température ambiante (15-22°C) et remontent en surface. Cette température plus chaude stimule la production d'esters (arômes fruités de banane, pomme) et de phénols (notes épicées de clou de girofle). C'est le style classique des bières belges, britanniques et de la révolution craft.",
+                    en: "Ales rely on Saccharomyces cerevisiae, operating at room temperatures (15-22°C). This warmer range triggers volatile organic compounds called esters (fructose, red apple, banana) and phenols (clove, pepper). This classic process anchors traditional British, Belgian Abbey, and modern American craft styles.",
+                    zh: "艾爾啤酒使用「釀酒酵母」，在溫暖常溫（15-22°C）環境中發酵，酵母漂浮於酒液頂端。較高溫度極大刺激了酵母合成水果「酯類」（如香蕉、青蘋果香）與「酚類」（丁香、辛香料感），奠定了英式傳統、比利時修道院與現代美式精釀的風味地基。"
+                },
+                profile: { bitter: 40, sweet: 45, sour: 10, roast: 15 },
+                glass: { fr: "Tulipe ou Pinte", en: "Tulip or Shaker Pint", zh: "鬱金香杯/品脫杯" },
+                pairings: { fr: "Fromages affinés, viandes rouges", en: "Sharp cheeses, gourmet burgers, roast beef", zh: "熟成起司、厚牛堡、烤牛肉" },
+                examples: "Duvel, Sierra Nevada Pale Ale, Guinness"
+            },
+            sour: {
+                category: { fr: "Grande Famille", en: "Major Branch", zh: "特殊發酵型" },
+                abv: "3.5% - 7.5%",
+                title: { fr: "Fermentations Spontanées & Sours", en: "Spontaneous & Sour Ales", zh: "酸啤酒 & 自然混合發酵" },
+                tagline: { fr: "L'art du sauvage et des levures autochtones", en: "Microbial complexity and lactic tartness", zh: "曠野野生酵母與乳酸菌結合" },
+                desc: {
+                    fr: "Ici, point d'inoculation stérile contrôlée de levure industrielle. Le brasseur expose le moût chaud à l'air libre (souvent dans un bassin appelé bac refroidisseur ou 'koelschip'). Les levures sauvages (Brettanomyces) et bactéries lactiques (Lactobacillus) de l'environnement s'y installent, créant une acidité unique et tranchante d'une immense complexité.",
+                    en: "Forget sterile industrial inoculation. Brewers expose warm wort to open air in wide copper pans ('coolships'). Local windborne microflora—including Brettanomyces wild yeast, Lactobacillus, and Pediococcus—colonize the liquid naturally, yielding exquisite acidity and funky barrel profiles.",
+                    zh: "酸啤酒不依賴實驗室人工篩選的酵母。傳統自然發酵（如蘭比克）是將熱麥汁倒入寬闊的「冷卻盤（Coolship）」中暴露於空氣中，由風中吹落的野生Brettanomyces酵母、乳酸菌及兒茶球菌自然定殖，經橡木桶數年熟成，交織出銳利的酸度與狂野、複雜的木質微澀感。"
+                },
+                profile: { bitter: 5, sweet: 10, sour: 90, roast: 5 },
+                glass: { fr: "Verre à Gueuze ou Flûte", en: "Gueuze Tumbler or Champagne Flute", zh: "無梗平底杯/香檳杯" },
+                pairings: { fr: "Huitres, poissons gras, chèvre frais", en: "Oysters, oily fish, tangy goat cheese", zh: "生蠔、油脂豐富的魚類、山羊起司" },
+                examples: "Cantillon Gueuze, 3 Fonteinen, Duchess de Bourgogne"
+            },
+            process: {
+                category: { fr: "Processus", en: "Brewing Science", zh: "科學製程" },
+                abv: "N/A",
+                title: { fr: "Le Processus de Fabrication", en: "The Brewing Process", zh: "啤酒四大釀造工藝步驟" },
+                tagline: { fr: "De l'épi d'orge jusqu'au verre parfait", en: "From barley grain to the bubbling glass", zh: "從一粒大麥到杯中冒泡的完美琥珀" },
+                desc: {
+                    fr: "Fabriquer de la bière est une science fascinante combinant biochimie et patience. Les quatre ingrédients essentiels (eau, malt, houblon, levure) subissent des étapes méticuleuses de cuisson, filtration, ébullition et garde pour libérer sucres, amertume et arômes précieux.",
+                    en: "Brewing beer is a fascinating science combining organic biochemistry and craftsmanship. Four key ingredients (water, malt, hops, yeast) undergo meticulous steps of milling, mashing, boiling, and fermentation to unleash pristine sugars, clean bitterness, and complex aromas.",
+                    zh: "釀造啤酒是一門結合有機生物化學與工藝耐心的迷人科學。四大核心原料（水、麥芽、啤酒花、酵母）需經過磨碎、糖化、過濾、沸騰和發酵等極其精密的操作，方能將大麥澱粉轉化為迷人酒精與馥郁香氣。"
+                },
+                profile: { bitter: 20, sweet: 40, sour: 10, roast: 10 },
+                glass: { fr: "Verre doseur / éprouvette", en: "Brewhouse Beaker", zh: "科學量杯" },
+                pairings: { fr: "Tous les plats !", en: "All kinds of food!", zh: "百搭萬物" },
+                examples: "Maltage, Empâtage, Ébullition, Fermentation"
+            },
+            myth: {
+                category: { fr: "Vérité Scientifique", en: "Color & Chemistry", zh: "色彩風味科學" },
+                abv: "Variable (0% - 15%+)",
+                title: { fr: "Couleurs & Saveurs de la Bière", en: "Color & Tastes Spectrum", zh: "啤酒顏色與風味深度" },
+                tagline: { fr: "La couleur n'est pas un style. C'est de la chimie !", en: "Color is merely malt roasting, not a recipe style", zh: "顏色僅取決於烘焙，解密色彩背後的真實口感" },
+                desc: {
+                    fr: "Une bière brune n'est pas forcément forte ni amère ! Sa couleur dépend du degré de touraillage (cuisson) du malt. Cependant, chaque spectre de couleur (Blonde, Ambrée, Noire) apporte une signature gustative bien spécifique grâce aux réactions de Maillard (caramélisation, torréfaction).",
+                    en: "Dark beer does not equal strong or bitter! Visual tint depends exclusively on how dark the malt was roasted in kilns. However, each color spectrum (Gold, Amber, Black) brings a very distinctive flavor signature driven by Maillard reactions and caramelization.",
+                    zh: "「黑啤酒酒精度一定很高/一定很苦」是最大的誤解！啤酒外觀顏色100%取決於麥芽在烤爐中烘乾的時間與溫度。然而，不同的顏色區間（金黃、琥珀、深黑）確實對應著因「美拉德反應」和糖化焦化帶來的特定風味特徵。理解顏色與風味的關係至關重要。"
+                },
+                profile: { bitter: 30, sweet: 45, sour: 10, roast: 50 },
+                glass: { fr: "Verre dégustation", en: "Taster Glass", zh: "品酒專用杯" },
+                pairings: { fr: "Accords par complémentarité", en: "Complementary pairings", zh: "風味互補搭配" },
+                examples: "Maillard Reactions / Toasting Chemistry"
+            },
+            brewing_step1: {
+                category: { fr: "Processus : Étape 1", en: "Brewing: Step 1", zh: "工藝步驟 1" },
+                abv: "N/A",
+                title: { fr: "Maltage & Empâtage", en: "Malting & Mashing", zh: "製麥與糖化工藝" },
+                tagline: { fr: "Transformer l'amidon en sucres fermentescibles", en: "Extracting and converting starch into sweet wort", zh: "釋放並轉化可發酵大麥糖分" },
+                desc: {
+                    fr: "L'orge brute est humidifiée pour germer (maltage), puis séchée pour stopper cette germination. En brasserie, ce malt est concassé et mélangé à de l'eau chaude (empâtage) entre 62°C et 72°C. Les enzymes naturelles s'activent pour transformer l'amidon de la céréale en sucres fermentescibles (le moût).",
+                    en: "Raw barley is soaked to sprout (malting) then dried in kilns. In the brewhouse, this malt is crushed and mixed with hot water (mashing) at 62°C–72°C. This activates natural enzymes that convert grain starches into sweet, fermentable sugar-rich liquid called wort.",
+                    zh: "大麥經浸泡發芽（製麥）後烘乾以固定風味。隨後將其粉碎並與熱水混合（糖化），控制在 62°C–72°C。此時天然澱粉酶被激活，將大麥澱粉轉化為富含糖分的甜美液體（稱為麥汁），作為發酵基底。"
+                },
+                profile: { bitter: 10, sweet: 85, sour: 0, roast: 20 },
+                glass: { fr: "Éprouvette", en: "Lab Tube", zh: "科學試管" },
+                pairings: { fr: "Sucre candi, céréales", en: "Grains, honey crackers", zh: "穀物棒、麥芽糖" },
+                examples: "Conversion de l'amidon / Enzymatic magic"
+            },
+            brewing_step2: {
+                category: { fr: "Processus : Étape 2", en: "Brewing: Step 2", zh: "工藝步驟 2" },
+                abv: "N/A",
+                title: { fr: "Ébullition & Houblonnage", en: "Boiling & Hopping", zh: "麥汁沸騰與啤酒花投放" },
+                tagline: { fr: "L'ajout d'amertume et de parfums volatils", en: "Locking in alpha acid bitterness and essential oils", zh: "注入靈魂苦味與揮發香氣" },
+                desc: {
+                    fr: "Le moût sucré et filtré est porté à ébullition pendant 1 à 2 heures. C'est ici que l'on ajoute le houblon. Les houblons ajoutés au début apportent l'amertume (isomérisation des acides alpha). Les houblons ajoutés à la fin (ou à froid plus tard, 'Dry Hopping') préservent les huiles essentielles aromatiques (notes florales, fruitées, résineuses).",
+                    en: "The filtered wort is boiled vigorously for 60 to 90 minutes. Hops are introduced during this phase. Early additions provide bitterness (alpha acid isomerization). Late additions (or post-boil dry-hopping) preserve volatile essential oils, offering floral, tropical, or piney aromas.",
+                    zh: "過濾後的麥汁沸騰 60-90 分鐘。在此階段投放啤酒花：早期投放經化學異構化釋放「苦味」（α-酸）；後期投放（或發酵期「乾投」）則保留不耐熱的揮發性精油，賦予啤酒花迷人的花香、柑橘或松脂香。"
+                },
+                profile: { bitter: 95, sweet: 15, sour: 0, roast: 0 },
+                glass: { fr: "Verre à IPA", en: "IPA Glass", zh: "啤酒花專用杯" },
+                pairings: { fr: "Plats pimentés, agrumes", en: "Spicy foods, citrus zest", zh: "辛辣食物、柑橘類" },
+                examples: "Acides Alpha / Huiles Essentielles / Dry Hopping"
+            },
+            brewing_step3: {
+                category: { fr: "Processus : Étape 3", en: "Brewing: Step 3", zh: "工藝步驟 3" },
+                abv: "N/A",
+                title: { fr: "Fermentation & Garde", en: "Fermentation & Conditioning", zh: "酵母發酵與低溫熟成" },
+                tagline: { fr: "Le travail vivant des levures et le mûrissement", en: "Yeast converts sugars into ethanol, CO2 and esters", zh: "酵母將糖分轉化為酒精與二氧化碳" },
+                desc: {
+                    fr: "Le moût refroidi est ensemencé en levure. Elles consomment les sucres pour créer l'alcool et le CO2 (bulles naturelles), ainsi que des esters fruités. S'ensuit une période de garde (mûrissement à froid pour clarifier la bière et affiner les saveurs) qui peut durer de quelques semaines à plusieurs mois.",
+                    en: "The cooled wort is pitched with yeast. These single-celled fungi consume sugars, generating alcohol, natural carbon dioxide, and flavorful esters. Finally, conditioning (cold aging to clarify and smooth out harsh notes) takes place, taking weeks or months.",
+                    zh: "冷卻後的麥汁中接入酵母。這些單細胞真菌吞噬糖分，代謝出酒精、天然二氧化碳及美妙的酯類香氣。發酵結束後進入「熟成期」（低溫靜置以澄清酒體、消除發酵初期雜味），可能持續數週至數月。"
+                },
+                profile: { bitter: 25, sweet: 20, sour: 15, roast: 5 },
+                glass: { fr: "Verre ballon", en: "Snifter Glass", zh: "聞香杯" },
+                pairings: { fr: "Fromages affinés, charcuterie", en: "Aged cheese, smoked ham", zh: "熟成起司、煙燻冷肉" },
+                examples: "Saccharomyces pastorianus vs cerevisiae"
+            },
+            col_blonde: {
+                category: { fr: "Couleur : Or / Paille", en: "Color: Gold / Straw", zh: "金黃 / 淡色系" },
+                abv: "3.5% - 10%+",
+                title: { fr: "Le Goût des Bières Blondes", en: "Flavor Profile of Pale & Golden Beers", zh: "金黃色系啤酒風味特徵" },
+                tagline: { fr: "Céréales fraîches, mie de pain et houblon éclatant", en: "Fresh grains, crisp breadiness, and bright hops", zh: "純淨麥香、清新吐司與明亮酒花" },
+                desc: {
+                    fr: "Les bières de couleur blonde utilisent des malts séchés à basse température. En bouche, elles évoquent la paille fraîche, la mie de pain, le biscuit léger ou le miel de fleurs. Sans la lourdeur des malts cuits, elles laissent s'exprimer pleinement la fraîcheur et la finesse des houblons (agrumes, herbe fraîche, résine de pin).",
+                    en: "Pale and golden beers utilize grains dried at gentle, low temperatures. On the palate, they showcase notes of fresh straw, white bread crumb, light cracker, or honey. Because there are no heavy roasted grains, the hop characteristics (citrus, herbal, floral) shine with incredible clarity.",
+                    zh: "金黃與淡色系啤酒使用低溫乾燥的淡色麥芽。入口能感受到清新麥香、白麵包芯、蘇打餅乾與淡淡的花蜜甜。由於缺乏深色麥芽的厚重，啤酒花本質的柑橘、草本、松針與花香等風味在此類別中表現得最為純粹、分明。"
+                },
+                profile: { bitter: 50, sweet: 35, sour: 5, roast: 0 },
+                glass: { fr: "Flûte ou Gobelet", en: "Pilsner Flute", zh: "高挑皮爾森杯" },
+                pairings: { fr: "Poissons, salades, sushis", en: "Grilled fish, fresh salads, sushi", zh: "煎魚、清爽沙拉、日式壽司" },
+                examples: "Pilsner, Blonde Belge, Golden Ale, Helles"
+            },
+            col_amber: {
+                category: { fr: "Couleur : Rousse / Cuivre", en: "Color: Amber / Red", zh: "琥珀 / 紅銅色系" },
+                abv: "4.5% - 8.5%",
+                title: { fr: "Le Goût des Bières Ambrées", en: "Flavor Profile of Amber & Red Beers", zh: "琥珀色系啤酒風味特徵" },
+                tagline: { fr: "Caramel chaud, biscuits et fruits secs", en: "Rich caramel, biscuit crumbs, and toasted nuts", zh: "濃郁焦糖、香甜餅乾與堅果芬芳" },
+                desc: {
+                    fr: "Les ambrées intègrent des malts 'caramels' touraillés à plus haute température. Les sucres cristallisent pendant la cuisson du grain. Vous y ressentirez des arômes chaleureux de caramel au beurre, de croûte de pain cuit, de noisette grillée et de fruits secs (raisins, dattes). Elles offrent une rondeur enveloppante sans l'amertume du brûlé.",
+                    en: "Amber and red beers blend in specialty caramel malts heated at medium-high temperatures, causing grain sugars to crystallize. This unlocks inviting flavors of butterscotch, rich toasted biscuit, roasted hazelnut, and dark raisins. They provide a beautiful malty body without any burnt bitterness.",
+                    zh: "琥珀與紅銅色系啤酒融入了中高溫烘烤的「焦糖麥芽」，使麥芽糖分在穀殼內結晶。這賦予了啤酒奶油焦糖、烤餅乾、烤榛果及深色葡萄乾的溫潤甜香。酒體飽滿，帶有溫和的麥芽甜，完全沒有燒焦的苦澀感。"
+                },
+                profile: { bitter: 40, sweet: 65, sour: 5, roast: 30 },
+                glass: { fr: "Calice ou Tulipe", en: "Tulip Glass", zh: "鬱金香杯" },
+                pairings: { fr: "Poulet rôti, canard, fromages affinés", en: "Roasted chicken, mature Cheddar, Peking duck", zh: "烤雞、熟成起司、北京烤鴨" },
+                examples: "Amber Ale, Märzen, Bière de Garde, Irish Red"
+            },
+            col_dark: {
+                category: { fr: "Couleur : Brune / Noire", en: "Color: Dark / Black", zh: "深色 / 黑色系" },
+                abv: "4.0% - 12%+",
+                title: { fr: "Le Goût des Brunes & Noires", en: "Flavor Profile of Dark & Black Beers", zh: "深黑色系啤酒風味特徵" },
+                tagline: { fr: "Expresso intense, cacao amer, réglisse et fumée", en: "Espresso shot, rich dark cocoa, and roasted grains", zh: "意式濃縮、高濃度黑可可、炭焙烘烤" },
+                desc: {
+                    fr: "Ces bières utilisent des malts torréfiés comme des grains de café (jusqu'à 220°C). Le goût est dominé par l'amertume du grain brûlé, rappelant l'expresso corsé, le chocolat noir intense (80%+), la réglisse et parfois des notes de tabac ou de fumée. Contrairement aux idées reçues, elles peuvent avoir une fin de bouche très sèche et rafraîchissante.",
+                    en: "These beers rely on grains roasted to high extremes (up to 220°C), just like coffee. The flavor profile is dominated by a pleasant roasty char: fresh espresso, intensely dark unsweetened cocoa, anise/licorice, and subtle woodsmoke. They can be incredibly dry and highly refreshing rather than thick.",
+                    zh: "深色與黑色系啤酒使用高達 220°C 極限高溫烘焙的「焦香/黑麥芽」，原理如同烘焙咖啡豆。風味主導為焦香與炭焙苦：炭燒濃縮咖啡、高濃度無糖黑可可、甘草以及細微的煙燻或泥煤味。許多黑色啤酒其實收口極其乾爽，非常易飲。"
+                },
+                profile: { bitter: 60, sweet: 35, sour: 10, roast: 95 },
+                glass: { fr: "Pinte ou Snifter", en: "Irish Pint Glass", zh: "愛爾蘭品脫杯" },
+                pairings: { fr: "Desserts au chocolat, huîtres, viande au barbecue", en: "Chocolate soufflé, raw oysters (classic!), smoked ribs", zh: "巧克力舒芙蕾、新鮮生蠔（世紀絕配）、烤肋排" },
+                examples: "Stout, Porter, Schwarzbier, Imperial Stout"
+            },
+            pilsner: {
+                category: { fr: "Lager Style", en: "Lager Style", zh: "拉格經典風格" },
+                abv: "4.4% - 5.2%",
+                title: { fr: "Pilsner (Pils)", en: "Czech & German Pilsner", zh: "皮爾森 / 比爾森" },
+                tagline: { fr: "La reine des blondes, florale et amère", en: "The golden standard of crisp bitterness", zh: "金黃乾爽、優雅花草微苦" },
+                desc: {
+                    fr: "Née en 1842 en Bohême (République tchèque), la Pilsner originale a révolutionné l'industrie avec son or brillant et cristallin. Utilisant du malt d'orge très pâle, de l'eau ultra-douce et les fameux houblons Saaz, elle développe des arômes herbacés et floraux intenses avec une amertume franche et désaltérante.",
+                    en: "Born in 1842 in Plzeň (Czech Republic), Pilsner forever replaced murky beers with crystal clear, pale gold perfection. Relying on soft water, Moravian barley malt, and the iconic noble Saaz hops, it showcases an unmistakable, bone-dry herbal snap and high crisp drinkability.",
+                    zh: "1842年誕生於波希米亞捷克比爾森鎮，以清澈奪目的金色光芒徹底顛覆了當時渾濁暗淡的啤酒世界。使用超軟水、摩拉維亞淡色大麥麥芽，以及標誌性的薩茲（Saaz）貴族啤酒花，完美塑造出乾爽、帶有優雅草本與花香的俐落苦感。"
+                },
+                profile: { bitter: 75, sweet: 20, sour: 0, roast: 0 },
+                glass: { fr: "Pilsner Flûte", en: "Footed Pilsner Glass", zh: "細長高腳皮爾森杯" },
+                pairings: { fr: "Frites belges, huîtres, fruits de mer", en: "Fish & Chips, oysters, hot soft pretzels", zh: "炸魚薯條、生蠔、椒鹽海鮮" },
+                examples: "Pilsner Urquell, Bitburger, Bernard Pils"
+            },
+            helles: {
+                category: { fr: "Lager Style", en: "Lager Style", zh: "拉格經典風格" },
+                abv: "4.7% - 5.4%",
+                title: { fr: "Munich Helles", en: "Munich Helles", zh: "慕尼黑清亮拉格" },
+                tagline: { fr: "La douceur du malt bavarois", en: "Soft, bready, and wonderfully clean", zh: "蓬鬆麥香、麵包般溫潤" },
+                desc: {
+                    fr: "La réponse bavaroise à la Pilsner. Brassée à Munich dès 1894 pour rivaliser avec la Bohême, la Helles met l'amertume au second plan pour souligner la pure douceur briochée et céréalière du malt d'orge local. Ronde, douce, subtilement houblonnée sans jamais être douceâtre.",
+                    en: "Munich's 1894 retaliatory strike to Pilsner's dominance. Unlike Pilsner, Helles pushes heavy hop bitterness to the back. Instead, it places warm, fresh-baked bread bready malt sweetness in the center stage, ending with a very light, floral sigh of German noble hops.",
+                    zh: "1894年巴伐利亞慕尼黑酒廠為對抗捷克皮爾森而研發。與強調苦感的皮爾森不同，海勒斯（Helles）將啤酒花苦度降至背景，旨在突出當地麥芽飽滿的吐司香、烘烤麵包般微甜與溫和口感，乾淨柔順。"
+                },
+                profile: { bitter: 30, sweet: 60, sour: 0, roast: 0 },
+                glass: { fr: "Masse (Chope Allemande)", en: "Dimpled Stein Mug", zh: "德式厚重把手大杯" },
+                pairings: { fr: "Saucisse de Francfort, bretzels", en: "Bavarian Weisswurst, mild cheeses, pork roast", zh: "慕尼黑白香腸、巴伐利亞鹼水結" },
+                examples: "Augustiner Lagerbier Hell, Weihenstephaner Original"
+            },
+            marzen: {
+                category: { fr: "Lager Style", en: "Lager Style", zh: "拉格經典風格" },
+                abv: "5.5% - 6.3%",
+                title: { fr: "Märzen / Oktoberfest", en: "Märzen / Oktoberfestbier", zh: "三月啤酒 / 慶典啤酒" },
+                tagline: { fr: "La bière de fête par excellence, toastée", en: "Autumnal rich caramel and bready richness", zh: "琥珀色澤、焦糖與麥芽甜香" },
+                desc: {
+                    fr: "Historiquement brassée en mars ('Märzen') avant les grosses chaleurs d'été (où le brassage était interdit), cette lager ambrée était conservée en cave tout l'été pour être consommée à l'Oktoberfest. Elle offre un corps malté généreux, des notes d'amande douce, de croûte de pain et de caramel.",
+                    en: "Traditionally brewed in March ('Märzen') before hot summer bacterial spoilage became a risk, this amber lager aged in cold caves until autumn festivals like Munich's Oktoberfest. It packs rich caramelization notes, amber depth, and a dry, toasted finish.",
+                    zh: "歷史上在春季「三月」釀造，以躲避炎夏因氣溫高易感染雜菌的風險，隨後存放在寒冷的山洞中緩慢發酵熟成，至秋季慕尼黑啤酒節（Oktoberfest）時暢飲。酒體呈美麗的琥珀色，富有醇厚的焦糖、烤麵包皮與堅果香。"
+                },
+                profile: { bitter: 35, sweet: 65, sour: 0, roast: 10 },
+                glass: { fr: "Chope traditionnelle", en: "Mass Stein", zh: "德式一升大扎杯" },
+                pairings: { fr: "Poulet rôti, côtes de porc", en: "Roasted chicken, grilled sausage, pork schnitzel", zh: "烤半雞、德式烤豬腳、煎香腸" },
+                examples: "Paulaner Oktoberfest, Ayinger Oktoberfest-Märzen"
+            },
+            dunkel: {
+                category: { fr: "Lager Style", en: "Lager Style", zh: "拉格經典風格" },
+                abv: "4.5% - 5.6%",
+                title: { fr: "Dunkel & Schwarzbier", en: "Dunkel & Schwarzbier", zh: "德式深色與黑拉格" },
+                tagline: { fr: "Toute la saveur torréfiée sans la lourdeur", en: "Roasty chocolate flavors in a fast-drinking body", zh: "深色烘烤香、酒體輕盈清脆" },
+                desc: {
+                    fr: "Deux styles de lagers sombres exceptionnels de tradition allemande. Contrairement aux Stouts anglais, elles conservent un corps extrêmement léger et désaltérant grâce à la fermentation basse, tout en proposant des arômes somptueux de cacao amer, de café filtre et de noisette grillée.",
+                    en: "Two elite dark German lagers. Distinct from heavy English Stouts, Dunkel (smooth, bready chocolate) and Schwarzbier (bone-dry black lager, intense light coffee) use bottom-fermenting yeast. They offer cozy, roasted, cocoa flavors in an incredibly clean and crisp body.",
+                    zh: "包含德式深色拉格（Dunkel）和黑拉格（Schwarzbier）。不同於厚重的英式世濤，這類啤酒利用低溫下層發酵，保留了拉格特有的乾脆俐落酒體，同時巧妙地釋放出可可、黑咖啡和烤乾果等迷人微苦烘焙香。"
+                },
+                profile: { bitter: 40, sweet: 45, sour: 0, roast: 65 },
+                glass: { fr: "Gobelet ou Pinte", en: "Glass Willibecher", zh: "威利巴赫杯/直型杯" },
+                pairings: { fr: "Viandes grillées au barbecue, desserts au chocolat", en: "Smoked barbecue, dark chocolate tart, gouda cheese", zh: "美式烤肋排、黑巧克力蛋糕、高達起司" },
+                examples: "Köstritzer Schwarzbier, Weltenburger Kloster Barock Dunkel"
+            },
+            ipa: {
+                category: { fr: "Ale Style", en: "Ale Style", zh: "艾爾現代先鋒" },
+                abv: "5.5% - 7.5%",
+                title: { fr: "IPA (India Pale Ale)", en: "India Pale Ale (IPA)", zh: "印度淡色艾爾 (IPA)" },
+                tagline: { fr: "L'explosion fruitée et l'amertume intense", en: "A massive cocktail of tropical hops", zh: "啤酒花熱帶果香與強勁苦感" },
+                desc: {
+                    fr: "Créée historiquement par les Anglais avec de fortes doses de houblon (conservateur naturel) pour survivre au voyage en bateau vers les Indes. Aujourd'hui réinventée par la scène craft américaine, l'IPA est un cocktail d'arômes de pamplemousse, de mangue et de résine grâce aux techniques de houblonnage à cru (Dry Hopping).",
+                    en: "Historically over-hopped by British brewers so the beer could survive the brutal sea voyages to India. Re-engineered during the 1980s American craft revolution, modern IPAs use dry-hopping to unleash bright mango, passionfruit, and pine-sap aromatics.",
+                    zh: "18世紀英國人為將啤酒安全海運至印度殖民地，特意加入大量具防腐作用的啤酒花。20世紀末被美國精釀界徹底發揚光大，研發出「乾投啤酒花（Dry Hopping）」技術，將葡萄柚、芒果、百香果與松針香氣推向極致。"
+                },
+                profile: { bitter: 95, sweet: 30, sour: 0, roast: 0 },
+                glass: { fr: "Verre à IPA ou Tulipe", en: "Spiegelau IPA Glass", zh: "IPA專用脊狀杯" },
+                pairings: { fr: "Plats épicés (curry), burgers costauds", en: "Spicy Indian curry, spicy tacos, blue cheese", zh: "辛辣印度咖哩、墨西哥捲餅、藍起司" },
+                examples: "Sierra Nevada Torpedo, BrewDog Punk IPA, Heady Topper"
+            },
+            stout: {
+                category: { fr: "Ale Style", en: "Ale Style", zh: "艾爾經典風格" },
+                abv: "4.0% - 10%+",
+                title: { fr: "Stout & Porter", en: "Stout & Porter", zh: "波特與世濤" },
+                tagline: { fr: "L'élégance sombre du grain torréfié", en: "The pitch-black soul of heavily roasted barley", zh: "烘烤大麥的深黑色焦香靈魂" },
+                desc: {
+                    fr: "Née à Londres au XVIIIe siècle pour restaurer les dockers ('Porters'), puis sublimée par la version extra forte ('Stout Porter'). Ces bières ultra sombres se caractérisent par l'emploi d'orge non maltée hautement torréfiée. En bouche, c'est l'analogie parfaite d'un expresso serré, de chocolat noir à 90% et de pain brûlé.",
+                    en: "Porters fueled 18th-century London street working classes ('porters'). This evolved into the highly roasted Stout Porter, celebrated globally by Irish brewers. Stouts rely on unmalted heavily scorched black barley, resulting in prominent espresso, burnt toast, and bitter dark cocoa flavors.",
+                    zh: "18世紀倫敦搬運工（Porters）最愛的滋補飲品。隨後愛爾蘭酒廠使用未發芽的高溫烘烤大麥將其升級為世濤（Stout）。酒體深黑不透光，入口如同品嚐一杯炭焙濃縮咖啡、高濃度黑巧克力及焦香吐司。"
+                },
+                profile: { bitter: 65, sweet: 25, sour: 10, roast: 95 },
+                glass: { fr: "Pinte irlandaise", en: "Tulip Pint Glass", zh: "愛爾蘭品脫杯" },
+                pairings: { fr: "Oursins, huîtres, gâteaux fondants au chocolat", en: "Raw oysters (classic pairing!), chocolate soufflé, BBQ", zh: "新鮮生蠔（世紀絕配）、巧克力舒芙蕾" },
+                examples: "Guinness Draught, Samuel Smith Taddy Porter, Founders KBS"
+            },
+            wheat: {
+                category: { fr: "Ale Style", en: "Ale Style", zh: "艾爾經典風格" },
+                abv: "4.5% - 5.6%",
+                title: { fr: "Bières de Blé / Blanches", en: "Wheat Beers / Hefeweizen", zh: "小麥啤酒 / 白啤酒" },
+                tagline: { fr: "La douceur crémeuse de la céréale", en: "Effervescent, cloud-like, and highly aromatic", zh: "輕柔綿密雲霧、果香辛香交織" },
+                desc: {
+                    fr: "Elles remplacent une grande partie de l'orge par du blé. On distingue les 'Witbiers' belges (brassées avec de la coriandre et de l'écorce d'orange amère pour un goût acidulé très frais) et les 'Hefeweizen' allemandes (où la levure bavaroise développe naturellement de puissantes notes de banane mûre et de clou de girofle).",
+                    en: "Brewed with a heavy portion of wheat rather than barley alone. This splits into two legendary paths: Belgian Witbier (brewed with fresh orange peel and coriander seeds for zesty hydration) and German Hefeweizen (yeast-driven banana ester and clove phenol madness).",
+                    zh: "使用高比例的小麥代替傳統大麥。分為兩大經典流派：比利時白啤（Witbier，加入陳皮與芫荽籽，清新柑橘香微酸）和德國小麥（Hefeweizen，完全由酵母自然代謝出濃郁的熟香蕉與丁香辛香）。"
+                },
+                profile: { bitter: 15, sweet: 45, sour: 20, roast: 0 },
+                glass: { fr: "Grand verre Weizen", en: "Tall Weizen Glass", zh: "高挑弧形小麥杯" },
+                pairings: { fr: "Salades d'été, chèvre chaud, moules-frites", en: "Goat cheese salad, sushi, classic steamed mussels", zh: "山羊起司沙拉、新鮮壽司、白酒燴淡菜" },
+                examples: "Hoegaarden Witbier, Weihenstephaner Hefeweissbier"
+            },
+            belgian: {
+                category: { fr: "Ale Style", en: "Ale Style", zh: "艾爾經典風格" },
+                abv: "6.5% - 10%+",
+                title: { fr: "Bières Belges & d'Abbaye", en: "Belgian Abbey Ales (Trappist)", zh: "比利時修道院與深色強艾爾" },
+                tagline: { fr: "Dubbel, Tripel, Quadrupel : la force levurée", en: "Heavenly yeast complexity, sugar candies, and heat", zh: "深邃酵母張力、水果蜜餞與高度暖感" },
+                desc: {
+                    fr: "Héritières des moines trappistes belges. Ces bières se caractérisent par l'ajout de sucre candi (qui augmente le taux d'alcool sans alourdir le corps) et l'utilisation de levures locales uniques. Elles développent des arômes somptueux de fruits secs (figue, raisin), d'épices, de réglisse et de sucre roux.",
+                    en: "Deeply connected to historical Trappist monasteries in Belgium. These ales use dark candi sugars (boosting alcohol levels while ensuring a digestible dry finish) and highly expressive Belgian yeast, creating layers of golden raisins, figs, baked apples, and cloves.",
+                    zh: "源自比利時天主教修道院僧侶的釀造智慧。通常在沸騰過程中加入特殊的「冰糖（Candi Sugar）」，既大幅拉高酒精度又保持酒體易飲，結合極具個性的比利時酵母，孕育出無與倫比的無花果、葡萄乾、焦糖與香料氣息。"
+                },
+                profile: { bitter: 25, sweet: 60, sour: 10, roast: 10 },
+                glass: { fr: "Calice d'Abbaye", en: "Wide Chalice or Goblet", zh: "修道院寬口聖杯" },
+                pairings: { fr: "Gibiers, fromages forts, carbonnade flamande", en: "Venison, rich beef stews, strong blue cheeses", zh: "燉牛肉、烤鹿肉、藍紋起司" },
+                examples: "Westvleteren XII, Chimay Bleue, Tripel Karmeliet"
+            },
+            lambic: {
+                category: { fr: "Wild Style", en: "Wild Style", zh: "酸啤酒經典" },
+                abv: "5.0% - 7.0%",
+                title: { fr: "Lambic & Gueuze", en: "Belgian Lambic & Gueuze", zh: "蘭比克 & 貴茲 (香檳級工藝)" },
+                tagline: { fr: "Le champagne sauvage de la vallée de la Senne", en: "The sour, funky champagne of Brussels", zh: "酸香冷冽、野生皮革與橡木桶香" },
+                desc: {
+                    fr: "Le Lambic est une bière de fermentation 100% spontanée brassée près de Bruxelles. La 'Gueuze' est un assemblage de Lambics jeunes (1 an) et vieux (3 ans) qui fermente à nouveau en bouteille. Le résultat est une boisson sans bulles à l'origine, très acide, boisée, sèche, souvent surnommée 'le champagne de la bière'.",
+                    en: "Lambic is a 100% spontaneously fermented beverage restricted to Pajottenland near Brussels. A 'Gueuze' is a grand-cru-style blend of 1-year-old (sugars remain) and 3-year-old (complex & dry) Lambics. It referments in champagne bottles, yielding sharp lemon acidity, oak structure, and wild 'horse blanket' farm aromas.",
+                    zh: "蘭比克（Lambic）是僅產於布魯塞爾周邊地區的100%自然空氣發酵啤酒。而貴茲（Gueuze）是將「一年期年輕蘭比克」與「三年期老蘭比克」大師級拼配，裝在香檳瓶中再次發酵。酸感冷冽、極致乾爽，伴隨陳年木桶、野菌與皮革氣息。"
+                },
+                profile: { bitter: 5, sweet: 5, sour: 95, roast: 0 },
+                glass: { fr: "Flûte à Gueuze", en: "Narrow Flute or Tumbler", zh: "無梗玻璃杯/香檳笛形杯" },
+                pairings: { fr: "Huitres creuses, moules, frites de patate douce", en: "Fresh oysters, fatty pork belly, classic mussels", zh: "生蠔、香煎五花肉、經典比利時淡菜" },
+                examples: "Cantillon Classic Gueuze, Boon Oude Geuze, Tilquin"
+            },
+            gose: {
+                category: { fr: "Wild Style", en: "Wild Style", zh: "酸啤酒經典" },
+                abv: "3.5% - 4.8%",
+                title: { fr: "Gose & Sour Beers", en: "Gose & Kettle Sour Beers", zh: "古斯酸啤酒 & 現代酸艾爾" },
+                tagline: { fr: "La fraîcheur acidulée des fruits et du sel", en: "Salty, tart, coriander-infused hydration", zh: "微鹹微酸、果汁感爆棚" },
+                desc: {
+                    fr: "La Gose est un style historique de Leipzig (Allemagne), brassée avec du blé, de la coriandre, et brassée avec de l'eau saline (sel de mer). Les 'Sour Beers' modernes utilisent souvent l'acidification en cuve (Kettle Sour) pour y infuser d'immenses quantités de fruits frais (framboise, fruit de la passion). Un profil ultra estival.",
+                    en: "Gose is an ancient, bizarre style from Goslar/Leipzig, Germany, using salted spring water, wheat, and coriander. Modern 'Kettle Sours' leverage lactic acid control in stainless steel tanks, transforming into low-ABV sour, refreshing fruit bombs loaded with raspberry, guava, or mango.",
+                    zh: "古斯（Gose）源於德國萊比錫，在釀造中融入了海鹽、芫荽籽。現代精釀常採用「罐式快速酸化（Kettle Sour）」控制乳酸發酵，不帶野菌騷味，而是搭配櫻桃、百香果、芒果等，調配成超高顏值、酸甜開胃的夏日果汁炸彈。"
+                },
+                profile: { bitter: 10, sweet: 15, sour: 85, roast: 0 },
+                glass: { fr: "Gobelet large", en: "Stange Glass or Coupe", zh: "直筒柱狀杯" },
+                pairings: { fr: "Ceviche de daurade, sorbets aux fruits", en: "Lime ceviche, fresh fruit sorbet, grilled shrimp", zh: "青檸醃生魚片、水果雪酪、烤蝦" },
+                examples: "Ritterguts Gose, Westbrook Gose, Lervig Sour"
+            },
+            kilning: {
+                category: { fr: "Technique", en: "Brewing Tech", zh: "烘焙原理" },
+                abv: "Dépend du brassage",
+                title: { fr: "Le touraillage et la cuisson", en: "Malt Kilning & Caramelization", zh: "麥芽烘焙與美拉德反應" },
+                tagline: { fr: "Du malt blond comme les blés au malt noir ébène", en: "Unlocking colors from straw to charcoal", zh: "麥芽加熱深度決定色澤" },
+                desc: {
+                    fr: "Le grain d'orge récolté doit être trempé pour germer (maltage) puis chauffé pour stopper cette germination (touraillage). La température et la durée déterminent la couleur finale et la typologie d'arômes. Un malt chauffé à 80°C donnera une blonde Pilsner. À 150°C, une ambrée caramélisée. À 220°C, une Porter noire chocolatée. C'est de la chimie alimentaire pure, la réaction de Maillard !",
+                    en: "Raw barley is soaked to sprout (malting), then baked in kilns to dry and stop growth (kilning). Oven heat level changes everything: 80°C preserves pale yellow Pilsner malts; 150°C creates Munich-caramelized malts; 220°C produces charred chocolate/black malts. It is culinary science: the Maillard reaction!",
+                    zh: "剛收割的大麥需加水使其發芽（發麥），再用熱風烘乾以終止其發芽（烘焙/Touraillage）。熱風的溫度決定了啤酒色澤：80°C低溫烘乾保留淡色皮爾森麥芽；150°C中溫烘烤使麥芽糖化並呈現琥珀焦糖色；220°C高溫焦化大麥則形成深黑大麥。這就是美妙的美拉德反應！"
+                },
+                profile: { bitter: 10, sweet: 50, sour: 0, roast: 90 },
+                glass: { fr: "Tout type", en: "All glassware types", zh: "各式酒杯皆有對應" },
+                pairings: { fr: "Fromage de brebis, viandes grillées", en: "Grilled sausages, cocoa chocolate beans", zh: "烤肉、巧克力可可豆" },
+                examples: "Malt Pilsen, Malt Munich, Malt Chocolat"
+            }
+        };
+
+        // Detailed Color & Taste SRM Spectrum Database
+        const srmSpectrum = [
+            {
+                srm: "2 - 4 SRM (EBC 4-8)",
+                colorCode: "#F5F19C",
+                textColor: "#1e293b",
+                borderColor: "rgba(30, 41, 59, 0.1)",
+                name: { fr: "Blond Très Clair / Paille", en: "Straw / Pale Gold", zh: "淡稻草色 / 極淡金" },
+                temp: "75°C - 80°C",
+                malts: { fr: "Pilsner, Carapils", en: "Pilsner, Carapils", zh: "皮爾森麥芽、卡拉皮爾斯" },
+                tastes: {
+                    fr: "Mie de pain de mie frais, céréale fraîche, herbe coupée, fleurs des champs. Un goût désaltérant, sec et propre sans sucre résiduel perceptible.",
+                    en: "Fresh white bread crumb, raw grains, crisp cut grass, meadow wildflowers. Bone-dry, highly refreshing, and sparkling clean on the palate.",
+                    zh: "新鮮白麵包芯、純淨生穀物、青草香與野生白花香。口感極度乾爽清透，幾乎不含任何殘糖感。"
+                }
+            },
+            {
+                srm: "5 - 8 SRM (EBC 10-16)",
+                colorCode: "#F5C147",
+                textColor: "#1e293b",
+                borderColor: "rgba(30, 41, 59, 0.1)",
+                name: { fr: "Blond Doré / Or", en: "Deep Blonde / Golden", zh: "金黃色 / 深金黃" },
+                temp: "80°C - 90°C",
+                malts: { fr: "Pale Ale, Vienna, Munich Clair", en: "Pale Ale, Vienna, Light Munich", zh: "淡色艾爾、維也納麥芽、淺色慕尼黑" },
+                tastes: {
+                    fr: "Miel doux de printemps, biscuit au beurre, brioche chaude, craquelin de blé. Apporte une légère et élégante rondeur maltée.",
+                    en: "Spring flower honey, rich butter biscuit, warm brioche bread, wheat cracker. Unlocks a delicate, rounded sweet malt presence.",
+                    zh: "春季花蜜、奶油蘇打餅乾、溫熱布里歐麵包、麥香麥片。口感圓潤，帶有恰到好處的清甜麥芽感。"
+                }
+            },
+            {
+                srm: "9 - 15 SRM (EBC 18-30)",
+                colorCode: "#C46F1A",
+                textColor: "#ffffff",
+                borderColor: "rgba(255, 255, 255, 0.15)",
+                name: { fr: "Ambrée / Cuivrée", en: "Amber / Rich Copper", zh: "琥珀色 / 銅紅色" },
+                temp: "100°C - 120°C",
+                malts: { fr: "Munich, Crystal Moyen, Biscuit", en: "Munich, Medium Crystal, Biscuit Malt", zh: "慕尼黑麥芽、中度水晶焦香、餅乾麥芽" },
+                tastes: {
+                    fr: "Caramel au beurre salé, toffee crémeux, noisette fraîche, croûte de pain cuit au feu de bois. Profil riche, chaleureux et gourmand.",
+                    en: "Salted butterscotch, creamy toffee, raw hazelnut, baked wood-fired bread crust. Rich, cozy, and deeply satisfying malt backbone.",
+                    zh: "奶油焦糖、太妃糖、新鮮榛果、柴燒窯烤麵包皮。層次厚實，帶有非常討喜的烘烤麥粒香。"
+                }
+            },
+            {
+                srm: "16 - 25 SRM (EBC 32-50)",
+                colorCode: "#8C310D",
+                textColor: "#ffffff",
+                borderColor: "rgba(255, 255, 255, 0.15)",
+                name: { fr: "Rousse / Cuivre Sombre", en: "Red / Dark Copper", zh: "深紅銅 / 寶石紅" },
+                temp: "130°C - 160°C",
+                malts: { fr: "CaraMunich, Special B, Malt Chocolat Clair", en: "CaraMunich, Special B, Pale Chocolate", zh: "卡拉慕尼黑、比利時特殊B、淺色巧克力" },
+                tastes: {
+                    fr: "Fruits noirs séchés (raisin de Corinthe, datte, pruneau), caramel brun intense, sucre candi rouge et noisette grillée craquante.",
+                    en: "Dried dark fruits (raisins, dates, prunes), heavily caramelized sugar, Belgian candi syrup, crunchy toasted hazelnuts.",
+                    zh: "深色蜜餞果乾（黑葡萄乾、椰棗、黑李乾）、濃郁焦糖、比利時糖漿與烘烤堅果的複合甜香。"
+                }
+            },
+            {
+                srm: "26 - 35 SRM (EBC 52-70)",
+                colorCode: "#421C0E",
+                textColor: "#ffffff",
+                borderColor: "rgba(255, 255, 255, 0.15)",
+                name: { fr: "Brune / Marron Profond", en: "Brown / Deep Walnut", zh: "棕褐色 / 深栗褐" },
+                temp: "170°C - 190°C",
+                malts: { fr: "Brown Malt, Carafa I, CaraAroma", en: "Brown Malt, Carafa I, CaraAroma", zh: "棕色麥芽、卡拉法一號、焦香芳香麥芽" },
+                tastes: {
+                    fr: "Chocolat au lait crémeux, cacao amer en poudre, noix de pécan grillée, mélasse de sucre de canne, subtile note boisée terreuse.",
+                    en: "Creamy milk chocolate, bitter unsweetened cocoa powder, toasted pecans, dark molasses, and subtle earthy wood notes.",
+                    zh: "牛奶巧克力、可可粉、烤胡桃、甘蔗黑糖蜜，伴隨細微的泥土木質氣息。"
+                }
+            },
+            {
+                srm: "36 - 40+ SRM (EBC 72-80+)",
+                colorCode: "#0F0B09",
+                textColor: "#ffffff",
+                borderColor: "rgba(255, 255, 255, 0.2)",
+                name: { fr: "Noire / Ébène", en: "Black / Pitch Ebony", zh: "深黑 / 漆黑色" },
+                temp: "200°C - 220°C+",
+                malts: { fr: "Roasted Barley, Black Malt, Carafa III", en: "Roasted Barley, Black Malt, Carafa III", zh: "烘烤大麥、黑麥芽、卡拉法三號" },
+                tastes: {
+                    fr: "Expresso serré corsé, chocolat noir amer 90%, charbon de bois, réglisse noire sauvage, notes de cendre fraîche ou de tabac séché.",
+                    en: "Intense espresso coffee, 90% bitter dark chocolate, wood charcoal, wild black licorice, dry roasted ash and tobacco notes.",
+                    zh: "重焙意式濃縮、90%濃苦黑巧克力、炭焙木炭香、野生黑甘草，伴隨乾菸草與微焦煙燻炭灰感。"
+                }
+            }
+        ];
+
+        let currentLang = 'fr';
+        let activeNodeId = null;
+        let activeSpectrumIndex = 0;
+
+        // Language Switcher Function
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Toggle active state in buttons
+            ['fr', 'en', 'zh'].forEach(l => {
+                const btn = document.getElementById(`btn-lang-${l}`);
+                if (l === lang) {
+                    btn.classList.add('bg-amber-500', 'text-slate-950');
+                    btn.classList.remove('text-slate-400', 'hover:text-white');
+                } else {
+                    btn.classList.remove('bg-amber-500', 'text-slate-950');
+                    btn.classList.add('text-slate-400', 'hover:text-white');
+                }
+            });
+
+            // Update UI static elements with translatable strings
+            document.getElementById('nav-title-fr').classList.toggle('hidden', lang !== 'fr');
+            document.getElementById('nav-title-en').classList.toggle('hidden', lang !== 'en');
+            document.getElementById('nav-title-zh').classList.toggle('hidden', lang !== 'zh');
+
+            document.getElementById('nav-sub-fr').classList.toggle('hidden', lang !== 'fr');
+            document.getElementById('nav-sub-en').classList.toggle('hidden', lang !== 'en');
+            document.getElementById('nav-sub-zh').classList.toggle('hidden', lang !== 'zh');
+
+            // Update all translated elements inside Mind Map Nodes
+            document.querySelectorAll('[data-fr]').forEach(elem => {
+                const frText = elem.getAttribute('data-fr');
+                const enText = elem.getAttribute('data-en');
+                const zhText = elem.getAttribute('data-zh');
+                
+                if (lang === 'fr' && frText) elem.textContent = frText;
+                if (lang === 'en' && enText) elem.textContent = enText;
+                if (lang === 'zh' && zhText) elem.textContent = zhText;
+            });
+
+            // Update Sidebar Details if a node is currently active
+            if (activeNodeId) {
+                updateSidebar(activeNodeId);
+            } else {
+                // Update placeholder texts
+                document.querySelectorAll('#no-selection-msg [data-fr]').forEach(elem => {
+                    const frText = elem.getAttribute('data-fr');
+                    const enText = elem.getAttribute('data-en');
+                    const zhText = elem.getAttribute('data-zh');
+                    if (lang === 'fr') elem.textContent = frText;
+                    if (lang === 'en') elem.textContent = enText;
+                    if (lang === 'zh') elem.textContent = zhText;
+                });
+            }
+
+            updateSpectrumDisplay();
+        }
+
+        // Node Selection Handler
+        function selectNode(nodeId) {
+            // Remove previous active outline styles
+            document.querySelectorAll('.node-item').forEach(node => {
+                node.classList.remove('node-active');
+            });
+
+            // Highlight chosen node
+            const targetNode = document.getElementById(`node-${nodeId}`);
+            if (targetNode) {
+                targetNode.classList.add('node-active');
+            }
+
+            activeNodeId = nodeId;
+            updateSidebar(nodeId);
+            
+            // Interactive Fun Fact cycling on clicks
+            updateQuizFact(nodeId);
+        }
+
+        // Color Spectrum Rendering and interaction
+        function renderColorSpectrum() {
+            const bar = document.getElementById('spectrum-steps-bar');
+            if (!bar) return;
+            bar.innerHTML = '';
+
+            srmSpectrum.forEach((step, index) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'flex-1 h-7 rounded-md transition-all duration-200 border-2 relative overflow-hidden flex items-center justify-center';
+                btn.style.backgroundColor = step.colorCode;
+                btn.style.borderColor = 'transparent';
+                btn.onclick = () => selectSpectrumStep(index);
+                btn.id = `spectrum-step-${index}`;
+
+                // Small indicator dot inside color button
+                const dot = document.createElement('span');
+                dot.className = 'w-1.5 h-1.5 rounded-full bg-white opacity-0 transition-opacity duration-200';
+                dot.id = `spectrum-step-dot-${index}`;
+                btn.appendChild(dot);
+
+                bar.appendChild(btn);
+            });
+
+            selectSpectrumStep(0);
+        }
+
+        function selectSpectrumStep(index) {
+            activeSpectrumIndex = index;
+            
+            // Toggle active visual indicator on buttons
+            srmSpectrum.forEach((step, idx) => {
+                const btn = document.getElementById(`spectrum-step-${idx}`);
+                const dot = document.getElementById(`spectrum-step-dot-${idx}`);
+                if (!btn || !dot) return;
+
+                if (idx === index) {
+                    btn.style.borderColor = '#ffffff';
+                    btn.classList.add('scale-110', 'z-10', 'shadow-md');
+                    dot.style.opacity = '0.9';
+                } else {
+                    btn.style.borderColor = 'transparent';
+                    btn.classList.remove('scale-110', 'z-10', 'shadow-md');
+                    dot.style.opacity = '0';
+                }
+            });
+
+            updateSpectrumDisplay();
+        }
+
+        function updateSpectrumDisplay() {
+            const step = srmSpectrum[activeSpectrumIndex];
+            if (!step) return;
+
+            const box = document.getElementById('spectrum-info-box');
+            const name = document.getElementById('spec-name');
+            const srm = document.getElementById('spec-srm');
+            const temp = document.getElementById('spec-temp');
+            const malts = document.getElementById('spec-malts');
+            const tastes = document.getElementById('spec-tastes');
+
+            if (!box || !name || !srm || !temp || !malts || !tastes) return;
+
+            // Apply specific color theme to the card for immersive feel
+            box.style.backgroundColor = step.colorCode;
+            box.style.color = step.textColor;
+            box.style.borderColor = step.borderColor;
+
+            // Animate card entry gently
+            box.classList.remove('opacity-0', 'translate-y-1');
+            box.classList.add('opacity-100', 'translate-y-0');
+
+            // Render translated content
+            name.textContent = step.name[currentLang] || step.name['en'];
+            srm.textContent = step.srm;
+            temp.textContent = step.temp;
+            malts.textContent = step.malts[currentLang] || step.malts['en'];
+            tastes.textContent = step.tastes[currentLang] || step.tastes['en'];
+        }
+
+        // Sidebar detail render engine
+        function updateSidebar(nodeId) {
+            const data = beerStylesData[nodeId];
+            if (!data) return;
+
+            // Hide placeholder message, reveal info card
+            document.getElementById('no-selection-msg').classList.add('hidden');
+            document.getElementById('details-card').classList.remove('hidden');
+
+            // Render translated fields
+            document.getElementById('detail-category').textContent = data.category[currentLang] || data.category['en'];
+            document.getElementById('detail-title').textContent = data.title[currentLang] || data.title['en'];
+            document.getElementById('detail-tagline').textContent = data.tagline[currentLang] || data.tagline['en'];
+            document.getElementById('detail-desc').textContent = data.desc[currentLang] || data.desc['en'];
+            
+            document.getElementById('detail-abv').innerHTML = `<i class="fa-solid fa-percent"></i> ABV: ${data.abv}`;
+            document.getElementById('detail-glass').innerHTML = `<i class="fa-solid fa-whiskey-glass text-amber-500"></i> ${data.glass[currentLang] || data.glass['en']}`;
+            document.getElementById('detail-pair').innerHTML = `<i class="fa-solid fa-utensils text-amber-500"></i> ${data.pairings[currentLang] || data.pairings['en']}`;
+            document.getElementById('detail-examples').textContent = data.examples;
+
+            // Translate technical labels on radar bar
+            document.getElementById('label-bitter').textContent = currentLang === 'fr' ? 'Amertume (Hop)' : currentLang === 'en' ? 'Bitterness' : '啤酒花苦度';
+            document.getElementById('label-sweet').textContent = currentLang === 'fr' ? 'Douceur / Malt' : currentLang === 'en' ? 'Malt Sweetness' : '麥芽甜感';
+            document.getElementById('label-sour').textContent = currentLang === 'fr' ? 'Acidité' : currentLang === 'en' ? 'Acidity / Tartness' : '乳酸酸感';
+            document.getElementById('label-roast').textContent = currentLang === 'fr' ? 'Torréfaction' : currentLang === 'en' ? 'Roastiness' : '烘烤焦味';
+
+            // Animate Profile Bars (Simulated Flavor values)
+            const prof = data.profile;
+            animateBar('bitter', prof.bitter, currentLang === 'fr' ? 'Amertume' : currentLang === 'en' ? 'Bitterness' : '苦度');
+            animateBar('sweet', prof.sweet, currentLang === 'fr' ? 'Malt' : currentLang === 'en' ? 'Malt' : '麥芽甜');
+            animateBar('sour', prof.sour, currentLang === 'fr' ? 'Acidité' : currentLang === 'en' ? 'Acidity' : '酸度');
+            animateBar('roast', prof.roast, currentLang === 'fr' ? 'Torréfaction' : currentLang === 'en' ? 'Roastiness' : '烘烤度');
+
+            // Show / Hide Color Spectrum widget dynamically depending on selection context
+            const isColorOrMaltNode = ['myth', 'kilning', 'col_blonde', 'col_amber', 'col_dark', 'root'].includes(nodeId);
+            const spectrumContainer = document.getElementById('color-spectrum-container');
+            if (spectrumContainer) {
+                if (isColorOrMaltNode) {
+                    spectrumContainer.classList.remove('hidden');
+                    // Automatically focus a corresponding spectrum step based on selected node
+                    if (nodeId === 'col_blonde') selectSpectrumStep(1); // Gold
+                    else if (nodeId === 'col_amber') selectSpectrumStep(2); // Amber / Copper
+                    else if (nodeId === 'col_dark') selectSpectrumStep(5); // Black / Dark
+                } else {
+                    spectrumContainer.classList.add('hidden');
+                }
+            }
+        }
+
+        function animateBar(id, val, label) {
+            const bar = document.getElementById(`bar-${id}`);
+            const text = document.getElementById(`val-${id}`);
+            bar.style.width = `${val}%`;
+            
+            // Set qualitative descriptor based on value
+            let desc = '';
+            if (val === 0) desc = currentLang === 'zh' ? '無' : 'None';
+            else if (val < 30) desc = currentLang === 'fr' ? 'Faible' : currentLang === 'en' ? 'Low' : '微弱';
+            else if (val < 70) desc = currentLang === 'fr' ? 'Moyen' : currentLang === 'en' ? 'Medium' : '中等';
+            else desc = currentLang === 'fr' ? 'Intense' : currentLang === 'en' ? 'Intense' : '強烈';
+
+            text.textContent = `${desc} (${val}%)`;
+        }
+
+        // Fun beer trivia cycling
+        function updateQuizFact(nodeId) {
+            const facts = {
+                root: {
+                    fr: "Le mot 'Bière' vient probablement du latin 'bibere' qui signifie boire.",
+                    en: "The word 'Beer' likely stems from the Latin 'bibere', which literally means 'to drink'.",
+                    zh: "英文中的「Beer」（啤酒）一詞可能源自拉丁語「bibere」，意思是「飲用/喝」。"
+                },
+                lager: {
+                    fr: "La première Lager blonde commerciale est née en Bavière au XIXe siècle.",
+                    en: "Modern cold-fermented Golden Lagers took the world by storm in the mid-19th century.",
+                    zh: "十九世紀初，巴伐利亞釀造師在低溫熟成期間，偶然奠定了現代金色拉格的基礎。"
+                },
+                ale: {
+                    fr: "Les Ales régnaient seules sur le monde avant l'invention de la réfrigération industrielle.",
+                    en: "Before mechanical cooling was invented, virtually all beer on Earth was some type of Ale.",
+                    zh: "在人工製冷技術發明之前，地球上的啤酒幾乎全都是暖發酵的艾爾風格。"
+                },
+                sour: {
+                    fr: "Les Lambics d'origine belge tirent leur complexité d'environ 100 micro-organismes différents !",
+                    en: "Belgian Lambic fermentation utilizes over 100 distinct yeast strains and bacteria over 3 years.",
+                    zh: "正宗的比利時蘭比克在長達數年的橡木桶熟成中，涉及多達100多種環境野生微生物的演替。"
+                },
+                process: {
+                    fr: "La loi allemande sur la pureté (Reinheitsgebot - 1516) limitait les ingrédients à l'eau, l'orge et le houblon. La levure était encore inconnue !",
+                    en: "The German purity law (Reinheitsgebot - 1516) allowed only water, barley, and hops. Yeast was chemically discovered centuries later!",
+                    zh: "1516年德國頒布的《啤酒純淨法》最初僅允許使用水、大麥和啤酒花。當時人們根本不知道酵母這種微生物的存在！"
+                },
+                myth: {
+                    fr: "La bière noire 'Guinness' est en réalité d'un rouge rubis extrêmement sombre et profond si vous la placez devant une forte lumière.",
+                    en: "Guinness Draught isn't actually black! Hold it up to a strong light, and you'll see a deep, rich ruby red shade.",
+                    zh: "大名鼎鼎的健力士黑啤（Guinness）其實根本不是黑色的！如果拿到強光下觀察，你會發現它呈現出非常深邃的紅寶石色。"
+                },
+                brewing_step1: {
+                    fr: "La température idéale d'empâtage (mashing) détermine si votre bière finale aura plus de corps (température haute) ou plus d'alcool (température basse).",
+                    en: "Mashing temperature dictates everything: higher temps leave sweet body sugars; lower temps create highly fermentable sugar for higher ABV.",
+                    zh: "糖化的溫度控制極其精妙：較高糖化溫度會保留不可發酵糖，令酒體綿密飽滿；較低溫度則形成極易發酵糖，拉高最終酒精度。"
+                },
+                col_blonde: {
+                    fr: "Les bières blondes d'aujourd'hui ne se sont démocratisées qu'au XIXe siècle avec l'arrivée des techniques de verrerie transparente !",
+                    en: "Super clear pale beers only became popular in the 19th century when affordable, transparent glassware replaced metal and clay mugs.",
+                    zh: "在19世紀之前，人們大多用金屬杯或陶罐喝混濁深色酒。直到透明玻璃杯普及，清澈剔透的金黃拉格才一躍成為世界霸主。"
+                }
+            };
+
+            const f = facts[nodeId] || facts['root'];
+            document.getElementById('quiz-fact').textContent = f[currentLang];
+        }
+
+        // Dynamic Node Connector Lines (Bilateral Curves using SVG Bezier Paths)
+        function drawConnectors() {
+            const svg = document.getElementById('svg-canvas');
+            const container = document.getElementById('mindmap-container');
+            if (!svg || !container) return;
+
+            // Clear previous lines
+            svg.innerHTML = '';
+            
+            // Set SVG size to match mindmap-container exactly
+            svg.setAttribute('width', container.offsetWidth);
+            svg.setAttribute('height', container.offsetHeight);
+
+            const root = document.getElementById('node-root');
+            if (!root) return;
+
+            const rootRect = root.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Calculate local coordinate for Center Root (anchor points)
+            const rootX = (rootRect.left + rootRect.width / 2) - containerRect.left;
+            const rootY = (rootRect.top + rootRect.height / 2) - containerRect.top;
+
+            // Connections lists: parent node ID -> array of child node IDs
+            const connections = [
+                { parent: 'root', children: ['lager', 'sour', 'process', 'ale', 'myth'] },
+                { parent: 'lager', children: ['pilsner', 'helles', 'marzen', 'dunkel'] },
+                { parent: 'sour', children: ['lambic', 'gose'] },
+                { parent: 'process', children: ['brewing_step1', 'brewing_step2', 'brewing_step3'] },
+                { parent: 'ale', children: ['ipa', 'stout', 'wheat', 'belgian'] },
+                { parent: 'myth', children: ['kilning', 'col_blonde', 'col_amber', 'col_dark'] }
+            ];
+
+            connections.forEach(conn => {
+                const parentNode = document.getElementById(`node-${conn.parent}`);
+                if (!parentNode) return;
+
+                const parentRect = parentNode.getBoundingClientRect();
+                const parentX = (parentRect.left + parentRect.width / 2) - containerRect.left;
+                const parentY = (parentRect.top + parentRect.height / 2) - containerRect.top;
+
+                conn.children.forEach(childId => {
+                    const childNode = document.getElementById(`node-${childId}`);
+                    if (!childNode) return;
+
+                    const childRect = childNode.getBoundingClientRect();
+                    const childX = (childRect.left + childRect.width / 2) - containerRect.left;
+                    const childY = (childRect.top + childRect.height / 2) - containerRect.top;
+
+                    // Dynamic color matching parent theme
+                    let strokeColor = '#475569'; // default slate-600
+                    if (conn.parent === 'root') {
+                        if (childId === 'lager') strokeColor = '#eab308'; // amber-500
+                        if (childId === 'sour') strokeColor = '#10b981'; // emerald-500
+                        if (childId === 'process') strokeColor = '#06b6d4'; // cyan-500
+                        if (childId === 'ale') strokeColor = '#f97316'; // orange-500
+                        if (childId === 'myth') strokeColor = '#f43f5e'; // rose-500
+                    } else if (conn.parent === 'lager') {
+                        strokeColor = '#f59e0b';
+                    } else if (conn.parent === 'sour') {
+                        strokeColor = '#10b981';
+                    } else if (conn.parent === 'process') {
+                        strokeColor = '#06b6d4';
+                    } else if (conn.parent === 'ale') {
+                        strokeColor = '#f97316';
+                    } else if (conn.parent === 'myth') {
+                        strokeColor = '#f43f5e';
+                    }
+
+                    // Create beautiful cubic Bezier curve path
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    
+                    // Control points calculations (generates biological organic curve style)
+                    const midX = (parentX + childX) / 2;
+                    const d = `M ${parentX} ${parentY} C ${midX} ${parentY}, ${midX} ${childY}, ${childX} ${childY}`;
+                    
+                    path.setAttribute('d', d);
+                    path.setAttribute('stroke', strokeColor);
+                    path.setAttribute('stroke-width', '2');
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('opacity', '0.55');
+                    path.setAttribute('stroke-dasharray', '4 2'); // neat dashed look
+                    svg.appendChild(path);
+                });
+            });
+        }
+
+        // Live Search Filter logic
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                // Restore all styles
+                document.querySelectorAll('.node-item').forEach(node => {
+                    node.style.opacity = '1';
+                    node.style.transform = 'scale(1)';
+                });
+                return;
+            }
+
+            // Loop through styles object and hide elements not matching
+            Object.keys(beerStylesData).forEach(nodeId => {
+                const data = beerStylesData[nodeId];
+                const nodeElem = document.getElementById(`node-${nodeId}`);
+                if (!nodeElem) return;
+
+                const frTitle = data.title.fr.toLowerCase();
+                const enTitle = data.title.en.toLowerCase();
+                const zhTitle = data.title.zh.toLowerCase();
+                const category = data.category.en.toLowerCase();
+
+                if (frTitle.includes(query) || enTitle.includes(query) || zhTitle.includes(query) || category.includes(query)) {
+                    nodeElem.style.opacity = '1';
+                    nodeElem.style.transform = 'scale(1.05)';
+                } else {
+                    nodeElem.style.opacity = '0.35';
+                    nodeElem.style.transform = 'scale(0.9)';
+                }
+            });
+        });
+
+        // Window load and resize listeners to recalculate connecting curves
+        window.onload = function() {
+            drawConnectors();
+            // Render interactive color/SRM spectrum bar
+            renderColorSpectrum();
+            // Automatically select root node on load to make details page engaging
+            selectNode('root');
+        };
+
+        window.onresize = function() {
+            drawConnectors();
+        };
+        
+        // Safety Fallback loop: redraw after a short delay in case typography renders slowly
+        setTimeout(drawConnectors, 800);
+    </script>
+</body>
+</html>
