@@ -346,10 +346,10 @@
             <div class="color-opt"          data-grad="from-cyan-400 to-sky-600"       style="background:linear-gradient(135deg,#22d3ee,#0284c7)"></div>
         </div>
 
-        <button onclick="confirmAddModule()"
+        <button id="modal-confirm-btn" onclick="confirmAddModule()"
             style="width:100%;padding:13px;border-radius:14px;background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;font-weight:800;font-size:13px;letter-spacing:.05em;border:none;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 20px rgba(139,92,246,0.35),inset 0 1px 0 rgba(255,255,255,0.2);transition:all .2s;"
             onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-            <i class="fa-solid fa-plus" style="margin-right:6px;"></i>Add to Galaxy
+            <i class="fa-solid fa-plus" style="margin-right:6px;"></i><span id="modal-confirm-text">加入星系</span>
         </button>
         <p id="modal-error" style="color:#f87171;font-size:11px;margin-top:10px;display:none;font-weight:600;"></p>
     </div>
