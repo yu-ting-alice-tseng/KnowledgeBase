@@ -922,6 +922,7 @@
         // Language Switcher Function
         function setLanguage(lang) {
             currentLang = lang;
+            localStorage.setItem('kb_lang', lang);
             
             // Toggle active state in buttons
             ['fr', 'en', 'zh'].forEach(l => {
@@ -1308,6 +1309,8 @@
 
         // Window load and resize listeners to recalculate connecting curves
         window.onload = function() {
+            const savedLang = localStorage.getItem('kb_lang');
+            if (savedLang && ['zh','en','fr'].includes(savedLang)) setLanguage(savedLang);
             drawConnectors();
             // Render interactive color/SRM spectrum bar
             renderColorSpectrum();
