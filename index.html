@@ -8,166 +8,249 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-color: #060913; --card-bg: rgba(15, 23, 42, 0.6); }
+        * { box-sizing: border-box; }
+
+        :root {
+            --bg: #04080f;
+            --glass: rgba(255,255,255,0.04);
+            --glass-border: rgba(255,255,255,0.10);
+            --glass-hover: rgba(255,255,255,0.07);
+        }
+
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             font-family: 'Nunito', sans-serif;
             color: #e2e8f0;
-            background-image:
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.05) 0px, transparent 50%);
             min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        .serif-title { font-family: 'Playfair Display', serif; }
 
+        /* ── Background orbs ── */
+        .orb {
+            position: fixed; border-radius: 50%;
+            filter: blur(100px); pointer-events: none; z-index: 0;
+        }
+        .orb-1 { width: 600px; height: 600px; top: -200px; left: -150px; background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); }
+        .orb-2 { width: 500px; height: 500px; top: -100px; right: -100px; background: radial-gradient(circle, rgba(236,72,153,0.15) 0%, transparent 70%); }
+        .orb-3 { width: 700px; height: 700px; bottom: -200px; left: 30%; background: radial-gradient(circle, rgba(56,189,248,0.10) 0%, transparent 70%); }
+        .orb-4 { width: 400px; height: 400px; bottom: 100px; right: -100px; background: radial-gradient(circle, rgba(217,70,239,0.12) 0%, transparent 70%); }
+        .orb-5 { width: 350px; height: 350px; top: 50%; left: 50%; transform: translate(-50%,-50%); background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%); }
+
+        /* ── Glass card ── */
         .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
             position: relative;
+            background: var(--glass);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 8px 32px rgba(0,0,0,0.35),
+                inset 0 1px 0 rgba(255,255,255,0.10),
+                inset 0 -1px 0 rgba(0,0,0,0.20);
+            transition: all 0.45s cubic-bezier(0.4,0,0.2,1);
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(255,255,255,0.02) 100%);
+            border-radius: inherit; pointer-events: none;
         }
         .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(56,189,248,0.4);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(56,189,248,0.1);
+            transform: translateY(-10px) scale(1.015);
+            border-color: rgba(255,255,255,0.20);
+            box-shadow:
+                0 24px 60px rgba(0,0,0,0.45),
+                0 0 40px rgba(139,92,246,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.16),
+                inset 0 -1px 0 rgba(0,0,0,0.15);
         }
-        .glass-card.edit-mode:hover {
-            transform: none;
-            box-shadow: none;
+        .glass-card.edit-mode:hover { transform: none; box-shadow: none; }
+
+        /* ── Iridescent icon box ── */
+        .icon-box {
+            position: relative;
+            width: 56px; height: 56px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: #fff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+        }
+        .icon-box::after {
+            content: '';
+            position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 60%);
+            pointer-events: none;
         }
 
-        /* Delete button on card */
+        /* ── Delete button ── */
         .delete-btn {
-            display: none;
-            position: absolute;
-            top: 12px; right: 12px;
-            width: 28px; height: 28px;
-            border-radius: 50%;
+            display: none; position: absolute; top: 14px; right: 14px;
+            width: 28px; height: 28px; border-radius: 50%;
             background: rgba(239,68,68,0.15);
             border: 1px solid rgba(239,68,68,0.35);
-            color: #f87171;
-            font-size: 11px;
+            color: #f87171; font-size: 11px;
             align-items: center; justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            z-index: 10;
+            cursor: pointer; transition: all 0.2s; z-index: 10;
         }
         .delete-btn:hover { background: rgba(239,68,68,0.35); color: #fff; }
         body.edit-mode .delete-btn { display: flex; }
-        body.edit-mode .glass-card { cursor: default; border-color: rgba(239,68,68,0.2); }
-        body.edit-mode .glass-card:hover { transform: none; box-shadow: none; border-color: rgba(239,68,68,0.35); }
+        body.edit-mode .glass-card { cursor: default; }
+        body.edit-mode .glass-card:hover { transform: none; box-shadow: none; }
 
-        /* Search bar */
-        #search-wrap { position: relative; max-width: 480px; margin: 0 auto 48px; }
+        /* ── Search ── */
+        #search-wrap { position: relative; max-width: 480px; margin: 0 auto 40px; }
         #search-input {
             width: 100%;
-            background: rgba(15,23,42,0.7);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 12px 48px 12px 44px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 20px;
+            padding: 13px 48px 13px 46px;
             color: #e2e8f0;
             font-family: 'Nunito', sans-serif;
-            font-size: 14px;
+            font-size: 14px; font-weight: 500;
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            backdrop-filter: blur(8px);
+            transition: all 0.25s;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
         }
         #search-input::placeholder { color: #475569; }
-        #search-input:focus { border-color: rgba(56,189,248,0.4); box-shadow: 0 0 0 3px rgba(56,189,248,0.08); }
-        #search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px; pointer-events: none; }
-        #search-clear { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 12px; cursor: pointer; display: none; }
+        #search-input:focus {
+            border-color: rgba(139,92,246,0.45);
+            background: rgba(255,255,255,0.07);
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.10), inset 0 1px 0 rgba(255,255,255,0.10);
+        }
+        #search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px; pointer-events: none; }
+        #search-clear { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 12px; cursor: pointer; display: none; transition: color .2s; }
         #search-clear:hover { color: #94a3b8; }
 
-        /* Toolbar */
+        /* ── Toolbar ── */
         #toolbar { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
         .tool-btn {
             display: flex; align-items: center; gap: 7px;
-            padding: 9px 18px; border-radius: 12px;
+            padding: 9px 20px; border-radius: 14px;
             font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
             cursor: pointer; transition: all 0.2s;
             font-family: 'Nunito', sans-serif;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(15,23,42,0.6);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.09);
             color: #94a3b8;
+            backdrop-filter: blur(12px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
         }
-        .tool-btn:hover { color: #e2e8f0; border-color: rgba(255,255,255,0.2); background: rgba(15,23,42,0.9); }
-        .tool-btn.active { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.35); color: #f87171; }
-        #upload-btn { color: #67e8f9; border-color: rgba(103,232,249,0.25); background: rgba(103,232,249,0.05); }
-        #upload-btn:hover { background: rgba(103,232,249,0.12); border-color: rgba(103,232,249,0.45); color: #e0f2fe; }
+        .tool-btn:hover { color: #e2e8f0; border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.09); }
+        .tool-btn.active { background: rgba(239,68,68,0.10); border-color: rgba(239,68,68,0.35); color: #f87171; }
+        #upload-btn { color: #a5b4fc; border-color: rgba(165,180,252,0.20); background: rgba(165,180,252,0.06); }
+        #upload-btn:hover { background: rgba(165,180,252,0.12); border-color: rgba(165,180,252,0.35); color: #c7d2fe; }
 
-        /* Add module modal */
+        /* ── Status pill ── */
+        .status-pill {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+            color: #475569; text-transform: uppercase;
+        }
+        .pulse-dot { width: 6px; height: 6px; border-radius: 50%; animation: pulse 2.5s ease-in-out infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+
+        /* ── Add modal ── */
         #add-modal {
             display: none; position: fixed; inset: 0; z-index: 300;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.60);
+            backdrop-filter: blur(10px);
             align-items: center; justify-content: center;
         }
         #add-modal.open { display: flex; }
         #modal-box {
-            background: #0d1526;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 24px;
-            padding: 36px;
+            background: rgba(10,14,26,0.85);
+            backdrop-filter: blur(32px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 28px;
+            padding: 40px;
             width: 100%; max-width: 460px;
             position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.10);
         }
-        .modal-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+        #modal-box::before {
+            content: '';
+            position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .modal-label { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.10em; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
         .modal-input {
-            width: 100%; background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px; padding: 10px 14px; color: #e2e8f0;
-            font-family: 'Nunito', sans-serif; font-size: 13px; outline: none;
-            transition: border-color 0.2s; margin-bottom: 16px;
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 12px; padding: 10px 14px;
+            color: #e2e8f0; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 500;
+            outline: none; transition: all .2s; margin-bottom: 16px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
         }
-        .modal-input:focus { border-color: rgba(56,189,248,0.4); }
+        .modal-input:focus { border-color: rgba(139,92,246,0.45); background: rgba(255,255,255,0.07); }
         #drop-zone {
-            border: 2px dashed rgba(56,189,248,0.25); border-radius: 14px;
+            border: 1.5px dashed rgba(139,92,246,0.30); border-radius: 18px;
             padding: 28px; text-align: center; color: #475569;
-            cursor: pointer; transition: all 0.2s; margin-bottom: 20px;
-            font-size: 13px;
+            cursor: pointer; transition: all 0.2s; margin-bottom: 20px; font-size: 13px; font-weight: 500;
+            background: rgba(139,92,246,0.03);
         }
-        #drop-zone.dragging, #drop-zone:hover { border-color: rgba(56,189,248,0.6); color: #94a3b8; background: rgba(56,189,248,0.04); }
-        #drop-zone .file-chosen { color: #67e8f9; font-weight: 600; }
+        #drop-zone:hover, #drop-zone.dragging { border-color: rgba(139,92,246,0.55); color: #94a3b8; background: rgba(139,92,246,0.07); }
+        #drop-zone .file-chosen { color: #a5b4fc; font-weight: 700; }
+        .color-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+        .color-opt { width: 32px; height: 32px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all .15s; }
+        .color-opt.selected { border-color: rgba(255,255,255,0.8); transform: scale(1.18); box-shadow: 0 0 12px rgba(255,255,255,0.2); }
 
-        /* Color picker row */
-        .color-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-        .color-opt {
-            width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
-            border: 2px solid transparent; transition: all 0.15s;
-        }
-        .color-opt.selected { border-color: #fff; transform: scale(1.15); }
-
-        /* Module viewer */
+        /* ── Viewer ── */
         #module-viewer {
             display: none; position: fixed; inset: 0; z-index: 100;
-            background: var(--bg-color); animation: slideIn 0.4s ease-out;
+            background: var(--bg); animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
         }
-        @keyframes slideIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes slideUp { from { transform: translateY(8%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* No results */
-        #no-results { display: none; grid-column: 1/-1; text-align: center; color: #475569; padding: 48px 0; }
+        /* ── No results ── */
+        #no-results { display: none; grid-column: 1/-1; text-align: center; color: #334155; padding: 60px 0; }
 
-        ::-webkit-scrollbar { width: 6px; }
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 10px; }
+
+        .serif-title { font-family: 'Playfair Display', serif; }
+
+        /* ── Gradient text helper ── */
+        .grad-text {
+            background: linear-gradient(135deg, #a78bfa, #ec4899, #38bdf8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
     </style>
 </head>
 <body class="p-6 md:p-12">
 
-<div class="max-w-7xl mx-auto">
+<!-- Background orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="orb orb-4"></div>
+<div class="orb orb-5"></div>
+
+<div class="max-w-7xl mx-auto" style="position:relative;z-index:1;">
+
     <!-- Header -->
-    <header class="mb-12 text-center">
-        <div class="inline-block p-1 px-3 mb-4 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-bold tracking-widest uppercase">
+    <header class="mb-14 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full text-xs font-bold tracking-widest uppercase"
+             style="background:rgba(139,92,246,0.10);border:1px solid rgba(139,92,246,0.22);color:#a78bfa;backdrop-filter:blur(10px);">
+            <i class="fa-solid fa-sparkles" style="font-size:9px;"></i>
             Personal Portfolio Hub
         </div>
-        <h1 class="serif-title text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
-            Knowledge <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-pink-500">Galaxy</span>
+        <h1 class="serif-title text-5xl md:text-7xl font-black text-white mb-5 tracking-tight leading-tight">
+            Knowledge <span class="grad-text">Galaxy</span>
         </h1>
-        <p class="text-slate-400 max-w-2xl mx-auto text-lg">
-            A curated repository of cross-domain research, mind maps, and interactive tools.
+        <p style="color:#64748b;max-width:480px;margin:0 auto;font-size:15px;font-weight:500;line-height:1.7;">
+            A curated repository of cross-domain research,<br>mind maps, and interactive tools.
         </p>
     </header>
 
-    <!-- Search bar -->
+    <!-- Search -->
     <div id="search-wrap">
         <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
         <input id="search-input" type="text" placeholder="Search modules…" oninput="handleSearch(this.value)">
@@ -185,22 +268,26 @@
     </div>
 
     <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="knowledge-grid">
-        <div id="no-results"><i class="fa-solid fa-telescope text-3xl mb-3 block"></i>No modules match your search.</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="knowledge-grid">
+        <div id="no-results">
+            <i class="fa-solid fa-satellite-dish" style="font-size:32px;margin-bottom:12px;display:block;opacity:.3;"></i>
+            <span style="font-size:13px;">No modules match your search.</span>
+        </div>
     </div>
 
-    <footer class="mt-24 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-        <p>© 2026 Personal Knowledge Base • Interactive Intelligence Architecture</p>
+    <!-- Footer -->
+    <footer style="margin-top:80px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.05);text-align:center;color:#1e293b;font-size:12px;font-weight:600;letter-spacing:.05em;">
+        © 2026 Personal Knowledge Base &nbsp;·&nbsp; Interactive Intelligence Architecture
     </footer>
 </div>
 
 <!-- Full-screen Viewer -->
 <div id="module-viewer">
-    <iframe id="viewer-frame" class="w-full h-full border-none" src=""></iframe>
-    <button onclick="closeViewer()" title="Back to Knowledge Galaxy"
-        style="position:fixed;top:16px;left:16px;z-index:200;display:flex;align-items:center;gap:8px;padding:8px 14px 8px 10px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:rgba(6,9,19,0.85);backdrop-filter:blur(12px);color:#94a3b8;font-size:12px;font-weight:700;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;font-family:'Nunito',sans-serif;"
-        onmouseover="this.style.color='#f8fafc';this.style.borderColor='rgba(255,255,255,0.25)';this.style.background='rgba(15,23,42,0.95)'"
-        onmouseout="this.style.color='#94a3b8';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(6,9,19,0.85)'">
+    <iframe id="viewer-frame" style="width:100%;height:100%;border:none;" src=""></iframe>
+    <button onclick="closeViewer()" title="Back"
+        style="position:fixed;top:18px;left:18px;z-index:200;display:flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:24px;border:1px solid rgba(255,255,255,0.12);background:rgba(4,8,15,0.80);backdrop-filter:blur(16px);color:#94a3b8;font-size:12px;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.4);"
+        onmouseover="this.style.color='#f1f5f9';this.style.borderColor='rgba(255,255,255,0.24)';this.style.background='rgba(10,14,26,0.95)'"
+        onmouseout="this.style.color='#94a3b8';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(4,8,15,0.80)'">
         <i class="fa-solid fa-chevron-left" style="font-size:10px;"></i> Back
     </button>
 </div>
@@ -208,15 +295,20 @@
 <!-- Add Module Modal -->
 <div id="add-modal">
     <div id="modal-box">
-        <button onclick="closeAddModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#475569;cursor:pointer;font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
-        <h2 style="font-size:18px;font-weight:800;color:#f1f5f9;margin-bottom:24px;">Add New Module</h2>
+        <button onclick="closeAddModal()"
+            style="position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:10px;color:#475569;cursor:pointer;padding:6px 10px;font-size:13px;transition:all .2s;"
+            onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#475569'">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
-        <!-- Drop zone -->
+        <h2 style="font-size:19px;font-weight:800;color:#f1f5f9;margin-bottom:6px;">Add New Module</h2>
+        <p style="font-size:12px;color:#475569;font-weight:500;margin-bottom:24px;">Upload any HTML file to add it to your galaxy.</p>
+
         <div id="drop-zone" onclick="document.getElementById('file-input').click()"
              ondragover="event.preventDefault();this.classList.add('dragging')"
              ondragleave="this.classList.remove('dragging')"
              ondrop="handleDrop(event)">
-            <i class="fa-solid fa-file-arrow-up" style="font-size:24px;margin-bottom:10px;display:block;color:#38bdf8;"></i>
+            <i class="fa-solid fa-cloud-arrow-up" style="font-size:28px;margin-bottom:10px;display:block;color:#8b5cf6;opacity:.7;"></i>
             <span id="drop-label">Drop an <strong>.html</strong> file here or <u>click to browse</u></span>
             <input type="file" id="file-input" accept=".html" style="display:none" onchange="handleFileSelect(this)">
         </div>
@@ -228,49 +320,46 @@
         <input class="modal-input" id="new-subtitle" type="text" placeholder="e.g. Brewing & Fermentation">
 
         <label class="modal-label">Description</label>
-        <input class="modal-input" id="new-desc" type="text" placeholder="Short description of this module…">
+        <input class="modal-input" id="new-desc" type="text" placeholder="Short description…">
 
         <label class="modal-label">Icon (FontAwesome class)</label>
-        <input class="modal-input" id="new-icon" type="text" placeholder="e.g. fa-book, fa-flask, fa-brain">
+        <input class="modal-input" id="new-icon" type="text" placeholder="e.g. fa-book  fa-flask  fa-brain">
 
         <label class="modal-label">Color Theme</label>
         <div class="color-opts" id="color-opts">
-            <div class="color-opt selected" data-grad="from-sky-400 to-blue-600"     style="background:linear-gradient(135deg,#38bdf8,#2563eb)"></div>
-            <div class="color-opt"          data-grad="from-emerald-400 to-teal-600" style="background:linear-gradient(135deg,#34d399,#0d9488)"></div>
-            <div class="color-opt"          data-grad="from-pink-400 to-rose-600"    style="background:linear-gradient(135deg,#f472b6,#e11d48)"></div>
-            <div class="color-opt"          data-grad="from-amber-400 to-orange-600" style="background:linear-gradient(135deg,#fbbf24,#ea580c)"></div>
-            <div class="color-opt"          data-grad="from-indigo-400 to-purple-600"style="background:linear-gradient(135deg,#818cf8,#9333ea)"></div>
-            <div class="color-opt"          data-grad="from-lime-400 to-green-600"   style="background:linear-gradient(135deg,#a3e635,#16a34a)"></div>
-            <div class="color-opt"          data-grad="from-fuchsia-400 to-pink-700" style="background:linear-gradient(135deg,#e879f9,#be185d)"></div>
-            <div class="color-opt"          data-grad="from-cyan-400 to-sky-600"     style="background:linear-gradient(135deg,#22d3ee,#0284c7)"></div>
+            <div class="color-opt selected" data-grad="from-violet-400 to-indigo-600"  style="background:linear-gradient(135deg,#a78bfa,#4f46e5)"></div>
+            <div class="color-opt"          data-grad="from-emerald-400 to-teal-600"   style="background:linear-gradient(135deg,#34d399,#0d9488)"></div>
+            <div class="color-opt"          data-grad="from-pink-400 to-rose-600"      style="background:linear-gradient(135deg,#f472b6,#e11d48)"></div>
+            <div class="color-opt"          data-grad="from-amber-400 to-orange-500"   style="background:linear-gradient(135deg,#fbbf24,#f97316)"></div>
+            <div class="color-opt"          data-grad="from-sky-400 to-blue-600"       style="background:linear-gradient(135deg,#38bdf8,#2563eb)"></div>
+            <div class="color-opt"          data-grad="from-fuchsia-400 to-purple-700" style="background:linear-gradient(135deg,#e879f9,#7e22ce)"></div>
+            <div class="color-opt"          data-grad="from-lime-400 to-green-600"     style="background:linear-gradient(135deg,#a3e635,#16a34a)"></div>
+            <div class="color-opt"          data-grad="from-cyan-400 to-sky-600"       style="background:linear-gradient(135deg,#22d3ee,#0284c7)"></div>
         </div>
 
         <button onclick="confirmAddModule()"
-            style="width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#2563eb);color:#fff;font-weight:800;font-size:13px;letter-spacing:0.05em;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:opacity 0.2s;"
+            style="width:100%;padding:13px;border-radius:14px;background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;font-weight:800;font-size:13px;letter-spacing:.05em;border:none;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 20px rgba(139,92,246,0.35),inset 0 1px 0 rgba(255,255,255,0.2);transition:all .2s;"
             onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
             <i class="fa-solid fa-plus" style="margin-right:6px;"></i>Add to Galaxy
         </button>
-        <p id="modal-error" style="color:#f87171;font-size:11px;margin-top:10px;display:none;"></p>
+        <p id="modal-error" style="color:#f87171;font-size:11px;margin-top:10px;display:none;font-weight:600;"></p>
     </div>
 </div>
 
 <script>
-    /* ── Persistent storage ── */
     const STORAGE_KEY = 'knowledge_galaxy_modules';
 
     const DEFAULT_MODULES = [
-        { id:'finance',    title:'Business & Finance',     subtitle:'Cross-Domain Knowledge Map',   description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.', icon:'fa-building-columns', color:'from-emerald-400 to-teal-600', file:'code_artifact.html',              custom:false },
-        { id:'beer',       title:'Zymos: Beer Masterclass',subtitle:'Brewing Science & Styles',     description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.', icon:'fa-beer-mug-empty', color:'from-amber-400 to-orange-600', file:'zymos_beer_mind_map.html',          custom:false },
-        { id:'skincare',   title:'Skincare Actives',       subtitle:'Science & Market Trends',      description:'Trilingual repository of active ingredients, formulation logic, and industry regulations.', icon:'fa-sparkles', color:'from-pink-400 to-rose-600',    file:'skincare-trilingual.html',          custom:false },
-        { id:'perfume',    title:'Perfume Intelligence',   subtitle:'Market Analysis & Brands',     description:'Coty portfolio analysis and perfume market competition mind map.',                        icon:'fa-bottle-droplet', color:'from-indigo-400 to-purple-600', file:'coty_perfume_market_mindmap.html', custom:false },
-        { id:'cv-builder', title:'CV Prompt Builder',      subtitle:'Career Engineering Tool',      description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',                  icon:'fa-file-invoice', color:'from-sky-400 to-blue-600',      file:'cv_prompt_builder_v2.html',        custom:false }
+        { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',  description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.', icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',   file:'code_artifact.html',              custom:false },
+        { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',    description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.', icon:'fa-beer-mug-empty', color:'from-amber-400 to-orange-500',   file:'zymos_beer_mind_map.html',         custom:false },
+        { id:'skincare',   title:'Skincare Actives',        subtitle:'Science & Market Trends',     description:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.', icon:'fa-sparkles',       color:'from-pink-400 to-rose-600',      file:'skincare-trilingual.html',         custom:false },
+        { id:'perfume',    title:'Perfume Intelligence',    subtitle:'Market Analysis & Brands',    description:'Coty portfolio analysis and perfume market competition mind map.',                        icon:'fa-bottle-droplet', color:'from-fuchsia-400 to-purple-700', file:'coty_perfume_market_mindmap.html', custom:false },
+        { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',     description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',                  icon:'fa-file-invoice',   color:'from-sky-400 to-blue-600',       file:'cv_prompt_builder_v2.html',       custom:false }
     ];
 
     function loadModules() {
-        try {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            return saved ? JSON.parse(saved) : DEFAULT_MODULES;
-        } catch { return DEFAULT_MODULES; }
+        try { const s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : DEFAULT_MODULES; }
+        catch { return DEFAULT_MODULES; }
     }
     function saveModules() { localStorage.setItem(STORAGE_KEY, JSON.stringify(modules)); }
 
@@ -278,8 +367,7 @@
     let searchQuery = '';
     let editMode = false;
     let pendingFileURL = null;
-    let pendingFileName = null;
-    let selectedColor = 'from-sky-400 to-blue-600';
+    let selectedColor = 'from-violet-400 to-indigo-600';
 
     /* ── Render ── */
     function renderGrid() {
@@ -291,39 +379,32 @@
             (m.subtitle||'').toLowerCase().includes(q) ||
             (m.description||'').toLowerCase().includes(q)
         );
-
-        // Remove old cards (keep no-results sentinel)
         grid.querySelectorAll('.glass-card').forEach(c => c.remove());
-
-        if (filtered.length === 0) { noRes.style.display = 'block'; return; }
+        if (!filtered.length) { noRes.style.display = 'block'; return; }
         noRes.style.display = 'none';
 
         filtered.forEach(mod => {
             const card = document.createElement('div');
-            card.className = 'glass-card rounded-3xl p-8 cursor-pointer group' + (editMode ? ' edit-mode' : '');
+            card.className = 'glass-card p-8 cursor-pointer group' + (editMode ? ' edit-mode' : '');
             card.dataset.id = mod.id;
             if (!editMode) card.onclick = () => openModule(mod.file, mod.title);
 
             card.innerHTML = `
-                <button class="delete-btn" onclick="deleteModule('${mod.id}',event)" title="Remove module">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <div class="flex justify-between items-start mb-6">
-                    <div class="h-14 w-14 rounded-2xl bg-gradient-to-br ${mod.color} flex items-center justify-center text-white text-2xl shadow-lg">
+                <button class="delete-btn" onclick="deleteModule('${mod.id}',event)"><i class="fa-solid fa-xmark"></i></button>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
+                    <div class="icon-box bg-gradient-to-br ${mod.color}">
                         <i class="fa-solid ${mod.icon}"></i>
                     </div>
-                    <div class="opacity-0 group-hover:opacity-100 transition-opacity text-sky-400">
+                    <div class="opacity-0 group-hover:opacity-100 transition-opacity" style="color:rgba(255,255,255,.35);font-size:13px;margin-top:4px;">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </div>
                 </div>
-                <div>
-                    <h3 class="text-2xl font-bold text-white mb-1">${mod.title}</h3>
-                    <p class="text-xs font-semibold text-sky-400 tracking-wider uppercase mb-4">${mod.subtitle}</p>
-                    <p class="text-slate-400 text-sm leading-relaxed line-clamp-3">${mod.description}</p>
-                </div>
-                <div class="mt-8 flex items-center gap-2">
-                    <div class="h-1.5 w-1.5 rounded-full ${mod.custom ? 'bg-sky-400' : 'bg-emerald-500'} animate-pulse"></div>
-                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">${mod.custom ? 'Custom Module' : 'Ready to Explore'}</span>
+                <h3 style="font-size:20px;font-weight:800;color:#f1f5f9;margin-bottom:4px;letter-spacing:-.3px;">${mod.title}</h3>
+                <p style="font-size:10px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;margin-bottom:14px;color:rgba(167,139,250,.8);">${mod.subtitle}</p>
+                <p style="color:#475569;font-size:13px;line-height:1.65;font-weight:500;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${mod.description}</p>
+                <div class="status-pill" style="margin-top:28px;">
+                    <div class="pulse-dot" style="background:${mod.custom ? '#60a5fa' : '#34d399'};box-shadow:0 0 6px ${mod.custom ? 'rgba(96,165,250,.5)' : 'rgba(52,211,153,.5)'}"></div>
+                    <span>${mod.custom ? 'Custom Module' : 'Ready to Explore'}</span>
                 </div>`;
             grid.appendChild(card);
         });
@@ -335,10 +416,7 @@
         document.getElementById('search-clear').style.display = val ? 'block' : 'none';
         renderGrid();
     }
-    function clearSearch() {
-        document.getElementById('search-input').value = '';
-        handleSearch('');
-    }
+    function clearSearch() { document.getElementById('search-input').value = ''; handleSearch(''); }
 
     /* ── Edit mode ── */
     function toggleEditMode() {
@@ -346,32 +424,23 @@
         document.body.classList.toggle('edit-mode', editMode);
         const btn = document.getElementById('edit-toggle');
         btn.classList.toggle('active', editMode);
-        btn.innerHTML = editMode
-            ? '<i class="fa-solid fa-check"></i> Done'
-            : '<i class="fa-solid fa-pen-to-square"></i> Edit';
+        btn.innerHTML = editMode ? '<i class="fa-solid fa-check"></i> Done' : '<i class="fa-solid fa-pen-to-square"></i> Edit';
         renderGrid();
     }
-
     function deleteModule(id, e) {
         e.stopPropagation();
         const idx = modules.findIndex(m => m.id === id);
         if (idx === -1) return;
-        // Revoke blob URL if custom
-        if (modules[idx].custom && modules[idx].file.startsWith('blob:')) {
-            URL.revokeObjectURL(modules[idx].file);
-        }
-        modules.splice(idx, 1);
-        saveModules();
-        renderGrid();
+        if (modules[idx].custom && modules[idx].file.startsWith('blob:')) URL.revokeObjectURL(modules[idx].file);
+        modules.splice(idx, 1); saveModules(); renderGrid();
     }
 
     /* ── Viewer ── */
-    function openModule(file, title) {
+    function openModule(file) {
         if (editMode) return;
-        const viewer = document.getElementById('module-viewer');
         document.getElementById('viewer-frame').src = file;
         document.body.style.overflow = 'hidden';
-        viewer.style.display = 'block';
+        document.getElementById('module-viewer').style.display = 'block';
     }
     function closeViewer() {
         document.getElementById('module-viewer').style.display = 'none';
@@ -382,70 +451,39 @@
     /* ── Add modal ── */
     function openAddModal() {
         document.getElementById('add-modal').classList.add('open');
+        ['new-title','new-subtitle','new-desc','new-icon'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('drop-label').innerHTML = 'Drop an <strong>.html</strong> file here or <u>click to browse</u>';
-        document.getElementById('new-title').value = '';
-        document.getElementById('new-subtitle').value = '';
-        document.getElementById('new-desc').value = '';
-        document.getElementById('new-icon').value = 'fa-file';
         document.getElementById('modal-error').style.display = 'none';
-        pendingFileURL = null; pendingFileName = null;
-        selectColor('from-sky-400 to-blue-600');
+        pendingFileURL = null; selectColor('from-violet-400 to-indigo-600');
     }
     function closeAddModal() { document.getElementById('add-modal').classList.remove('open'); }
 
     function handleDrop(e) {
-        e.preventDefault();
-        document.getElementById('drop-zone').classList.remove('dragging');
-        const file = e.dataTransfer.files[0];
-        if (file) processFile(file);
+        e.preventDefault(); document.getElementById('drop-zone').classList.remove('dragging');
+        if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
     }
-    function handleFileSelect(input) {
-        if (input.files[0]) processFile(input.files[0]);
-    }
+    function handleFileSelect(input) { if (input.files[0]) processFile(input.files[0]); }
     function processFile(file) {
-        if (!file.name.endsWith('.html')) {
-            showModalError('Please select an .html file.'); return;
-        }
+        if (!file.name.endsWith('.html')) { showModalError('Please select an .html file.'); return; }
         if (pendingFileURL) URL.revokeObjectURL(pendingFileURL);
         pendingFileURL = URL.createObjectURL(file);
-        pendingFileName = file.name;
         document.getElementById('drop-label').innerHTML = `<span class="file-chosen"><i class="fa-solid fa-check" style="margin-right:5px;"></i>${file.name}</span>`;
-        // Auto-fill title from filename
-        if (!document.getElementById('new-title').value) {
+        if (!document.getElementById('new-title').value)
             document.getElementById('new-title').value = file.name.replace('.html','').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-        }
     }
-
     function confirmAddModule() {
         const title = document.getElementById('new-title').value.trim();
-        const subtitle = document.getElementById('new-subtitle').value.trim();
-        const desc = document.getElementById('new-desc').value.trim();
-        const icon = document.getElementById('new-icon').value.trim() || 'fa-file';
-
         if (!pendingFileURL) { showModalError('Please upload an HTML file first.'); return; }
         if (!title) { showModalError('Please enter a module title.'); return; }
-
-        const id = 'custom_' + Date.now();
-        modules.push({ id, title, subtitle: subtitle||'Custom Module', description: desc||'', icon, color: selectedColor, file: pendingFileURL, custom: true });
-        saveModules();
-        renderGrid();
-        closeAddModal();
+        const icon = document.getElementById('new-icon').value.trim() || 'fa-file';
+        modules.push({ id:'custom_'+Date.now(), title, subtitle:document.getElementById('new-subtitle').value.trim()||'Custom Module', description:document.getElementById('new-desc').value.trim()||'', icon, color:selectedColor, file:pendingFileURL, custom:true });
+        saveModules(); renderGrid(); closeAddModal();
     }
-
-    function showModalError(msg) {
-        const el = document.getElementById('modal-error');
-        el.textContent = msg; el.style.display = 'block';
-    }
+    function showModalError(msg) { const el = document.getElementById('modal-error'); el.textContent = msg; el.style.display = 'block'; }
 
     /* ── Color picker ── */
-    document.getElementById('color-opts').addEventListener('click', e => {
-        const opt = e.target.closest('.color-opt');
-        if (opt) selectColor(opt.dataset.grad);
-    });
-    function selectColor(grad) {
-        selectedColor = grad;
-        document.querySelectorAll('.color-opt').forEach(o => o.classList.toggle('selected', o.dataset.grad === grad));
-    }
+    document.getElementById('color-opts').addEventListener('click', e => { const o = e.target.closest('.color-opt'); if (o) selectColor(o.dataset.grad); });
+    function selectColor(g) { selectedColor = g; document.querySelectorAll('.color-opt').forEach(o => o.classList.toggle('selected', o.dataset.grad===g)); }
 
     /* ── Keys ── */
     document.addEventListener('keydown', e => {
@@ -455,7 +493,6 @@
         }
     });
 
-    /* ── Boot ── */
     renderGrid();
 </script>
 </body>
