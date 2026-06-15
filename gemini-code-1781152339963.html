@@ -655,6 +655,7 @@
   const hdrBtns = {zh: document.getElementById('hdr-zh'), en: document.getElementById('hdr-en'), fr: document.getElementById('hdr-fr')};
 
   function switchLang(lang) {
+    localStorage.setItem('kb_lang', lang);
     buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     panels.forEach(p => p.classList.toggle('active', p.id === lang));
     document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
@@ -667,6 +668,10 @@
   }
 
   buttons.forEach(btn => btn.addEventListener('click', () => switchLang(btn.dataset.lang)));
+
+  // Restore saved language on load
+  const _savedLang = localStorage.getItem('kb_lang');
+  if (_savedLang && ['zh','en','fr'].includes(_savedLang)) switchLang(_savedLang);
 </script>
 </body>
 </html>
