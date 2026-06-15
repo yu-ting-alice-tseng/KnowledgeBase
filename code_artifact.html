@@ -1742,11 +1742,9 @@
       document.getElementById('header-subtitle').innerText = uiTranslations[lang].subtitle;
       document.getElementById('global-search-input').placeholder = uiTranslations[lang].searchPlaceholder;
       
-      // 切換領域 Tabs 的中文名稱
-      document.getElementById('tab-btn-finance-text').innerText = uiTranslations[lang].domainFinance;
-      document.getElementById('tab-btn-accounting-text').innerText = uiTranslations[lang].domainAccounting;
-      document.getElementById('tab-btn-marketing-text').innerText = uiTranslations[lang].domainMarketing;
-      
+      // 更新下拉選單按鈕文字
+      updateDropdownButton();
+
       // 詳細解析版塊靜態標籤
       document.getElementById('label-metadata').innerText = uiTranslations[lang].metadataLabel;
       document.getElementById('label-core-def').innerText = uiTranslations[lang].coreDefinition;
