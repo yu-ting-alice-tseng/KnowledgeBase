@@ -1460,7 +1460,8 @@
     // 5. 初始化載入
     window.addEventListener('load', () => {
       // 預設為繁體中文、金融領域、企業金融分支
-      setLanguage('zh');
+      const savedLang = localStorage.getItem('kb_lang');
+      setLanguage(savedLang && ['zh','en','fr'].includes(savedLang) ? savedLang : 'zh');
       
       // 全局搜尋監聽
       const searchInput = document.getElementById('global-search-input');
