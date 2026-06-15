@@ -99,12 +99,13 @@
   /* ── Detail Panel ── */
   #detail-panel {
     width: 340px; min-width: 340px;
-    background: rgba(10,16,30,0.95);
+    background: rgba(255,255,255,0.03);
     border-left: 1px solid rgba(255,255,255,0.10);
     overflow-y: auto;
     transition: width .3s, min-width .3s;
     padding: 0;
-    backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(32px) saturate(200%);
+    box-shadow: -8px 0 40px rgba(0,0,0,0.25);
   }
   #detail-panel.hidden { width: 0; min-width: 0; overflow: hidden; padding: 0; }
   #detail-inner { padding: 24px 20px 48px; min-width: 300px; }
