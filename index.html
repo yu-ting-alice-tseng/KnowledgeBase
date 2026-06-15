@@ -1,252 +1,317 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bonita's Knowledge Galaxy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonita's Knowledge Library</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 
-        :root {
-            --bg: #04080f;
-            --glass: rgba(255,255,255,0.04);
-            --glass-border: rgba(255,255,255,0.10);
-            --glass-hover: rgba(255,255,255,0.07);
-        }
+:root{
+  --bg:#0c0906;
+  --gold:#c8a55a;
+  --gold-bright:#e6c87a;
+  --gold-dim:rgba(200,165,90,0.5);
+  --cream:#ede3d0;
+  --cream-dim:#9a8878;
+  --muted:#5c4e3e;
+  --glass-bg:rgba(255,242,208,0.052);
+  --glass-bg-hover:rgba(255,242,208,0.088);
+  --glass-border:rgba(200,165,90,0.17);
+  --glass-border-hover:rgba(200,165,90,0.38);
+}
 
-        body {
-            background-color: var(--bg);
-            font-family: 'Nunito', 'Noto Serif TC', sans-serif;
-            color: #e2e8f0;
-            min-height: 100vh;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+html,body{height:100%;}
 
-        /* ── Background orbs ── */
-        .orb {
-            position: fixed; border-radius: 50%;
-            filter: blur(100px); pointer-events: none; z-index: 0;
-        }
-        .orb-1 { width: 600px; height: 600px; top: -200px; left: -150px; background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); }
-        .orb-2 { width: 500px; height: 500px; top: -100px; right: -100px; background: radial-gradient(circle, rgba(236,72,153,0.15) 0%, transparent 70%); }
-        .orb-3 { width: 700px; height: 700px; bottom: -200px; left: 30%; background: radial-gradient(circle, rgba(56,189,248,0.10) 0%, transparent 70%); }
-        .orb-4 { width: 400px; height: 400px; bottom: 100px; right: -100px; background: radial-gradient(circle, rgba(217,70,239,0.12) 0%, transparent 70%); }
-        .orb-5 { width: 350px; height: 350px; top: 50%; left: 50%; transform: translate(-50%,-50%); background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%); }
+body{
+  background-color:var(--bg);
+  font-family:'Nunito','Noto Serif TC',sans-serif;
+  color:var(--cream);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
 
-        /* ── Glass card ── */
-        .glass-card {
-            position: relative;
-            background: var(--glass);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            box-shadow:
-                0 8px 32px rgba(0,0,0,0.35),
-                inset 0 1px 0 rgba(255,255,255,0.10),
-                inset 0 -1px 0 rgba(0,0,0,0.20);
-            transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, border-color 0.2s ease;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .glass-card::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(255,255,255,0.02) 100%);
-            border-radius: inherit; pointer-events: none;
-        }
-        .glass-card:hover {
-            transform: translateY(-8px) scale(1.012);
-            border-color: rgba(255,255,255,0.20);
-            box-shadow:
-                0 24px 60px rgba(0,0,0,0.45),
-                0 0 40px rgba(139,92,246,0.12),
-                inset 0 1px 0 rgba(255,255,255,0.16),
-                inset 0 -1px 0 rgba(0,0,0,0.15);
-        }
-        .glass-card:focus-visible {
-            outline: 2px solid rgba(167,139,250,0.7);
-            outline-offset: 3px;
-        }
-        .glass-card.edit-mode:hover { transform: none; box-shadow: none; cursor: default; }
+/* Ambient vignette */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background:radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%);
+  pointer-events:none;z-index:0;
+}
 
-        /* ── Iridescent icon box ── */
-        .icon-box {
-            position: relative;
-            width: 56px; height: 56px; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; color: #fff;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
-        }
-        .icon-box::after {
-            content: '';
-            position: absolute; inset: 0; border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 60%);
-            pointer-events: none;
-        }
+/* ── Warm reading-lamp orbs ── */
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
+.orb-1{width:800px;height:800px;top:-300px;left:-200px;background:radial-gradient(circle,rgba(210,148,40,0.20) 0%,transparent 65%);filter:blur(110px);}
+.orb-2{width:500px;height:500px;top:-80px;right:-120px;background:radial-gradient(circle,rgba(180,110,30,0.13) 0%,transparent 65%);filter:blur(90px);}
+.orb-3{width:650px;height:650px;bottom:-200px;left:15%;background:radial-gradient(circle,rgba(30,75,100,0.15) 0%,transparent 65%);filter:blur(100px);}
+.orb-4{width:400px;height:400px;bottom:80px;right:-80px;background:radial-gradient(circle,rgba(110,55,130,0.09) 0%,transparent 65%);filter:blur(80px);}
+.orb-5{width:900px;height:900px;top:35%;left:45%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(170,110,25,0.055) 0%,transparent 65%);filter:blur(130px);}
 
-        /* ── Delete button ── */
-        .delete-btn {
-            display: none; position: absolute; top: 10px; right: 10px;
-            width: 36px; height: 36px; border-radius: 50%;
-            background: rgba(239,68,68,0.15);
-            border: 1px solid rgba(239,68,68,0.35);
-            color: #f87171; font-size: 12px;
-            align-items: center; justify-content: center;
-            cursor: pointer; transition: background 0.18s, color 0.18s; z-index: 10;
-        }
-        .delete-btn:hover { background: rgba(239,68,68,0.40); color: #fff; transform: scale(1.08); }
-        .delete-btn:focus-visible { outline: 2px solid rgba(248,113,113,0.7); outline-offset: 2px; }
-        body.edit-mode .delete-btn { display: flex; }
-        body.edit-mode .glass-card { cursor: default; }
-        body.edit-mode .glass-card:hover { transform: none; box-shadow: none; }
+/* ── Liquid Glass Card ── */
+.glass-card{
+  position:relative;
+  background:var(--glass-bg);
+  backdrop-filter:blur(44px) saturate(190%) brightness(1.06);
+  -webkit-backdrop-filter:blur(44px) saturate(190%) brightness(1.06);
+  border-radius:20px;
+  border:1px solid var(--glass-border);
+  box-shadow:
+    0 28px 70px rgba(0,0,0,0.60),
+    0 8px 24px rgba(0,0,0,0.38),
+    inset 0 1.5px 0 rgba(255,238,170,0.32),
+    inset 0 -1px 0 rgba(0,0,0,0.28),
+    inset 2px 0 8px rgba(255,225,130,0.03),
+    inset -2px 0 8px rgba(0,0,0,0.08);
+  transition:transform 0.38s cubic-bezier(0.34,1.38,0.64,1),box-shadow 0.38s ease,border-color 0.25s ease,background 0.25s ease;
+  overflow:hidden;
+  cursor:pointer;
+}
 
-        /* ── Search ── */
-        #search-wrap { position: relative; max-width: 480px; margin: 0 auto 40px; }
-        #search-input {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.10);
-            border-radius: 20px;
-            padding: 13px 48px 13px 46px;
-            color: #e2e8f0;
-            font-family: 'Nunito', sans-serif;
-            font-size: 16px; font-weight: 500;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-        }
-        #search-input::placeholder { color: #475569; }
-        #search-input:focus {
-            border-color: rgba(139,92,246,0.45);
-            background: rgba(255,255,255,0.07);
-            box-shadow: 0 0 0 3px rgba(139,92,246,0.10), inset 0 1px 0 rgba(255,255,255,0.10);
-        }
-        #search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px; pointer-events: none; }
-        #search-clear { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 12px; cursor: pointer; display: none; transition: color .2s; }
-        #search-clear:hover { color: #94a3b8; }
+/* Specular top highlight */
+.glass-card::before{
+  content:'';
+  position:absolute;top:0;left:8%;right:8%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,238,160,0.65) 25%,rgba(255,250,215,0.90) 50%,rgba(255,238,160,0.65) 75%,transparent);
+  pointer-events:none;z-index:2;
+}
 
-        /* ── Toolbar ── */
-        #toolbar { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
-        .tool-btn {
-            display: flex; align-items: center; gap: 7px;
-            padding: 9px 20px; border-radius: 14px;
-            font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
-            cursor: pointer; transition: all 0.2s;
-            font-family: 'Nunito', sans-serif;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.09);
-            color: #94a3b8;
-            backdrop-filter: blur(12px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
-        }
-        .tool-btn:hover { color: #e2e8f0; border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.09); }
-        .tool-btn.active { background: rgba(239,68,68,0.10); border-color: rgba(239,68,68,0.35); color: #f87171; }
-        #upload-btn { color: #a5b4fc; border-color: rgba(165,180,252,0.20); background: rgba(165,180,252,0.06); }
-        #upload-btn:hover { background: rgba(165,180,252,0.12); border-color: rgba(165,180,252,0.35); color: #c7d2fe; }
+/* Fresnel upper glow */
+.glass-card::after{
+  content:'';
+  position:absolute;top:1px;left:1px;right:1px;
+  height:44%;
+  background:linear-gradient(180deg,rgba(255,248,215,0.075) 0%,transparent 100%);
+  border-radius:19px 19px 60% 60% / 19px 19px 28% 28%;
+  pointer-events:none;z-index:1;
+}
 
-        /* ── Status pill ── */
-        .status-pill {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
-            color: #475569; text-transform: uppercase;
-        }
-        .pulse-dot { width: 6px; height: 6px; border-radius: 50%; animation: pulse 2.5s ease-in-out infinite; }
-        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+.glass-card:hover{
+  transform:translateY(-11px) scale(1.014);
+  background:var(--glass-bg-hover);
+  border-color:var(--glass-border-hover);
+  box-shadow:
+    0 44px 100px rgba(0,0,0,0.68),
+    0 16px 40px rgba(0,0,0,0.42),
+    0 0 55px rgba(200,148,40,0.11),
+    inset 0 1.5px 0 rgba(255,240,180,0.46),
+    inset 0 -1px 0 rgba(0,0,0,0.22);
+}
 
-        /* ── Add modal ── */
-        #add-modal {
-            display: none; position: fixed; inset: 0; z-index: 300;
-            background: rgba(0,0,0,0.60);
-            backdrop-filter: blur(10px);
-            align-items: center; justify-content: center;
-        }
-        #add-modal.open { display: flex; }
-        #modal-box {
-            background: rgba(10,14,26,0.85);
-            backdrop-filter: blur(32px) saturate(180%);
-            border: 1px solid rgba(255,255,255,0.10);
-            border-radius: 28px;
-            padding: 40px;
-            width: 100%; max-width: 460px;
-            position: relative;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.10);
-        }
-        #modal-box::before {
-            content: '';
-            position: absolute; inset: 0; border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .modal-label { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.10em; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
-        .modal-input {
-            width: 100%;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 12px; padding: 10px 14px;
-            color: #e2e8f0; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 500;
-            outline: none; transition: all .2s; margin-bottom: 16px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-        }
-        .modal-input:focus { border-color: rgba(139,92,246,0.45); background: rgba(255,255,255,0.07); }
-        #drop-zone {
-            border: 1.5px dashed rgba(139,92,246,0.30); border-radius: 18px;
-            padding: 28px; text-align: center; color: #475569;
-            cursor: pointer; transition: all 0.2s; margin-bottom: 20px; font-size: 13px; font-weight: 500;
-            background: rgba(139,92,246,0.03);
-        }
-        #drop-zone:hover, #drop-zone.dragging { border-color: rgba(139,92,246,0.55); color: #94a3b8; background: rgba(139,92,246,0.07); }
-        #drop-zone .file-chosen { color: #a5b4fc; font-weight: 700; }
-        .color-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-        .color-opt { width: 32px; height: 32px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all .15s; }
-        .color-opt.selected { border-color: rgba(255,255,255,0.8); transform: scale(1.18); box-shadow: 0 0 12px rgba(255,255,255,0.2); }
+.glass-card:focus-visible{outline:2px solid rgba(200,165,90,0.6);outline-offset:3px;}
 
-        /* ── Viewer ── */
-        #module-viewer {
-            display: none; position: fixed; inset: 0; z-index: 100;
-            background: var(--bg); animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
-        }
-        @keyframes slideUp { from { transform: translateY(8%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+/* Book spine accent */
+.book-spine{
+  position:absolute;left:0;top:0;bottom:0;
+  width:4px;border-radius:20px 0 0 20px;
+  z-index:4;
+}
 
-        /* ── No results ── */
-        #no-results { display: none; grid-column: 1/-1; text-align: center; color: #334155; padding: 60px 0; }
+/* Icon box */
+.icon-box{
+  position:relative;
+  width:52px;height:52px;border-radius:15px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:#fff;
+  box-shadow:0 8px 26px rgba(0,0,0,0.42),inset 0 1px 0 rgba(255,255,255,0.24);
+}
+.icon-box::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(145deg,rgba(255,255,255,0.28) 0%,transparent 55%);
+  pointer-events:none;
+}
 
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 10px; }
+/* Card title — serif */
+.card-title{
+  font-family:'Cormorant Garamond','Noto Serif TC',serif;
+  font-size:21px;font-weight:600;
+  color:#f2e8d4;letter-spacing:-0.2px;line-height:1.22;
+}
 
-        .serif-title { font-family: 'Fredoka', sans-serif; letter-spacing: -0.5px; }
+/* Vol number */
+.vol-tag{
+  font-size:9px;font-weight:800;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--gold-dim);
+  font-family:'Nunito',sans-serif;
+}
 
-        /* ── Focus-visible: global ── */
-        :focus-visible { outline: 2px solid rgba(167,139,250,0.7); outline-offset: 2px; border-radius: 6px; }
-        button:focus-visible { outline: 2px solid rgba(167,139,250,0.7); outline-offset: 3px; border-radius: 10px; }
+/* Ruled separator */
+.ruled-sep{
+  height:1px;
+  background:linear-gradient(90deg,rgba(200,165,90,0.28),rgba(200,165,90,0.10),transparent);
+  margin:15px 0;
+}
 
-        /* ── Toolbar button focus ── */
-        .tool-btn:focus-visible { outline: 2px solid rgba(167,139,250,0.65); outline-offset: 2px; }
+/* Delete btn */
+.delete-btn{
+  display:none;position:absolute;top:12px;right:12px;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(239,68,68,0.12);
+  border:1px solid rgba(239,68,68,0.30);
+  color:#f87171;font-size:11px;
+  align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.18s;z-index:10;
+}
+.delete-btn:hover{background:rgba(239,68,68,0.36);color:#fff;transform:scale(1.1);}
+body.edit-mode .delete-btn{display:flex;}
+body.edit-mode .glass-card{cursor:default;}
+body.edit-mode .glass-card:hover{transform:none;box-shadow:0 28px 70px rgba(0,0,0,0.60),0 8px 24px rgba(0,0,0,0.38),inset 0 1.5px 0 rgba(255,238,170,0.32),inset 0 -1px 0 rgba(0,0,0,0.28);}
 
-        /* ── Reduced motion ── */
-        @media (prefers-reduced-motion: reduce) {
-            .glass-card, .tool-btn, .delete-btn { transition: none !important; }
-            .glass-card:hover { transform: none; }
-            @keyframes pulse { 0%,100% { opacity: 1; } }
-        }
+/* Status pill */
+.status-pill{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.09em;color:var(--muted);text-transform:uppercase;}
+.pulse-dot{width:6px;height:6px;border-radius:50%;animation:pulse 2.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.45;transform:scale(0.80);}}
 
-        /* ── Gradient text helper ── */
-        .grad-text {
-            background: linear-gradient(135deg, #a78bfa, #ec4899, #38bdf8);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-    </style>
+/* ── Search ── */
+#search-wrap{position:relative;max-width:500px;margin:0 auto 32px;}
+#search-input{
+  width:100%;
+  background:rgba(255,242,208,0.042);
+  backdrop-filter:blur(28px);
+  border:1px solid rgba(200,165,90,0.18);
+  border-radius:14px;
+  padding:13px 48px 13px 46px;
+  color:var(--cream);
+  font-family:'Nunito',sans-serif;
+  font-size:15px;font-weight:500;
+  outline:none;
+  transition:all 0.25s;
+  box-shadow:inset 0 1px 0 rgba(255,235,165,0.10),0 4px 18px rgba(0,0,0,0.22);
+}
+#search-input::placeholder{color:var(--muted);font-style:italic;}
+#search-input:focus{
+  border-color:rgba(200,165,90,0.42);
+  background:rgba(255,242,208,0.072);
+  box-shadow:0 0 0 3px rgba(200,165,90,0.09),inset 0 1px 0 rgba(255,235,165,0.14),0 4px 18px rgba(0,0,0,0.22);
+}
+#search-icon{position:absolute;left:17px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
+#search-clear{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;cursor:pointer;display:none;transition:color .2s;}
+#search-clear:hover{color:var(--cream);}
+
+/* ── Toolbar ── */
+#toolbar{display:flex;justify-content:center;gap:8px;margin-bottom:48px;}
+.tool-btn{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 20px;border-radius:12px;
+  font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+  cursor:pointer;transition:all 0.22s;
+  font-family:'Nunito',sans-serif;
+  background:rgba(255,242,208,0.038);
+  border:1px solid rgba(200,165,90,0.13);
+  color:var(--muted);
+  backdrop-filter:blur(14px);
+  box-shadow:inset 0 1px 0 rgba(255,235,165,0.06);
+}
+.tool-btn:hover{color:var(--cream);border-color:rgba(200,165,90,0.30);background:rgba(255,242,208,0.08);}
+.tool-btn.active{background:rgba(239,68,68,0.09);border-color:rgba(239,68,68,0.28);color:#f87171;}
+#upload-btn{color:rgba(200,165,90,0.68);border-color:rgba(200,165,90,0.18);}
+#upload-btn:hover{color:var(--gold);border-color:rgba(200,165,90,0.40);background:rgba(200,165,90,0.07);}
+
+/* ── Add modal ── */
+#add-modal{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(0,0,0,0.72);
+  backdrop-filter:blur(14px);
+  align-items:center;justify-content:center;
+}
+#add-modal.open{display:flex;}
+#modal-box{
+  background:rgba(14,11,8,0.92);
+  backdrop-filter:blur(48px) saturate(180%);
+  border:1px solid rgba(200,165,90,0.18);
+  border-radius:24px;
+  padding:40px;
+  width:100%;max-width:460px;
+  position:relative;
+  box-shadow:0 60px 140px rgba(0,0,0,0.75),inset 0 1.5px 0 rgba(255,235,165,0.18);
+}
+#modal-box::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,rgba(255,242,190,0.042) 0%,transparent 50%);
+  pointer-events:none;
+}
+#modal-box::after{
+  content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,235,160,0.55) 50%,transparent);
+}
+.modal-label{display:block;font-size:9px;font-weight:800;letter-spacing:0.13em;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+.modal-input{
+  width:100%;
+  background:rgba(255,242,208,0.038);
+  border:1px solid rgba(200,165,90,0.13);
+  border-radius:10px;padding:10px 14px;
+  color:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;font-weight:500;
+  outline:none;transition:all .2s;margin-bottom:16px;
+  box-shadow:inset 0 1px 0 rgba(255,235,165,0.06);
+}
+.modal-input:focus{border-color:rgba(200,165,90,0.38);background:rgba(255,242,208,0.07);}
+#drop-zone{
+  border:1.5px dashed rgba(200,165,90,0.25);border-radius:16px;
+  padding:28px;text-align:center;color:var(--muted);
+  cursor:pointer;transition:all 0.22s;margin-bottom:20px;font-size:13px;font-weight:500;
+  background:rgba(200,165,90,0.022);
+}
+#drop-zone:hover,#drop-zone.dragging{border-color:rgba(200,165,90,0.48);color:var(--cream);background:rgba(200,165,90,0.058);}
+#drop-zone .file-chosen{color:var(--gold);font-weight:700;}
+.color-opts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.color-opt{width:30px;height:30px;border-radius:9px;cursor:pointer;border:2px solid transparent;transition:all .16s;}
+.color-opt.selected{border-color:rgba(255,255,255,0.80);transform:scale(1.18);box-shadow:0 0 12px rgba(255,255,255,0.2);}
+
+/* ── Viewer ── */
+#module-viewer{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:var(--bg);animation:slideUp 0.42s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes slideUp{from{transform:translateY(8%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* No results */
+#no-results{display:none;grid-column:1/-1;text-align:center;color:var(--muted);padding:70px 0;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(200,165,90,0.16);border-radius:10px;}
+
+/* Focus */
+:focus-visible{outline:2px solid rgba(200,165,90,0.58);outline-offset:2px;border-radius:6px;}
+button:focus-visible{outline:2px solid rgba(200,165,90,0.58);outline-offset:3px;border-radius:10px;}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .glass-card,.tool-btn,.delete-btn{transition:none!important;}
+  .glass-card:hover{transform:none;}
+  @keyframes pulse{0%,100%{opacity:1;}}
+}
+
+/* ── Header ornaments ── */
+.ornament-rule{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  margin:22px auto 18px;max-width:320px;
+}
+.ornament-line{flex:1;height:1px;}
+.ornament-line-l{background:linear-gradient(to right,transparent,rgba(200,165,90,0.42));}
+.ornament-line-r{background:linear-gradient(to left,transparent,rgba(200,165,90,0.42));}
+.ornament-gem{color:var(--gold);font-size:10px;letter-spacing:0.3em;opacity:0.65;}
+
+/* Lang switcher pill */
+.lang-pill{
+  display:flex;gap:4px;padding:4px;
+  background:rgba(255,242,208,0.038);
+  border:1px solid rgba(200,165,90,0.13);
+  border-radius:12px;backdrop-filter:blur(14px);
+}
+
+/* Display serif helper */
+.serif{font-family:'Cormorant Garamond','Noto Serif TC',serif;}
+</style>
 </head>
 <body class="p-6 md:p-12">
 
-<!-- Background orbs -->
+<!-- Ambient orbs -->
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
@@ -255,363 +320,443 @@
 
 <div class="max-w-7xl mx-auto" style="position:relative;z-index:1;">
 
-    <!-- Header -->
-    <header class="mb-14" style="position:relative;">
-        <!-- Language switcher -->
-        <div style="position:absolute;top:0;right:0;display:flex;gap:5px;padding:4px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:12px;backdrop-filter:blur(12px);">
-            <button onclick="switchLang('zh')" id="idx-zh" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .2s;background:rgba(139,92,246,0.15);color:#c4b5fd;">繁中</button>
-            <button onclick="switchLang('en')" id="idx-en" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .2s;background:transparent;color:#64748b;">EN</button>
-            <button onclick="switchLang('fr')" id="idx-fr" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .2s;background:transparent;color:#64748b;">FR</button>
-        </div>
+  <!-- ── Header ── -->
+  <header style="margin-bottom:72px;position:relative;">
 
-        <div class="text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full text-xs font-bold tracking-widest uppercase"
-                 style="background:rgba(139,92,246,0.10);border:1px solid rgba(139,92,246,0.22);color:#a78bfa;backdrop-filter:blur(10px);">
-                <i class="fa-solid fa-sparkles" style="font-size:9px;"></i>
-                <span id="badge-text">個人知識庫</span>
-            </div>
-            <h1 class="serif-title text-5xl md:text-7xl font-black text-white mb-5 leading-tight">
-                Knowledge <span class="grad-text">Galaxy</span>
-            </h1>
-            <p id="page-subtitle" style="color:#64748b;max-width:480px;margin:0 auto;font-size:15px;font-weight:500;line-height:1.7;">
-                跨領域研究、心智圖與互動工具的精選庫
-            </p>
-        </div>
-    </header>
-
-    <!-- Search -->
-    <div id="search-wrap">
-        <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
-        <input id="search-input" type="text" placeholder="Search modules…" oninput="handleSearch(this.value)">
-        <i class="fa-solid fa-xmark" id="search-clear" onclick="clearSearch()" role="button" tabindex="0" aria-label="Clear search" onkeydown="if(event.key==='Enter'||event.key===' ')clearSearch()"></i>
+    <!-- Language switcher -->
+    <div style="position:absolute;top:0;right:0;" class="lang-pill">
+      <button onclick="switchLang('zh')" id="idx-zh"
+        style="padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:0.06em;border-radius:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .22s;background:rgba(200,165,90,0.18);color:var(--gold);">繁中</button>
+      <button onclick="switchLang('en')" id="idx-en"
+        style="padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:0.06em;border-radius:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .22s;background:transparent;color:var(--muted);">EN</button>
+      <button onclick="switchLang('fr')" id="idx-fr"
+        style="padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:0.06em;border-radius:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .22s;background:transparent;color:var(--muted);">FR</button>
     </div>
 
-    <!-- Toolbar -->
-    <div id="toolbar">
-        <button class="tool-btn" id="upload-btn" onclick="openAddModal()">
-            <i class="fa-solid fa-plus"></i> <span id="add-btn-text">新增模組</span>
-        </button>
-        <button class="tool-btn" id="edit-toggle" onclick="toggleEditMode()">
-            <i class="fa-solid fa-pen-to-square"></i> <span id="edit-btn-text">編輯</span>
-        </button>
+    <!-- Centred heading block -->
+    <div style="text-align:center;padding-top:16px;">
+
+      <!-- Eyebrow -->
+      <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;">
+        <span style="display:block;width:28px;height:1px;background:var(--gold-dim);"></span>
+        <span id="badge-text" style="font-size:10px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);font-family:'Nunito',sans-serif;">個人知識庫</span>
+        <span style="display:block;width:28px;height:1px;background:var(--gold-dim);"></span>
+      </div>
+
+      <!-- Main title -->
+      <h1 class="serif" style="font-size:clamp(56px,8.5vw,100px);font-weight:500;font-style:italic;color:#f0e6d0;line-height:1.02;letter-spacing:-1px;margin-bottom:10px;">
+        Knowledge<br>
+        <span style="color:var(--gold);">Library</span>
+      </h1>
+
+      <!-- Ornamental divider -->
+      <div class="ornament-rule">
+        <div class="ornament-line ornament-line-l"></div>
+        <span class="ornament-gem">✦</span>
+        <div class="ornament-line ornament-line-r"></div>
+      </div>
+
+      <!-- Subtitle -->
+      <p id="page-subtitle" style="color:var(--cream-dim);max-width:440px;margin:0 auto;font-size:14px;font-weight:500;line-height:1.75;font-style:italic;font-family:'Cormorant Garamond',serif;">
+        跨領域研究、心智圖與互動工具的精選庫
+      </p>
     </div>
+  </header>
 
-    <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="knowledge-grid">
-        <div id="no-results">
-            <i class="fa-solid fa-satellite-dish" style="font-size:32px;margin-bottom:12px;display:block;opacity:.3;"></i>
-            <span id="no-results-text" style="font-size:13px;">找不到符合的模組。</span>
-        </div>
-    </div>
+  <!-- ── Search ── -->
+  <div id="search-wrap">
+    <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
+    <input id="search-input" type="text" placeholder="Search the library…" oninput="handleSearch(this.value)">
+    <i class="fa-solid fa-xmark" id="search-clear" onclick="clearSearch()" role="button" tabindex="0"
+       aria-label="Clear search" onkeydown="if(event.key==='Enter'||event.key===' ')clearSearch()"></i>
+  </div>
 
-    <!-- Footer -->
-    <footer style="margin-top:80px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.05);text-align:center;color:#1e293b;font-size:12px;font-weight:600;letter-spacing:.05em;">
-        <span id="footer-text">© 2026 個人知識庫 &nbsp;·&nbsp; 互動智識架構</span>
-    </footer>
-</div>
-
-<!-- Full-screen Viewer -->
-<div id="module-viewer">
-    <iframe id="viewer-frame" style="width:100%;height:100%;border:none;" src=""></iframe>
-    <button onclick="closeViewer()" aria-label="Back to home"
-        style="position:fixed;top:18px;left:18px;z-index:200;display:flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:24px;border:1px solid rgba(255,255,255,0.12);background:rgba(4,8,15,0.80);backdrop-filter:blur(16px);color:#94a3b8;font-size:12px;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:color .18s, border-color .18s, background .18s;font-family:'Nunito',sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.4);"
-        onmouseover="this.style.color='#f1f5f9';this.style.borderColor='rgba(255,255,255,0.24)';this.style.background='rgba(10,14,26,0.95)'"
-        onmouseout="this.style.color='#94a3b8';this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='rgba(4,8,15,0.80)'">
-        <i class="fa-solid fa-chevron-left" style="font-size:10px;" aria-hidden="true"></i> Back
+  <!-- ── Toolbar ── -->
+  <div id="toolbar">
+    <button class="tool-btn" id="upload-btn" onclick="openAddModal()">
+      <i class="fa-solid fa-plus"></i> <span id="add-btn-text">新增模組</span>
     </button>
+    <button class="tool-btn" id="edit-toggle" onclick="toggleEditMode()">
+      <i class="fa-solid fa-pen-to-square"></i> <span id="edit-btn-text">編輯</span>
+    </button>
+  </div>
+
+  <!-- ── Grid ── -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="knowledge-grid">
+    <div id="no-results">
+      <i class="fa-solid fa-book-open-reader" style="font-size:34px;margin-bottom:14px;display:block;opacity:.22;"></i>
+      <span id="no-results-text" style="font-size:13px;font-style:italic;">找不到符合的模組。</span>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer style="margin-top:90px;padding-top:28px;border-top:1px solid rgba(200,165,90,0.10);text-align:center;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:10px;">
+      <div style="width:40px;height:1px;background:linear-gradient(to right,transparent,rgba(200,165,90,0.30));"></div>
+      <span style="color:var(--gold);font-size:10px;opacity:0.4;">✦</span>
+      <div style="width:40px;height:1px;background:linear-gradient(to left,transparent,rgba(200,165,90,0.30));"></div>
+    </div>
+    <span id="footer-text" style="color:var(--muted);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">© 2026 個人知識庫 · 互動智識架構</span>
+  </footer>
 </div>
 
-<!-- Add Module Modal -->
+<!-- ── Full-screen Viewer ── -->
+<div id="module-viewer">
+  <iframe id="viewer-frame" style="width:100%;height:100%;border:none;" src=""></iframe>
+  <button onclick="closeViewer()" aria-label="Back to library"
+    style="position:fixed;top:18px;left:18px;z-index:200;display:flex;align-items:center;gap:8px;padding:9px 18px 9px 13px;border-radius:24px;border:1px solid rgba(200,165,90,0.18);background:rgba(12,9,6,0.82);backdrop-filter:blur(18px);color:var(--cream-dim);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;box-shadow:0 4px 22px rgba(0,0,0,0.45);"
+    onmouseover="this.style.color='var(--cream)';this.style.borderColor='rgba(200,165,90,0.40)'"
+    onmouseout="this.style.color='var(--cream-dim)';this.style.borderColor='rgba(200,165,90,0.18)'">
+    <i class="fa-solid fa-chevron-left" style="font-size:10px;"></i> Back
+  </button>
+</div>
+
+<!-- ── Add Module Modal ── -->
 <div id="add-modal">
-    <div id="modal-box">
-        <button onclick="closeAddModal()" aria-label="Close modal"
-            style="position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:10px;color:#475569;cursor:pointer;padding:6px 10px;font-size:13px;transition:color .18s;"
-            onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#475569'">
-            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </button>
+  <div id="modal-box">
+    <button onclick="closeAddModal()" aria-label="Close modal"
+      style="position:absolute;top:18px;right:18px;background:rgba(255,242,208,0.04);border:1px solid rgba(200,165,90,0.13);border-radius:10px;color:var(--muted);cursor:pointer;padding:6px 10px;font-size:13px;transition:color .18s;"
+      onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--muted)'">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
 
-        <h2 id="modal-title-text" style="font-size:19px;font-weight:800;color:#f1f5f9;margin-bottom:6px;">新增模組</h2>
-        <p id="modal-subtitle-text" style="font-size:12px;color:#475569;font-weight:500;margin-bottom:24px;">上傳 HTML 檔案以加入你的星系。</p>
-
-        <div id="drop-zone" onclick="document.getElementById('file-input').click()"
-             ondragover="event.preventDefault();this.classList.add('dragging')"
-             ondragleave="this.classList.remove('dragging')"
-             ondrop="handleDrop(event)">
-            <i class="fa-solid fa-cloud-arrow-up" style="font-size:28px;margin-bottom:10px;display:block;color:#8b5cf6;opacity:.7;"></i>
-            <span id="drop-label">Drop an <strong>.html</strong> file here or <u>click to browse</u></span>
-            <input type="file" id="file-input" accept=".html" style="display:none" onchange="handleFileSelect(this)">
-        </div>
-
-        <label class="modal-label" id="label-mod-title">模組標題</label>
-        <input class="modal-input" id="new-title" type="text" placeholder="e.g. Beer Science">
-
-        <label class="modal-label" id="label-mod-subtitle">副標題</label>
-        <input class="modal-input" id="new-subtitle" type="text" placeholder="e.g. Brewing & Fermentation">
-
-        <label class="modal-label" id="label-mod-desc">描述</label>
-        <input class="modal-input" id="new-desc" type="text" placeholder="簡短描述…">
-
-        <label class="modal-label" id="label-mod-icon">圖示（FontAwesome 類名）</label>
-        <input class="modal-input" id="new-icon" type="text" placeholder="e.g. fa-book  fa-flask  fa-brain">
-
-        <label class="modal-label" id="label-mod-color">顏色主題</label>
-        <div class="color-opts" id="color-opts">
-            <div class="color-opt selected" data-grad="from-violet-400 to-indigo-600"  style="background:linear-gradient(135deg,#a78bfa,#4f46e5)"></div>
-            <div class="color-opt"          data-grad="from-emerald-400 to-teal-600"   style="background:linear-gradient(135deg,#34d399,#0d9488)"></div>
-            <div class="color-opt"          data-grad="from-pink-400 to-rose-600"      style="background:linear-gradient(135deg,#f472b6,#e11d48)"></div>
-            <div class="color-opt"          data-grad="from-amber-400 to-orange-500"   style="background:linear-gradient(135deg,#fbbf24,#f97316)"></div>
-            <div class="color-opt"          data-grad="from-sky-400 to-blue-600"       style="background:linear-gradient(135deg,#38bdf8,#2563eb)"></div>
-            <div class="color-opt"          data-grad="from-fuchsia-400 to-purple-700" style="background:linear-gradient(135deg,#e879f9,#7e22ce)"></div>
-            <div class="color-opt"          data-grad="from-lime-400 to-green-600"     style="background:linear-gradient(135deg,#a3e635,#16a34a)"></div>
-            <div class="color-opt"          data-grad="from-cyan-400 to-sky-600"       style="background:linear-gradient(135deg,#22d3ee,#0284c7)"></div>
-        </div>
-
-        <button id="modal-confirm-btn" onclick="confirmAddModule()"
-            style="width:100%;padding:13px;border-radius:14px;background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;font-weight:800;font-size:13px;letter-spacing:.05em;border:none;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 20px rgba(139,92,246,0.35),inset 0 1px 0 rgba(255,255,255,0.2);transition:all .2s;"
-            onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-            <i class="fa-solid fa-plus" style="margin-right:6px;"></i><span id="modal-confirm-text">加入星系</span>
-        </button>
-        <p id="modal-error" style="color:#f87171;font-size:11px;margin-top:10px;display:none;font-weight:600;"></p>
+    <div style="margin-bottom:24px;">
+      <h2 id="modal-title-text" class="serif" style="font-size:22px;font-weight:600;font-style:italic;color:#f0e6d0;margin-bottom:5px;">新增模組</h2>
+      <p id="modal-subtitle-text" style="font-size:12px;color:var(--muted);font-weight:500;">上傳 HTML 檔案以加入你的書庫。</p>
     </div>
+
+    <div id="drop-zone" onclick="document.getElementById('file-input').click()"
+         ondragover="event.preventDefault();this.classList.add('dragging')"
+         ondragleave="this.classList.remove('dragging')"
+         ondrop="handleDrop(event)">
+      <i class="fa-solid fa-book-medical" style="font-size:26px;margin-bottom:10px;display:block;color:var(--gold);opacity:.6;"></i>
+      <span id="drop-label">Drop an <strong>.html</strong> file here or <u>click to browse</u></span>
+      <input type="file" id="file-input" accept=".html" style="display:none" onchange="handleFileSelect(this)">
+    </div>
+
+    <label class="modal-label" id="label-mod-title">模組標題</label>
+    <input class="modal-input" id="new-title" type="text" placeholder="e.g. Beer Science">
+
+    <label class="modal-label" id="label-mod-subtitle">副標題</label>
+    <input class="modal-input" id="new-subtitle" type="text" placeholder="e.g. Brewing & Fermentation">
+
+    <label class="modal-label" id="label-mod-desc">描述</label>
+    <input class="modal-input" id="new-desc" type="text" placeholder="簡短描述…">
+
+    <label class="modal-label" id="label-mod-icon">圖示（FontAwesome 類名）</label>
+    <input class="modal-input" id="new-icon" type="text" placeholder="e.g. fa-book  fa-flask  fa-brain">
+
+    <label class="modal-label" id="label-mod-color">顏色主題</label>
+    <div class="color-opts" id="color-opts">
+      <div class="color-opt selected" data-grad="from-violet-400 to-indigo-600"  style="background:linear-gradient(135deg,#a78bfa,#4f46e5)"></div>
+      <div class="color-opt"          data-grad="from-emerald-400 to-teal-600"   style="background:linear-gradient(135deg,#34d399,#0d9488)"></div>
+      <div class="color-opt"          data-grad="from-pink-400 to-rose-600"      style="background:linear-gradient(135deg,#f472b6,#e11d48)"></div>
+      <div class="color-opt"          data-grad="from-amber-400 to-orange-500"   style="background:linear-gradient(135deg,#fbbf24,#f97316)"></div>
+      <div class="color-opt"          data-grad="from-sky-400 to-blue-600"       style="background:linear-gradient(135deg,#38bdf8,#2563eb)"></div>
+      <div class="color-opt"          data-grad="from-fuchsia-400 to-purple-700" style="background:linear-gradient(135deg,#e879f9,#7e22ce)"></div>
+      <div class="color-opt"          data-grad="from-lime-400 to-green-600"     style="background:linear-gradient(135deg,#a3e635,#16a34a)"></div>
+      <div class="color-opt"          data-grad="from-cyan-400 to-sky-600"       style="background:linear-gradient(135deg,#22d3ee,0284c7)"></div>
+    </div>
+
+    <button id="modal-confirm-btn" onclick="confirmAddModule()"
+      style="width:100%;padding:13px;border-radius:13px;background:linear-gradient(135deg,rgba(200,165,90,0.25),rgba(180,140,60,0.18));color:var(--gold);font-weight:800;font-size:12px;letter-spacing:0.10em;text-transform:uppercase;border:1px solid rgba(200,165,90,0.35);cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,235,160,0.18);transition:all .22s;"
+      onmouseover="this.style.background='linear-gradient(135deg,rgba(200,165,90,0.38),rgba(180,140,60,0.28))';"
+      onmouseout="this.style.background='linear-gradient(135deg,rgba(200,165,90,0.25),rgba(180,140,60,0.18))';">
+      <i class="fa-solid fa-plus" style="margin-right:6px;"></i><span id="modal-confirm-text">加入書庫</span>
+    </button>
+    <p id="modal-error" style="color:#f87171;font-size:11px;margin-top:10px;display:none;font-weight:600;"></p>
+  </div>
 </div>
 
 <script>
-    /* ── i18n ── */
-    const UI = {
-        zh: {
-            badge: '個人知識庫',
-            subtitle: '跨領域研究、心智圖與互動工具的精選庫',
-            searchPlaceholder: '搜尋模組…',
-            addBtn: '新增模組', editBtn: '編輯', doneBtn: '完成',
-            readyStatus: '準備探索', customStatus: '自訂模組',
-            noResults: '找不到符合的模組。',
-            footer: '© 2026 個人知識庫 &nbsp;·&nbsp; 互動智識架構',
-            modalTitle: '新增模組', modalSubtitle: '上傳 HTML 檔案以加入你的星系。',
-            dropLabel: '拖曳 <strong>.html</strong> 檔案至此，或 <u>點擊瀏覽</u>',
-            labelTitle: '模組標題', labelSub: '副標題', labelDesc: '描述',
-            labelIcon: '圖示（FontAwesome 類名）', labelColor: '顏色主題',
-            confirmBtn: '加入星系'
-        },
-        en: {
-            badge: 'Personal Portfolio Hub',
-            subtitle: 'A curated repository of cross-domain research,<br>mind maps, and interactive tools.',
-            searchPlaceholder: 'Search modules…',
-            addBtn: 'Add Module', editBtn: 'Edit', doneBtn: 'Done',
-            readyStatus: 'Ready to Explore', customStatus: 'Custom Module',
-            noResults: 'No modules match your search.',
-            footer: '© 2026 Personal Knowledge Base &nbsp;·&nbsp; Interactive Intelligence Architecture',
-            modalTitle: 'Add New Module', modalSubtitle: 'Upload any HTML file to add it to your galaxy.',
-            dropLabel: 'Drop an <strong>.html</strong> file here or <u>click to browse</u>',
-            labelTitle: 'Module Title', labelSub: 'Subtitle', labelDesc: 'Description',
-            labelIcon: 'Icon (FontAwesome class)', labelColor: 'Color Theme',
-            confirmBtn: 'Add to Galaxy'
-        },
-        fr: {
-            badge: 'Portfolio Personnel',
-            subtitle: 'Un répertoire de recherches transversales,<br>cartes mentales et outils interactifs.',
-            searchPlaceholder: 'Rechercher un module…',
-            addBtn: 'Ajouter', editBtn: 'Modifier', doneBtn: 'Terminé',
-            readyStatus: 'Prêt à explorer', customStatus: 'Module personnalisé',
-            noResults: 'Aucun module ne correspond à votre recherche.',
-            footer: '© 2026 Base de Connaissances &nbsp;·&nbsp; Architecture Intelligence Interactive',
-            modalTitle: 'Ajouter un module', modalSubtitle: "Importez un fichier HTML pour l'ajouter à votre galaxie.",
-            dropLabel: 'Déposez un fichier <strong>.html</strong> ici ou <u>cliquez pour parcourir</u>',
-            labelTitle: 'Titre du module', labelSub: 'Sous-titre', labelDesc: 'Description',
-            labelIcon: 'Icône (classe FontAwesome)', labelColor: 'Thème de couleur',
-            confirmBtn: 'Ajouter à la galaxie'
-        }
-    };
+/* ── i18n ── */
+const UI = {
+  zh: {
+    badge:'個人知識庫',
+    subtitle:'跨領域研究、心智圖與互動工具的精選庫',
+    searchPlaceholder:'搜尋館藏…',
+    addBtn:'新增模組', editBtn:'編輯', doneBtn:'完成',
+    readyStatus:'準備探索', customStatus:'自訂模組',
+    noResults:'找不到符合的模組。',
+    footer:'© 2026 個人知識庫 &nbsp;·&nbsp; 互動智識架構',
+    modalTitle:'新增模組', modalSubtitle:'上傳 HTML 檔案以加入你的書庫。',
+    dropLabel:'拖曳 <strong>.html</strong> 檔案至此，或 <u>點擊瀏覽</u>',
+    labelTitle:'模組標題', labelSub:'副標題', labelDesc:'描述',
+    labelIcon:'圖示（FontAwesome 類名）', labelColor:'顏色主題',
+    confirmBtn:'加入書庫'
+  },
+  en: {
+    badge:'Personal Knowledge Library',
+    subtitle:'A curated repository of cross-domain research,<br>mind maps &amp; interactive tools.',
+    searchPlaceholder:'Search the library…',
+    addBtn:'Add Module', editBtn:'Edit', doneBtn:'Done',
+    readyStatus:'Ready to Explore', customStatus:'Custom Module',
+    noResults:'No volumes match your search.',
+    footer:'© 2026 Personal Knowledge Library &nbsp;·&nbsp; Interactive Intelligence',
+    modalTitle:'Add New Volume', modalSubtitle:'Upload any HTML file to shelve it in your library.',
+    dropLabel:'Drop an <strong>.html</strong> file here or <u>click to browse</u>',
+    labelTitle:'Module Title', labelSub:'Subtitle', labelDesc:'Description',
+    labelIcon:'Icon (FontAwesome class)', labelColor:'Color Theme',
+    confirmBtn:'Add to Library'
+  },
+  fr: {
+    badge:'Bibliothèque Personnelle',
+    subtitle:'Un répertoire de recherches transversales,<br>cartes mentales &amp; outils interactifs.',
+    searchPlaceholder:'Rechercher dans la bibliothèque…',
+    addBtn:'Ajouter', editBtn:'Modifier', doneBtn:'Terminé',
+    readyStatus:'Prêt à explorer', customStatus:'Module personnalisé',
+    noResults:'Aucun volume ne correspond à votre recherche.',
+    footer:'© 2026 Bibliothèque de Connaissances &nbsp;·&nbsp; Intelligence Interactive',
+    modalTitle:'Ajouter un volume', modalSubtitle:"Importez un fichier HTML pour l'ajouter à votre bibliothèque.",
+    dropLabel:'Déposez un fichier <strong>.html</strong> ici ou <u>cliquez pour parcourir</u>',
+    labelTitle:'Titre du module', labelSub:'Sous-titre', labelDesc:'Description',
+    labelIcon:'Icône (classe FontAwesome)', labelColor:'Thème de couleur',
+    confirmBtn:'Ajouter à la bibliothèque'
+  }
+};
 
-    let currentLang = 'zh';
+let currentLang = 'zh';
 
-    function switchLang(l) {
-        currentLang = l;
-        localStorage.setItem('kb_lang', l);
-        const u = UI[l];
-        // button states
-        ['zh','en','fr'].forEach(k => {
-            const btn = document.getElementById(`idx-${k}`);
-            if (k === l) { btn.style.background = 'rgba(139,92,246,0.15)'; btn.style.color = '#c4b5fd'; btn.setAttribute('aria-pressed','true'); }
-            else { btn.style.background = 'transparent'; btn.style.color = '#64748b'; btn.setAttribute('aria-pressed','false'); }
-        });
-        // update static UI
-        document.getElementById('badge-text').textContent = u.badge;
-        document.getElementById('page-subtitle').innerHTML = u.subtitle;
-        document.getElementById('search-input').placeholder = u.searchPlaceholder;
-        document.getElementById('add-btn-text').textContent = u.addBtn;
-        document.getElementById('no-results-text').textContent = u.noResults;
-        document.getElementById('footer-text').innerHTML = u.footer;
-        document.getElementById('modal-title-text').textContent = u.modalTitle;
-        document.getElementById('modal-subtitle-text').textContent = u.modalSubtitle;
-        document.getElementById('drop-label').innerHTML = u.dropLabel;
-        document.getElementById('label-mod-title').textContent = u.labelTitle;
-        document.getElementById('label-mod-subtitle').textContent = u.labelSub;
-        document.getElementById('label-mod-desc').textContent = u.labelDesc;
-        document.getElementById('label-mod-icon').textContent = u.labelIcon;
-        document.getElementById('label-mod-color').textContent = u.labelColor;
-        document.getElementById('modal-confirm-text').textContent = u.confirmBtn;
-        document.documentElement.lang = l === 'zh' ? 'zh-Hant' : l;
-        if (!editMode) document.getElementById('edit-btn-text').textContent = u.editBtn;
-        renderGrid();
+function switchLang(l) {
+  currentLang = l;
+  localStorage.setItem('kb_lang', l);
+  const u = UI[l];
+  ['zh','en','fr'].forEach(k => {
+    const btn = document.getElementById('idx-'+k);
+    if (k === l) { btn.style.background='rgba(200,165,90,0.18)'; btn.style.color='var(--gold)'; btn.setAttribute('aria-pressed','true'); }
+    else { btn.style.background='transparent'; btn.style.color='var(--muted)'; btn.setAttribute('aria-pressed','false'); }
+  });
+  document.getElementById('badge-text').textContent = u.badge;
+  document.getElementById('page-subtitle').innerHTML = u.subtitle;
+  document.getElementById('search-input').placeholder = u.searchPlaceholder;
+  document.getElementById('add-btn-text').textContent = u.addBtn;
+  document.getElementById('no-results-text').textContent = u.noResults;
+  document.getElementById('footer-text').innerHTML = u.footer;
+  document.getElementById('modal-title-text').textContent = u.modalTitle;
+  document.getElementById('modal-subtitle-text').textContent = u.modalSubtitle;
+  document.getElementById('drop-label').innerHTML = u.dropLabel;
+  document.getElementById('label-mod-title').textContent = u.labelTitle;
+  document.getElementById('label-mod-subtitle').textContent = u.labelSub;
+  document.getElementById('label-mod-desc').textContent = u.labelDesc;
+  document.getElementById('label-mod-icon').textContent = u.labelIcon;
+  document.getElementById('label-mod-color').textContent = u.labelColor;
+  document.getElementById('modal-confirm-text').textContent = u.confirmBtn;
+  document.documentElement.lang = l === 'zh' ? 'zh-Hant' : l;
+  if (!editMode) document.getElementById('edit-btn-text').textContent = u.editBtn;
+  renderGrid();
+}
+
+const STORAGE_KEY = 'knowledge_galaxy_modules';
+
+/* Gradient → spine color map */
+const SPINE_COLORS = {
+  'from-violet-400 to-indigo-600':  'linear-gradient(180deg,#a78bfa,#4f46e5)',
+  'from-emerald-400 to-teal-600':   'linear-gradient(180deg,#34d399,#0d9488)',
+  'from-pink-400 to-rose-600':      'linear-gradient(180deg,#f472b6,#e11d48)',
+  'from-amber-400 to-orange-500':   'linear-gradient(180deg,#fbbf24,#f97316)',
+  'from-sky-400 to-blue-600':       'linear-gradient(180deg,#38bdf8,#2563eb)',
+  'from-fuchsia-400 to-purple-700': 'linear-gradient(180deg,#e879f9,#7e22ce)',
+  'from-lime-400 to-green-600':     'linear-gradient(180deg,#a3e635,#16a34a)',
+  'from-cyan-400 to-sky-600':       'linear-gradient(180deg,#22d3ee,#0284c7)',
+};
+
+/* Gradient → glow color map */
+const GLOW_COLORS = {
+  'from-violet-400 to-indigo-600':  'rgba(139,92,246,0.14)',
+  'from-emerald-400 to-teal-600':   'rgba(52,211,153,0.14)',
+  'from-pink-400 to-rose-600':      'rgba(244,114,182,0.14)',
+  'from-amber-400 to-orange-500':   'rgba(251,191,36,0.14)',
+  'from-sky-400 to-blue-600':       'rgba(56,189,248,0.14)',
+  'from-fuchsia-400 to-purple-700': 'rgba(232,121,249,0.14)',
+  'from-lime-400 to-green-600':     'rgba(163,230,53,0.14)',
+  'from-cyan-400 to-sky-600':       'rgba(34,211,238,0.14)',
+};
+
+const DEFAULT_MODULES = [
+  { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',  description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.', icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',   file:'code_artifact.html',              custom:false },
+  { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',    description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.', icon:'fa-beer-mug-empty', color:'from-amber-400 to-orange-500',   file:'zymos_beer_mind_map.html',         custom:false },
+  { id:'skincare',   title:'Skincare Actives',        subtitle:'Science & Market Trends',     description:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.', icon:'fa-sparkles',       color:'from-pink-400 to-rose-600',      file:'skincare-trilingual.html',         custom:false },
+  { id:'perfume',    title:'Perfume Intelligence',    subtitle:'Market Analysis & Brands',    description:'Coty portfolio analysis and perfume market competition mind map.',                        icon:'fa-bottle-droplet', color:'from-fuchsia-400 to-purple-700', file:'coty_perfume_market_mindmap.html', custom:false },
+  { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',     description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',                  icon:'fa-file-invoice',   color:'from-sky-400 to-blue-600',       file:'cv_prompt_builder_v2.html',        custom:false }
+];
+
+function loadModules() {
+  try { const s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : DEFAULT_MODULES; }
+  catch { return DEFAULT_MODULES; }
+}
+function saveModules() { localStorage.setItem(STORAGE_KEY, JSON.stringify(modules)); }
+
+let modules = loadModules();
+let searchQuery = '';
+let editMode = false;
+let pendingFileURL = null;
+let selectedColor = 'from-violet-400 to-indigo-600';
+
+/* ── Render ── */
+function renderGrid() {
+  const grid = document.getElementById('knowledge-grid');
+  const noRes = document.getElementById('no-results');
+  const q = searchQuery.toLowerCase();
+  const filtered = modules.filter(m =>
+    !q || m.title.toLowerCase().includes(q) ||
+    (m.subtitle||'').toLowerCase().includes(q) ||
+    (m.description||'').toLowerCase().includes(q)
+  );
+  grid.querySelectorAll('.glass-card').forEach(c => c.remove());
+  if (!filtered.length) { noRes.style.display = 'block'; return; }
+  noRes.style.display = 'none';
+
+  filtered.forEach((mod, idx) => {
+    const card = document.createElement('div');
+    card.className = 'glass-card' + (editMode ? ' edit-mode' : '');
+    card.dataset.id = mod.id;
+    const spineGrad = SPINE_COLORS[mod.color] || 'linear-gradient(180deg,#a78bfa,#4f46e5)';
+    const glowColor = GLOW_COLORS[mod.color] || 'rgba(139,92,246,0.14)';
+
+    if (!editMode) {
+      card.onclick = () => openModule(mod.file, mod.title);
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', 'Open ' + mod.title);
+      card.onkeydown = e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); openModule(mod.file,mod.title); } };
     }
 
-    const STORAGE_KEY = 'knowledge_galaxy_modules';
-
-    const DEFAULT_MODULES = [
-        { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',  description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.', icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',   file:'code_artifact.html',              custom:false },
-        { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',    description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.', icon:'fa-beer-mug-empty', color:'from-amber-400 to-orange-500',   file:'zymos_beer_mind_map.html',         custom:false },
-        { id:'skincare',   title:'Skincare Actives',        subtitle:'Science & Market Trends',     description:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.', icon:'fa-sparkles',       color:'from-pink-400 to-rose-600',      file:'skincare-trilingual.html',         custom:false },
-        { id:'perfume',    title:'Perfume Intelligence',    subtitle:'Market Analysis & Brands',    description:'Coty portfolio analysis and perfume market competition mind map.',                        icon:'fa-bottle-droplet', color:'from-fuchsia-400 to-purple-700', file:'coty_perfume_market_mindmap.html', custom:false },
-        { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',     description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',                  icon:'fa-file-invoice',   color:'from-sky-400 to-blue-600',       file:'cv_prompt_builder_v2.html',       custom:false }
-    ];
-
-    function loadModules() {
-        try { const s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : DEFAULT_MODULES; }
-        catch { return DEFAULT_MODULES; }
-    }
-    function saveModules() { localStorage.setItem(STORAGE_KEY, JSON.stringify(modules)); }
-
-    let modules = loadModules();
-    let searchQuery = '';
-    let editMode = false;
-    let pendingFileURL = null;
-    let selectedColor = 'from-violet-400 to-indigo-600';
-
-    /* ── Render ── */
-    function renderGrid() {
-        const grid = document.getElementById('knowledge-grid');
-        const noRes = document.getElementById('no-results');
-        const q = searchQuery.toLowerCase();
-        const filtered = modules.filter(m =>
-            !q || m.title.toLowerCase().includes(q) ||
-            (m.subtitle||'').toLowerCase().includes(q) ||
-            (m.description||'').toLowerCase().includes(q)
-        );
-        grid.querySelectorAll('.glass-card').forEach(c => c.remove());
-        if (!filtered.length) { noRes.style.display = 'block'; return; }
-        noRes.style.display = 'none';
-
-        filtered.forEach(mod => {
-            const card = document.createElement('div');
-            card.className = 'glass-card p-8 group' + (editMode ? ' edit-mode' : '');
-            card.dataset.id = mod.id;
-            if (!editMode) {
-                card.onclick = () => openModule(mod.file, mod.title);
-                card.setAttribute('tabindex', '0');
-                card.setAttribute('role', 'button');
-                card.setAttribute('aria-label', `Open ${mod.title}`);
-                card.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModule(mod.file, mod.title); } };
-            }
-
-            card.innerHTML = `
-                <button class="delete-btn" onclick="deleteModule('${mod.id}',event)"><i class="fa-solid fa-xmark"></i></button>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
-                    <div class="icon-box bg-gradient-to-br ${mod.color}">
-                        <i class="fa-solid ${mod.icon}"></i>
-                    </div>
-                    <div class="opacity-0 group-hover:opacity-100 transition-opacity" style="color:rgba(255,255,255,.35);font-size:13px;margin-top:4px;">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </div>
-                </div>
-                <h3 style="font-size:20px;font-weight:800;color:#f1f5f9;margin-bottom:4px;letter-spacing:-.3px;">${mod.title}</h3>
-                <p style="font-size:10px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;margin-bottom:14px;color:rgba(167,139,250,.8);">${mod.subtitle}</p>
-                <p style="color:#475569;font-size:13px;line-height:1.65;font-weight:500;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${mod.description}</p>
-                <div class="status-pill" style="margin-top:28px;">
-                    <div class="pulse-dot" style="background:${mod.custom ? '#60a5fa' : '#34d399'};box-shadow:0 0 6px ${mod.custom ? 'rgba(96,165,250,.5)' : 'rgba(52,211,153,.5)'}"></div>
-                    <span>${mod.custom ? UI[currentLang].customStatus : UI[currentLang].readyStatus}</span>
-                </div>`;
-            grid.appendChild(card);
-        });
+    /* Hover glow effect via JS (can't do dynamic CSS vars per-card in pure CSS) */
+    if (!editMode) {
+      card.addEventListener('mouseenter', () => {
+        card.style.boxShadow = `0 44px 100px rgba(0,0,0,0.68),0 16px 40px rgba(0,0,0,0.42),0 0 60px ${glowColor},inset 0 1.5px 0 rgba(255,240,180,0.46),inset 0 -1px 0 rgba(0,0,0,0.22)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.boxShadow = '';
+      });
     }
 
-    /* ── Search ── */
-    function handleSearch(val) {
-        searchQuery = val;
-        document.getElementById('search-clear').style.display = val ? 'block' : 'none';
-        renderGrid();
-    }
-    function clearSearch() { document.getElementById('search-input').value = ''; handleSearch(''); }
+    const volNum = String(idx + 1).padStart(2, '0');
 
-    /* ── Edit mode ── */
-    function toggleEditMode() {
-        editMode = !editMode;
-        document.body.classList.toggle('edit-mode', editMode);
-        const btn = document.getElementById('edit-toggle');
-        btn.classList.toggle('active', editMode);
-        btn.innerHTML = editMode
-            ? `<i class="fa-solid fa-check"></i> <span id="edit-btn-text">${UI[currentLang].doneBtn}</span>`
-            : `<i class="fa-solid fa-pen-to-square"></i> <span id="edit-btn-text">${UI[currentLang].editBtn}</span>`;
-        renderGrid();
-    }
-    function deleteModule(id, e) {
-        e.stopPropagation();
-        const idx = modules.findIndex(m => m.id === id);
-        if (idx === -1) return;
-        if (modules[idx].custom && modules[idx].file.startsWith('blob:')) URL.revokeObjectURL(modules[idx].file);
-        modules.splice(idx, 1); saveModules(); renderGrid();
-    }
+    card.innerHTML = `
+      <button class="delete-btn" onclick="deleteModule('${mod.id}',event)"><i class="fa-solid fa-xmark"></i></button>
+      <div class="book-spine" style="background:${spineGrad};"></div>
+      <div style="padding:28px 28px 28px 36px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;">
+          <div class="icon-box bg-gradient-to-br ${mod.color}">
+            <i class="fa-solid ${mod.icon}"></i>
+          </div>
+          <div style="text-align:right;">
+            <div class="vol-tag">Vol. ${volNum}</div>
+            <div style="opacity:0;transition:opacity .25s;margin-top:6px;color:rgba(200,165,90,0.45);font-size:12px;" class="open-arrow">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </div>
+          </div>
+        </div>
+        <h3 class="card-title" style="margin-bottom:6px;">${mod.title}</h3>
+        <p style="font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;color:rgba(200,165,90,0.55);">${mod.subtitle}</p>
+        <div class="ruled-sep"></div>
+        <p style="color:var(--muted);font-size:13px;line-height:1.68;font-weight:500;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${mod.description}</p>
+        <div class="status-pill" style="margin-top:22px;">
+          <div class="pulse-dot" style="background:${mod.custom?'#60a5fa':'#a87c3a'};box-shadow:0 0 6px ${mod.custom?'rgba(96,165,250,.45)':'rgba(168,124,58,.5)'}"></div>
+          <span>${mod.custom ? UI[currentLang].customStatus : UI[currentLang].readyStatus}</span>
+        </div>
+      </div>`;
 
-    /* ── Viewer ── */
-    function openModule(file) {
-        if (editMode) return;
-        document.getElementById('viewer-frame').src = file;
-        document.body.style.overflow = 'hidden';
-        document.getElementById('module-viewer').style.display = 'block';
-    }
-    function closeViewer() {
-        document.getElementById('module-viewer').style.display = 'none';
-        document.getElementById('viewer-frame').src = '';
-        document.body.style.overflow = 'auto';
+    /* Show arrow on hover */
+    if (!editMode) {
+      const arrow = card.querySelector('.open-arrow');
+      card.addEventListener('mouseenter', () => { if(arrow) arrow.style.opacity = '1'; });
+      card.addEventListener('mouseleave', () => { if(arrow) arrow.style.opacity = '0'; });
     }
 
-    /* ── Add modal ── */
-    function openAddModal() {
-        document.getElementById('add-modal').classList.add('open');
-        ['new-title','new-subtitle','new-desc','new-icon'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('drop-label').innerHTML = UI[currentLang].dropLabel;
-        document.getElementById('modal-error').style.display = 'none';
-        pendingFileURL = null; selectColor('from-violet-400 to-indigo-600');
-    }
-    function closeAddModal() { document.getElementById('add-modal').classList.remove('open'); }
+    grid.appendChild(card);
+  });
+}
 
-    function handleDrop(e) {
-        e.preventDefault(); document.getElementById('drop-zone').classList.remove('dragging');
-        if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
-    }
-    function handleFileSelect(input) { if (input.files[0]) processFile(input.files[0]); }
-    function processFile(file) {
-        if (!file.name.endsWith('.html')) { showModalError('Please select an .html file.'); return; }
-        if (pendingFileURL) URL.revokeObjectURL(pendingFileURL);
-        pendingFileURL = URL.createObjectURL(file);
-        document.getElementById('drop-label').innerHTML = `<span class="file-chosen"><i class="fa-solid fa-check" style="margin-right:5px;"></i>${file.name}</span>`;
-        if (!document.getElementById('new-title').value)
-            document.getElementById('new-title').value = file.name.replace('.html','').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-    }
-    function confirmAddModule() {
-        const title = document.getElementById('new-title').value.trim();
-        if (!pendingFileURL) { showModalError('Please upload an HTML file first.'); return; }
-        if (!title) { showModalError('Please enter a module title.'); return; }
-        const icon = document.getElementById('new-icon').value.trim() || 'fa-file';
-        modules.push({ id:'custom_'+Date.now(), title, subtitle:document.getElementById('new-subtitle').value.trim()||'Custom Module', description:document.getElementById('new-desc').value.trim()||'', icon, color:selectedColor, file:pendingFileURL, custom:true });
-        saveModules(); renderGrid(); closeAddModal();
-    }
-    function showModalError(msg) { const el = document.getElementById('modal-error'); el.textContent = msg; el.style.display = 'block'; }
+/* ── Search ── */
+function handleSearch(val) {
+  searchQuery = val;
+  document.getElementById('search-clear').style.display = val ? 'block' : 'none';
+  renderGrid();
+}
+function clearSearch() { document.getElementById('search-input').value = ''; handleSearch(''); }
 
-    /* ── Color picker ── */
-    document.getElementById('color-opts').addEventListener('click', e => { const o = e.target.closest('.color-opt'); if (o) selectColor(o.dataset.grad); });
-    function selectColor(g) { selectedColor = g; document.querySelectorAll('.color-opt').forEach(o => o.classList.toggle('selected', o.dataset.grad===g)); }
+/* ── Edit mode ── */
+function toggleEditMode() {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  const btn = document.getElementById('edit-toggle');
+  btn.classList.toggle('active', editMode);
+  btn.innerHTML = editMode
+    ? `<i class="fa-solid fa-check"></i> <span id="edit-btn-text">${UI[currentLang].doneBtn}</span>`
+    : `<i class="fa-solid fa-pen-to-square"></i> <span id="edit-btn-text">${UI[currentLang].editBtn}</span>`;
+  renderGrid();
+}
+function deleteModule(id, e) {
+  e.stopPropagation();
+  const idx = modules.findIndex(m => m.id === id);
+  if (idx === -1) return;
+  if (modules[idx].custom && modules[idx].file.startsWith('blob:')) URL.revokeObjectURL(modules[idx].file);
+  modules.splice(idx, 1); saveModules(); renderGrid();
+}
 
-    /* ── Keys ── */
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-            if (document.getElementById('module-viewer').style.display === 'block') closeViewer();
-            else closeAddModal();
-        }
-    });
+/* ── Viewer ── */
+function openModule(file) {
+  if (editMode) return;
+  document.getElementById('viewer-frame').src = file;
+  document.body.style.overflow = 'hidden';
+  document.getElementById('module-viewer').style.display = 'block';
+}
+function closeViewer() {
+  document.getElementById('module-viewer').style.display = 'none';
+  document.getElementById('viewer-frame').src = '';
+  document.body.style.overflow = 'auto';
+}
 
-    // Restore saved language (default zh)
-    const _initLang = localStorage.getItem('kb_lang') || 'zh';
-    switchLang(['zh','en','fr'].includes(_initLang) ? _initLang : 'zh');
+/* ── Add modal ── */
+function openAddModal() {
+  document.getElementById('add-modal').classList.add('open');
+  ['new-title','new-subtitle','new-desc','new-icon'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('drop-label').innerHTML = UI[currentLang].dropLabel;
+  document.getElementById('modal-error').style.display = 'none';
+  pendingFileURL = null; selectColor('from-violet-400 to-indigo-600');
+}
+function closeAddModal() { document.getElementById('add-modal').classList.remove('open'); }
+
+function handleDrop(e) {
+  e.preventDefault(); document.getElementById('drop-zone').classList.remove('dragging');
+  if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
+}
+function handleFileSelect(input) { if (input.files[0]) processFile(input.files[0]); }
+function processFile(file) {
+  if (!file.name.endsWith('.html')) { showModalError('Please select an .html file.'); return; }
+  if (pendingFileURL) URL.revokeObjectURL(pendingFileURL);
+  pendingFileURL = URL.createObjectURL(file);
+  document.getElementById('drop-label').innerHTML = `<span class="file-chosen"><i class="fa-solid fa-check" style="margin-right:5px;"></i>${file.name}</span>`;
+  if (!document.getElementById('new-title').value)
+    document.getElementById('new-title').value = file.name.replace('.html','').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+}
+function confirmAddModule() {
+  const title = document.getElementById('new-title').value.trim();
+  if (!pendingFileURL) { showModalError('Please upload an HTML file first.'); return; }
+  if (!title) { showModalError('Please enter a module title.'); return; }
+  const icon = document.getElementById('new-icon').value.trim() || 'fa-file';
+  modules.push({ id:'custom_'+Date.now(), title, subtitle:document.getElementById('new-subtitle').value.trim()||'Custom Module', description:document.getElementById('new-desc').value.trim()||'', icon, color:selectedColor, file:pendingFileURL, custom:true });
+  saveModules(); renderGrid(); closeAddModal();
+}
+function showModalError(msg) { const el=document.getElementById('modal-error'); el.textContent=msg; el.style.display='block'; }
+
+/* ── Color picker ── */
+document.getElementById('color-opts').addEventListener('click', e => { const o=e.target.closest('.color-opt'); if(o) selectColor(o.dataset.grad); });
+function selectColor(g) { selectedColor=g; document.querySelectorAll('.color-opt').forEach(o=>o.classList.toggle('selected',o.dataset.grad===g)); }
+
+/* ── Keys ── */
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') {
+    if (document.getElementById('module-viewer').style.display==='block') closeViewer();
+    else closeAddModal();
+  }
+});
+
+/* ── Boot ── */
+const _initLang = localStorage.getItem('kb_lang') || 'zh';
+switchLang(['zh','en','fr'].includes(_initLang) ? _initLang : 'zh');
 </script>
 </body>
 </html>
