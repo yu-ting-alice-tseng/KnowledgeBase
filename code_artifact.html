@@ -111,17 +111,17 @@
         </div>
       </div>
 
-      <!-- 跨領域快速切換器 -->
-      <div class="flex p-1 bg-slate-900/80 border border-slate-800 rounded-xl w-full lg:w-auto overflow-x-auto gap-1">
-        <button id="tab-btn-finance" onclick="switchDomain('finance')" class="flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.15)] w-full lg:w-auto whitespace-nowrap">
-          <i class="fa-solid fa-sack-dollar text-emerald-400"></i> <span id="tab-btn-finance-text">金融學 (Finance)</span>
+      <!-- 領域下拉選單 -->
+      <div class="relative" id="domain-dropdown-wrap">
+        <button id="domain-dropdown-btn" onclick="toggleDomainDropdown()"
+          class="flex items-center gap-3 px-4 py-2.5 bg-slate-900/80 border border-slate-800 rounded-xl w-full lg:min-w-[240px] lg:w-auto hover:border-slate-700 transition-colors duration-200">
+          <i id="dd-domain-icon" class="fa-solid fa-sack-dollar text-emerald-400 text-sm w-4 text-center shrink-0"></i>
+          <span id="dd-domain-label" class="flex-1 text-left text-sm font-bold text-emerald-400">金融學 (Finance)</span>
+          <i class="fa-solid fa-chevron-down text-slate-500 text-xs transition-transform duration-200" id="dd-chevron"></i>
         </button>
-        <button id="tab-btn-accounting" onclick="switchDomain('accounting')" class="flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200 w-full lg:w-auto whitespace-nowrap">
-          <i class="fa-solid fa-calculator"></i> <span id="tab-btn-accounting-text">會計學 (Accounting)</span>
-        </button>
-        <button id="tab-btn-marketing" onclick="switchDomain('marketing')" class="flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200 w-full lg:w-auto whitespace-nowrap">
-          <i class="fa-solid fa-bullseye"></i> <span id="tab-btn-marketing-text">市場行銷 (Marketing)</span>
-        </button>
+        <div id="domain-dropdown-menu" class="domain-dd-menu hidden absolute top-full left-0 mt-2 bg-slate-950/97 border border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden" style="min-width:260px;backdrop-filter:blur(20px);">
+          <div class="p-2" id="domain-dropdown-list"><!-- JS renders this --></div>
+        </div>
       </div>
 
       <!-- 搜尋及語言切換控制列 -->
