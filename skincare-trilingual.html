@@ -66,12 +66,14 @@
     width: 90px; height: 90px; border-radius: 50%;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     font-weight: 700; font-size: 11px; text-align: center; line-height: 1.3;
-    border: 2px solid rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.15);
     transition: box-shadow .25s, transform .25s;
   }
-  .node-branch:hover { transform: translate(-50%,-50%) scale(1.08) !important; }
+  .node-branch:hover { transform: translate(-50%,-50%) scale(1.10) !important; box-shadow: 0 12px 36px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.22) !important; }
   .node-branch i { font-size: 18px; margin-bottom: 4px; }
-  .node-branch.active { box-shadow: 0 0 30px var(--node-color), 0 0 60px rgba(0,0,0,0.5) !important; }
+  .node-branch.active { box-shadow: 0 0 30px var(--node-color), 0 0 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2) !important; }
 
   .node-leaf {
     background: rgba(255,255,255,0.05);
