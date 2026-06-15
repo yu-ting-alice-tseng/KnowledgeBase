@@ -542,7 +542,7 @@
     function openAddModal() {
         document.getElementById('add-modal').classList.add('open');
         ['new-title','new-subtitle','new-desc','new-icon'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('drop-label').innerHTML = 'Drop an <strong>.html</strong> file here or <u>click to browse</u>';
+        document.getElementById('drop-label').innerHTML = UI[currentLang].dropLabel;
         document.getElementById('modal-error').style.display = 'none';
         pendingFileURL = null; selectColor('from-violet-400 to-indigo-600');
     }
