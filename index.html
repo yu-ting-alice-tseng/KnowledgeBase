@@ -356,6 +356,85 @@
 </div>
 
 <script>
+    /* ── i18n ── */
+    const UI = {
+        zh: {
+            badge: '個人知識庫',
+            subtitle: '跨領域研究、心智圖與互動工具的精選庫',
+            searchPlaceholder: '搜尋模組…',
+            addBtn: '新增模組', editBtn: '編輯', doneBtn: '完成',
+            readyStatus: '準備探索', customStatus: '自訂模組',
+            noResults: '找不到符合的模組。',
+            footer: '© 2026 個人知識庫 &nbsp;·&nbsp; 互動智識架構',
+            modalTitle: '新增模組', modalSubtitle: '上傳 HTML 檔案以加入你的星系。',
+            dropLabel: '拖曳 <strong>.html</strong> 檔案至此，或 <u>點擊瀏覽</u>',
+            labelTitle: '模組標題', labelSub: '副標題', labelDesc: '描述',
+            labelIcon: '圖示（FontAwesome 類名）', labelColor: '顏色主題',
+            confirmBtn: '加入星系'
+        },
+        en: {
+            badge: 'Personal Portfolio Hub',
+            subtitle: 'A curated repository of cross-domain research,<br>mind maps, and interactive tools.',
+            searchPlaceholder: 'Search modules…',
+            addBtn: 'Add Module', editBtn: 'Edit', doneBtn: 'Done',
+            readyStatus: 'Ready to Explore', customStatus: 'Custom Module',
+            noResults: 'No modules match your search.',
+            footer: '© 2026 Personal Knowledge Base &nbsp;·&nbsp; Interactive Intelligence Architecture',
+            modalTitle: 'Add New Module', modalSubtitle: 'Upload any HTML file to add it to your galaxy.',
+            dropLabel: 'Drop an <strong>.html</strong> file here or <u>click to browse</u>',
+            labelTitle: 'Module Title', labelSub: 'Subtitle', labelDesc: 'Description',
+            labelIcon: 'Icon (FontAwesome class)', labelColor: 'Color Theme',
+            confirmBtn: 'Add to Galaxy'
+        },
+        fr: {
+            badge: 'Portfolio Personnel',
+            subtitle: 'Un répertoire de recherches transversales,<br>cartes mentales et outils interactifs.',
+            searchPlaceholder: 'Rechercher un module…',
+            addBtn: 'Ajouter', editBtn: 'Modifier', doneBtn: 'Terminé',
+            readyStatus: 'Prêt à explorer', customStatus: 'Module personnalisé',
+            noResults: 'Aucun module ne correspond à votre recherche.',
+            footer: '© 2026 Base de Connaissances &nbsp;·&nbsp; Architecture Intelligence Interactive',
+            modalTitle: 'Ajouter un module', modalSubtitle: "Importez un fichier HTML pour l'ajouter à votre galaxie.",
+            dropLabel: 'Déposez un fichier <strong>.html</strong> ici ou <u>cliquez pour parcourir</u>',
+            labelTitle: 'Titre du module', labelSub: 'Sous-titre', labelDesc: 'Description',
+            labelIcon: 'Icône (classe FontAwesome)', labelColor: 'Thème de couleur',
+            confirmBtn: 'Ajouter à la galaxie'
+        }
+    };
+
+    let currentLang = 'zh';
+
+    function switchLang(l) {
+        currentLang = l;
+        localStorage.setItem('kb_lang', l);
+        const u = UI[l];
+        // button states
+        ['zh','en','fr'].forEach(k => {
+            const btn = document.getElementById(`idx-${k}`);
+            if (k === l) { btn.style.background = 'rgba(139,92,246,0.15)'; btn.style.color = '#c4b5fd'; }
+            else { btn.style.background = 'transparent'; btn.style.color = '#64748b'; }
+        });
+        // update static UI
+        document.getElementById('badge-text').textContent = u.badge;
+        document.getElementById('page-subtitle').innerHTML = u.subtitle;
+        document.getElementById('search-input').placeholder = u.searchPlaceholder;
+        document.getElementById('add-btn-text').textContent = u.addBtn;
+        document.getElementById('no-results-text').textContent = u.noResults;
+        document.getElementById('footer-text').innerHTML = u.footer;
+        document.getElementById('modal-title-text').textContent = u.modalTitle;
+        document.getElementById('modal-subtitle-text').textContent = u.modalSubtitle;
+        document.getElementById('drop-label').innerHTML = u.dropLabel;
+        document.getElementById('label-mod-title').textContent = u.labelTitle;
+        document.getElementById('label-mod-subtitle').textContent = u.labelSub;
+        document.getElementById('label-mod-desc').textContent = u.labelDesc;
+        document.getElementById('label-mod-icon').textContent = u.labelIcon;
+        document.getElementById('label-mod-color').textContent = u.labelColor;
+        document.getElementById('modal-confirm-text').textContent = u.confirmBtn;
+        document.documentElement.lang = l === 'zh' ? 'zh-Hant' : l;
+        if (!editMode) document.getElementById('edit-btn-text').textContent = u.editBtn;
+        renderGrid();
+    }
+
     const STORAGE_KEY = 'knowledge_galaxy_modules';
 
     const DEFAULT_MODULES = [
