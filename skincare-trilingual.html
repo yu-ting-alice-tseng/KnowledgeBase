@@ -11,7 +11,7 @@
   :root {
     --accent: #ec4899;
     --accent2: #d946ef;
-    --bg: #060913;
+    --bg: #04080f;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -90,11 +90,11 @@
   #detail-panel {
     width: 340px; min-width: 340px;
     background: rgba(10,16,30,0.95);
-    border-left: 1px solid rgba(255,255,255,0.07);
+    border-left: 1px solid rgba(255,255,255,0.10);
     overflow-y: auto;
     transition: width .3s, min-width .3s;
     padding: 0;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(20px) saturate(180%);
   }
   #detail-panel.hidden { width: 0; min-width: 0; overflow: hidden; padding: 0; }
   #detail-inner { padding: 24px 20px 48px; min-width: 300px; }
@@ -127,10 +127,16 @@
 </style>
 </head>
 <body>
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:600px;height:600px;top:-200px;left:-150px;background:radial-gradient(circle,rgba(139,92,246,0.18) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:500px;height:500px;top:-100px;right:-100px;background:radial-gradient(circle,rgba(236,72,153,0.15) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:700px;height:700px;bottom:-200px;left:30%;background:radial-gradient(circle,rgba(56,189,248,0.10) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:400px;height:400px;bottom:100px;right:-100px;background:radial-gradient(circle,rgba(217,70,239,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
 <div id="app">
 
   <!-- ── Header ── -->
-  <header style="background:rgba(6,9,19,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 24px;z-index:50;flex-shrink:0;">
+  <header style="background:rgba(4,8,15,0.75);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.10);padding:14px 24px;z-index:50;flex-shrink:0;">
     <div style="max-width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;">
       <div style="display:flex;align-items:center;gap:10px;">
         <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-size:12px;font-weight:600;text-decoration:none;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);transition:all .2s;white-space:nowrap;">
@@ -138,7 +144,7 @@
         </a>
         <div style="position:relative;">
           <div style="position:absolute;inset:-3px;background:linear-gradient(135deg,#ec4899,#d946ef);border-radius:10px;filter:blur(4px);opacity:0.6;"></div>
-          <div style="position:relative;background:#060913;padding:8px 10px;border-radius:10px;border:1px solid rgba(236,72,153,0.3);">
+          <div style="position:relative;background:#04080f;padding:8px 10px;border-radius:10px;border:1px solid rgba(236,72,153,0.3);">
             <i class="fa-solid fa-flask-vial" style="color:#f0abca;font-size:16px;"></i>
           </div>
         </div>

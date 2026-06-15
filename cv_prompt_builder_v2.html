@@ -29,7 +29,7 @@
 
   body {
     margin: 0;
-    background: #060913;
+    background: #04080f;
     background-image:
       radial-gradient(at 0% 0%, rgba(14,165,233,0.07) 0px, transparent 50%),
       radial-gradient(at 100% 100%, rgba(99,102,241,0.05) 0px, transparent 50%);
@@ -49,8 +49,8 @@
   /* ── Page header ── */
   .page-header {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(6,9,19,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    background: rgba(4,8,15,0.75); backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.10);
     padding: 14px 24px;
   }
   .page-header-inner {
@@ -73,7 +73,7 @@
     border-radius: 10px; opacity: 0.6; filter: blur(4px);
   }
   .brand-icon-inner {
-    position: relative; background: #060913;
+    position: relative; background: #04080f;
     padding: 8px 10px; border-radius: 10px;
     border: 1px solid rgba(14,165,233,0.3);
   }
@@ -118,7 +118,7 @@
   /* ── Prompts ── */
   .prompt-wrap { position: relative; }
   .prompt-block {
-    background: rgba(6,9,19,0.80); border-radius: var(--border-radius-md);
+    background: rgba(4,8,15,0.75); border-radius: var(--border-radius-md);
     padding: 14px 80px 14px 14px;
     font-size: 12px; line-height: 1.8; color: #94a3b8;
     font-family: var(--font-mono); white-space: pre-wrap; word-break: break-word;
@@ -205,6 +205,12 @@
 </style>
 </head>
 <body>
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:600px;height:600px;top:-200px;left:-150px;background:radial-gradient(circle,rgba(139,92,246,0.18) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:500px;height:500px;top:-100px;right:-100px;background:radial-gradient(circle,rgba(236,72,153,0.15) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:700px;height:700px;bottom:-200px;left:30%;background:radial-gradient(circle,rgba(56,189,248,0.10) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:400px;height:400px;bottom:100px;right:-100px;background:radial-gradient(circle,rgba(217,70,239,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
 
 <!-- Sticky top nav -->
 <header class="page-header">

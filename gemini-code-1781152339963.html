@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root {
-    --bg: #060913;
+    --bg: #04080f;
     --card-bg: rgba(15,23,42,0.70);
     --text: #e2e8f0;
     --muted: #94a3b8;
@@ -32,8 +32,8 @@
     margin: 0;
     background: var(--bg);
     background-image:
-      radial-gradient(at 0% 0%, rgba(236,72,153,0.07) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(217,70,239,0.05) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(236,72,153,0.12) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(217,70,239,0.10) 0px, transparent 50%);
     background-attachment: fixed;
     color: var(--text);
     font-family: 'Nunito', 'Noto Serif TC', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -65,7 +65,7 @@
 
   .lang-bar {
     position: sticky; top: 58px; z-index: 50;
-    background: rgba(6,9,19,0.92); backdrop-filter: blur(12px);
+    background: rgba(4,8,15,0.75); backdrop-filter: blur(20px) saturate(180%);
     display: flex; justify-content: center; gap: 10px;
     padding: 14px 0; border-bottom: 1px solid var(--border); margin-bottom: 32px;
   }
@@ -162,9 +162,15 @@
 </style>
 </head>
 <body>
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:600px;height:600px;top:-200px;left:-150px;background:radial-gradient(circle,rgba(139,92,246,0.18) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:500px;height:500px;top:-100px;right:-100px;background:radial-gradient(circle,rgba(236,72,153,0.15) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:700px;height:700px;bottom:-200px;left:30%;background:radial-gradient(circle,rgba(56,189,248,0.10) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:400px;height:400px;bottom:100px;right:-100px;background:radial-gradient(circle,rgba(217,70,239,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
 
 <!-- Sticky top nav -->
-<header style="position:sticky;top:0;z-index:100;background:rgba(6,9,19,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 24px;">
+<header style="position:sticky;top:0;z-index:100;background:rgba(4,8,15,0.75);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.10);padding:14px 24px;">
   <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;">
     <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-size:12px;font-weight:600;text-decoration:none;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);white-space:nowrap;">
       <i class="fa-solid fa-arrow-left" style="font-size:9px;"></i> Home
@@ -172,7 +178,7 @@
     <div style="display:flex;align-items:center;gap:10px;">
       <div style="position:relative;">
         <div style="position:absolute;inset:-3px;background:linear-gradient(135deg,#ec4899,#d946ef);border-radius:10px;opacity:0.6;filter:blur(4px);"></div>
-        <div style="position:relative;background:#060913;padding:8px 10px;border-radius:10px;border:1px solid rgba(236,72,153,0.3);">
+        <div style="position:relative;background:#04080f;padding:8px 10px;border-radius:10px;border:1px solid rgba(236,72,153,0.3);">
           <i class="fa-solid fa-flask-vial" style="color:#f0abca;font-size:15px;"></i>
         </div>
       </div>
