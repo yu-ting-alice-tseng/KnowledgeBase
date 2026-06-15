@@ -873,6 +873,7 @@
         // Language Switcher Function
         function setLanguage(lang) {
             currentLang = lang;
+            localStorage.setItem('kb_lang', lang);
             
             // Toggle active state in buttons
             ['fr', 'en', 'zh'].forEach(l => {
@@ -1299,8 +1300,8 @@
 
         // Window load and resize listeners to recalculate connecting curves
         window.onload = function() {
-            // Force rendering Trilingual strings to Chinese Traditional on start up to fit user preference
-            setLanguage('zh');
+            const savedLang = localStorage.getItem('kb_lang');
+            setLanguage(savedLang && ['zh','en','fr'].includes(savedLang) ? savedLang : 'zh');
             
             // Draw connector curves
             drawConnectors();
