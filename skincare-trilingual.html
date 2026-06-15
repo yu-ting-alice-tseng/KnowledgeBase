@@ -204,7 +204,8 @@ const L = {
     trend: '市場趨勢',
     source: '資訊來源',
     regulation: '法規框架',
-    closeBtn: '關閉'
+    closeBtn: '關閉',
+    products: '明星產品參考'
   },
   en: {
     root: 'Skincare\nActives',
@@ -216,7 +217,8 @@ const L = {
     trend: 'Key Trends',
     source: 'Sources',
     regulation: 'Framework',
-    closeBtn: 'Close'
+    closeBtn: 'Close',
+    products: 'Star Products'
   },
   fr: {
     root: 'Actifs\nSoin',
@@ -228,7 +230,8 @@ const L = {
     trend: 'Tendances',
     source: 'Sources',
     regulation: 'Réglementation',
-    closeBtn: 'Fermer'
+    closeBtn: 'Fermer',
+    products: 'Produits phares'
   }
 };
 
@@ -244,36 +247,36 @@ const BRANCHES = [
         id: 'retinoids',
         label: { zh: '視黃醇類', en: 'Retinoids', fr: 'Rétinoïdes' },
         detail: {
-          zh: { title: '視黃醇類 Retinoids', sub: 'rétinoïdes', mechanism: '加速角質更新、促進膠原合成', ingredients: ['Retinol', 'Retinal (retinaldehyde)', 'Tretinoin (藥品)'], note: '效力：Retinol < Retinal < Tretinoin；需建立耐受（retinization），注意光敏性' },
-          en: { title: 'Retinoids', sub: 'rétinoïdes / 視黃醇類', mechanism: 'Speed cell turnover, stimulate collagen synthesis', ingredients: ['Retinol', 'Retinal', 'Tretinoin (Rx)'], note: 'Potency: Retinol < Retinal < Tretinoin; Build tolerance gradually (retinization); causes photosensitivity' },
-          fr: { title: 'Rétinoïdes', sub: 'retinoids / 視黃醇類', mechanism: 'Accélèrent le renouvellement cellulaire et stimulent le collagène', ingredients: ['Rétinol', 'Rétinal', 'Trétinoïne (médicament)'], note: 'Puissance : rétinol < rétinal < trétinoïne ; rétinisation progressive ; photosensibilité' }
+          zh: { title: '視黃醇類 Retinoids', sub: 'rétinoïdes', mechanism: '加速角質更新、促進膠原合成', ingredients: ['Retinol', 'Retinal (retinaldehyde)', 'Tretinoin (藥品)'], products: ['SkinCeuticals Retinol 0.3/1.0', 'The Ordinary Granactive Retinoid 2% Emulsion', "Paula's Choice 1% Retinol Booster", 'RoC Retinol Correxion Line Smoothing Serum', 'Avène RetrinAL 0.1 Intensive Cream'], note: '效力：Retinol < Retinal < Tretinoin；需建立耐受（retinization），注意光敏性' },
+          en: { title: 'Retinoids', sub: 'rétinoïdes / 視黃醇類', mechanism: 'Speed cell turnover, stimulate collagen synthesis', ingredients: ['Retinol', 'Retinal', 'Tretinoin (Rx)'], products: ['SkinCeuticals Retinol 0.3/1.0', 'The Ordinary Granactive Retinoid 2% Emulsion', "Paula's Choice 1% Retinol Booster", 'RoC Retinol Correxion Line Smoothing Serum', 'Avène RetrinAL 0.1 Intensive Cream'], note: 'Potency: Retinol < Retinal < Tretinoin; Build tolerance gradually (retinization); causes photosensitivity' },
+          fr: { title: 'Rétinoïdes', sub: 'retinoids / 視黃醇類', mechanism: 'Accélèrent le renouvellement cellulaire et stimulent le collagène', ingredients: ['Rétinol', 'Rétinal', 'Trétinoïne (médicament)'], products: ['SkinCeuticals Retinol 0.3/1.0', 'The Ordinary Granactive Retinoid 2% Emulsion', "Paula's Choice 1% Retinol Booster", 'RoC Retinol Correxion Line Smoothing Serum', 'Avène RetrinAL 0.1 Intensive Cream'], note: 'Puissance : rétinol < rétinal < trétinoïne ; rétinisation progressive ; photosensibilité' }
         }
       },
       {
         id: 'peptides',
         label: { zh: '胜肽', en: 'Peptides', fr: 'Peptides' },
         detail: {
-          zh: { title: '胜肽 Peptides', sub: '訊號型 / 載體型', mechanism: '短鏈胺基酸訊號分子，刺激膠原或傳遞銅等微量元素', ingredients: ['Matrixyl (Palmitoyl Pentapeptide)', 'Argireline', 'Copper Peptides'], note: '需區分行銷宣稱與臨床證據' },
-          en: { title: 'Peptides', sub: 'signal / carrier peptides', mechanism: 'Short amino-acid chains that signal collagen production or carry trace minerals', ingredients: ['Matrixyl (Palmitoyl Pentapeptide)', 'Argireline', 'Copper Peptides'], note: 'Distinguish marketing claims from clinical evidence' },
-          fr: { title: 'Peptides', sub: 'signal / transporteurs', mechanism: 'Courtes chaînes d\'acides aminés qui stimulent le collagène ou transportent des minéraux', ingredients: ['Matrixyl', 'Argireline', 'Peptides de cuivre'], note: 'Distinguer la promesse marketing des preuves cliniques' }
+          zh: { title: '胜肽 Peptides', sub: '訊號型 / 載體型', mechanism: '短鏈胺基酸訊號分子，刺激膠原或傳遞銅等微量元素', ingredients: ['Matrixyl (Palmitoyl Pentapeptide)', 'Argireline', 'Copper Peptides'], products: ['The Ordinary Buffet Multi-Peptide Serum', 'Drunk Elephant Protini Polypeptide Cream', 'Olay Regenerist Micro-Sculpting Serum', 'COSRX Advanced Snail 96 Mucin Power Essence', 'Estée Lauder Advanced Night Repair (ANR)'], note: '需區分行銷宣稱與臨床證據' },
+          en: { title: 'Peptides', sub: 'signal / carrier peptides', mechanism: 'Short amino-acid chains that signal collagen production or carry trace minerals', ingredients: ['Matrixyl (Palmitoyl Pentapeptide)', 'Argireline', 'Copper Peptides'], products: ['The Ordinary Buffet Multi-Peptide Serum', 'Drunk Elephant Protini Polypeptide Cream', 'Olay Regenerist Micro-Sculpting Serum', 'COSRX Advanced Snail 96 Mucin Power Essence', 'Estée Lauder Advanced Night Repair (ANR)'], note: 'Distinguish marketing claims from clinical evidence' },
+          fr: { title: 'Peptides', sub: 'signal / transporteurs', mechanism: 'Courtes chaînes d\'acides aminés qui stimulent le collagène ou transportent des minéraux', ingredients: ['Matrixyl', 'Argireline', 'Peptides de cuivre'], products: ['The Ordinary Buffet Multi-Peptide Serum', 'Drunk Elephant Protini Polypeptide Cream', 'Olay Regenerist Micro-Sculpting Serum', 'COSRX Advanced Snail 96 Mucin Power Essence', 'Estée Lauder Advanced Night Repair (ANR)'], note: 'Distinguer la promesse marketing des preuves cliniques' }
         }
       },
       {
         id: 'bakuchiol',
         label: { zh: '補骨脂酚', en: 'Bakuchiol', fr: 'Bakuchiol' },
         detail: {
-          zh: { title: '補骨脂酚 Bakuchiol', sub: '視黃醇植物替代', mechanism: '類似視黃醇作用路徑，刺激膠原、促更新', ingredients: ['Bakuchiol (天然萃取)'], note: '刺激性低、可日間使用，適合敏感肌族群' },
-          en: { title: 'Bakuchiol', sub: 'plant-based retinol alternative', mechanism: 'Mimics retinoid pathways — stimulates collagen, accelerates turnover', ingredients: ['Bakuchiol (plant extract)'], note: 'Lower irritation than retinol; safe for daytime and sensitive skin' },
-          fr: { title: 'Bakuchiol', sub: 'alternative végétale au rétinol', mechanism: 'Imite les voies du rétinol — stimule le collagène, accélère le renouvellement', ingredients: ['Bakuchiol (extrait végétal)'], note: 'Moins irritant que le rétinol ; utilisable de jour ; convient aux peaux sensibles' }
+          zh: { title: '補骨脂酚 Bakuchiol', sub: '視黃醇植物替代', mechanism: '類似視黃醇作用路徑，刺激膠原、促更新', ingredients: ['Bakuchiol (天然萃取)'], products: ['Bybi Bakuchiol Booster', 'The Inkey List Bakuchiol Moisturizer', 'Honest Beauty Truly Defying Serum', 'Youth To The People Superfood Air-Whip Moisture Cream', 'Cocokind Bakuchiol Face Oil'], note: '刺激性低、可日間使用，適合敏感肌族群' },
+          en: { title: 'Bakuchiol', sub: 'plant-based retinol alternative', mechanism: 'Mimics retinoid pathways — stimulates collagen, accelerates turnover', ingredients: ['Bakuchiol (plant extract)'], products: ['Bybi Bakuchiol Booster', 'The Inkey List Bakuchiol Moisturizer', 'Honest Beauty Truly Defying Serum', 'Youth To The People Superfood Air-Whip Moisture Cream', 'Cocokind Bakuchiol Face Oil'], note: 'Lower irritation than retinol; safe for daytime and sensitive skin' },
+          fr: { title: 'Bakuchiol', sub: 'alternative végétale au rétinol', mechanism: 'Imite les voies du rétinol — stimule le collagène, accélère le renouvellement', ingredients: ['Bakuchiol (extrait végétal)'], products: ['Bybi Bakuchiol Booster', 'The Inkey List Bakuchiol Moisturizer', 'Honest Beauty Truly Defying Serum', 'Youth To The People Superfood Air-Whip Moisture Cream', 'Cocokind Bakuchiol Face Oil'], note: 'Moins irritant que le rétinol ; utilisable de jour ; convient aux peaux sensibles' }
         }
       },
       {
         id: 'antioxidants',
         label: { zh: '抗氧化劑', en: 'Antioxidants', fr: 'Antioxydants' },
         detail: {
-          zh: { title: '抗氧化劑 Antioxidants', sub: '對抗自由基、光老化', mechanism: '中和自由基（ROS），保護細胞免受光老化損傷', ingredients: ['Vitamin C (L-ascorbic acid)', 'Vitamin E (Tocopherol)', 'Ferulic Acid', 'Resveratrol', 'Niacinamide'], note: 'VitC+VitE+Ferulic Acid 三重協同，穩定性與效果最佳' },
-          en: { title: 'Antioxidants', sub: 'fight free radicals & photo-aging', mechanism: 'Neutralize reactive oxygen species (ROS), protect against UV-induced aging', ingredients: ['Vitamin C (L-AA)', 'Vitamin E (Tocopherol)', 'Ferulic Acid', 'Resveratrol', 'Niacinamide'], note: 'VitC+VitE+Ferulic Acid triple combo offers best stability and efficacy' },
-          fr: { title: 'Antioxydants', sub: 'contre les radicaux libres et le photovieillissement', mechanism: 'Neutralisent les espèces réactives de l\'oxygène, protègent du vieillissement UV', ingredients: ['Vitamine C (L-AA)', 'Vitamine E (Tocophérol)', 'Acide férulique', 'Resvératrol'], note: 'Combo VitC+VitE+Acide férulique : stabilité et efficacité optimales' }
+          zh: { title: '抗氧化劑 Antioxidants', sub: '對抗自由基、光老化', mechanism: '中和自由基（ROS），保護細胞免受光老化損傷', ingredients: ['Vitamin C (L-ascorbic acid)', 'Vitamin E (Tocopherol)', 'Ferulic Acid', 'Resveratrol', 'Niacinamide'], products: ['SkinCeuticals C E Ferulic (業界黃金標準)', 'Drunk Elephant C-Firma Fresh Day Serum', "Paula's Choice C15 Super Booster", "Kiehl's Powerful-Strength Line-Reducing Concentrate", 'The Ordinary Ascorbyl Glucoside Solution 12%'], note: 'VitC+VitE+Ferulic Acid 三重協同，穩定性與效果最佳' },
+          en: { title: 'Antioxidants', sub: 'fight free radicals & photo-aging', mechanism: 'Neutralize reactive oxygen species (ROS), protect against UV-induced aging', ingredients: ['Vitamin C (L-AA)', 'Vitamin E (Tocopherol)', 'Ferulic Acid', 'Resveratrol', 'Niacinamide'], products: ['SkinCeuticals C E Ferulic (gold standard)', 'Drunk Elephant C-Firma Fresh Day Serum', "Paula's Choice C15 Super Booster", "Kiehl's Powerful-Strength Line-Reducing Concentrate", 'The Ordinary Ascorbyl Glucoside Solution 12%'], note: 'VitC+VitE+Ferulic Acid triple combo offers best stability and efficacy' },
+          fr: { title: 'Antioxydants', sub: 'contre les radicaux libres et le photovieillissement', mechanism: 'Neutralisent les espèces réactives de l\'oxygène, protègent du vieillissement UV', ingredients: ['Vitamine C (L-AA)', 'Vitamine E (Tocophérol)', 'Acide férulique', 'Resvératrol'], products: ['SkinCeuticals C E Ferulic (référence sectorielle)', 'Drunk Elephant C-Firma Fresh Day Serum', "Paula's Choice C15 Super Booster", "Kiehl's Powerful-Strength Line-Reducing Concentrate", 'The Ordinary Ascorbyl Glucoside Solution 12%'], note: 'Combo VitC+VitE+Acide férulique : stabilité et efficacité optimales' }
         }
       }
     ]
@@ -289,27 +292,27 @@ const BRANCHES = [
         id: 'humectants',
         label: { zh: '吸濕劑', en: 'Humectants', fr: 'Humectants' },
         detail: {
-          zh: { title: '吸濕劑 Humectants', sub: '從環境或深層吸水', mechanism: '從環境或真皮層吸水至角質層，維持水分', ingredients: ['Hyaluronic Acid (玻尿酸)', 'Glycerin (甘油)', 'Panthenol (泛醇)', 'Sodium PCA', 'Urea'], note: '高分子 HA 停留表層，低分子 HA 可深入；需搭配封閉劑效果更佳' },
-          en: { title: 'Humectants', sub: 'draw water into skin', mechanism: 'Draw water from environment or dermis into the stratum corneum', ingredients: ['Hyaluronic Acid', 'Glycerin', 'Panthenol', 'Sodium PCA', 'Urea'], note: 'High-MW HA stays on surface; low-MW penetrates deeper; pair with occlusives for best results' },
-          fr: { title: 'Humectants', sub: 'attirent l\'eau vers la peau', mechanism: 'Attirent l\'eau depuis l\'environnement ou le derme vers la couche cornée', ingredients: ['Acide hyaluronique', 'Glycérine', 'Panthénol', 'Sodium PCA', 'Urée'], note: 'HA haute masse : surface ; basse masse : pénètre ; associer aux occlusifs' }
+          zh: { title: '吸濕劑 Humectants', sub: '從環境或深層吸水', mechanism: '從環境或真皮層吸水至角質層，維持水分', ingredients: ['Hyaluronic Acid (玻尿酸)', 'Glycerin (甘油)', 'Panthenol (泛醇)', 'Sodium PCA', 'Urea'], products: ['Neutrogena Hydro Boost Water Gel (玻尿酸代表作)', 'The Ordinary Hyaluronic Acid 2% + B5', 'LANEIGE Water Sleeping Mask', 'Hada Labo Gokujyun Premium Lotion (肌研極潤)', 'La Roche-Posay Hyalu B5 Serum'], note: '高分子 HA 停留表層，低分子 HA 可深入；需搭配封閉劑效果更佳' },
+          en: { title: 'Humectants', sub: 'draw water into skin', mechanism: 'Draw water from environment or dermis into the stratum corneum', ingredients: ['Hyaluronic Acid', 'Glycerin', 'Panthenol', 'Sodium PCA', 'Urea'], products: ['Neutrogena Hydro Boost Water Gel (HA icon)', 'The Ordinary Hyaluronic Acid 2% + B5', 'LANEIGE Water Sleeping Mask', 'Hada Labo Gokujyun Premium Lotion', 'La Roche-Posay Hyalu B5 Serum'], note: 'High-MW HA stays on surface; low-MW penetrates deeper; pair with occlusives for best results' },
+          fr: { title: 'Humectants', sub: 'attirent l\'eau vers la peau', mechanism: 'Attirent l\'eau depuis l\'environnement ou le derme vers la couche cornée', ingredients: ['Acide hyaluronique', 'Glycérine', 'Panthénol', 'Sodium PCA', 'Urée'], products: ['Neutrogena Hydro Boost Water Gel (icône HA)', 'The Ordinary Hyaluronic Acid 2% + B5', 'LANEIGE Water Sleeping Mask', 'Hada Labo Gokujyun Premium Lotion', 'La Roche-Posay Hyalu B5 Sérum'], note: 'HA haute masse : surface ; basse masse : pénètre ; associer aux occlusifs' }
         }
       },
       {
         id: 'ceramides',
         label: { zh: '神經醯胺', en: 'Ceramides', fr: 'Céramides' },
         detail: {
-          zh: { title: '神經醯胺 Ceramides', sub: '屏障三要素', mechanism: '填補角質細胞間脂質空隙，修復皮膚屏障，減少 TEWL', ingredients: ['Ceramide NP', 'Ceramide AP', 'Ceramide EOP', 'Cholesterol (膽固醇)', 'Fatty Acids (脂肪酸)'], note: '理想比例 Ceramide:Cholesterol:Fatty Acid ≈ 1:1:1；知名配方見 CeraVe' },
-          en: { title: 'Ceramides', sub: 'barrier triad', mechanism: 'Fill lipid gaps between corneocytes, restore barrier, reduce TEWL', ingredients: ['Ceramide NP', 'Ceramide AP', 'Ceramide EOP', 'Cholesterol', 'Fatty Acids'], note: 'Ideal ratio Ceramide:Cholesterol:Fatty Acid ≈ 1:1:1; key ingredient in CeraVe' },
-          fr: { title: 'Céramides', sub: 'trio de la barrière', mechanism: 'Comblent les espaces lipidiques, restaurent la barrière, réduisent la PIE/TEWL', ingredients: ['Céramide NP', 'Céramide AP', 'Cholestérol', 'Acides gras'], note: 'Ratio idéal Céramide:Cholestérol:Acides gras ≈ 1:1:1 ; ingrédient phare de CeraVe' }
+          zh: { title: '神經醯胺 Ceramides', sub: '屏障三要素', mechanism: '填補角質細胞間脂質空隙，修復皮膚屏障，減少 TEWL', ingredients: ['Ceramide NP', 'Ceramide AP', 'Ceramide EOP', 'Cholesterol (膽固醇)', 'Fatty Acids (脂肪酸)'], products: ['CeraVe Moisturizing Cream (三重神經醯胺代表)', 'CeraVe Hydrating Cleanser', 'Elizabeth Arden Eight Hour Cream', 'Dr. Jart+ Cicapair Tiger Grass Cream', 'Kiehl's Ultra Facial Cream'], note: '理想比例 Ceramide:Cholesterol:Fatty Acid ≈ 1:1:1；知名配方見 CeraVe' },
+          en: { title: 'Ceramides', sub: 'barrier triad', mechanism: 'Fill lipid gaps between corneocytes, restore barrier, reduce TEWL', ingredients: ['Ceramide NP', 'Ceramide AP', 'Ceramide EOP', 'Cholesterol', 'Fatty Acids'], products: ['CeraVe Moisturizing Cream (triple ceramide icon)', 'CeraVe Hydrating Cleanser', 'Elizabeth Arden Eight Hour Cream', 'Dr. Jart+ Cicapair Tiger Grass Cream', "Kiehl's Ultra Facial Cream"], note: 'Ideal ratio Ceramide:Cholesterol:Fatty Acid ≈ 1:1:1; key ingredient in CeraVe' },
+          fr: { title: 'Céramides', sub: 'trio de la barrière', mechanism: 'Comblent les espaces lipidiques, restaurent la barrière, réduisent la PIE/TEWL', ingredients: ['Céramide NP', 'Céramide AP', 'Cholestérol', 'Acides gras'], products: ['CeraVe Crème Hydratante (référence céramides)', 'CeraVe Nettoyant Hydratant', 'Elizabeth Arden Eight Hour Cream', 'Dr. Jart+ Cicapair Tiger Grass Cream', "Kiehl's Ultra Facial Cream"], note: 'Ratio idéal Céramide:Cholestérol:Acides gras ≈ 1:1:1 ; ingrédient phare de CeraVe' }
         }
       },
       {
         id: 'emollients',
         label: { zh: '潤膚劑', en: 'Emollients', fr: 'Émollients' },
         detail: {
-          zh: { title: '潤膚劑 Emollients', sub: '改善膚觸、填補間隙', mechanism: '填補角質層細胞間隙，使肌膚柔滑', ingredients: ['Squalane (角鯊烷)', 'Jojoba Oil', 'Dimethicone', 'Cetyl Alcohol'], note: '角鯊烷輕盈無油感、適合多數膚質' },
-          en: { title: 'Emollients', sub: 'smooth & fill skin texture', mechanism: 'Fill spaces between corneocytes, improve skin texture and softness', ingredients: ['Squalane', 'Jojoba Oil', 'Dimethicone', 'Cetyl Alcohol'], note: 'Squalane is lightweight and suits most skin types' },
-          fr: { title: 'Émollients', sub: 'lissent la texture cutanée', mechanism: 'Comblent les espaces entre cornéocytes, améliorent la texture et la douceur', ingredients: ['Squalane', 'Huile de jojoba', 'Diméthicone', 'Alcool cétylique'], note: 'Le squalane est léger et convient à la plupart des types de peau' }
+          zh: { title: '潤膚劑 Emollients', sub: '改善膚觸、填補間隙', mechanism: '填補角質層細胞間隙，使肌膚柔滑', ingredients: ['Squalane (角鯊烷)', 'Jojoba Oil', 'Dimethicone', 'Cetyl Alcohol'], products: ['Biossance 100% Squalane Oil', 'The Ordinary 100% Plant-Derived Squalane', 'Kiehl's Midnight Recovery Concentrate', 'The INKEY List Squalane Oil', 'Tatcha The Dewy Skin Cream'], note: '角鯊烷輕盈無油感、適合多數膚質' },
+          en: { title: 'Emollients', sub: 'smooth & fill skin texture', mechanism: 'Fill spaces between corneocytes, improve skin texture and softness', ingredients: ['Squalane', 'Jojoba Oil', 'Dimethicone', 'Cetyl Alcohol'], products: ['Biossance 100% Squalane Oil', 'The Ordinary 100% Plant-Derived Squalane', "Kiehl's Midnight Recovery Concentrate", 'The INKEY List Squalane Oil', 'Tatcha The Dewy Skin Cream'], note: 'Squalane is lightweight and suits most skin types' },
+          fr: { title: 'Émollients', sub: 'lissent la texture cutanée', mechanism: 'Comblent les espaces entre cornéocytes, améliorent la texture et la douceur', ingredients: ['Squalane', 'Huile de jojoba', 'Diméthicone', 'Alcool cétylique'], products: ['Biossance 100% Squalane Oil', 'The Ordinary 100% Plant-Derived Squalane', "Kiehl's Midnight Recovery Concentrate", 'The INKEY List Squalane Oil', 'Tatcha The Dewy Skin Cream'], note: 'Le squalane est léger et convient à la plupart des types de peau' }
         }
       }
     ]
@@ -325,27 +328,27 @@ const BRANCHES = [
         id: 'vitaminc',
         label: { zh: '維生素 C', en: 'Vitamin C', fr: 'Vitamine C' },
         detail: {
-          zh: { title: '維生素 C Vitamin C', sub: 'vitamine C / 維生素C', mechanism: '抑制酪胺酸酶（tyrosinase），減少黑色素生成；抗氧化', ingredients: ['L-Ascorbic Acid (純 VitC)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate', '3-O-Ethyl Ascorbate'], note: 'L-AA 效果最強但最不穩定，需低 pH 環境；衍生物較溫和但效果稍弱' },
-          en: { title: 'Vitamin C', sub: 'vitamine C / 維生素C', mechanism: 'Inhibits tyrosinase, reduces melanin synthesis; antioxidant', ingredients: ['L-Ascorbic Acid (pure)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate', '3-O-Ethyl Ascorbate'], note: 'L-AA is most effective but unstable (needs low pH); derivatives are milder but less potent' },
-          fr: { title: 'Vitamine C', sub: 'vitamin C / 維生素C', mechanism: 'Inhibe la tyrosinase, réduit la mélanine ; antioxydant', ingredients: ['Acide L-ascorbique (pur)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate'], note: 'La L-AA est la plus efficace mais instable (pH bas requis) ; les dérivés sont plus stables' }
+          zh: { title: '維生素 C Vitamin C', sub: 'vitamine C / 維生素C', mechanism: '抑制酪胺酸酶（tyrosinase），減少黑色素生成；抗氧化', ingredients: ['L-Ascorbic Acid (純 VitC)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate', '3-O-Ethyl Ascorbate'], products: ['SkinCeuticals C E Ferulic 15%', 'Drunk Elephant C-Firma 15%', 'Sunday Riley C.E.O. Brightening Serum', 'Timeless Vitamin C + E Ferulic Acid Serum', 'Melano CC Rohto Intensive Anti-Spot Essence'], note: 'L-AA 效果最強但最不穩定，需低 pH 環境；衍生物較溫和但效果稍弱' },
+          en: { title: 'Vitamin C', sub: 'vitamine C / 維生素C', mechanism: 'Inhibits tyrosinase, reduces melanin synthesis; antioxidant', ingredients: ['L-Ascorbic Acid (pure)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate', '3-O-Ethyl Ascorbate'], products: ['SkinCeuticals C E Ferulic 15%', 'Drunk Elephant C-Firma 15%', 'Sunday Riley C.E.O. Brightening Serum', 'Timeless Vitamin C + E Ferulic Acid Serum', 'Melano CC Rohto Intensive Anti-Spot Essence'], note: 'L-AA is most effective but unstable (needs low pH); derivatives are milder but less potent' },
+          fr: { title: 'Vitamine C', sub: 'vitamin C / 維生素C', mechanism: 'Inhibe la tyrosinase, réduit la mélanine ; antioxydant', ingredients: ['Acide L-ascorbique (pur)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate'], products: ['SkinCeuticals C E Ferulic 15%', 'Drunk Elephant C-Firma 15%', 'Sunday Riley C.E.O. Brightening Serum', 'Timeless Vitamin C + E Ferulic Acid Serum', 'Melano CC Rohto Intensive Anti-Spot Essence'], note: 'La L-AA est la plus efficace mais instable (pH bas requis) ; les dérivés sont plus stables' }
         }
       },
       {
         id: 'niacinamide',
         label: { zh: '菸鹼醯胺', en: 'Niacinamide', fr: 'Niacinamide' },
         detail: {
-          zh: { title: '菸鹼醯胺 Niacinamide', sub: '多功能成分', mechanism: '抑制黑色素從黑色素細胞傳遞到角質細胞；強化屏障；控油抗炎', ingredients: ['Niacinamide (Vit B3)'], note: '常見濃度 2–10%；與 VitC 可搭配使用（煙黃問題多為迷思）；控油效果佳' },
-          en: { title: 'Niacinamide', sub: 'multifunctional powerhouse', mechanism: 'Blocks melanosome transfer → brightening; strengthens barrier; regulates sebum', ingredients: ['Niacinamide (Vitamin B3)'], note: 'Common range 2–10%; pairs well with Vitamin C (yellowing concern mostly a myth); great for oily skin' },
-          fr: { title: 'Niacinamide', sub: 'actif multifonction', mechanism: 'Bloque le transfert des mélanosomes → éclat ; renforce la barrière ; régule le sébum', ingredients: ['Niacinamide (Vitamine B3)'], note: 'Dosage courant 2–10 % ; compatible avec la Vit C ; idéal pour peaux grasses' }
+          zh: { title: '菸鹼醯胺 Niacinamide', sub: '多功能成分', mechanism: '抑制黑色素從黑色素細胞傳遞到角質細胞；強化屏障；控油抗炎', ingredients: ['Niacinamide (Vit B3)'], products: ['The Ordinary Niacinamide 10% + Zinc 1%', 'Paula's Choice 10% Niacinamide Booster', 'Good Molecules Discoloration Correcting Serum', 'COSRX Niacinamide 15% Face Serum', 'La Roche-Posay Pure Niacinamide 10 Serum'], note: '常見濃度 2–10%；與 VitC 可搭配使用（煙黃問題多為迷思）；控油效果佳' },
+          en: { title: 'Niacinamide', sub: 'multifunctional powerhouse', mechanism: 'Blocks melanosome transfer → brightening; strengthens barrier; regulates sebum', ingredients: ['Niacinamide (Vitamin B3)'], products: ['The Ordinary Niacinamide 10% + Zinc 1%', "Paula's Choice 10% Niacinamide Booster", 'Good Molecules Discoloration Correcting Serum', 'COSRX Niacinamide 15% Face Serum', 'La Roche-Posay Pure Niacinamide 10 Serum'], note: 'Common range 2–10%; pairs well with Vitamin C (yellowing concern mostly a myth); great for oily skin' },
+          fr: { title: 'Niacinamide', sub: 'actif multifonction', mechanism: 'Bloque le transfert des mélanosomes → éclat ; renforce la barrière ; régule le sébum', ingredients: ['Niacinamide (Vitamine B3)'], products: ['The Ordinary Niacinamide 10% + Zinc 1%', "Paula's Choice 10% Niacinamide Booster", 'Good Molecules Discoloration Correcting Serum', 'COSRX Niacinamide 15% Face Serum', 'La Roche-Posay Pure Niacinamide 10 Sérum'], note: 'Dosage courant 2–10 % ; compatible avec la Vit C ; idéal pour peaux grasses' }
         }
       },
       {
         id: 'depigment',
         label: { zh: '淡斑成分', en: 'Depigmenting', fr: 'Dépigmentants' },
         detail: {
-          zh: { title: '淡斑成分群', sub: '多路徑抑制黑色素', mechanism: '分別抑制酪胺酸酶、阻斷黑色素傳遞或加速代謝', ingredients: ['Arbutin (熊果素)', 'Tranexamic Acid (傳明酸)', 'Kojic Acid (麴酸)', 'Azelaic Acid (杜鵑花酸)', 'Alpha Arbutin'], note: '各成分機制不同，可組合搭配；麴酸EU有使用限制' },
-          en: { title: 'Depigmenting Actives', sub: 'multiple pathways', mechanism: 'Inhibit tyrosinase, block melanin transfer, or accelerate melanin breakdown', ingredients: ['Alpha Arbutin', 'Tranexamic Acid', 'Kojic Acid', 'Azelaic Acid', 'Ellagic Acid'], note: 'Different mechanisms — can be combined; kojic acid has EU usage limits' },
-          fr: { title: 'Actifs dépigmentants', sub: 'plusieurs voies d\'action', mechanism: 'Inhibent la tyrosinase, bloquent le transfert ou accélèrent la dégradation de la mélanine', ingredients: ['Alpha-Arbutine', 'Acide tranexamique', 'Acide kojique', 'Acide azélaïque'], note: 'Mécanismes distincts, combinables ; l\'acide kojique est limité en UE' }
+          zh: { title: '淡斑成分群', sub: '多路徑抑制黑色素', mechanism: '分別抑制酪胺酸酶、阻斷黑色素傳遞或加速代謝', ingredients: ['Arbutin (熊果素)', 'Tranexamic Acid (傳明酸)', 'Kojic Acid (麴酸)', 'Azelaic Acid (杜鵑花酸)', 'Alpha Arbutin'], products: ['Shiseido White Lucent All Day Brightener', 'SK-II GenOptics Spot Essence', 'The Ordinary Alpha Arbutin 2% + HA', 'Envy Therapy 3% Tranexamic Acid Serum', 'The Inkey List Tranexamic Acid Serum'], note: '各成分機制不同，可組合搭配；麴酸EU有使用限制' },
+          en: { title: 'Depigmenting Actives', sub: 'multiple pathways', mechanism: 'Inhibit tyrosinase, block melanin transfer, or accelerate melanin breakdown', ingredients: ['Alpha Arbutin', 'Tranexamic Acid', 'Kojic Acid', 'Azelaic Acid', 'Ellagic Acid'], products: ['Shiseido White Lucent All Day Brightener', 'SK-II GenOptics Spot Essence', 'The Ordinary Alpha Arbutin 2% + HA', 'Envy Therapy 3% Tranexamic Acid Serum', 'The Inkey List Tranexamic Acid Serum'], note: 'Different mechanisms — can be combined; kojic acid has EU usage limits' },
+          fr: { title: 'Actifs dépigmentants', sub: 'plusieurs voies d\'action', mechanism: 'Inhibent la tyrosinase, bloquent le transfert ou accélèrent la dégradation de la mélanine', ingredients: ['Alpha-Arbutine', 'Acide tranexamique', 'Acide kojique', 'Acide azélaïque'], products: ['Shiseido White Lucent All Day Brightener', 'SK-II GenOptics Spot Essence', 'The Ordinary Alpha Arbutin 2% + HA', 'Envy Therapy 3% Tranexamic Acid Serum', 'The Inkey List Tranexamic Acid Serum'], note: 'Mécanismes distincts, combinables ; l\'acide kojique est limité en UE' }
         }
       }
     ]
@@ -361,17 +364,17 @@ const BRANCHES = [
         id: 'centella',
         label: { zh: '積雪草', en: 'Centella', fr: 'Centella' },
         detail: {
-          zh: { title: '積雪草 Centella Asiatica (Cica)', sub: '舒緩修護植物萃取', mechanism: '積雪草苷（madecassoside）抗炎、促膠原；積雪草酸修復屏障', ingredients: ['Centella Asiatica Extract', 'Madecassoside', 'Asiaticoside', 'Asiatic Acid'], note: '廣受防護型與敏感肌配方採用；「Cica」是行銷名稱' },
-          en: { title: 'Centella Asiatica (Cica)', sub: 'soothing & repairing botanical', mechanism: 'Madecassoside: anti-inflammatory, collagen stimulating; Asiaticoside: barrier repair', ingredients: ['Centella Asiatica Extract', 'Madecassoside', 'Asiaticoside', 'Asiatic Acid'], note: '"Cica" is a marketing term for the ingredient family' },
-          fr: { title: 'Centella Asiatica (Cica)', sub: 'botanique apaisant et réparateur', mechanism: 'Madécassoside : anti-inflammatoire, stimule le collagène ; asiaticoside : réparation barrière', ingredients: ['Extrait de Centella Asiatica', 'Madécassoside', 'Asiaticoside'], note: '« Cica » est un terme marketing pour cette famille d\'ingrédients' }
+          zh: { title: '積雪草 Centella Asiatica (Cica)', sub: '舒緩修護植物萃取', mechanism: '積雪草苷（madecassoside）抗炎、促膠原；積雪草酸修復屏障', ingredients: ['Centella Asiatica Extract', 'Madecassoside', 'Asiaticoside', 'Asiatic Acid'], products: ['Dr. Jart+ Cicapair Tiger Grass Cream', 'COSRX Centella Blemish Ampule', 'Purito Centella Green Level Unscented Sun', 'Klairs Midnight Blue Calming Cream', 'La Roche-Posay Cicaplast Baume B5'], note: '廣受防護型與敏感肌配方採用；「Cica」是行銷名稱' },
+          en: { title: 'Centella Asiatica (Cica)', sub: 'soothing & repairing botanical', mechanism: 'Madecassoside: anti-inflammatory, collagen stimulating; Asiaticoside: barrier repair', ingredients: ['Centella Asiatica Extract', 'Madecassoside', 'Asiaticoside', 'Asiatic Acid'], products: ['Dr. Jart+ Cicapair Tiger Grass Cream', 'COSRX Centella Blemish Ampule', 'Purito Centella Green Level Unscented Sun', 'Klairs Midnight Blue Calming Cream', 'La Roche-Posay Cicaplast Baume B5'], note: '"Cica" is a marketing term for the ingredient family' },
+          fr: { title: 'Centella Asiatica (Cica)', sub: 'botanique apaisant et réparateur', mechanism: 'Madécassoside : anti-inflammatoire, stimule le collagène ; asiaticoside : réparation barrière', ingredients: ['Extrait de Centella Asiatica', 'Madécassoside', 'Asiaticoside'], products: ['Dr. Jart+ Cicapair Tiger Grass Cream', 'COSRX Centella Blemish Ampule', 'Purito Centella Green Level Unscented Sun', 'Klairs Midnight Blue Calming Cream', 'La Roche-Posay Cicaplast Baume B5'], note: '« Cica » est un terme marketing pour cette famille d\'ingrédients' }
         }
       },
       {
         id: 'calming',
         label: { zh: '鎮定成分', en: 'Calming', fr: 'Calmants' },
         detail: {
-          zh: { title: '鎮定舒緩成分', sub: '減少刺激、抗發炎', mechanism: '降低皮膚炎症反應、緩解泛紅與刺激', ingredients: ['Allantoin (尿囊素)', 'Bisabolol (紅沒藥醇)', 'Panthenol (泛醇)', 'Beta-Glucan', 'Oat Extract (燕麥萃取)'], note: '常用於術後修護、敏感肌或去角質後的緩衝配方' },
-          en: { title: 'Calming Actives', sub: 'reduce redness & irritation', mechanism: 'Reduce inflammatory response, calm redness and sensitization', ingredients: ['Allantoin', 'Bisabolol', 'Panthenol', 'Beta-Glucan', 'Oat Extract'], note: 'Common in post-procedure, sensitive skin, and post-exfoliation formulas' },
+          zh: { title: '鎮定舒緩成分', sub: '減少刺激、抗發炎', mechanism: '降低皮膚炎症反應、緩解泛紅與刺激', ingredients: ['Allantoin (尿囊素)', 'Bisabolol (紅沒藥醇)', 'Panthenol (泛醇)', 'Beta-Glucan', 'Oat Extract (燕麥萃取)'], products: ['Aveeno Calm + Restore Nourishing Oat Serum', 'La Roche-Posay Toleriane Double Repair Moisturizer', 'Klairs Rich Moist Soothing Serum', 'First Aid Beauty Ultra Repair Cream (Oat)', 'Avène Cicalfate+ Restorative Protective Cream'], note: '常用於術後修護、敏感肌或去角質後的緩衝配方' },
+          en: { title: 'Calming Actives', sub: 'reduce redness & irritation', mechanism: 'Reduce inflammatory response, calm redness and sensitization', ingredients: ['Allantoin', 'Bisabolol', 'Panthenol', 'Beta-Glucan', 'Oat Extract'], products: ['Aveeno Calm + Restore Nourishing Oat Serum', 'La Roche-Posay Toleriane Double Repair Moisturizer', 'Klairs Rich Moist Soothing Serum', 'First Aid Beauty Ultra Repair Cream (Oat)', 'Avène Cicalfate+ Restorative Protective Cream'], note: 'Common in post-procedure, sensitive skin, and post-exfoliation formulas' },
           fr: { title: 'Actifs calmants', sub: 'réduisent rougeurs et irritations', mechanism: 'Réduisent la réponse inflammatoire, calment les rougeurs et la sensibilisation', ingredients: ['Allantoïne', 'Bisabolol', 'Panthénol', 'Bêta-glucane', 'Extrait d\'avoine'], note: 'Fréquents dans les soins post-gommage, peaux sensibles et post-procédure' }
         }
       },
@@ -379,9 +382,9 @@ const BRANCHES = [
         id: 'sunscreen',
         label: { zh: '防曬', en: 'Sun Protection', fr: 'Solaire' },
         detail: {
-          zh: { title: '防曬 Sun Protection', sub: 'SPF / PA / UVA / UVB', mechanism: '有機濾劑吸收 UV 轉化為熱能；無機（礦物）濾劑反射散射', ingredients: ['Zinc Oxide (氧化鋅)', 'Titanium Dioxide (二氧化鈦)', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl'], note: 'SPF 對應 UVB；PA/UVA 對應 UVA；廣譜（Broad-spectrum）同時涵蓋；歐美濾劑法規不同' },
-          en: { title: 'Sun Protection', sub: 'SPF / PA / broad-spectrum', mechanism: 'Chemical filters absorb UV and convert to heat; mineral filters reflect/scatter UV', ingredients: ['Zinc Oxide', 'Titanium Dioxide', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl SX/XL'], note: 'SPF = UVB; PA/UVA star = UVA; Broad-spectrum = both; EU allows more modern filters than US FDA' },
-          fr: { title: 'Protection solaire', sub: 'FPS / PA / large spectre', mechanism: 'Filtres chimiques absorbent et convertissent les UV ; minéraux réfléchissent', ingredients: ['Oxyde de zinc', 'Dioxyde de titane', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl'], note: 'SPF = UVB ; PA = UVA ; L\'UE autorise plus de filtres modernes que la FDA américaine' }
+          zh: { title: '防曬 Sun Protection', sub: 'SPF / PA / UVA / UVB', mechanism: '有機濾劑吸收 UV 轉化為熱能；無機（礦物）濾劑反射散射', ingredients: ['Zinc Oxide (氧化鋅)', 'Titanium Dioxide (二氧化鈦)', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl'], products: ['Altruist SPF50 (高 CP 值)', 'La Roche-Posay Anthelios UVMune 400', 'Isntree Hyaluronic Acid Watery Sun Gel SPF50+', 'Biore UV Aqua Rich Watery Essence SPF50+', 'EltaMD UV Clear Broad-Spectrum SPF46'], note: 'SPF 對應 UVB；PA/UVA 對應 UVA；廣譜（Broad-spectrum）同時涵蓋；歐美濾劑法規不同' },
+          en: { title: 'Sun Protection', sub: 'SPF / PA / broad-spectrum', mechanism: 'Chemical filters absorb UV and convert to heat; mineral filters reflect/scatter UV', ingredients: ['Zinc Oxide', 'Titanium Dioxide', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl SX/XL'], products: ['La Roche-Posay Anthelios UVMune 400 Invisible Fluid', 'EltaMD UV Clear Broad-Spectrum SPF46', 'Isntree Hyaluronic Acid Watery Sun Gel SPF50+', 'Biore UV Aqua Rich Watery Essence SPF50+', 'Supergoop! Unseen Sunscreen SPF40'], note: 'SPF = UVB; PA/UVA star = UVA; Broad-spectrum = both; EU allows more modern filters than US FDA' },
+          fr: { title: 'Protection solaire', sub: 'FPS / PA / large spectre', mechanism: 'Filtres chimiques absorbent et convertissent les UV ; minéraux réfléchissent', ingredients: ['Oxyde de zinc', 'Dioxyde de titane', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl'], products: ['La Roche-Posay Anthelios UVMune 400 Invisible', 'EltaMD UV Clear Broad-Spectrum SPF46', 'Isntree Hyaluronic Acid Watery Sun Gel SPF50+', 'Biore UV Aqua Rich Watery Essence SPF50+', 'Supergoop! Unseen Sunscreen SPF40'], note: 'SPF = UVB ; PA = UVA ; L\'UE autorise plus de filtres modernes que la FDA américaine' }
         }
       }
     ]
@@ -397,27 +400,27 @@ const BRANCHES = [
         id: 'bha',
         label: { zh: 'BHA 水楊酸', en: 'Salicylic Acid', fr: 'Acide Salicylique' },
         detail: {
-          zh: { title: '水楊酸 BHA', sub: 'Beta Hydroxy Acid', mechanism: '親脂性，能滲透毛孔溶解角栓；溶角質（keratolytic）；抗炎', ingredients: ['Salicylic Acid (水楊酸)'], note: '常見濃度 0.5–2%；歐盟限制 2%；適合痘痘肌、黑頭；酸敏感者慎用' },
-          en: { title: 'Salicylic Acid (BHA)', sub: 'Beta Hydroxy Acid', mechanism: 'Lipophilic — penetrates pores to dissolve plugs; keratolytic; anti-inflammatory', ingredients: ['Salicylic Acid'], note: 'Common range 0.5–2%; EU max 2%; best for acne-prone and congested skin' },
-          fr: { title: 'Acide salicylique (BHA)', sub: 'Bêta-hydroxy acide', mechanism: 'Liposoluble — pénètre les pores, dissout les bouchons ; kératolytique ; anti-inflammatoire', ingredients: ['Acide salicylique'], note: 'Dosage courant 0,5–2 % ; limite UE 2 % ; idéal pour peaux à tendance acnéique' }
+          zh: { title: '水楊酸 BHA', sub: 'Beta Hydroxy Acid', mechanism: '親脂性，能滲透毛孔溶解角栓；溶角質（keratolytic）；抗炎', ingredients: ['Salicylic Acid (水楊酸)'], products: ["Paula's Choice Skin Perfecting 2% BHA Liquid Exfoliant", 'The Ordinary Salicylic Acid 2% Solution', 'Cetaphil DermaControl Oil Absorbing Moisturizer SPF30', 'COSRX BHA Blackhead Power Liquid', 'Stridex Medicated Pads (Maximum Strength)'], note: '常見濃度 0.5–2%；歐盟限制 2%；適合痘痘肌、黑頭；酸敏感者慎用' },
+          en: { title: 'Salicylic Acid (BHA)', sub: 'Beta Hydroxy Acid', mechanism: 'Lipophilic — penetrates pores to dissolve plugs; keratolytic; anti-inflammatory', ingredients: ['Salicylic Acid'], products: ["Paula's Choice Skin Perfecting 2% BHA Liquid Exfoliant", 'The Ordinary Salicylic Acid 2% Solution', 'Cetaphil DermaControl Oil Absorbing Moisturizer SPF30', 'COSRX BHA Blackhead Power Liquid', 'Stridex Medicated Pads (Maximum Strength)'], note: 'Common range 0.5–2%; EU max 2%; best for acne-prone and congested skin' },
+          fr: { title: 'Acide salicylique (BHA)', sub: 'Bêta-hydroxy acide', mechanism: 'Liposoluble — pénètre les pores, dissout les bouchons ; kératolytique ; anti-inflammatoire', ingredients: ['Acide salicylique'], products: ["Paula's Choice Skin Perfecting 2% BHA Liquid Exfoliant", 'The Ordinary Salicylic Acid 2% Solution', 'Cetaphil DermaControl Oil Absorbing Moisturizer SPF30', 'COSRX BHA Blackhead Power Liquid', 'Stridex Medicated Pads (Maximum Strength)'], note: 'Dosage courant 0,5–2 % ; limite UE 2 % ; idéal pour peaux à tendance acnéique' }
         }
       },
       {
         id: 'bpo',
         label: { zh: '過氧化苯', en: 'Benzoyl Peroxide', fr: 'Peroxyde Benzoyle' },
         detail: {
-          zh: { title: '過氧化苯 Benzoyl Peroxide', sub: '殺菌型抗痘成分', mechanism: '釋放活性氧殺滅痤瘡丙酸桿菌（C. acnes）；兼具去角質作用', ingredients: ['Benzoyl Peroxide (BPO)'], note: '常見 2.5–10%；可漂白布料；需搭配保濕；初期可能刺激' },
-          en: { title: 'Benzoyl Peroxide', sub: 'antibacterial acne fighter', mechanism: 'Releases active oxygen to kill C. acnes bacteria; also has keratolytic action', ingredients: ['Benzoyl Peroxide (BPO)'], note: 'Common range 2.5–10%; bleaches fabric; pair with moisturizer; may cause initial dryness' },
-          fr: { title: 'Peroxyde de benzoyle', sub: 'anti-bactérien anti-acné', mechanism: 'Libère de l\'oxygène actif pour éliminer C. acnes ; effet kératolytique', ingredients: ['Peroxyde de benzoyle (BPO)'], note: 'Courant 2,5–10 % ; décolore les tissus ; associer à un hydratant ; irritation initiale possible' }
+          zh: { title: '過氧化苯 Benzoyl Peroxide', sub: '殺菌型抗痘成分', mechanism: '釋放活性氧殺滅痤瘡丙酸桿菌（C. acnes）；兼具去角質作用', ingredients: ['Benzoyl Peroxide (BPO)'], products: ['Proactiv Emergency Blemish Relief (2.5% BPO)', 'PanOxyl Acne Foaming Wash 10% BPO', 'La Roche-Posay Effaclar Duo+ (5.5% BPO)', 'The Inkey List Succinic Acid Acne Treatment', 'Neutrogena On-the-Spot Acne Treatment (2.5% BPO)'], note: '常見 2.5–10%；可漂白布料；需搭配保濕；初期可能刺激' },
+          en: { title: 'Benzoyl Peroxide', sub: 'antibacterial acne fighter', mechanism: 'Releases active oxygen to kill C. acnes bacteria; also has keratolytic action', ingredients: ['Benzoyl Peroxide (BPO)'], products: ['Proactiv Emergency Blemish Relief (2.5% BPO)', 'PanOxyl Acne Foaming Wash 10% BPO', 'La Roche-Posay Effaclar Duo+ (5.5% BPO)', 'The Inkey List Succinic Acid Acne Treatment', 'Neutrogena On-the-Spot Acne Treatment (2.5% BPO)'], note: 'Common range 2.5–10%; bleaches fabric; pair with moisturizer; may cause initial dryness' },
+          fr: { title: 'Peroxyde de benzoyle', sub: 'anti-bactérien anti-acné', mechanism: 'Libère de l\'oxygène actif pour éliminer C. acnes ; effet kératolytique', ingredients: ['Peroxyde de benzoyle (BPO)'], products: ['Proactiv Emergency Blemish Relief (2,5 % BPO)', 'PanOxyl Acne Foaming Wash 10 % BPO', 'La Roche-Posay Effaclar Duo+ (5,5 % BPO)', 'The Inkey List Succinic Acid Acne Treatment', 'Neutrogena On-the-Spot Acne Treatment (2,5 % BPO)'], note: 'Courant 2,5–10 % ; décolore les tissus ; associer à un hydratant ; irritation initiale possible' }
         }
       },
       {
         id: 'ahas',
         label: { zh: 'AHA 果酸', en: 'AHA Exfoliants', fr: 'AHA Exfoliants' },
         detail: {
-          zh: { title: 'AHA 果酸 Alpha Hydroxy Acids', sub: '水溶性去角質酸', mechanism: '弱化角質細胞間連結，促進老廢角質脫落（desquamation）', ingredients: ['Glycolic Acid (乙醇酸)', 'Lactic Acid (乳酸)', 'Mandelic Acid (杏仁酸)', 'Malic Acid'], note: '乙醇酸分子最小效果強；乳酸溫和保濕；杏仁酸最溫和適合敏感肌' },
-          en: { title: 'Alpha Hydroxy Acids (AHA)', sub: 'water-soluble exfoliants', mechanism: 'Weaken bonds between corneocytes to promote exfoliation (desquamation)', ingredients: ['Glycolic Acid', 'Lactic Acid', 'Mandelic Acid', 'Malic Acid'], note: 'Glycolic: smallest molecule, strongest; Lactic: gentle + moisturizing; Mandelic: mildest' },
-          fr: { title: 'Acides alpha-hydroxy (AHA)', sub: 'exfoliants hydrosolubles', mechanism: 'Fragilisent les liens entre cornéocytes pour favoriser la desquamation', ingredients: ['Acide glycolique', 'Acide lactique', 'Acide mandélique', 'Acide malique'], note: 'Glycolique : plus petite molécule, plus fort ; Lactique : doux + hydratant ; Mandélique : le plus doux' }
+          zh: { title: 'AHA 果酸 Alpha Hydroxy Acids', sub: '水溶性去角質酸', mechanism: '弱化角質細胞間連結，促進老廢角質脫落（desquamation）', ingredients: ['Glycolic Acid (乙醇酸)', 'Lactic Acid (乳酸)', 'Mandelic Acid (杏仁酸)', 'Malic Acid'], products: ["Paula's Choice Skin Perfecting 8% AHA Lotion", 'The Ordinary Glycolic Acid 7% Toning Solution', 'Pixi Glow Tonic (Glycolic 5%)', 'Alpha-H Liquid Gold (Glycolic 5%)', 'Sunday Riley Good Genes All-in-One Lactic Acid Treatment'], note: '乙醇酸分子最小效果強；乳酸溫和保濕；杏仁酸最溫和適合敏感肌' },
+          en: { title: 'Alpha Hydroxy Acids (AHA)', sub: 'water-soluble exfoliants', mechanism: 'Weaken bonds between corneocytes to promote exfoliation (desquamation)', ingredients: ['Glycolic Acid', 'Lactic Acid', 'Mandelic Acid', 'Malic Acid'], products: ["Paula's Choice Skin Perfecting 8% AHA Lotion", 'The Ordinary Glycolic Acid 7% Toning Solution', 'Pixi Glow Tonic (Glycolic 5%)', 'Alpha-H Liquid Gold (Glycolic 5%)', 'Sunday Riley Good Genes All-in-One Lactic Acid Treatment'], note: 'Glycolic: smallest molecule, strongest; Lactic: gentle + moisturizing; Mandelic: mildest' },
+          fr: { title: 'Acides alpha-hydroxy (AHA)', sub: 'exfoliants hydrosolubles', mechanism: 'Fragilisent les liens entre cornéocytes pour favoriser la desquamation', ingredients: ['Acide glycolique', 'Acide lactique', 'Acide mandélique', 'Acide malique'], products: ["Paula's Choice Skin Perfecting 8% AHA Lotion", 'The Ordinary Glycolic Acid 7% Toning Solution', 'Pixi Glow Tonic (Glycolique 5%)', 'Alpha-H Liquid Gold (Glycolique 5%)', 'Sunday Riley Good Genes All-in-One Lactic Acid Treatment'], note: 'Glycolique : plus petite molécule, plus fort ; Lactique : doux + hydratant ; Mandélique : le plus doux' }
         }
       }
     ]
@@ -480,6 +483,107 @@ const BRANCHES = [
           fr: {
             title: 'Logique de formulation', sub: 'de la promesse à l\'actif',
             items: ['1️⃣ Définir la promesse (claim) : anti-âge / éclat / réparation / acné / apaisant', '2️⃣ Associer actifs et dosages : connaître les plages réalistes', '3️⃣ Système galénique : phase aqueuse/huileuse, émulsification, encapsulation', '4️⃣ Preuves : in vitro → in vivo → mesures instrumentales → tests consommateurs'],
+          }
+        }
+      }
+    ]
+  }
+,
+
+  {
+    id: 'marketing',
+    color: '#e879f9',
+    icon: 'fa-bullhorn',
+    label: { zh: '行銷策略', en: 'Marketing', fr: 'Marketing' },
+    angle: -210,
+    leaves: [
+      {
+        id: 'consumer_insight',
+        label: { zh: '消費者洞察', en: 'Consumer Insights', fr: 'Insights Consommateurs' },
+        detail: {
+          zh: {
+            title: '消費者洞察 Consumer Insights', sub: '了解你的顧客',
+            items: ['🎯 膚質分型：乾性 / 油性 / 混合 / 敏感 / 痘痘肌，是 SKU 規劃與溝通的基礎', '📊 肌膚煩惱排行：毛孔、暗沉、斑點、細紋是全球 Top 4 關注點', '👩 消費者旅程：認知→興趣→試用→回購→推薦（AISTDA），每階段需不同溝通策略', '🔍 Social Listening：監測 IG/TikTok/PTT 上的成分討論，識別下一個爆款成分', '💬 KOL/KOC 分層：百萬網紅（觸及廣）＋素人（信任度高）雙軌策略'],
+          },
+          en: {
+            title: 'Consumer Insights', sub: 'Know your customer',
+            items: ['🎯 Skin Type Segmentation: Dry / Oily / Combination / Sensitive / Acne-prone — basis for SKU planning', '📊 Top 4 Global Skin Concerns: Pores, Dullness, Spots, Fine Lines', '👩 Consumer Journey: Awareness→Interest→Trial→Repurchase→Advocacy (AISTDA)', '🔍 Social Listening: Monitor IG/TikTok for trending ingredients & brand sentiment', '💬 KOL/KOC Layering: Mega-influencer (reach) + Micro/Nano (trust & authenticity)'],
+          },
+          fr: {
+            title: 'Insights consommateurs', sub: 'Connaître son client',
+            items: ['🎯 Segmentation par type de peau : Sèche / Grasse / Mixte / Sensible / Acnéique', '📊 Top 4 préoccupations mondiales : Pores, Teint terne, Taches, Ridules', '👩 Parcours client : Découverte→Intérêt→Essai→Réachat→Recommandation', '🔍 Social Listening : surveiller IG/TikTok pour les ingrédients tendance', '💬 Stratégie KOL/KOC : mega-influenceurs (portée) + micro/nano (confiance)'],
+          }
+        }
+      },
+      {
+        id: 'claim_strategy',
+        label: { zh: '宣稱策略', en: 'Claim Strategy', fr: 'Stratégie Claims' },
+        detail: {
+          zh: {
+            title: '宣稱策略 Claim Strategy', sub: '說到做到，做到才能說',
+            items: ['📋 宣稱類型：功效宣稱（有效成分）、感官宣稱（膚感）、工藝宣稱（專利技術）', '⚖️ 宣稱合規：須有科學依據（in vitro/in vivo/消費者測試），避免絕對化字眼', '🔬 臨床實證分級：體外測試→動物實驗（限用）→人體試驗→消費者盲測', '🌐 各市場差異：歐盟 ISCC 指引、美國 FTC 廣告規範、台灣衛福部化妝品管理', '⭐ 黃金宣稱公式：「成分名稱 + 濃度/技術 + 可測量改善 + 測試時間」'],
+          },
+          en: {
+            title: 'Claim Strategy', sub: 'Substantiate before you communicate',
+            items: ['📋 Claim Types: Efficacy (active ingredients), Sensory (texture/feel), Technology (patent/method)', '⚖️ Claim Compliance: Must be substantiated — in vitro/in vivo/consumer studies; avoid absolute superlatives', '🔬 Evidence Hierarchy: In vitro → Human instrumental → Consumer blind test → Clinical RCT', '🌐 Market Differences: EU ISCC guidelines, US FTC advertising rules, local health authority standards', '⭐ Gold Formula: "Ingredient + Concentration/Tech + Measurable Improvement + Timeframe"'],
+          },
+          fr: {
+            title: 'Stratégie des allégations', sub: 'Prouver avant de communiquer',
+            items: ['📋 Types d'allégations : Efficacité (actifs), Sensorielle (texture), Technologique (brevet)', '⚖️ Conformité : preuves scientifiques requises — in vitro/in vivo/tests consommateurs', '🔬 Hiérarchie des preuves : In vitro → Instrumental humain → Test en aveugle → ECR clinique', '🌐 Différences marchés : ISCC EU, FTC US, réglementations locales', '⭐ Formule or : "Actif + Concentration/Techno + Amélioration mesurable + Délai"'],
+          }
+        }
+      },
+      {
+        id: 'channel_strategy',
+        label: { zh: '通路與傳播', en: 'Channel & Media', fr: 'Canaux & Média' },
+        detail: {
+          zh: {
+            title: '通路與傳播策略', sub: 'Where & How to Reach',
+            items: ['📱 社群媒體：TikTok（抖音）主打成分教育 + 開箱；IG 視覺美學 + KOL 合作', '🏪 零售通路：藥妝店（Drug Store）vs 百貨專櫃 vs DTC（品牌官網） vs 電商（蝦皮/Shopee/Tmall）', '👩‍⚕️ 皮膚科 / 醫美通路：背書可信度高，適合訴求修護型、醫美級產品', '🎥 成分行銷：「成分派」消費者興起，透明原料表 + 濃度標示 = 高轉換', '📦 訂閱 & 美妝盒：Birchbox / Ipsy / 台灣 Pinkoi 訂閱盒，適合新品試用導流'],
+          },
+          en: {
+            title: 'Channel & Media Strategy', sub: 'Where & How to Reach',
+            items: ['📱 Social Media: TikTok — ingredient education + unboxing; IG — aesthetic content + KOL collabs', '🏪 Retail: Drug Store vs Department Store vs DTC (brand.com) vs E-commerce (Amazon/Shopee/Tmall)', '👩‍⚕️ Derm/Medi-Spa Channel: High credibility, best for clinical/repair positioning', '🎥 Ingredient Marketing: "Skintellectuals" demand formula transparency — INCI + %-disclosure drives conversion', '📦 Subscription Boxes: Birchbox/Ipsy/Sephora Play — ideal trial & awareness driver for new launches'],
+          },
+          fr: {
+            title: 'Stratégie canaux et médias', sub: 'Où et comment toucher sa cible',
+            items: ['📱 Réseaux sociaux : TikTok — éducation ingrédients + unboxing ; IG — esthétique + KOL', '🏪 Distribution : Pharmacie vs Grand magasin vs DTC vs E-commerce (Amazon/Tmall)', '👩‍⚕️ Canal dermo/médical : crédibilité maximale, idéal pour positionnement clinique', '🎥 Marketing ingrédients : les « skintellectuals » exigent transparence INCI + dosage', '📦 Boxes beauté : Birchbox/Ipsy — excellents pour l'essai et la notoriété au lancement'],
+          }
+        }
+      },
+      {
+        id: 'brand_storytelling',
+        label: { zh: '品牌敘事', en: 'Brand Storytelling', fr: 'Storytelling Marque' },
+        detail: {
+          zh: {
+            title: '品牌敘事 Brand Storytelling', sub: '科學 × 情感 × 身份認同',
+            items: ['🧬 成分故事：每個明星成分都需要一個「起源故事」（實驗室研發 / 天然萃取 / 配方師靈感）', '❤️ 情感共鳴：皮膚與自信的連結（護膚 = 自我照護），超越產品功效的敘事層次', '🌱 品牌價值：潔淨（Clean）、永續（Sustainable）、包容（Inclusive）成為新護城河', '🏷️ 定位框架：奢華（La Mer）→ 大眾（CeraVe）→ 平替策略（The Ordinary 顛覆高端）', '📖 產品命名學：能傳達功效的名字（Retinol Storm / Hyaluronic Acid 2%）vs 詩意品牌名（Laneige）'],
+          },
+          en: {
+            title: 'Brand Storytelling', sub: 'Science × Emotion × Identity',
+            items: ['🧬 Ingredient Story: Every star ingredient needs an origin story (lab discovery / natural extract / formulator insight)', '❤️ Emotional Resonance: Skin-confidence connection — skincare as self-care transcends efficacy claims', '🌱 Brand Values: Clean, Sustainable, Inclusive are the new moats', '🏷️ Positioning: Luxury (La Mer) → Mass (CeraVe) → Disruption (The Ordinary democratizes premium)', '📖 Naming Science: Functional names (Retinol Storm / HA 2%) vs Poetic brand names (Laneige / Tatcha)'],
+          },
+          fr: {
+            title: 'Storytelling de marque', sub: 'Science × Émotion × Identité',
+            items: ['🧬 Histoire de l'ingrédient : chaque actif star a besoin d'une origin story (labo / nature / formulateur)', '❤️ Résonance émotionnelle : la peau comme vecteur de confiance — le soin comme rituel de soi', '🌱 Valeurs de marque : Clean, Durable, Inclusif — les nouveaux avantages concurrentiels', '🏷️ Positionnement : Luxe (La Mer) → Grand public (CeraVe) → Disruption (The Ordinary)', '📖 Naming : noms fonctionnels (Retinol Storm / HA 2%) vs noms poétiques (Laneige / Tatcha)'],
+          }
+        }
+      },
+      {
+        id: 'launch_planning',
+        label: { zh: '新品上市規劃', en: 'Launch Planning', fr: 'Plan de Lancement' },
+        detail: {
+          zh: {
+            title: '新品上市規劃', sub: 'GTM Strategy for Beauty',
+            items: ['📅 上市時程：T-6月（策略/成分鎖定）→ T-3月（內容製作/KOL簽約）→ T-1月（預熱/試用活動）→ T 日（上線/媒體報導）→ T+3月（數據優化/二波推廣）', '🎁 Trial Strategy：樣品贈送、訂閱盒合作、皮膚科診所試用包，降低嘗試門檻', '📊 KPI 設定：觸及率（Reach）/ 互動率（ER）/ 試用轉換率 / 回購率 / NPS 分數', '🌏 市場優先序：通常以台港澳 → 東南亞 → 日韓 → 歐美市場順序擴張（或反向進行 reverse premium）', '⚡ 成分熱度監測：Google Trends + TikTok 話題量 + 電商搜尋詞判斷成分時機'],
+          },
+          en: {
+            title: 'Launch Planning', sub: 'GTM Strategy for Beauty',
+            items: ['📅 Timeline: T-6mo (strategy/actives lock) → T-3mo (content/KOL sign) → T-1mo (teaser/sampling) → Launch Day (media/PR) → T+3mo (data optimization & wave 2)', '🎁 Trial Strategy: Sampling, subscription box partnerships, derm office trial kits — lower barrier to first use', '📊 KPIs: Reach / Engagement Rate / Trial-to-Purchase CVR / Repurchase Rate / NPS', '🌏 Market Sequencing: TW/HK → SEA → JP/KR → Western markets (or reverse-premium entry)', '⚡ Ingredient Trend Signals: Google Trends + TikTok hashtag volume + e-commerce search data'],
+          },
+          fr: {
+            title: 'Plan de lancement', sub: 'Stratégie GTM beauté',
+            items: ['📅 Calendrier : T-6m (stratégie/actifs) → T-3m (contenus/KOL) → T-1m (teaser/échantillons) → Jour J (médias/RP) → T+3m (optimisation/vague 2)', '🎁 Stratégie d'essai : échantillons, partenariats boxes, kits dermatologues', '📊 KPIs : Portée / Taux d'engagement / Taux de conversion essai→achat / Réachat / NPS', '🌏 Séquence marché : TW/HK → Asie du Sud-Est → JP/KR → Occident', '⚡ Signaux tendance : Google Trends + volume hashtag TikTok + données recherche e-commerce'],
           }
         }
       }
@@ -627,6 +731,11 @@ function showDetail(leaf, color) {
   if (d.items) {
     html += `<div class="detail-section">`;
     d.items.forEach(item => { html += `<div class="detail-item">${item}</div>`; });
+    html += '</div>';
+  }
+  if (d.products) {
+    html += `<div class="detail-section"><h4>${L[lang].products}</h4>`;
+    d.products.forEach(p => { html += `<span class="detail-chip" style="border-color:${color}44;color:#f1f5f9;">${p}</span>`; });
     html += '</div>';
   }
   if (d.note) {
