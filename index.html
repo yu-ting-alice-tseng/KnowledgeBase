@@ -223,6 +223,20 @@
 
         .serif-title { font-family: 'Fredoka', sans-serif; letter-spacing: -0.5px; }
 
+        /* ── Focus-visible: global ── */
+        :focus-visible { outline: 2px solid rgba(167,139,250,0.7); outline-offset: 2px; border-radius: 6px; }
+        button:focus-visible { outline: 2px solid rgba(167,139,250,0.7); outline-offset: 3px; border-radius: 10px; }
+
+        /* ── Toolbar button focus ── */
+        .tool-btn:focus-visible { outline: 2px solid rgba(167,139,250,0.65); outline-offset: 2px; }
+
+        /* ── Reduced motion ── */
+        @media (prefers-reduced-motion: reduce) {
+            .glass-card, .tool-btn, .delete-btn { transition: none !important; }
+            .glass-card:hover { transform: none; }
+            @keyframes pulse { 0%,100% { opacity: 1; } }
+        }
+
         /* ── Gradient text helper ── */
         .grad-text {
             background: linear-gradient(135deg, #a78bfa, #ec4899, #38bdf8);
