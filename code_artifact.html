@@ -1784,8 +1784,9 @@
       // 監聽視窗尺寸改變，即時重繪連接線
       window.addEventListener('resize', drawConnections);
       
-      // 點擊外部自動關閉搜尋下拉框
+      // 點擊外部自動關閉下拉框
       document.addEventListener('click', (e) => {
+        if (!e.target.closest('#domain-dropdown-wrap')) closeDomainDropdown();
         if (!e.target.closest('#global-search-input') && !e.target.closest('#search-results-dropdown')) {
           document.getElementById('search-results-dropdown').classList.add('hidden');
         }
@@ -1797,17 +1798,8 @@
       if (!domainDatabase[domainKey]) return;
       currentDomainKey = domainKey;
 
-      // 更新 Tab 啟動外觀
-      const domains = ['finance', 'accounting', 'marketing'];
-      domains.forEach(key => {
-        const btn = document.getElementById(`tab-btn-${key}`);
-        if (key === domainKey) {
-          const themeColor = domainDatabase[key].themeColor;
-          btn.className = `flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 bg-${themeColor}-500/10 text-${themeColor}-400 border border-${themeColor}-500/20 shadow-[0_0_12px_rgba(${domainDatabase[key].rgbColor},0.15)] w-full lg:w-auto whitespace-nowrap`;
-        } else {
-          btn.className = "flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-300 text-slate-400 hover:text-slate-200 w-full lg:w-auto whitespace-nowrap";
-        }
-      });
+      // 更新下拉選單按鈕外觀
+      updateDropdownButton();
 
       // 重繪選取領域的心智圖
       renderDomainMindmap(domainKey);
