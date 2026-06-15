@@ -3,375 +3,611 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bonita's Knowledge Library</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Bibliotheca · Knowledge Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant+SC:wght@300;400;500;600&family=Nunito:wght@300;400;500;600;700;800&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root{
-  --bg:#0c0906;
-  --gold:#c8a55a;
-  --gold-bright:#e6c87a;
-  --gold-dim:rgba(200,165,90,0.5);
-  --cream:#ede3d0;
-  --cream-dim:#9a8878;
-  --muted:#5c4e3e;
-  --glass-bg:rgba(255,242,208,0.052);
-  --glass-bg-hover:rgba(255,242,208,0.088);
-  --glass-border:rgba(200,165,90,0.17);
-  --glass-border-hover:rgba(200,165,90,0.38);
+/* ── Tokens ── */
+:root {
+  --bg:         #0b0806;
+  --bg2:        #100d09;
+  --gold:       #c9a85c;
+  --gold-hi:    #e8cc84;
+  --gold-lo:    rgba(201,168,92,0.40);
+  --gold-faint: rgba(201,168,92,0.12);
+  --cream:      #ede2cc;
+  --cream2:     #b8a48a;
+  --muted:      #5e4e38;
+  --muted2:     #3a2e20;
+
+  /* glass layers */
+  --gl-base:    rgba(255,243,210,0.055);
+  --gl-hover:   rgba(255,243,210,0.095);
+  --gl-border:  rgba(201,168,92,0.18);
+  --gl-border-h:rgba(201,168,92,0.42);
+  --gl-shine:   rgba(255,248,220,0.90);
+  --gl-fresnel: rgba(255,246,215,0.08);
 }
 
-html,body{height:100%;}
+html, body { height: 100%; }
 
-body{
-  background-color:var(--bg);
-  font-family:'Nunito','Noto Serif TC',sans-serif;
-  color:var(--cream);
-  min-height:100vh;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+body {
+  background: var(--bg);
+  font-family: 'Nunito', 'Noto Serif TC', sans-serif;
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Ambient vignette */
-body::after{
-  content:'';
-  position:fixed;inset:0;
-  background:radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%);
-  pointer-events:none;z-index:0;
+/* ─── Fixed layer stack (z 0-9) ─── */
+
+/* Vignette */
+#vignette {
+  position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 80% at 50% 40%, transparent 35%, rgba(0,0,0,0.62) 100%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0,0,0,0.5) 0%, transparent 100%);
 }
 
-/* ── Warm reading-lamp orbs ── */
-.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
-.orb-1{width:800px;height:800px;top:-300px;left:-200px;background:radial-gradient(circle,rgba(210,148,40,0.20) 0%,transparent 65%);filter:blur(110px);}
-.orb-2{width:500px;height:500px;top:-80px;right:-120px;background:radial-gradient(circle,rgba(180,110,30,0.13) 0%,transparent 65%);filter:blur(90px);}
-.orb-3{width:650px;height:650px;bottom:-200px;left:15%;background:radial-gradient(circle,rgba(30,75,100,0.15) 0%,transparent 65%);filter:blur(100px);}
-.orb-4{width:400px;height:400px;bottom:80px;right:-80px;background:radial-gradient(circle,rgba(110,55,130,0.09) 0%,transparent 65%);filter:blur(80px);}
-.orb-5{width:900px;height:900px;top:35%;left:45%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(170,110,25,0.055) 0%,transparent 65%);filter:blur(130px);}
+/* Shelf lines */
+#shelves {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image:
+    linear-gradient(0deg,
+      transparent 0%,
+      transparent calc(32vh - 1px),
+      rgba(90,62,28,0.13) calc(32vh - 1px),
+      rgba(90,62,28,0.13) calc(32vh),
+      rgba(50,35,15,0.07) calc(32vh),
+      rgba(50,35,15,0.07) calc(32vh + 2px),
+      transparent calc(32vh + 2px),
+      transparent calc(65vh - 1px),
+      rgba(90,62,28,0.10) calc(65vh - 1px),
+      rgba(90,62,28,0.10) calc(65vh),
+      rgba(50,35,15,0.05) calc(65vh),
+      rgba(50,35,15,0.05) calc(65vh + 2px),
+      transparent calc(65vh + 2px),
+      transparent 100%
+    );
+}
 
-/* ── Liquid Glass Card ── */
-.glass-card{
-  position:relative;
-  background:var(--glass-bg);
-  backdrop-filter:blur(44px) saturate(190%) brightness(1.06);
-  -webkit-backdrop-filter:blur(44px) saturate(190%) brightness(1.06);
-  border-radius:20px;
-  border:1px solid var(--glass-border);
+/* Ambient reading-lamp orbs */
+.orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
+.o1 { width:900px;height:900px;top:-320px;left:-250px;
+      background:radial-gradient(circle,rgba(215,148,35,0.22) 0%,transparent 62%);filter:blur(115px); }
+.o2 { width:600px;height:600px;top:-120px;right:-180px;
+      background:radial-gradient(circle,rgba(185,112,28,0.14) 0%,transparent 62%);filter:blur(95px); }
+.o3 { width:700px;height:700px;bottom:-220px;left:18%;
+      background:radial-gradient(circle,rgba(28,72,95,0.16) 0%,transparent 62%);filter:blur(105px); }
+.o4 { width:450px;height:450px;bottom:60px;right:-100px;
+      background:radial-gradient(circle,rgba(100,50,120,0.09) 0%,transparent 62%);filter:blur(85px); }
+.o5 { width:1000px;height:1000px;top:30%;left:42%;transform:translate(-50%,-50%);
+      background:radial-gradient(circle,rgba(168,108,22,0.052) 0%,transparent 65%);filter:blur(140px); }
+
+/* Dust motes */
+#dust { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.mote {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: rgba(255,235,165,0.55);
+  animation: float-up linear infinite;
+  will-change: transform, opacity;
+}
+@keyframes float-up {
+  0%   { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+  8%   { opacity: 1; }
+  88%  { opacity: 0.6; }
+  100% { transform: translateY(-105vh) translateX(var(--dx,20px)) scale(1.2); opacity: 0; }
+}
+
+/* ─── Layout ─── */
+#wrap { position: relative; z-index: 10; max-width: 1280px; margin: 0 auto; padding: 52px 48px 80px; }
+@media(max-width:680px){ #wrap { padding: 36px 20px 60px; } }
+
+/* ─── Header ─── */
+#header { text-align: center; margin-bottom: 80px; position: relative; }
+
+/* Monogram seal */
+#seal {
+  width: 58px; height: 58px; border-radius: 50%;
+  background: linear-gradient(145deg, rgba(201,168,92,0.22), rgba(140,100,40,0.12));
+  border: 1px solid rgba(201,168,92,0.30);
   box-shadow:
-    0 28px 70px rgba(0,0,0,0.60),
-    0 8px 24px rgba(0,0,0,0.38),
-    inset 0 1.5px 0 rgba(255,238,170,0.32),
-    inset 0 -1px 0 rgba(0,0,0,0.28),
-    inset 2px 0 8px rgba(255,225,130,0.03),
-    inset -2px 0 8px rgba(0,0,0,0.08);
-  transition:transform 0.38s cubic-bezier(0.34,1.38,0.64,1),box-shadow 0.38s ease,border-color 0.25s ease,background 0.25s ease;
-  overflow:hidden;
-  cursor:pointer;
+    0 0 0 4px rgba(201,168,92,0.07),
+    0 0 0 8px rgba(201,168,92,0.03),
+    inset 0 1px 0 rgba(255,238,165,0.28),
+    inset 0 -1px 0 rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 26px;
+  font-family: 'Cormorant SC', serif;
+  font-size: 20px; font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(12px);
 }
 
-/* Specular top highlight */
-.glass-card::before{
-  content:'';
-  position:absolute;top:0;left:8%;right:8%;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,238,160,0.65) 25%,rgba(255,250,215,0.90) 50%,rgba(255,238,160,0.65) 75%,transparent);
-  pointer-events:none;z-index:2;
+/* Eyebrow */
+#eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 22px;
+}
+#eyebrow span.rule { display: block; width: 32px; height: 1px; background: var(--gold-lo); }
+#badge-text {
+  font-family: 'Cormorant SC', serif;
+  font-size: 11px; font-weight: 400; letter-spacing: 0.25em;
+  color: var(--gold-lo);
+}
+
+/* Main title */
+#main-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-style: italic;
+  font-size: clamp(62px, 9vw, 108px);
+  font-weight: 400;
+  line-height: 0.95;
+  color: #f2e6ce;
+  letter-spacing: -2px;
+  margin-bottom: 8px;
+}
+#main-title .gold-word {
+  color: var(--gold);
+  font-weight: 300;
+  display: block;
+  padding-left: 0.12em; /* slight indent for second word */
+}
+
+/* Ornamental divider */
+.orn-div {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin: 24px auto 20px; max-width: 280px;
+}
+.orn-div .lr { flex: 1; height: 1px; }
+.orn-div .lr-l { background: linear-gradient(to right, transparent, rgba(201,168,92,0.45)); }
+.orn-div .lr-r { background: linear-gradient(to left,  transparent, rgba(201,168,92,0.45)); }
+.orn-div .gem { color: var(--gold); font-size: 9px; opacity: 0.6; letter-spacing: 0.4em; }
+
+/* Subtitle */
+#page-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-style: italic; font-weight: 300;
+  color: var(--cream2); line-height: 1.75; letter-spacing: 0.02em;
+  max-width: 420px; margin: 0 auto;
+}
+
+/* Lang switcher */
+#lang-switch {
+  position: absolute; top: 0; right: 0;
+  display: flex; gap: 3px; padding: 4px;
+  background: rgba(255,242,200,0.038);
+  border: 1px solid rgba(201,168,92,0.12);
+  border-radius: 11px;
+  backdrop-filter: blur(16px);
+}
+#lang-switch button {
+  padding: 5px 13px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+  border-radius: 7px; border: none; cursor: pointer;
+  font-family: 'Nunito', sans-serif; transition: all .22s;
+  background: transparent; color: var(--muted);
+}
+#lang-switch button.active { background: rgba(201,168,92,0.18); color: var(--gold); }
+
+/* ─── Collection heading ─── */
+#collection-header {
+  display: flex; align-items: center; gap: 18px;
+  margin-bottom: 32px;
+}
+#collection-header .col-label {
+  font-family: 'Cormorant SC', serif;
+  font-size: 11px; font-weight: 400; letter-spacing: 0.30em;
+  color: var(--muted); white-space: nowrap;
+}
+#collection-header .col-rule {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(201,168,92,0.20), transparent);
+}
+#collection-header .col-count {
+  font-size: 10px; font-weight: 700; color: var(--muted2);
+  font-family: 'Nunito', sans-serif; letter-spacing: 0.08em;
+}
+
+/* ─── Search ─── */
+#search-wrap { position: relative; max-width: 520px; margin: 0 auto 28px; }
+#search-input {
+  width: 100%;
+  background: rgba(255,242,200,0.042);
+  backdrop-filter: blur(32px) saturate(160%);
+  border: 1px solid rgba(201,168,92,0.17);
+  border-radius: 14px;
+  padding: 13px 48px 13px 46px;
+  color: var(--cream);
+  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 500;
+  outline: none; transition: all 0.25s;
+  box-shadow: inset 0 1px 0 rgba(255,235,160,0.10), 0 6px 22px rgba(0,0,0,0.25);
+}
+#search-input::placeholder { color: var(--muted); font-style: italic; }
+#search-input:focus {
+  border-color: rgba(201,168,92,0.40);
+  background: rgba(255,242,200,0.072);
+  box-shadow: 0 0 0 3px rgba(201,168,92,0.09),
+              inset 0 1px 0 rgba(255,235,160,0.15),
+              0 6px 22px rgba(0,0,0,0.25);
+}
+#search-icon { position: absolute; left: 17px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 11px; pointer-events: none; }
+#search-clear { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 11px; cursor: pointer; display: none; transition: color .2s; }
+#search-clear:hover { color: var(--cream); }
+
+/* ─── Toolbar ─── */
+#toolbar { display: flex; justify-content: center; gap: 8px; margin-bottom: 52px; }
+.tool-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 8px 18px; border-radius: 11px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.10em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.22s;
+  font-family: 'Nunito', sans-serif;
+  background: rgba(255,242,200,0.036);
+  border: 1px solid rgba(201,168,92,0.12);
+  color: var(--muted);
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 rgba(255,235,160,0.06);
+}
+.tool-btn:hover { color: var(--cream); border-color: rgba(201,168,92,0.28); background: rgba(255,242,200,0.08); }
+.tool-btn.active { background: rgba(239,68,68,0.09); border-color: rgba(239,68,68,0.26); color: #f87171; }
+#upload-btn { color: var(--gold-lo); border-color: rgba(201,168,92,0.16); }
+#upload-btn:hover { color: var(--gold); border-color: rgba(201,168,92,0.38); background: rgba(201,168,92,0.07); }
+
+/* ─── Grid ─── */
+#knowledge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 24px; }
+
+/* ─── Liquid Glass Card ─── */
+.glass-card {
+  position: relative;
+  background: var(--gl-base);
+  backdrop-filter: blur(48px) saturate(200%) brightness(1.07);
+  -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.07);
+  border-radius: 18px;
+  border: 1px solid var(--gl-border);
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.62),
+    0 10px 28px rgba(0,0,0,0.40),
+    /* page-stack right edge */
+    3px 3px 0 -1px rgba(20,14,6,0.55),
+    5px 6px 0 -2px rgba(20,14,6,0.40),
+    7px 9px 0 -3px rgba(20,14,6,0.28),
+    /* inner top highlight */
+    inset 0 1.5px 0 rgba(255,242,170,0.34),
+    /* inner bottom shadow */
+    inset 0 -1px 0 rgba(0,0,0,0.30),
+    /* inner side warm tint */
+    inset 2px 0 10px rgba(255,225,130,0.03),
+    inset -2px 0 10px rgba(0,0,0,0.08);
+  transition:
+    transform 0.10s ease,   /* fast during mouse move */
+    box-shadow 0.35s ease,
+    border-color 0.28s ease,
+    background 0.28s ease;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Top specular line */
+.glass-card::before {
+  content: '';
+  position: absolute; top: 0; left: 6%; right: 6%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,242,165,0.55) 20%,
+    var(--gl-shine) 50%,
+    rgba(255,242,165,0.55) 80%,
+    transparent);
+  pointer-events: none; z-index: 5;
 }
 
 /* Fresnel upper glow */
-.glass-card::after{
-  content:'';
-  position:absolute;top:1px;left:1px;right:1px;
-  height:44%;
-  background:linear-gradient(180deg,rgba(255,248,215,0.075) 0%,transparent 100%);
-  border-radius:19px 19px 60% 60% / 19px 19px 28% 28%;
-  pointer-events:none;z-index:1;
+.glass-card::after {
+  content: '';
+  position: absolute; top: 1px; left: 1px; right: 1px;
+  height: 42%;
+  background: linear-gradient(180deg, var(--gl-fresnel) 0%, transparent 100%);
+  border-radius: 17px 17px 55% 55% / 17px 17px 26% 26%;
+  pointer-events: none; z-index: 4;
 }
 
-.glass-card:hover{
-  transform:translateY(-11px) scale(1.014);
-  background:var(--glass-bg-hover);
-  border-color:var(--glass-border-hover);
-  box-shadow:
-    0 44px 100px rgba(0,0,0,0.68),
-    0 16px 40px rgba(0,0,0,0.42),
-    0 0 55px rgba(200,148,40,0.11),
-    inset 0 1.5px 0 rgba(255,240,180,0.46),
-    inset 0 -1px 0 rgba(0,0,0,0.22);
+/* Diagonal refraction band — the key "liquid" feel */
+.card-glare {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    112deg,
+    transparent 0%,
+    transparent 33%,
+    rgba(255,248,215,0.038) 41%,
+    rgba(255,252,228,0.060) 49%,
+    rgba(255,248,215,0.038) 57%,
+    transparent 65%,
+    transparent 100%
+  );
+  border-radius: inherit;
+  pointer-events: none; z-index: 3;
+  transition: opacity 0.4s;
+}
+.glass-card:hover .card-glare { opacity: 1.4; }
+
+/* Book spine */
+.book-spine {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 5px; border-radius: 18px 0 0 18px;
+  z-index: 6;
+  box-shadow: inset -1px 0 3px rgba(0,0,0,0.25);
 }
 
-.glass-card:focus-visible{outline:2px solid rgba(200,165,90,0.6);outline-offset:3px;}
-
-/* Book spine accent */
-.book-spine{
-  position:absolute;left:0;top:0;bottom:0;
-  width:4px;border-radius:20px 0 0 20px;
-  z-index:4;
+/* Page-edge texture on right */
+.page-edge {
+  position: absolute; right: 0; top: 10px; bottom: 10px;
+  width: 4px; border-radius: 0 3px 3px 0;
+  z-index: 6;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,248,220,0.20) 0px,
+    rgba(255,248,220,0.20) 1px,
+    rgba(180,155,110,0.08) 1px,
+    rgba(180,155,110,0.08) 2px
+  );
 }
+
+/* Card content */
+.card-body { padding: 28px 30px 28px 38px; position: relative; z-index: 7; }
+
+/* Card entry animation */
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(22px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+.glass-card { animation: card-in 0.5s cubic-bezier(0.22,1,0.36,1) both; }
 
 /* Icon box */
-.icon-box{
-  position:relative;
-  width:52px;height:52px;border-radius:15px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;color:#fff;
-  box-shadow:0 8px 26px rgba(0,0,0,0.42),inset 0 1px 0 rgba(255,255,255,0.24);
+.icon-box {
+  position: relative;
+  width: 50px; height: 50px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; color: #fff;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.24);
+  flex-shrink: 0;
 }
-.icon-box::after{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  background:linear-gradient(145deg,rgba(255,255,255,0.28) 0%,transparent 55%);
-  pointer-events:none;
-}
-
-/* Card title — serif */
-.card-title{
-  font-family:'Cormorant Garamond','Noto Serif TC',serif;
-  font-size:21px;font-weight:600;
-  color:#f2e8d4;letter-spacing:-0.2px;line-height:1.22;
+.icon-box::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(145deg, rgba(255,255,255,0.28) 0%, transparent 55%);
+  pointer-events: none;
 }
 
-/* Vol number */
-.vol-tag{
-  font-size:9px;font-weight:800;letter-spacing:0.18em;
-  text-transform:uppercase;color:var(--gold-dim);
-  font-family:'Nunito',sans-serif;
+/* Roman numeral chapter marker */
+.chapter-num {
+  font-family: 'Cormorant SC', serif;
+  font-size: 11px; font-weight: 400; letter-spacing: 0.15em;
+  color: var(--gold-lo);
+}
+
+/* Card title */
+.card-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 22px; font-weight: 600;
+  color: #f3e9d6; letter-spacing: -0.3px; line-height: 1.18;
+  margin-bottom: 5px;
+}
+
+/* Card subtitle tag */
+.card-tag {
+  font-size: 9px; font-weight: 800; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(201,168,92,0.52);
+  font-family: 'Nunito', sans-serif;
 }
 
 /* Ruled separator */
-.ruled-sep{
-  height:1px;
-  background:linear-gradient(90deg,rgba(200,165,90,0.28),rgba(200,165,90,0.10),transparent);
-  margin:15px 0;
+.ruled-sep {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201,168,92,0.30), rgba(201,168,92,0.10), transparent);
+  margin: 14px 0;
 }
 
-/* Delete btn */
-.delete-btn{
-  display:none;position:absolute;top:12px;right:12px;
-  width:34px;height:34px;border-radius:50%;
-  background:rgba(239,68,68,0.12);
-  border:1px solid rgba(239,68,68,0.30);
-  color:#f87171;font-size:11px;
-  align-items:center;justify-content:center;
-  cursor:pointer;transition:all 0.18s;z-index:10;
+/* Description */
+.card-desc {
+  color: var(--muted); font-size: 13px; line-height: 1.70; font-weight: 500;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-.delete-btn:hover{background:rgba(239,68,68,0.36);color:#fff;transform:scale(1.1);}
-body.edit-mode .delete-btn{display:flex;}
-body.edit-mode .glass-card{cursor:default;}
-body.edit-mode .glass-card:hover{transform:none;box-shadow:0 28px 70px rgba(0,0,0,0.60),0 8px 24px rgba(0,0,0,0.38),inset 0 1.5px 0 rgba(255,238,170,0.32),inset 0 -1px 0 rgba(0,0,0,0.28);}
 
 /* Status pill */
-.status-pill{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.09em;color:var(--muted);text-transform:uppercase;}
-.pulse-dot{width:6px;height:6px;border-radius:50%;animation:pulse 2.5s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.45;transform:scale(0.80);}}
+.status-pill { display: flex; align-items: center; gap: 6px; margin-top: 20px;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--muted2); }
+.pulse-dot { width: 5px; height: 5px; border-radius: 50%; animation: pulse 2.6s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.42;transform:scale(0.78);} }
 
-/* ── Search ── */
-#search-wrap{position:relative;max-width:500px;margin:0 auto 32px;}
-#search-input{
-  width:100%;
-  background:rgba(255,242,208,0.042);
-  backdrop-filter:blur(28px);
-  border:1px solid rgba(200,165,90,0.18);
-  border-radius:14px;
-  padding:13px 48px 13px 46px;
-  color:var(--cream);
-  font-family:'Nunito',sans-serif;
-  font-size:15px;font-weight:500;
-  outline:none;
-  transition:all 0.25s;
-  box-shadow:inset 0 1px 0 rgba(255,235,165,0.10),0 4px 18px rgba(0,0,0,0.22);
-}
-#search-input::placeholder{color:var(--muted);font-style:italic;}
-#search-input:focus{
-  border-color:rgba(200,165,90,0.42);
-  background:rgba(255,242,208,0.072);
-  box-shadow:0 0 0 3px rgba(200,165,90,0.09),inset 0 1px 0 rgba(255,235,165,0.14),0 4px 18px rgba(0,0,0,0.22);
-}
-#search-icon{position:absolute;left:17px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
-#search-clear{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;cursor:pointer;display:none;transition:color .2s;}
-#search-clear:hover{color:var(--cream);}
+/* Open arrow */
+.open-arr { opacity: 0; transition: opacity 0.28s; color: rgba(201,168,92,0.45); font-size: 11px; margin-top: 5px; }
+.glass-card:hover .open-arr { opacity: 1; }
 
-/* ── Toolbar ── */
-#toolbar{display:flex;justify-content:center;gap:8px;margin-bottom:48px;}
-.tool-btn{
-  display:flex;align-items:center;gap:7px;
-  padding:9px 20px;border-radius:12px;
-  font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
-  cursor:pointer;transition:all 0.22s;
-  font-family:'Nunito',sans-serif;
-  background:rgba(255,242,208,0.038);
-  border:1px solid rgba(200,165,90,0.13);
-  color:var(--muted);
-  backdrop-filter:blur(14px);
-  box-shadow:inset 0 1px 0 rgba(255,235,165,0.06);
+/* Delete btn */
+.delete-btn {
+  display: none; position: absolute; top: 12px; right: 14px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(239,68,68,0.11); border: 1px solid rgba(239,68,68,0.28);
+  color: #f87171; font-size: 10px;
+  align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.18s; z-index: 20;
 }
-.tool-btn:hover{color:var(--cream);border-color:rgba(200,165,90,0.30);background:rgba(255,242,208,0.08);}
-.tool-btn.active{background:rgba(239,68,68,0.09);border-color:rgba(239,68,68,0.28);color:#f87171;}
-#upload-btn{color:rgba(200,165,90,0.68);border-color:rgba(200,165,90,0.18);}
-#upload-btn:hover{color:var(--gold);border-color:rgba(200,165,90,0.40);background:rgba(200,165,90,0.07);}
+.delete-btn:hover { background: rgba(239,68,68,0.35); color: #fff; transform: scale(1.1); }
+body.edit-mode .delete-btn { display: flex; }
+body.edit-mode .glass-card { cursor: default; }
+body.edit-mode .glass-card:hover { transform: none !important; }
 
-/* ── Add modal ── */
-#add-modal{
-  display:none;position:fixed;inset:0;z-index:300;
-  background:rgba(0,0,0,0.72);
-  backdrop-filter:blur(14px);
-  align-items:center;justify-content:center;
+/* ─── No results ─── */
+#no-results {
+  display: none; grid-column: 1/-1; text-align: center;
+  color: var(--muted); padding: 72px 0;
 }
-#add-modal.open{display:flex;}
-#modal-box{
-  background:rgba(14,11,8,0.92);
-  backdrop-filter:blur(48px) saturate(180%);
-  border:1px solid rgba(200,165,90,0.18);
-  border-radius:24px;
-  padding:40px;
-  width:100%;max-width:460px;
-  position:relative;
-  box-shadow:0 60px 140px rgba(0,0,0,0.75),inset 0 1.5px 0 rgba(255,235,165,0.18);
-}
-#modal-box::before{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  background:linear-gradient(135deg,rgba(255,242,190,0.042) 0%,transparent 50%);
-  pointer-events:none;
-}
-#modal-box::after{
-  content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,235,160,0.55) 50%,transparent);
-}
-.modal-label{display:block;font-size:9px;font-weight:800;letter-spacing:0.13em;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
-.modal-input{
-  width:100%;
-  background:rgba(255,242,208,0.038);
-  border:1px solid rgba(200,165,90,0.13);
-  border-radius:10px;padding:10px 14px;
-  color:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;font-weight:500;
-  outline:none;transition:all .2s;margin-bottom:16px;
-  box-shadow:inset 0 1px 0 rgba(255,235,165,0.06);
-}
-.modal-input:focus{border-color:rgba(200,165,90,0.38);background:rgba(255,242,208,0.07);}
-#drop-zone{
-  border:1.5px dashed rgba(200,165,90,0.25);border-radius:16px;
-  padding:28px;text-align:center;color:var(--muted);
-  cursor:pointer;transition:all 0.22s;margin-bottom:20px;font-size:13px;font-weight:500;
-  background:rgba(200,165,90,0.022);
-}
-#drop-zone:hover,#drop-zone.dragging{border-color:rgba(200,165,90,0.48);color:var(--cream);background:rgba(200,165,90,0.058);}
-#drop-zone .file-chosen{color:var(--gold);font-weight:700;}
-.color-opts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
-.color-opt{width:30px;height:30px;border-radius:9px;cursor:pointer;border:2px solid transparent;transition:all .16s;}
-.color-opt.selected{border-color:rgba(255,255,255,0.80);transform:scale(1.18);box-shadow:0 0 12px rgba(255,255,255,0.2);}
 
-/* ── Viewer ── */
-#module-viewer{
-  display:none;position:fixed;inset:0;z-index:100;
-  background:var(--bg);animation:slideUp 0.42s cubic-bezier(0.4,0,0.2,1);
+/* ─── Add modal ─── */
+#add-modal {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.74); backdrop-filter: blur(16px);
+  align-items: center; justify-content: center;
 }
-@keyframes slideUp{from{transform:translateY(8%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+#add-modal.open { display: flex; }
+#modal-box {
+  background: rgba(13,10,7,0.93);
+  backdrop-filter: blur(52px) saturate(180%);
+  border: 1px solid rgba(201,168,92,0.18);
+  border-radius: 22px; padding: 40px;
+  width: 100%; max-width: 460px; position: relative;
+  box-shadow: 0 70px 160px rgba(0,0,0,0.80),
+              inset 0 1.5px 0 rgba(255,238,160,0.20);
+}
+#modal-box::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,242,185,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+#modal-box::after {
+  content: ''; position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,238,155,0.52) 50%, transparent);
+}
+.modal-label {
+  display: block; font-size: 9px; font-weight: 800;
+  letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px;
+}
+.modal-input {
+  width: 100%; background: rgba(255,242,200,0.038); border: 1px solid rgba(201,168,92,0.13);
+  border-radius: 10px; padding: 10px 14px; color: var(--cream);
+  font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 500;
+  outline: none; transition: all .2s; margin-bottom: 16px;
+  box-shadow: inset 0 1px 0 rgba(255,235,160,0.06);
+}
+.modal-input:focus { border-color: rgba(201,168,92,0.38); background: rgba(255,242,200,0.07); }
+#drop-zone {
+  border: 1.5px dashed rgba(201,168,92,0.24); border-radius: 14px;
+  padding: 28px; text-align: center; color: var(--muted);
+  cursor: pointer; transition: all 0.22s; margin-bottom: 20px;
+  font-size: 13px; font-weight: 500; background: rgba(201,168,92,0.022);
+}
+#drop-zone:hover, #drop-zone.dragging {
+  border-color: rgba(201,168,92,0.50); color: var(--cream); background: rgba(201,168,92,0.06);
+}
+#drop-zone .file-chosen { color: var(--gold); font-weight: 700; }
+.color-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.color-opt {
+  width: 28px; height: 28px; border-radius: 8px;
+  cursor: pointer; border: 2px solid transparent; transition: all .16s;
+}
+.color-opt.selected { border-color: rgba(255,255,255,0.78); transform: scale(1.18); box-shadow: 0 0 10px rgba(255,255,255,0.18); }
 
-/* No results */
-#no-results{display:none;grid-column:1/-1;text-align:center;color:var(--muted);padding:70px 0;}
+/* ─── Module viewer ─── */
+#module-viewer {
+  display: none; position: fixed; inset: 0; z-index: 100;
+  background: var(--bg); animation: slide-up 0.42s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes slide-up { from{transform:translateY(8%);opacity:0;} to{transform:translateY(0);opacity:1;} }
 
-/* Scrollbar */
-::-webkit-scrollbar{width:5px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:rgba(200,165,90,0.16);border-radius:10px;}
+/* ─── Footer ─── */
+#footer {
+  margin-top: 96px; padding-top: 26px;
+  border-top: 1px solid rgba(201,168,92,0.09);
+  text-align: center;
+}
+.footer-orn { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 10px; }
+.footer-orn .fl { width: 44px; height: 1px; background: linear-gradient(to right,transparent,rgba(201,168,92,0.28)); }
+.footer-orn .fr { width: 44px; height: 1px; background: linear-gradient(to left,transparent,rgba(201,168,92,0.28)); }
+.footer-orn .fg { color: var(--gold); font-size: 8px; opacity: 0.38; }
+#footer-text { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; }
 
-/* Focus */
-:focus-visible{outline:2px solid rgba(200,165,90,0.58);outline-offset:2px;border-radius:6px;}
-button:focus-visible{outline:2px solid rgba(200,165,90,0.58);outline-offset:3px;border-radius:10px;}
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(201,168,92,0.15); border-radius: 10px; }
 
-/* Reduced motion */
-@media(prefers-reduced-motion:reduce){
-  .glass-card,.tool-btn,.delete-btn{transition:none!important;}
-  .glass-card:hover{transform:none;}
+/* ─── Focus ─── */
+:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset: 2px; border-radius: 6px; }
+button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset: 3px; border-radius: 10px; }
+
+/* ─── Reduced motion ─── */
+@media(prefers-reduced-motion:reduce) {
+  .glass-card, .tool-btn { transition: none !important; }
+  .glass-card:hover { transform: none !important; }
+  .mote { animation: none !important; }
   @keyframes pulse{0%,100%{opacity:1;}}
 }
-
-/* ── Header ornaments ── */
-.ornament-rule{
-  display:flex;align-items:center;justify-content:center;gap:18px;
-  margin:22px auto 18px;max-width:320px;
-}
-.ornament-line{flex:1;height:1px;}
-.ornament-line-l{background:linear-gradient(to right,transparent,rgba(200,165,90,0.42));}
-.ornament-line-r{background:linear-gradient(to left,transparent,rgba(200,165,90,0.42));}
-.ornament-gem{color:var(--gold);font-size:10px;letter-spacing:0.3em;opacity:0.65;}
-
-/* Lang switcher pill */
-.lang-pill{
-  display:flex;gap:4px;padding:4px;
-  background:rgba(255,242,208,0.038);
-  border:1px solid rgba(200,165,90,0.13);
-  border-radius:12px;backdrop-filter:blur(14px);
-}
-
-/* Display serif helper */
-.serif{font-family:'Cormorant Garamond','Noto Serif TC',serif;}
 </style>
 </head>
-<body class="p-6 md:p-12">
+<body>
 
-<!-- Ambient orbs -->
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
-<div class="orb orb-4"></div>
-<div class="orb orb-5"></div>
+<!-- Fixed ambient layers -->
+<div id="vignette"></div>
+<div id="shelves"></div>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+<div class="orb o3"></div>
+<div class="orb o4"></div>
+<div class="orb o5"></div>
 
-<div class="max-w-7xl mx-auto" style="position:relative;z-index:1;">
+<!-- Dust mote container (populated by JS) -->
+<div id="dust"></div>
 
-  <!-- ── Header ── -->
-  <header style="margin-bottom:72px;position:relative;">
+<!-- ── Main content ── -->
+<div id="wrap">
+
+  <!-- Header -->
+  <header id="header">
 
     <!-- Language switcher -->
-    <div style="position:absolute;top:0;right:0;" class="lang-pill">
-      <button onclick="switchLang('zh')" id="idx-zh"
-        style="padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:0.06em;border-radius:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .22s;background:rgba(200,165,90,0.18);color:var(--gold);">繁中</button>
-      <button onclick="switchLang('en')" id="idx-en"
-        style="padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:0.06em;border-radius:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .22s;background:transparent;color:var(--muted);">EN</button>
-      <button onclick="switchLang('fr')" id="idx-fr"
-        style="padding:5px 14px;font-size:11px;font-weight:800;letter-spacing:0.06em;border-radius:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .22s;background:transparent;color:var(--muted);">FR</button>
+    <div id="lang-switch">
+      <button onclick="switchLang('zh')" id="idx-zh" class="active">繁中</button>
+      <button onclick="switchLang('en')" id="idx-en">EN</button>
+      <button onclick="switchLang('fr')" id="idx-fr">FR</button>
     </div>
 
-    <!-- Centred heading block -->
-    <div style="text-align:center;padding-top:16px;">
+    <!-- Monogram seal -->
+    <div id="seal">B</div>
 
-      <!-- Eyebrow -->
-      <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;">
-        <span style="display:block;width:28px;height:1px;background:var(--gold-dim);"></span>
-        <span id="badge-text" style="font-size:10px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);font-family:'Nunito',sans-serif;">個人知識庫</span>
-        <span style="display:block;width:28px;height:1px;background:var(--gold-dim);"></span>
-      </div>
-
-      <!-- Main title -->
-      <h1 class="serif" style="font-size:clamp(56px,8.5vw,100px);font-weight:500;font-style:italic;color:#f0e6d0;line-height:1.02;letter-spacing:-1px;margin-bottom:10px;">
-        Knowledge<br>
-        <span style="color:var(--gold);">Library</span>
-      </h1>
-
-      <!-- Ornamental divider -->
-      <div class="ornament-rule">
-        <div class="ornament-line ornament-line-l"></div>
-        <span class="ornament-gem">✦</span>
-        <div class="ornament-line ornament-line-r"></div>
-      </div>
-
-      <!-- Subtitle -->
-      <p id="page-subtitle" style="color:var(--cream-dim);max-width:440px;margin:0 auto;font-size:14px;font-weight:500;line-height:1.75;font-style:italic;font-family:'Cormorant Garamond',serif;">
-        跨領域研究、心智圖與互動工具的精選庫
-      </p>
+    <!-- Eyebrow -->
+    <div id="eyebrow">
+      <span class="rule"></span>
+      <span id="badge-text">個人知識庫</span>
+      <span class="rule"></span>
     </div>
+
+    <!-- Title -->
+    <h1 id="main-title">
+      Knowledge
+      <span class="gold-word">Library</span>
+    </h1>
+
+    <!-- Ornamental rule -->
+    <div class="orn-div">
+      <div class="lr lr-l"></div>
+      <span class="gem">✦</span>
+      <div class="lr lr-r"></div>
+    </div>
+
+    <!-- Subtitle -->
+    <p id="page-subtitle">跨領域研究、心智圖與互動工具的精選庫</p>
   </header>
 
-  <!-- ── Search ── -->
+  <!-- Search -->
   <div id="search-wrap">
     <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
-    <input id="search-input" type="text" placeholder="Search the library…" oninput="handleSearch(this.value)">
-    <i class="fa-solid fa-xmark" id="search-clear" onclick="clearSearch()" role="button" tabindex="0"
-       aria-label="Clear search" onkeydown="if(event.key==='Enter'||event.key===' ')clearSearch()"></i>
+    <input id="search-input" type="text" placeholder="Search the collection…"
+           oninput="handleSearch(this.value)">
+    <i class="fa-solid fa-xmark" id="search-clear" onclick="clearSearch()"
+       role="button" tabindex="0"
+       onkeydown="if(event.key==='Enter'||event.key===' ')clearSearch()"></i>
   </div>
 
-  <!-- ── Toolbar ── -->
+  <!-- Toolbar -->
   <div id="toolbar">
     <button class="tool-btn" id="upload-btn" onclick="openAddModal()">
       <i class="fa-solid fa-plus"></i> <span id="add-btn-text">新增模組</span>
@@ -381,55 +617,72 @@ button:focus-visible{outline:2px solid rgba(200,165,90,0.58);outline-offset:3px;
     </button>
   </div>
 
-  <!-- ── Grid ── -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="knowledge-grid">
+  <!-- Collection heading -->
+  <div id="collection-header">
+    <span class="col-label">Collection</span>
+    <div class="col-rule"></div>
+    <span class="col-count" id="col-count">— 5 volumes</span>
+  </div>
+
+  <!-- Grid -->
+  <div id="knowledge-grid">
     <div id="no-results">
-      <i class="fa-solid fa-book-open-reader" style="font-size:34px;margin-bottom:14px;display:block;opacity:.22;"></i>
-      <span id="no-results-text" style="font-size:13px;font-style:italic;">找不到符合的模組。</span>
+      <i class="fa-solid fa-book-open-reader"
+         style="font-size:36px;margin-bottom:16px;display:block;opacity:.18;"></i>
+      <span id="no-results-text"
+            style="font-size:14px;font-style:italic;font-family:'Cormorant Garamond',serif;">
+        找不到符合的館藏。
+      </span>
     </div>
   </div>
 
-  <!-- ── Footer ── -->
-  <footer style="margin-top:90px;padding-top:28px;border-top:1px solid rgba(200,165,90,0.10);text-align:center;">
-    <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:10px;">
-      <div style="width:40px;height:1px;background:linear-gradient(to right,transparent,rgba(200,165,90,0.30));"></div>
-      <span style="color:var(--gold);font-size:10px;opacity:0.4;">✦</span>
-      <div style="width:40px;height:1px;background:linear-gradient(to left,transparent,rgba(200,165,90,0.30));"></div>
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footer-orn">
+      <div class="fl"></div>
+      <span class="fg">✦</span>
+      <div class="fr"></div>
     </div>
-    <span id="footer-text" style="color:var(--muted);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">© 2026 個人知識庫 · 互動智識架構</span>
+    <span id="footer-text">© 2026 個人知識庫 · 互動智識架構</span>
   </footer>
-</div>
+</div><!-- /#wrap -->
 
-<!-- ── Full-screen Viewer ── -->
+<!-- Full-screen Viewer -->
 <div id="module-viewer">
   <iframe id="viewer-frame" style="width:100%;height:100%;border:none;" src=""></iframe>
   <button onclick="closeViewer()" aria-label="Back to library"
-    style="position:fixed;top:18px;left:18px;z-index:200;display:flex;align-items:center;gap:8px;padding:9px 18px 9px 13px;border-radius:24px;border:1px solid rgba(200,165,90,0.18);background:rgba(12,9,6,0.82);backdrop-filter:blur(18px);color:var(--cream-dim);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;box-shadow:0 4px 22px rgba(0,0,0,0.45);"
-    onmouseover="this.style.color='var(--cream)';this.style.borderColor='rgba(200,165,90,0.40)'"
-    onmouseout="this.style.color='var(--cream-dim)';this.style.borderColor='rgba(200,165,90,0.18)'">
-    <i class="fa-solid fa-chevron-left" style="font-size:10px;"></i> Back
+    style="position:fixed;top:18px;left:18px;z-index:200;display:flex;align-items:center;gap:8px;padding:9px 18px 9px 13px;border-radius:22px;border:1px solid rgba(201,168,92,0.18);background:rgba(11,8,6,0.84);backdrop-filter:blur(20px);color:var(--cream2);font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;box-shadow:0 4px 24px rgba(0,0,0,0.48);"
+    onmouseover="this.style.color='var(--cream)';this.style.borderColor='rgba(201,168,92,0.40)'"
+    onmouseout="this.style.color='var(--cream2)';this.style.borderColor='rgba(201,168,92,0.18)'">
+    <i class="fa-solid fa-chevron-left" style="font-size:9px;"></i> Back
   </button>
 </div>
 
-<!-- ── Add Module Modal ── -->
+<!-- Add Module Modal -->
 <div id="add-modal">
   <div id="modal-box">
-    <button onclick="closeAddModal()" aria-label="Close modal"
-      style="position:absolute;top:18px;right:18px;background:rgba(255,242,208,0.04);border:1px solid rgba(200,165,90,0.13);border-radius:10px;color:var(--muted);cursor:pointer;padding:6px 10px;font-size:13px;transition:color .18s;"
+    <button onclick="closeAddModal()" aria-label="Close"
+      style="position:absolute;top:16px;right:16px;background:rgba(255,242,200,0.04);border:1px solid rgba(201,168,92,0.12);border-radius:9px;color:var(--muted);cursor:pointer;padding:5px 9px;font-size:12px;transition:color .18s;"
       onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--muted)'">
       <i class="fa-solid fa-xmark"></i>
     </button>
 
-    <div style="margin-bottom:24px;">
-      <h2 id="modal-title-text" class="serif" style="font-size:22px;font-weight:600;font-style:italic;color:#f0e6d0;margin-bottom:5px;">新增模組</h2>
-      <p id="modal-subtitle-text" style="font-size:12px;color:var(--muted);font-weight:500;">上傳 HTML 檔案以加入你的書庫。</p>
-    </div>
+    <h2 id="modal-title-text"
+        style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;font-style:italic;color:#f0e6cf;margin-bottom:5px;">
+      新增模組
+    </h2>
+    <p id="modal-subtitle-text"
+       style="font-size:11px;color:var(--muted);font-weight:500;margin-bottom:24px;">
+      上傳 HTML 檔案以加入你的書庫。
+    </p>
 
-    <div id="drop-zone" onclick="document.getElementById('file-input').click()"
+    <div id="drop-zone"
+         onclick="document.getElementById('file-input').click()"
          ondragover="event.preventDefault();this.classList.add('dragging')"
          ondragleave="this.classList.remove('dragging')"
          ondrop="handleDrop(event)">
-      <i class="fa-solid fa-book-medical" style="font-size:26px;margin-bottom:10px;display:block;color:var(--gold);opacity:.6;"></i>
+      <i class="fa-solid fa-book-medical"
+         style="font-size:24px;margin-bottom:10px;display:block;color:var(--gold);opacity:.58;"></i>
       <span id="drop-label">Drop an <strong>.html</strong> file here or <u>click to browse</u></span>
       <input type="file" id="file-input" accept=".html" style="display:none" onchange="handleFileSelect(this)">
     </div>
@@ -444,7 +697,7 @@ button:focus-visible{outline:2px solid rgba(200,165,90,0.58);outline-offset:3px;
     <input class="modal-input" id="new-desc" type="text" placeholder="簡短描述…">
 
     <label class="modal-label" id="label-mod-icon">圖示（FontAwesome 類名）</label>
-    <input class="modal-input" id="new-icon" type="text" placeholder="e.g. fa-book  fa-flask  fa-brain">
+    <input class="modal-input" id="new-icon" type="text" placeholder="fa-book  fa-flask  fa-brain">
 
     <label class="modal-label" id="label-mod-color">顏色主題</label>
     <div class="color-opts" id="color-opts">
@@ -455,63 +708,86 @@ button:focus-visible{outline:2px solid rgba(200,165,90,0.58);outline-offset:3px;
       <div class="color-opt"          data-grad="from-sky-400 to-blue-600"       style="background:linear-gradient(135deg,#38bdf8,#2563eb)"></div>
       <div class="color-opt"          data-grad="from-fuchsia-400 to-purple-700" style="background:linear-gradient(135deg,#e879f9,#7e22ce)"></div>
       <div class="color-opt"          data-grad="from-lime-400 to-green-600"     style="background:linear-gradient(135deg,#a3e635,#16a34a)"></div>
-      <div class="color-opt"          data-grad="from-cyan-400 to-sky-600"       style="background:linear-gradient(135deg,#22d3ee,0284c7)"></div>
+      <div class="color-opt"          data-grad="from-cyan-400 to-sky-600"       style="background:linear-gradient(135deg,#22d3ee,#0284c7)"></div>
     </div>
 
-    <button id="modal-confirm-btn" onclick="confirmAddModule()"
-      style="width:100%;padding:13px;border-radius:13px;background:linear-gradient(135deg,rgba(200,165,90,0.25),rgba(180,140,60,0.18));color:var(--gold);font-weight:800;font-size:12px;letter-spacing:0.10em;text-transform:uppercase;border:1px solid rgba(200,165,90,0.35);cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,235,160,0.18);transition:all .22s;"
-      onmouseover="this.style.background='linear-gradient(135deg,rgba(200,165,90,0.38),rgba(180,140,60,0.28))';"
-      onmouseout="this.style.background='linear-gradient(135deg,rgba(200,165,90,0.25),rgba(180,140,60,0.18))';">
-      <i class="fa-solid fa-plus" style="margin-right:6px;"></i><span id="modal-confirm-text">加入書庫</span>
+    <button onclick="confirmAddModule()"
+      style="width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,rgba(201,168,92,0.24),rgba(160,125,50,0.16));color:var(--gold);font-weight:800;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(201,168,92,0.34);cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 22px rgba(0,0,0,0.32),inset 0 1px 0 rgba(255,238,155,0.18);transition:all .22s;"
+      onmouseover="this.style.background='linear-gradient(135deg,rgba(201,168,92,0.36),rgba(160,125,50,0.26))'"
+      onmouseout="this.style.background='linear-gradient(135deg,rgba(201,168,92,0.24),rgba(160,125,50,0.16))'">
+      <i class="fa-solid fa-plus" style="margin-right:6px;"></i>
+      <span id="modal-confirm-text">加入書庫</span>
     </button>
     <p id="modal-error" style="color:#f87171;font-size:11px;margin-top:10px;display:none;font-weight:600;"></p>
   </div>
 </div>
 
 <script>
-/* ── i18n ── */
+/* ─── Dust motes ─── */
+(function() {
+  const dust = document.getElementById('dust');
+  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X',
+                 'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII'];
+  for (let i = 0; i < 18; i++) {
+    const m = document.createElement('div');
+    m.className = 'mote';
+    const size  = 1 + Math.random() * 2;
+    const left  = 5 + Math.random() * 90;
+    const delay = Math.random() * 22;
+    const dur   = 18 + Math.random() * 24;
+    const dx    = (Math.random() - 0.5) * 80;
+    const top   = 10 + Math.random() * 85;
+    m.style.cssText =
+      `left:${left}%;top:${top}%;width:${size}px;height:${size}px;`+
+      `animation-delay:${delay}s;animation-duration:${dur}s;`+
+      `--dx:${dx}px;opacity:${0.2+Math.random()*0.5};`;
+    dust.appendChild(m);
+  }
+})();
+
+/* ─── i18n ─── */
 const UI = {
   zh: {
     badge:'個人知識庫',
     subtitle:'跨領域研究、心智圖與互動工具的精選庫',
-    searchPlaceholder:'搜尋館藏…',
+    searchPH:'搜尋館藏…',
     addBtn:'新增模組', editBtn:'編輯', doneBtn:'完成',
     readyStatus:'準備探索', customStatus:'自訂模組',
-    noResults:'找不到符合的模組。',
+    noResults:'找不到符合的館藏。',
     footer:'© 2026 個人知識庫 &nbsp;·&nbsp; 互動智識架構',
-    modalTitle:'新增模組', modalSubtitle:'上傳 HTML 檔案以加入你的書庫。',
-    dropLabel:'拖曳 <strong>.html</strong> 檔案至此，或 <u>點擊瀏覽</u>',
-    labelTitle:'模組標題', labelSub:'副標題', labelDesc:'描述',
-    labelIcon:'圖示（FontAwesome 類名）', labelColor:'顏色主題',
-    confirmBtn:'加入書庫'
+    modalTitle:'新增模組', modalSub:'上傳 HTML 檔案以加入你的書庫。',
+    dropLabel:'拖曳 <strong>.html</strong> 至此，或 <u>點擊瀏覽</u>',
+    lTitle:'模組標題', lSub:'副標題', lDesc:'描述',
+    lIcon:'圖示（FontAwesome 類名）', lColor:'顏色主題',
+    confirmBtn:'加入書庫', volumes:'冊'
   },
   en: {
     badge:'Personal Knowledge Library',
     subtitle:'A curated repository of cross-domain research,<br>mind maps &amp; interactive tools.',
-    searchPlaceholder:'Search the library…',
-    addBtn:'Add Module', editBtn:'Edit', doneBtn:'Done',
-    readyStatus:'Ready to Explore', customStatus:'Custom Module',
+    searchPH:'Search the collection…',
+    addBtn:'Add Volume', editBtn:'Edit', doneBtn:'Done',
+    readyStatus:'Ready to Read', customStatus:'Custom Volume',
     noResults:'No volumes match your search.',
     footer:'© 2026 Personal Knowledge Library &nbsp;·&nbsp; Interactive Intelligence',
-    modalTitle:'Add New Volume', modalSubtitle:'Upload any HTML file to shelve it in your library.',
+    modalTitle:'Add New Volume', modalSub:'Upload any HTML file to shelve it.',
     dropLabel:'Drop an <strong>.html</strong> file here or <u>click to browse</u>',
-    labelTitle:'Module Title', labelSub:'Subtitle', labelDesc:'Description',
-    labelIcon:'Icon (FontAwesome class)', labelColor:'Color Theme',
-    confirmBtn:'Add to Library'
+    lTitle:'Module Title', lSub:'Subtitle', lDesc:'Description',
+    lIcon:'Icon (FontAwesome class)', lColor:'Color Theme',
+    confirmBtn:'Add to Library', volumes:'volumes'
   },
   fr: {
     badge:'Bibliothèque Personnelle',
     subtitle:'Un répertoire de recherches transversales,<br>cartes mentales &amp; outils interactifs.',
-    searchPlaceholder:'Rechercher dans la bibliothèque…',
+    searchPH:'Rechercher dans la collection…',
     addBtn:'Ajouter', editBtn:'Modifier', doneBtn:'Terminé',
-    readyStatus:'Prêt à explorer', customStatus:'Module personnalisé',
+    readyStatus:'Prêt à lire', customStatus:'Module personnalisé',
     noResults:'Aucun volume ne correspond à votre recherche.',
     footer:'© 2026 Bibliothèque de Connaissances &nbsp;·&nbsp; Intelligence Interactive',
-    modalTitle:'Ajouter un volume', modalSubtitle:"Importez un fichier HTML pour l'ajouter à votre bibliothèque.",
-    dropLabel:'Déposez un fichier <strong>.html</strong> ici ou <u>cliquez pour parcourir</u>',
-    labelTitle:'Titre du module', labelSub:'Sous-titre', labelDesc:'Description',
-    labelIcon:'Icône (classe FontAwesome)', labelColor:'Thème de couleur',
-    confirmBtn:'Ajouter à la bibliothèque'
+    modalTitle:'Ajouter un volume', modalSub:"Importez un fichier HTML pour l'ajouter.",
+    dropLabel:'Déposez un <strong>.html</strong> ici ou <u>cliquez</u>',
+    lTitle:'Titre du module', lSub:'Sous-titre', lDesc:'Description',
+    lIcon:'Icône (classe FontAwesome)', lColor:'Thème de couleur',
+    confirmBtn:'Ajouter', volumes:'volumes'
   }
 };
 
@@ -522,34 +798,34 @@ function switchLang(l) {
   localStorage.setItem('kb_lang', l);
   const u = UI[l];
   ['zh','en','fr'].forEach(k => {
-    const btn = document.getElementById('idx-'+k);
-    if (k === l) { btn.style.background='rgba(200,165,90,0.18)'; btn.style.color='var(--gold)'; btn.setAttribute('aria-pressed','true'); }
-    else { btn.style.background='transparent'; btn.style.color='var(--muted)'; btn.setAttribute('aria-pressed','false'); }
+    const b = document.getElementById('idx-'+k);
+    b.classList.toggle('active', k===l);
+    b.setAttribute('aria-pressed', k===l ? 'true':'false');
   });
-  document.getElementById('badge-text').textContent = u.badge;
-  document.getElementById('page-subtitle').innerHTML = u.subtitle;
-  document.getElementById('search-input').placeholder = u.searchPlaceholder;
-  document.getElementById('add-btn-text').textContent = u.addBtn;
-  document.getElementById('no-results-text').textContent = u.noResults;
-  document.getElementById('footer-text').innerHTML = u.footer;
+  document.getElementById('badge-text').textContent       = u.badge;
+  document.getElementById('page-subtitle').innerHTML      = u.subtitle;
+  document.getElementById('search-input').placeholder     = u.searchPH;
+  document.getElementById('add-btn-text').textContent     = u.addBtn;
+  document.getElementById('no-results-text').textContent  = u.noResults;
+  document.getElementById('footer-text').innerHTML        = u.footer;
   document.getElementById('modal-title-text').textContent = u.modalTitle;
-  document.getElementById('modal-subtitle-text').textContent = u.modalSubtitle;
-  document.getElementById('drop-label').innerHTML = u.dropLabel;
-  document.getElementById('label-mod-title').textContent = u.labelTitle;
-  document.getElementById('label-mod-subtitle').textContent = u.labelSub;
-  document.getElementById('label-mod-desc').textContent = u.labelDesc;
-  document.getElementById('label-mod-icon').textContent = u.labelIcon;
-  document.getElementById('label-mod-color').textContent = u.labelColor;
+  document.getElementById('modal-subtitle-text').textContent = u.modalSub;
+  document.getElementById('drop-label').innerHTML         = u.dropLabel;
+  document.getElementById('label-mod-title').textContent  = u.lTitle;
+  document.getElementById('label-mod-subtitle').textContent = u.lSub;
+  document.getElementById('label-mod-desc').textContent   = u.lDesc;
+  document.getElementById('label-mod-icon').textContent   = u.lIcon;
+  document.getElementById('label-mod-color').textContent  = u.lColor;
   document.getElementById('modal-confirm-text').textContent = u.confirmBtn;
-  document.documentElement.lang = l === 'zh' ? 'zh-Hant' : l;
+  document.documentElement.lang = l==='zh' ? 'zh-Hant' : l;
   if (!editMode) document.getElementById('edit-btn-text').textContent = u.editBtn;
   renderGrid();
 }
 
+/* ─── Data ─── */
 const STORAGE_KEY = 'knowledge_galaxy_modules';
 
-/* Gradient → spine color map */
-const SPINE_COLORS = {
+const SPINE = {
   'from-violet-400 to-indigo-600':  'linear-gradient(180deg,#a78bfa,#4f46e5)',
   'from-emerald-400 to-teal-600':   'linear-gradient(180deg,#34d399,#0d9488)',
   'from-pink-400 to-rose-600':      'linear-gradient(180deg,#f472b6,#e11d48)',
@@ -559,125 +835,181 @@ const SPINE_COLORS = {
   'from-lime-400 to-green-600':     'linear-gradient(180deg,#a3e635,#16a34a)',
   'from-cyan-400 to-sky-600':       'linear-gradient(180deg,#22d3ee,#0284c7)',
 };
-
-/* Gradient → glow color map */
-const GLOW_COLORS = {
-  'from-violet-400 to-indigo-600':  'rgba(139,92,246,0.14)',
-  'from-emerald-400 to-teal-600':   'rgba(52,211,153,0.14)',
-  'from-pink-400 to-rose-600':      'rgba(244,114,182,0.14)',
-  'from-amber-400 to-orange-500':   'rgba(251,191,36,0.14)',
-  'from-sky-400 to-blue-600':       'rgba(56,189,248,0.14)',
-  'from-fuchsia-400 to-purple-700': 'rgba(232,121,249,0.14)',
-  'from-lime-400 to-green-600':     'rgba(163,230,53,0.14)',
-  'from-cyan-400 to-sky-600':       'rgba(34,211,238,0.14)',
+const GLOW = {
+  'from-violet-400 to-indigo-600':  'rgba(139,92,246,0.18)',
+  'from-emerald-400 to-teal-600':   'rgba(52,211,153,0.16)',
+  'from-pink-400 to-rose-600':      'rgba(244,114,182,0.16)',
+  'from-amber-400 to-orange-500':   'rgba(251,191,36,0.16)',
+  'from-sky-400 to-blue-600':       'rgba(56,189,248,0.16)',
+  'from-fuchsia-400 to-purple-700': 'rgba(232,121,249,0.16)',
+  'from-lime-400 to-green-600':     'rgba(163,230,53,0.15)',
+  'from-cyan-400 to-sky-600':       'rgba(34,211,238,0.15)',
 };
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X',
+               'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
 
 const DEFAULT_MODULES = [
-  { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',  description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.', icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',   file:'code_artifact.html',              custom:false },
-  { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',    description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.', icon:'fa-beer-mug-empty', color:'from-amber-400 to-orange-500',   file:'zymos_beer_mind_map.html',         custom:false },
-  { id:'skincare',   title:'Skincare Actives',        subtitle:'Science & Market Trends',     description:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.', icon:'fa-sparkles',       color:'from-pink-400 to-rose-600',      file:'skincare-trilingual.html',         custom:false },
-  { id:'perfume',    title:'Perfume Intelligence',    subtitle:'Market Analysis & Brands',    description:'Coty portfolio analysis and perfume market competition mind map.',                        icon:'fa-bottle-droplet', color:'from-fuchsia-400 to-purple-700', file:'coty_perfume_market_mindmap.html', custom:false },
-  { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',     description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',                  icon:'fa-file-invoice',   color:'from-sky-400 to-blue-600',       file:'cv_prompt_builder_v2.html',        custom:false }
+  { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',
+    description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.',
+    icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',
+    file:'code_artifact.html', custom:false },
+  { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',
+    description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.',
+    icon:'fa-beer-mug-empty',  color:'from-amber-400 to-orange-500',
+    file:'zymos_beer_mind_map.html', custom:false },
+  { id:'skincare',   title:'Skincare Actives',        subtitle:'Science & Market Trends',
+    description:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.',
+    icon:'fa-sparkles',        color:'from-pink-400 to-rose-600',
+    file:'skincare-trilingual.html', custom:false },
+  { id:'perfume',    title:'Perfume Intelligence',    subtitle:'Market Analysis & Brands',
+    description:'Coty portfolio analysis and perfume market competition mind map.',
+    icon:'fa-bottle-droplet',  color:'from-fuchsia-400 to-purple-700',
+    file:'coty_perfume_market_mindmap.html', custom:false },
+  { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',
+    description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',
+    icon:'fa-file-invoice',    color:'from-sky-400 to-blue-600',
+    file:'cv_prompt_builder_v2.html', custom:false }
 ];
 
 function loadModules() {
-  try { const s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : DEFAULT_MODULES; }
+  try { const s=localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : DEFAULT_MODULES; }
   catch { return DEFAULT_MODULES; }
 }
 function saveModules() { localStorage.setItem(STORAGE_KEY, JSON.stringify(modules)); }
 
-let modules = loadModules();
+let modules     = loadModules();
 let searchQuery = '';
-let editMode = false;
-let pendingFileURL = null;
-let selectedColor = 'from-violet-400 to-indigo-600';
+let editMode    = false;
+let pendingURL  = null;
+let selColor    = 'from-violet-400 to-indigo-600';
 
-/* ── Render ── */
+/* ─── Render grid ─── */
 function renderGrid() {
-  const grid = document.getElementById('knowledge-grid');
+  const grid  = document.getElementById('knowledge-grid');
   const noRes = document.getElementById('no-results');
-  const q = searchQuery.toLowerCase();
-  const filtered = modules.filter(m =>
-    !q || m.title.toLowerCase().includes(q) ||
+  const q     = searchQuery.toLowerCase();
+  const shown = modules.filter(m =>
+    !q ||
+    m.title.toLowerCase().includes(q) ||
     (m.subtitle||'').toLowerCase().includes(q) ||
     (m.description||'').toLowerCase().includes(q)
   );
+
   grid.querySelectorAll('.glass-card').forEach(c => c.remove());
-  if (!filtered.length) { noRes.style.display = 'block'; return; }
+
+  /* update count */
+  const cnt = document.getElementById('col-count');
+  if (cnt) cnt.textContent = `— ${shown.length} ${UI[currentLang].volumes}`;
+
+  if (!shown.length) { noRes.style.display='block'; return; }
   noRes.style.display = 'none';
 
-  filtered.forEach((mod, idx) => {
+  shown.forEach((mod, idx) => {
     const card = document.createElement('div');
-    card.className = 'glass-card' + (editMode ? ' edit-mode' : '');
+    card.className = 'glass-card';
     card.dataset.id = mod.id;
-    const spineGrad = SPINE_COLORS[mod.color] || 'linear-gradient(180deg,#a78bfa,#4f46e5)';
-    const glowColor = GLOW_COLORS[mod.color] || 'rgba(139,92,246,0.14)';
+    card.style.animationDelay = (idx * 0.07) + 's';
+
+    const spineGrad = SPINE[mod.color] || SPINE['from-violet-400 to-indigo-600'];
+    const glowClr   = GLOW[mod.color]  || 'rgba(139,92,246,0.18)';
+    const roman     = ROMAN[idx] || String(idx+1);
 
     if (!editMode) {
-      card.onclick = () => openModule(mod.file, mod.title);
-      card.setAttribute('tabindex', '0');
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', 'Open ' + mod.title);
-      card.onkeydown = e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); openModule(mod.file,mod.title); } };
+      card.onclick = () => openModule(mod.file);
+      card.setAttribute('tabindex','0');
+      card.setAttribute('role','button');
+      card.setAttribute('aria-label','Open '+mod.title);
+      card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod.file); } };
     }
-
-    /* Hover glow effect via JS (can't do dynamic CSS vars per-card in pure CSS) */
-    if (!editMode) {
-      card.addEventListener('mouseenter', () => {
-        card.style.boxShadow = `0 44px 100px rgba(0,0,0,0.68),0 16px 40px rgba(0,0,0,0.42),0 0 60px ${glowColor},inset 0 1.5px 0 rgba(255,240,180,0.46),inset 0 -1px 0 rgba(0,0,0,0.22)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.boxShadow = '';
-      });
-    }
-
-    const volNum = String(idx + 1).padStart(2, '0');
 
     card.innerHTML = `
-      <button class="delete-btn" onclick="deleteModule('${mod.id}',event)"><i class="fa-solid fa-xmark"></i></button>
+      <button class="delete-btn" onclick="deleteModule('${mod.id}',event)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
       <div class="book-spine" style="background:${spineGrad};"></div>
-      <div style="padding:28px 28px 28px 36px;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;">
+      <div class="page-edge"></div>
+      <div class="card-glare"></div>
+      <div class="card-body">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
           <div class="icon-box bg-gradient-to-br ${mod.color}">
             <i class="fa-solid ${mod.icon}"></i>
           </div>
           <div style="text-align:right;">
-            <div class="vol-tag">Vol. ${volNum}</div>
-            <div style="opacity:0;transition:opacity .25s;margin-top:6px;color:rgba(200,165,90,0.45);font-size:12px;" class="open-arrow">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </div>
+            <div class="chapter-num">${roman}</div>
+            <div class="open-arr"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
           </div>
         </div>
-        <h3 class="card-title" style="margin-bottom:6px;">${mod.title}</h3>
-        <p style="font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;color:rgba(200,165,90,0.55);">${mod.subtitle}</p>
+        <h3 class="card-title">${mod.title}</h3>
+        <p class="card-tag">${mod.subtitle}</p>
         <div class="ruled-sep"></div>
-        <p style="color:var(--muted);font-size:13px;line-height:1.68;font-weight:500;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${mod.description}</p>
-        <div class="status-pill" style="margin-top:22px;">
-          <div class="pulse-dot" style="background:${mod.custom?'#60a5fa':'#a87c3a'};box-shadow:0 0 6px ${mod.custom?'rgba(96,165,250,.45)':'rgba(168,124,58,.5)'}"></div>
+        <p class="card-desc">${mod.description}</p>
+        <div class="status-pill">
+          <div class="pulse-dot"
+               style="background:${mod.custom?'#60a5fa':'#a07838'};
+                      box-shadow:0 0 6px ${mod.custom?'rgba(96,165,250,.42)':'rgba(160,120,56,.48)'}">
+          </div>
           <span>${mod.custom ? UI[currentLang].customStatus : UI[currentLang].readyStatus}</span>
         </div>
       </div>`;
 
-    /* Show arrow on hover */
+    /* ── 3D book-lift on mouse move ── */
     if (!editMode) {
-      const arrow = card.querySelector('.open-arrow');
-      card.addEventListener('mouseenter', () => { if(arrow) arrow.style.opacity = '1'; });
-      card.addEventListener('mouseleave', () => { if(arrow) arrow.style.opacity = '0'; });
+      let tiltActive = false;
+
+      card.addEventListener('mouseenter', () => {
+        tiltActive = true;
+        card.style.transition = 'transform 0.08s ease, box-shadow 0.35s ease, border-color 0.28s ease, background 0.28s ease';
+        card.style.borderColor = 'var(--gl-border-h)';
+        card.style.background  = 'var(--gl-hover)';
+        card.style.boxShadow   =
+          `0 44px 100px rgba(0,0,0,0.68),`+
+          `0 16px 40px rgba(0,0,0,0.44),`+
+          `0 0 64px ${glowClr},`+
+          `3px 3px 0 -1px rgba(20,14,6,0.50),`+
+          `5px 6px 0 -2px rgba(20,14,6,0.36),`+
+          `7px 9px 0 -3px rgba(20,14,6,0.24),`+
+          `inset 0 1.5px 0 rgba(255,242,170,0.46),`+
+          `inset 0 -1px 0 rgba(0,0,0,0.22)`;
+      });
+
+      card.addEventListener('mousemove', e => {
+        if (!tiltActive) return;
+        const r  = card.getBoundingClientRect();
+        const x  = (e.clientX - r.left) / r.width  - 0.5;
+        const y  = (e.clientY - r.top)  / r.height - 0.5;
+        const rX = -y * 9;
+        const rY =  x * 7;
+        const tY = -13 - Math.abs(y) * 4;
+        card.style.transform =
+          `translateY(${tY}px) scale(1.018) perspective(900px) rotateX(${rX}deg) rotateY(${rY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        tiltActive = false;
+        card.style.transition = 'transform 0.48s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.35s ease, border-color 0.28s ease, background 0.28s ease';
+        card.style.transform   = '';
+        card.style.borderColor = '';
+        card.style.background  = '';
+        card.style.boxShadow   = '';
+      });
     }
 
     grid.appendChild(card);
   });
 }
 
-/* ── Search ── */
+/* ─── Search ─── */
 function handleSearch(val) {
   searchQuery = val;
   document.getElementById('search-clear').style.display = val ? 'block' : 'none';
   renderGrid();
 }
-function clearSearch() { document.getElementById('search-input').value = ''; handleSearch(''); }
+function clearSearch() {
+  document.getElementById('search-input').value = '';
+  handleSearch('');
+}
 
-/* ── Edit mode ── */
+/* ─── Edit mode ─── */
 function toggleEditMode() {
   editMode = !editMode;
   document.body.classList.toggle('edit-mode', editMode);
@@ -690,16 +1022,16 @@ function toggleEditMode() {
 }
 function deleteModule(id, e) {
   e.stopPropagation();
-  const idx = modules.findIndex(m => m.id === id);
-  if (idx === -1) return;
-  if (modules[idx].custom && modules[idx].file.startsWith('blob:')) URL.revokeObjectURL(modules[idx].file);
-  modules.splice(idx, 1); saveModules(); renderGrid();
+  const i = modules.findIndex(m => m.id===id);
+  if (i===-1) return;
+  if (modules[i].custom && modules[i].file.startsWith('blob:')) URL.revokeObjectURL(modules[i].file);
+  modules.splice(i,1); saveModules(); renderGrid();
 }
 
-/* ── Viewer ── */
+/* ─── Viewer ─── */
 function openModule(file) {
   if (editMode) return;
-  document.getElementById('viewer-frame').src = file;
+  document.getElementById('viewer-frame').src  = file;
   document.body.style.overflow = 'hidden';
   document.getElementById('module-viewer').style.display = 'block';
 }
@@ -709,44 +1041,57 @@ function closeViewer() {
   document.body.style.overflow = 'auto';
 }
 
-/* ── Add modal ── */
+/* ─── Modal ─── */
 function openAddModal() {
   document.getElementById('add-modal').classList.add('open');
-  ['new-title','new-subtitle','new-desc','new-icon'].forEach(id => document.getElementById(id).value = '');
+  ['new-title','new-subtitle','new-desc','new-icon'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('drop-label').innerHTML = UI[currentLang].dropLabel;
   document.getElementById('modal-error').style.display = 'none';
-  pendingFileURL = null; selectColor('from-violet-400 to-indigo-600');
+  pendingURL = null; selectColor('from-violet-400 to-indigo-600');
 }
 function closeAddModal() { document.getElementById('add-modal').classList.remove('open'); }
-
 function handleDrop(e) {
   e.preventDefault(); document.getElementById('drop-zone').classList.remove('dragging');
   if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
 }
-function handleFileSelect(input) { if (input.files[0]) processFile(input.files[0]); }
+function handleFileSelect(i) { if (i.files[0]) processFile(i.files[0]); }
 function processFile(file) {
   if (!file.name.endsWith('.html')) { showModalError('Please select an .html file.'); return; }
-  if (pendingFileURL) URL.revokeObjectURL(pendingFileURL);
-  pendingFileURL = URL.createObjectURL(file);
-  document.getElementById('drop-label').innerHTML = `<span class="file-chosen"><i class="fa-solid fa-check" style="margin-right:5px;"></i>${file.name}</span>`;
+  if (pendingURL) URL.revokeObjectURL(pendingURL);
+  pendingURL = URL.createObjectURL(file);
+  document.getElementById('drop-label').innerHTML =
+    `<span class="file-chosen"><i class="fa-solid fa-check" style="margin-right:5px;"></i>${file.name}</span>`;
   if (!document.getElementById('new-title').value)
-    document.getElementById('new-title').value = file.name.replace('.html','').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    document.getElementById('new-title').value =
+      file.name.replace('.html','').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 }
 function confirmAddModule() {
   const title = document.getElementById('new-title').value.trim();
-  if (!pendingFileURL) { showModalError('Please upload an HTML file first.'); return; }
-  if (!title) { showModalError('Please enter a module title.'); return; }
-  const icon = document.getElementById('new-icon').value.trim() || 'fa-file';
-  modules.push({ id:'custom_'+Date.now(), title, subtitle:document.getElementById('new-subtitle').value.trim()||'Custom Module', description:document.getElementById('new-desc').value.trim()||'', icon, color:selectedColor, file:pendingFileURL, custom:true });
+  if (!pendingURL) { showModalError('Please upload an HTML file first.'); return; }
+  if (!title)      { showModalError('Please enter a title.'); return; }
+  modules.push({
+    id: 'custom_'+Date.now(), title,
+    subtitle:    document.getElementById('new-subtitle').value.trim() || 'Custom Volume',
+    description: document.getElementById('new-desc').value.trim() || '',
+    icon:        document.getElementById('new-icon').value.trim()  || 'fa-file',
+    color:       selColor, file: pendingURL, custom: true
+  });
   saveModules(); renderGrid(); closeAddModal();
 }
-function showModalError(msg) { const el=document.getElementById('modal-error'); el.textContent=msg; el.style.display='block'; }
+function showModalError(msg) {
+  const el=document.getElementById('modal-error'); el.textContent=msg; el.style.display='block';
+}
 
-/* ── Color picker ── */
-document.getElementById('color-opts').addEventListener('click', e => { const o=e.target.closest('.color-opt'); if(o) selectColor(o.dataset.grad); });
-function selectColor(g) { selectedColor=g; document.querySelectorAll('.color-opt').forEach(o=>o.classList.toggle('selected',o.dataset.grad===g)); }
+/* ─── Color picker ─── */
+document.getElementById('color-opts').addEventListener('click', e => {
+  const o = e.target.closest('.color-opt'); if(o) selectColor(o.dataset.grad);
+});
+function selectColor(g) {
+  selColor = g;
+  document.querySelectorAll('.color-opt').forEach(o=>o.classList.toggle('selected',o.dataset.grad===g));
+}
 
-/* ── Keys ── */
+/* ─── Keyboard ─── */
 document.addEventListener('keydown', e => {
   if (e.key==='Escape') {
     if (document.getElementById('module-viewer').style.display==='block') closeViewer();
@@ -754,9 +1099,14 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ── Boot ── */
-const _initLang = localStorage.getItem('kb_lang') || 'zh';
-switchLang(['zh','en','fr'].includes(_initLang) ? _initLang : 'zh');
+/* ─── Boot ─── */
+/* Tailwind cdn for icon-box gradient classes */
+const tw = document.createElement('script');
+tw.src = 'https://cdn.tailwindcss.com';
+document.head.appendChild(tw);
+
+const saved = localStorage.getItem('kb_lang');
+switchLang(['zh','en','fr'].includes(saved) ? saved : 'zh');
 </script>
 </body>
 </html>
