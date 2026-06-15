@@ -695,6 +695,7 @@ document.getElementById('canvas-wrap').addEventListener('touchend', () => { isDr
 /* ── LANGUAGE ── */
 function switchLang(l) {
   lang = l;
+  localStorage.setItem('kb_lang', l);
   const hdrBtns = { zh: document.getElementById('hdr-zh'), en: document.getElementById('hdr-en'), fr: document.getElementById('hdr-fr') };
   Object.entries(hdrBtns).forEach(([k, btn]) => {
     if (k === l) { btn.style.background = 'rgba(236,72,153,0.15)'; btn.style.color = '#f0abca'; }
@@ -717,7 +718,11 @@ function switchLang(l) {
 }
 
 /* ── BOOT ── */
-window.addEventListener('load', () => { render(); });
+window.addEventListener('load', () => {
+  const savedLang = localStorage.getItem('kb_lang');
+  if (savedLang && ['zh','en','fr'].includes(savedLang)) switchLang(savedLang);
+  render();
+});
 window.addEventListener('resize', () => { render(); });
 </script>
 </body>
