@@ -236,18 +236,27 @@
 <div class="max-w-7xl mx-auto" style="position:relative;z-index:1;">
 
     <!-- Header -->
-    <header class="mb-14 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full text-xs font-bold tracking-widest uppercase"
-             style="background:rgba(139,92,246,0.10);border:1px solid rgba(139,92,246,0.22);color:#a78bfa;backdrop-filter:blur(10px);">
-            <i class="fa-solid fa-sparkles" style="font-size:9px;"></i>
-            Personal Portfolio Hub
+    <header class="mb-14" style="position:relative;">
+        <!-- Language switcher -->
+        <div style="position:absolute;top:0;right:0;display:flex;gap:5px;padding:4px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:12px;backdrop-filter:blur(12px);">
+            <button onclick="switchLang('zh')" id="idx-zh" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .2s;background:rgba(139,92,246,0.15);color:#c4b5fd;">繁中</button>
+            <button onclick="switchLang('en')" id="idx-en" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .2s;background:transparent;color:#64748b;">EN</button>
+            <button onclick="switchLang('fr')" id="idx-fr" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;font-family:inherit;transition:all .2s;background:transparent;color:#64748b;">FR</button>
         </div>
-        <h1 class="serif-title text-5xl md:text-7xl font-black text-white mb-5 tracking-tight leading-tight">
-            Knowledge <span class="grad-text">Galaxy</span>
-        </h1>
-        <p style="color:#64748b;max-width:480px;margin:0 auto;font-size:15px;font-weight:500;line-height:1.7;">
-            A curated repository of cross-domain research,<br>mind maps, and interactive tools.
-        </p>
+
+        <div class="text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full text-xs font-bold tracking-widest uppercase"
+                 style="background:rgba(139,92,246,0.10);border:1px solid rgba(139,92,246,0.22);color:#a78bfa;backdrop-filter:blur(10px);">
+                <i class="fa-solid fa-sparkles" style="font-size:9px;"></i>
+                <span id="badge-text">個人知識庫</span>
+            </div>
+            <h1 class="serif-title text-5xl md:text-7xl font-black text-white mb-5 leading-tight">
+                Knowledge <span class="grad-text">Galaxy</span>
+            </h1>
+            <p id="page-subtitle" style="color:#64748b;max-width:480px;margin:0 auto;font-size:15px;font-weight:500;line-height:1.7;">
+                跨領域研究、心智圖與互動工具的精選庫
+            </p>
+        </div>
     </header>
 
     <!-- Search -->
