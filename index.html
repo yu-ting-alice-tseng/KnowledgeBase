@@ -431,8 +431,8 @@
         // button states
         ['zh','en','fr'].forEach(k => {
             const btn = document.getElementById(`idx-${k}`);
-            if (k === l) { btn.style.background = 'rgba(139,92,246,0.15)'; btn.style.color = '#c4b5fd'; }
-            else { btn.style.background = 'transparent'; btn.style.color = '#64748b'; }
+            if (k === l) { btn.style.background = 'rgba(139,92,246,0.15)'; btn.style.color = '#c4b5fd'; btn.setAttribute('aria-pressed','true'); }
+            else { btn.style.background = 'transparent'; btn.style.color = '#64748b'; btn.setAttribute('aria-pressed','false'); }
         });
         // update static UI
         document.getElementById('badge-text').textContent = u.badge;
@@ -493,9 +493,15 @@
 
         filtered.forEach(mod => {
             const card = document.createElement('div');
-            card.className = 'glass-card p-8 cursor-pointer group' + (editMode ? ' edit-mode' : '');
+            card.className = 'glass-card p-8 group' + (editMode ? ' edit-mode' : '');
             card.dataset.id = mod.id;
-            if (!editMode) card.onclick = () => openModule(mod.file, mod.title);
+            if (!editMode) {
+                card.onclick = () => openModule(mod.file, mod.title);
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `Open ${mod.title}`);
+                card.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModule(mod.file, mod.title); } };
+            }
 
             card.innerHTML = `
                 <button class="delete-btn" onclick="deleteModule('${mod.id}',event)"><i class="fa-solid fa-xmark"></i></button>
