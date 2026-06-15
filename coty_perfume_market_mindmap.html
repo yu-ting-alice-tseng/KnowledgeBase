@@ -207,7 +207,9 @@
 
         function switchLanguage(lang) {
             currentLang = lang;
-            
+            // normalize: save 'cn' as 'zh' so other pages can restore it
+            localStorage.setItem('kb_lang', lang === 'cn' ? 'zh' : lang);
+
             // Toggle active classes on buttons
             document.querySelectorAll('.controls button').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${lang}`).classList.add('active');
@@ -225,7 +227,10 @@
         }
 
         // Initial setup execution
-        switchLanguage('en');
+        const _savedLang = localStorage.getItem('kb_lang');
+        // map 'zh' back to 'cn' for this page's data keys
+        const _initLang = _savedLang === 'zh' ? 'cn' : (_savedLang && ['en','fr','cn'].includes(_savedLang) ? _savedLang : 'en');
+        switchLanguage(_initLang);
     </script>
 </body>
 </html>
