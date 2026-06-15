@@ -1410,6 +1410,7 @@
     function setLanguage(lang) {
       if (!uiTranslations[lang]) return;
       currentLang = lang;
+      localStorage.setItem('kb_lang', lang);
       
       // 更新語言按鈕樣式
       ['zh', 'en', 'fr'].forEach(l => {
