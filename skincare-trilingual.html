@@ -74,17 +74,25 @@
   .node-branch.active { box-shadow: 0 0 30px var(--node-color), 0 0 60px rgba(0,0,0,0.5) !important; }
 
   .node-leaf {
-    background: rgba(15,23,42,0.85);
+    background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 20px;
-    padding: 8px 14px;
-    font-size: 11px; font-weight: 600;
+    padding: 8px 16px;
+    font-size: 11px; font-weight: 700;
     white-space: nowrap;
-    backdrop-filter: blur(8px);
-    transition: border-color .2s, box-shadow .2s;
+    backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.10);
+    transition: all .2s;
   }
-  .node-leaf:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-  .node-leaf.active { box-shadow: 0 0 0 2px var(--node-color); }
+  .node-leaf:hover {
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.22);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.14);
+  }
+  .node-leaf.active {
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 2px var(--node-color), 0 8px 28px rgba(0,0,0,0.35);
+  }
 
   /* ── Detail Panel ── */
   #detail-panel {
