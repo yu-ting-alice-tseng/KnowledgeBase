@@ -1404,6 +1404,318 @@
       }
     };
 
+    // ── 新增領域 ──────────────────────────────────────────────────────────
+    domainDatabase.consulting = {
+      themeColor: 'violet', rgbColor: '139,92,246', hexColor: '#8b5cf6',
+      indicatorIcon: 'fa-briefcase', indicatorText: { zh: '點擊節點，深入了解諮詢顧問各核心能力', en: 'Click a node to explore consulting competencies', fr: 'Cliquez sur un nœud pour explorer les compétences conseil' },
+      centralNode: { zh: { zh: '管理顧問', en: 'Consulting', fr: 'Conseil' }, en: { zh: '管理顧問', en: 'Consulting', fr: 'Conseil' }, fr: { zh: '管理顧問', en: 'Consulting', fr: 'Conseil' } },
+      branches: {
+        strategy_consulting: {
+          id: 'strategy_consulting',
+          title: { zh: '策略顧問', en: 'Strategy Consulting', fr: 'Conseil en Stratégie' },
+          englishTitle: 'Strategy',
+          badge: 'Core',
+          icon: 'fa-chess',
+          description: { zh: '協助企業制定長期競爭策略、市場進入計畫與商業模式轉型，是麥肯錫、BCG、貝恩的核心業務。', en: 'Help companies formulate long-term competitive strategy, market entry plans, and business model transformation — the core business of McKinsey, BCG, and Bain.', fr: 'Aider les entreprises à définir leur stratégie concurrentielle, leurs plans d\'entrée sur le marché et leur transformation — cœur de métier de McKinsey, BCG et Bain.' },
+          subfields: [{ zh: '競爭策略', en: 'Competitive Strategy', fr: 'Stratégie concurrentielle' }, { zh: '市場進入', en: 'Market Entry', fr: 'Entrée sur le marché' }, { zh: '商業模式', en: 'Business Model', fr: 'Modèle d\'affaires' }],
+          skills: [{ zh: '問題拆解', en: 'Problem Structuring', fr: 'Structuration de problème' }, { zh: 'MECE框架', en: 'MECE Frameworks', fr: 'Cadres MECE' }, { zh: '情境分析', en: 'Scenario Analysis', fr: 'Analyse de scénarios' }],
+          tools: ['Issue Tree', 'Porter\'s 5 Forces', 'BCG Matrix', 'SWOT'],
+          scenario: {
+            question: { zh: '你是BCG顧問，客戶為台灣連鎖便利商店，面臨東南亞展店機會，應首先進行哪項分析？', en: 'As a BCG consultant, your client is a Taiwanese convenience store chain eyeing Southeast Asia expansion. What analysis should come first?', fr: 'En tant que consultant BCG, votre client est une chaîne taïwanaise souhaitant s\'étendre en Asie du Sud-Est. Quelle analyse effectuer en premier ?' },
+            options: [
+              { text: { zh: 'A. 立刻確定要進哪個國家', en: 'A. Immediately decide which country to enter', fr: 'A. Décider immédiatement quel pays cibler' }, correct: false, reason: { zh: '應先釐清問題核心與現況，而非倉促選定市場。', en: 'Problem definition and baseline analysis must precede market selection.', fr: 'La définition du problème et l\'analyse de base doivent précéder le choix du marché.' } },
+              { text: { zh: 'B. 拆解核心問題樹：市場吸引力 vs. 公司能力匹配度', en: 'B. Build an issue tree: market attractiveness vs. company capability fit', fr: 'B. Construire un arbre à problèmes : attractivité du marché vs capacités de l\'entreprise' }, correct: true, reason: { zh: '正確！策略顧問首要任務是將模糊問題結構化，以MECE方式拆解成可驗證的子假設。', en: 'Correct! The consultant\'s first task is to structure the ambiguous question into testable sub-hypotheses using a MECE issue tree.', fr: 'Correct ! La première mission du consultant est de structurer la question ambiguë en sous-hypothèses vérifiables via un arbre MECE.' } },
+              { text: { zh: 'C. 直接做競品分析', en: 'C. Jump straight to competitor analysis', fr: 'C. Passer directement à l\'analyse concurrentielle' }, correct: false, reason: { zh: '競品分析是後續步驟，先要確定問題框架。', en: 'Competitor analysis is a downstream step — problem framing comes first.', fr: 'L\'analyse concurrentielle est une étape ultérieure — le cadrage du problème vient d\'abord.' } }
+            ]
+          }
+        },
+        operations_consulting: {
+          id: 'operations_consulting',
+          title: { zh: '營運顧問', en: 'Operations Consulting', fr: 'Conseil Opérationnel' },
+          englishTitle: 'Operations',
+          badge: 'High Demand',
+          icon: 'fa-gears',
+          description: { zh: '協助客戶改善流程效率、降低成本並提升組織績效，涵蓋精實管理、六標準差與數位轉型。', en: 'Help clients improve process efficiency, reduce costs, and boost organizational performance — covering Lean, Six Sigma, and digital transformation.', fr: 'Aider les clients à améliorer l\'efficacité des processus, réduire les coûts et renforcer la performance organisationnelle.' },
+          subfields: [{ zh: '流程改善', en: 'Process Improvement', fr: 'Amélioration des processus' }, { zh: '精實管理', en: 'Lean Management', fr: 'Gestion Lean' }, { zh: '數位轉型', en: 'Digital Transformation', fr: 'Transformation numérique' }],
+          skills: [{ zh: '流程圖繪製', en: 'Process Mapping', fr: 'Cartographie des processus' }, { zh: '根本原因分析', en: 'Root Cause Analysis', fr: 'Analyse des causes racines' }, { zh: 'KPI設計', en: 'KPI Design', fr: 'Conception de KPI' }],
+          tools: ['Lean Six Sigma', 'Value Stream Map', 'DMAIC', 'Kaizen'],
+          scenario: {
+            question: { zh: '一家製造商生產線良率僅75%，你身為顧問應優先採取哪個步驟？', en: 'A manufacturer has a 75% production yield. As a consultant, what is your priority first step?', fr: 'Un fabricant affiche un taux de rendement de 75%. En tant que consultant, quelle est votre première priorité ?' },
+            options: [
+              { text: { zh: 'A. 立即更換所有設備', en: 'A. Immediately replace all equipment', fr: 'A. Remplacer immédiatement tous les équipements' }, correct: false, reason: { zh: '在釐清根本原因前，貿然更換設備可能浪費資源。', en: 'Replacing equipment before diagnosing root causes wastes resources.', fr: 'Remplacer les équipements avant de diagnostiquer les causes racines gaspille des ressources.' } },
+              { text: { zh: 'B. 以DMAIC框架界定問題，收集數據找出缺陷根因', en: 'B. Apply DMAIC to define the problem and collect data to find defect root causes', fr: 'B. Appliquer DMAIC pour définir le problème et collecter des données sur les causes de défauts' }, correct: true, reason: { zh: '正確！DMAIC（定義、測量、分析、改善、控制）是六標準差核心框架，確保以數據驅動找到真正根因。', en: 'Correct! DMAIC (Define, Measure, Analyze, Improve, Control) is the Six Sigma core framework ensuring data-driven root cause identification.', fr: 'Correct ! DMAIC est le cadre central du Six Sigma pour identifier les causes racines par la donnée.' } },
+              { text: { zh: 'C. 直接請工人加班補足產量缺口', en: 'C. Ask workers to overtime to cover the production gap', fr: 'C. Demander aux ouvriers de faire des heures supplémentaires pour combler l\'écart' }, correct: false, reason: { zh: '加班掩蓋問題而非解決根本原因，且增加成本。', en: 'Overtime masks the problem rather than fixing root causes and increases cost.', fr: 'Les heures supplémentaires masquent le problème au lieu de traiter les causes racines.' } }
+            ]
+          }
+        },
+        change_management: {
+          id: 'change_management',
+          title: { zh: '變革管理', en: 'Change Management', fr: 'Conduite du Changement' },
+          englishTitle: 'Change Mgmt',
+          badge: 'Soft Skill',
+          icon: 'fa-people-arrows',
+          description: { zh: '引導組織成員適應轉型，化解抵抗、建立共識，使策略落地執行，是顧問項目成敗的關鍵軟實力。', en: 'Guide organizational members through transformation — overcoming resistance, building alignment, and ensuring strategy execution. A critical soft skill for project success.', fr: 'Accompagner les collaborateurs dans la transformation — surmonter les résistances, construire l\'adhésion et assurer l\'exécution de la stratégie.' },
+          subfields: [{ zh: '利害關係人管理', en: 'Stakeholder Management', fr: 'Gestion des parties prenantes' }, { zh: '組織溝通', en: 'Org Communication', fr: 'Communication organisationnelle' }, { zh: '培訓與賦能', en: 'Training & Enablement', fr: 'Formation et autonomisation' }],
+          skills: [{ zh: '訪談技巧', en: 'Interview Skills', fr: 'Techniques d\'entretien' }, { zh: '影響力說服', en: 'Influencing', fr: 'Influence et persuasion' }, { zh: '工作坊設計', en: 'Workshop Design', fr: 'Conception d\'ateliers' }],
+          tools: ['ADKAR Model', 'Kotter 8-Step', 'Stakeholder Map', 'Resistance Log'],
+          scenario: {
+            question: { zh: '你正在導入新ERP系統，但中階管理者普遍抗拒，你應優先做什麼？', en: 'You are rolling out a new ERP system but mid-level managers are broadly resistant. What should you prioritize?', fr: 'Vous déployez un nouveau système ERP mais les managers intermédiaires résistent. Que prioriser ?' },
+            options: [
+              { text: { zh: 'A. 強制規定所有人必須在兩周內完成系統切換', en: 'A. Mandate everyone to switch to the new system within two weeks', fr: 'A. Imposer la bascule dans les deux semaines à tous les utilisateurs' }, correct: false, reason: { zh: '強制切換在未解決抗拒根因前，只會引發更大的抵制和系統棄用。', en: 'Forced cutover without addressing root resistance causes greater rejection and system abandonment.', fr: 'La bascule forcée sans traiter les résistances provoque un rejet et une non-adoption.' } },
+              { text: { zh: 'B. 先做利害關係人分析，了解抗拒原因，再針對性溝通', en: 'B. Conduct stakeholder analysis to understand resistance roots, then communicate with targeted messages', fr: 'B. Mener une analyse des parties prenantes pour comprendre les résistances, puis communiquer de façon ciblée' }, correct: true, reason: { zh: '正確！ADKAR模型強調先建立認知與意願（Awareness & Desire），才能有效推動後續學習與行動。', en: 'Correct! The ADKAR model emphasizes building Awareness and Desire before Knowledge and Action can follow.', fr: 'Correct ! Le modèle ADKAR insiste sur la conscience et le désir avant la connaissance et l\'action.' } },
+              { text: { zh: 'C. 直接跳過中階管理者，直接對基層員工推廣', en: 'C. Bypass middle managers and push adoption directly to frontline employees', fr: 'C. Contourner les managers et pousser l\'adoption directement auprès des équipes terrain' }, correct: false, reason: { zh: '跳過中層會失去關鍵推動力，且可能造成訊息混亂。', en: 'Bypassing middle management removes critical multipliers and creates message chaos.', fr: 'Contourner le management intermédiaire élimine les relais clés et crée de la confusion.' } }
+            ]
+          }
+        }
+      }
+    };
+
+    domainDatabase.supply_chain = {
+      themeColor: 'sky', rgbColor: '14,165,233', hexColor: '#0ea5e9',
+      indicatorIcon: 'fa-truck-fast', indicatorText: { zh: '點擊節點，探索供應鏈管理核心領域', en: 'Click a node to explore supply chain management', fr: 'Cliquez sur un nœud pour explorer la gestion de la chaîne logistique' },
+      centralNode: { zh: { zh: '供應鏈', en: 'Supply Chain', fr: 'Chaîne Logistique' }, en: { zh: '供應鏈', en: 'Supply Chain', fr: 'Chaîne Logistique' }, fr: { zh: '供應鏈', en: 'Supply Chain', fr: 'Chaîne Logistique' } },
+      branches: {
+        procurement: {
+          id: 'procurement',
+          title: { zh: '採購管理', en: 'Procurement', fr: 'Achats' },
+          englishTitle: 'Procurement',
+          badge: 'Foundation',
+          icon: 'fa-hand-holding-dollar',
+          description: { zh: '管理原物料、零件的供應商選擇、議價與合約管理，以最優成本確保穩定供料。', en: 'Manage supplier selection, negotiation, and contract management for raw materials and components to ensure stable supply at optimal cost.', fr: 'Gérer la sélection des fournisseurs, la négociation et les contrats pour garantir un approvisionnement stable au meilleur coût.' },
+          subfields: [{ zh: '供應商開發', en: 'Supplier Development', fr: 'Développement fournisseurs' }, { zh: '成本分析', en: 'Cost Analysis', fr: 'Analyse des coûts' }, { zh: '合約管理', en: 'Contract Management', fr: 'Gestion des contrats' }],
+          skills: [{ zh: '議價技巧', en: 'Negotiation', fr: 'Négociation' }, { zh: '供應商評估', en: 'Supplier Evaluation', fr: 'Évaluation fournisseurs' }, { zh: '成本建模', en: 'Cost Modeling', fr: 'Modélisation des coûts' }],
+          tools: ['SAP Ariba', 'Spend Analysis', 'RFQ/RFP', 'Supplier Scorecard'],
+          scenario: {
+            question: { zh: '單一供應商提供你80%的關鍵零件，供應鏈主管應如何降低風險？', en: 'A single supplier provides 80% of your critical components. How should a supply chain manager reduce this risk?', fr: 'Un seul fournisseur fournit 80% de vos composants critiques. Comment réduire ce risque ?' },
+            options: [
+              { text: { zh: 'A. 維持現狀，價格最優就好', en: 'A. Maintain the status quo — best price is what matters', fr: 'A. Maintenir le statu quo — seul le meilleur prix compte' }, correct: false, reason: { zh: '單一來源採購雖節省成本，但在中斷風險下極度脆弱。', en: 'Single-source procurement saves cost but is dangerously fragile when disruption occurs.', fr: 'L\'approvisionnement à source unique économise des coûts mais est très vulnérable aux perturbations.' } },
+              { text: { zh: 'B. 推動雙源/多源採購策略，並評估備用供應商', en: 'B. Pursue dual/multi-sourcing strategy and qualify backup suppliers', fr: 'B. Mettre en œuvre une stratégie multi-sources et qualifier des fournisseurs alternatifs' }, correct: true, reason: { zh: '正確！雙源或多源採購是供應鏈韌性的基礎，可在主供應商中斷時確保業務連續性。', en: 'Correct! Dual/multi-sourcing is the foundation of supply chain resilience, ensuring business continuity when the primary supplier is disrupted.', fr: 'Correct ! Le multi-sourcing est la base de la résilience, garantissant la continuité en cas de perturbation du fournisseur principal.' } },
+              { text: { zh: 'C. 存放6個月庫存以防萬一', en: 'C. Stock 6 months of inventory as a buffer', fr: 'C. Stocker 6 mois de stock par précaution' }, correct: false, reason: { zh: '過量庫存佔用大量資本，且無法根本解決供應商集中風險。', en: 'Excess inventory ties up capital and doesn\'t fundamentally address supplier concentration risk.', fr: 'Un stock excessif immobilise du capital et ne résout pas fondamentalement le risque de concentration fournisseur.' } }
+            ]
+          }
+        },
+        logistics: {
+          id: 'logistics',
+          title: { zh: '物流與倉儲', en: 'Logistics & Warehousing', fr: 'Logistique et Entreposage' },
+          englishTitle: 'Logistics',
+          badge: 'Operations',
+          icon: 'fa-warehouse',
+          description: { zh: '涵蓋貨物運輸、倉庫佈局、庫存管理與最後一哩配送，是電商與製造業的核心競爭力。', en: 'Covers freight transport, warehouse layout, inventory management, and last-mile delivery — a core competency for e-commerce and manufacturing.', fr: 'Couvre le transport de marchandises, la gestion des entrepôts, des stocks et la livraison du dernier kilomètre.' },
+          subfields: [{ zh: '倉儲規劃', en: 'Warehouse Planning', fr: 'Planification entrepôt' }, { zh: '庫存管理', en: 'Inventory Management', fr: 'Gestion des stocks' }, { zh: '最後一哩', en: 'Last-Mile Delivery', fr: 'Dernier kilomètre' }],
+          skills: [{ zh: '需求預測', en: 'Demand Forecasting', fr: 'Prévision de la demande' }, { zh: '路線優化', en: 'Route Optimization', fr: 'Optimisation des itinéraires' }, { zh: 'WMS操作', en: 'WMS Operation', fr: 'Opération WMS' }],
+          tools: ['SAP WM', 'Manhattan Associates', 'Oracle WMS', 'Power BI'],
+          scenario: {
+            question: { zh: '電商旺季訂單量預計增加3倍，物流主管應最優先做哪件事？', en: 'E-commerce peak season orders are projected to triple. What should the logistics manager prioritize first?', fr: 'Les commandes e-commerce devraient tripler lors des pics. Que doit prioriser le responsable logistique ?' },
+            options: [
+              { text: { zh: 'A. 臨時僱傭大量工讀生', en: 'A. Hire large numbers of temporary workers last-minute', fr: 'A. Embaucher massivement en urgence des intérimaires' }, correct: false, reason: { zh: '臨時大量招募品質難以控管，且訓練成本高。', en: 'Last-minute mass hiring is hard to quality-control and training costs are high.', fr: 'Le recrutement massif en urgence est difficile à contrôler et les coûts de formation sont élevés.' } },
+              { text: { zh: 'B. 提前進行產能規劃：擴充倉儲、預約運力、啟動彈性人力協議', en: 'B. Proactive capacity planning: expand warehouse space, reserve carrier capacity, activate flexible staffing agreements', fr: 'B. Planification proactive des capacités : extension entrepôt, réservation transport, accords de personnel flexible' }, correct: true, reason: { zh: '正確！物流旺季管理的關鍵在於提前規劃，而非事後補救。S&OP流程確保產能與需求對齊。', en: 'Correct! Peak logistics management success depends on proactive planning, not reactive fixes. S&OP aligns capacity with demand.', fr: 'Correct ! La gestion des pics logistiques repose sur la planification proactive, pas les corrections réactives.' } },
+              { text: { zh: 'C. 暫停部分SKU的接單以減少壓力', en: 'C. Pause orders for some SKUs to reduce pressure', fr: 'C. Suspendre les commandes sur certains SKU pour réduire la pression' }, correct: false, reason: { zh: '暫停接單直接損失業績，是最不理想的解法。', en: 'Pausing orders directly sacrifices revenue — the worst-case solution.', fr: 'Suspendre les commandes sacrifie directement le chiffre d\'affaires — la pire solution.' } }
+            ]
+          }
+        },
+        demand_planning: {
+          id: 'demand_planning',
+          title: { zh: '需求規劃', en: 'Demand Planning', fr: 'Planification de la Demande' },
+          englishTitle: 'Demand Planning',
+          badge: 'Analytics',
+          icon: 'fa-chart-line',
+          description: { zh: '預測未來市場需求，以統計模型與業務判斷結合，驅動生產排程、原料採購與庫存水位決策。', en: 'Forecast future market demand by combining statistical models and business judgment to drive production scheduling, material procurement, and inventory level decisions.', fr: 'Prévoir la demande future en combinant modèles statistiques et jugement business pour piloter la production et les stocks.' },
+          subfields: [{ zh: '統計預測', en: 'Statistical Forecasting', fr: 'Prévision statistique' }, { zh: 'S&OP流程', en: 'S&OP Process', fr: 'Processus S&OP' }, { zh: '促銷影響分析', en: 'Promo Impact Analysis', fr: 'Analyse impact promotionnel' }],
+          skills: [{ zh: '時間序列分析', en: 'Time Series Analysis', fr: 'Analyse de séries temporelles' }, { zh: '業務協作', en: 'Cross-functional Collaboration', fr: 'Collaboration interfonctionnelle' }, { zh: '異常偵測', en: 'Outlier Detection', fr: 'Détection d\'anomalies' }],
+          tools: ['SAP IBP', 'Blue Yonder', 'Excel Solver', 'Python (Prophet)'],
+          scenario: {
+            question: { zh: '你的預測模型顯示下季需求下降15%，但業務團隊強烈反對，你應如何處理？', en: 'Your forecast model shows 15% demand decline next quarter, but the sales team strongly disagrees. How do you handle this?', fr: 'Votre modèle prévoit une baisse de la demande de 15%, mais l\'équipe commerciale s\'y oppose fortement. Comment gérer ?' },
+            options: [
+              { text: { zh: 'A. 完全採信業務數字', en: 'A. Accept the sales team\'s numbers entirely', fr: 'A. Accepter intégralement les chiffres de l\'équipe commerciale' }, correct: false, reason: { zh: '業務數字常帶有樂觀偏誤，單方面採信會增加庫存風險。', en: 'Sales numbers often carry optimism bias; accepting them one-sidedly increases inventory risk.', fr: 'Les chiffres commerciaux ont souvent un biais optimiste ; les accepter augmente le risque de surstockage.' } },
+              { text: { zh: 'B. 在S&OP會議中呈現雙方假設，通過數據佐證與情境模擬尋求共識', en: 'B. Present both assumptions in the S&OP meeting and seek consensus through data evidence and scenario simulation', fr: 'B. Présenter les deux hypothèses en S&OP et chercher un consensus par les données et la simulation de scénarios' }, correct: true, reason: { zh: '正確！S&OP的核心價值在於整合各部門觀點，用數據取代主觀爭論，並給出帶有風險評估的最終預測共識。', en: 'Correct! S&OP\'s core value is integrating cross-functional perspectives, replacing subjective debate with data, and producing a consensus forecast with risk assessment.', fr: 'Correct ! La valeur du S&OP est d\'intégrer les perspectives, remplacer les débats subjectifs par les données et produire un consensus avec évaluation des risques.' } },
+              { text: { zh: 'C. 維持高庫存以兩邊都不得罪', en: 'C. Keep high inventory to avoid offending either side', fr: 'C. Maintenir un stock élevé pour ne pas froisser les deux parties' }, correct: false, reason: { zh: '規避衝突不是決策方式，高庫存徒增資金佔用與報廢風險。', en: 'Conflict avoidance is not decision-making; high inventory increases capital tie-up and obsolescence risk.', fr: 'Éviter les conflits n\'est pas une prise de décision ; un stock élevé augmente les coûts et le risque d\'obsolescence.' } }
+            ]
+          }
+        }
+      }
+    };
+
+    domainDatabase.strategy = {
+      themeColor: 'indigo', rgbColor: '99,102,241', hexColor: '#6366f1',
+      indicatorIcon: 'fa-chess-queen', indicatorText: { zh: '點擊節點，探索企業策略規劃核心框架', en: 'Click a node to explore corporate strategy frameworks', fr: 'Cliquez sur un nœud pour explorer les cadres de stratégie d\'entreprise' },
+      centralNode: { zh: { zh: '企業策略', en: 'Strategy', fr: 'Stratégie' }, en: { zh: '企業策略', en: 'Strategy', fr: 'Stratégie' }, fr: { zh: '企業策略', en: 'Strategy', fr: 'Stratégie' } },
+      branches: {
+        competitive_strategy: {
+          id: 'competitive_strategy',
+          title: { zh: '競爭策略', en: 'Competitive Strategy', fr: 'Stratégie Concurrentielle' },
+          englishTitle: 'Competitive',
+          badge: 'Core',
+          icon: 'fa-shield-halved',
+          description: { zh: '分析產業競爭動態，建立持久競爭優勢，波特五力、競爭定位與差異化是核心工具。', en: 'Analyze industry competitive dynamics and build sustainable competitive advantage — Porter\'s Five Forces, competitive positioning, and differentiation are core tools.', fr: 'Analyser la dynamique concurrentielle et construire un avantage compétitif durable — les Cinq Forces de Porter, le positionnement et la différenciation sont les outils clés.' },
+          subfields: [{ zh: '差異化策略', en: 'Differentiation Strategy', fr: 'Stratégie de différenciation' }, { zh: '成本領導', en: 'Cost Leadership', fr: 'Leadership par les coûts' }, { zh: '聚焦策略', en: 'Focus Strategy', fr: 'Stratégie de niche' }],
+          skills: [{ zh: '產業分析', en: 'Industry Analysis', fr: 'Analyse sectorielle' }, { zh: '競品情報', en: 'Competitive Intelligence', fr: 'Intelligence concurrentielle' }, { zh: '定位設計', en: 'Positioning Design', fr: 'Conception de positionnement' }],
+          tools: ['Porter\'s 5 Forces', 'Value Chain Analysis', 'Competitive Map', 'Blue Ocean Canvas'],
+          scenario: {
+            question: { zh: '一家本土品牌面對國際大廠殺入市場，最不應該做的是什麼？', en: 'A local brand faces international players entering its market. What should it NOT do?', fr: 'Une marque locale fait face à l\'arrivée de géants internationaux. Que ne doit-elle surtout pas faire ?' },
+            options: [
+              { text: { zh: 'A. 強化在地化優勢與利基市場深耕', en: 'A. Strengthen localization advantages and deepen niche market penetration', fr: 'A. Renforcer les avantages de localisation et approfondir sa niche' }, correct: false, reason: { zh: '這是正確策略——在地品牌應在大廠難以複製的領域建立護城河。', en: 'This is correct strategy — local brands should build moats in areas international players can\'t easily replicate.', fr: 'C\'est la bonne stratégie — les marques locales doivent créer des fossés que les géants ne peuvent pas facilement reproduire.' } },
+              { text: { zh: 'B. 與國際大廠直接在所有品類上打價格戰', en: 'B. Launch a direct price war against the international player across all categories', fr: 'B. Lancer une guerre des prix directe contre le géant international sur toutes les catégories' }, correct: true, reason: { zh: '正確（應避免）！全面價格戰會消耗本土品牌有限資源，且在規模不對稱下注定失敗。聚焦優勢利基才是正道。', en: 'Correct (avoid this)! A full-scale price war depletes local brand resources and is destined to fail against asymmetric scale. Focus on niche strengths.', fr: 'Correct (à éviter) ! Une guerre des prix totale épuise les ressources de la marque locale et est vouée à l\'échec face à l\'asymétrie d\'échelle.' } },
+              { text: { zh: 'C. 與大廠差異化，瞄準其忽略的顧客群', en: 'C. Differentiate from the large player and target customer segments they neglect', fr: 'C. Se différencier et cibler les segments de clientèle négligés par le grand acteur' }, correct: false, reason: { zh: '這是正確策略——競爭避開大廠優勢面，聚焦被忽略的細分市場。', en: 'This is correct strategy — compete where the large player is weak and target underserved segments.', fr: 'C\'est la bonne stratégie — concourir là où le grand acteur est faible et cibler les segments sous-servis.' } }
+            ]
+          }
+        },
+        growth_strategy: {
+          id: 'growth_strategy',
+          title: { zh: '成長策略', en: 'Growth Strategy', fr: 'Stratégie de Croissance' },
+          englishTitle: 'Growth',
+          badge: 'CEO Priority',
+          icon: 'fa-rocket',
+          description: { zh: '企業如何持續擴大規模，包含市場滲透、新市場開發、新產品開發與多角化四大方向（安索夫矩陣）。', en: 'How companies sustain growth — via market penetration, market development, product development, and diversification (Ansoff Matrix).', fr: 'Comment les entreprises maintiennent leur croissance — via la pénétration de marché, le développement de marchés, de produits et la diversification (Matrice d\'Ansoff).' },
+          subfields: [{ zh: '市場滲透', en: 'Market Penetration', fr: 'Pénétration de marché' }, { zh: '地理擴張', en: 'Geographic Expansion', fr: 'Expansion géographique' }, { zh: '併購整合', en: 'M&A Integration', fr: 'Intégration M&A' }],
+          skills: [{ zh: '市場規模估算', en: 'Market Sizing', fr: 'Estimation de marché' }, { zh: '財務建模', en: 'Financial Modeling', fr: 'Modélisation financière' }, { zh: '盡職調查', en: 'Due Diligence', fr: 'Due diligence' }],
+          tools: ['Ansoff Matrix', 'TAM/SAM/SOM', 'DCF Model', 'McKinsey 7S'],
+          scenario: {
+            question: { zh: '一家台灣SaaS公司想進入日本市場，最應優先評估哪個因素？', en: 'A Taiwanese SaaS company wants to enter the Japanese market. Which factor should be evaluated first?', fr: 'Une entreprise SaaS taïwanaise veut entrer sur le marché japonais. Quel facteur évaluer en priorité ?' },
+            options: [
+              { text: { zh: 'A. 日本市場的規模（TAM）', en: 'A. Japanese market size (TAM)', fr: 'A. La taille du marché japonais (TAM)' }, correct: false, reason: { zh: '市場規模是重要考量，但光有大市場並不等於可進入——競爭結構、法規與客戶需求同樣關鍵。', en: 'Market size matters but a large market alone doesn\'t mean it\'s accessible — competitive structure, regulation, and customer needs are equally critical.', fr: 'La taille du marché est importante mais ne garantit pas l\'accessibilité — structure concurrentielle, réglementation et besoins clients sont tout aussi critiques.' } },
+              { text: { zh: 'B. 是否有本地化夥伴或通路，以及日本客戶對外資SaaS的接受度', en: 'B. Whether local partners or channels exist and Japanese customer acceptance of foreign SaaS', fr: 'B. L\'existence de partenaires locaux et l\'acceptation des clients japonais envers les SaaS étrangers' }, correct: true, reason: { zh: '正確！日本市場的文化壁壘與通路高度仰賴本地信任關係，若無在地合作夥伴，市場規模再大也難以觸達。', en: 'Correct! Japan\'s cultural barriers and channel dynamics depend heavily on local trust relationships. Without local partners, even a large market is inaccessible.', fr: 'Correct ! Les barrières culturelles et les canaux japonais dépendent fortement des relations de confiance locales. Sans partenaires locaux, même un grand marché est inaccessible.' } },
+              { text: { zh: 'C. 產品功能是否比競爭對手多', en: 'C. Whether the product has more features than competitors', fr: 'C. Si le produit a plus de fonctionnalités que les concurrents' }, correct: false, reason: { zh: '功能多寡並非市場進入的決定因素，在地化適應與通路更為關鍵。', en: 'Feature count is not the determining factor for market entry; localization and channel access matter more.', fr: 'Le nombre de fonctionnalités n\'est pas le facteur déterminant pour entrer sur un marché ; la localisation et l\'accès aux canaux comptent davantage.' } }
+            ]
+          }
+        },
+        corporate_governance: {
+          id: 'corporate_governance',
+          title: { zh: '公司治理', en: 'Corporate Governance', fr: 'Gouvernance d\'Entreprise' },
+          englishTitle: 'Governance',
+          badge: 'ESG',
+          icon: 'fa-scale-balanced',
+          description: { zh: '確保公司決策制度透明、股東與利害關係人利益受保護，ESG浪潮下已成為投資人核心考量。', en: 'Ensure transparent corporate decision-making and protect shareholder/stakeholder interests — under the ESG wave, now a core investment consideration.', fr: 'Assurer la transparence des décisions et protéger les intérêts des parties prenantes — sous la vague ESG, c\'est devenu un critère d\'investissement central.' },
+          subfields: [{ zh: '董事會制度', en: 'Board Structure', fr: 'Structure du conseil d\'administration' }, { zh: 'ESG報告', en: 'ESG Reporting', fr: 'Reporting ESG' }, { zh: '法規遵循', en: 'Compliance', fr: 'Conformité' }],
+          skills: [{ zh: '年報解讀', en: 'Annual Report Reading', fr: 'Lecture de rapports annuels' }, { zh: '股東溝通', en: 'Investor Relations', fr: 'Relations investisseurs' }, { zh: 'ESG指標設計', en: 'ESG Metric Design', fr: 'Conception de métriques ESG' }],
+          tools: ['GRI Standards', 'TCFD Framework', 'Bloomberg ESG', 'Proxy Analysis'],
+          scenario: {
+            question: { zh: '一家公司CEO同時擔任董事長，這在治理上主要帶來什麼風險？', en: 'A company\'s CEO also serves as Board Chairman. What is the primary governance risk?', fr: 'Le PDG d\'une entreprise est aussi Président du Conseil. Quel est le principal risque de gouvernance ?' },
+            options: [
+              { text: { zh: 'A. 公司決策速度會變慢', en: 'A. Corporate decision-making will slow down', fr: 'A. Les décisions de l\'entreprise seront plus lentes' }, correct: false, reason: { zh: '事實上，雙重職務往往讓決策更快，但缺乏制衡。', en: 'In fact, dual roles often speed up decisions — but this removes checks and balances.', fr: 'En réalité, les rôles doubles accélèrent souvent les décisions — mais cela supprime les contre-pouvoirs.' } },
+              { text: { zh: 'B. 監督機制失衡，缺乏對CEO的獨立制衡，增加利益衝突風險', en: 'B. Oversight imbalance — lack of independent checks on the CEO increases conflict of interest risk', fr: 'B. Déséquilibre de la surveillance — l\'absence de contrôle indépendant du PDG augmente le risque de conflits d\'intérêts' }, correct: true, reason: { zh: '正確！雙重職務（Dual Role）是公司治理的紅旗，國際機構投資人通常要求分離CEO與董事長職務。', en: 'Correct! CEO/Chair duality is a governance red flag. Institutional investors globally typically require separation of the CEO and Chairman roles.', fr: 'Correct ! Le cumul des fonctions est un signal d\'alarme en gouvernance. Les investisseurs institutionnels exigent généralement la séparation des rôles.' } },
+              { text: { zh: 'C. 員工薪資會受影響', en: 'C. Employee compensation will be affected', fr: 'C. Les salaires des employés seront affectés' }, correct: false, reason: { zh: '雙重職務直接影響的是董事會獨立性與股東保護，並非員工薪資。', en: 'Dual roles directly affect board independence and shareholder protection, not employee compensation.', fr: 'Les rôles doubles affectent directement l\'indépendance du conseil et la protection des actionnaires, pas les salaires.' } }
+            ]
+          }
+        }
+      }
+    };
+
+    domainDatabase.operations = {
+      themeColor: 'amber', rgbColor: '245,158,11', hexColor: '#f59e0b',
+      indicatorIcon: 'fa-industry', indicatorText: { zh: '點擊節點，探索營運管理核心領域', en: 'Click a node to explore operations management', fr: 'Cliquez sur un nœud pour explorer le management des opérations' },
+      centralNode: { zh: { zh: '營運管理', en: 'Operations', fr: 'Opérations' }, en: { zh: '營運管理', en: 'Operations', fr: 'Opérations' }, fr: { zh: '營運管理', en: 'Operations', fr: 'Opérations' } },
+      branches: {
+        project_management: {
+          id: 'project_management',
+          title: { zh: '專案管理', en: 'Project Management', fr: 'Gestion de Projet' },
+          englishTitle: 'PM',
+          badge: 'Universal',
+          icon: 'fa-diagram-project',
+          description: { zh: '規劃、執行、監控與收尾各類商業專案，PMP、敏捷（Agile）與PRINCE2是全球主流認證框架。', en: 'Plan, execute, monitor, and close business projects. PMP, Agile, and PRINCE2 are the globally recognized certification frameworks.', fr: 'Planifier, exécuter, surveiller et clôturer des projets. PMP, Agile et PRINCE2 sont les cadres de certification mondialement reconnus.' },
+          subfields: [{ zh: '敏捷/Scrum', en: 'Agile/Scrum', fr: 'Agile/Scrum' }, { zh: '範疇管理', en: 'Scope Management', fr: 'Gestion du périmètre' }, { zh: '風險管理', en: 'Risk Management', fr: 'Gestion des risques' }],
+          skills: [{ zh: '專案計畫', en: 'Project Planning', fr: 'Planification de projet' }, { zh: '資源分配', en: 'Resource Allocation', fr: 'Allocation des ressources' }, { zh: '利害關係人溝通', en: 'Stakeholder Communication', fr: 'Communication parties prenantes' }],
+          tools: ['MS Project', 'Jira', 'Asana', 'Gantt Chart'],
+          scenario: {
+            question: { zh: '你的IT開發專案已超出預算20%且落後兩週，你應如何處理？', en: 'Your IT development project is 20% over budget and two weeks behind schedule. How do you handle this?', fr: 'Votre projet de développement IT dépasse le budget de 20% et a deux semaines de retard. Comment gérer ?' },
+            options: [
+              { text: { zh: 'A. 向上隱瞞問題，期望之後能追回', en: 'A. Conceal the issue upward and hope to recover later', fr: 'A. Dissimuler le problème en espérant rattraper le retard' }, correct: false, reason: { zh: '隱瞞問題會讓利害關係人失去信任，且問題只會惡化。', en: 'Concealing issues destroys stakeholder trust and problems only compound.', fr: 'Dissimuler les problèmes détruit la confiance et ne fait qu\'aggraver la situation.' } },
+              { text: { zh: 'B. 立即升報利害關係人，進行範疇、時程、預算的三角評估並提出選項', en: 'B. Immediately escalate to stakeholders, conduct triangle assessment of scope/schedule/budget, and present options', fr: 'B. Escalader immédiatement aux parties prenantes, évaluer le triangle périmètre/planning/budget et présenter des options' }, correct: true, reason: { zh: '正確！PM的核心職責是透明溝通並在鐵三角（範疇、時間、成本）間做出有意識的取捨，而非單方面決定。', en: 'Correct! The PM\'s core duty is transparent communication and making conscious trade-offs within the triple constraint (scope/time/cost), not unilateral decisions.', fr: 'Correct ! Le PM doit communiquer de manière transparente et faire des arbitrages conscients dans le triangle de contraintes (périmètre/temps/coût).' } },
+              { text: { zh: 'C. 砍掉所有功能以趕上截止日', en: 'C. Cut all features to meet the deadline', fr: 'C. Supprimer toutes les fonctionnalités pour respecter le délai' }, correct: false, reason: { zh: '單方面大幅砍功能沒有經過利害關係人同意，可能造成交付物無法使用。', en: 'Unilaterally cutting major features without stakeholder agreement may result in an unusable deliverable.', fr: 'Supprimer unilatéralement des fonctionnalités sans accord des parties prenantes peut rendre le livrable inutilisable.' } }
+            ]
+          }
+        },
+        quality_management: {
+          id: 'quality_management',
+          title: { zh: '品質管理', en: 'Quality Management', fr: 'Management de la Qualité' },
+          englishTitle: 'Quality',
+          badge: 'ISO',
+          icon: 'fa-medal',
+          description: { zh: '確保產品與服務符合標準並持續改善，ISO 9001、TQM與六標準差是製造與服務業的核心品保工具。', en: 'Ensure products and services meet standards and continuously improve — ISO 9001, TQM, and Six Sigma are core quality assurance tools for manufacturing and services.', fr: 'Garantir la conformité des produits/services aux standards et l\'amélioration continue — ISO 9001, TQM et Six Sigma sont les outils clés.' },
+          subfields: [{ zh: 'ISO認證', en: 'ISO Certification', fr: 'Certification ISO' }, { zh: '全面品質管理', en: 'Total Quality Management', fr: 'Management Total de la Qualité' }, { zh: '客訴處理', en: 'Complaint Handling', fr: 'Gestion des réclamations' }],
+          skills: [{ zh: '統計製程管制', en: 'SPC (Statistical Process Control)', fr: 'Contrôle Statistique des Procédés' }, { zh: '品質稽核', en: 'Quality Auditing', fr: 'Audit qualité' }, { zh: '根因分析', en: 'Root Cause Analysis', fr: 'Analyse des causes racines' }],
+          tools: ['ISO 9001', 'Control Charts', 'Fishbone Diagram', 'FMEA'],
+          scenario: {
+            question: { zh: '客戶反映產品出現批次性缺陷，品管主管應最優先採取哪個行動？', en: 'Customers report batch defects in the product. What should the quality manager prioritize first?', fr: 'Des clients signalent des défauts par lot. Que doit prioriser en premier le responsable qualité ?' },
+            options: [
+              { text: { zh: 'A. 先向客戶道歉並給折扣', en: 'A. Apologize to customers and offer discounts first', fr: 'A. S\'excuser auprès des clients et offrir des réductions en premier' }, correct: false, reason: { zh: '道歉是必要的，但若未找出根因並遏制問題，缺陷會持續發生。', en: 'Apologies are necessary but without root cause and containment, defects will continue.', fr: 'Les excuses sont nécessaires mais sans cause racine et confinement, les défauts continueront.' } },
+              { text: { zh: 'B. 立即啟動批次隔離（Containment），同步展開根因調查（8D/DMAIC）', en: 'B. Immediately initiate batch containment while simultaneously launching root cause investigation (8D/DMAIC)', fr: 'B. Initier immédiatement le confinement des lots tout en lançant l\'analyse des causes racines (8D/DMAIC)' }, correct: true, reason: { zh: '正確！品質危機的第一步是遏制（Containment）——隔離問題批次，防止更多缺品流出。第二步才是根因調查與永久矯正。', en: 'Correct! Step one in a quality crisis is Containment — isolate the problem batch to prevent further defects from reaching customers. Root cause investigation is step two.', fr: 'Correct ! La première étape en crise qualité est le confinement — isoler le lot défectueux. L\'analyse des causes racines est la deuxième étape.' } },
+              { text: { zh: 'C. 更換整個生產團隊', en: 'C. Replace the entire production team', fr: 'C. Remplacer toute l\'équipe de production' }, correct: false, reason: { zh: '品質問題通常源於系統與流程，而非個人，更換人員無法解決根本問題。', en: 'Quality issues typically stem from systems and processes, not individuals. Replacing people doesn\'t fix root causes.', fr: 'Les problèmes qualité viennent généralement des systèmes, pas des individus. Remplacer les personnes ne résout pas les causes racines.' } }
+            ]
+          }
+        },
+        business_analytics: {
+          id: 'business_analytics',
+          title: { zh: '商業分析', en: 'Business Analytics', fr: 'Analyse Business' },
+          englishTitle: 'Analytics',
+          badge: 'Data-Driven',
+          icon: 'fa-magnifying-glass-chart',
+          description: { zh: '運用數據與分析技術輔助商業決策，包含KPI設計、儀表板建置、A/B測試與預測分析。', en: 'Use data and analytics to support business decisions — covering KPI design, dashboard building, A/B testing, and predictive analytics.', fr: 'Utiliser les données et l\'analytique pour soutenir les décisions business — KPI, tableaux de bord, tests A/B et analytique prédictive.' },
+          subfields: [{ zh: 'KPI儀表板', en: 'KPI Dashboard', fr: 'Tableau de bord KPI' }, { zh: 'A/B測試', en: 'A/B Testing', fr: 'Tests A/B' }, { zh: '預測分析', en: 'Predictive Analytics', fr: 'Analytique prédictive' }],
+          skills: [{ zh: 'SQL查詢', en: 'SQL Querying', fr: 'Requêtes SQL' }, { zh: '數據視覺化', en: 'Data Visualization', fr: 'Visualisation de données' }, { zh: '統計假設檢定', en: 'Statistical Hypothesis Testing', fr: 'Tests d\'hypothèses statistiques' }],
+          tools: ['Power BI', 'Tableau', 'Python (pandas)', 'Google Analytics'],
+          scenario: {
+            question: { zh: '電商網站改版後轉換率從2%下降到1.5%，你如何判斷是否是改版造成的？', en: 'After a website redesign, conversion rate dropped from 2% to 1.5%. How do you determine if the redesign caused this?', fr: 'Après une refonte du site, le taux de conversion est passé de 2% à 1,5%. Comment déterminer si la refonte en est la cause ?' },
+            options: [
+              { text: { zh: 'A. 直接回滾改版，因為數字變差了', en: 'A. Immediately roll back the redesign since the numbers got worse', fr: 'A. Annuler immédiatement la refonte puisque les chiffres ont empiré' }, correct: false, reason: { zh: '轉換率下降可能有其他原因（季節性、流量來源變化），直接回滾是過早決策。', en: 'Conversion drop may have other causes (seasonality, traffic source changes). Rolling back immediately is premature.', fr: 'La baisse peut avoir d\'autres causes (saisonnalité, changement de source de trafic). Annuler immédiatement est prématuré.' } },
+              { text: { zh: 'B. 設計A/B測試，控制其他變數，統計驗證改版與轉換率的因果關係', en: 'B. Design an A/B test, control for other variables, and statistically verify the causal relationship between redesign and conversion', fr: 'B. Concevoir un test A/B, contrôler les autres variables et vérifier statistiquement la relation causale entre la refonte et la conversion' }, correct: true, reason: { zh: '正確！相關不等於因果。A/B測試是驗證設計決策影響力的黃金標準，確保決策基於統計顯著性而非偶然。', en: 'Correct! Correlation ≠ causation. A/B testing is the gold standard for validating design decision impact, ensuring decisions are based on statistical significance.', fr: 'Correct ! Corrélation ≠ causalité. Le test A/B est l\'étalon-or pour valider l\'impact des décisions de design.' } },
+              { text: { zh: 'C. 詢問設計師的主觀感受', en: 'C. Ask the designer for their subjective opinion', fr: 'C. Demander l\'opinion subjective du designer' }, correct: false, reason: { zh: '主觀感受無法取代數據驗證，商業分析的核心是客觀的數據佐證。', en: 'Subjective opinion cannot replace data validation. The core of business analytics is objective evidence.', fr: 'L\'opinion subjective ne peut remplacer la validation par les données. L\'analytique business repose sur des preuves objectives.' } }
+            ]
+          }
+        }
+      }
+    };
+
+    // ── Dropdown helpers ──────────────────────────────────────────────────
+    const domainMeta = {
+      finance:      { icon: 'fa-sack-dollar',          name: { zh: '金融學',   en: 'Finance',       fr: 'Finance' } },
+      accounting:   { icon: 'fa-calculator',           name: { zh: '會計學',   en: 'Accounting',    fr: 'Comptabilité' } },
+      marketing:    { icon: 'fa-bullhorn',             name: { zh: '行銷學',   en: 'Marketing',     fr: 'Marketing' } },
+      consulting:   { icon: 'fa-briefcase',            name: { zh: '管理顧問', en: 'Consulting',    fr: 'Conseil' } },
+      supply_chain: { icon: 'fa-truck-fast',           name: { zh: '供應鏈',   en: 'Supply Chain',  fr: 'Supply Chain' } },
+      strategy:     { icon: 'fa-chess-queen',          name: { zh: '企業策略', en: 'Strategy',      fr: 'Stratégie' } },
+      operations:   { icon: 'fa-industry',             name: { zh: '營運管理', en: 'Operations',    fr: 'Opérations' } },
+    };
+
+    function toggleDomainDropdown() {
+      const menu = document.getElementById('domain-dropdown-menu');
+      const chevron = document.getElementById('dd-chevron');
+      if (menu.classList.contains('hidden')) {
+        renderDropdownList();
+        menu.classList.remove('hidden');
+        chevron.style.transform = 'rotate(180deg)';
+      } else {
+        closeDomainDropdown();
+      }
+    }
+
+    function renderDropdownList() {
+      const list = document.getElementById('domain-dropdown-list');
+      list.innerHTML = Object.keys(domainMeta).map(key => {
+        const meta = domainMeta[key];
+        const color = domainDatabase[key].themeColor;
+        const isActive = key === currentDomainKey;
+        return `<button onclick="switchDomain('${key}');closeDomainDropdown();"
+          class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm transition-colors duration-150 ${isActive ? `bg-${color}-500/15 text-${color}-400` : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'}">
+          <i class="fa-solid ${meta.icon} w-4 text-center shrink-0 ${isActive ? `text-${color}-400` : ''}"></i>
+          <span class="font-semibold">${meta.name[currentLang]}</span>
+          ${isActive ? '<i class="fa-solid fa-check ml-auto text-xs"></i>' : ''}
+        </button>`;
+      }).join('');
+    }
+
+    function closeDomainDropdown() {
+      document.getElementById('domain-dropdown-menu').classList.add('hidden');
+      document.getElementById('dd-chevron').style.transform = '';
+    }
+
+    function updateDropdownButton() {
+      const meta = domainMeta[currentDomainKey];
+      const color = domainDatabase[currentDomainKey].themeColor;
+      document.getElementById('dd-domain-icon').className = `fa-solid ${meta.icon} text-${color}-400 text-sm w-4 text-center shrink-0`;
+      document.getElementById('dd-domain-label').className = `flex-1 text-left text-sm font-bold text-${color}-400`;
+      document.getElementById('dd-domain-label').textContent = meta.name[currentLang];
+    }
+
     // 目前選取的領域 & 分支 ID
     let currentDomainKey = 'finance';
     let activeBranchId = 'corporate';
