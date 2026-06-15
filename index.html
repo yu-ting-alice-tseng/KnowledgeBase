@@ -49,8 +49,9 @@
                 0 8px 32px rgba(0,0,0,0.35),
                 inset 0 1px 0 rgba(255,255,255,0.10),
                 inset 0 -1px 0 rgba(0,0,0,0.20);
-            transition: all 0.45s cubic-bezier(0.4,0,0.2,1);
+            transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease, border-color 0.2s ease;
             overflow: hidden;
+            cursor: pointer;
         }
         .glass-card::before {
             content: '';
@@ -59,7 +60,7 @@
             border-radius: inherit; pointer-events: none;
         }
         .glass-card:hover {
-            transform: translateY(-10px) scale(1.015);
+            transform: translateY(-8px) scale(1.012);
             border-color: rgba(255,255,255,0.20);
             box-shadow:
                 0 24px 60px rgba(0,0,0,0.45),
@@ -67,7 +68,11 @@
                 inset 0 1px 0 rgba(255,255,255,0.16),
                 inset 0 -1px 0 rgba(0,0,0,0.15);
         }
-        .glass-card.edit-mode:hover { transform: none; box-shadow: none; }
+        .glass-card:focus-visible {
+            outline: 2px solid rgba(167,139,250,0.7);
+            outline-offset: 3px;
+        }
+        .glass-card.edit-mode:hover { transform: none; box-shadow: none; cursor: default; }
 
         /* ── Iridescent icon box ── */
         .icon-box {
