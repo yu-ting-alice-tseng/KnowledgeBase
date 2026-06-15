@@ -1,532 +1,707 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" class="h-full">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>美妝保養｜核心活性成分與市場趨勢</title>
+<title>Skincare Actives · 美妝保養 · Actifs Soin</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  :root{
-    --bg:#060913;
-    --text:#e2e8f0;
-    --muted:#94a3b8;
-    --border:rgba(255,255,255,0.08);
-    --blue-bg:rgba(56,189,248,0.10);
-    --yellow-bg:rgba(251,191,36,0.10);
-    --green-bg:rgba(52,211,153,0.10);
-    --orange-bg:rgba(251,146,60,0.10);
-    --purple-bg:rgba(168,85,247,0.10);
-    --red-bg:rgba(248,113,113,0.10);
-    --code-bg:rgba(30,41,59,0.80);
-    --code-text:#f472b6;
-    --accent:#ec4899;
-    --accent-light:rgba(236,72,153,0.12);
+  :root {
+    --accent: #ec4899;
+    --accent2: #d946ef;
+    --bg: #060913;
   }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+    background-color: var(--bg);
     background-image:
-      radial-gradient(at 0% 0%, rgba(236,72,153,0.07) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(217,70,239,0.05) 0px, transparent 50%);
-    background-attachment:fixed;
-    color:var(--text);
-    font-family:'Plus Jakarta Sans','Noto Sans TC',-apple-system,BlinkMacSystemFont,sans-serif;
-    line-height:1.65; -webkit-font-smoothing:antialiased;
+      radial-gradient(at 0% 0%,   rgba(236,72,153,0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(217,70,239,0.06) 0px, transparent 50%);
+    color: #e2e8f0;
+    height: 100%; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
   }
-  /* scrollbar */
-  ::-webkit-scrollbar{width:6px;}
-  ::-webkit-scrollbar-track{background:transparent;}
-  ::-webkit-scrollbar-thumb{background:#334155;border-radius:10px;}
+  html { height: 100%; }
 
-  .wrap{max-width:860px; margin:0 auto; padding:0 24px 100px;}
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 
-  /* gradient border utility */
-  .gradient-border{position:relative;}
-  .gradient-border::before{
-    content:""; position:absolute; inset:0; border-radius:inherit; padding:1px;
-    background:linear-gradient(to bottom right,rgba(255,255,255,0.08),rgba(255,255,255,0.01));
-    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-    -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+  /* ── Layout ── */
+  #app { display: flex; flex-direction: column; height: 100%; }
+  #main { display: flex; flex: 1; overflow: hidden; }
+
+  /* ── Canvas ── */
+  #canvas-wrap {
+    flex: 1; position: relative; overflow: hidden;
+    cursor: grab;
   }
+  #canvas-wrap:active { cursor: grabbing; }
+  #canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  #svg-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 
-  header.page-head{padding:48px 0 20px; text-align:center;}
-  .page-icon{font-size:48px; line-height:1; margin-bottom:12px;}
-  h1.title{
-    font-size:32px; font-weight:800; margin:10px 0 6px; letter-spacing:-0.5px;
-    background:linear-gradient(to right,#f9a8d4,#ec4899,#d946ef);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  /* ── Nodes ── */
+  .node {
+    position: absolute; transform: translate(-50%, -50%);
+    cursor: pointer; z-index: 10; user-select: none;
+    transition: filter .2s;
   }
-  .subtitle{color:var(--muted); font-size:14px; margin-bottom:8px;}
+  .node:hover { filter: brightness(1.2); }
+  .node-root {
+    width: 110px; height: 110px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #ec4899, #d946ef);
+    box-shadow: 0 0 40px rgba(236,72,153,0.5), 0 0 80px rgba(236,72,153,0.2);
+    color: #fff; font-weight: 800; font-size: 13px; text-align: center;
+    border: 2px solid rgba(255,255,255,0.2);
+    line-height: 1.3;
+  }
+  .node-root i { font-size: 22px; margin-bottom: 5px; }
 
-  .lang-bar{
-    position:sticky; top:0; z-index:50;
-    background:rgba(6,9,19,0.90); backdrop-filter:blur(12px);
-    display:flex; gap:8px; padding:14px 0; border-bottom:1px solid var(--border);
-    margin-bottom:16px; flex-wrap:wrap; justify-content:center;
+  .node-branch {
+    width: 90px; height: 90px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 11px; text-align: center; line-height: 1.3;
+    border: 2px solid rgba(255,255,255,0.15);
+    transition: box-shadow .25s, transform .25s;
   }
-  .lang-btn{
-    border:1px solid rgba(236,72,153,0.25);
-    background:rgba(236,72,153,0.05); color:var(--muted);
-    padding:8px 20px; border-radius:30px; cursor:pointer; font-size:13px; font-weight:600;
-    transition:all .2s ease; font-family:inherit;
-  }
-  .lang-btn:hover{background:rgba(236,72,153,0.12); color:var(--text); border-color:rgba(236,72,153,0.5);}
-  .lang-btn.active{
-    background:rgba(236,72,153,0.15); color:#f9a8d4;
-    border-color:rgba(236,72,153,0.6);
-    box-shadow:0 0 12px rgba(236,72,153,0.2);
-  }
-  .back-home{
-    display:inline-flex; align-items:center; gap:6px;
-    color:var(--muted); font-size:12px; text-decoration:none;
-    padding:6px 14px; border-radius:20px; border:1px solid var(--border);
-    background:rgba(255,255,255,0.03); transition:all .2s;
-    position:absolute; left:0;
-  }
-  .back-home:hover{color:var(--text); border-color:rgba(236,72,153,0.4);}
+  .node-branch:hover { transform: translate(-50%,-50%) scale(1.08) !important; }
+  .node-branch i { font-size: 18px; margin-bottom: 4px; }
+  .node-branch.active { box-shadow: 0 0 30px var(--node-color), 0 0 60px rgba(0,0,0,0.5) !important; }
 
-  .panel{display:none; animation:fade .3s ease-out;}
-  .panel.active{display:block;}
-  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
-
-  h2{
-    font-size:22px; font-weight:700; margin:36px 0 10px; padding-bottom:8px;
-    border-bottom:1px solid var(--border); color:var(--text);
-    display:flex; align-items:center; gap:10px;
+  .node-leaf {
+    background: rgba(15,23,42,0.85);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 11px; font-weight: 600;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+    transition: border-color .2s, box-shadow .2s;
   }
-  h3{font-size:17px; font-weight:700; margin:28px 0 8px; color:#f1f5f9;}
-  h4{font-size:15px; font-weight:600; margin:20px 0 6px; color:#cbd5e1;}
-  p{margin:8px 0;}
-  ul,ol{margin:8px 0; padding-left:24px;}
-  li{margin:5px 0; color:var(--text);}
-  strong{color:#f1f5f9;}
+  .node-leaf:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .node-leaf.active { box-shadow: 0 0 0 2px var(--node-color); }
 
-  code{
-    background:var(--code-bg); color:var(--code-text);
-    padding:2px 6px; border-radius:4px; font-size:.86em;
-    font-family:"SFMono-Regular",Consolas,monospace;
-    border:1px solid rgba(244,114,182,0.15);
+  /* ── Detail Panel ── */
+  #detail-panel {
+    width: 340px; min-width: 340px;
+    background: rgba(10,16,30,0.95);
+    border-left: 1px solid rgba(255,255,255,0.07);
+    overflow-y: auto;
+    transition: width .3s, min-width .3s;
+    padding: 0;
+    backdrop-filter: blur(12px);
   }
-  .hl-blue{background:var(--blue-bg); border-radius:3px; padding:1px 4px; color:#7dd3fc;}
-  .hl-yellow{background:var(--yellow-bg); border-radius:3px; padding:1px 4px; color:#fde68a;}
-  .hl-green{background:var(--green-bg); border-radius:3px; padding:1px 4px; color:#6ee7b7;}
-  .hl-red{background:var(--red-bg); border-radius:3px; padding:1px 4px; color:#fca5a5;}
-  .red-text{color:#fca5a5;}
-
-  .callout{
-    display:flex; gap:14px; padding:16px 18px;
-    border-radius:12px; margin:16px 0; align-items:flex-start;
-    border:1px solid var(--border);
-    background:rgba(15,23,42,0.5);
+  #detail-panel.hidden { width: 0; min-width: 0; overflow: hidden; padding: 0; }
+  #detail-inner { padding: 24px 20px 48px; min-width: 300px; }
+  .detail-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+  .detail-title { font-size: 20px; font-weight: 800; color: #f1f5f9; margin-bottom: 4px; }
+  .detail-sub { font-size: 12px; color: #64748b; margin-bottom: 20px; }
+  .detail-section { margin-bottom: 18px; }
+  .detail-section h4 { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+  .detail-chip {
+    display: inline-block; padding: 5px 11px; border-radius: 10px; font-size: 12px; font-weight: 600;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    margin: 3px 3px 3px 0; color: #cbd5e1;
   }
-  .callout .ico{font-size:20px; line-height:1.5; flex-shrink:0;}
-  .callout .body{flex:1; font-size:14px;}
-  .callout .body > :first-child{margin-top:0;}
-  .callout .body > :last-child{margin-bottom:0;}
-  .c-yellow{border-color:rgba(251,191,36,0.25); background:rgba(251,191,36,0.05);}
-  .c-orange{border-color:rgba(251,146,60,0.25); background:rgba(251,146,60,0.05);}
-  .c-green{border-color:rgba(52,211,153,0.25); background:rgba(52,211,153,0.05);}
-  .c-purple{border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.05);}
-  .c-plain{border-color:var(--border); background:rgba(30,41,59,0.5);}
+  .detail-item { font-size: 13px; color: #94a3b8; line-height: 1.6; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .detail-item:last-child { border-bottom: none; }
+  .detail-item strong { color: #e2e8f0; }
+  .detail-note { font-size: 12px; color: #64748b; font-style: italic; margin-top: 6px; }
+  #close-panel { position: absolute; top: 16px; right: 16px; background: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #475569; cursor: pointer; padding: 5px 9px; font-size: 12px; }
+  #close-panel:hover { color: #e2e8f0; border-color: rgba(255,255,255,0.25); }
 
-  a{color:#f0abca; text-decoration:none;}
-  a:hover{color:#fbcfe8; text-decoration:underline;}
-  hr{border:none; border-top:1px solid var(--border); margin:16px 0;}
-  .muted{color:var(--muted);}
-
-  footer{
-    margin-top:48px; padding-top:16px; border-top:1px solid var(--border);
-    color:var(--muted); font-size:12px; text-align:center;
+  /* Tip */
+  #tip {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(15,23,42,0.8); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
+    padding: 8px 18px; font-size: 11px; color: #475569;
+    pointer-events: none; white-space: nowrap;
+    transition: opacity .4s;
   }
 </style>
 </head>
 <body>
+<div id="app">
 
-<!-- Sticky top nav bar -->
-<header style="position:sticky;top:0;z-index:100;background:rgba(6,9,19,0.90);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 24px;">
-  <div style="max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;">
-    <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-size:12px;font-weight:600;text-decoration:none;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);transition:all .2s;white-space:nowrap;">
-      <i class="fa-solid fa-arrow-left" style="font-size:10px;"></i> 返回 / Home
-    </a>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <div style="position:relative;">
-        <div style="position:absolute;inset:-3px;background:linear-gradient(135deg,#ec4899,#d946ef);border-radius:10px;blur:6px;opacity:0.6;filter:blur(4px);"></div>
-        <div style="position:relative;background:#060913;padding:8px 10px;border-radius:10px;border:1px solid rgba(236,72,153,0.3);">
-          <i class="fa-solid fa-flask-vial" style="color:#f0abca;font-size:16px;"></i>
+  <!-- ── Header ── -->
+  <header style="background:rgba(6,9,19,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 24px;z-index:50;flex-shrink:0;">
+    <div style="max-width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-size:12px;font-weight:600;text-decoration:none;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);transition:all .2s;white-space:nowrap;">
+          <i class="fa-solid fa-arrow-left" style="font-size:10px;"></i> Home
+        </a>
+        <div style="position:relative;">
+          <div style="position:absolute;inset:-3px;background:linear-gradient(135deg,#ec4899,#d946ef);border-radius:10px;filter:blur(4px);opacity:0.6;"></div>
+          <div style="position:relative;background:#060913;padding:8px 10px;border-radius:10px;border:1px solid rgba(236,72,153,0.3);">
+            <i class="fa-solid fa-flask-vial" style="color:#f0abca;font-size:16px;"></i>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#ec4899;text-transform:uppercase;opacity:.8;">SKINCARE INTELLIGENCE</div>
+          <div style="font-size:16px;font-weight:800;color:#f1f5f9;letter-spacing:-.3px;" id="nav-title">美妝保養 · Skincare Actives</div>
         </div>
       </div>
-      <div>
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#ec4899;text-transform:uppercase;opacity:0.8;">SKINCARE INTELLIGENCE</div>
-        <div style="font-size:16px;font-weight:800;color:#f1f5f9;letter-spacing:-0.3px;">美妝保養 · Skincare Actives</div>
+      <div style="display:flex;gap:6px;padding:4px;background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
+        <button onclick="switchLang('zh')" id="hdr-zh" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;background:rgba(236,72,153,0.15);color:#f0abca;font-family:inherit;transition:all .2s;">繁中</button>
+        <button onclick="switchLang('en')" id="hdr-en" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;background:transparent;color:#64748b;font-family:inherit;transition:all .2s;">EN</button>
+        <button onclick="switchLang('fr')" id="hdr-fr" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;background:transparent;color:#64748b;font-family:inherit;transition:all .2s;">FR</button>
       </div>
     </div>
-    <div style="display:flex;gap:6px;padding:4px;background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
-      <button onclick="switchLang('zh')" id="hdr-zh" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;transition:all .2s;background:rgba(236,72,153,0.15);color:#f0abca;font-family:inherit;">繁中</button>
-      <button onclick="switchLang('en')" id="hdr-en" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;transition:all .2s;background:transparent;color:#64748b;font-family:inherit;">EN</button>
-      <button onclick="switchLang('fr')" id="hdr-fr" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;transition:all .2s;background:transparent;color:#64748b;font-family:inherit;">FR</button>
-    </div>
-  </div>
-</header>
-
-<div class="wrap">
-  <header class="page-head">
-    <div class="page-icon">💄</div>
-    <h1 class="title">美妝保養｜核心活性成分與市場趨勢</h1>
-    <div class="subtitle">Skincare · Active Ingredients &amp; Market Trends — 中文 / English / Français</div>
   </header>
 
-  <nav class="lang-bar" style="position:relative;">
-    <button class="lang-btn active" data-lang="zh">🇹🇼 中文</button>
-    <button class="lang-btn" data-lang="en">🇬🇧 English</button>
-    <button class="lang-btn" data-lang="fr">🇫🇷 Français</button>
-  </nav>
+  <div id="main">
+    <!-- Canvas -->
+    <div id="canvas-wrap">
+      <div id="canvas">
+        <svg id="svg-lines"></svg>
+      </div>
+      <div id="tip" data-zh="點擊節點查看詳情 · 拖曳平移 · 滾輪縮放" data-en="Click nodes for details · Drag to pan · Scroll to zoom" data-fr="Cliquez pour les détails · Glisser pour déplacer · Molette pour zoomer">
+        點擊節點查看詳情 · 拖曳平移 · 滾輪縮放
+      </div>
+    </div>
 
-  <!-- ============ 中文 ============ -->
-  <section class="panel active" id="zh">
-    <h2>主題概覽</h2>
-    <div class="callout c-yellow"><div class="ico">💡</div><div class="body">
-      本頁從「科學核心 → 實際應用」整理美妝保養（Skincare）知識：<code>成分與機制</code> → <code>訴求 (claim)</code> → <code>配方邏輯</code> → <code>法規與安全</code> → <code>產業趨勢</code>。重點是能把行銷話術翻譯成成分、機制與證據的語言。
-    </div></div>
-    <ol>
-      <li><strong>成分與機制</strong>：依訴求（抗老、保濕、亮白、屏障修護、抗痘控油、舒緩、防曬）整理核心活性成分與其<code>作用機制 (mechanism of action)</code></li>
-      <li><strong>配方邏輯</strong>：從行銷訴求拆解到真實配方（訴求 → 成分與濃度 → 載體系統 → 證據）</li>
-      <li><strong>法規與安全</strong>：歐盟與美國法規、<code>INCI</code> 標示、過敏原、安全評估</li>
-      <li><strong>產業趨勢</strong>：B2B 資訊來源與重要趨勢（微生態、潔淨美妝、護膚化、外曝體、永續）</li>
-      <li><strong>整合</strong>：常見問題與面試自我檢核</li>
-    </ol>
-
-    <h3>一、核心活性成分（依訴求分類）</h3>
-    <p class="muted">每個成分以「訴求／英文／法文」三語呈現，並標出關鍵機制與搭配。</p>
-    <h4>1. 抗老（Anti-aging／anti-âge）</h4>
-    <ul>
-      <li><strong>視黃醇類／Retinoids／rétinoïdes</strong>：<span class="hl-blue">維生素 A 衍生物，能加速角質更新並促進膠原合成</span>。效力序列約為 <code>rétinol &lt; rétinal (retinaldehyde) &lt; trétinoïne</code>，後者多屬藥品等級。需注意<code>光敏性 (photosensitivity)</code>與刺激，須循序<code>建立耐受 (retinization)</code>。</li>
-      <li><strong>胜肽／Peptides／peptides</strong>：<span class="hl-blue">由胺基酸組成的短鏈訊號分子</span>，多走<code>訊號型 (signal peptides)</code>或<code>載體型 (carrier peptides)</code>宣稱路徑；務必區分「宣稱」與「臨床證據」。</li>
-      <li><strong>補骨脂酚／Bakuchiol</strong>：<span class="hl-yellow">常被定位為視黃醇的溫和替代</span>，刺激性較低、可日間使用。</li>
-      <li><strong>抗氧化劑／Antioxidants</strong>：如<code>維生素 C (vitamine C)</code>、<code>維生素 E</code>、<code>阿魏酸 (ferulic acid)</code>，中和<code>自由基 (free radicals)</code>、對抗光老化。</li>
-    </ul>
-    <h4>2. 保濕與屏障修護（Hydration &amp; Barrier）</h4>
-    <ul>
-      <li><strong>吸濕劑／Humectants</strong>：<span class="hl-blue">從環境或深層吸水到角質層的成分</span>，如<code>玻尿酸 (acide hyaluronique)</code>、<code>甘油 (glycérine)</code>、<code>泛醇 (panthénol)</code>。</li>
-      <li><strong>潤膚劑／Emollients</strong>：<span class="hl-blue">填補角質細胞間隙、改善膚觸的脂質</span>，如<code>角鯊烷 (squalane)</code>。</li>
-      <li><strong>封閉劑／Occlusives</strong>：<span class="hl-blue">在表面形成薄膜、減少經皮水分散失 (TEWL) 的成分</span>。</li>
-      <li><strong>神經醯胺／Ceramides／céramides</strong>：<span class="hl-red">角質層脂質的關鍵成分</span>，常與<code>膽固醇</code>、<code>脂肪酸</code>以約 <code>1:1:1</code> 比例搭配，談「屏障三要素」。</li>
-    </ul>
-    <h4>3. 亮白／淡斑（Brightening／éclat）</h4>
-    <ul>
-      <li><strong>維生素 C／Vitamin C／vitamine C</strong>：抗氧化、抑制<code>酪胺酸酶 (tyrosinase)</code>、淡化暗沉；不同<code>衍生物</code>在穩定性與刺激性差異大（L-AA 最有效但最不穩定）。</li>
-      <li><strong>菸鹼醯胺／Niacinamide</strong>：<span class="hl-yellow">多功能成分</span>，抑制黑色素傳遞、強化屏障、控油。</li>
-      <li><strong>熊果素／Arbutin、傳明酸／Tranexamic acid、麴酸／Kojic acid、杜鵑花酸／Azelaic acid</strong>：不同路徑抑制黑色素生成或傳遞。</li>
-    </ul>
-    <h4>4. 抗痘與控油（Acne &amp; Oil control）</h4>
-    <ul>
-      <li><strong>水楊酸／Salicylic Acid (BHA)</strong>：<span class="hl-blue">親脂性、可深入毛孔溶解角栓的去角質酸</span>。</li>
-      <li><strong>過氧化苯／Benzoyl Peroxide</strong>：抗痤瘡桿菌。</li>
-      <li><strong>菸鹼醯胺、鋅</strong>：控油、抗發炎。</li>
-    </ul>
-    <h4>5. 舒緩抗敏（Soothing／apaisant）</h4>
-    <ul>
-      <li><strong>積雪草／Centella Asiatica (Cica)</strong>：含<code>積雪草苷 (madecassoside)</code>，舒緩、修護。</li>
-      <li><strong>尿囊素／Allantoin、紅沒藥醇／Bisabolol</strong>：鎮定、減少刺激。</li>
-    </ul>
-    <h4>6. 防曬（Sun protection／protection solaire）</h4>
-    <ul>
-      <li><strong>紫外線濾劑／UV filters</strong>：分<code>有機 (organic/chemical)</code>與<code>無機 (inorganic/mineral)</code>兩類。</li>
-      <li><code>SPF</code> 對應 UVB、<code>PA／UVA</code> 對應 UVA；廣譜防曬同時涵蓋兩者。</li>
-    </ul>
-
-    <h3>二、成分機制深入</h3>
-    <div class="callout c-orange"><div class="ico">📎</div><div class="body">
-      <strong>為什麼分子量、載體與穩定性很重要？</strong>同一個成分，效果取決於它能否「到達作用位置」且「維持活性」。
-      <ul>
-        <li><code>分子量 (molecular weight)</code>：影響滲透深度（高分子玻尿酸停留表層、低分子可深入）。</li>
-        <li><code>載體／包裹 (encapsulation)</code>：保護易氧化成分（維生素 C、視黃醇），控制釋放、降低刺激。</li>
-        <li><code>pH 值</code>：影響酸類活性與皮膚耐受（純維 C 需低 pH 才穩定有效）。</li>
-      </ul>
-    </div></div>
-
-    <h3>三、如何拆解產品本質：從行銷詞到配方語言</h3>
-    <ol>
-      <li><strong>先定義訴求（claim）</strong>：抗老／亮白／修護／抗痘／舒緩等</li>
-      <li><strong>對應成分與濃度區間</strong>：能說出合理範圍即可，不必硬背單一數字</li>
-      <li><strong>看載體與系統</strong>：水相、油相、乳化、包裹是否影響穩定性與釋放</li>
-      <li><strong>用證據說話</strong>：<code>體外 (in vitro)</code>、<code>人體 (in vivo)</code>、<code>儀器測量</code>、<code>消費者測試</code>各能支持什麼結論</li>
-    </ol>
-    <div class="callout c-green"><div class="ico">📄</div><div class="body">
-      <strong>練習：拆解一支「抗老精華」</strong>
-      <ol>
-        <li>訴求：減少細紋、提亮</li>
-        <li>可能成分：<code>rétinol</code> + <code>peptides</code> + <code>niacinamide</code> + <code>acide hyaluronique</code></li>
-        <li>系統：包裹型視黃醇以降低刺激、延長穩定性</li>
-        <li>證據：宣稱「8 週改善細紋」應對應人體儀器測試，而非僅體外數據</li>
-      </ol>
-    </div></div>
-
-    <h3>四、法規與安全</h3>
-    <ul>
-      <li>歐盟：<span class="hl-green"><code>Regulation (EC) No 1223/2009 (EU Cosmetics Regulation)</code></span> 規範成分安全、標示與宣稱，由 <a href="https://health.ec.europa.eu/scientific-committees/scientific-committee-consumer-safety-sccs_en" target="_blank">SCCS</a>（消費者安全科學委員會）做安全評估。</li>
-      <li>標示：全球通用 <a href="https://incidecoder.com/" target="_blank">INCI</a>（International Nomenclature of Cosmetic Ingredients）成分命名；歐盟另要求標示特定<code>過敏原 (allergens)</code>。</li>
-      <li>美國：<a href="https://www.fda.gov/cosmetics" target="_blank">FDA</a> 監管，新法 <code>MoCRA (2022)</code> 強化設施登記與不良反應通報。</li>
-    </ul>
-
-    <h3>五、趨勢與資訊來源（偏 B2B）</h3>
-    <ul>
-      <li><a href="https://wwd.com/beauty-industry-news/" target="_blank">WWD Beauty Inc</a>：偏產業與品牌動態，適合抓「發生了什麼」</li>
-      <li><a href="https://www.cosmeticsdesign-europe.com/" target="_blank">CosmeticsDesign-Europe</a>：偏原料、供應鏈、法規與技術，適合抓「為什麼／怎麼做」</li>
-      <li><strong>重要趨勢</strong>：<code>皮膚微生態 (skin microbiome)</code>、<code>潔淨美妝 (clean beauty)</code>、<code>護膚化 (skinification)</code>、<code>外曝體 (exposome)</code>、<code>永續與升級回收原料</code>、<code>AI 個人化</code>。</li>
-    </ul>
-
-    <h3>六、常見問題</h3>
-    <div class="callout c-purple"><div class="ico">❓</div><div class="body">
-      <strong>「天然」就比較安全嗎？</strong> 不必然。安全取決於<code>劑量 (dose)</code>與<code>安全評估</code>，而非來源；許多天然萃取也可能含過敏原。<br>
-      <strong>酸類可以疊加視黃醇嗎？</strong> 通常建議分開時段使用以降低刺激，視膚況與耐受而定。
-    </div></div>
-
-    <h3>七、面試／工作可用的自我檢核</h3>
-    <ul>
-      <li>我能否用一句話說明某產品的核心賣點對應哪些成分與機制？</li>
-      <li>我能否說清楚某成分的風險、適用族群與使用情境（敏感肌、孕期等）？</li>
-      <li>我能否分辨「行銷宣稱」與「臨床／儀器證據」的差別？</li>
-    </ul>
-  </section>
-
-  <!-- ============ English ============ -->
-  <section class="panel" id="en">
-    <h2>Overview</h2>
-    <div class="callout c-yellow"><div class="ico">💡</div><div class="body">
-      This page moves from <strong>scientific core → real application</strong> for skincare: <code>ingredients &amp; mechanisms</code> → <code>claims</code> → <code>formulation logic</code> → <code>regulation &amp; safety</code> → <code>industry trends</code>. The goal is to translate marketing language into the language of ingredients, mechanisms and evidence.
-    </div></div>
-    <ol>
-      <li><strong>Ingredients &amp; mechanisms</strong>: hero actives organized by claim (anti-aging, hydration, brightening, barrier repair, acne, soothing, sun) with their <code>mechanism of action</code></li>
-      <li><strong>Formulation logic</strong>: from a marketing claim down to the real formula (claim → ingredient &amp; dosage → vehicle → evidence)</li>
-      <li><strong>Regulation &amp; safety</strong>: EU vs US frameworks, <code>INCI</code> labeling, allergens, safety assessment</li>
-      <li><strong>Trends &amp; sources</strong>: B2B sources and key movements (microbiome, clean beauty, skinification, exposome, sustainability)</li>
-      <li><strong>Consolidation</strong>: common questions + interview self-check</li>
-    </ol>
-
-    <h3>1. Hero actives by claim (terms in 3 languages)</h3>
-    <h4>Anti-aging（抗老／anti-âge）</h4>
-    <ul>
-      <li><strong>Retinoids（視黃醇類／rétinoïdes）</strong>: <span class="hl-blue">vitamin A derivatives that speed cell turnover and stimulate collagen</span>. Potency roughly <code>retinol &lt; retinal &lt; tretinoin</code>. Watch for <code>photosensitivity</code> and irritation; build tolerance gradually (<code>retinization</code>).</li>
-      <li><strong>Peptides（胜肽／peptides）</strong>: <span class="hl-blue">short amino-acid chains acting as signal molecules</span>; separate <code>claims</code> from <code>clinical evidence</code>.</li>
-      <li><strong>Bakuchiol（補骨脂酚）</strong>: <span class="hl-yellow">positioned as a gentler retinol alternative</span>, usable in daytime.</li>
-      <li><strong>Antioxidants</strong>: e.g. <code>vitamin C</code>, <code>vitamin E</code>, <code>ferulic acid</code> — neutralize <code>free radicals</code> and fight photo-aging.</li>
-    </ul>
-    <h4>Hydration &amp; barrier repair（保濕與屏障修護）</h4>
-    <ul>
-      <li><strong>Humectants</strong>: <span class="hl-blue">draw water into the stratum corneum</span> — <code>hyaluronic acid</code>, <code>glycerin</code>, <code>panthenol</code>.</li>
-      <li><strong>Emollients</strong>: <span class="hl-blue">lipids that fill gaps between corneocytes and smooth skin</span> — e.g. <code>squalane</code>.</li>
-      <li><strong>Occlusives</strong>: <span class="hl-blue">form a surface film to reduce transepidermal water loss (TEWL)</span>.</li>
-      <li><strong>Ceramides（神經醯胺／céramides）</strong>: <span class="hl-red">key stratum-corneum lipids</span>, often paired with <code>cholesterol</code> and <code>fatty acids</code> (~<code>1:1:1</code>) for the barrier triad.</li>
-    </ul>
-    <h4>Brightening（亮白／éclat）</h4>
-    <ul>
-      <li><strong>Vitamin C</strong>: antioxidant, inhibits <code>tyrosinase</code>; derivatives differ in stability/tolerability (pure L-AA is most effective but least stable).</li>
-      <li><strong>Niacinamide</strong>: <span class="hl-yellow">multifunctional</span> — blocks melanin transfer, strengthens barrier, controls oil.</li>
-      <li><strong>Arbutin, Tranexamic acid, Kojic acid, Azelaic acid</strong>: inhibit melanin synthesis/transfer via different paths.</li>
-    </ul>
-    <h4>Acne &amp; oil control（抗痘控油）</h4>
-    <ul>
-      <li><strong>Salicylic Acid (BHA)</strong>: <span class="hl-blue">lipophilic exfoliant that penetrates pores to dissolve plugs</span>.</li>
-      <li><strong>Benzoyl Peroxide</strong>: targets acne bacteria.</li>
-      <li><strong>Niacinamide, Zinc</strong>: oil control and anti-inflammatory.</li>
-    </ul>
-    <h4>Soothing（舒緩／apaisant）</h4>
-    <ul>
-      <li><strong>Centella Asiatica (Cica)</strong>: contains <code>madecassoside</code>; soothing and repairing.</li>
-      <li><strong>Allantoin, Bisabolol</strong>: calming, reduce irritation.</li>
-    </ul>
-    <h4>Sun protection（防曬／protection solaire）</h4>
-    <ul>
-      <li><strong>UV filters</strong>: <code>organic/chemical</code> vs <code>inorganic/mineral</code>.</li>
-      <li><code>SPF</code> addresses UVB; <code>PA／UVA</code> addresses UVA; broad-spectrum covers both.</li>
-    </ul>
-
-    <h3>2. Mechanisms in depth</h3>
-    <div class="callout c-orange"><div class="ico">📎</div><div class="body">
-      <strong>Why molecular weight, vehicle and stability matter</strong> — the same active works only if it reaches its target and stays active.
-      <ul>
-        <li><code>Molecular weight</code>: governs penetration depth (high-MW HA stays superficial; low-MW penetrates).</li>
-        <li><code>Encapsulation</code>: protects unstable actives (vitamin C, retinol), controls release, lowers irritation.</li>
-        <li><code>pH</code>: drives acid activity and tolerance (pure vitamin C needs low pH to stay effective).</li>
-      </ul>
-    </div></div>
-
-    <h3>3. From marketing to formulation thinking</h3>
-    <ol>
-      <li>Define the <strong>claim</strong></li>
-      <li>Map it to <strong>ingredients &amp; realistic dosage ranges</strong></li>
-      <li>Check the <strong>vehicle/system</strong> (emulsion, encapsulation, stability)</li>
-      <li>Evaluate <strong>evidence</strong>: <code>in vitro</code> vs <code>in vivo</code> vs <code>instrumental</code> vs <code>consumer tests</code></li>
-    </ol>
-    <div class="callout c-green"><div class="ico">📄</div><div class="body">
-      <strong>Exercise: deconstruct an anti-aging serum</strong>
-      <ol>
-        <li>Claim: reduce fine lines, brighten</li>
-        <li>Likely actives: <code>retinol</code> + <code>peptides</code> + <code>niacinamide</code> + <code>hyaluronic acid</code></li>
-        <li>System: encapsulated retinol to lower irritation and improve stability</li>
-        <li>Evidence: a "fine lines improved in 8 weeks" claim should map to in vivo instrumental data, not just in vitro</li>
-      </ol>
-    </div></div>
-
-    <h3>4. Regulation &amp; safety</h3>
-    <ul>
-      <li>EU: <span class="hl-green"><code>Regulation (EC) No 1223/2009 (EU Cosmetics Regulation)</code></span> governs ingredient safety, labeling and claims; safety is assessed by the <a href="https://health.ec.europa.eu/scientific-committees/scientific-committee-consumer-safety-sccs_en" target="_blank">SCCS</a>.</li>
-      <li>Labeling: global <a href="https://incidecoder.com/" target="_blank">INCI</a> naming; EU also requires labeling of specific <code>allergens</code>.</li>
-      <li>US: regulated by <a href="https://www.fda.gov/cosmetics" target="_blank">FDA</a>; <code>MoCRA (2022)</code> adds facility registration and adverse-event reporting.</li>
-    </ul>
-
-    <h3>5. Trends &amp; sources (B2B)</h3>
-    <ul>
-      <li><a href="https://wwd.com/beauty-industry-news/" target="_blank">WWD Beauty Inc</a>: market/brand movements — "what happened"</li>
-      <li><a href="https://www.cosmeticsdesign-europe.com/" target="_blank">CosmeticsDesign-Europe</a>: ingredients, suppliers, regulation, technology — "why / how"</li>
-      <li><strong>Key trends</strong>: <code>skin microbiome</code>, <code>clean beauty</code>, <code>skinification</code>, <code>exposome</code>, <code>sustainability / upcycled ingredients</code>, <code>AI personalization</code>.</li>
-    </ul>
-
-    <h3>6. Common questions</h3>
-    <div class="callout c-purple"><div class="ico">❓</div><div class="body">
-      <strong>Is "natural" automatically safer?</strong> Not necessarily — safety depends on <code>dose</code> and <code>safety assessment</code>, not origin; many botanicals contain allergens.<br>
-      <strong>Can I layer acids with retinol?</strong> Usually best separated by time of day to limit irritation, depending on skin tolerance.
-    </div></div>
-
-    <h3>7. Interview / work self-check</h3>
-    <ul>
-      <li>Can I state a product's hero claim and map it to ingredients and mechanisms in one sentence?</li>
-      <li>Can I explain an ingredient's risks, target users and usage context (sensitive skin, pregnancy)?</li>
-      <li>Can I distinguish a marketing claim from clinical/instrumental evidence?</li>
-    </ul>
-  </section>
-
-  <!-- ============ Français ============ -->
-  <section class="panel" id="fr">
-    <h2>Aperçu</h2>
-    <div class="callout c-yellow"><div class="ico">💡</div><div class="body">
-      Cette page va du <strong>cœur scientifique → application concrète</strong> pour le soin de la peau : <code>actifs &amp; mécanismes</code> → <code>promesses (claims)</code> → <code>logique de formulation</code> → <code>réglementation &amp; sécurité</code> → <code>tendances</code>. L'objectif : traduire le marketing en langage d'ingrédients, de mécanismes et de preuves.
-    </div></div>
-    <ol>
-      <li><strong>Actifs &amp; mécanismes</strong> : actifs phares classés par promesse (anti-âge, hydratation, éclat, réparation barrière, acné, apaisant, solaire) et leur <code>mécanisme d'action</code></li>
-      <li><strong>Logique de formulation</strong> : de la promesse marketing à la formule réelle (claim → ingrédient &amp; dosage → système galénique → preuves)</li>
-      <li><strong>Réglementation &amp; sécurité</strong> : cadres UE vs US, étiquetage <code>INCI</code>, allergènes, évaluation de sécurité</li>
-      <li><strong>Tendances &amp; sources</strong> : sources B2B et grands courants (microbiome, clean beauty, skinification, exposome, durabilité)</li>
-      <li><strong>Consolidation</strong> : questions fréquentes + auto-évaluation entretien</li>
-    </ol>
-
-    <h3>1. Actifs phares par promesse (termes en 3 langues)</h3>
-    <h4>Anti-âge（抗老／Anti-aging）</h4>
-    <ul>
-      <li><strong>Rétinoïdes（視黃醇類／Retinoids）</strong> : <span class="hl-blue">dérivés de la vitamine A qui accélèrent le renouvellement cellulaire et stimulent le collagène</span>. Puissance ≈ <code>rétinol &lt; rétinal &lt; trétinoïne</code>. Attention à la <code>photosensibilité</code> et à l'irritation ; introduction progressive (<code>rétinisation</code>).</li>
-      <li><strong>Peptides（胜肽）</strong> : <span class="hl-blue">courtes chaînes d'acides aminés agissant comme molécules de signal</span> ; distinguer la <code>promesse</code> des <code>preuves cliniques</code>.</li>
-      <li><strong>Bakuchiol（補骨脂酚）</strong> : <span class="hl-yellow">alternative plus douce au rétinol</span>, utilisable le jour.</li>
-      <li><strong>Antioxydants</strong> : <code>vitamine C</code>, <code>vitamine E</code>, <code>acide férulique</code> — neutralisent les <code>radicaux libres</code> et luttent contre le photovieillissement.</li>
-    </ul>
-    <h4>Hydratation &amp; réparation de la barrière（保濕與屏障修護）</h4>
-    <ul>
-      <li><strong>Humectants</strong> : <span class="hl-blue">attirent l'eau vers la couche cornée</span> — <code>acide hyaluronique</code>, <code>glycérine</code>, <code>panthénol</code>.</li>
-      <li><strong>Émollients</strong> : <span class="hl-blue">lipides qui comblent les espaces entre cornéocytes et lissent la peau</span> — ex. <code>squalane</code>.</li>
-      <li><strong>Occlusifs</strong> : <span class="hl-blue">forment un film de surface réduisant la perte insensible en eau (PIE / TEWL)</span>.</li>
-      <li><strong>Céramides（神經醯胺）</strong> : <span class="hl-red">lipides clés de la couche cornée</span>, souvent associés au <code>cholestérol</code> et aux <code>acides gras</code> (~<code>1:1:1</code>) — le trio de la barrière.</li>
-    </ul>
-    <h4>Éclat / dépigmentant（亮白）</h4>
-    <ul>
-      <li><strong>Vitamine C</strong> : antioxydant, inhibe la <code>tyrosinase</code> ; les <code>dérivés</code> varient en stabilité/tolérance (la L-AA pure est la plus efficace mais la moins stable).</li>
-      <li><strong>Niacinamide</strong> : <span class="hl-yellow">multifonction</span> — bloque le transfert de mélanine, renforce la barrière, régule le sébum.</li>
-      <li><strong>Arbutine, Acide tranexamique, Acide kojique, Acide azélaïque</strong> : inhibent la synthèse/le transfert de mélanine par différentes voies.</li>
-    </ul>
-    <h4>Acné &amp; contrôle du sébum（抗痘控油）</h4>
-    <ul>
-      <li><strong>Acide salicylique (BHA)</strong> : <span class="hl-blue">exfoliant lipophile qui pénètre les pores pour dissoudre les bouchons</span>.</li>
-      <li><strong>Peroxyde de benzoyle</strong> : cible les bactéries de l'acné.</li>
-      <li><strong>Niacinamide, Zinc</strong> : séborégulateur, anti-inflammatoire.</li>
-    </ul>
-    <h4>Apaisant（舒緩）</h4>
-    <ul>
-      <li><strong>Centella Asiatica (Cica)</strong> : contient le <code>madécassoside</code> ; apaise et répare.</li>
-      <li><strong>Allantoïne, Bisabolol</strong> : calment, réduisent l'irritation.</li>
-    </ul>
-    <h4>Protection solaire（防曬）</h4>
-    <ul>
-      <li><strong>Filtres UV</strong> : <code>organiques/chimiques</code> vs <code>inorganiques/minéraux</code>.</li>
-      <li>Le <code>SPF</code> couvre les UVB ; <code>PA／UVA</code> couvre les UVA ; un large spectre couvre les deux.</li>
-    </ul>
-
-    <h3>2. Mécanismes en profondeur</h3>
-    <div class="callout c-orange"><div class="ico">📎</div><div class="body">
-      <strong>Pourquoi la masse moléculaire, le système galénique et la stabilité comptent</strong> — un actif n'agit que s'il atteint sa cible et reste actif.
-      <ul>
-        <li><code>Masse moléculaire</code> : détermine la profondeur de pénétration (le HA de haute masse reste en surface, le bas pénètre).</li>
-        <li><code>Encapsulation</code> : protège les actifs instables (vitamine C, rétinol), contrôle la libération, réduit l'irritation.</li>
-        <li><code>pH</code> : conditionne l'activité des acides et la tolérance (la vitamine C pure exige un pH bas).</li>
-      </ul>
-    </div></div>
-
-    <h3>3. Passer du marketing à la formulation</h3>
-    <ol>
-      <li>Clarifier la <strong>promesse (claim)</strong></li>
-      <li>Associer <strong>ingrédients</strong> et <strong>plages de dosage</strong> réalistes</li>
-      <li>Examiner le <strong>système galénique</strong> (émulsion, encapsulation, stabilité)</li>
-      <li>Évaluer les <strong>preuves</strong> : <code>in vitro</code> vs <code>in vivo</code> vs <code>mesures instrumentales</code> vs <code>tests consommateurs</code></li>
-    </ol>
-    <div class="callout c-green"><div class="ico">📄</div><div class="body">
-      <strong>Exercice : décomposer un sérum anti-âge</strong>
-      <ol>
-        <li>Promesse : réduire les ridules, éclat</li>
-        <li>Actifs probables : <code>rétinol</code> + <code>peptides</code> + <code>niacinamide</code> + <code>acide hyaluronique</code></li>
-        <li>Système : rétinol encapsulé pour limiter l'irritation et améliorer la stabilité</li>
-        <li>Preuves : une promesse « ridules réduites en 8 semaines » doit reposer sur des mesures in vivo, pas seulement in vitro</li>
-      </ol>
-    </div></div>
-
-    <h3>4. Réglementation &amp; sécurité</h3>
-    <ul>
-      <li>UE : <span class="hl-green"><code>Règlement (CE) No 1223/2009 (Règlement Cosmétiques UE)</code></span> encadre la sécurité des ingrédients, l'étiquetage et les allégations ; l'évaluation est faite par le <a href="https://health.ec.europa.eu/scientific-committees/scientific-committee-consumer-safety-sccs_en" target="_blank">SCCS</a>.</li>
-      <li>Étiquetage : nomenclature mondiale <a href="https://incidecoder.com/" target="_blank">INCI</a> ; l'UE impose en plus l'étiquetage de certains <code>allergènes</code>.</li>
-      <li>US : régulé par la <a href="https://www.fda.gov/cosmetics" target="_blank">FDA</a> ; le <code>MoCRA (2022)</code> renforce l'enregistrement des sites et la déclaration des effets indésirables.</li>
-    </ul>
-
-    <h3>5. Tendances &amp; sources (B2B)</h3>
-    <ul>
-      <li><a href="https://wwd.com/beauty-industry-news/" target="_blank">WWD Beauty Inc</a> : mouvements marché/marques — « ce qui se passe »</li>
-      <li><a href="https://www.cosmeticsdesign-europe.com/" target="_blank">CosmeticsDesign-Europe</a> : ingrédients, fournisseurs, réglementation, technologie — « pourquoi / comment »</li>
-      <li><strong>Tendances clés</strong> : <code>microbiome cutané</code>, <code>clean beauty</code>, <code>skinification</code>, <code>exposome</code>, <code>durabilité / ingrédients upcyclés</code>, <code>personnalisation par IA</code>.</li>
-    </ul>
-
-    <h3>6. Questions fréquentes</h3>
-    <div class="callout c-purple"><div class="ico">❓</div><div class="body">
-      <strong>« Naturel » est-il forcément plus sûr ?</strong> Pas nécessairement — la sécurité dépend du <code>dosage</code> et de l'<code>évaluation</code>, pas de l'origine ; beaucoup d'extraits végétaux contiennent des allergènes.<br>
-      <strong>Peut-on superposer acides et rétinol ?</strong> Mieux vaut généralement les séparer dans la journée pour limiter l'irritation, selon la tolérance.
-    </div></div>
-
-    <h3>7. Auto-évaluation entretien / travail</h3>
-    <ul>
-      <li>Puis-je relier en une phrase la promesse phare d'un produit à ses ingrédients et mécanismes ?</li>
-      <li>Puis-je expliquer les risques d'un actif, ses publics cibles et contextes d'usage (peau sensible, grossesse) ?</li>
-      <li>Puis-je distinguer une allégation marketing d'une preuve clinique/instrumentale ?</li>
-    </ul>
-  </section>
-
-  <footer>美妝保養｜核心活性成分與市場趨勢 · 中文 / English / Français · 點上方按鈕切換語言 / Click the buttons above to switch language.</footer>
+    <!-- Detail Panel -->
+    <div id="detail-panel" class="hidden" style="position:relative;">
+      <button id="close-panel" onclick="closePanel()"><i class="fa-solid fa-xmark"></i></button>
+      <div id="detail-inner"></div>
+    </div>
+  </div>
 </div>
 
 <script>
-  const buttons = document.querySelectorAll('.lang-btn');
-  const panels = document.querySelectorAll('.panel');
-  const hdrBtns = {zh: document.getElementById('hdr-zh'), en: document.getElementById('hdr-en'), fr: document.getElementById('hdr-fr')};
+/* ── DATA ─────────────────────────────────────────────────────── */
+const L = {
+  zh: {
+    root: '美妝保養\n活性成分',
+    navTitle: '美妝保養 · Skincare Actives',
+    tip: '點擊節點查看詳情 · 拖曳平移 · 滾輪縮放',
+    keyIngredients: '核心成分',
+    mechanism: '作用機制',
+    note: '備註',
+    trend: '市場趨勢',
+    source: '資訊來源',
+    regulation: '法規框架',
+    closeBtn: '關閉'
+  },
+  en: {
+    root: 'Skincare\nActives',
+    navTitle: 'Skincare Actives · 美妝保養',
+    tip: 'Click nodes for details · Drag to pan · Scroll to zoom',
+    keyIngredients: 'Key Ingredients',
+    mechanism: 'Mechanism',
+    note: 'Notes',
+    trend: 'Key Trends',
+    source: 'Sources',
+    regulation: 'Framework',
+    closeBtn: 'Close'
+  },
+  fr: {
+    root: 'Actifs\nSoin',
+    navTitle: 'Actifs Soin · Skincare Intelligence',
+    tip: 'Cliquez pour les détails · Glisser · Molette zoom',
+    keyIngredients: 'Actifs clés',
+    mechanism: 'Mécanisme',
+    note: 'Notes',
+    trend: 'Tendances',
+    source: 'Sources',
+    regulation: 'Réglementation',
+    closeBtn: 'Fermer'
+  }
+};
 
-  function switchLang(lang) {
-    buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-    panels.forEach(p => p.classList.toggle('active', p.id === lang));
-    document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
-    Object.entries(hdrBtns).forEach(([k, btn]) => {
-      if (!btn) return;
-      if (k === lang) { btn.style.background = 'rgba(236,72,153,0.15)'; btn.style.color = '#f0abca'; }
-      else { btn.style.background = 'transparent'; btn.style.color = '#64748b'; }
+const BRANCHES = [
+  {
+    id: 'antiaging',
+    color: '#f43f5e',
+    icon: 'fa-hourglass-half',
+    label: { zh: '抗老', en: 'Anti-Aging', fr: 'Anti-Âge' },
+    angle: -90,
+    leaves: [
+      {
+        id: 'retinoids',
+        label: { zh: '視黃醇類', en: 'Retinoids', fr: 'Rétinoïdes' },
+        detail: {
+          zh: { title: '視黃醇類 Retinoids', sub: 'rétinoïdes', mechanism: '加速角質更新、促進膠原合成', ingredients: ['Retinol', 'Retinal (retinaldehyde)', 'Tretinoin (藥品)'], note: '效力：Retinol < Retinal < Tretinoin；需建立耐受（retinization），注意光敏性' },
+          en: { title: 'Retinoids', sub: 'rétinoïdes / 視黃醇類', mechanism: 'Speed cell turnover, stimulate collagen synthesis', ingredients: ['Retinol', 'Retinal', 'Tretinoin (Rx)'], note: 'Potency: Retinol < Retinal < Tretinoin; Build tolerance gradually (retinization); causes photosensitivity' },
+          fr: { title: 'Rétinoïdes', sub: 'retinoids / 視黃醇類', mechanism: 'Accélèrent le renouvellement cellulaire et stimulent le collagène', ingredients: ['Rétinol', 'Rétinal', 'Trétinoïne (médicament)'], note: 'Puissance : rétinol < rétinal < trétinoïne ; rétinisation progressive ; photosensibilité' }
+        }
+      },
+      {
+        id: 'peptides',
+        label: { zh: '胜肽', en: 'Peptides', fr: 'Peptides' },
+        detail: {
+          zh: { title: '胜肽 Peptides', sub: '訊號型 / 載體型', mechanism: '短鏈胺基酸訊號分子，刺激膠原或傳遞銅等微量元素', ingredients: ['Matrixyl (Palmitoyl Pentapeptide)', 'Argireline', 'Copper Peptides'], note: '需區分行銷宣稱與臨床證據' },
+          en: { title: 'Peptides', sub: 'signal / carrier peptides', mechanism: 'Short amino-acid chains that signal collagen production or carry trace minerals', ingredients: ['Matrixyl (Palmitoyl Pentapeptide)', 'Argireline', 'Copper Peptides'], note: 'Distinguish marketing claims from clinical evidence' },
+          fr: { title: 'Peptides', sub: 'signal / transporteurs', mechanism: 'Courtes chaînes d\'acides aminés qui stimulent le collagène ou transportent des minéraux', ingredients: ['Matrixyl', 'Argireline', 'Peptides de cuivre'], note: 'Distinguer la promesse marketing des preuves cliniques' }
+        }
+      },
+      {
+        id: 'bakuchiol',
+        label: { zh: '補骨脂酚', en: 'Bakuchiol', fr: 'Bakuchiol' },
+        detail: {
+          zh: { title: '補骨脂酚 Bakuchiol', sub: '視黃醇植物替代', mechanism: '類似視黃醇作用路徑，刺激膠原、促更新', ingredients: ['Bakuchiol (天然萃取)'], note: '刺激性低、可日間使用，適合敏感肌族群' },
+          en: { title: 'Bakuchiol', sub: 'plant-based retinol alternative', mechanism: 'Mimics retinoid pathways — stimulates collagen, accelerates turnover', ingredients: ['Bakuchiol (plant extract)'], note: 'Lower irritation than retinol; safe for daytime and sensitive skin' },
+          fr: { title: 'Bakuchiol', sub: 'alternative végétale au rétinol', mechanism: 'Imite les voies du rétinol — stimule le collagène, accélère le renouvellement', ingredients: ['Bakuchiol (extrait végétal)'], note: 'Moins irritant que le rétinol ; utilisable de jour ; convient aux peaux sensibles' }
+        }
+      },
+      {
+        id: 'antioxidants',
+        label: { zh: '抗氧化劑', en: 'Antioxidants', fr: 'Antioxydants' },
+        detail: {
+          zh: { title: '抗氧化劑 Antioxidants', sub: '對抗自由基、光老化', mechanism: '中和自由基（ROS），保護細胞免受光老化損傷', ingredients: ['Vitamin C (L-ascorbic acid)', 'Vitamin E (Tocopherol)', 'Ferulic Acid', 'Resveratrol', 'Niacinamide'], note: 'VitC+VitE+Ferulic Acid 三重協同，穩定性與效果最佳' },
+          en: { title: 'Antioxidants', sub: 'fight free radicals & photo-aging', mechanism: 'Neutralize reactive oxygen species (ROS), protect against UV-induced aging', ingredients: ['Vitamin C (L-AA)', 'Vitamin E (Tocopherol)', 'Ferulic Acid', 'Resveratrol', 'Niacinamide'], note: 'VitC+VitE+Ferulic Acid triple combo offers best stability and efficacy' },
+          fr: { title: 'Antioxydants', sub: 'contre les radicaux libres et le photovieillissement', mechanism: 'Neutralisent les espèces réactives de l\'oxygène, protègent du vieillissement UV', ingredients: ['Vitamine C (L-AA)', 'Vitamine E (Tocophérol)', 'Acide férulique', 'Resvératrol'], note: 'Combo VitC+VitE+Acide férulique : stabilité et efficacité optimales' }
+        }
+      }
+    ]
+  },
+  {
+    id: 'hydration',
+    color: '#38bdf8',
+    icon: 'fa-droplet',
+    label: { zh: '保濕屏障', en: 'Hydration', fr: 'Hydratation' },
+    angle: -30,
+    leaves: [
+      {
+        id: 'humectants',
+        label: { zh: '吸濕劑', en: 'Humectants', fr: 'Humectants' },
+        detail: {
+          zh: { title: '吸濕劑 Humectants', sub: '從環境或深層吸水', mechanism: '從環境或真皮層吸水至角質層，維持水分', ingredients: ['Hyaluronic Acid (玻尿酸)', 'Glycerin (甘油)', 'Panthenol (泛醇)', 'Sodium PCA', 'Urea'], note: '高分子 HA 停留表層，低分子 HA 可深入；需搭配封閉劑效果更佳' },
+          en: { title: 'Humectants', sub: 'draw water into skin', mechanism: 'Draw water from environment or dermis into the stratum corneum', ingredients: ['Hyaluronic Acid', 'Glycerin', 'Panthenol', 'Sodium PCA', 'Urea'], note: 'High-MW HA stays on surface; low-MW penetrates deeper; pair with occlusives for best results' },
+          fr: { title: 'Humectants', sub: 'attirent l\'eau vers la peau', mechanism: 'Attirent l\'eau depuis l\'environnement ou le derme vers la couche cornée', ingredients: ['Acide hyaluronique', 'Glycérine', 'Panthénol', 'Sodium PCA', 'Urée'], note: 'HA haute masse : surface ; basse masse : pénètre ; associer aux occlusifs' }
+        }
+      },
+      {
+        id: 'ceramides',
+        label: { zh: '神經醯胺', en: 'Ceramides', fr: 'Céramides' },
+        detail: {
+          zh: { title: '神經醯胺 Ceramides', sub: '屏障三要素', mechanism: '填補角質細胞間脂質空隙，修復皮膚屏障，減少 TEWL', ingredients: ['Ceramide NP', 'Ceramide AP', 'Ceramide EOP', 'Cholesterol (膽固醇)', 'Fatty Acids (脂肪酸)'], note: '理想比例 Ceramide:Cholesterol:Fatty Acid ≈ 1:1:1；知名配方見 CeraVe' },
+          en: { title: 'Ceramides', sub: 'barrier triad', mechanism: 'Fill lipid gaps between corneocytes, restore barrier, reduce TEWL', ingredients: ['Ceramide NP', 'Ceramide AP', 'Ceramide EOP', 'Cholesterol', 'Fatty Acids'], note: 'Ideal ratio Ceramide:Cholesterol:Fatty Acid ≈ 1:1:1; key ingredient in CeraVe' },
+          fr: { title: 'Céramides', sub: 'trio de la barrière', mechanism: 'Comblent les espaces lipidiques, restaurent la barrière, réduisent la PIE/TEWL', ingredients: ['Céramide NP', 'Céramide AP', 'Cholestérol', 'Acides gras'], note: 'Ratio idéal Céramide:Cholestérol:Acides gras ≈ 1:1:1 ; ingrédient phare de CeraVe' }
+        }
+      },
+      {
+        id: 'emollients',
+        label: { zh: '潤膚劑', en: 'Emollients', fr: 'Émollients' },
+        detail: {
+          zh: { title: '潤膚劑 Emollients', sub: '改善膚觸、填補間隙', mechanism: '填補角質層細胞間隙，使肌膚柔滑', ingredients: ['Squalane (角鯊烷)', 'Jojoba Oil', 'Dimethicone', 'Cetyl Alcohol'], note: '角鯊烷輕盈無油感、適合多數膚質' },
+          en: { title: 'Emollients', sub: 'smooth & fill skin texture', mechanism: 'Fill spaces between corneocytes, improve skin texture and softness', ingredients: ['Squalane', 'Jojoba Oil', 'Dimethicone', 'Cetyl Alcohol'], note: 'Squalane is lightweight and suits most skin types' },
+          fr: { title: 'Émollients', sub: 'lissent la texture cutanée', mechanism: 'Comblent les espaces entre cornéocytes, améliorent la texture et la douceur', ingredients: ['Squalane', 'Huile de jojoba', 'Diméthicone', 'Alcool cétylique'], note: 'Le squalane est léger et convient à la plupart des types de peau' }
+        }
+      }
+    ]
+  },
+  {
+    id: 'brightening',
+    color: '#facc15',
+    icon: 'fa-sun',
+    label: { zh: '亮白淡斑', en: 'Brightening', fr: 'Éclat' },
+    angle: 30,
+    leaves: [
+      {
+        id: 'vitaminc',
+        label: { zh: '維生素 C', en: 'Vitamin C', fr: 'Vitamine C' },
+        detail: {
+          zh: { title: '維生素 C Vitamin C', sub: 'vitamine C / 維生素C', mechanism: '抑制酪胺酸酶（tyrosinase），減少黑色素生成；抗氧化', ingredients: ['L-Ascorbic Acid (純 VitC)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate', '3-O-Ethyl Ascorbate'], note: 'L-AA 效果最強但最不穩定，需低 pH 環境；衍生物較溫和但效果稍弱' },
+          en: { title: 'Vitamin C', sub: 'vitamine C / 維生素C', mechanism: 'Inhibits tyrosinase, reduces melanin synthesis; antioxidant', ingredients: ['L-Ascorbic Acid (pure)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate', '3-O-Ethyl Ascorbate'], note: 'L-AA is most effective but unstable (needs low pH); derivatives are milder but less potent' },
+          fr: { title: 'Vitamine C', sub: 'vitamin C / 維生素C', mechanism: 'Inhibe la tyrosinase, réduit la mélanine ; antioxydant', ingredients: ['Acide L-ascorbique (pur)', 'Ascorbyl Glucoside', 'Sodium Ascorbyl Phosphate'], note: 'La L-AA est la plus efficace mais instable (pH bas requis) ; les dérivés sont plus stables' }
+        }
+      },
+      {
+        id: 'niacinamide',
+        label: { zh: '菸鹼醯胺', en: 'Niacinamide', fr: 'Niacinamide' },
+        detail: {
+          zh: { title: '菸鹼醯胺 Niacinamide', sub: '多功能成分', mechanism: '抑制黑色素從黑色素細胞傳遞到角質細胞；強化屏障；控油抗炎', ingredients: ['Niacinamide (Vit B3)'], note: '常見濃度 2–10%；與 VitC 可搭配使用（煙黃問題多為迷思）；控油效果佳' },
+          en: { title: 'Niacinamide', sub: 'multifunctional powerhouse', mechanism: 'Blocks melanosome transfer → brightening; strengthens barrier; regulates sebum', ingredients: ['Niacinamide (Vitamin B3)'], note: 'Common range 2–10%; pairs well with Vitamin C (yellowing concern mostly a myth); great for oily skin' },
+          fr: { title: 'Niacinamide', sub: 'actif multifonction', mechanism: 'Bloque le transfert des mélanosomes → éclat ; renforce la barrière ; régule le sébum', ingredients: ['Niacinamide (Vitamine B3)'], note: 'Dosage courant 2–10 % ; compatible avec la Vit C ; idéal pour peaux grasses' }
+        }
+      },
+      {
+        id: 'depigment',
+        label: { zh: '淡斑成分', en: 'Depigmenting', fr: 'Dépigmentants' },
+        detail: {
+          zh: { title: '淡斑成分群', sub: '多路徑抑制黑色素', mechanism: '分別抑制酪胺酸酶、阻斷黑色素傳遞或加速代謝', ingredients: ['Arbutin (熊果素)', 'Tranexamic Acid (傳明酸)', 'Kojic Acid (麴酸)', 'Azelaic Acid (杜鵑花酸)', 'Alpha Arbutin'], note: '各成分機制不同，可組合搭配；麴酸EU有使用限制' },
+          en: { title: 'Depigmenting Actives', sub: 'multiple pathways', mechanism: 'Inhibit tyrosinase, block melanin transfer, or accelerate melanin breakdown', ingredients: ['Alpha Arbutin', 'Tranexamic Acid', 'Kojic Acid', 'Azelaic Acid', 'Ellagic Acid'], note: 'Different mechanisms — can be combined; kojic acid has EU usage limits' },
+          fr: { title: 'Actifs dépigmentants', sub: 'plusieurs voies d\'action', mechanism: 'Inhibent la tyrosinase, bloquent le transfert ou accélèrent la dégradation de la mélanine', ingredients: ['Alpha-Arbutine', 'Acide tranexamique', 'Acide kojique', 'Acide azélaïque'], note: 'Mécanismes distincts, combinables ; l\'acide kojique est limité en UE' }
+        }
+      }
+    ]
+  },
+  {
+    id: 'soothing',
+    color: '#34d399',
+    icon: 'fa-leaf',
+    label: { zh: '舒緩修護', en: 'Soothing', fr: 'Apaisant' },
+    angle: 90,
+    leaves: [
+      {
+        id: 'centella',
+        label: { zh: '積雪草', en: 'Centella', fr: 'Centella' },
+        detail: {
+          zh: { title: '積雪草 Centella Asiatica (Cica)', sub: '舒緩修護植物萃取', mechanism: '積雪草苷（madecassoside）抗炎、促膠原；積雪草酸修復屏障', ingredients: ['Centella Asiatica Extract', 'Madecassoside', 'Asiaticoside', 'Asiatic Acid'], note: '廣受防護型與敏感肌配方採用；「Cica」是行銷名稱' },
+          en: { title: 'Centella Asiatica (Cica)', sub: 'soothing & repairing botanical', mechanism: 'Madecassoside: anti-inflammatory, collagen stimulating; Asiaticoside: barrier repair', ingredients: ['Centella Asiatica Extract', 'Madecassoside', 'Asiaticoside', 'Asiatic Acid'], note: '"Cica" is a marketing term for the ingredient family' },
+          fr: { title: 'Centella Asiatica (Cica)', sub: 'botanique apaisant et réparateur', mechanism: 'Madécassoside : anti-inflammatoire, stimule le collagène ; asiaticoside : réparation barrière', ingredients: ['Extrait de Centella Asiatica', 'Madécassoside', 'Asiaticoside'], note: '« Cica » est un terme marketing pour cette famille d\'ingrédients' }
+        }
+      },
+      {
+        id: 'calming',
+        label: { zh: '鎮定成分', en: 'Calming', fr: 'Calmants' },
+        detail: {
+          zh: { title: '鎮定舒緩成分', sub: '減少刺激、抗發炎', mechanism: '降低皮膚炎症反應、緩解泛紅與刺激', ingredients: ['Allantoin (尿囊素)', 'Bisabolol (紅沒藥醇)', 'Panthenol (泛醇)', 'Beta-Glucan', 'Oat Extract (燕麥萃取)'], note: '常用於術後修護、敏感肌或去角質後的緩衝配方' },
+          en: { title: 'Calming Actives', sub: 'reduce redness & irritation', mechanism: 'Reduce inflammatory response, calm redness and sensitization', ingredients: ['Allantoin', 'Bisabolol', 'Panthenol', 'Beta-Glucan', 'Oat Extract'], note: 'Common in post-procedure, sensitive skin, and post-exfoliation formulas' },
+          fr: { title: 'Actifs calmants', sub: 'réduisent rougeurs et irritations', mechanism: 'Réduisent la réponse inflammatoire, calment les rougeurs et la sensibilisation', ingredients: ['Allantoïne', 'Bisabolol', 'Panthénol', 'Bêta-glucane', 'Extrait d\'avoine'], note: 'Fréquents dans les soins post-gommage, peaux sensibles et post-procédure' }
+        }
+      },
+      {
+        id: 'sunscreen',
+        label: { zh: '防曬', en: 'Sun Protection', fr: 'Solaire' },
+        detail: {
+          zh: { title: '防曬 Sun Protection', sub: 'SPF / PA / UVA / UVB', mechanism: '有機濾劑吸收 UV 轉化為熱能；無機（礦物）濾劑反射散射', ingredients: ['Zinc Oxide (氧化鋅)', 'Titanium Dioxide (二氧化鈦)', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl'], note: 'SPF 對應 UVB；PA/UVA 對應 UVA；廣譜（Broad-spectrum）同時涵蓋；歐美濾劑法規不同' },
+          en: { title: 'Sun Protection', sub: 'SPF / PA / broad-spectrum', mechanism: 'Chemical filters absorb UV and convert to heat; mineral filters reflect/scatter UV', ingredients: ['Zinc Oxide', 'Titanium Dioxide', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl SX/XL'], note: 'SPF = UVB; PA/UVA star = UVA; Broad-spectrum = both; EU allows more modern filters than US FDA' },
+          fr: { title: 'Protection solaire', sub: 'FPS / PA / large spectre', mechanism: 'Filtres chimiques absorbent et convertissent les UV ; minéraux réfléchissent', ingredients: ['Oxyde de zinc', 'Dioxyde de titane', 'Avobenzone', 'Tinosorb M/S', 'Mexoryl'], note: 'SPF = UVB ; PA = UVA ; L\'UE autorise plus de filtres modernes que la FDA américaine' }
+        }
+      }
+    ]
+  },
+  {
+    id: 'acne',
+    color: '#a78bfa',
+    icon: 'fa-microscope',
+    label: { zh: '控油抗痘', en: 'Acne Control', fr: 'Anti-Acné' },
+    angle: 150,
+    leaves: [
+      {
+        id: 'bha',
+        label: { zh: 'BHA 水楊酸', en: 'Salicylic Acid', fr: 'Acide Salicylique' },
+        detail: {
+          zh: { title: '水楊酸 BHA', sub: 'Beta Hydroxy Acid', mechanism: '親脂性，能滲透毛孔溶解角栓；溶角質（keratolytic）；抗炎', ingredients: ['Salicylic Acid (水楊酸)'], note: '常見濃度 0.5–2%；歐盟限制 2%；適合痘痘肌、黑頭；酸敏感者慎用' },
+          en: { title: 'Salicylic Acid (BHA)', sub: 'Beta Hydroxy Acid', mechanism: 'Lipophilic — penetrates pores to dissolve plugs; keratolytic; anti-inflammatory', ingredients: ['Salicylic Acid'], note: 'Common range 0.5–2%; EU max 2%; best for acne-prone and congested skin' },
+          fr: { title: 'Acide salicylique (BHA)', sub: 'Bêta-hydroxy acide', mechanism: 'Liposoluble — pénètre les pores, dissout les bouchons ; kératolytique ; anti-inflammatoire', ingredients: ['Acide salicylique'], note: 'Dosage courant 0,5–2 % ; limite UE 2 % ; idéal pour peaux à tendance acnéique' }
+        }
+      },
+      {
+        id: 'bpo',
+        label: { zh: '過氧化苯', en: 'Benzoyl Peroxide', fr: 'Peroxyde Benzoyle' },
+        detail: {
+          zh: { title: '過氧化苯 Benzoyl Peroxide', sub: '殺菌型抗痘成分', mechanism: '釋放活性氧殺滅痤瘡丙酸桿菌（C. acnes）；兼具去角質作用', ingredients: ['Benzoyl Peroxide (BPO)'], note: '常見 2.5–10%；可漂白布料；需搭配保濕；初期可能刺激' },
+          en: { title: 'Benzoyl Peroxide', sub: 'antibacterial acne fighter', mechanism: 'Releases active oxygen to kill C. acnes bacteria; also has keratolytic action', ingredients: ['Benzoyl Peroxide (BPO)'], note: 'Common range 2.5–10%; bleaches fabric; pair with moisturizer; may cause initial dryness' },
+          fr: { title: 'Peroxyde de benzoyle', sub: 'anti-bactérien anti-acné', mechanism: 'Libère de l\'oxygène actif pour éliminer C. acnes ; effet kératolytique', ingredients: ['Peroxyde de benzoyle (BPO)'], note: 'Courant 2,5–10 % ; décolore les tissus ; associer à un hydratant ; irritation initiale possible' }
+        }
+      },
+      {
+        id: 'ahas',
+        label: { zh: 'AHA 果酸', en: 'AHA Exfoliants', fr: 'AHA Exfoliants' },
+        detail: {
+          zh: { title: 'AHA 果酸 Alpha Hydroxy Acids', sub: '水溶性去角質酸', mechanism: '弱化角質細胞間連結，促進老廢角質脫落（desquamation）', ingredients: ['Glycolic Acid (乙醇酸)', 'Lactic Acid (乳酸)', 'Mandelic Acid (杏仁酸)', 'Malic Acid'], note: '乙醇酸分子最小效果強；乳酸溫和保濕；杏仁酸最溫和適合敏感肌' },
+          en: { title: 'Alpha Hydroxy Acids (AHA)', sub: 'water-soluble exfoliants', mechanism: 'Weaken bonds between corneocytes to promote exfoliation (desquamation)', ingredients: ['Glycolic Acid', 'Lactic Acid', 'Mandelic Acid', 'Malic Acid'], note: 'Glycolic: smallest molecule, strongest; Lactic: gentle + moisturizing; Mandelic: mildest' },
+          fr: { title: 'Acides alpha-hydroxy (AHA)', sub: 'exfoliants hydrosolubles', mechanism: 'Fragilisent les liens entre cornéocytes pour favoriser la desquamation', ingredients: ['Acide glycolique', 'Acide lactique', 'Acide mandélique', 'Acide malique'], note: 'Glycolique : plus petite molécule, plus fort ; Lactique : doux + hydratant ; Mandélique : le plus doux' }
+        }
+      }
+    ]
+  },
+  {
+    id: 'industry',
+    color: '#fb923c',
+    icon: 'fa-chart-line',
+    label: { zh: '產業趨勢', en: 'Industry', fr: 'Industrie' },
+    angle: -150,
+    leaves: [
+      {
+        id: 'trends',
+        label: { zh: '市場趨勢', en: 'Key Trends', fr: 'Tendances' },
+        detail: {
+          zh: {
+            title: '美妝產業重要趨勢', sub: '2024–2026 key movements',
+            items: ['🦠 皮膚微生態 (Skin Microbiome)：益生元、益生菌成分保護菌群平衡', '🌿 潔淨美妝 (Clean Beauty)：無特定成分（無矽靈、無防腐劑）訴求，需明辨科學性', '💄 護膚化 (Skinification)：護膚成分進入彩妝（底妝+玻尿酸、粉底+SPF）', '🌍 外曝體 (Exposome)：DNA 層面的防護（污染、藍光、壓力、睡眠）', '♻️ 永續原料：升級回收（Upcycled ingredients）、生物發酵取代傳統萃取', '🤖 AI 個人化：基於皮膚分析的客製配方服務'],
+          },
+          en: {
+            title: 'Beauty Industry Key Trends', sub: '2024–2026 key movements',
+            items: ['🦠 Skin Microbiome: prebiotics & probiotics to protect bacterial balance', '🌿 Clean Beauty: "free-from" claims — critically evaluate the science', '💄 Skinification: skincare actives entering makeup (foundation + HA, tinted SPF)', '🌍 Exposome: holistic defense against pollution, blue light, stress, sleep deprivation', '♻️ Sustainable Ingredients: upcycled, biofermentation replacing conventional extraction', '🤖 AI Personalization: customized formulas based on individual skin analysis'],
+          },
+          fr: {
+            title: 'Tendances industrie beauté', sub: 'mouvements clés 2024–2026',
+            items: ['🦠 Microbiome cutané : prébiotiques et probiotiques pour protéger l\'équilibre bactérien', '🌿 Clean Beauty : promesses "sans" — évaluer la rigueur scientifique', '💄 Skinification : actifs de soin dans le maquillage (fond de teint + HA, teinte SPF)', '🌍 Exposome : protection contre pollution, lumière bleue, stress, sommeil', '♻️ Durabilité : ingrédients upcyclés, biofermentation vs extraction conventionnelle', '🤖 Personnalisation IA : formules sur-mesure basées sur l\'analyse cutanée'],
+          }
+        }
+      },
+      {
+        id: 'regulation',
+        label: { zh: '法規安全', en: 'Regulation', fr: 'Réglementation' },
+        detail: {
+          zh: {
+            title: '法規與安全框架', sub: 'EU · US · INCI',
+            items: ['🇪🇺 歐盟：Regulation (EC) No 1223/2009；SCCS 安全評估；要求標示 26 種特定過敏原', '🇺🇸 美國：FDA 監管；MoCRA 2022 強化設施登記與不良反應通報', '🌐 INCI 命名：全球通用成分命名系統，標示於所有化妝品', '⚠️ 安全評估：從體外到人體測試，需評估刺激性、致敏性、光毒性等'],
+          },
+          en: {
+            title: 'Regulation & Safety', sub: 'EU · US · INCI',
+            items: ['🇪🇺 EU: Reg. (EC) No 1223/2009; safety by SCCS; mandatory labeling of 26 allergens', '🇺🇸 US: FDA regulated; MoCRA 2022 adds facility registration & adverse event reporting', '🌐 INCI: International Nomenclature of Cosmetic Ingredients — universal global system', '⚠️ Safety Assessment: from in vitro to human testing — irritation, sensitization, phototoxicity'],
+          },
+          fr: {
+            title: 'Réglementation & Sécurité', sub: 'UE · US · INCI',
+            items: ['🇪🇺 UE : Règlement (CE) No 1223/2009 ; évaluation SCCS ; 26 allergènes à étiqueter', '🇺🇸 US : FDA ; MoCRA 2022 : enregistrement des sites et déclaration d\'effets indésirables', '🌐 INCI : nomenclature internationale universelle inscrite sur tous les cosmétiques', '⚠️ Évaluation sécurité : de l\'in vitro à l\'in vivo — irritation, sensibilisation, phototoxicité'],
+          }
+        }
+      },
+      {
+        id: 'formulation',
+        label: { zh: '配方邏輯', en: 'Formulation', fr: 'Formulation' },
+        detail: {
+          zh: {
+            title: '配方邏輯 Formulation Thinking', sub: '從宣稱到成分',
+            items: ['1️⃣ 定義訴求 (Claim)：抗老 / 亮白 / 修護 / 抗痘 / 舒緩', '2️⃣ 對應成分與濃度：記合理範圍即可，不需硬背單一數字', '3️⃣ 載體與系統：水相、油相、乳化、包裹影響穩定性與釋放', '4️⃣ 評估證據：體外 in vitro → 體內 in vivo → 儀器測量 → 消費者測試'],
+          },
+          en: {
+            title: 'Formulation Logic', sub: 'from claims to ingredients',
+            items: ['1️⃣ Define the Claim: anti-aging / brightening / repair / acne / soothing', '2️⃣ Map to Ingredients & Dosage: know realistic ranges, not exact numbers', '3️⃣ Vehicle & System: aqueous/oil phase, emulsification, encapsulation → stability & release', '4️⃣ Evaluate Evidence: in vitro → in vivo → instrumental → consumer sensory'],
+          },
+          fr: {
+            title: 'Logique de formulation', sub: 'de la promesse à l\'actif',
+            items: ['1️⃣ Définir la promesse (claim) : anti-âge / éclat / réparation / acné / apaisant', '2️⃣ Associer actifs et dosages : connaître les plages réalistes', '3️⃣ Système galénique : phase aqueuse/huileuse, émulsification, encapsulation', '4️⃣ Preuves : in vitro → in vivo → mesures instrumentales → tests consommateurs'],
+          }
+        }
+      }
+    ]
+  }
+];
+
+/* ── STATE ── */
+let lang = 'zh';
+let transform = { x: 0, y: 0, scale: 1 };
+let activeLeaf = null;
+let nodePositions = {}; // id → { x, y } in canvas coords
+
+/* ── LAYOUT CONFIG ── */
+const ROOT_R = 220; // radius from center to branch node center
+const LEAF_R = 130; // radius from branch to leaf
+
+function degToRad(d) { return d * Math.PI / 180; }
+
+function buildLayout(cw, ch) {
+  const cx = cw / 2, cy = ch / 2;
+  nodePositions = {};
+  nodePositions['root'] = { x: cx, y: cy };
+
+  BRANCHES.forEach(branch => {
+    const rad = degToRad(branch.angle);
+    const bx = cx + ROOT_R * Math.cos(rad);
+    const by = cy + ROOT_R * Math.sin(rad);
+    nodePositions[branch.id] = { x: bx, y: by };
+
+    const leafCount = branch.leaves.length;
+    branch.leaves.forEach((leaf, i) => {
+      const spread = leafCount === 1 ? 0 : (i / (leafCount - 1) - 0.5) * 80;
+      const leafAngle = branch.angle + spread;
+      const lrad = degToRad(leafAngle);
+      const lx = bx + LEAF_R * Math.cos(lrad);
+      const ly = by + LEAF_R * Math.sin(lrad);
+      nodePositions[leaf.id] = { x: lx, y: ly };
     });
-    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+}
+
+/* ── RENDER ── */
+function render() {
+  const wrap = document.getElementById('canvas-wrap');
+  const canvas = document.getElementById('canvas');
+  const cw = wrap.clientWidth, ch = wrap.clientHeight;
+  canvas.style.width = cw + 'px';
+  canvas.style.height = ch + 'px';
+
+  buildLayout(cw, ch);
+  canvas.innerHTML = '<svg id="svg-lines" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></svg>';
+  const svg = document.getElementById('svg-lines');
+
+  // Draw lines
+  function drawLine(x1, y1, x2, y2, color) {
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '1.5');
+    line.setAttribute('stroke-opacity', '0.35');
+    svg.appendChild(line);
   }
 
-  buttons.forEach(btn => btn.addEventListener('click', () => switchLang(btn.dataset.lang)));
+  BRANCHES.forEach(branch => {
+    const bp = nodePositions[branch.id];
+    const rp = nodePositions['root'];
+    drawLine(rp.x, rp.y, bp.x, bp.y, branch.color);
+    branch.leaves.forEach(leaf => {
+      const lp = nodePositions[leaf.id];
+      drawLine(bp.x, bp.y, lp.x, lp.y, branch.color + '99');
+    });
+  });
+
+  // Root node
+  const rp = nodePositions['root'];
+  const rootEl = makeEl('div', 'node node-root');
+  rootEl.style.left = rp.x + 'px'; rootEl.style.top = rp.y + 'px';
+  rootEl.innerHTML = `<i class="fa-solid fa-flask-vial"></i><span>${L[lang].root}</span>`;
+  canvas.appendChild(rootEl);
+
+  // Branch & leaf nodes
+  BRANCHES.forEach(branch => {
+    const bp = nodePositions[branch.id];
+    const branchEl = makeEl('div', 'node node-branch');
+    branchEl.id = 'node-' + branch.id;
+    branchEl.style.left = bp.x + 'px'; branchEl.style.top = bp.y + 'px';
+    branchEl.style.setProperty('--node-color', branch.color);
+    branchEl.style.background = `radial-gradient(circle at 35% 35%, ${branch.color}33, ${branch.color}11)`;
+    branchEl.style.borderColor = branch.color + '55';
+    branchEl.style.color = branch.color;
+    branchEl.innerHTML = `<i class="fa-solid ${branch.icon}"></i><span>${branch.label[lang]}</span>`;
+    canvas.appendChild(branchEl);
+
+    branch.leaves.forEach(leaf => {
+      const lp = nodePositions[leaf.id];
+      const leafEl = makeEl('div', 'node node-leaf');
+      leafEl.id = 'node-' + leaf.id;
+      leafEl.style.left = lp.x + 'px'; leafEl.style.top = lp.y + 'px';
+      leafEl.style.setProperty('--node-color', branch.color);
+      leafEl.style.borderColor = branch.color + '40';
+      leafEl.style.color = '#cbd5e1';
+      leafEl.textContent = leaf.label[lang];
+      leafEl.addEventListener('click', (e) => { e.stopPropagation(); showDetail(leaf, branch.color); });
+      canvas.appendChild(leafEl);
+    });
+  });
+
+  applyTransform();
+}
+
+function makeEl(tag, cls) {
+  const el = document.createElement(tag);
+  el.className = cls; return el;
+}
+
+/* ── DETAIL PANEL ── */
+function showDetail(leaf, color) {
+  activeLeaf = leaf.id;
+  document.querySelectorAll('.node-leaf').forEach(n => n.classList.remove('active'));
+  const nodeEl = document.getElementById('node-' + leaf.id);
+  if (nodeEl) nodeEl.classList.add('active');
+
+  const d = leaf.detail[lang];
+  const panel = document.getElementById('detail-panel');
+  const inner = document.getElementById('detail-inner');
+
+  let html = `
+    <div class="detail-tag" style="background:${color}22;color:${color};">${L[lang].keyIngredients}</div>
+    <div class="detail-title">${d.title}</div>
+    <div class="detail-sub">${d.sub}</div>`;
+
+  if (d.mechanism) {
+    html += `<div class="detail-section">
+      <h4>${L[lang].mechanism}</h4>
+      <div class="detail-item">${d.mechanism}</div>
+    </div>`;
+  }
+  if (d.ingredients) {
+    html += `<div class="detail-section"><h4>${L[lang].keyIngredients}</h4>`;
+    d.ingredients.forEach(i => { html += `<span class="detail-chip">${i}</span>`; });
+    html += '</div>';
+  }
+  if (d.items) {
+    html += `<div class="detail-section">`;
+    d.items.forEach(item => { html += `<div class="detail-item">${item}</div>`; });
+    html += '</div>';
+  }
+  if (d.note) {
+    html += `<div class="detail-note">💡 ${d.note}</div>`;
+  }
+
+  inner.innerHTML = html;
+  panel.classList.remove('hidden');
+}
+
+function closePanel() {
+  document.getElementById('detail-panel').classList.add('hidden');
+  document.querySelectorAll('.node-leaf').forEach(n => n.classList.remove('active'));
+  activeLeaf = null;
+}
+
+/* ── TRANSFORM ── */
+function applyTransform() {
+  const canvas = document.getElementById('canvas');
+  canvas.style.transform = `translate(${transform.x}px,${transform.y}px) scale(${transform.scale})`;
+  canvas.style.transformOrigin = '0 0';
+}
+
+/* ── PAN & ZOOM ── */
+let isDragging = false, dragStart = { x: 0, y: 0 }, dragOrigin = { x: 0, y: 0 };
+
+document.getElementById('canvas-wrap').addEventListener('mousedown', e => {
+  if (e.target.closest('.node')) return;
+  isDragging = true;
+  dragStart = { x: e.clientX, y: e.clientY };
+  dragOrigin = { ...transform };
+});
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  transform.x = dragOrigin.x + (e.clientX - dragStart.x);
+  transform.y = dragOrigin.y + (e.clientY - dragStart.y);
+  applyTransform();
+});
+window.addEventListener('mouseup', () => { isDragging = false; });
+
+document.getElementById('canvas-wrap').addEventListener('wheel', e => {
+  e.preventDefault();
+  const delta = e.deltaY > 0 ? 0.9 : 1.1;
+  transform.scale = Math.min(2, Math.max(0.35, transform.scale * delta));
+  applyTransform();
+}, { passive: false });
+
+// Touch support
+let lastTouch = null;
+document.getElementById('canvas-wrap').addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    isDragging = true;
+    dragStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    dragOrigin = { ...transform };
+  }
+});
+document.getElementById('canvas-wrap').addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (!isDragging || e.touches.length !== 1) return;
+  transform.x = dragOrigin.x + (e.touches[0].clientX - dragStart.x);
+  transform.y = dragOrigin.y + (e.touches[0].clientY - dragStart.y);
+  applyTransform();
+}, { passive: false });
+document.getElementById('canvas-wrap').addEventListener('touchend', () => { isDragging = false; });
+
+/* ── LANGUAGE ── */
+function switchLang(l) {
+  lang = l;
+  const hdrBtns = { zh: document.getElementById('hdr-zh'), en: document.getElementById('hdr-en'), fr: document.getElementById('hdr-fr') };
+  Object.entries(hdrBtns).forEach(([k, btn]) => {
+    if (k === l) { btn.style.background = 'rgba(236,72,153,0.15)'; btn.style.color = '#f0abca'; }
+    else { btn.style.background = 'transparent'; btn.style.color = '#64748b'; }
+  });
+  document.getElementById('nav-title').textContent = L[l].navTitle;
+  document.getElementById('tip').textContent = L[l].tip;
+  document.documentElement.lang = l === 'zh' ? 'zh-Hant' : l;
+
+  // Re-render with current transform
+  render();
+
+  // Re-open detail panel if one was active
+  if (activeLeaf) {
+    for (const branch of BRANCHES) {
+      const leaf = branch.leaves.find(lf => lf.id === activeLeaf);
+      if (leaf) { showDetail(leaf, branch.color); break; }
+    }
+  }
+}
+
+/* ── BOOT ── */
+window.addEventListener('load', () => { render(); });
+window.addEventListener('resize', () => { render(); });
 </script>
 </body>
 </html>
