@@ -2025,13 +2025,22 @@
           badge: 'Operations',
           icon: 'fa-industry',
           description: { zh: '管理快消品從原料採購、生產製造到配送上架的完整流程，在高週轉、低毛利的特性下追求極致的效率與成本控制。', en: 'Manage the full FMCG process from raw material sourcing through manufacturing to shelf delivery, pursuing maximum efficiency and cost control under high-turnover, low-margin conditions.', fr: 'Gérer le processus complet FMCG, de l\'approvisionnement à la fabrication jusqu\'à la livraison en rayon, en recherchant l\'efficacité maximale.' },
-          subfields: [{ zh: '生產排程與規劃', en: 'Production Scheduling', fr: 'Planification de la Production' }, { zh: '原物料採購', en: 'Raw Material Sourcing', fr: 'Approvisionnement en Matières Premières' }, { zh: '配銷網路設計', en: 'Distribution Network Design', fr: 'Conception du Réseau de Distribution' }, { zh: '保質期與庫存管理', en: 'Shelf-Life & Inventory Management', fr: 'Gestion de la Durée de Conservation & des Stocks' }],
+          subfields: [
+            { name: { zh: '生產排程與規劃', en: 'Production Scheduling', fr: 'Planification de la Production' }, desc: { zh: '依據需求預測安排產線生產順序與批量，平衡產能利用率與換線成本。', en: 'Scheduling production line sequence and batch sizes based on demand forecasts, balancing capacity utilization against changeover costs.', fr: 'Planifier la séquence et les lots de production selon les prévisions, en équilibrant l\'utilisation de capacité et les coûts de changement de série.' } },
+            { name: { zh: '原物料採購', en: 'Raw Material Sourcing', fr: 'Approvisionnement en Matières Premières' }, desc: { zh: '確保關鍵原料的穩定供應與價格穩定性，降低原物料價格波動對成本的衝擊。', en: 'Ensuring stable supply and price stability of key raw materials to reduce the impact of commodity price volatility on costs.', fr: 'Assurer un approvisionnement stable et des prix stables pour les matières premières clés afin de réduire l\'impact de la volatilité des coûts.' } },
+            { name: { zh: '配銷網路設計', en: 'Distribution Network Design', fr: 'Conception du Réseau de Distribution' }, desc: { zh: '規劃工廠、倉庫與配送中心的地理佈局，縮短交貨時間並降低運輸成本。', en: 'Planning the geographic layout of factories, warehouses, and distribution centers to shorten delivery time and reduce transport costs.', fr: 'Planifier la disposition géographique des usines, entrepôts et centres de distribution pour réduire les délais et les coûts de transport.' } },
+            { name: { zh: '保質期與庫存管理', en: 'Shelf-Life & Inventory Management', fr: 'Gestion de la Durée de Conservation & des Stocks' }, desc: { zh: '針對短保質期商品設計先進先出（FIFO）流程與庫存週轉策略，降低過期報廢損失。', en: 'Designing FIFO processes and inventory turnover strategies for short-shelf-life goods to minimize expiry-related write-offs.', fr: 'Concevoir des processus FIFO et des stratégies de rotation des stocks pour les produits à courte durée de conservation afin de minimiser les pertes.' } }
+          ],
           skills: [
             { zh: '**S&OP流程管理**：能整合銷售預測、生產產能與庫存水位，制定可執行的供需平衡計畫。', en: '**S&OP Process Management**: Integrating sales forecasts, production capacity, and inventory levels into actionable supply-demand balance plans.', fr: '**Gestion du Processus S&OP**: Intégrer prévisions de ventes, capacité de production et niveaux de stock.' },
             { zh: '**精實生產**：熟悉精實製造原則，能減少生產線浪費並提升設備稼動率（OEE）。', en: '**Lean Manufacturing**: Applying lean principles to reduce production line waste and improve Overall Equipment Effectiveness (OEE).', fr: '**Production Lean**: Appliquer les principes lean pour réduire le gaspillage et améliorer le TRS (OEE).' },
             { zh: '**保質期風險管理**：能針對短保質期商品設計先進先出（FIFO）庫存策略，降低報廢損失。', en: '**Shelf-Life Risk Management**: Designing FIFO inventory strategies for short-shelf-life goods to minimize spoilage losses.', fr: '**Gestion du Risque de Durée de Vie**: Concevoir des stratégies FIFO pour les produits à courte durée de conservation.' }
           ],
           tools: ['SAP APO/IBP', 'Demand Planning Software', 'Lean Six Sigma', 'WMS Systems'],
+          certifications: [
+            { zh: 'APICS/ASCM CPIM 生產與庫存管理認證', en: 'APICS/ASCM CPIM (Certified in Production and Inventory Management)', fr: 'APICS/ASCM CPIM (Certified in Production and Inventory Management)' },
+            { zh: 'Lean Six Sigma 綠帶認證', en: 'Lean Six Sigma Green Belt', fr: 'Lean Six Sigma Green Belt' }
+          ],
           scenario: {
             question: { zh: '一款優酪乳新品在通路上的退貨率（因過期）高達12%，遠高於業界平均3%，供應鏈團隊應優先處理什麼？', en: 'A new yogurt product has a 12% return rate (due to expiry) at retail, far above the 3% industry average. What should the supply chain team address first?', fr: 'Un nouveau yaourt a un taux de retour de 12% (péremption), bien au-dessus de la moyenne du secteur (3%). Que doit traiter en priorité l\'équipe supply chain ?' },
             options: [
@@ -2048,13 +2057,22 @@
           badge: 'Innovation',
           icon: 'fa-flask',
           description: { zh: '透過市場研究挖掘消費者未被滿足的需求，並轉化為新產品開發（NPD）的具體配方、包裝與定位方向。', en: 'Use market research to uncover unmet consumer needs and translate them into concrete new product development (NPD) formulations, packaging, and positioning.', fr: 'Utiliser la recherche marketing pour découvrir les besoins non satisfaits et les traduire en formulations, emballages et positionnements concrets.' },
-          subfields: [{ zh: '消費者市場研究', en: 'Consumer Market Research', fr: 'Recherche Marché Consommateur' }, { zh: '新品開發流程', en: 'NPD Process', fr: 'Processus de NPD' }, { zh: '感官科學測試', en: 'Sensory Science Testing', fr: 'Tests Sensoriels' }, { zh: '包裝與永續設計', en: 'Packaging & Sustainability Design', fr: 'Conception d\'Emballage & Durabilité' }],
+          subfields: [
+            { name: { zh: '消費者市場研究', en: 'Consumer Market Research', fr: 'Recherche Marché Consommateur' }, desc: { zh: '透過焦點小組、問卷與民族誌觀察，挖掘消費者未被滿足的潛在需求。', en: 'Using focus groups, surveys, and ethnographic observation to uncover unmet latent consumer needs.', fr: 'Utiliser des groupes de discussion, sondages et observation ethnographique pour révéler les besoins latents non satisfaits.' } },
+            { name: { zh: '新品開發流程', en: 'NPD Process', fr: 'Processus de NPD' }, desc: { zh: '依循Stage-Gate流程從概念發想、配方優化到上市試銷，系統化管理新品風險。', en: 'Following the Stage-Gate process from concept generation through formulation to pre-launch trials to systematically manage new product risk.', fr: 'Suivre le processus Stage-Gate, de l\'idéation à la formulation et aux essais, pour gérer systématiquement le risque produit.' } },
+            { name: { zh: '感官科學測試', en: 'Sensory Science Testing', fr: 'Tests Sensoriels' }, desc: { zh: '運用盲測與感官評估方法量化產品口感、氣味與外觀的消費者接受度。', en: 'Using blind tests and sensory evaluation methods to quantify consumer acceptance of product taste, smell, and appearance.', fr: 'Utiliser des tests à l\'aveugle et l\'évaluation sensorielle pour quantifier l\'acceptation du goût, de l\'odeur et de l\'apparence du produit.' } },
+            { name: { zh: '包裝與永續設計', en: 'Packaging & Sustainability Design', fr: 'Conception d\'Emballage & Durabilité' }, desc: { zh: '設計兼顧視覺吸引力、保護功能與環保材質的包裝方案，回應永續消費趨勢。', en: 'Designing packaging that balances visual appeal, protective function, and eco-friendly materials in response to sustainable consumption trends.', fr: 'Concevoir des emballages alliant attrait visuel, protection et matériaux écologiques pour répondre aux tendances de consommation durable.' } }
+          ],
           skills: [
             { zh: '**消費者洞察萃取**：能從質化焦點小組與量化問卷中提煉出可執行的產品創新方向。', en: '**Consumer Insight Extraction**: Distilling actionable product innovation directions from qualitative focus groups and quantitative surveys.', fr: '**Extraction d\'Insights Consommateurs**: Tirer des directions d\'innovation concrètes des groupes de discussion et sondages.' },
             { zh: '**新品開發流程管理**：熟悉從概念測試、配方優化到上市前試銷的Stage-Gate流程。', en: '**NPD Process Management**: Familiarity with the Stage-Gate process from concept testing through formulation to pre-launch trials.', fr: '**Gestion du Processus de NPD**: Maîtrise du processus Stage-Gate, des tests de concept à la formulation et aux essais.' },
             { zh: '**跨領域協作**：能整合行銷、研發化學家與法規團隊的需求，確保產品兼具吸引力與合規性。', en: '**Cross-disciplinary Collaboration**: Integrating marketing, R&D chemists, and regulatory teams to ensure products are both appealing and compliant.', fr: '**Collaboration Interdisciplinaire**: Intégrer marketing, chimistes R&D et équipes réglementaires.' }
           ],
           tools: ['Qualtrics/SurveyMonkey', 'Sensory Panel Software', 'Stage-Gate Frameworks', 'Nielsen Innovation Tracking'],
+          certifications: [
+            { zh: 'Institute of Food Technologists (IFT) 認證', en: 'Institute of Food Technologists (IFT) Certification', fr: 'Certification Institute of Food Technologists (IFT)' },
+            { zh: 'Market Research Society (MRS) 證書', en: 'Market Research Society (MRS) Certificate', fr: 'Certificat Market Research Society (MRS)' }
+          ],
           scenario: {
             question: { zh: '消費者研究顯示年輕世代高度關注「無添加糖」標籤，但配方部門表示去糖會嚴重影響口感，產品團隊應如何決策？', en: 'Consumer research shows younger generations highly value "no added sugar" labels, but the formulation team says removing sugar severely impacts taste. How should the product team decide?', fr: 'La recherche montre que les jeunes générations valorisent fortement les étiquettes "sans sucre ajouté", mais l\'équipe formulation dit que cela nuit gravement au goût. Comment l\'équipe produit doit-elle décider ?' },
             options: [
@@ -2071,13 +2089,22 @@
           badge: 'Omnichannel',
           icon: 'fa-cart-shopping',
           description: { zh: '管理品牌在傳統零售（量販店、超市、便利店）與電商平台（天貓、Shopee、自有DTC網站）的全渠道銷售布局與營運。', en: 'Manage brand sales across traditional retail (hypermarkets, supermarkets, convenience stores) and e-commerce platforms (Tmall, Shopee, owned DTC sites) in an omnichannel strategy.', fr: 'Gérer les ventes de la marque sur le commerce traditionnel et les plateformes e-commerce dans une stratégie omnicanale.' },
-          subfields: [{ zh: '全渠道策略規劃', en: 'Omnichannel Strategy', fr: 'Stratégie Omnicanale' }, { zh: '電商平台營運', en: 'E-commerce Platform Operations', fr: 'Opérations sur Plateformes E-commerce' }, { zh: 'DTC品牌官網經營', en: 'DTC Website Management', fr: 'Gestion du Site DTC' }, { zh: '通路衝突管理', en: 'Channel Conflict Management', fr: 'Gestion des Conflits de Canal' }],
+          subfields: [
+            { name: { zh: '全渠道策略規劃', en: 'Omnichannel Strategy', fr: 'Stratégie Omnicanale' }, desc: { zh: '整合線上線下銷售管道的體驗與庫存，提供消費者無縫的購物旅程。', en: 'Integrating the experience and inventory of online and offline sales channels to provide a seamless customer shopping journey.', fr: 'Intégrer l\'expérience et les stocks des canaux en ligne et hors ligne pour offrir un parcours d\'achat client sans couture.' } },
+            { name: { zh: '電商平台營運', en: 'E-commerce Platform Operations', fr: 'Opérations sur Plateformes E-commerce' }, desc: { zh: '管理商品上架、關鍵字優化與平台活動參與，提升線上店鋪的曝光與轉換率。', en: 'Managing product listings, keyword optimization, and platform campaign participation to boost online store visibility and conversion.', fr: 'Gérer les listings produits, l\'optimisation des mots-clés et la participation aux campagnes de plateforme pour augmenter visibilité et conversion.' } },
+            { name: { zh: 'DTC品牌官網經營', en: 'DTC Website Management', fr: 'Gestion du Site DTC' }, desc: { zh: '經營品牌直營電商網站，累積第一方消費者數據並強化品牌忠誠度。', en: 'Operating the brand\'s direct-to-consumer website to accumulate first-party customer data and strengthen brand loyalty.', fr: 'Exploiter le site direct-to-consumer de la marque pour accumuler des données client de première main et renforcer la fidélité.' } },
+            { name: { zh: '通路衝突管理', en: 'Channel Conflict Management', fr: 'Gestion des Conflits de Canal' }, desc: { zh: '制定統一定價政策與差異化商品組合，化解線上線下與經銷商之間的利益衝突。', en: 'Establishing unified pricing policies and differentiated product assortments to resolve conflicts of interest between online, offline, and distributor channels.', fr: 'Établir des politiques de prix unifiées et des assortiments différenciés pour résoudre les conflits d\'intérêts entre canaux et distributeurs.' } }
+          ],
           skills: [
             { zh: '**電商營運分析**：熟悉電商平台後台數據（轉換率、客單價、流量來源），優化線上銷售表現。', en: '**E-commerce Operations Analysis**: Familiarity with platform backend data (conversion rate, AOV, traffic sources) to optimize online sales performance.', fr: '**Analyse des Opérations E-commerce**: Maîtrise des données de plateforme pour optimiser la performance des ventes en ligne.' },
             { zh: '**全渠道定價策略**：能設計避免線上線下價格衝突的渠道定價架構。', en: '**Omnichannel Pricing Strategy**: Designing channel pricing architectures that avoid online-offline price conflicts.', fr: '**Stratégie de Prix Omnicanale**: Concevoir des architectures de prix évitant les conflits en ligne/hors ligne.' },
             { zh: '**平台關係經營**：能與電商平台的類目運營團隊建立合作關係，爭取更好的曝光資源。', en: '**Platform Relationship Management**: Building partnerships with e-commerce platform category teams to secure better visibility placements.', fr: '**Gestion des Relations Plateforme**: Construire des partenariats avec les équipes catégorielles des plateformes pour une meilleure visibilité.' }
           ],
           tools: ['Shopify/Shopline', 'Tmall/Shopee Seller Center', 'Google Analytics', 'Criteo/Performance Ads'],
+          certifications: [
+            { zh: 'Google Analytics Individual Qualification (GAIQ)', en: 'Google Analytics Individual Qualification (GAIQ)', fr: 'Google Analytics Individual Qualification (GAIQ)' },
+            { zh: 'Shopify Partner / Commerce Certification', en: 'Shopify Commerce Certification', fr: 'Certification Shopify Commerce' }
+          ],
           scenario: {
             question: { zh: '品牌的DTC官網價格比電商平台旗艦店低15%，導致經銷夥伴強烈抗議「線上線下打架」，品牌方應如何處理？', en: 'A brand\'s DTC website prices 15% lower than its e-commerce flagship store, causing distribution partners to protest about "online-offline channel conflict." How should the brand handle this?', fr: 'Le site DTC d\'une marque affiche des prix 15% plus bas que sa boutique e-commerce phare, provoquant des protestations des partenaires de distribution. Comment la marque doit-elle réagir ?' },
             options: [
@@ -2847,4 +2874,20 @@
               <div class="text-[10px] text-slate-400 mt-0.5 truncate max-w-[180px]">${t(res.englishTitle)}</div>
             </div>
             <span class="text-[10px] px-2 py-0.5 font-bold rounded bg-${res.themeColor}-500/10 text-${res.themeColor}-400 border border-${res.themeColor}-500/20 whitespace-nowrap">
-              $
+              ${t(res.domainName)}
+            </span>
+          `;
+          dropdown.appendChild(row);
+        });
+      } else {
+        dropdown.classList.remove('hidden');
+        dropdown.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-500">
+            ${uiTranslations[currentLang].noResults}
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
