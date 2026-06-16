@@ -147,24 +147,26 @@
 <div id="app">
 
   <!-- ── Header ── -->
-  <header style="background:rgba(4,8,15,0.75);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.10);padding:14px 24px;z-index:50;flex-shrink:0;">
+  <header style="background:rgba(4,8,15,0.8);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(15,23,42,0.8);padding:14px 24px;z-index:50;flex-shrink:0;">
     <div style="max-width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;">
-      <div style="display:flex;align-items:center;gap:10px;">
+      <div style="display:flex;align-items:center;gap:12px;">
         <div style="position:relative;">
-          <div style="position:absolute;inset:-3px;background:linear-gradient(135deg,#ec4899,#d946ef);border-radius:10px;filter:blur(4px);opacity:0.6;"></div>
-          <div style="position:relative;background:#04080f;padding:8px 10px;border-radius:10px;border:1px solid rgba(236,72,153,0.3);">
-            <i class="fa-solid fa-flask-vial" style="color:#f0abca;font-size:16px;"></i>
+          <div style="position:absolute;inset:-4px;background:linear-gradient(135deg,#ec4899,#d946ef);border-radius:12px;filter:blur(6px);opacity:0.75;"></div>
+          <div style="position:relative;background:#020617;padding:10px;border-radius:12px;border:1px solid rgba(30,41,59,0.8);">
+            <i class="fa-solid fa-flask-vial" style="color:#f0abca;font-size:18px;"></i>
           </div>
         </div>
         <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#ec4899;text-transform:uppercase;opacity:.8;">SKINCARE INTELLIGENCE</div>
-          <div style="font-size:16px;font-weight:800;color:#f1f5f9;letter-spacing:-.3px;" id="nav-title">美妝保養 · Skincare Actives</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="padding:2px 8px;font-size:9px;font-weight:700;letter-spacing:.15em;color:#ec4899;text-transform:uppercase;background:rgba(236,72,153,0.1);border-radius:999px;border:1px solid rgba(236,72,153,0.2);">SKINCARE INTELLIGENCE</span>
+          </div>
+          <div style="font-size:18px;font-weight:800;letter-spacing:-.3px;background:linear-gradient(to right,#fff,#fce7f3,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent;" id="nav-title">美妝保養 · Skincare Actives</div>
         </div>
       </div>
-      <div style="display:flex;gap:6px;padding:4px;background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
-        <button onclick="switchLang('zh')" id="hdr-zh" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;background:rgba(236,72,153,0.15);color:#f0abca;font-family:inherit;transition:all .2s;">繁中</button>
-        <button onclick="switchLang('en')" id="hdr-en" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;background:transparent;color:#64748b;font-family:inherit;transition:all .2s;">EN</button>
-        <button onclick="switchLang('fr')" id="hdr-fr" style="padding:5px 12px;font-size:11px;font-weight:700;border-radius:8px;border:none;cursor:pointer;background:transparent;color:#64748b;font-family:inherit;transition:all .2s;">FR</button>
+      <div style="display:flex;gap:4px;padding:4px;background:#0f172a;border:1px solid rgba(30,41,59,1);border-radius:12px;">
+        <button onclick="switchLang('zh')" id="hdr-zh" style="padding:5px 11px;font-size:11px;font-weight:700;border-radius:8px;border:1px solid rgba(236,72,153,0.2);cursor:pointer;background:rgba(236,72,153,0.15);color:#f0abca;font-family:inherit;transition:all .2s;">繁中</button>
+        <button onclick="switchLang('en')" id="hdr-en" style="padding:5px 11px;font-size:11px;font-weight:700;border-radius:8px;border:1px solid transparent;cursor:pointer;background:transparent;color:#64748b;font-family:inherit;transition:all .2s;">EN</button>
+        <button onclick="switchLang('fr')" id="hdr-fr" style="padding:5px 11px;font-size:11px;font-weight:700;border-radius:8px;border:1px solid transparent;cursor:pointer;background:transparent;color:#64748b;font-family:inherit;transition:all .2s;">FR</button>
       </div>
     </div>
   </header>
