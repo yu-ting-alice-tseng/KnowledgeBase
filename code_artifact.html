@@ -2189,16 +2189,23 @@
 
     function renderDropdownList() {
       const list = document.getElementById('domain-dropdown-list');
-      list.innerHTML = Object.keys(domainMeta).map(key => {
-        const meta = domainMeta[key];
-        const color = domainDatabase[key].themeColor;
-        const isActive = key === currentDomainKey;
-        return `<button onclick="switchDomain('${key}');closeDomainDropdown();"
-          class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm transition-colors duration-150 ${isActive ? `bg-${color}-500/15 text-${color}-400` : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'}">
-          <i class="fa-solid ${meta.icon} w-4 text-center shrink-0 ${isActive ? `text-${color}-400` : ''}"></i>
-          <span class="font-semibold">${meta.name[currentLang]}</span>
-          ${isActive ? '<i class="fa-solid fa-check ml-auto text-xs"></i>' : ''}
-        </button>`;
+      const categoryOrder = ['core_business', 'operations_strategy', 'tech_emerging'];
+      list.innerHTML = categoryOrder.map(catKey => {
+        const keysInCat = Object.keys(domainMeta).filter(k => domainMeta[k].category === catKey);
+        if (!keysInCat.length) return '';
+        const header = `<div class="px-3 pt-3 pb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 select-none first:pt-1.5">${domainCategoryMeta[catKey][currentLang]}</div>`;
+        const items = keysInCat.map(key => {
+          const meta = domainMeta[key];
+          const color = domainDatabase[key].themeColor;
+          const isActive = key === currentDomainKey;
+          return `<button onclick="switchDomain('${key}');closeDomainDropdown();"
+            class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm transition-colors duration-150 ${isActive ? `bg-${color}-500/15 text-${color}-400` : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'}">
+            <i class="fa-solid ${meta.icon} w-4 text-center shrink-0 ${isActive ? `text-${color}-400` : ''}"></i>
+            <span class="font-semibold">${meta.name[currentLang]}</span>
+            ${isActive ? '<i class="fa-solid fa-check ml-auto text-xs"></i>' : ''}
+          </button>`;
+        }).join('');
+        return header + items;
       }).join('');
     }
 
