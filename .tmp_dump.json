@@ -1,0 +1,515 @@
+{
+  "en": {
+    "name": "Coty & The Perfume Market",
+    "children": [
+      {
+        "name": "Iconic Coty Brands",
+        "children": [
+          {
+            "name": "Prestige (Luxury)",
+            "children": [
+              {
+                "name": "Gucci Beauty (High fashion heritage)"
+              },
+              {
+                "name": "Chloé (Feminine, romantic, bohemian)"
+              },
+              {
+                "name": "Burberry Beauty (British classic refinement)"
+              },
+              {
+                "name": "Hugo Boss (Modern corporate elegance)"
+              },
+              {
+                "name": "Calvin Klein (Minimalist, provocative, gender-neutral)"
+              }
+            ]
+          },
+          {
+            "name": "Consumer Beauty (Mass Market)",
+            "children": [
+              {
+                "name": "CoverGirl (Accessible, inclusive makeup)"
+              },
+              {
+                "name": "Rimmel London (Edgy, street-style cosmetic culture)"
+              },
+              {
+                "name": "Sally Hansen (Nail care and color leader)"
+              },
+              {
+                "name": "Adidas (Sport-active body and fragrance care)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Iconic Coty Perfumes",
+        "children": [
+          {
+            "name": "Chloé Eau de Parfum",
+            "children": [
+              {
+                "name": "Notes: Damascena rose, peony, freesia, magnolia, cedarwood, amber"
+              },
+              {
+                "name": "Packaging: Vintage-inspired fluted glass bottle, genuine silver-plated collar, hand-tied grosgrain ribbon"
+              }
+            ]
+          },
+          {
+            "name": "CK One (Calvin Klein)",
+            "children": [
+              {
+                "name": "Notes: Bergamot, cardamom, pineapple, papaya, green tea, jasmine, musk, amber"
+              },
+              {
+                "name": "Packaging: Ultra-minimalist frosted glass flask bottle, removable screw cap, metallic spray atomizer"
+              }
+            ]
+          },
+          {
+            "name": "Gucci Flora Gorgeous Gardenia",
+            "children": [
+              {
+                "name": "Notes: Pear blossom, white gardenia, frangipani, patchouli, brown sugar"
+              },
+              {
+                "name": "Packaging: Elongated pink lacquered glass bottle, shiny gold cap, iconic Flora pattern artwork"
+              }
+            ]
+          },
+          {
+            "name": "Boss Bottled (Hugo Boss)",
+            "children": [
+              {
+                "name": "Notes: Apple, bergamot, cinnamon, clove, geranium, sandalwood, cedarwood, vetiver"
+              },
+              {
+                "name": "Packaging: Clean cylindrical glass flacon, embossed block-letter logo, brushed metallic cap"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Main Competitors & Icons",
+        "children": [
+          {
+            "name": "L'Oréal Luxe",
+            "children": [
+              {
+                "name": "YSL Libre",
+                "children": [
+                  {
+                    "name": "Notes: Lavender, mandarin, orange blossom, jasmine, Madagascar vanilla, musk"
+                  },
+                  {
+                    "name": "Packaging: Sharp geometric bottle, oversized horizontal YSL Cassandre logo wrapped around glass, gold chains"
+                  }
+                ]
+              },
+              {
+                "name": "Lancôme La Vie Est Belle",
+                "children": [
+                  {
+                    "name": "Notes: Blackcurrant, pear, iris, jasmine, orange blossom, praline, vanilla, patchouli"
+                  },
+                  {
+                    "name": "Packaging: Heavy glass square with a rounded crystal smile indentation, grey organza ribbon knot"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "LVMH (Moët Hennessy Louis Vuitton)",
+            "children": [
+              {
+                "name": "Dior Sauvage",
+                "children": [
+                  {
+                    "name": "Notes: Reggio Calabria bergamot, Sichuan pepper, lavender, ambroxan, cedar"
+                  },
+                  {
+                    "name": "Packaging: Heavy dark blue-to-black lacquered glass cylinder, magnetic CD-monogrammed cap"
+                  }
+                ]
+              },
+              {
+                "name": "Chanel No. 5 (Independent Competitor)",
+                "children": [
+                  {
+                    "name": "Notes: Aldehydes, ylang-ylang, neroli, May rose, jasmine, sandalwood, bourbon vanilla"
+                  },
+                  {
+                    "name": "Packaging: Architectural emerald-cut minimalist glass bottle, octagonal stopper mimicking Place Vendôme"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Estée Lauder Companies",
+            "children": [
+              {
+                "name": "Tom Ford Black Orchid",
+                "children": [
+                  {
+                    "name": "Notes: Black truffle, ylang-ylang, black orchid, patchouli, incense, vanilla, dark chocolate"
+                  },
+                  {
+                    "name": "Packaging: Art Deco-inspired ribbed black glass bottle, hand-tied gold cord with engraved plate"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "fr": {
+    "name": "Coty & Le Marché du Parfum",
+    "children": [
+      {
+        "name": "Marques Iconiques de Coty",
+        "children": [
+          {
+            "name": "Prestige (Luxe)",
+            "children": [
+              {
+                "name": "Gucci Beauty (Héritage de la haute couture)"
+              },
+              {
+                "name": "Chloé (Féminine, romantique, bohème)"
+              },
+              {
+                "name": "Burberry Beauty (Raffinement classique britannique)"
+              },
+              {
+                "name": "Hugo Boss (Élégance corporate moderne)"
+              },
+              {
+                "name": "Calvin Klein (Minimaliste, provocateur, non-genre)"
+              }
+            ]
+          },
+          {
+            "name": "Consumer Beauty (Grand Public)",
+            "children": [
+              {
+                "name": "CoverGirl (Maquillage accessible et inclusif)"
+              },
+              {
+                "name": "Rimmel London (Culture cosmétique urbaine et audacieuse)"
+              },
+              {
+                "name": "Sally Hansen (Leader des soins et vernis à ongles)"
+              },
+              {
+                "name": "Adidas (Soins corporels et parfums sportifs actifs)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Parfums Iconiques de Coty",
+        "children": [
+          {
+            "name": "Chloé Eau de Parfum",
+            "children": [
+              {
+                "name": "Notes: Rose Damascena, pivoine, freesia, magnolia, bois de cèdre, ambre"
+              },
+              {
+                "name": "Flacon: Verre plissé d'inspiration vintage, col plaqué argent véritable, ruban de gros-grain noué à la main"
+              }
+            ]
+          },
+          {
+            "name": "CK One (Calvin Klein)",
+            "children": [
+              {
+                "name": "Notes: Bergamote, cardamome, ananas, papaye, thé vert, jasmin, musc, ambre"
+              },
+              {
+                "name": "Flacon: Flasque ultra-minimaliste en verre dépoli, bouchon à vis amovible, atomiseur métallique séparé"
+              }
+            ]
+          },
+          {
+            "name": "Gucci Flora Gorgeous Gardenia",
+            "children": [
+              {
+                "name": "Notes: Fleur de poirier, gardénia blanc, frangipanier, patchouli, sucre roux"
+              },
+              {
+                "name": "Flacon: Élongué en verre laqué rose, capot en or brillant, motif Flora emblématique"
+              }
+            ]
+          },
+          {
+            "name": "Boss Bottled (Hugo Boss)",
+            "children": [
+              {
+                "name": "Notes: Pomme, bergamote, cannelle, clou de girofle, géranium, santal, cèdre, vétiver"
+              },
+              {
+                "name": "Flacon: Silhouette cylindrique épurée, logo en lettres capitales embossées, capot en métal brossé"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Principaux Concurrents & Icônes",
+        "children": [
+          {
+            "name": "L'Oréal Luxe",
+            "children": [
+              {
+                "name": "YSL Libre",
+                "children": [
+                  {
+                    "name": "Notes: Lavande, mandarine, fleur d'oranger, jasmin, vanille de Madagascar, musc"
+                  },
+                  {
+                    "name": "Flacon: Coupe géométrique incisive, logo Cassandre YSL horizontal XXL sculpté dans le verre, chaînes dorées"
+                  }
+                ]
+              },
+              {
+                "name": "Lancôme La Vie Est Belle",
+                "children": [
+                  {
+                    "name": "Notes: Cassis, poire, iris, jasmin, fleur d'oranger, praline, vanille, patchouli"
+                  },
+                  {
+                    "name": "Flacon: Carré de verre lourd avec une empreinte ronde évoquant un sourire de cristal, ruban d'organza gris"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "LVMH (Moët Hennessy Louis Vuitton)",
+            "children": [
+              {
+                "name": "Dior Sauvage",
+                "children": [
+                  {
+                    "name": "Notes: Bergamote de Calabre, poivre du Sichuan, lavande, ambroxan, cèdre"
+                  },
+                  {
+                    "name": "Flacon: Cylindre lourd en verre laqué bleu-noir dégradé, capot magnétique gravé du monogramme CD"
+                  }
+                ]
+              },
+              {
+                "name": "Chanel N°5 (Concurrent Indépendant)",
+                "children": [
+                  {
+                    "name": "Notes: Aldéhydes, ylang-ylang, néroli, rose de Mai, jasmin, santal, vanille bourbon"
+                  },
+                  {
+                    "name": "Flacon: Épure architecturale en verre taille émeraude, bouchon octogonal miroitant la Place Vendôme"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Estée Lauder Companies",
+            "children": [
+              {
+                "name": "Tom Ford Black Orchid",
+                "children": [
+                  {
+                    "name": "Notes: Truffe noire, ylang-ylang, orchidée noire, patchouli, encens, vanille, chocolat noir"
+                  },
+                  {
+                    "name": "Flacon: Verre noir cannelé d'inspiration Art Déco, cordon doré noué main avec plaque gravée"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "cn": {
+    "name": "科蒂集团与香水市场",
+    "children": [
+      {
+        "name": "科蒂旗下标志性品牌",
+        "children": [
+          {
+            "name": "奢华美妆部门 (Prestige)",
+            "children": [
+              {
+                "name": "Gucci Beauty 古驰美妆 (高级时装奢华传承)"
+              },
+              {
+                "name": "Chloé 蔻依 (展现女性化、浪漫与波西米亚风格)"
+              },
+              {
+                "name": "Burberry Beauty 博柏利美妆 (英伦经典与现代洗练)"
+              },
+              {
+                "name": "Hugo Boss 雨果博斯 (现代职场精英的优雅风范)"
+              },
+              {
+                "name": "Calvin Klein 卡尔文克雷恩 (极简主义、前卫与无性别主义先锋)"
+              }
+            ]
+          },
+          {
+            "name": "大众美妆部门 (Consumer Beauty)",
+            "children": [
+              {
+                "name": "CoverGirl 封面女郎 (高性价比、包容性强的大众彩妆)"
+              },
+              {
+                "name": "Rimmel London 芮谜 (带有伦敦街头叛逆感的彩妆文化)"
+              },
+              {
+                "name": "Sally Hansen 莎莉汉森 (全球指甲护理与色彩知名品牌)"
+              },
+              {
+                "name": "Adidas 阿迪达斯 (主打运动活力的身体护理与香氛系列)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "科蒂标志性香水",
+        "children": [
+          {
+            "name": "Chloé 同名女士淡香精 (Chloé Eau de Parfum)",
+            "children": [
+              {
+                "name": "香调：大马士革玫瑰、牡丹、小苍兰、木兰、雪松、琥珀"
+              },
+              {
+                "name": "包装设计：复古褶皱玻璃瓶身，独特的真银镀层瓶颈，手工系上的罗缎丝带"
+              }
+            ]
+          },
+          {
+            "name": "CK One 中性淡香水 (Calvin Klein)",
+            "children": [
+              {
+                "name": "香调：佛手柑、小豆蔻、菠萝、木瓜、绿茶、茉莉、麝香、琥珀"
+              },
+              {
+                "name": "包装设计：极致极简的磨砂玻璃酒瓶造型，可拆卸铝制螺丝帽，配有金属喷头"
+              }
+            ]
+          },
+          {
+            "name": "Gucci 绮梦栀子女士香水 (Flora Gorgeous Gardenia)",
+            "children": [
+              {
+                "name": "香调：梨花、白栀子花、鸡蛋花、广藿香、红糖"
+              },
+              {
+                "name": "包装设计：修长的粉红色漆面玻璃瓶，精致金色瓶盖，经典的Flora花卉图腾"
+              }
+            ]
+          },
+          {
+            "name": "Boss 自信男士淡香水 (Boss Bottled)",
+            "children": [
+              {
+                "name": "香调：苹果、佛手柑、肉桂、丁香、天竺葵、檀香、雪松、香根草"
+              },
+              {
+                "name": "包装设计：纯粹干练的圆柱状玻璃瓶身，凹凸工艺刻印的粗体品牌标志，拉丝金属触感瓶盖"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "市场主要竞争对手及经典代表作",
+        "children": [
+          {
+            "name": "欧莱雅高档美妆部门 (L'Oréal Luxe)",
+            "children": [
+              {
+                "name": "YSL 圣罗兰自由之水 (Libre)",
+                "children": [
+                  {
+                    "name": "香调：薰衣草、柑橘、橙花、茉莉、马达加斯加香草、麝香"
+                  },
+                  {
+                    "name": "包装设计：锋利几何切割瓶身，横向超大金属 YSL Cassandre 标志镶嵌于玻璃之上，配有金色链条"
+                  }
+                ]
+              },
+              {
+                "name": "Lancôme 兰蔻美丽人生 (La Vie Est Belle)",
+                "children": [
+                  {
+                    "name": "香调：黑加仑、梨、鸢尾花、茉莉、橙花、果仁糖、香草、广藿香"
+                  },
+                  {
+                    "name": "包装设计：厚重的方形玻璃瓶底，内部勾勒出圆润的“水晶微笑”弧度，瓶颈系有灰色欧根纱双翼"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "LVMH 路威酩轩集团",
+            "children": [
+              {
+                "name": "Dior 迪奥旷野男士香水 (Sauvage)",
+                "children": [
+                  {
+                    "name": "香调：卡拉布里亚佛手柑、四川花椒、薰衣草、降龙涎香醚、雪松"
+                  },
+                  {
+                    "name": "包装设计：质感沉稳的深蓝至墨黑渐变漆面圆柱玻璃瓶，带有CD家族磁吸式瓶盖"
+                  }
+                ]
+              },
+              {
+                "name": "Chanel 香奈儿五号 (N°5 - 独立奢侈品牌竞争者)",
+                "children": [
+                  {
+                    "name": "香调：醛香、依兰、橙花、五月玫瑰、茉莉、檀香、波旁香草"
+                  },
+                  {
+                    "name": "包装设计：极具建筑美感的祖母绿切割极简方形玻璃瓶，八角形瓶盖致敬巴黎芳登广场的几何轮廓"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "雅诗兰黛集团 (Estée Lauder Companies)",
+            "children": [
+              {
+                "name": "Tom Ford 午夜兰花 (Black Orchid)",
+                "children": [
+                  {
+                    "name": "香调：黑松露、依兰、黑兰花、广藿香、焚香、香草、黑巧克力"
+                  },
+                  {
+                    "name": "包装设计：富有装饰艺术(Art Deco)风格的黑色垂直罗纹玻璃瓶，手工系有刻字金色铭牌线圈"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
