@@ -23,46 +23,46 @@
         header {
             position: absolute;
             top: 0; left: 0; width: 100%;
-            padding: 14px 24px;
-            background: rgba(4,8,15,0.75);
+            padding: 16px 24px;
+            background: rgba(4,8,15,0.8);
             backdrop-filter: blur(20px) saturate(180%);
             z-index: 10;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.10);
+            border-bottom: 1px solid rgba(15,23,42,0.8);
             gap: 12px;
         }
-        .header-brand { display: flex; align-items: center; gap: 10px; }
+        .header-brand { display: flex; align-items: center; gap: 12px; }
         .brand-icon {
             position: relative; flex-shrink: 0;
         }
         .brand-icon-glow {
-            position: absolute; inset: -3px;
+            position: absolute; inset: -4px;
             background: linear-gradient(135deg, #d946ef, #ec4899);
-            border-radius: 10px; opacity: 0.6; filter: blur(4px);
+            border-radius: 12px; opacity: 0.75; filter: blur(6px);
         }
         .brand-icon-inner {
-            position: relative; background: #04080f;
-            padding: 8px 10px; border-radius: 10px;
-            border: 1px solid rgba(217,70,239,0.35);
+            position: relative; background: #020617;
+            padding: 10px; border-radius: 12px;
+            border: 1px solid rgba(30,41,59,0.8);
         }
-        .brand-icon-inner i { color: #e879f9; font-size: 16px; }
-        .brand-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #d946ef; text-transform: uppercase; opacity: 0.85; }
-        .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.3px; }
+        .brand-icon-inner i { color: #e879f9; font-size: 18px; }
+        .brand-tag { display:inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; color: #d946ef; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: rgba(217,70,239,0.1); border: 1px solid rgba(217,70,239,0.2); }
+        .brand-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; background: linear-gradient(to right, #fff, #f5d0fe, #e879f9); -webkit-background-clip: text; background-clip: text; color: transparent; }
         #title { display: none; }
-        .controls { display: flex; gap: 6px; padding: 4px; background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+        .controls { display: flex; gap: 4px; padding: 4px; background: #0f172a; border: 1px solid rgba(30,41,59,1); border-radius: 12px; }
         button {
             background: transparent;
-            border: none; color: #64748b;
+            border: 1px solid transparent; color: #64748b;
             padding: 5px 14px; border-radius: 8px;
             cursor: pointer; font-size: 11px; font-weight: 700;
             transition: all 0.2s; font-family: inherit; letter-spacing: 0.03em;
         }
         button:hover { background: rgba(217,70,239,0.10); color: #e2e8f0; }
         button.active {
-            background: rgba(217,70,239,0.18); color: #e879f9;
-            box-shadow: 0 0 10px rgba(217,70,239,0.2);
+            background: rgba(217,70,239,0.15); color: #e879f9;
+            border-color: rgba(217,70,239,0.2);
         }
         .header-right { display: flex; align-items: center; gap: 10px; }
         .back-btn {
