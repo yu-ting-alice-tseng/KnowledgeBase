@@ -511,6 +511,12 @@ body.edit-mode .glass-card:hover { transform: none !important; }
   display: none; position: fixed; inset: 0; z-index: 100;
   background: var(--bg); animation: slide-up 0.42s cubic-bezier(0.4,0,0.2,1);
 }
+#viewer-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 52px; z-index: 101;
+  display: flex; align-items: center; padding: 0 18px;
+  background: rgba(11,8,6,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,168,92,0.14);
+}
 @keyframes slide-up { from{transform:translateY(8%);opacity:0;} to{transform:translateY(0);opacity:1;} }
 
 /* ─── Footer ─── */
