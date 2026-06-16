@@ -879,17 +879,25 @@ const DEFAULT_MODULES = [
     file:'cv_prompt_builder_v2.html', custom:false }
 ];
 
+const REMOVED_KEY = 'knowledge_galaxy_removed_builtins';
 function loadModules() {
   // Built-in modules always come fresh from DEFAULT_MODULES (so renames/updates in code
   // take effect immediately) — only user-uploaded custom modules are read from storage.
+  // Built-ins the user explicitly deleted stay hidden via REMOVED_KEY.
   try {
     const s = localStorage.getItem(STORAGE_KEY);
     const stored = s ? JSON.parse(s) : [];
     const customOnly = stored.filter(m => m.custom);
-    return [...DEFAULT_MODULES, ...customOnly];
+    const removedIds = JSON.parse(localStorage.getItem(REMOVED_KEY) || '[]');
+    const builtins = DEFAULT_MODULES.filter(m => !removedIds.includes(m.id));
+    return [...builtins, ...customOnly];
   } catch { return DEFAULT_MODULES; }
 }
-function saveModules() { localStorage.setItem(STORAGE_KEY, JSON.stringify(modules)); }
+function saveModules() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(modules));
+  const removedIds = DEFAULT_MODULES.filter(d => !modules.some(m => m.id===d.id)).map(d => d.id);
+  localStorage.setItem(REMOVED_KEY, JSON.stringify(removedIds));
+}
 
 let modules     = loadModules();
 let searchQuery = '';
