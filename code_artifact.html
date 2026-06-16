@@ -1665,6 +1665,129 @@
       }
     };
 
+    domainDatabase.tech = {
+      themeColor: 'cyan', rgbColor: '6, 182, 212', hexColor: '#06b6d4',
+      indicatorIcon: 'fa-microchip', indicatorText: { zh: '點擊節點，探索科技產業核心職能', en: 'Click a node to explore the tech industry', fr: 'Cliquez sur un nœud pour explorer l\'industrie technologique' },
+      centralNode: { zh: { zh: '科技業', en: 'Tech Industry', fr: 'Industrie Tech' }, en: { zh: '科技業', en: 'Tech Industry', fr: 'Industrie Tech' }, fr: { zh: '科技業', en: 'Tech Industry', fr: 'Industrie Tech' } },
+      branches: {
+        software_engineering: {
+          id: 'software_engineering',
+          title: { zh: '軟體工程與架構', en: 'Software Engineering & Architecture', fr: 'Ingénierie Logicielle & Architecture' },
+          englishTitle: 'Software Eng',
+          badge: 'Core',
+          icon: 'fa-code',
+          description: { zh: '設計、開發並維護可擴展的軟體系統，涵蓋程式語言、系統架構設計與軟體開發生命週期管理，是科技公司的工程骨幹。', en: 'Design, build, and maintain scalable software systems — covering programming languages, system architecture, and the software development lifecycle. The engineering backbone of any tech company.', fr: 'Concevoir, développer et maintenir des systèmes logiciels évolutifs — langages de programmation, architecture système et cycle de vie du développement logiciel.' },
+          subfields: [{ zh: '前端/後端開發', en: 'Frontend/Backend Development', fr: 'Développement Frontend/Backend' }, { zh: '系統架構設計', en: 'System Architecture Design', fr: 'Conception d\'Architecture Système' }, { zh: '軟體測試與品質', en: 'Software Testing & QA', fr: 'Tests Logiciels & QA' }, { zh: '微服務與API設計', en: 'Microservices & API Design', fr: 'Microservices & Conception d\'API' }],
+          skills: [
+            { zh: '**程式語言精通**：熟練 Python、Java、Go 或 TypeScript 等主流語言，能撰寫高效且易維護的程式碼。', en: '**Programming Language Mastery**: Proficiency in mainstream languages like Python, Java, Go, or TypeScript to write efficient, maintainable code.', fr: '**Maîtrise des Langages de Programmation**: Maîtrise de langages courants (Python, Java, Go, TypeScript) pour écrire un code efficace et maintenable.' },
+            { zh: '**系統設計能力**：能權衡延展性、可用性與一致性，設計分散式系統架構。', en: '**System Design**: Balancing scalability, availability, and consistency to design distributed system architectures.', fr: '**Conception de Systèmes**: Équilibrer évolutivité, disponibilité et cohérence pour concevoir des architectures distribuées.' },
+            { zh: '**版本控制與CI/CD**：熟悉 Git 工作流程與持續整合/部署管線，確保程式碼品質與快速迭代。', en: '**Version Control & CI/CD**: Familiarity with Git workflows and continuous integration/deployment pipelines to ensure code quality and rapid iteration.', fr: '**Contrôle de Version & CI/CD**: Maîtrise des workflows Git et des pipelines d\'intégration/déploiement continu.' }
+          ],
+          tools: ['Git/GitHub', 'VS Code / IntelliJ', 'Docker/Kubernetes', 'Jenkins/GitHub Actions'],
+          scenario: {
+            question: { zh: '一個電商網站在促銷期間流量暴增10倍，導致系統頻繁當機，工程團隊應優先採取什麼架構策略？', en: 'An e-commerce site sees a 10x traffic spike during a sale, causing frequent crashes. What architecture strategy should the engineering team prioritize?', fr: 'Un site e-commerce voit son trafic multiplié par 10 pendant une promotion, causant des pannes fréquentes. Quelle stratégie d\'architecture l\'équipe doit-elle prioriser ?' },
+            options: [
+              { text: { zh: 'A. 直接升級單一伺服器的硬體規格（Scale Up）', en: 'A. Simply upgrade the single server\'s hardware specs (Scale Up)', fr: 'A. Simplement améliorer le matériel d\'un serveur unique (Scale Up)' }, correct: false, reason: { zh: '垂直擴展有物理上限，且單點故障風險依然存在，無法應對10倍流量的彈性需求。', en: 'Vertical scaling has physical limits and single-point-of-failure risk remains, unable to handle elastic 10x demand.', fr: 'La mise à l\'échelle verticale a des limites physiques et le risque de point de défaillance unique persiste.' } },
+              { text: { zh: 'B. 導入水平擴展（Horizontal Scaling）、負載平衡與快取層，並將服務拆分為可獨立擴展的微服務', en: 'B. Implement horizontal scaling, load balancing, and caching layers, decomposing services into independently scalable microservices', fr: 'B. Mettre en place une mise à l\'échelle horizontale, un équilibrage de charge et des caches, en décomposant les services en microservices' }, correct: true, reason: { zh: '正確！水平擴展配合負載平衡器能彈性應對流量尖峰，快取層減少資料庫壓力，微服務架構讓瓶頸服務可獨立擴展。', en: 'Correct! Horizontal scaling with load balancers elastically handles traffic spikes, caching reduces database load, and microservices let bottleneck services scale independently.', fr: 'Correct ! La mise à l\'échelle horizontale avec équilibreurs gère élastiquement les pics de trafic, le cache réduit la charge BD.' } },
+              { text: { zh: 'C. 暫時關閉網站直到促銷結束', en: 'C. Temporarily shut down the site until the sale ends', fr: 'C. Fermer temporairement le site jusqu\'à la fin de la promotion' }, correct: false, reason: { zh: '這會直接造成業務損失與品牌信任損害，並非解決架構問題的方式。', en: 'This directly causes revenue loss and brand trust damage, and does not address the underlying architecture problem.', fr: 'Cela cause directement une perte de revenus et nuit à la confiance, sans résoudre le problème d\'architecture.' } }
+            ]
+          }
+        },
+        product_management_tech: {
+          id: 'product_management_tech',
+          title: { zh: '產品管理', en: 'Product Management', fr: 'Gestion de Produit' },
+          englishTitle: 'Product Mgmt',
+          badge: 'Strategic',
+          icon: 'fa-lightbulb',
+          description: { zh: '橋接商業、技術與用戶需求，定義產品願景、優先排序功能路線圖，並透過數據驅動決策推動產品成功。', en: 'Bridge business, technology, and user needs — defining product vision, prioritizing feature roadmaps, and driving product success through data-driven decisions.', fr: 'Relier les besoins business, techniques et utilisateurs — définir la vision produit, prioriser la feuille de route et piloter le succès par la donnée.' },
+          subfields: [{ zh: '產品策略與願景', en: 'Product Strategy & Vision', fr: 'Stratégie & Vision Produit' }, { zh: '使用者研究', en: 'User Research', fr: 'Recherche Utilisateur' }, { zh: '路線圖規劃', en: 'Roadmap Planning', fr: 'Planification de Feuille de Route' }, { zh: '產品分析與實驗', en: 'Product Analytics & Experimentation', fr: 'Analytique Produit & Expérimentation' }],
+          skills: [
+            { zh: '**需求優先級排序**：運用 RICE、Kano 模型等框架，在有限資源下決定該先做什麼功能。', en: '**Requirement Prioritization**: Using frameworks like RICE and Kano to decide what to build first under limited resources.', fr: '**Priorisation des Besoins**: Utilisation de cadres comme RICE et Kano pour décider quoi développer en priorité.' },
+            { zh: '**跨職能協作**：能有效對齊工程、設計、行銷與銷售團隊，確保產品交付一致。', en: '**Cross-functional Collaboration**: Effectively aligning engineering, design, marketing, and sales teams to ensure consistent delivery.', fr: '**Collaboration Transverse**: Aligner efficacement ingénierie, design, marketing et ventes pour une livraison cohérente.' },
+            { zh: '**數據驅動決策**：熟練解讀產品分析數據與A/B測試結果，驗證功能假設。', en: '**Data-Driven Decision Making**: Skilled at interpreting product analytics and A/B test results to validate feature hypotheses.', fr: '**Décisions Basées sur les Données**: Interpréter l\'analytique produit et les tests A/B pour valider les hypothèses.' }
+          ],
+          tools: ['Jira/Linear', 'Figma', 'Amplitude/Mixpanel', 'Notion/Confluence'],
+          scenario: {
+            question: { zh: '使用者調查顯示功能A的需求聲量很大，但數據分析顯示功能B能帶來更高的留存率，PM應如何決策？', en: 'User surveys show high demand for Feature A, but data analysis shows Feature B drives higher retention. How should the PM decide?', fr: 'Les enquêtes utilisateurs montrent une forte demande pour la fonctionnalité A, mais les données montrent que B améliore davantage la rétention. Comment le PM doit-il décider ?' },
+            options: [
+              { text: { zh: 'A. 完全依照使用者聲量最大的功能A優先開發', en: 'A. Build Feature A first simply because it has the loudest user demand', fr: 'A. Développer en priorité la fonctionnalité A simplement parce qu\'elle est la plus demandée' }, correct: false, reason: { zh: '使用者表達的需求（聲量）不一定等同於真正驅動商業價值的行為（留存），單純依聲量決策容易誤判優先級。', en: 'Expressed user demand doesn\'t always equal behavior that drives business value (retention); deciding purely on voice volume risks mis-prioritization.', fr: 'La demande exprimée ne correspond pas toujours au comportement qui crée de la valeur ; décider uniquement sur le volume de voix risque de mal prioriser.' } },
+              { text: { zh: 'B. 結合定性與定量證據，評估功能B對北極星指標的實際影響，並用小規模實驗驗證後再決定資源分配', en: 'B. Combine qualitative and quantitative evidence, assess Feature B\'s actual impact on the North Star metric, and validate via small-scale experiments before allocating resources', fr: 'B. Combiner preuves qualitatives et quantitatives, évaluer l\'impact réel de B sur la métrique nord, et valider par expérimentation avant d\'allouer les ressources' }, correct: true, reason: { zh: '正確！優秀的PM會結合定性回饋與定量數據，並透過小規模驗證降低決策風險，而非單憑單一訊號做決定。', en: 'Correct! Strong PMs combine qualitative feedback with quantitative data and reduce decision risk through small-scale validation, rather than acting on a single signal.', fr: 'Correct ! Les bons PM combinent retours qualitatifs et données quantitatives, réduisant le risque par une validation à petite échelle.' } },
+              { text: { zh: 'C. 兩個功能都同時全力開發以滿足所有人', en: 'C. Develop both features simultaneously at full scale to satisfy everyone', fr: 'C. Développer les deux fonctionnalités simultanément à pleine échelle pour satisfaire tout le monde' }, correct: false, reason: { zh: '資源永遠有限，同時全力開發會稀釋團隊專注力並拖慢交付速度，違反優先排序的核心原則。', en: 'Resources are always limited; developing both at full scale dilutes team focus and slows delivery, violating core prioritization principles.', fr: 'Les ressources sont toujours limitées ; développer les deux à pleine échelle dilue le focus et ralentit la livraison.' } }
+            ]
+          }
+        },
+        data_infra_devops: {
+          id: 'data_infra_devops',
+          title: { zh: '資料與基礎設施', en: 'Data & Infrastructure / DevOps', fr: 'Données & Infrastructure / DevOps' },
+          englishTitle: 'Data & Infra',
+          badge: 'Backbone',
+          icon: 'fa-server',
+          description: { zh: '建置並維運支撐產品運作的雲端基礎設施、資料管線與自動化部署系統，確保服務的穩定性、安全性與成本效益。', en: 'Build and operate the cloud infrastructure, data pipelines, and automated deployment systems that power products — ensuring reliability, security, and cost efficiency.', fr: 'Construire et exploiter l\'infrastructure cloud, les pipelines de données et les systèmes de déploiement automatisé garantissant fiabilité, sécurité et efficacité des coûts.' },
+          subfields: [{ zh: '雲端架構（AWS/GCP/Azure）', en: 'Cloud Architecture (AWS/GCP/Azure)', fr: 'Architecture Cloud (AWS/GCP/Azure)' }, { zh: '資料管線與ETL', en: 'Data Pipelines & ETL', fr: 'Pipelines de Données & ETL' }, { zh: '網站可靠性工程(SRE)', en: 'Site Reliability Engineering (SRE)', fr: 'Ingénierie de Fiabilité (SRE)' }, { zh: '資安與合規', en: 'Security & Compliance', fr: 'Sécurité & Conformité' }],
+          skills: [
+            { zh: '**雲端服務管理**：熟練操作 AWS/GCP/Azure 核心服務，能設計具成本效益的雲端架構。', en: '**Cloud Service Management**: Proficient with core AWS/GCP/Azure services, designing cost-effective cloud architectures.', fr: '**Gestion des Services Cloud**: Maîtrise des services AWS/GCP/Azure, conception d\'architectures cloud rentables.' },
+            { zh: '**基礎設施即程式碼（IaC）**：使用 Terraform 或 CloudFormation 將基礎設施版本化、自動化管理。', en: '**Infrastructure as Code (IaC)**: Using Terraform or CloudFormation to version-control and automate infrastructure management.', fr: '**Infrastructure as Code (IaC)**: Utilisation de Terraform ou CloudFormation pour versionner et automatiser l\'infrastructure.' },
+            { zh: '**監控與事件回應**：建置可觀測性系統（Observability），能快速定位並修復生產環境故障。', en: '**Monitoring & Incident Response**: Building observability systems to quickly locate and resolve production failures.', fr: '**Surveillance & Réponse aux Incidents**: Construction de systèmes d\'observabilité pour résoudre rapidement les pannes en production.' }
+          ],
+          tools: ['AWS/GCP/Azure', 'Terraform', 'Kubernetes/Docker', 'Datadog/Grafana'],
+          scenario: {
+            question: { zh: '生產環境的資料庫在凌晨突然回應延遲飆高，SRE工程師應優先採取什麼行動？', en: 'The production database suddenly shows soaring response latency at 3am. What should the SRE engineer prioritize first?', fr: 'La base de données de production montre une latence en forte hausse à 3h du matin. Que doit prioriser l\'ingénieur SRE ?' },
+            options: [
+              { text: { zh: 'A. 立即重啟整個資料庫叢集，不做任何診斷', en: 'A. Immediately restart the entire database cluster without any diagnosis', fr: 'A. Redémarrer immédiatement tout le cluster de base de données sans diagnostic' }, correct: false, reason: { zh: '未診斷直接重啟可能造成資料不一致或掩蓋真正的根因，且可能引發更長時間的停機。', en: 'Restarting without diagnosis may cause data inconsistency or mask the real root cause, potentially causing longer downtime.', fr: 'Redémarrer sans diagnostic peut causer une incohérence des données ou masquer la cause réelle, prolongeant potentiellement la panne.' } },
+              { text: { zh: 'B. 查看監控儀表板與日誌定位瓶頸（如慢查詢、連接池耗盡），執行緩解措施同時記錄事件時間軸', en: 'B. Check monitoring dashboards and logs to pinpoint the bottleneck (e.g., slow queries, connection pool exhaustion), apply mitigation while logging the incident timeline', fr: 'B. Vérifier les tableaux de bord et journaux pour localiser le goulot (requêtes lentes, épuisement du pool de connexions), appliquer une mitigation en documentant la chronologie' }, correct: true, reason: { zh: '正確！SRE的核心原則是先觀測、定位根因再行動，並完整記錄事件時間軸供事後覆盤（Postmortem）使用。', en: 'Correct! The core SRE principle is to observe and locate root cause before acting, with full incident timeline logging for postmortem review.', fr: 'Correct ! Le principe SRE central est d\'observer et localiser la cause racine avant d\'agir, en documentant pour le postmortem.' } },
+              { text: { zh: 'C. 等到上班時間再處理，畢竟是凌晨', en: 'C. Wait until business hours to handle it since it\'s the middle of the night', fr: 'C. Attendre les heures de bureau pour traiter le problème puisqu\'il est tard' }, correct: false, reason: { zh: '生產環境事故需要即時應對，延遲處理會擴大影響範圍與使用者損害，違反SRE的服務水準協議（SLA）原則。', en: 'Production incidents require immediate response; delaying expands impact and user harm, violating SLA principles.', fr: 'Les incidents en production nécessitent une réponse immédiate ; retarder élargit l\'impact, violant les principes de SLA.' } }
+            ]
+          }
+        },
+        tech_business_vc: {
+          id: 'tech_business_vc',
+          title: { zh: '科技創投與商業模式', en: 'Tech Business Models & VC', fr: 'Modèles d\'Affaires Tech & Capital-Risque' },
+          englishTitle: 'Tech Biz & VC',
+          badge: 'Funding',
+          icon: 'fa-rocket',
+          description: { zh: '理解科技公司如何透過不同商業模式（訂閱、廣告、平台）獲利，以及創業募資、估值與創投生態系的運作邏輯。', en: 'Understand how tech companies monetize through different business models (subscription, ads, platform) and how startup fundraising, valuation, and the VC ecosystem operate.', fr: 'Comprendre comment les entreprises tech monétisent (abonnement, publicité, plateforme) et comment fonctionnent la levée de fonds, la valorisation et l\'écosystème du capital-risque.' },
+          subfields: [{ zh: '商業模式設計', en: 'Business Model Design', fr: 'Conception du Modèle d\'Affaires' }, { zh: '創投募資輪次', en: 'VC Funding Rounds', fr: 'Tours de Financement VC' }, { zh: '新創估值方法', en: 'Startup Valuation Methods', fr: 'Méthodes de Valorisation Startup' }, { zh: '平台網路效應', en: 'Platform Network Effects', fr: 'Effets de Réseau Plateforme' }],
+          skills: [
+            { zh: '**單位經濟分析**：能計算 CAC、LTV 等單位經濟指標，評估商業模式的長期健康度。', en: '**Unit Economics Analysis**: Calculating CAC, LTV, and other unit economics to assess long-term business model health.', fr: '**Analyse de l\'Économie Unitaire**: Calculer le CAC, LTV pour évaluer la santé à long terme du modèle d\'affaires.' },
+            { zh: '**募資簡報與估值談判**：能撰寫吸引投資人的Pitch Deck，並理解稀釋、優先股條款等募資機制。', en: '**Fundraising Pitches & Valuation Negotiation**: Crafting investor-ready pitch decks and understanding dilution and preferred stock terms.', fr: '**Pitchs de Levée de Fonds & Négociation**: Créer des pitch decks convaincants et comprendre la dilution et les clauses d\'actions préférentielles.' },
+            { zh: '**市場與競爭分析**：能評估TAM/SAM/SOM與競爭格局，判斷商業模式的可擴展性。', en: '**Market & Competitive Analysis**: Assessing TAM/SAM/SOM and competitive landscape to judge business model scalability.', fr: '**Analyse de Marché & Concurrentielle**: Évaluer le TAM/SAM/SOM et le paysage concurrentiel pour juger l\'évolutivité.' }
+          ],
+          tools: ['PitchBook/Crunchbase', 'Excel Financial Models', 'Carta (Cap Table)', 'DocSend'],
+          scenario: {
+            question: { zh: '一家新創公司的CAC（顧客獲取成本）持續上升，但LTV（顧客終生價值）卻停滯不前，投資人應如何解讀此訊號？', en: 'A startup\'s CAC keeps rising while LTV stagnates. How should investors interpret this signal?', fr: 'Le CAC d\'une startup continue d\'augmenter tandis que la LTV stagne. Comment les investisseurs doivent-ils interpréter ce signal ?' },
+            options: [
+              { text: { zh: 'A. 這是正常現象，只要持續加碼行銷預算就能解決', en: 'A. This is normal — simply increasing marketing budget will resolve it', fr: 'A. C\'est normal — augmenter simplement le budget marketing résoudra le problème' }, correct: false, reason: { zh: '盲目加碼行銷只會讓CAC惡化得更快，並未解決LTV停滯背後的產品或留存問題。', en: 'Blindly increasing marketing spend only worsens CAC faster and doesn\'t address the underlying product or retention issues behind stagnant LTV.', fr: 'Augmenter aveuglément le marketing aggrave le CAC plus vite et ne résout pas les problèmes de produit ou de rétention.' } },
+              { text: { zh: 'B. 這是商業模式健康度的紅旗，應深入檢視產品留存率、定價策略與獲客渠道效率，再決定是否繼續擴張', en: 'B. This is a red flag for business model health; should deeply examine product retention, pricing strategy, and acquisition channel efficiency before deciding to scale further', fr: 'B. C\'est un signal d\'alarme pour la santé du modèle d\'affaires ; il faut examiner en profondeur la rétention, la tarification et l\'efficacité des canaux avant de décider de poursuivre l\'expansion' }, correct: true, reason: { zh: '正確！CAC上升、LTV停滯意味著單位經濟惡化，這是投資人評估新創「規模化前是否該先優化單位經濟」的關鍵訊號。', en: 'Correct! Rising CAC with stagnant LTV signals deteriorating unit economics — a key signal investors use to assess whether a startup should optimize unit economics before scaling.', fr: 'Correct ! Le CAC en hausse avec LTV stagnante signale une économie unitaire qui se dégrade — un signal clé avant de décider d\'investir dans la mise à l\'échelle.' } },
+              { text: { zh: 'C. 立即停止所有行銷活動以降低CAC', en: 'C. Immediately halt all marketing activities to reduce CAC', fr: 'C. Arrêter immédiatement toutes les activités marketing pour réduire le CAC' }, correct: false, reason: { zh: '完全停止行銷會直接損害成長動能，正確做法是優化渠道與留存，而非一刀切停止。', en: 'Completely halting marketing directly harms growth momentum; the correct approach is to optimize channels and retention, not a blanket stop.', fr: 'Arrêter complètement le marketing nuit directement à la dynamique de croissance ; il faut optimiser les canaux, pas tout arrêter.' } }
+            ]
+          }
+        },
+        ux_design: {
+          id: 'ux_design',
+          title: { zh: '使用者體驗設計', en: 'UX/Design', fr: 'Conception UX' },
+          englishTitle: 'UX/Design',
+          badge: 'User-Centric',
+          icon: 'fa-pen-ruler',
+          description: { zh: '透過研究、原型設計與測試，創造直覺、易用且符合使用者需求的產品體驗，連結商業目標與使用者滿意度。', en: 'Through research, prototyping, and testing, create intuitive and user-friendly product experiences that connect business goals with user satisfaction.', fr: 'Par la recherche, le prototypage et les tests, créer des expériences produit intuitives qui relient les objectifs business à la satisfaction utilisateur.' },
+          subfields: [{ zh: '使用者研究與訪談', en: 'User Research & Interviews', fr: 'Recherche & Entretiens Utilisateurs' }, { zh: '介面原型設計', en: 'UI Prototyping', fr: 'Prototypage d\'Interface' }, { zh: '可用性測試', en: 'Usability Testing', fr: 'Tests d\'Utilisabilité' }, { zh: '設計系統建置', en: 'Design Systems', fr: 'Systèmes de Conception' }],
+          skills: [
+            { zh: '**使用者研究方法**：熟練質化訪談與量化問卷調查，能挖掘真實的使用者痛點與需求。', en: '**User Research Methods**: Skilled in qualitative interviews and quantitative surveys to uncover real user pain points and needs.', fr: '**Méthodes de Recherche Utilisateur**: Maîtrise des entretiens qualitatifs et sondages quantitatifs pour révéler les besoins réels.' },
+            { zh: '**互動原型製作**：能用 Figma 等工具快速產出高擬真原型，驗證設計假設。', en: '**Interactive Prototyping**: Rapidly producing high-fidelity prototypes in tools like Figma to validate design hypotheses.', fr: '**Prototypage Interactif**: Production rapide de prototypes haute-fidélité avec des outils comme Figma pour valider les hypothèses.' },
+            { zh: '**設計系統思維**：建立並維護一致性的元件庫與設計規範，確保跨產品體驗統一。', en: '**Design Systems Thinking**: Building and maintaining consistent component libraries and design guidelines for unified cross-product experiences.', fr: '**Pensée Systèmes de Conception**: Construire des bibliothèques de composants cohérentes pour une expérience unifiée.' }
+          ],
+          tools: ['Figma', 'Sketch', 'Maze/UserTesting', 'Adobe Creative Suite'],
+          scenario: {
+            question: { zh: '可用性測試顯示，90%的新用戶在註冊流程的第二步驟放棄，設計師應如何處理？', en: 'Usability testing shows 90% of new users abandon at step two of the signup flow. How should the designer respond?', fr: 'Les tests d\'utilisabilité montrent que 90% des nouveaux utilisateurs abandonnent à l\'étape deux de l\'inscription. Comment le designer doit-il réagir ?' },
+            options: [
+              { text: { zh: 'A. 直接刪除整個註冊流程的第二步驟', en: 'A. Simply delete the second step of the signup flow entirely', fr: 'A. Supprimer simplement la deuxième étape du processus d\'inscription' }, correct: false, reason: { zh: '未先了解放棄的根本原因（如表單太複雜、欄位不清楚）就直接刪除步驟，可能移除必要的資訊收集環節。', en: 'Deleting the step without first understanding the root cause of abandonment (e.g., overly complex form, unclear fields) may remove necessary information collection.', fr: 'Supprimer l\'étape sans comprendre la cause racine de l\'abandon peut éliminer une collecte d\'information nécessaire.' } },
+              { text: { zh: 'B. 透過螢幕錄影與後續訪談找出該步驟的具體痛點（如欄位過多、文案不清），再針對性簡化設計並重新測試', en: 'B. Use screen recordings and follow-up interviews to identify specific pain points (too many fields, unclear copy) in that step, then redesign and retest accordingly', fr: 'B. Utiliser des enregistrements d\'écran et des entretiens pour identifier les points de friction spécifiques, puis simplifier le design et retester' }, correct: true, reason: { zh: '正確！優秀的UX流程是先診斷根本原因，再進行針對性的迭代設計，並透過重新測試驗證改善效果，而非憑直覺亂改。', en: 'Correct! Good UX process diagnoses root causes first, then iterates design accordingly and re-tests to validate improvement, rather than guessing.', fr: 'Correct ! Un bon processus UX diagnostique d\'abord les causes racines, puis itère et reteste pour valider l\'amélioration, sans deviner.' } },
+              { text: { zh: 'C. 增加更多獎勵誘因鼓勵用戶忍耐完成註冊', en: 'C. Add more reward incentives to encourage users to push through the signup', fr: 'C. Ajouter plus d\'incitations pour encourager les utilisateurs à terminer l\'inscription' }, correct: false, reason: { zh: '用獎勵掩蓋體驗問題並未真正解決流程本身的可用性缺陷，長期仍會造成用戶流失與不滿。', en: 'Using rewards to mask the experience problem doesn\'t actually fix the underlying usability flaw, and will still cause churn and dissatisfaction long-term.', fr: 'Utiliser des récompenses pour masquer le problème ne corrige pas le défaut d\'utilisabilité sous-jacent, causant churn et insatisfaction à long terme.' } }
+            ]
+          }
+        }
+      }
+    };
+
     // ── Dropdown helpers ──────────────────────────────────────────────────
     const domainMeta = {
       finance:      { icon: 'fa-sack-dollar',          name: { zh: '金融學',   en: 'Finance',       fr: 'Finance' } },
