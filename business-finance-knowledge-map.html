@@ -1822,13 +1822,23 @@
           badge: 'Strategic',
           icon: 'fa-lightbulb',
           description: { zh: '橋接商業、技術與用戶需求，定義產品願景、優先排序功能路線圖，並透過數據驅動決策推動產品成功。', en: 'Bridge business, technology, and user needs — defining product vision, prioritizing feature roadmaps, and driving product success through data-driven decisions.', fr: 'Relier les besoins business, techniques et utilisateurs — définir la vision produit, prioriser la feuille de route et piloter le succès par la donnée.' },
-          subfields: [{ zh: '產品策略與願景', en: 'Product Strategy & Vision', fr: 'Stratégie & Vision Produit' }, { zh: '使用者研究', en: 'User Research', fr: 'Recherche Utilisateur' }, { zh: '路線圖規劃', en: 'Roadmap Planning', fr: 'Planification de Feuille de Route' }, { zh: '產品分析與實驗', en: 'Product Analytics & Experimentation', fr: 'Analytique Produit & Expérimentation' }],
+          subfields: [
+            { name: { zh: '產品策略與願景', en: 'Product Strategy & Vision', fr: 'Stratégie & Vision Produit' }, desc: { zh: '定義產品長期方向與北極星指標，確保團隊投入與企業整體目標一致。', en: 'Defining the product\'s long-term direction and North Star metric, ensuring team efforts align with overall business goals.', fr: 'Définir la direction à long terme du produit et sa métrique nord, en alignant les efforts de l\'équipe sur les objectifs globaux.' } },
+            { name: { zh: '使用者研究', en: 'User Research', fr: 'Recherche Utilisateur' }, desc: { zh: '透過訪談、問卷與行為觀察深入了解用戶痛點，作為功能設計的依據。', en: 'Using interviews, surveys, and behavioral observation to deeply understand user pain points as a basis for feature design.', fr: 'Utiliser entretiens, sondages et observation comportementale pour comprendre les points de friction et orienter la conception.' } },
+            { name: { zh: '路線圖規劃', en: 'Roadmap Planning', fr: 'Planification de Feuille de Route' }, desc: { zh: '依資源與商業優先級排序功能開發順序，並對外溝通產品發展時程。', en: 'Prioritizing feature development order based on resources and business priorities, and communicating the product timeline externally.', fr: 'Hiérarchiser le développement des fonctionnalités selon les ressources et priorités business, et communiquer le calendrier produit.' } },
+            { name: { zh: '產品分析與實驗', en: 'Product Analytics & Experimentation', fr: 'Analytique Produit & Expérimentation' }, desc: { zh: '透過數據儀表板與A/B測試驗證功能假設，量化產品決策的實際影響。', en: 'Validating feature hypotheses through data dashboards and A/B testing, quantifying the actual impact of product decisions.', fr: 'Valider les hypothèses de fonctionnalités via des tableaux de bord et des tests A/B, en quantifiant l\'impact réel des décisions produit.' } }
+          ],
           skills: [
             { zh: '**需求優先級排序**：運用 RICE、Kano 模型等框架，在有限資源下決定該先做什麼功能。', en: '**Requirement Prioritization**: Using frameworks like RICE and Kano to decide what to build first under limited resources.', fr: '**Priorisation des Besoins**: Utilisation de cadres comme RICE et Kano pour décider quoi développer en priorité.' },
             { zh: '**跨職能協作**：能有效對齊工程、設計、行銷與銷售團隊，確保產品交付一致。', en: '**Cross-functional Collaboration**: Effectively aligning engineering, design, marketing, and sales teams to ensure consistent delivery.', fr: '**Collaboration Transverse**: Aligner efficacement ingénierie, design, marketing et ventes pour une livraison cohérente.' },
             { zh: '**數據驅動決策**：熟練解讀產品分析數據與A/B測試結果，驗證功能假設。', en: '**Data-Driven Decision Making**: Skilled at interpreting product analytics and A/B test results to validate feature hypotheses.', fr: '**Décisions Basées sur les Données**: Interpréter l\'analytique produit et les tests A/B pour valider les hypothèses.' }
           ],
           tools: ['Jira/Linear', 'Figma', 'Amplitude/Mixpanel', 'Notion/Confluence'],
+          certifications: [
+            { zh: 'Certified Scrum Product Owner (CSPO)', en: 'Certified Scrum Product Owner (CSPO)', fr: 'Certified Scrum Product Owner (CSPO)' },
+            { zh: 'Pragmatic Institute Product Management Certification', en: 'Pragmatic Institute Product Management Certification', fr: 'Certification en Gestion de Produit Pragmatic Institute' },
+            { zh: 'Reforge 產品管理課程', en: 'Reforge Product Management Programs', fr: 'Programmes de Gestion de Produit Reforge' }
+          ],
           scenario: {
             question: { zh: '使用者調查顯示功能A的需求聲量很大，但數據分析顯示功能B能帶來更高的留存率，PM應如何決策？', en: 'User surveys show high demand for Feature A, but data analysis shows Feature B drives higher retention. How should the PM decide?', fr: 'Les enquêtes utilisateurs montrent une forte demande pour la fonctionnalité A, mais les données montrent que B améliore davantage la rétention. Comment le PM doit-il décider ?' },
             options: [
@@ -1845,13 +1855,23 @@
           badge: 'Backbone',
           icon: 'fa-server',
           description: { zh: '建置並維運支撐產品運作的雲端基礎設施、資料管線與自動化部署系統，確保服務的穩定性、安全性與成本效益。', en: 'Build and operate the cloud infrastructure, data pipelines, and automated deployment systems that power products — ensuring reliability, security, and cost efficiency.', fr: 'Construire et exploiter l\'infrastructure cloud, les pipelines de données et les systèmes de déploiement automatisé garantissant fiabilité, sécurité et efficacité des coûts.' },
-          subfields: [{ zh: '雲端架構（AWS/GCP/Azure）', en: 'Cloud Architecture (AWS/GCP/Azure)', fr: 'Architecture Cloud (AWS/GCP/Azure)' }, { zh: '資料管線與ETL', en: 'Data Pipelines & ETL', fr: 'Pipelines de Données & ETL' }, { zh: '網站可靠性工程(SRE)', en: 'Site Reliability Engineering (SRE)', fr: 'Ingénierie de Fiabilité (SRE)' }, { zh: '資安與合規', en: 'Security & Compliance', fr: 'Sécurité & Conformité' }],
+          subfields: [
+            { name: { zh: '雲端架構（AWS/GCP/Azure）', en: 'Cloud Architecture (AWS/GCP/Azure)', fr: 'Architecture Cloud (AWS/GCP/Azure)' }, desc: { zh: '設計具彈性、高可用性且符合成本效益的雲端運算與儲存架構。', en: 'Designing elastic, highly available, and cost-effective cloud computing and storage architectures.', fr: 'Concevoir des architectures cloud élastiques, hautement disponibles et économiques pour le calcul et le stockage.' } },
+            { name: { zh: '資料管線與ETL', en: 'Data Pipelines & ETL', fr: 'Pipelines de Données & ETL' }, desc: { zh: '建置自動化的資料抽取、轉換與載入流程，確保下游分析取得乾淨可靠的數據。', en: 'Building automated extract-transform-load pipelines to ensure downstream analytics receive clean, reliable data.', fr: 'Construire des pipelines automatisés d\'extraction-transformation-chargement pour garantir des données propres et fiables en aval.' } },
+            { name: { zh: '網站可靠性工程(SRE)', en: 'Site Reliability Engineering (SRE)', fr: 'Ingénierie de Fiabilité (SRE)' }, desc: { zh: '結合軟體工程方法管理系統可靠性，建立SLA、可觀測性與事故應變流程。', en: 'Applying software engineering practices to manage system reliability, establishing SLAs, observability, and incident response processes.', fr: 'Appliquer des pratiques d\'ingénierie logicielle pour gérer la fiabilité système, établir des SLA, l\'observabilité et la réponse aux incidents.' } },
+            { name: { zh: '資安與合規', en: 'Security & Compliance', fr: 'Sécurité & Conformité' }, desc: { zh: '導入存取控制、加密與漏洞掃描機制，確保系統符合資安與法規要求。', en: 'Implementing access controls, encryption, and vulnerability scanning to ensure systems meet security and regulatory requirements.', fr: 'Mettre en place le contrôle d\'accès, le chiffrement et l\'analyse de vulnérabilités pour garantir la conformité sécuritaire et réglementaire.' } }
+          ],
           skills: [
             { zh: '**雲端服務管理**：熟練操作 AWS/GCP/Azure 核心服務，能設計具成本效益的雲端架構。', en: '**Cloud Service Management**: Proficient with core AWS/GCP/Azure services, designing cost-effective cloud architectures.', fr: '**Gestion des Services Cloud**: Maîtrise des services AWS/GCP/Azure, conception d\'architectures cloud rentables.' },
             { zh: '**基礎設施即程式碼（IaC）**：使用 Terraform 或 CloudFormation 將基礎設施版本化、自動化管理。', en: '**Infrastructure as Code (IaC)**: Using Terraform or CloudFormation to version-control and automate infrastructure management.', fr: '**Infrastructure as Code (IaC)**: Utilisation de Terraform ou CloudFormation pour versionner et automatiser l\'infrastructure.' },
             { zh: '**監控與事件回應**：建置可觀測性系統（Observability），能快速定位並修復生產環境故障。', en: '**Monitoring & Incident Response**: Building observability systems to quickly locate and resolve production failures.', fr: '**Surveillance & Réponse aux Incidents**: Construction de systèmes d\'observabilité pour résoudre rapidement les pannes en production.' }
           ],
           tools: ['AWS/GCP/Azure', 'Terraform', 'Kubernetes/Docker', 'Datadog/Grafana'],
+          certifications: [
+            { zh: 'AWS Certified DevOps Engineer – Professional', en: 'AWS Certified DevOps Engineer – Professional', fr: 'AWS Certified DevOps Engineer – Professional' },
+            { zh: 'HashiCorp Certified: Terraform Associate', en: 'HashiCorp Certified: Terraform Associate', fr: 'HashiCorp Certified: Terraform Associate' },
+            { zh: 'Google Professional Cloud DevOps Engineer', en: 'Google Professional Cloud DevOps Engineer', fr: 'Google Professional Cloud DevOps Engineer' }
+          ],
           scenario: {
             question: { zh: '生產環境的資料庫在凌晨突然回應延遲飆高，SRE工程師應優先採取什麼行動？', en: 'The production database suddenly shows soaring response latency at 3am. What should the SRE engineer prioritize first?', fr: 'La base de données de production montre une latence en forte hausse à 3h du matin. Que doit prioriser l\'ingénieur SRE ?' },
             options: [
@@ -1868,13 +1888,22 @@
           badge: 'Funding',
           icon: 'fa-rocket',
           description: { zh: '理解科技公司如何透過不同商業模式（訂閱、廣告、平台）獲利，以及創業募資、估值與創投生態系的運作邏輯。', en: 'Understand how tech companies monetize through different business models (subscription, ads, platform) and how startup fundraising, valuation, and the VC ecosystem operate.', fr: 'Comprendre comment les entreprises tech monétisent (abonnement, publicité, plateforme) et comment fonctionnent la levée de fonds, la valorisation et l\'écosystème du capital-risque.' },
-          subfields: [{ zh: '商業模式設計', en: 'Business Model Design', fr: 'Conception du Modèle d\'Affaires' }, { zh: '創投募資輪次', en: 'VC Funding Rounds', fr: 'Tours de Financement VC' }, { zh: '新創估值方法', en: 'Startup Valuation Methods', fr: 'Méthodes de Valorisation Startup' }, { zh: '平台網路效應', en: 'Platform Network Effects', fr: 'Effets de Réseau Plateforme' }],
+          subfields: [
+            { name: { zh: '商業模式設計', en: 'Business Model Design', fr: 'Conception du Modèle d\'Affaires' }, desc: { zh: '評估訂閱制、廣告或平台抽成等不同營收模式，選擇最適合產品的獲利結構。', en: 'Evaluating revenue models like subscription, advertising, or platform take-rate to select the profit structure best suited to the product.', fr: 'Évaluer les modèles de revenus (abonnement, publicité, commission de plateforme) pour choisir la structure de profit la plus adaptée.' } },
+            { name: { zh: '創投募資輪次', en: 'VC Funding Rounds', fr: 'Tours de Financement VC' }, desc: { zh: '理解種子輪到後期輪次的募資邏輯、稀釋效應與條款談判要點。', en: 'Understanding the fundraising logic, dilution effects, and term negotiation points from seed to late-stage rounds.', fr: 'Comprendre la logique de levée de fonds, les effets de dilution et les points de négociation des clauses du seed aux tours tardifs.' } },
+            { name: { zh: '新創估值方法', en: 'Startup Valuation Methods', fr: 'Méthodes de Valorisation Startup' }, desc: { zh: '運用可比公司分析、營收倍數等方法評估早期新創公司的合理估值區間。', en: 'Using comparable company analysis and revenue multiples to assess a reasonable valuation range for early-stage startups.', fr: 'Utiliser l\'analyse de sociétés comparables et les multiples de revenus pour évaluer une fourchette de valorisation raisonnable pour les startups.' } },
+            { name: { zh: '平台網路效應', en: 'Platform Network Effects', fr: 'Effets de Réseau Plateforme' }, desc: { zh: '分析使用者增加如何提升平台價值，並設計策略加速雙邊或多邊市場成長。', en: 'Analyzing how user growth increases platform value, and designing strategies to accelerate two-sided or multi-sided market growth.', fr: 'Analyser comment la croissance des utilisateurs augmente la valeur de la plateforme et concevoir des stratégies pour accélérer la croissance multilatérale.' } }
+          ],
           skills: [
             { zh: '**單位經濟分析**：能計算 CAC、LTV 等單位經濟指標，評估商業模式的長期健康度。', en: '**Unit Economics Analysis**: Calculating CAC, LTV, and other unit economics to assess long-term business model health.', fr: '**Analyse de l\'Économie Unitaire**: Calculer le CAC, LTV pour évaluer la santé à long terme du modèle d\'affaires.' },
             { zh: '**募資簡報與估值談判**：能撰寫吸引投資人的Pitch Deck，並理解稀釋、優先股條款等募資機制。', en: '**Fundraising Pitches & Valuation Negotiation**: Crafting investor-ready pitch decks and understanding dilution and preferred stock terms.', fr: '**Pitchs de Levée de Fonds & Négociation**: Créer des pitch decks convaincants et comprendre la dilution et les clauses d\'actions préférentielles.' },
             { zh: '**市場與競爭分析**：能評估TAM/SAM/SOM與競爭格局，判斷商業模式的可擴展性。', en: '**Market & Competitive Analysis**: Assessing TAM/SAM/SOM and competitive landscape to judge business model scalability.', fr: '**Analyse de Marché & Concurrentielle**: Évaluer le TAM/SAM/SOM et le paysage concurrentiel pour juger l\'évolutivité.' }
           ],
           tools: ['PitchBook/Crunchbase', 'Excel Financial Models', 'Carta (Cap Table)', 'DocSend'],
+          certifications: [
+            { zh: 'FMVA 財務建模與估值分析師', en: 'FMVA (Financial Modeling & Valuation Analyst)', fr: 'FMVA (Modélisation Financière & Analyse)' },
+            { zh: 'Venture Capital & Private Equity 證書 (Wharton, Coursera)', en: 'Venture Capital & Private Equity Specialization (Wharton, Coursera)', fr: 'Spécialisation Capital-Risque & Private Equity (Wharton, Coursera)' }
+          ],
           scenario: {
             question: { zh: '一家新創公司的CAC（顧客獲取成本）持續上升，但LTV（顧客終生價值）卻停滯不前，投資人應如何解讀此訊號？', en: 'A startup\'s CAC keeps rising while LTV stagnates. How should investors interpret this signal?', fr: 'Le CAC d\'une startup continue d\'augmenter tandis que la LTV stagne. Comment les investisseurs doivent-ils interpréter ce signal ?' },
             options: [
@@ -1891,13 +1920,23 @@
           badge: 'User-Centric',
           icon: 'fa-pen-ruler',
           description: { zh: '透過研究、原型設計與測試，創造直覺、易用且符合使用者需求的產品體驗，連結商業目標與使用者滿意度。', en: 'Through research, prototyping, and testing, create intuitive and user-friendly product experiences that connect business goals with user satisfaction.', fr: 'Par la recherche, le prototypage et les tests, créer des expériences produit intuitives qui relient les objectifs business à la satisfaction utilisateur.' },
-          subfields: [{ zh: '使用者研究與訪談', en: 'User Research & Interviews', fr: 'Recherche & Entretiens Utilisateurs' }, { zh: '介面原型設計', en: 'UI Prototyping', fr: 'Prototypage d\'Interface' }, { zh: '可用性測試', en: 'Usability Testing', fr: 'Tests d\'Utilisabilité' }, { zh: '設計系統建置', en: 'Design Systems', fr: 'Systèmes de Conception' }],
+          subfields: [
+            { name: { zh: '使用者研究與訪談', en: 'User Research & Interviews', fr: 'Recherche & Entretiens Utilisateurs' }, desc: { zh: '透過深度訪談與情境觀察，挖掘使用者真實需求與行為動機。', en: 'Through in-depth interviews and contextual observation, uncovering users\' real needs and behavioral motivations.', fr: 'Par des entretiens approfondis et l\'observation contextuelle, révéler les besoins réels et les motivations comportementales des utilisateurs.' } },
+            { name: { zh: '介面原型設計', en: 'UI Prototyping', fr: 'Prototypage d\'Interface' }, desc: { zh: '快速產出低、高擬真原型，在開發前驗證互動流程與視覺呈現。', en: 'Rapidly producing low- and high-fidelity prototypes to validate interaction flows and visual presentation before development.', fr: 'Produire rapidement des prototypes basse et haute fidélité pour valider les flux d\'interaction avant le développement.' } },
+            { name: { zh: '可用性測試', en: 'Usability Testing', fr: 'Tests d\'Utilisabilité' }, desc: { zh: '邀請真實用戶操作原型或產品，觀察並記錄使用障礙以指導設計優化。', en: 'Inviting real users to operate prototypes or products, observing and recording usability obstacles to guide design optimization.', fr: 'Inviter de vrais utilisateurs à manipuler des prototypes pour observer les obstacles d\'utilisation et orienter les optimisations.' } },
+            { name: { zh: '設計系統建置', en: 'Design Systems', fr: 'Systèmes de Conception' }, desc: { zh: '建立可重複使用的元件庫與視覺規範，確保跨產品的一致性與開發效率。', en: 'Building reusable component libraries and visual guidelines to ensure cross-product consistency and development efficiency.', fr: 'Construire des bibliothèques de composants réutilisables et des normes visuelles pour la cohérence et l\'efficacité du développement.' } }
+          ],
           skills: [
             { zh: '**使用者研究方法**：熟練質化訪談與量化問卷調查，能挖掘真實的使用者痛點與需求。', en: '**User Research Methods**: Skilled in qualitative interviews and quantitative surveys to uncover real user pain points and needs.', fr: '**Méthodes de Recherche Utilisateur**: Maîtrise des entretiens qualitatifs et sondages quantitatifs pour révéler les besoins réels.' },
             { zh: '**互動原型製作**：能用 Figma 等工具快速產出高擬真原型，驗證設計假設。', en: '**Interactive Prototyping**: Rapidly producing high-fidelity prototypes in tools like Figma to validate design hypotheses.', fr: '**Prototypage Interactif**: Production rapide de prototypes haute-fidélité avec des outils comme Figma pour valider les hypothèses.' },
             { zh: '**設計系統思維**：建立並維護一致性的元件庫與設計規範，確保跨產品體驗統一。', en: '**Design Systems Thinking**: Building and maintaining consistent component libraries and design guidelines for unified cross-product experiences.', fr: '**Pensée Systèmes de Conception**: Construire des bibliothèques de composants cohérentes pour une expérience unifiée.' }
           ],
           tools: ['Figma', 'Sketch', 'Maze/UserTesting', 'Adobe Creative Suite'],
+          certifications: [
+            { zh: 'Google UX Design Professional Certificate', en: 'Google UX Design Professional Certificate', fr: 'Certificat Professionnel Google UX Design' },
+            { zh: 'NN/g UX Certification', en: 'Nielsen Norman Group (NN/g) UX Certification', fr: 'Certification UX du Nielsen Norman Group (NN/g)' },
+            { zh: 'Interaction Design Foundation (IDF) 認證', en: 'Interaction Design Foundation (IDF) Certification', fr: 'Certification Interaction Design Foundation (IDF)' }
+          ],
           scenario: {
             question: { zh: '可用性測試顯示，90%的新用戶在註冊流程的第二步驟放棄，設計師應如何處理？', en: 'Usability testing shows 90% of new users abandon at step two of the signup flow. How should the designer respond?', fr: 'Les tests d\'utilisabilité montrent que 90% des nouveaux utilisateurs abandonnent à l\'étape deux de l\'inscription. Comment le designer doit-il réagir ?' },
             options: [
