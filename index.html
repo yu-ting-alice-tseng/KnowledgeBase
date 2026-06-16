@@ -880,8 +880,14 @@ const DEFAULT_MODULES = [
 ];
 
 function loadModules() {
-  try { const s=localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : DEFAULT_MODULES; }
-  catch { return DEFAULT_MODULES; }
+  // Built-in modules always come fresh from DEFAULT_MODULES (so renames/updates in code
+  // take effect immediately) — only user-uploaded custom modules are read from storage.
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    const stored = s ? JSON.parse(s) : [];
+    const customOnly = stored.filter(m => m.custom);
+    return [...DEFAULT_MODULES, ...customOnly];
+  } catch { return DEFAULT_MODULES; }
 }
 function saveModules() { localStorage.setItem(STORAGE_KEY, JSON.stringify(modules)); }
 
