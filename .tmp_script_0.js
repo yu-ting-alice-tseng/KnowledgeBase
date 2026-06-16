@@ -336,7 +336,7 @@ const BRANCHES = [
           },
           fr: {
             title: 'Stratégie des allégations', sub: 'Prouver avant de communiquer',
-            items: ['📋 Types d'allégations : Efficacité (actifs), Sensorielle (texture), Technologique (brevet)', '⚖️ Conformité : preuves scientifiques requises — in vitro/in vivo/tests consommateurs', '🔬 Hiérarchie des preuves : In vitro → Instrumental humain → Test en aveugle → ECR clinique', '🌐 Différences marchés : ISCC EU, FTC US, réglementations locales', '⭐ Formule or : "Actif + Concentration/Techno + Amélioration mesurable + Délai"'],
+            items: ['📋 Types d\'allégations : Efficacité (actifs), Sensorielle (texture), Technologique (brevet)', '⚖️ Conformité : preuves scientifiques requises — in vitro/in vivo/tests consommateurs', '🔬 Hiérarchie des preuves : In vitro → Instrumental humain → Test en aveugle → ECR clinique', '🌐 Différences marchés : ISCC EU, FTC US, réglementations locales', '⭐ Formule or : "Actif + Concentration/Techno + Amélioration mesurable + Délai"'],
           }
         }
       },
@@ -354,7 +354,7 @@ const BRANCHES = [
           },
           fr: {
             title: 'Stratégie canaux et médias', sub: 'Où et comment toucher sa cible',
-            items: ['📱 Réseaux sociaux : TikTok — éducation ingrédients + unboxing ; IG — esthétique + KOL', '🏪 Distribution : Pharmacie vs Grand magasin vs DTC vs E-commerce (Amazon/Tmall)', '👩‍⚕️ Canal dermo/médical : crédibilité maximale, idéal pour positionnement clinique', '🎥 Marketing ingrédients : les « skintellectuals » exigent transparence INCI + dosage', '📦 Boxes beauté : Birchbox/Ipsy — excellents pour l'essai et la notoriété au lancement'],
+            items: ['📱 Réseaux sociaux : TikTok — éducation ingrédients + unboxing ; IG — esthétique + KOL', '🏪 Distribution : Pharmacie vs Grand magasin vs DTC vs E-commerce (Amazon/Tmall)', '👩‍⚕️ Canal dermo/médical : crédibilité maximale, idéal pour positionnement clinique', '🎥 Marketing ingrédients : les « skintellectuals » exigent transparence INCI + dosage', '📦 Boxes beauté : Birchbox/Ipsy — excellents pour l\'essai et la notoriété au lancement'],
           }
         }
       },
@@ -372,7 +372,7 @@ const BRANCHES = [
           },
           fr: {
             title: 'Storytelling de marque', sub: 'Science × Émotion × Identité',
-            items: ['🧬 Histoire de l'ingrédient : chaque actif star a besoin d'une origin story (labo / nature / formulateur)', '❤️ Résonance émotionnelle : la peau comme vecteur de confiance — le soin comme rituel de soi', '🌱 Valeurs de marque : Clean, Durable, Inclusif — les nouveaux avantages concurrentiels', '🏷️ Positionnement : Luxe (La Mer) → Grand public (CeraVe) → Disruption (The Ordinary)', '📖 Naming : noms fonctionnels (Retinol Storm / HA 2%) vs noms poétiques (Laneige / Tatcha)'],
+            items: ['🧬 Histoire de l\'ingrédient : chaque actif star a besoin d\'une origin story (labo / nature / formulateur)', '❤️ Résonance émotionnelle : la peau comme vecteur de confiance — le soin comme rituel de soi', '🌱 Valeurs de marque : Clean, Durable, Inclusif — les nouveaux avantages concurrentiels', '🏷️ Positionnement : Luxe (La Mer) → Grand public (CeraVe) → Disruption (The Ordinary)', '📖 Naming : noms fonctionnels (Retinol Storm / HA 2%) vs noms poétiques (Laneige / Tatcha)'],
           }
         }
       },
@@ -390,7 +390,7 @@ const BRANCHES = [
           },
           fr: {
             title: 'Plan de lancement', sub: 'Stratégie GTM beauté',
-            items: ['📅 Calendrier : T-6m (stratégie/actifs) → T-3m (contenus/KOL) → T-1m (teaser/échantillons) → Jour J (médias/RP) → T+3m (optimisation/vague 2)', '🎁 Stratégie d'essai : échantillons, partenariats boxes, kits dermatologues', '📊 KPIs : Portée / Taux d'engagement / Taux de conversion essai→achat / Réachat / NPS', '🌏 Séquence marché : TW/HK → Asie du Sud-Est → JP/KR → Occident', '⚡ Signaux tendance : Google Trends + volume hashtag TikTok + données recherche e-commerce'],
+            items: ['📅 Calendrier : T-6m (stratégie/actifs) → T-3m (contenus/KOL) → T-1m (teaser/échantillons) → Jour J (médias/RP) → T+3m (optimisation/vague 2)', '🎁 Stratégie d\'essai : échantillons, partenariats boxes, kits dermatologues', '📊 KPIs : Portée / Taux d\'engagement / Taux de conversion essai→achat / Réachat / NPS', '🌏 Séquence marché : TW/HK → Asie du Sud-Est → JP/KR → Occident', '⚡ Signaux tendance : Google Trends + volume hashtag TikTok + données recherche e-commerce'],
           }
         }
       }
