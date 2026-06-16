@@ -1,5 +1,7 @@
 found 6
-Traceback (most recent call last):
-  File "C:\Users\Bonita\Desktop\00_Personal Document\07_Portfolio\23_Personal Knowledge Base\.find_fr_contractions.py", line 16, in <module>
-    print(repr(ctx))
-UnicodeEncodeError: 'cp950' codec can't encode character '\U0001f4cb' in position 8: illegal multibyte sequence
+"ems: ['📋 Types d'allégations : Efficacit"
+"xcellents pour l'essai et la notoriété a"
+"'🧬 Histoire de l'ingrédient : chaque act"
+" star a besoin d'une origin story (labo "
+", '🎁 Stratégie d'essai : échantillons, p"
+" Portée / Taux d'engagement / Taux de co"
