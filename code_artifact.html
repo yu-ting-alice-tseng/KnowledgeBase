@@ -1788,6 +1788,129 @@
       }
     };
 
+    domainDatabase.fmcg = {
+      themeColor: 'orange', rgbColor: '249, 115, 22', hexColor: '#f97316',
+      indicatorIcon: 'fa-cart-shopping', indicatorText: { zh: '點擊節點，探索快消品產業核心領域', en: 'Click a node to explore the FMCG industry', fr: 'Cliquez sur un nœud pour explorer l\'industrie des biens de consommation' },
+      centralNode: { zh: { zh: '快消品產業', en: 'FMCG Industry', fr: 'Industrie FMCG' }, en: { zh: '快消品產業', en: 'FMCG Industry', fr: 'Industrie FMCG' }, fr: { zh: '快消品產業', en: 'FMCG Industry', fr: 'Industrie FMCG' } },
+      branches: {
+        brand_management: {
+          id: 'brand_management',
+          title: { zh: '品牌管理', en: 'Brand Management', fr: 'Gestion de Marque' },
+          englishTitle: 'Brand Mgmt',
+          badge: 'Core',
+          icon: 'fa-tags',
+          description: { zh: '打造並維護品牌資產，從定位、識別到行銷活動規劃，確保品牌在消費者心中建立差異化且持久的印象。', en: 'Build and maintain brand equity — from positioning and identity to campaign planning — ensuring a differentiated, lasting impression in consumers\' minds.', fr: 'Construire et maintenir le capital de marque — du positionnement à l\'identité en passant par la planification de campagnes.' },
+          subfields: [{ zh: '品牌定位與識別', en: 'Brand Positioning & Identity', fr: 'Positionnement & Identité de Marque' }, { zh: '行銷活動規劃', en: 'Campaign Planning', fr: 'Planification de Campagnes' }, { zh: '品牌資產管理', en: 'Brand Equity Management', fr: 'Gestion du Capital de Marque' }, { zh: '產品組合策略', en: 'Portfolio Strategy', fr: 'Stratégie de Portefeuille' }],
+          skills: [
+            { zh: '**品牌策略制定**：能運用品牌金字塔、定位圖等框架，建立清晰且具差異化的品牌主張。', en: '**Brand Strategy Development**: Using frameworks like brand pyramids and positioning maps to build clear, differentiated brand propositions.', fr: '**Élaboration de Stratégie de Marque**: Utiliser des cadres comme la pyramide de marque pour bâtir une proposition différenciée.' },
+            { zh: '**P&L損益管理**：能掌握品牌損益表，平衡行銷投資與毛利率目標。', en: '**P&L Management**: Managing brand profit & loss statements, balancing marketing investment against margin targets.', fr: '**Gestion du P&L**: Gérer le compte de résultat de la marque, équilibrant investissement marketing et objectifs de marge.' },
+            { zh: '**跨部門領導**：能協調研發、供應鏈與銷售團隊，確保品牌願景落地執行。', en: '**Cross-functional Leadership**: Coordinating R&D, supply chain, and sales teams to ensure brand vision is executed.', fr: '**Leadership Transverse**: Coordonner R&D, supply chain et ventes pour exécuter la vision de marque.' }
+          ],
+          tools: ['Nielsen/Kantar Data', 'Brand Tracker Studies', 'Excel P&L Models', 'Adobe Creative Suite'],
+          scenario: {
+            question: { zh: '某洗髮精品牌市佔率連續兩季下滑，但廣告聲量並未減少，品牌經理應優先檢視什麼？', en: 'A shampoo brand\'s market share has declined for two consecutive quarters despite unchanged ad spend. What should the brand manager investigate first?', fr: 'La part de marché d\'une marque de shampoing a baissé deux trimestres consécutifs malgré un budget pub inchangé. Que doit examiner en premier le brand manager ?' },
+            options: [
+              { text: { zh: 'A. 立即加倍廣告預算以提升聲量', en: 'A. Immediately double the ad budget to boost share of voice', fr: 'A. Doubler immédiatement le budget publicitaire' }, correct: false, reason: { zh: '聲量並未減少卻市佔下滑，問題很可能不在廣告投放量，盲目加碼可能浪費資源。', en: 'Since ad spend hasn\'t decreased but share is falling, the issue likely isn\'t ad volume; blindly increasing spend may waste resources.', fr: 'Le budget n\'a pas baissé mais la part de marché chute ; le problème n\'est probablement pas le volume publicitaire.' } },
+              { text: { zh: 'B. 分析價格競爭力、通路鋪貨率與產品口碑（NPS），找出消費者流失的具體原因', en: 'B. Analyze price competitiveness, distribution coverage, and product NPS to identify the specific causes of customer attrition', fr: 'B. Analyser la compétitivité prix, la couverture de distribution et le NPS produit pour identifier les causes de l\'attrition' }, correct: true, reason: { zh: '正確！市佔下滑但廣告聲量穩定，意味著問題可能出在價格、鋪貨或產品力，需系統性診斷而非單一加碼廣告。', en: 'Correct! Declining share with stable ad spend suggests the issue lies in pricing, distribution, or product strength — requiring systematic diagnosis, not just more advertising.', fr: 'Correct ! La baisse de part avec un budget pub stable suggère un problème de prix, distribution ou produit — nécessitant un diagnostic systématique.' } },
+              { text: { zh: 'C. 直接降價20%搶回市佔率', en: 'C. Immediately cut prices by 20% to win back market share', fr: 'C. Réduire immédiatement les prix de 20% pour reconquérir des parts de marché' }, correct: false, reason: { zh: '未診斷根因就降價會直接侵蝕毛利，且可能引發價格戰，傷害品牌長期定位。', en: 'Cutting prices without diagnosing the root cause directly erodes margin and may trigger a price war, damaging long-term brand positioning.', fr: 'Réduire les prix sans diagnostic érode directement la marge et peut déclencher une guerre des prix nuisant au positionnement à long terme.' } }
+            ]
+          }
+        },
+        trade_channel_marketing: {
+          id: 'trade_channel_marketing',
+          title: { zh: '通路與貿易行銷', en: 'Trade & Channel Marketing', fr: 'Marketing Commercial & Canal' },
+          englishTitle: 'Trade Marketing',
+          badge: 'Execution',
+          icon: 'fa-store',
+          description: { zh: '管理品牌在零售通路的鋪貨、陳列與促銷執行，與經銷商及零售商談判合作條件，確保產品在貨架上的可見度與銷售動能。', en: 'Manage brand distribution, shelf placement, and promotional execution at retail; negotiate terms with distributors and retailers to ensure shelf visibility and sales momentum.', fr: 'Gérer la distribution, le placement en rayon et l\'exécution promotionnelle ; négocier avec distributeurs et détaillants.' },
+          subfields: [{ zh: '通路談判', en: 'Channel Negotiation', fr: 'Négociation de Canal' }, { zh: '貨架陳列管理', en: 'Shelf & Planogram Management', fr: 'Gestion des Linéaires' }, { zh: '促銷活動設計', en: 'Trade Promotion Design', fr: 'Conception de Promotions Commerciales' }, { zh: '經銷商管理', en: 'Distributor Management', fr: 'Gestion des Distributeurs' }],
+          skills: [
+            { zh: '**通路談判技巧**：能與大型零售商談判上架費、陳列位置與促銷分攤比例。', en: '**Channel Negotiation**: Negotiating listing fees, shelf positioning, and promotional cost-sharing with major retailers.', fr: '**Négociation de Canal**: Négocier les frais de référencement, le placement en rayon et le partage des coûts promotionnels.' },
+            { zh: '**促銷效益分析**：能計算促銷投資回報率（Promo ROI），判斷哪種促銷形式最具成本效益。', en: '**Promotion ROI Analysis**: Calculating promotional ROI to determine the most cost-effective promotion types.', fr: '**Analyse du ROI Promotionnel**: Calculer le ROI des promotions pour déterminer les types les plus rentables.' },
+            { zh: '**通路數據分析**：熟悉POS銷售數據與庫存週轉率，優化鋪貨策略。', en: '**Channel Data Analysis**: Familiarity with POS sales data and inventory turnover to optimize distribution strategy.', fr: '**Analyse de Données de Canal**: Maîtrise des données de point de vente et de rotation des stocks.' }
+          ],
+          tools: ['Nielsen Retail Audit', 'Excel/Power BI', 'SAP Trade Promotion Mgmt', 'Distributor Portals'],
+          scenario: {
+            question: { zh: '某零食品牌在量販店的促銷活動執行後銷量大增，但促銷結束後銷量跌得比促銷前更低，貿易行銷經理應如何解讀？', en: 'A snack brand sees a sales surge during a hypermarket promotion, but post-promotion sales drop even lower than before. How should the trade marketing manager interpret this?', fr: 'Une marque de snacks voit ses ventes augmenter pendant une promotion en hypermarché, mais après, les ventes chutent encore plus bas qu\'avant. Comment l\'interpréter ?' },
+            options: [
+              { text: { zh: 'A. 促銷非常成功，應立即再加大同樣的促銷力度', en: 'A. The promotion was very successful — immediately repeat it with even greater intensity', fr: 'A. La promotion a très bien fonctionné — la répéter immédiatement avec plus d\'intensité' }, correct: false, reason: { zh: '銷量在促銷後跌得比促銷前更低，是典型的「囤貨效應」（消費者只是提前購買），並非真正創造新需求。', en: 'Sales dropping below pre-promotion levels is a classic "pantry loading" effect (consumers simply bought earlier), not genuine new demand creation.', fr: 'Les ventes tombant sous le niveau d\'avant-promotion est l\'effet classique de "stockage" — pas une vraie création de demande.' } },
+              { text: { zh: 'B. 識別這是「囤貨效應」，分析促銷是否真正帶來新顧客或僅是提前消費既有顧客的需求', en: 'B. Recognize this as a "pantry loading" effect, and analyze whether the promotion truly acquired new customers or merely pulled forward existing demand', fr: 'B. Reconnaître l\'effet de "stockage" et analyser si la promotion a réellement acquis de nouveaux clients ou simplement avancé la demande existante' }, correct: true, reason: { zh: '正確！銷量先升後跌至更低點是囤貨效應的典型訊號，貿易行銷需評估促銷的「淨增量銷售」而非僅看活動期間的表面數字。', en: 'Correct! A sales rise followed by a deeper trough is the classic pantry-loading signal. Trade marketing must evaluate incremental net sales, not just headline activity-period numbers.', fr: 'Correct ! Une hausse suivie d\'une chute plus profonde est le signal classique du stockage. Il faut évaluer les ventes incrémentales nettes.' } },
+              { text: { zh: 'C. 這與促銷無關，純粹是季節性因素造成的', en: 'C. This is unrelated to the promotion — purely a seasonal factor', fr: 'C. Cela n\'a rien à voir avec la promotion — c\'est purement un facteur saisonnier' }, correct: false, reason: { zh: '銷量模式與促銷時間點高度相關，直接歸因於季節性而忽視促銷機制是不嚴謹的分析。', en: 'The sales pattern is highly correlated with the promotion timing; attributing it purely to seasonality while ignoring promotion mechanics is an unrigorous analysis.', fr: 'Le profil des ventes est fortement corrélé au timing de la promotion ; l\'attribuer purement à la saisonnalité est une analyse peu rigoureuse.' } }
+            ]
+          }
+        },
+        cpg_supply_chain: {
+          id: 'cpg_supply_chain',
+          title: { zh: '供應鏈與製造', en: 'Supply Chain & Manufacturing', fr: 'Chaîne d\'Approvisionnement & Fabrication' },
+          englishTitle: 'CPG Supply Chain',
+          badge: 'Operations',
+          icon: 'fa-industry',
+          description: { zh: '管理快消品從原料採購、生產製造到配送上架的完整流程，在高週轉、低毛利的特性下追求極致的效率與成本控制。', en: 'Manage the full FMCG process from raw material sourcing through manufacturing to shelf delivery, pursuing maximum efficiency and cost control under high-turnover, low-margin conditions.', fr: 'Gérer le processus complet FMCG, de l\'approvisionnement à la fabrication jusqu\'à la livraison en rayon, en recherchant l\'efficacité maximale.' },
+          subfields: [{ zh: '生產排程與規劃', en: 'Production Scheduling', fr: 'Planification de la Production' }, { zh: '原物料採購', en: 'Raw Material Sourcing', fr: 'Approvisionnement en Matières Premières' }, { zh: '配銷網路設計', en: 'Distribution Network Design', fr: 'Conception du Réseau de Distribution' }, { zh: '保質期與庫存管理', en: 'Shelf-Life & Inventory Management', fr: 'Gestion de la Durée de Conservation & des Stocks' }],
+          skills: [
+            { zh: '**S&OP流程管理**：能整合銷售預測、生產產能與庫存水位，制定可執行的供需平衡計畫。', en: '**S&OP Process Management**: Integrating sales forecasts, production capacity, and inventory levels into actionable supply-demand balance plans.', fr: '**Gestion du Processus S&OP**: Intégrer prévisions de ventes, capacité de production et niveaux de stock.' },
+            { zh: '**精實生產**：熟悉精實製造原則，能減少生產線浪費並提升設備稼動率（OEE）。', en: '**Lean Manufacturing**: Applying lean principles to reduce production line waste and improve Overall Equipment Effectiveness (OEE).', fr: '**Production Lean**: Appliquer les principes lean pour réduire le gaspillage et améliorer le TRS (OEE).' },
+            { zh: '**保質期風險管理**：能針對短保質期商品設計先進先出（FIFO）庫存策略，降低報廢損失。', en: '**Shelf-Life Risk Management**: Designing FIFO inventory strategies for short-shelf-life goods to minimize spoilage losses.', fr: '**Gestion du Risque de Durée de Vie**: Concevoir des stratégies FIFO pour les produits à courte durée de conservation.' }
+          ],
+          tools: ['SAP APO/IBP', 'Demand Planning Software', 'Lean Six Sigma', 'WMS Systems'],
+          scenario: {
+            question: { zh: '一款優酪乳新品在通路上的退貨率（因過期）高達12%，遠高於業界平均3%，供應鏈團隊應優先處理什麼？', en: 'A new yogurt product has a 12% return rate (due to expiry) at retail, far above the 3% industry average. What should the supply chain team address first?', fr: 'Un nouveau yaourt a un taux de retour de 12% (péremption), bien au-dessus de la moyenne du secteur (3%). Que doit traiter en priorité l\'équipe supply chain ?' },
+            options: [
+              { text: { zh: 'A. 要求零售商自行吸收所有退貨損失', en: 'A. Demand that retailers absorb all return losses themselves', fr: 'A. Exiger que les détaillants absorbent eux-mêmes toutes les pertes de retour' }, correct: false, reason: { zh: '這無法解決根本的供需配置問題，且會嚴重損害與零售商的長期合作關係。', en: 'This doesn\'t solve the underlying supply-demand allocation problem and severely damages long-term retailer relationships.', fr: 'Cela ne résout pas le problème sous-jacent et nuit gravement aux relations à long terme avec les détaillants.' } },
+              { text: { zh: 'B. 重新檢視需求預測準確度與配送頻率，確保鋪貨量與各門店實際銷售週轉速度匹配，並優化FIFO出貨流程', en: 'B. Re-examine demand forecast accuracy and delivery frequency to ensure shipment volumes match each store\'s actual sales turnover, and optimize FIFO shipping processes', fr: 'B. Réexaminer la précision des prévisions et la fréquence de livraison pour aligner les volumes sur la rotation réelle des ventes, et optimiser le FIFO' }, correct: true, reason: { zh: '正確！高過期退貨率通常源於需求預測失準（鋪貨過量）或配送頻率不足，須從預測精準度與FIFO流程兩端同時優化。', en: 'Correct! High expiry-related returns typically stem from inaccurate demand forecasting (over-distribution) or insufficient delivery frequency, requiring optimization on both forecast accuracy and FIFO process fronts.', fr: 'Correct ! Les retours élevés liés à la péremption proviennent généralement de prévisions imprécises ou d\'une fréquence de livraison insuffisante.' } },
+              { text: { zh: 'C. 立即停產該款新品', en: 'C. Immediately discontinue the new product', fr: 'C. Arrêter immédiatement la production du nouveau produit' }, correct: false, reason: { zh: '未診斷根因即停產過於武斷，問題可能僅是供應鏈配置失準，而非產品本身缺乏市場需求。', en: 'Discontinuing without diagnosing the root cause is overly drastic; the issue may simply be supply chain misallocation rather than a lack of genuine market demand.', fr: 'Arrêter sans diagnostic est trop radical ; le problème peut être une mauvaise allocation logistique plutôt qu\'un manque de demande réelle.' } }
+            ]
+          }
+        },
+        consumer_insights_rd: {
+          id: 'consumer_insights_rd',
+          title: { zh: '消費者洞察與研發', en: 'Consumer Insights & R&D/NPD', fr: 'Insights Consommateurs & R&D' },
+          englishTitle: 'Insights & R&D',
+          badge: 'Innovation',
+          icon: 'fa-flask',
+          description: { zh: '透過市場研究挖掘消費者未被滿足的需求，並轉化為新產品開發（NPD）的具體配方、包裝與定位方向。', en: 'Use market research to uncover unmet consumer needs and translate them into concrete new product development (NPD) formulations, packaging, and positioning.', fr: 'Utiliser la recherche marketing pour découvrir les besoins non satisfaits et les traduire en formulations, emballages et positionnements concrets.' },
+          subfields: [{ zh: '消費者市場研究', en: 'Consumer Market Research', fr: 'Recherche Marché Consommateur' }, { zh: '新品開發流程', en: 'NPD Process', fr: 'Processus de NPD' }, { zh: '感官科學測試', en: 'Sensory Science Testing', fr: 'Tests Sensoriels' }, { zh: '包裝與永續設計', en: 'Packaging & Sustainability Design', fr: 'Conception d\'Emballage & Durabilité' }],
+          skills: [
+            { zh: '**消費者洞察萃取**：能從質化焦點小組與量化問卷中提煉出可執行的產品創新方向。', en: '**Consumer Insight Extraction**: Distilling actionable product innovation directions from qualitative focus groups and quantitative surveys.', fr: '**Extraction d\'Insights Consommateurs**: Tirer des directions d\'innovation concrètes des groupes de discussion et sondages.' },
+            { zh: '**新品開發流程管理**：熟悉從概念測試、配方優化到上市前試銷的Stage-Gate流程。', en: '**NPD Process Management**: Familiarity with the Stage-Gate process from concept testing through formulation to pre-launch trials.', fr: '**Gestion du Processus de NPD**: Maîtrise du processus Stage-Gate, des tests de concept à la formulation et aux essais.' },
+            { zh: '**跨領域協作**：能整合行銷、研發化學家與法規團隊的需求，確保產品兼具吸引力與合規性。', en: '**Cross-disciplinary Collaboration**: Integrating marketing, R&D chemists, and regulatory teams to ensure products are both appealing and compliant.', fr: '**Collaboration Interdisciplinaire**: Intégrer marketing, chimistes R&D et équipes réglementaires.' }
+          ],
+          tools: ['Qualtrics/SurveyMonkey', 'Sensory Panel Software', 'Stage-Gate Frameworks', 'Nielsen Innovation Tracking'],
+          scenario: {
+            question: { zh: '消費者研究顯示年輕世代高度關注「無添加糖」標籤，但配方部門表示去糖會嚴重影響口感，產品團隊應如何決策？', en: 'Consumer research shows younger generations highly value "no added sugar" labels, but the formulation team says removing sugar severely impacts taste. How should the product team decide?', fr: 'La recherche montre que les jeunes générations valorisent fortement les étiquettes "sans sucre ajouté", mais l\'équipe formulation dit que cela nuit gravement au goût. Comment l\'équipe produit doit-elle décider ?' },
+            options: [
+              { text: { zh: 'A. 直接放棄無糖配方，維持原配方不變', en: 'A. Simply abandon the sugar-free formulation and keep the original recipe unchanged', fr: 'A. Abandonner simplement la formulation sans sucre et garder la recette originale' }, correct: false, reason: { zh: '完全放棄會錯失迎合明確消費者趨勢的機會，也讓競爭者有機可乘搶占這個市場缺口。', en: 'Completely abandoning it misses the opportunity to address a clear consumer trend and leaves the market gap open for competitors to seize.', fr: 'Abandonner complètement manque l\'opportunité d\'adresser une tendance claire et laisse le marché ouvert aux concurrents.' } },
+              { text: { zh: 'B. 與感官科學團隊合作進行多輪配方迭代與消費者盲測，尋找天然甜味劑替代方案，在口感與健康訴求間找到平衡點', en: 'B. Collaborate with the sensory science team on multiple formulation iterations and blind consumer testing to find natural sweetener alternatives that balance taste and health claims', fr: 'B. Collaborer avec l\'équipe de science sensorielle sur plusieurs itérations de formulation et tests à l\'aveugle pour trouver un équilibre entre goût et allégations santé' }, correct: true, reason: { zh: '正確！面對口感與健康訴求的取捨，正確做法是透過反覆的配方迭代與盲測驗證，尋找消費者可接受的平衡點，而非二元選邊。', en: 'Correct! When facing a taste-vs-health tradeoff, the right approach is iterative formulation and blind testing to find a consumer-acceptable balance, rather than a binary choice.', fr: 'Correct ! Face à ce compromis, la bonne approche est l\'itération et les tests à l\'aveugle pour trouver un équilibre acceptable, pas un choix binaire.' } },
+              { text: { zh: 'C. 直接在包裝上標示「無添加糖」但配方維持不變', en: 'C. Simply label the package "no added sugar" while keeping the formula unchanged', fr: 'C. Étiqueter simplement l\'emballage "sans sucre ajouté" tout en gardant la formule inchangée' }, correct: false, reason: { zh: '這是欺騙性的不實宣稱，會構成法規違規與品牌信任危機，絕對不可採用。', en: 'This is a deceptive, false claim that constitutes a regulatory violation and brand trust crisis — absolutely not acceptable.', fr: 'C\'est une allégation trompeuse et fausse qui constitue une violation réglementaire et une crise de confiance — absolument inacceptable.' } }
+            ]
+          }
+        },
+        retail_ecommerce_channel: {
+          id: 'retail_ecommerce_channel',
+          title: { zh: '零售與電商通路', en: 'Retail & E-commerce', fr: 'Commerce de Détail & E-commerce' },
+          englishTitle: 'Retail & E-comm',
+          badge: 'Omnichannel',
+          icon: 'fa-cart-shopping',
+          description: { zh: '管理品牌在傳統零售（量販店、超市、便利店）與電商平台（天貓、Shopee、自有DTC網站）的全渠道銷售布局與營運。', en: 'Manage brand sales across traditional retail (hypermarkets, supermarkets, convenience stores) and e-commerce platforms (Tmall, Shopee, owned DTC sites) in an omnichannel strategy.', fr: 'Gérer les ventes de la marque sur le commerce traditionnel et les plateformes e-commerce dans une stratégie omnicanale.' },
+          subfields: [{ zh: '全渠道策略規劃', en: 'Omnichannel Strategy', fr: 'Stratégie Omnicanale' }, { zh: '電商平台營運', en: 'E-commerce Platform Operations', fr: 'Opérations sur Plateformes E-commerce' }, { zh: 'DTC品牌官網經營', en: 'DTC Website Management', fr: 'Gestion du Site DTC' }, { zh: '通路衝突管理', en: 'Channel Conflict Management', fr: 'Gestion des Conflits de Canal' }],
+          skills: [
+            { zh: '**電商營運分析**：熟悉電商平台後台數據（轉換率、客單價、流量來源），優化線上銷售表現。', en: '**E-commerce Operations Analysis**: Familiarity with platform backend data (conversion rate, AOV, traffic sources) to optimize online sales performance.', fr: '**Analyse des Opérations E-commerce**: Maîtrise des données de plateforme pour optimiser la performance des ventes en ligne.' },
+            { zh: '**全渠道定價策略**：能設計避免線上線下價格衝突的渠道定價架構。', en: '**Omnichannel Pricing Strategy**: Designing channel pricing architectures that avoid online-offline price conflicts.', fr: '**Stratégie de Prix Omnicanale**: Concevoir des architectures de prix évitant les conflits en ligne/hors ligne.' },
+            { zh: '**平台關係經營**：能與電商平台的類目運營團隊建立合作關係，爭取更好的曝光資源。', en: '**Platform Relationship Management**: Building partnerships with e-commerce platform category teams to secure better visibility placements.', fr: '**Gestion des Relations Plateforme**: Construire des partenariats avec les équipes catégorielles des plateformes pour une meilleure visibilité.' }
+          ],
+          tools: ['Shopify/Shopline', 'Tmall/Shopee Seller Center', 'Google Analytics', 'Criteo/Performance Ads'],
+          scenario: {
+            question: { zh: '品牌的DTC官網價格比電商平台旗艦店低15%，導致經銷夥伴強烈抗議「線上線下打架」，品牌方應如何處理？', en: 'A brand\'s DTC website prices 15% lower than its e-commerce flagship store, causing distribution partners to protest about "online-offline channel conflict." How should the brand handle this?', fr: 'Le site DTC d\'une marque affiche des prix 15% plus bas que sa boutique e-commerce phare, provoquant des protestations des partenaires de distribution. Comment la marque doit-elle réagir ?' },
+            options: [
+              { text: { zh: 'A. 忽視經銷夥伴的抗議，繼續維持DTC低價策略以追求短期業績', en: 'A. Ignore the distribution partners\' protests and keep the low DTC pricing strategy to chase short-term performance', fr: 'A. Ignorer les protestations des partenaires et maintenir la stratégie de prix bas sur le DTC pour la performance à court terme' }, correct: false, reason: { zh: '長期忽視通路衝突會嚴重損害與經銷夥伴的信任，可能導致夥伴減少對品牌的資源投入或轉而推廣競品。', en: 'Ignoring channel conflict long-term severely damages trust with distribution partners, who may reduce brand investment or promote competitors instead.', fr: 'Ignorer le conflit de canal à long terme nuit gravement à la confiance des partenaires, qui pourraient réduire leur investissement ou promouvoir des concurrents.' } },
+              { text: { zh: 'B. 建立清晰的全渠道定價政策（MAP），透過產品組合差異化（如DTC限定款）區隔渠道而非單純比價', en: 'B. Establish a clear Minimum Advertised Price (MAP) policy, and differentiate channels through product assortment (e.g., DTC-exclusive SKUs) rather than pure price competition', fr: 'B. Établir une politique de prix plancher (MAP) claire et différencier les canaux par l\'assortiment produit plutôt que par la concurrence pure de prix' }, correct: true, reason: { zh: '正確！全渠道管理的核心是用「政策」與「差異化商品組合」化解價格衝突，而非單方面犧牲某個渠道的利益。', en: 'Correct! The core of omnichannel management is resolving price conflict through policy and differentiated assortment, not unilaterally sacrificing one channel\'s interests.', fr: 'Correct ! La gestion omnicanale résout les conflits de prix par la politique et l\'assortiment différencié, pas en sacrifiant un canal.' } },
+              { text: { zh: 'C. 直接關閉DTC官網，全部銷售交由經銷夥伴負責', en: 'C. Simply shut down the DTC website and hand all sales to distribution partners', fr: 'C. Fermer simplement le site DTC et confier toutes les ventes aux partenaires de distribution' }, correct: false, reason: { zh: '完全放棄DTC渠道會失去直接觸及消費者數據與建立品牌忠誠度的重要管道，並非理想的長期解方。', en: 'Completely abandoning the DTC channel loses the important avenue for direct consumer data and brand loyalty building — not an ideal long-term solution.', fr: 'Abandonner complètement le DTC fait perdre un canal important de données consommateurs directes et de fidélisation — pas une solution idéale à long terme.' } }
+            ]
+          }
+        }
+      }
+    };
+
     // ── Dropdown helpers ──────────────────────────────────────────────────
     const domainMeta = {
       finance:      { icon: 'fa-sack-dollar',          name: { zh: '金融學',   en: 'Finance',       fr: 'Finance' } },
