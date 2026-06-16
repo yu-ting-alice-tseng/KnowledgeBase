@@ -1,5 +1,0 @@
-raw = open('skincare-trilingual.html', encoding='utf-8').read()
-count = raw.count("Kiehl's")
-fixed = raw.replace("Kiehl's", "Kiehl\\'s")
-open('skincare-trilingual.html', 'w', encoding='utf-8').write(fixed)
-print(count, 'occurrences fixed')
