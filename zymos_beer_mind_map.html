@@ -71,22 +71,30 @@
 </div>
 
     <!-- Navigation / Header -->
-    <header class="bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-6 py-4 flex flex-wrap items-center justify-between gap-4 z-20">
+    <header class="bg-slate-950/80 backdrop-blur-md border-b border-slate-900/80 px-6 py-4 flex flex-wrap items-center justify-between gap-4 z-20 sticky top-0">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 text-xl font-bold shadow-lg shadow-amber-500/20">
-                <i class="fa-solid fa-beer-mug-empty"></i>
+            <div class="relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-orange-600 to-amber-700 rounded-xl blur opacity-75 animate-pulse"></div>
+                <div class="relative bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                    <i class="fa-solid fa-beer-mug-empty text-amber-400 text-xl"></i>
+                </div>
             </div>
             <div>
-                <h1 class="text-xl font-extrabold tracking-tight text-white flex items-center gap-2">
+                <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-amber-400 uppercase bg-amber-500/10 rounded-full border border-amber-500/20">
+                        CRAFT &amp; SCIENCE
+                    </span>
+                    <span class="text-xs text-slate-400 font-light">
+                        <span id="nav-sub-fr">Explorez la production, les classifications de styles et les brasseries mythiques</span>
+                        <span id="nav-sub-en" class="hidden">Explore brewing science, style multi-classifications, and world legendary breweries</span>
+                        <span id="nav-sub-zh" class="hidden">探索核心原料與製造、多維度風格分類，以及傳奇修道院與現代精釀先鋒</span>
+                    </span>
+                </div>
+                <h1 class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-amber-100 to-amber-400 bg-clip-text text-transparent tracking-tight flex items-center gap-2">
                     <span id="nav-title-fr">Zymos - Univers de la Bière & Science</span>
                     <span id="nav-title-en" class="hidden">Zymos - Beer Master & Culture Map</span>
                     <span id="nav-title-zh" class="hidden">Zymos - 啤酒工藝、風格與酒廠大師全景圖</span>
                 </h1>
-                <p class="text-xs text-slate-400">
-                    <span id="nav-sub-fr">Explorez la production, les classifications de styles et les brasseries mythiques</span>
-                    <span id="nav-sub-en" class="hidden">Explore brewing science, style multi-classifications, and world legendary breweries</span>
-                    <span id="nav-sub-zh" class="hidden">探索核心原料與製造、多維度風格分類，以及傳奇修道院與現代精釀先鋒</span>
-                </p>
             </div>
         </div>
 
@@ -94,19 +102,19 @@
         <div class="flex items-center gap-4 flex-wrap">
             <!-- Search bar -->
             <div class="relative">
-                <input type="text" id="search-input" placeholder="Rechercher / Search..." class="bg-slate-800 text-sm rounded-lg pl-9 pr-4 py-2 w-48 focus:w-64 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all border border-slate-700 text-slate-200">
+                <input type="text" id="search-input" placeholder="Rechercher / Search..." class="bg-slate-900 text-sm rounded-xl pl-9 pr-4 py-2 w-48 focus:w-64 focus:outline-none focus:border-amber-500/80 focus:ring-2 focus:ring-amber-500/10 transition-all border border-slate-800 text-slate-200">
                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
             </div>
 
             <!-- Language Switcher Buttons -->
-            <div class="bg-slate-950 p-1 rounded-lg border border-slate-800 flex gap-1">
-                <button onclick="setLanguage('fr')" id="btn-lang-fr" class="px-3 py-1 rounded text-xs font-semibold uppercase transition-all bg-amber-500 text-slate-950">
+            <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1">
+                <button onclick="setLanguage('fr')" id="btn-lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 bg-amber-500/15 text-amber-400 border border-amber-500/20">
                     FR
                 </button>
-                <button onclick="setLanguage('en')" id="btn-lang-en" class="px-3 py-1 rounded text-xs font-semibold uppercase transition-all text-slate-400 hover:text-white">
+                <button onclick="setLanguage('en')" id="btn-lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">
                     EN
                 </button>
-                <button onclick="setLanguage('zh')" id="btn-lang-zh" class="px-3 py-1 rounded text-xs font-semibold uppercase transition-all text-slate-400 hover:text-white">
+                <button onclick="setLanguage('zh')" id="btn-lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">
                     中文
                 </button>
             </div>
