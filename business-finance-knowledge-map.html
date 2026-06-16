@@ -249,11 +249,21 @@
             <!-- 動態生成 -->
           </ul>
         </div>
+
+        <!-- 相關證照與課程 (Certifications & Courses) -->
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-certificate text-xs"></i> <span id="label-certifications">相關證照與課程</span>
+          </h4>
+          <div id="detail-certifications" class="flex flex-wrap gap-2 pt-2">
+            <!-- 動態生成 -->
+          </div>
+        </div>
       </div>
 
       <!-- 右側/下方欄：工具與情境挑戰互動器 -->
       <div class="space-y-8">
-        
+
         <!-- 工具箱卡片 -->
         <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900 space-y-4">
           <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
@@ -320,6 +330,7 @@
         exploreBlocks: "核心探究板塊 (Subfields)",
         essentialSkills: "關鍵必備專業技能",
         industryTools: "行業主流軟體與平台",
+        certifications: "相關證照與課程",
         scenarioChallenge: "實戰情境挑戰 (Interactive Scenario)",
         answerCorrect: "回答正確！",
         answerAnalysis: "解答分析：",
@@ -347,6 +358,7 @@
         exploreBlocks: "Core Subfields (Subfields)",
         essentialSkills: "Key Required Professional Skills",
         industryTools: "Industry Software & Platforms",
+        certifications: "Certifications & Courses",
         scenarioChallenge: "Interactive Scenario Challenge",
         answerCorrect: "Correct Answer!",
         answerAnalysis: "Solution Analysis:",
@@ -374,6 +386,7 @@
         exploreBlocks: "Sous-domaines d'Exploration Clés",
         essentialSkills: "Compétences Professionnelles Requises",
         industryTools: "Logiciels & Outils Industriels Majeurs",
+        certifications: "Certifications & Formations",
         scenarioChallenge: "Défi Scénario Interactif",
         answerCorrect: "Bonne réponse !",
         answerAnalysis: "Analyse de la solution :",
@@ -1414,9 +1427,18 @@
           badge: 'Core',
           icon: 'fa-chess',
           description: { zh: '協助企業制定長期競爭策略、市場進入計畫與商業模式轉型，是麥肯錫、BCG、貝恩的核心業務。', en: 'Help companies formulate long-term competitive strategy, market entry plans, and business model transformation — the core business of McKinsey, BCG, and Bain.', fr: 'Aider les entreprises à définir leur stratégie concurrentielle, leurs plans d\'entrée sur le marché et leur transformation — cœur de métier de McKinsey, BCG et Bain.' },
-          subfields: [{ zh: '競爭策略', en: 'Competitive Strategy', fr: 'Stratégie concurrentielle' }, { zh: '市場進入', en: 'Market Entry', fr: 'Entrée sur le marché' }, { zh: '商業模式', en: 'Business Model', fr: 'Modèle d\'affaires' }],
+          subfields: [
+            { name: { zh: '競爭策略', en: 'Competitive Strategy', fr: 'Stratégie concurrentielle' }, desc: { zh: '分析產業結構與競爭優勢，協助企業制定差異化或成本領導的長期競爭定位。', en: 'Analyzing industry structure and competitive advantage to define a firm\'s differentiation or cost-leadership positioning.', fr: 'Analyser la structure du secteur et l\'avantage concurrentiel pour définir un positionnement de différenciation ou de coût.' } },
+            { name: { zh: '市場進入', en: 'Market Entry', fr: 'Entrée sur le marché' }, desc: { zh: '評估新市場規模、法規與競爭態勢，規劃最佳進入模式（合資、併購或自建）。', en: 'Assessing new market size, regulation, and competitive landscape to design the optimal entry mode (JV, M&A, or organic build).', fr: 'Évaluer la taille du marché, la réglementation et la concurrence pour choisir le meilleur mode d\'entrée (coentreprise, acquisition ou implantation organique).' } },
+            { name: { zh: '商業模式', en: 'Business Model', fr: 'Modèle d\'affaires' }, desc: { zh: '重新設計企業價值主張、收入結構與成本驅動因素，以應對市場轉型。', en: 'Redesigning a company\'s value proposition, revenue structure, and cost drivers to adapt to market shifts.', fr: 'Repenser la proposition de valeur, la structure de revenus et les leviers de coûts d\'une entreprise pour s\'adapter aux mutations du marché.' } }
+          ],
           skills: [{ zh: '問題拆解', en: 'Problem Structuring', fr: 'Structuration de problème' }, { zh: 'MECE框架', en: 'MECE Frameworks', fr: 'Cadres MECE' }, { zh: '情境分析', en: 'Scenario Analysis', fr: 'Analyse de scénarios' }],
           tools: ['Issue Tree', 'Porter\'s 5 Forces', 'BCG Matrix', 'SWOT'],
+          certifications: [
+            { zh: 'McKinsey Forward Program', en: 'McKinsey Forward Program', fr: 'McKinsey Forward Program' },
+            { zh: 'Strategy & Management 證書 (Wharton Online)', en: 'Business Strategy Specialization (Wharton Online, Coursera)', fr: 'Spécialisation Stratégie d\'Entreprise (Wharton Online, Coursera)' },
+            { zh: 'CSP 策略規劃師認證', en: 'Certified Strategy Planner (CSP)', fr: 'CSP (Certified Strategy Planner)' }
+          ],
           scenario: {
             question: { zh: '你是BCG顧問，客戶為台灣連鎖便利商店，面臨東南亞展店機會，應首先進行哪項分析？', en: 'As a BCG consultant, your client is a Taiwanese convenience store chain eyeing Southeast Asia expansion. What analysis should come first?', fr: 'En tant que consultant BCG, votre client est une chaîne taïwanaise souhaitant s\'étendre en Asie du Sud-Est. Quelle analyse effectuer en premier ?' },
             options: [
@@ -2257,6 +2279,7 @@
       document.getElementById('label-subfields').innerText = uiTranslations[lang].exploreBlocks;
       document.getElementById('label-skills').innerText = uiTranslations[lang].essentialSkills;
       document.getElementById('label-tools').innerText = uiTranslations[lang].industryTools;
+      document.getElementById('label-certifications').innerText = uiTranslations[lang].certifications;
       document.getElementById('label-scenario').innerText = uiTranslations[lang].scenarioChallenge;
       document.getElementById('label-instructions').innerText = uiTranslations[lang].instructions;
       
@@ -2453,6 +2476,16 @@
         tag.className = `px-3 py-1.5 bg-slate-900 border border-slate-850 hover:border-${data.themeColor}-500/30 rounded-xl text-xs font-semibold text-slate-300 cursor-default transition-all duration-200`;
         tag.innerText = tool;
         toolsContainer.appendChild(tag);
+      });
+
+      // F-2. 渲染相關證照與課程
+      const certsContainer = document.getElementById('detail-certifications');
+      certsContainer.innerHTML = '';
+      (branch.certifications || []).forEach(cert => {
+        const chip = document.createElement('span');
+        chip.className = 'px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-slate-300 flex items-center gap-1.5';
+        chip.innerHTML = `<i class="fa-solid fa-certificate text-[10px]" style="color: ${data.hexColor}"></i> ${t(cert)}`;
+        certsContainer.appendChild(chip);
       });
 
       // G. 渲染情境題目
