@@ -1697,9 +1697,18 @@
           badge: 'Universal',
           icon: 'fa-diagram-project',
           description: { zh: '規劃、執行、監控與收尾各類商業專案，PMP、敏捷（Agile）與PRINCE2是全球主流認證框架。', en: 'Plan, execute, monitor, and close business projects. PMP, Agile, and PRINCE2 are the globally recognized certification frameworks.', fr: 'Planifier, exécuter, surveiller et clôturer des projets. PMP, Agile et PRINCE2 sont les cadres de certification mondialement reconnus.' },
-          subfields: [{ zh: '敏捷/Scrum', en: 'Agile/Scrum', fr: 'Agile/Scrum' }, { zh: '範疇管理', en: 'Scope Management', fr: 'Gestion du périmètre' }, { zh: '風險管理', en: 'Risk Management', fr: 'Gestion des risques' }],
+          subfields: [
+            { name: { zh: '敏捷/Scrum', en: 'Agile/Scrum', fr: 'Agile/Scrum' }, desc: { zh: '以短週期衝刺（Sprint）迭代交付產品，透過每日站會與回顧會持續調整方向。', en: 'Delivering products iteratively through short sprints, using daily standups and retrospectives to continuously adjust direction.', fr: 'Livrer un produit de façon itérative via des sprints courts, avec des points quotidiens et des rétrospectives pour ajuster la trajectoire.' } },
+            { name: { zh: '範疇管理', en: 'Scope Management', fr: 'Gestion du périmètre' }, desc: { zh: '明確定義專案邊界與交付項目，並透過變更控制流程管理範疇蔓延。', en: 'Clearly defining project boundaries and deliverables, and managing scope creep through formal change control processes.', fr: 'Définir clairement les limites et livrables du projet, et gérer la dérive du périmètre via un processus de contrôle des changements.' } },
+            { name: { zh: '風險管理', en: 'Risk Management', fr: 'Gestion des risques' }, desc: { zh: '識別、評估並制定應對計畫，降低專案延誤或失敗的潛在威脅。', en: 'Identifying, assessing, and developing mitigation plans to reduce potential threats of project delay or failure.', fr: 'Identifier, évaluer et élaborer des plans d\'atténuation pour réduire les risques de retard ou d\'échec du projet.' } }
+          ],
           skills: [{ zh: '專案計畫', en: 'Project Planning', fr: 'Planification de projet' }, { zh: '資源分配', en: 'Resource Allocation', fr: 'Allocation des ressources' }, { zh: '利害關係人溝通', en: 'Stakeholder Communication', fr: 'Communication parties prenantes' }],
           tools: ['MS Project', 'Jira', 'Asana', 'Gantt Chart'],
+          certifications: [
+            { zh: 'PMP 專案管理專業人士認證', en: 'PMP (Project Management Professional)', fr: 'PMP (Project Management Professional)' },
+            { zh: 'CSM 敏捷Scrum Master認證', en: 'CSM (Certified ScrumMaster)', fr: 'CSM (Certified ScrumMaster)' },
+            { zh: 'PRINCE2 專案管理認證', en: 'PRINCE2 Certification', fr: 'Certification PRINCE2' }
+          ],
           scenario: {
             question: { zh: '你的IT開發專案已超出預算20%且落後兩週，你應如何處理？', en: 'Your IT development project is 20% over budget and two weeks behind schedule. How do you handle this?', fr: 'Votre projet de développement IT dépasse le budget de 20% et a deux semaines de retard. Comment gérer ?' },
             options: [
@@ -1716,9 +1725,18 @@
           badge: 'ISO',
           icon: 'fa-medal',
           description: { zh: '確保產品與服務符合標準並持續改善，ISO 9001、TQM與六標準差是製造與服務業的核心品保工具。', en: 'Ensure products and services meet standards and continuously improve — ISO 9001, TQM, and Six Sigma are core quality assurance tools for manufacturing and services.', fr: 'Garantir la conformité des produits/services aux standards et l\'amélioration continue — ISO 9001, TQM et Six Sigma sont les outils clés.' },
-          subfields: [{ zh: 'ISO認證', en: 'ISO Certification', fr: 'Certification ISO' }, { zh: '全面品質管理', en: 'Total Quality Management', fr: 'Management Total de la Qualité' }, { zh: '客訴處理', en: 'Complaint Handling', fr: 'Gestion des réclamations' }],
+          subfields: [
+            { name: { zh: 'ISO認證', en: 'ISO Certification', fr: 'Certification ISO' }, desc: { zh: '建立並維護符合ISO 9001等國際標準的品質管理系統文件與稽核流程。', en: 'Establishing and maintaining quality management system documentation and audit processes that comply with international standards like ISO 9001.', fr: 'Établir et maintenir la documentation et les processus d\'audit d\'un système de gestion de la qualité conforme à des normes comme ISO 9001.' } },
+            { name: { zh: '全面品質管理', en: 'Total Quality Management', fr: 'Management Total de la Qualité' }, desc: { zh: '推動全員參與的持續改善文化，將品質責任貫穿企業每個職能與流程。', en: 'Driving an organization-wide culture of continuous improvement, embedding quality responsibility into every function and process.', fr: 'Promouvoir une culture d\'amélioration continue impliquant tous les collaborateurs, en intégrant la qualité dans chaque fonction.' } },
+            { name: { zh: '客訴處理', en: 'Complaint Handling', fr: 'Gestion des réclamations' }, desc: { zh: '建立標準化流程接收、調查並回應客戶投訴，將其轉化為產品改善依據。', en: 'Establishing standardized processes to receive, investigate, and respond to customer complaints, turning them into product improvement insights.', fr: 'Mettre en place des processus standardisés pour traiter les réclamations clients et les transformer en pistes d\'amélioration produit.' } }
+          ],
           skills: [{ zh: '統計製程管制', en: 'SPC (Statistical Process Control)', fr: 'Contrôle Statistique des Procédés' }, { zh: '品質稽核', en: 'Quality Auditing', fr: 'Audit qualité' }, { zh: '根因分析', en: 'Root Cause Analysis', fr: 'Analyse des causes racines' }],
           tools: ['ISO 9001', 'Control Charts', 'Fishbone Diagram', 'FMEA'],
+          certifications: [
+            { zh: 'ASQ 品質工程師認證 (CQE)', en: 'ASQ Certified Quality Engineer (CQE)', fr: 'ASQ Certified Quality Engineer (CQE)' },
+            { zh: 'ISO 9001主導稽核員認證', en: 'ISO 9001 Lead Auditor Certification', fr: 'Certification Auditeur Principal ISO 9001' },
+            { zh: 'Lean Six Sigma 黑帶認證', en: 'Lean Six Sigma Black Belt', fr: 'Lean Six Sigma Black Belt' }
+          ],
           scenario: {
             question: { zh: '客戶反映產品出現批次性缺陷，品管主管應最優先採取哪個行動？', en: 'Customers report batch defects in the product. What should the quality manager prioritize first?', fr: 'Des clients signalent des défauts par lot. Que doit prioriser en premier le responsable qualité ?' },
             options: [
@@ -1735,9 +1753,18 @@
           badge: 'Data-Driven',
           icon: 'fa-magnifying-glass-chart',
           description: { zh: '運用數據與分析技術輔助商業決策，包含KPI設計、儀表板建置、A/B測試與預測分析。', en: 'Use data and analytics to support business decisions — covering KPI design, dashboard building, A/B testing, and predictive analytics.', fr: 'Utiliser les données et l\'analytique pour soutenir les décisions business — KPI, tableaux de bord, tests A/B et analytique prédictive.' },
-          subfields: [{ zh: 'KPI儀表板', en: 'KPI Dashboard', fr: 'Tableau de bord KPI' }, { zh: 'A/B測試', en: 'A/B Testing', fr: 'Tests A/B' }, { zh: '預測分析', en: 'Predictive Analytics', fr: 'Analytique prédictive' }],
+          subfields: [
+            { name: { zh: 'KPI儀表板', en: 'KPI Dashboard', fr: 'Tableau de bord KPI' }, desc: { zh: '篩選與視覺化關鍵績效指標，建置即時儀表板供管理層監控業務健康度。', en: 'Selecting and visualizing key performance indicators, building real-time dashboards for management to monitor business health.', fr: 'Sélectionner et visualiser les indicateurs clés de performance dans des tableaux de bord en temps réel pour le suivi de la direction.' } },
+            { name: { zh: 'A/B測試', en: 'A/B Testing', fr: 'Tests A/B' }, desc: { zh: '設計對照實驗驗證產品或行銷變動的真實效果，以統計顯著性支撐決策。', en: 'Designing controlled experiments to validate the real effect of product or marketing changes, supporting decisions with statistical significance.', fr: 'Concevoir des expériences contrôlées pour valider l\'effet réel des changements produit ou marketing avec une significativité statistique.' } },
+            { name: { zh: '預測分析', en: 'Predictive Analytics', fr: 'Analytique prédictive' }, desc: { zh: '運用歷史數據與統計模型預測未來業務趨勢，如客戶流失或銷售走勢。', en: 'Using historical data and statistical models to predict future business trends, such as customer churn or sales trajectory.', fr: 'Utiliser des données historiques et des modèles statistiques pour prédire les tendances futures, comme le churn client ou les ventes.' } }
+          ],
           skills: [{ zh: 'SQL查詢', en: 'SQL Querying', fr: 'Requêtes SQL' }, { zh: '數據視覺化', en: 'Data Visualization', fr: 'Visualisation de données' }, { zh: '統計假設檢定', en: 'Statistical Hypothesis Testing', fr: 'Tests d\'hypothèses statistiques' }],
           tools: ['Power BI', 'Tableau', 'Python (pandas)', 'Google Analytics'],
+          certifications: [
+            { zh: 'Google Data Analytics 專業證書', en: 'Google Data Analytics Professional Certificate', fr: 'Certificat Professionnel Google Data Analytics' },
+            { zh: 'Microsoft Certified: Power BI Data Analyst Associate', en: 'Microsoft Certified: Power BI Data Analyst Associate', fr: 'Microsoft Certified: Power BI Data Analyst Associate' },
+            { zh: 'Tableau Desktop Specialist 認證', en: 'Tableau Desktop Specialist Certification', fr: 'Certification Tableau Desktop Specialist' }
+          ],
           scenario: {
             question: { zh: '電商網站改版後轉換率從2%下降到1.5%，你如何判斷是否是改版造成的？', en: 'After a website redesign, conversion rate dropped from 2% to 1.5%. How do you determine if the redesign caused this?', fr: 'Après une refonte du site, le taux de conversion est passé de 2% à 1,5%. Comment déterminer si la refonte en est la cause ?' },
             options: [
@@ -1762,13 +1789,23 @@
           badge: 'Core',
           icon: 'fa-code',
           description: { zh: '設計、開發並維護可擴展的軟體系統，涵蓋程式語言、系統架構設計與軟體開發生命週期管理，是科技公司的工程骨幹。', en: 'Design, build, and maintain scalable software systems — covering programming languages, system architecture, and the software development lifecycle. The engineering backbone of any tech company.', fr: 'Concevoir, développer et maintenir des systèmes logiciels évolutifs — langages de programmation, architecture système et cycle de vie du développement logiciel.' },
-          subfields: [{ zh: '前端/後端開發', en: 'Frontend/Backend Development', fr: 'Développement Frontend/Backend' }, { zh: '系統架構設計', en: 'System Architecture Design', fr: 'Conception d\'Architecture Système' }, { zh: '軟體測試與品質', en: 'Software Testing & QA', fr: 'Tests Logiciels & QA' }, { zh: '微服務與API設計', en: 'Microservices & API Design', fr: 'Microservices & Conception d\'API' }],
+          subfields: [
+            { name: { zh: '前端/後端開發', en: 'Frontend/Backend Development', fr: 'Développement Frontend/Backend' }, desc: { zh: '建構使用者介面與伺服器端邏輯，串接資料庫與外部服務以實現完整的應用功能。', en: 'Building user interfaces and server-side logic, connecting databases and external services to deliver complete application functionality.', fr: 'Construire les interfaces utilisateur et la logique serveur, en connectant bases de données et services externes pour des fonctionnalités complètes.' } },
+            { name: { zh: '系統架構設計', en: 'System Architecture Design', fr: 'Conception d\'Architecture Système' }, desc: { zh: '規劃系統的整體結構與元件互動方式，權衡擴展性、效能與維護成本。', en: 'Planning the overall system structure and component interactions, balancing scalability, performance, and maintenance cost.', fr: 'Planifier la structure globale du système et les interactions entre composants, en équilibrant évolutivité, performance et coûts de maintenance.' } },
+            { name: { zh: '軟體測試與品質', en: 'Software Testing & QA', fr: 'Tests Logiciels & QA' }, desc: { zh: '設計單元、整合與端到端測試案例，確保程式碼變更不破壞既有功能。', en: 'Designing unit, integration, and end-to-end test cases to ensure code changes don\'t break existing functionality.', fr: 'Concevoir des tests unitaires, d\'intégration et de bout en bout pour garantir que les changements ne cassent pas les fonctionnalités existantes.' } },
+            { name: { zh: '微服務與API設計', en: 'Microservices & API Design', fr: 'Microservices & Conception d\'API' }, desc: { zh: '將系統拆分為獨立可部署的服務單元，並設計清晰一致的API介面供彼此溝通。', en: 'Decomposing systems into independently deployable service units and designing clear, consistent APIs for inter-service communication.', fr: 'Décomposer les systèmes en unités de service déployables indépendamment et concevoir des API claires pour la communication inter-services.' } }
+          ],
           skills: [
             { zh: '**程式語言精通**：熟練 Python、Java、Go 或 TypeScript 等主流語言，能撰寫高效且易維護的程式碼。', en: '**Programming Language Mastery**: Proficiency in mainstream languages like Python, Java, Go, or TypeScript to write efficient, maintainable code.', fr: '**Maîtrise des Langages de Programmation**: Maîtrise de langages courants (Python, Java, Go, TypeScript) pour écrire un code efficace et maintenable.' },
             { zh: '**系統設計能力**：能權衡延展性、可用性與一致性，設計分散式系統架構。', en: '**System Design**: Balancing scalability, availability, and consistency to design distributed system architectures.', fr: '**Conception de Systèmes**: Équilibrer évolutivité, disponibilité et cohérence pour concevoir des architectures distribuées.' },
             { zh: '**版本控制與CI/CD**：熟悉 Git 工作流程與持續整合/部署管線，確保程式碼品質與快速迭代。', en: '**Version Control & CI/CD**: Familiarity with Git workflows and continuous integration/deployment pipelines to ensure code quality and rapid iteration.', fr: '**Contrôle de Version & CI/CD**: Maîtrise des workflows Git et des pipelines d\'intégration/déploiement continu.' }
           ],
           tools: ['Git/GitHub', 'VS Code / IntelliJ', 'Docker/Kubernetes', 'Jenkins/GitHub Actions'],
+          certifications: [
+            { zh: 'AWS Certified Solutions Architect', en: 'AWS Certified Solutions Architect', fr: 'AWS Certified Solutions Architect' },
+            { zh: 'Certified Kubernetes Administrator (CKA)', en: 'Certified Kubernetes Administrator (CKA)', fr: 'Certified Kubernetes Administrator (CKA)' },
+            { zh: 'Meta Back-End / Front-End Developer Certificate', en: 'Meta Back-End / Front-End Developer Certificate (Coursera)', fr: 'Certificat Développeur Back-End/Front-End Meta (Coursera)' }
+          ],
           scenario: {
             question: { zh: '一個電商網站在促銷期間流量暴增10倍，導致系統頻繁當機，工程團隊應優先採取什麼架構策略？', en: 'An e-commerce site sees a 10x traffic spike during a sale, causing frequent crashes. What architecture strategy should the engineering team prioritize?', fr: 'Un site e-commerce voit son trafic multiplié par 10 pendant une promotion, causant des pannes fréquentes. Quelle stratégie d\'architecture l\'équipe doit-elle prioriser ?' },
             options: [
