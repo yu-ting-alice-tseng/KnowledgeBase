@@ -2156,17 +2156,23 @@
 
     // ── Dropdown helpers ──────────────────────────────────────────────────
     const domainMeta = {
-      finance:      { icon: 'fa-sack-dollar',          name: { zh: '金融學',   en: 'Finance',       fr: 'Finance' } },
-      accounting:   { icon: 'fa-calculator',           name: { zh: '會計學',   en: 'Accounting',    fr: 'Comptabilité' } },
-      marketing:    { icon: 'fa-bullhorn',             name: { zh: '行銷學',   en: 'Marketing',     fr: 'Marketing' } },
-      consulting:   { icon: 'fa-briefcase',            name: { zh: '管理顧問', en: 'Consulting',    fr: 'Conseil' } },
-      supply_chain: { icon: 'fa-truck-fast',           name: { zh: '供應鏈',   en: 'Supply Chain',  fr: 'Supply Chain' } },
-      strategy:     { icon: 'fa-chess-queen',          name: { zh: '企業策略', en: 'Strategy',      fr: 'Stratégie' } },
-      operations:   { icon: 'fa-industry',             name: { zh: '營運管理', en: 'Operations',    fr: 'Opérations' } },
-      tech:         { icon: 'fa-microchip',             name: { zh: '科技業',   en: 'Tech Industry', fr: 'Industrie Tech' } },
-      fmcg:         { icon: 'fa-cart-shopping',         name: { zh: '快消品 (FMCG)', en: 'FMCG',     fr: 'FMCG' } },
-      ai:           { icon: 'fa-brain',                 name: { zh: '人工智慧', en: 'AI Industry',   fr: 'Industrie IA' } },
-      saas:         { icon: 'fa-cloud',                 name: { zh: 'SaaS / 雲端', en: 'SaaS',       fr: 'SaaS' } },
+      finance:      { icon: 'fa-sack-dollar',          name: { zh: '金融學',   en: 'Finance',       fr: 'Finance' },      category: 'core_business' },
+      accounting:   { icon: 'fa-calculator',           name: { zh: '會計學',   en: 'Accounting',    fr: 'Comptabilité' }, category: 'core_business' },
+      marketing:    { icon: 'fa-bullhorn',             name: { zh: '行銷學',   en: 'Marketing',     fr: 'Marketing' },     category: 'core_business' },
+      consulting:   { icon: 'fa-briefcase',            name: { zh: '管理顧問', en: 'Consulting',    fr: 'Conseil' },       category: 'core_business' },
+      supply_chain: { icon: 'fa-truck-fast',           name: { zh: '供應鏈',   en: 'Supply Chain',  fr: 'Supply Chain' },  category: 'operations_strategy' },
+      strategy:     { icon: 'fa-chess-queen',          name: { zh: '企業策略', en: 'Strategy',      fr: 'Stratégie' },     category: 'operations_strategy' },
+      operations:   { icon: 'fa-industry',             name: { zh: '營運管理', en: 'Operations',    fr: 'Opérations' },    category: 'operations_strategy' },
+      tech:         { icon: 'fa-microchip',             name: { zh: '科技業',   en: 'Tech Industry', fr: 'Industrie Tech' }, category: 'tech_emerging' },
+      fmcg:         { icon: 'fa-cart-shopping',         name: { zh: '快消品 (FMCG)', en: 'FMCG',     fr: 'FMCG' },          category: 'tech_emerging' },
+      ai:           { icon: 'fa-brain',                 name: { zh: '人工智慧', en: 'AI Industry',   fr: 'Industrie IA' },  category: 'tech_emerging' },
+      saas:         { icon: 'fa-cloud',                 name: { zh: 'SaaS / 雲端', en: 'SaaS',       fr: 'SaaS' },          category: 'tech_emerging' },
+    };
+
+    const domainCategoryMeta = {
+      core_business:      { zh: '商學核心', en: 'Core Business', fr: 'Cœur Business' },
+      operations_strategy:{ zh: '營運與策略', en: 'Operations & Strategy', fr: 'Opérations & Stratégie' },
+      tech_emerging:       { zh: '科技與新興產業', en: 'Tech & Emerging Industries', fr: 'Tech & Industries Émergentes' },
     };
 
     function toggleDomainDropdown() {
