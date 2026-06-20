@@ -259,6 +259,18 @@
             <!-- 動態生成 -->
           </div>
         </div>
+
+        <!-- LinkedIn / Indeed 職缺搜尋關鍵字 -->
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-magnifying-glass-dollar text-xs"></i>
+            <span id="label-job-titles">LinkedIn / Indeed 職缺搜尋關鍵字</span>
+          </h4>
+          <p id="label-job-titles-hint" class="text-[11px] text-slate-500 -mt-2">在 LinkedIn、Indeed、Welcome to the Jungle 搜尋以下職稱，找到這個領域的相關工作機會</p>
+          <div id="detail-job-titles" class="flex flex-wrap gap-2 pt-1">
+            <!-- 動態生成 -->
+          </div>
+        </div>
       </div>
 
       <!-- 右側/下方欄：工具與情境挑戰互動器 -->
@@ -331,6 +343,8 @@
         essentialSkills: "關鍵必備專業技能",
         industryTools: "行業主流軟體與平台",
         certifications: "相關證照與課程",
+        jobTitles: "LinkedIn / Indeed 職缺搜尋關鍵字",
+        jobTitlesHint: "在 LinkedIn、Indeed、Welcome to the Jungle 搜尋以下職稱，找到這個領域的相關工作機會",
         scenarioChallenge: "實戰情境挑戰 (Interactive Scenario)",
         answerCorrect: "回答正確！",
         answerAnalysis: "解答分析：",
@@ -359,6 +373,8 @@
         essentialSkills: "Key Required Professional Skills",
         industryTools: "Industry Software & Platforms",
         certifications: "Certifications & Courses",
+        jobTitles: "Job Title Keywords (LinkedIn / Indeed)",
+        jobTitlesHint: "Search these titles on LinkedIn, Indeed, or Welcome to the Jungle to find roles in this field",
         scenarioChallenge: "Interactive Scenario Challenge",
         answerCorrect: "Correct Answer!",
         answerAnalysis: "Solution Analysis:",
@@ -387,6 +403,8 @@
         essentialSkills: "Compétences Professionnelles Requises",
         industryTools: "Logiciels & Outils Industriels Majeurs",
         certifications: "Certifications & Formations",
+        jobTitles: "Mots-clés de Poste (LinkedIn / Indeed)",
+        jobTitlesHint: "Recherchez ces titres sur LinkedIn, Indeed ou Welcome to the Jungle pour trouver des postes dans ce domaine",
         scenarioChallenge: "Défi Scénario Interactif",
         answerCorrect: "Bonne réponse !",
         answerAnalysis: "Analyse de la solution :",
@@ -464,6 +482,11 @@
               { zh: 'FMVA財務建模與估值分析師', en: 'FMVA (Financial Modeling & Valuation Analyst)', fr: 'FMVA (Modélisation Financière & Analyse)' },
               { zh: 'Wall Street Prep 財務建模課程', en: 'Wall Street Prep Financial Modeling Courses', fr: 'Cours de Modélisation Financière Wall Street Prep' }
             ],
+            jobTitles: [
+              'Financial Analyst', 'Corporate Finance Analyst', 'FP&A Analyst',
+              'M&A Analyst', 'Investment Banking Analyst', 'Treasury Analyst',
+              'Corporate Development Analyst', 'Junior Financial Analyst'
+            ],
             scenario: {
               question: {
                 zh: '台積電在評估一項耗資百億美金、預計回收期達15年的全新進階晶圓廠建置案。此決策在企業金融中屬於哪項範疇，最適合用什麼工具評估？',
@@ -529,6 +552,11 @@
               { zh: 'FRM 金融風險管理師', en: 'FRM (Financial Risk Manager)', fr: 'FRM (Financial Risk Manager)' },
               { zh: 'CMT 特許市場技術分析師', en: 'CMT (Chartered Market Technician)', fr: 'CMT (Chartered Market Technician)' }
             ],
+            jobTitles: [
+              'Investment Analyst', 'Equity Research Analyst', 'Research Associate',
+              'Portfolio Manager', 'Asset Management Associate', 'Fund Analyst',
+              'Junior Trader', 'Securities Analyst'
+            ],
             scenario: {
               question: {
                 zh: '某大型退休基金希望規避未來三個月股市大幅下跌風險，但不想賣出手中持股。投資部門應如何操作？',
@@ -592,6 +620,11 @@
             certifications: [
               { zh: 'CFP 國際認證財務規劃師', en: 'CFP (Certified Financial Planner)', fr: 'CFP (Certified Financial Planner)' },
               { zh: 'CPWA 私人財富顧問認證', en: 'CPWA (Certified Private Wealth Advisor)', fr: 'CPWA (Certified Private Wealth Advisor)' }
+            ],
+            jobTitles: [
+              'Financial Advisor', 'Wealth Manager', 'Private Banker',
+              'Financial Planner', 'Investment Advisor', 'Relationship Manager',
+              'Wealth Planning Consultant', 'Client Advisor (Private Banking)'
             ],
             scenario: {
               question: {
@@ -657,6 +690,11 @@
               { zh: 'CGFM 政府財務管理師認證', en: 'CGFM (Certified Government Financial Manager)', fr: 'CGFM (Certified Government Financial Manager)' },
               { zh: 'Public Financial Management 證書 (IMF Institute)', en: 'Public Financial Management Certificate (IMF Institute)', fr: 'Certificat en Gestion des Finances Publiques (Institut FMI)' }
             ],
+            jobTitles: [
+              'Budget Analyst', 'Government Financial Analyst', 'Public Finance Analyst',
+              'Economic Policy Analyst', 'Fiscal Policy Analyst', 'Municipal Finance Analyst',
+              'Policy Economist'
+            ],
             scenario: {
               question: {
                 zh: '在經濟陷入嚴重蕭條、失業率飆高時，根據凱因斯主義，政府財政部門最可能採取什麼反週期措施？',
@@ -720,6 +758,11 @@
             certifications: [
               { zh: 'CQF 量化金融證書', en: 'CQF (Certificate in Quantitative Finance)', fr: 'CQF (Certificate in Quantitative Finance)' },
               { zh: 'FRM 金融風險管理師', en: 'FRM (Financial Risk Manager)', fr: 'FRM (Financial Risk Manager)' }
+            ],
+            jobTitles: [
+              'Quantitative Analyst (Quant)', 'Quantitative Researcher', 'FinTech Analyst',
+              'Algorithmic Trader', 'Quant Developer', 'Risk Model Analyst',
+              'FinTech Product Manager', 'Digital Banking Analyst', 'Blockchain Analyst'
             ],
             scenario: {
               question: {
@@ -804,6 +847,11 @@
               { zh: 'CPA 美國會計師執照', en: 'CPA (Certified Public Accountant)', fr: 'CPA (Certified Public Accountant)' },
               { zh: 'ACCA 特許公認會計師公會證書', en: 'ACCA (Association of Chartered Certified Accountants)', fr: 'ACCA (Association of Chartered Certified Accountants)' }
             ],
+            jobTitles: [
+              'Financial Accountant', 'Accountant', 'General Ledger Accountant',
+              'Financial Reporting Analyst', 'Junior Accountant', 'Finance Manager',
+              'Group Accountant', 'Consolidation Accountant'
+            ],
             scenario: {
               question: {
                 zh: '公司購買一台價值 100 萬元的設備，預計可使用 5 年，無殘值。若採用直線法，第一年的折舊分錄應為？',
@@ -867,6 +915,11 @@
             certifications: [
               { zh: 'CMA 美國管理會計師認證', en: 'CMA (Certified Management Accountant)', fr: 'CMA (Certified Management Accountant)' },
               { zh: 'CIMA 特許管理會計師證書', en: 'CIMA (Chartered Institute of Management Accountants)', fr: 'CIMA (Chartered Institute of Management Accountants)' }
+            ],
+            jobTitles: [
+              'Management Accountant', 'Cost Analyst', 'FP&A Analyst',
+              'Finance Business Partner', 'Controller', 'Budget Analyst',
+              'Financial Planning Analyst', 'Commercial Finance Analyst'
             ],
             scenario: {
               question: {
@@ -932,6 +985,11 @@
               { zh: 'CIA 國際內部稽核師認證', en: 'CIA (Certified Internal Auditor)', fr: 'CIA (Certified Internal Auditor)' },
               { zh: 'CPA 會計師執照', en: 'CPA (Certified Public Accountant)', fr: 'CPA (Certified Public Accountant)' }
             ],
+            jobTitles: [
+              'Auditor', 'Internal Auditor', 'External Auditor', 'Audit Associate',
+              'IT Auditor', 'Audit Manager', 'Assurance Associate',
+              'Big 4 Audit Staff'
+            ],
             scenario: {
               question: {
                 zh: '在進行年度庫存實地盤點時，發現倉庫實物數量少於帳面紀錄，此時審計人員的最佳首要行動是？',
@@ -995,6 +1053,11 @@
             certifications: [
               { zh: 'EA 美國國稅局註冊代理人', en: 'EA (Enrolled Agent)', fr: 'EA (Enrolled Agent)' },
               { zh: 'CPA 會計師執照', en: 'CPA (Certified Public Accountant)', fr: 'CPA (Certified Public Accountant)' }
+            ],
+            jobTitles: [
+              'Tax Analyst', 'Tax Accountant', 'Tax Manager', 'Tax Associate',
+              'Transfer Pricing Analyst', 'VAT Analyst', 'Tax Compliance Officer',
+              'International Tax Specialist'
             ],
             scenario: {
               question: {
@@ -1060,6 +1123,11 @@
               { zh: 'CISA 資訊系統稽核師認證', en: 'CISA (Certified Information Systems Auditor)', fr: 'CISA (Certified Information Systems Auditor)' },
               { zh: 'SAP S/4HANA Financial Accounting 認證', en: 'SAP S/4HANA Financial Accounting Certification', fr: 'Certification SAP S/4HANA Financial Accounting' }
             ],
+            jobTitles: [
+              'ERP Consultant', 'Financial Systems Analyst', 'SAP Consultant (FI/CO)',
+              'Business Systems Analyst', 'Finance IT Analyst', 'Accounting Information Systems Analyst',
+              'RPA Developer (Finance)'
+            ],
             scenario: {
               question: {
                 zh: '公司希望大幅縮短每月「應收帳款對帳」的時間，最適合導入哪項技術來自動化處理高重複性、且有固定规则的跨系統複製貼上工作？',
@@ -1123,6 +1191,11 @@
             certifications: [
               { zh: 'CFE 國際反舞弊師認證', en: 'CFE (Certified Fraud Examiner)', fr: 'CFE (Certified Fraud Examiner)' },
               { zh: 'CFF 鑑識財務認證', en: 'CFF (Certified in Financial Forensics)', fr: 'CFF (Certified in Financial Forensics)' }
+            ],
+            jobTitles: [
+              'Forensic Accountant', 'Fraud Analyst', 'Fraud Investigator',
+              'AML Analyst (Anti-Money Laundering)', 'Compliance Analyst',
+              'Financial Crime Analyst', 'Litigation Support Analyst'
             ],
             scenario: {
               question: {
@@ -1208,6 +1281,11 @@
               { zh: 'Google Ads 認證', en: 'Google Ads Certification', fr: 'Certification Google Ads' },
               { zh: 'HubSpot Content Marketing Certification', en: 'HubSpot Content Marketing Certification', fr: 'Certification HubSpot Content Marketing' }
             ],
+            jobTitles: [
+              'Digital Marketing Manager', 'SEO Specialist', 'Performance Marketing Manager',
+              'Paid Media Specialist', 'SEM Analyst', 'Digital Campaign Manager',
+              'Growth Marketing Analyst', 'Digital Acquisition Manager'
+            ],
             scenario: {
               question: {
                 zh: '某電商網站發現廣告點擊率 (CTR) 很高，但著陸頁 (Landing Page) 的轉換率 (CR) 卻只有 0.2%（低於行業均值 2%），數位行銷師最優先執行的動作是？',
@@ -1272,6 +1350,11 @@
               { zh: 'Professional Certificate in Brand Management (Kellogg School)', en: 'Professional Certificate in Brand Management (Kellogg School)', fr: 'Certificat Professionnel en Gestion de Marque (Kellogg School)' },
               { zh: 'Meta Social Media Marketing Certificate', en: 'Meta Social Media Marketing Certificate', fr: 'Certificat Meta Social Media Marketing' }
             ],
+            jobTitles: [
+              'Brand Manager', 'Brand Strategist', 'Brand Marketing Manager',
+              'Assistant Brand Manager', 'Brand Associate', 'Content Marketing Manager',
+              'Social Media Manager', 'Communications Manager'
+            ],
             scenario: {
               question: {
                 zh: '一家主打高性價比的平價環保水壺品牌，在品牌創立初期，公關部門最適合發佈哪種故事切入點以吸引第一批核心鐵粉？',
@@ -1331,6 +1414,11 @@
             certifications: [
               { zh: 'Reforge Growth Series 課程', en: 'Reforge Growth Series Program', fr: 'Programme Reforge Growth Series' },
               { zh: 'CXL Growth Marketing Minidegree', en: 'CXL Growth Marketing Minidegree', fr: 'CXL Growth Marketing Minidegree' }
+            ],
+            jobTitles: [
+              'Growth Marketing Manager', 'Product Marketing Manager (PMM)',
+              'CRM Manager', 'Lifecycle Marketing Manager', 'User Acquisition Manager',
+              'Retention Marketing Manager', 'Growth Hacker', 'Growth Analyst'
             ],
             scenario: {
               question: {
@@ -1392,6 +1480,11 @@
               { zh: 'HubSpot Marketing Software Certification', en: 'HubSpot Marketing Software Certification', fr: 'Certification HubSpot Marketing Software' },
               { zh: 'Salesforce Marketing Cloud Certification', en: 'Salesforce Marketing Cloud Certification', fr: 'Certification Salesforce Marketing Cloud' }
             ],
+            jobTitles: [
+              'Marketing Operations Manager', 'MarTech Manager', 'Marketing Automation Specialist',
+              'CRM Analyst', 'Marketing Systems Analyst', 'Email Marketing Manager',
+              'Customer Data Platform (CDP) Analyst'
+            ],
             scenario: {
               question: {
                 zh: '某連鎖服飾線上商城希望提升顧客的「二次回購率」，MarTech 團隊應該首選哪種策略？',
@@ -1452,6 +1545,11 @@
               { zh: 'PMP 專案管理專業人士認證', en: 'PMP (Project Management Professional)', fr: 'PMP (Project Management Professional)' },
               { zh: 'CMP 認證會議專業人士', en: 'CMP (Certified Meeting Professional)', fr: 'CMP (Certified Meeting Professional)' }
             ],
+            jobTitles: [
+              'Marketing Manager', 'Trade Marketing Manager', 'Marketing Communications Manager',
+              'Campaign Manager', 'Event Marketing Manager', 'IMC Manager',
+              'Field Marketing Manager', 'Integrated Marketing Manager'
+            ],
             scenario: {
               question: {
                 zh: '某國際美妝品牌要在市中心黃金地段舉辦一場耗資百萬的「櫻花主題快閃店」活動。傳統行銷專案經理最關鍵的工作任務是？',
@@ -1506,6 +1604,11 @@
             { zh: 'Strategy & Management 證書 (Wharton Online)', en: 'Business Strategy Specialization (Wharton Online, Coursera)', fr: 'Spécialisation Stratégie d\'Entreprise (Wharton Online, Coursera)' },
             { zh: 'CSP 策略規劃師認證', en: 'Certified Strategy Planner (CSP)', fr: 'CSP (Certified Strategy Planner)' }
           ],
+          jobTitles: [
+            'Strategy Consultant', 'Management Consultant', 'Business Analyst (Consulting)',
+            'Associate Consultant', 'Strategy Analyst', 'Senior Consultant',
+            'Consultant (Big 4 / MBB)'
+          ],
           scenario: {
             question: { zh: '你是BCG顧問，客戶為台灣連鎖便利商店，面臨東南亞展店機會，應首先進行哪項分析？', en: 'As a BCG consultant, your client is a Taiwanese convenience store chain eyeing Southeast Asia expansion. What analysis should come first?', fr: 'En tant que consultant BCG, votre client est une chaîne taïwanaise souhaitant s\'étendre en Asie du Sud-Est. Quelle analyse effectuer en premier ?' },
             options: [
@@ -1534,6 +1637,11 @@
             { zh: 'Lean Six Sigma 綠帶認證 (Green Belt)', en: 'Lean Six Sigma Green Belt Certification', fr: 'Certification Lean Six Sigma Green Belt' },
             { zh: 'PMP 專案管理專業人士認證', en: 'PMP (Project Management Professional)', fr: 'PMP (Project Management Professional)' }
           ],
+          jobTitles: [
+            'Operations Consultant', 'Process Improvement Consultant', 'Lean Consultant',
+            'Operations Analyst', 'Business Transformation Analyst',
+            'Efficiency Analyst', 'Supply Chain Consultant'
+          ],
           scenario: {
             question: { zh: '一家製造商生產線良率僅75%，你身為顧問應優先採取哪個步驟？', en: 'A manufacturer has a 75% production yield. As a consultant, what is your priority first step?', fr: 'Un fabricant affiche un taux de rendement de 75%. En tant que consultant, quelle est votre première priorité ?' },
             options: [
@@ -1561,6 +1669,11 @@
             { zh: 'Prosci 變革管理認證', en: 'Prosci Change Management Certification', fr: 'Certification Prosci en Gestion du Changement' },
             { zh: 'CCMP 變革管理專業認證', en: 'CCMP (Certified Change Management Professional)', fr: 'CCMP (Certified Change Management Professional)' },
             { zh: 'ATD 人才發展認證', en: 'ATD Certified Professional in Talent Development', fr: 'Certification ATD en Développement des Talents' }
+          ],
+          jobTitles: [
+            'Change Management Consultant', 'Organizational Development Consultant',
+            'Transformation Manager', 'HR Business Partner', 'Change Analyst',
+            'Organizational Change Manager', 'People & Change Consultant'
           ],
           scenario: {
             question: { zh: '你正在導入新ERP系統，但中階管理者普遍抗拒，你應優先做什麼？', en: 'You are rolling out a new ERP system but mid-level managers are broadly resistant. What should you prioritize?', fr: 'Vous déployez un nouveau système ERP mais les managers intermédiaires résistent. Que prioriser ?' },
@@ -1597,6 +1710,11 @@
             { zh: 'CPSM 採購供應管理師認證', en: 'CPSM (Certified Professional in Supply Management)', fr: 'CPSM (Certified Professional in Supply Management)' },
             { zh: 'CIPS 採購與供應特許認證', en: 'CIPS (Chartered Institute of Procurement & Supply) Certification', fr: 'Certification CIPS (Chartered Institute of Procurement & Supply)' }
           ],
+          jobTitles: [
+            'Procurement Manager', 'Buyer', 'Strategic Sourcing Manager',
+            'Category Manager', 'Procurement Analyst', 'Purchasing Manager',
+            'Sourcing Specialist', 'Vendor Manager'
+          ],
           scenario: {
             question: { zh: '單一供應商提供你80%的關鍵零件，供應鏈主管應如何降低風險？', en: 'A single supplier provides 80% of your critical components. How should a supply chain manager reduce this risk?', fr: 'Un seul fournisseur fournit 80% de vos composants critiques. Comment réduire ce risque ?' },
             options: [
@@ -1624,6 +1742,11 @@
             { zh: 'APICS/ASCM CSCP 供應鏈專業認證', en: 'APICS/ASCM CSCP (Certified Supply Chain Professional)', fr: 'APICS/ASCM CSCP (Certified Supply Chain Professional)' },
             { zh: 'CLTD 物流運輸與配送認證', en: 'CLTD (Certified in Logistics, Transportation and Distribution)', fr: 'CLTD (Certified in Logistics, Transportation and Distribution)' }
           ],
+          jobTitles: [
+            'Logistics Manager', 'Supply Chain Coordinator', 'Operations Manager (Logistics)',
+            'Warehouse Manager', 'Transportation Manager', 'Freight Manager',
+            'Distribution Manager', 'Logistics Analyst'
+          ],
           scenario: {
             question: { zh: '電商旺季訂單量預計增加3倍，物流主管應最優先做哪件事？', en: 'E-commerce peak season orders are projected to triple. What should the logistics manager prioritize first?', fr: 'Les commandes e-commerce devraient tripler lors des pics. Que doit prioriser le responsable logistique ?' },
             options: [
@@ -1650,6 +1773,11 @@
           certifications: [
             { zh: 'IBF 需求規劃與預測專業認證', en: 'IBF Certified in Demand Planning & Forecasting', fr: 'Certification IBF en Planification de la Demande' },
             { zh: 'APICS/ASCM CPIM 生產與庫存管理認證', en: 'APICS/ASCM CPIM (Certified in Production and Inventory Management)', fr: 'APICS/ASCM CPIM (Certified in Production and Inventory Management)' }
+          ],
+          jobTitles: [
+            'Demand Planner', 'Supply Planner', 'S&OP Analyst',
+            'Inventory Manager', 'Forecasting Analyst', 'Demand Planning Manager',
+            'Supply Chain Planner', 'Inventory Analyst'
           ],
           scenario: {
             question: { zh: '你的預測模型顯示下季需求下降15%，但業務團隊強烈反對，你應如何處理？', en: 'Your forecast model shows 15% demand decline next quarter, but the sales team strongly disagrees. How do you handle this?', fr: 'Votre modèle prévoit une baisse de la demande de 15%, mais l\'équipe commerciale s\'y oppose fortement. Comment gérer ?' },
@@ -1686,6 +1814,12 @@
             { zh: 'Competitive Strategy 證書 (Ludwig-Maximilians-Universität, Coursera)', en: 'Competitive Strategy (Coursera, LMU Munich)', fr: 'Competitive Strategy (Coursera, LMU Munich)' },
             { zh: 'Wharton Business Strategy 專項證書', en: 'Wharton Business Strategy Specialization', fr: 'Spécialisation Stratégie d\'Entreprise Wharton' }
           ],
+          jobTitles: [
+            'Corporate Strategy Manager', 'Strategy Analyst', 'Business Development Manager',
+            'Competitive Intelligence Analyst', 'Strategic Planning Manager',
+            'Market Strategy Analyst', 'Corporate Planning Analyst'
+
+          ],
           scenario: {
             question: { zh: '一家本土品牌面對國際大廠殺入市場，最不應該做的是什麼？', en: 'A local brand faces international players entering its market. What should it NOT do?', fr: 'Une marque locale fait face à l\'arrivée de géants internationaux. Que ne doit-elle surtout pas faire ?' },
             options: [
@@ -1713,6 +1847,11 @@
             { zh: 'CFA特許金融分析師', en: 'CFA (Chartered Financial Analyst)', fr: 'CFA (Chartered Financial Analyst)' },
             { zh: 'M&A與企業重組課程 (Wall Street Prep)', en: 'M&A Modeling Course (Wall Street Prep)', fr: 'Cours de Modélisation M&A (Wall Street Prep)' }
           ],
+          jobTitles: [
+            'Business Development Manager', 'Corporate Development Manager',
+            'Strategic Partnerships Manager', 'M&A Analyst', 'Growth Strategy Analyst',
+            'Market Entry Analyst', 'Business Development Associate'
+          ],
           scenario: {
             question: { zh: '一家台灣SaaS公司想進入日本市場，最應優先評估哪個因素？', en: 'A Taiwanese SaaS company wants to enter the Japanese market. Which factor should be evaluated first?', fr: 'Une entreprise SaaS taïwanaise veut entrer sur le marché japonais. Quel facteur évaluer en priorité ?' },
             options: [
@@ -1739,6 +1878,11 @@
           certifications: [
             { zh: 'CGI 公司治理專業認證', en: 'Chartered Governance Institute (CGI) Qualification', fr: 'Certification du Chartered Governance Institute (CGI)' },
             { zh: 'GARP SCR 永續與氣候風險認證', en: 'GARP SCR (Sustainability and Climate Risk) Certificate', fr: 'Certificat GARP SCR (Sustainability and Climate Risk)' }
+          ],
+          jobTitles: [
+            'Corporate Secretary', 'Compliance Officer', 'Governance Analyst',
+            'Investor Relations Manager', 'ESG Analyst', 'Board Governance Analyst',
+            'Regulatory Affairs Manager', 'Sustainability Manager'
           ],
           scenario: {
             question: { zh: '一家公司CEO同時擔任董事長，這在治理上主要帶來什麼風險？', en: 'A company\'s CEO also serves as Board Chairman. What is the primary governance risk?', fr: 'Le PDG d\'une entreprise est aussi Président du Conseil. Quel est le principal risque de gouvernance ?' },
@@ -1776,6 +1920,11 @@
             { zh: 'CSM 敏捷Scrum Master認證', en: 'CSM (Certified ScrumMaster)', fr: 'CSM (Certified ScrumMaster)' },
             { zh: 'PRINCE2 專案管理認證', en: 'PRINCE2 Certification', fr: 'Certification PRINCE2' }
           ],
+          jobTitles: [
+            'Project Manager', 'Program Manager', 'PMO Analyst',
+            'Scrum Master', 'Project Coordinator', 'Delivery Manager',
+            'Agile Coach', 'IT Project Manager'
+          ],
           scenario: {
             question: { zh: '你的IT開發專案已超出預算20%且落後兩週，你應如何處理？', en: 'Your IT development project is 20% over budget and two weeks behind schedule. How do you handle this?', fr: 'Votre projet de développement IT dépasse le budget de 20% et a deux semaines de retard. Comment gérer ?' },
             options: [
@@ -1804,6 +1953,11 @@
             { zh: 'ISO 9001主導稽核員認證', en: 'ISO 9001 Lead Auditor Certification', fr: 'Certification Auditeur Principal ISO 9001' },
             { zh: 'Lean Six Sigma 黑帶認證', en: 'Lean Six Sigma Black Belt', fr: 'Lean Six Sigma Black Belt' }
           ],
+          jobTitles: [
+            'Quality Manager', 'Quality Analyst', 'Process Improvement Manager',
+            'Lean Six Sigma Black Belt', 'Operations Excellence Manager',
+            'Quality Assurance Engineer', 'Continuous Improvement Manager'
+          ],
           scenario: {
             question: { zh: '客戶反映產品出現批次性缺陷，品管主管應最優先採取哪個行動？', en: 'Customers report batch defects in the product. What should the quality manager prioritize first?', fr: 'Des clients signalent des défauts par lot. Que doit prioriser en premier le responsable qualité ?' },
             options: [
@@ -1831,6 +1985,11 @@
             { zh: 'Google Data Analytics 專業證書', en: 'Google Data Analytics Professional Certificate', fr: 'Certificat Professionnel Google Data Analytics' },
             { zh: 'Microsoft Certified: Power BI Data Analyst Associate', en: 'Microsoft Certified: Power BI Data Analyst Associate', fr: 'Microsoft Certified: Power BI Data Analyst Associate' },
             { zh: 'Tableau Desktop Specialist 認證', en: 'Tableau Desktop Specialist Certification', fr: 'Certification Tableau Desktop Specialist' }
+          ],
+          jobTitles: [
+            'Business Analyst', 'Data Analyst', 'Operations Analyst',
+            'Business Intelligence Analyst', 'Performance Analyst',
+            'Reporting Analyst', 'Insights Analyst', 'BI Developer'
           ],
           scenario: {
             question: { zh: '電商網站改版後轉換率從2%下降到1.5%，你如何判斷是否是改版造成的？', en: 'After a website redesign, conversion rate dropped from 2% to 1.5%. How do you determine if the redesign caused this?', fr: 'Après une refonte du site, le taux de conversion est passé de 2% à 1,5%. Comment déterminer si la refonte en est la cause ?' },
@@ -1873,6 +2032,11 @@
             { zh: 'Certified Kubernetes Administrator (CKA)', en: 'Certified Kubernetes Administrator (CKA)', fr: 'Certified Kubernetes Administrator (CKA)' },
             { zh: 'Meta Back-End / Front-End Developer Certificate', en: 'Meta Back-End / Front-End Developer Certificate (Coursera)', fr: 'Certificat Développeur Back-End/Front-End Meta (Coursera)' }
           ],
+          jobTitles: [
+            'Software Engineer', 'Backend Developer', 'Frontend Developer',
+            'Full-Stack Developer', 'Software Developer', 'Application Developer',
+            'API Engineer', 'Java / Python / Node.js Developer'
+          ],
           scenario: {
             question: { zh: '一個電商網站在促銷期間流量暴增10倍，導致系統頻繁當機，工程團隊應優先採取什麼架構策略？', en: 'An e-commerce site sees a 10x traffic spike during a sale, causing frequent crashes. What architecture strategy should the engineering team prioritize?', fr: 'Un site e-commerce voit son trafic multiplié par 10 pendant une promotion, causant des pannes fréquentes. Quelle stratégie d\'architecture l\'équipe doit-elle prioriser ?' },
             options: [
@@ -1905,6 +2069,11 @@
             { zh: 'Certified Scrum Product Owner (CSPO)', en: 'Certified Scrum Product Owner (CSPO)', fr: 'Certified Scrum Product Owner (CSPO)' },
             { zh: 'Pragmatic Institute Product Management Certification', en: 'Pragmatic Institute Product Management Certification', fr: 'Certification en Gestion de Produit Pragmatic Institute' },
             { zh: 'Reforge 產品管理課程', en: 'Reforge Product Management Programs', fr: 'Programmes de Gestion de Produit Reforge' }
+          ],
+          jobTitles: [
+            'Product Manager', 'Product Owner', 'Associate Product Manager (APM)',
+            'Technical Product Manager', 'Senior Product Manager',
+            'Growth Product Manager', 'Platform Product Manager'
           ],
           scenario: {
             question: { zh: '使用者調查顯示功能A的需求聲量很大，但數據分析顯示功能B能帶來更高的留存率，PM應如何決策？', en: 'User surveys show high demand for Feature A, but data analysis shows Feature B drives higher retention. How should the PM decide?', fr: 'Les enquêtes utilisateurs montrent une forte demande pour la fonctionnalité A, mais les données montrent que B améliore davantage la rétention. Comment le PM doit-il décider ?' },
@@ -1939,6 +2108,11 @@
             { zh: 'HashiCorp Certified: Terraform Associate', en: 'HashiCorp Certified: Terraform Associate', fr: 'HashiCorp Certified: Terraform Associate' },
             { zh: 'Google Professional Cloud DevOps Engineer', en: 'Google Professional Cloud DevOps Engineer', fr: 'Google Professional Cloud DevOps Engineer' }
           ],
+          jobTitles: [
+            'DevOps Engineer', 'Site Reliability Engineer (SRE)', 'Data Engineer',
+            'Platform Engineer', 'Cloud Engineer', 'Infrastructure Engineer',
+            'MLOps Engineer', 'Cloud Architect'
+          ],
           scenario: {
             question: { zh: '生產環境的資料庫在凌晨突然回應延遲飆高，SRE工程師應優先採取什麼行動？', en: 'The production database suddenly shows soaring response latency at 3am. What should the SRE engineer prioritize first?', fr: 'La base de données de production montre une latence en forte hausse à 3h du matin. Que doit prioriser l\'ingénieur SRE ?' },
             options: [
@@ -1970,6 +2144,11 @@
           certifications: [
             { zh: 'FMVA 財務建模與估值分析師', en: 'FMVA (Financial Modeling & Valuation Analyst)', fr: 'FMVA (Modélisation Financière & Analyse)' },
             { zh: 'Venture Capital & Private Equity 證書 (Wharton, Coursera)', en: 'Venture Capital & Private Equity Specialization (Wharton, Coursera)', fr: 'Spécialisation Capital-Risque & Private Equity (Wharton, Coursera)' }
+          ],
+          jobTitles: [
+            'Venture Capital Analyst', 'VC Associate', 'Startup Business Development',
+            'Tech Strategy Analyst', 'Investment Associate (VC/PE)',
+            'Corporate Venture Analyst', 'Startup Ecosystem Manager'
           ],
           scenario: {
             question: { zh: '一家新創公司的CAC（顧客獲取成本）持續上升，但LTV（顧客終生價值）卻停滯不前，投資人應如何解讀此訊號？', en: 'A startup\'s CAC keeps rising while LTV stagnates. How should investors interpret this signal?', fr: 'Le CAC d\'une startup continue d\'augmenter tandis que la LTV stagne. Comment les investisseurs doivent-ils interpréter ce signal ?' },
@@ -2003,6 +2182,11 @@
             { zh: 'Google UX Design Professional Certificate', en: 'Google UX Design Professional Certificate', fr: 'Certificat Professionnel Google UX Design' },
             { zh: 'NN/g UX Certification', en: 'Nielsen Norman Group (NN/g) UX Certification', fr: 'Certification UX du Nielsen Norman Group (NN/g)' },
             { zh: 'Interaction Design Foundation (IDF) 認證', en: 'Interaction Design Foundation (IDF) Certification', fr: 'Certification Interaction Design Foundation (IDF)' }
+          ],
+          jobTitles: [
+            'UX Designer', 'Product Designer', 'UI/UX Designer',
+            'UX Researcher', 'Interaction Designer', 'Service Designer',
+            'UX Writer', 'Design Lead'
           ],
           scenario: {
             question: { zh: '可用性測試顯示，90%的新用戶在註冊流程的第二步驟放棄，設計師應如何處理？', en: 'Usability testing shows 90% of new users abandon at step two of the signup flow. How should the designer respond?', fr: 'Les tests d\'utilisabilité montrent que 90% des nouveaux utilisateurs abandonnent à l\'étape deux de l\'inscription. Comment le designer doit-il réagir ?' },
@@ -2044,6 +2228,11 @@
             { zh: 'Brand Management 證書 (IE Business School / Coursera)', en: 'Brand Management Specialization (IE Business School, Coursera)', fr: 'Spécialisation Gestion de Marque (IE Business School, Coursera)' },
             { zh: 'Kantar Marketing Academy 認證', en: 'Kantar Marketing Academy Certification', fr: 'Certification Kantar Marketing Academy' }
           ],
+          jobTitles: [
+            'Brand Manager (FMCG)', 'Assistant Brand Manager', 'Marketing Manager (FMCG)',
+            'Category Marketing Manager', 'Junior Brand Manager',
+            'Brand Development Manager', 'Portfolio Manager (FMCG)'
+          ],
           scenario: {
             question: { zh: '某洗髮精品牌市佔率連續兩季下滑，但廣告聲量並未減少，品牌經理應優先檢視什麼？', en: 'A shampoo brand\'s market share has declined for two consecutive quarters despite unchanged ad spend. What should the brand manager investigate first?', fr: 'La part de marché d\'une marque de shampoing a baissé deux trimestres consécutifs malgré un budget pub inchangé. Que doit examiner en premier le brand manager ?' },
             options: [
@@ -2075,6 +2264,11 @@
           certifications: [
             { zh: 'IGD 零售與貿易行銷課程', en: 'IGD Retail & Trade Marketing Training', fr: 'Formation IGD Marketing Commercial & Détail' },
             { zh: 'Category Management Association (CMA) 認證', en: 'Category Management Association (CMA) Certification', fr: 'Certification Category Management Association (CMA)' }
+          ],
+          jobTitles: [
+            'Trade Marketing Manager', 'Channel Marketing Manager', 'Key Account Manager (KAM)',
+            'Shopper Marketing Manager', 'National Account Manager', 'Field Sales Manager',
+            'Modern Trade Manager', 'Category Manager'
           ],
           scenario: {
             question: { zh: '某零食品牌在量販店的促銷活動執行後銷量大增，但促銷結束後銷量跌得比促銷前更低，貿易行銷經理應如何解讀？', en: 'A snack brand sees a sales surge during a hypermarket promotion, but post-promotion sales drop even lower than before. How should the trade marketing manager interpret this?', fr: 'Une marque de snacks voit ses ventes augmenter pendant une promotion en hypermarché, mais après, les ventes chutent encore plus bas qu\'avant. Comment l\'interpréter ?' },
@@ -2108,6 +2302,11 @@
             { zh: 'APICS/ASCM CPIM 生產與庫存管理認證', en: 'APICS/ASCM CPIM (Certified in Production and Inventory Management)', fr: 'APICS/ASCM CPIM (Certified in Production and Inventory Management)' },
             { zh: 'Lean Six Sigma 綠帶認證', en: 'Lean Six Sigma Green Belt', fr: 'Lean Six Sigma Green Belt' }
           ],
+          jobTitles: [
+            'Supply Chain Manager (FMCG/CPG)', 'Supply Chain Analyst', 'Operations Manager (FMCG)',
+            'Production Planner', 'Logistics Coordinator (FMCG)',
+            'S&OP Manager', 'Plant Manager', 'Manufacturing Operations Manager'
+          ],
           scenario: {
             question: { zh: '一款優酪乳新品在通路上的退貨率（因過期）高達12%，遠高於業界平均3%，供應鏈團隊應優先處理什麼？', en: 'A new yogurt product has a 12% return rate (due to expiry) at retail, far above the 3% industry average. What should the supply chain team address first?', fr: 'Un nouveau yaourt a un taux de retour de 12% (péremption), bien au-dessus de la moyenne du secteur (3%). Que doit traiter en priorité l\'équipe supply chain ?' },
             options: [
@@ -2140,6 +2339,11 @@
             { zh: 'Institute of Food Technologists (IFT) 認證', en: 'Institute of Food Technologists (IFT) Certification', fr: 'Certification Institute of Food Technologists (IFT)' },
             { zh: 'Market Research Society (MRS) 證書', en: 'Market Research Society (MRS) Certificate', fr: 'Certificat Market Research Society (MRS)' }
           ],
+          jobTitles: [
+            'Consumer Insights Analyst', 'Market Research Analyst', 'Insights Manager',
+            'Sensory Analyst', 'R&D Manager (FMCG)', 'Product Development Manager',
+            'Consumer Research Manager', 'Innovation Manager'
+          ],
           scenario: {
             question: { zh: '消費者研究顯示年輕世代高度關注「無添加糖」標籤，但配方部門表示去糖會嚴重影響口感，產品團隊應如何決策？', en: 'Consumer research shows younger generations highly value "no added sugar" labels, but the formulation team says removing sugar severely impacts taste. How should the product team decide?', fr: 'La recherche montre que les jeunes générations valorisent fortement les étiquettes "sans sucre ajouté", mais l\'équipe formulation dit que cela nuit gravement au goût. Comment l\'équipe produit doit-elle décider ?' },
             options: [
@@ -2171,6 +2375,11 @@
           certifications: [
             { zh: 'Google Analytics Individual Qualification (GAIQ)', en: 'Google Analytics Individual Qualification (GAIQ)', fr: 'Google Analytics Individual Qualification (GAIQ)' },
             { zh: 'Shopify Partner / Commerce Certification', en: 'Shopify Commerce Certification', fr: 'Certification Shopify Commerce' }
+          ],
+          jobTitles: [
+            'E-commerce Manager', 'Category Manager (Retail)', 'Digital Commerce Manager',
+            'Retail Marketing Manager', 'Online Merchandiser', 'E-commerce Analyst',
+            'Omnichannel Manager', 'Amazon / Shopee / Lazada Seller Manager'
           ],
           scenario: {
             question: { zh: '品牌的DTC官網價格比電商平台旗艦店低15%，導致經銷夥伴強烈抗議「線上線下打架」，品牌方應如何處理？', en: 'A brand\'s DTC website prices 15% lower than its e-commerce flagship store, causing distribution partners to protest about "online-offline channel conflict." How should the brand handle this?', fr: 'Le site DTC d\'une marque affiche des prix 15% plus bas que sa boutique e-commerce phare, provoquant des protestations des partenaires de distribution. Comment la marque doit-elle réagir ?' },
@@ -2213,6 +2422,7 @@
             { zh: 'Google TensorFlow Developer Certificate', en: 'Google TensorFlow Developer Certificate', fr: 'Certificat de Développeur TensorFlow de Google' },
             { zh: 'DeepLearning.AI 機器學習專項課程 (Coursera)', en: 'DeepLearning.AI Specializations (Coursera)', fr: 'Spécialisations DeepLearning.AI (Coursera)' }
           ],
+          jobTitles: ['Machine Learning Engineer', 'AI Engineer', 'Applied Scientist', 'ML Research Engineer', 'Deep Learning Engineer', 'NLP Engineer', 'Computer Vision Engineer'],
           scenario: {
             question: { zh: '一個推薦系統模型在上線三個月後準確率明顯下滑，但程式碼從未改動過，工程師應優先懷疑什麼問題？', en: 'A recommendation model\'s accuracy has visibly degraded three months after launch, despite no code changes. What should the engineer suspect first?', fr: 'Un modèle de recommandation voit sa précision se dégrader visiblement trois mois après son lancement, sans aucun changement de code. Que doit suspecter l\'ingénieur en premier ?' },
             options: [
@@ -2245,6 +2455,7 @@
             { zh: 'AI Product Management 證書 (Duke University, Coursera)', en: 'AI Product Management Specialization (Duke University, Coursera)', fr: 'Spécialisation Gestion de Produit IA (Duke University, Coursera)' },
             { zh: 'Prompt Engineering for ChatGPT 證書 (Vanderbilt, Coursera)', en: 'Prompt Engineering for ChatGPT (Vanderbilt, Coursera)', fr: 'Prompt Engineering for ChatGPT (Vanderbilt, Coursera)' }
           ],
+          jobTitles: ['AI Product Manager', 'AI Solutions Architect', 'AI Business Analyst', 'Conversational AI Designer', 'LLM Application Developer', 'AI Product Owner'],
           scenario: {
             question: { zh: '客服AI聊天機器人在處理複雜退款爭議時經常給出不準確的答案，PM應如何設計產品功能來降低風險？', en: 'A customer service AI chatbot frequently gives inaccurate answers on complex refund disputes. How should the PM design the product feature to reduce risk?', fr: 'Un chatbot IA donne souvent des réponses inexactes sur les litiges de remboursement complexes. Comment le PM doit-il concevoir la fonctionnalité pour réduire le risque ?' },
             options: [
@@ -2277,6 +2488,7 @@
             { zh: 'NVIDIA Deep Learning Institute (DLI) 認證', en: 'NVIDIA Deep Learning Institute (DLI) Certification', fr: 'Certification NVIDIA Deep Learning Institute (DLI)' },
             { zh: 'Certified Kubernetes Administrator (CKA)', en: 'Certified Kubernetes Administrator (CKA)', fr: 'Certified Kubernetes Administrator (CKA)' }
           ],
+          jobTitles: ['MLOps Engineer', 'ML Platform Engineer', 'AI Infrastructure Engineer', 'LLMOps Engineer', 'GPU Cluster Engineer', 'Distributed Systems Engineer', 'AI/ML Infrastructure Engineer'],
           scenario: {
             question: { zh: '公司的GPU叢集利用率僅有40%，但研究團隊仍經常抱怨排不到算力進行實驗，基礎設施團隊應如何解決？', en: 'The company\'s GPU cluster utilization is only 40%, yet research teams frequently complain they can\'t get compute for experiments. How should the infrastructure team solve this?', fr: 'Le taux d\'utilisation du cluster GPU n\'est que de 40%, mais les équipes de recherche se plaignent souvent de ne pas pouvoir obtenir de calcul. Comment l\'équipe infrastructure doit-elle résoudre cela ?' },
             options: [
@@ -2309,6 +2521,7 @@
             { zh: 'Deep Learning Specialization (Andrew Ng, Coursera)', en: 'Deep Learning Specialization (Andrew Ng, Coursera)', fr: 'Spécialisation Deep Learning (Andrew Ng, Coursera)' },
             { zh: 'Stanford CS229/CS230 線上課程證書', en: 'Stanford CS229/CS230 Online Course Certificates', fr: 'Certificats des Cours en Ligne Stanford CS229/CS230' }
           ],
+          jobTitles: ['Data Scientist', 'Research Scientist', 'Applied Research Scientist', 'ML Researcher', 'AI Research Engineer', 'Quantitative Researcher'],
           scenario: {
             question: { zh: '研究員提出一個新模型架構，初步實驗顯示準確率比基線模型高出5%，但僅測試過一個資料集，該如何嚴謹地驗證此發現？', en: 'A researcher proposes a new model architecture; preliminary experiments show 5% higher accuracy than the baseline, but only tested on one dataset. How should this finding be rigorously validated?', fr: 'Un chercheur propose une nouvelle architecture ; les expériences montrent 5% de précision supérieure à la référence, mais testée sur un seul jeu de données. Comment valider rigoureusement cette découverte ?' },
             options: [
@@ -2341,6 +2554,7 @@
             { zh: 'IAPP AIGP 人工智慧治理專業認證', en: 'IAPP AIGP (Artificial Intelligence Governance Professional)', fr: 'IAPP AIGP (Artificial Intelligence Governance Professional)' },
             { zh: 'Responsible AI 證書 (LearnQuest / Microsoft, Coursera)', en: 'Responsible AI Specialization (Microsoft, Coursera)', fr: 'Spécialisation IA Responsable (Microsoft, Coursera)' }
           ],
+          jobTitles: ['AI Governance Analyst', 'AI Ethics Analyst', 'Responsible AI Specialist', 'AI Policy Analyst', 'AI Compliance Manager', 'Trust & Safety Manager (AI)'],
           scenario: {
             question: { zh: '一家銀行的AI信用評分模型被發現對特定族群的拒貸率顯著偏高，即便排除了種族變數，治理團隊應如何處理？', en: 'A bank\'s AI credit scoring model is found to have a significantly higher rejection rate for a specific demographic group, even after excluding race as a variable. How should the governance team respond?', fr: 'Le modèle de notation de crédit IA d\'une banque montre un taux de rejet significativement plus élevé pour un groupe démographique spécifique, même après exclusion de la race comme variable. Comment l\'équipe de gouvernance doit-elle réagir ?' },
             options: [
@@ -2381,6 +2595,7 @@
             { zh: 'Product-Led Growth Certification (Pendo / ProductLed)', en: 'Product-Led Growth Certification (ProductLed)', fr: 'Certification Product-Led Growth (ProductLed)' },
             { zh: 'Reforge Growth Series 課程', en: 'Reforge Growth Series Program', fr: 'Programme Reforge Growth Series' }
           ],
+          jobTitles: ['Product Manager (PLG)', 'Growth Product Manager', 'Product-Led Growth Manager', 'Product Analyst', 'Growth Hacker', 'User Acquisition Manager'],
           scenario: {
             question: { zh: '一個專案管理SaaS工具的免費試用轉付費轉換率僅2%，遠低於業界平均15%，但使用者活躍度數據顯示正常，PLG團隊應優先檢視什麼？', en: 'A project management SaaS tool has only a 2% free-trial-to-paid conversion rate, far below the 15% industry average, yet engagement data looks normal. What should the PLG team examine first?', fr: 'Un outil SaaS de gestion de projet a un taux de conversion essai-payant de seulement 2%, bien inférieur à la moyenne du secteur (15%), mais les données d\'engagement semblent normales. Que doit examiner l\'équipe PLG en premier ?' },
             options: [
@@ -2413,6 +2628,7 @@
             { zh: 'FMVA 財務建模與估值分析師', en: 'FMVA (Financial Modeling & Valuation Analyst)', fr: 'FMVA (Modélisation Financière & Analyse)' },
             { zh: 'SaaS Metrics & Financial Modeling 課程 (Maven/Udemy)', en: 'SaaS Metrics & Financial Modeling Course (Maven/Udemy)', fr: 'Cours Métriques SaaS & Modélisation Financière (Maven/Udemy)' }
           ],
+          jobTitles: ['Finance Analyst (SaaS)', 'Revenue Operations Analyst', 'SaaS Financial Analyst', 'Business Intelligence Analyst', 'FP&A Analyst (SaaS)', 'Revenue Analytics Manager'],
           scenario: {
             question: { zh: '一家SaaS公司的整體MRR持續成長，但同期群留存曲線顯示老客戶流失率正在惡化，財務長應如何解讀此現象？', en: 'A SaaS company\'s overall MRR keeps growing, but cohort retention curves show older customer churn is worsening. How should the CFO interpret this?', fr: 'Le MRR global d\'une entreprise SaaS continue de croître, mais les courbes de rétention par cohorte montrent que le churn des anciens clients s\'aggrave. Comment le CFO doit-il interpréter cela ?' },
             options: [
@@ -2445,6 +2661,7 @@
             { zh: 'Certified Customer Success Manager (CCSM, SuccessCOACHING)', en: 'Certified Customer Success Manager (CCSM, SuccessCOACHING)', fr: 'Certified Customer Success Manager (CCSM, SuccessCOACHING)' },
             { zh: 'Gainsight Customer Success Certification', en: 'Gainsight Customer Success Certification', fr: 'Certification Gainsight Customer Success' }
           ],
+          jobTitles: ['Customer Success Manager (CSM)', 'Customer Success Specialist', 'Account Manager (SaaS)', 'Customer Onboarding Specialist', 'Renewal Manager', 'Customer Experience Manager'],
           scenario: {
             question: { zh: '一個關鍵大客戶的健康分數連續兩個月下滑，使用頻率降低且主要聯絡人已離職，客戶成功經理應如何優先處理？', en: 'A key enterprise account\'s health score has declined for two consecutive months, with reduced usage and the main point of contact having left the company. How should the customer success manager prioritize this?', fr: 'Le score de santé d\'un grand compte clé a baissé deux mois consécutifs, avec une utilisation réduite et le départ du contact principal. Comment le gestionnaire de succès client doit-il prioriser cela ?' },
             options: [
@@ -2477,6 +2694,7 @@
             { zh: 'HubSpot Sales Software Certification', en: 'HubSpot Sales Software Certification', fr: 'Certification HubSpot Sales Software' },
             { zh: 'Salesforce Certified Sales Cloud Consultant', en: 'Salesforce Certified Sales Cloud Consultant', fr: 'Salesforce Certified Sales Cloud Consultant' }
           ],
+          jobTitles: ['Sales Development Representative (SDR)', 'Account Executive (AE)', 'Business Development Representative (BDR)', 'GTM Strategy Manager', 'Revenue Operations Manager', 'Enterprise Account Executive'],
           scenario: {
             question: { zh: '一家SaaS公司原本主打中小企業市場採PLG自助式銷售，現在想拓展企業級大客戶，銷售團隊應如何調整GTM策略？', en: 'A SaaS company originally targeting SMBs via PLG self-serve sales now wants to expand into enterprise accounts. How should the sales team adjust its GTM strategy?', fr: 'Une entreprise SaaS ciblant initialement les PME via la vente PLG en self-service veut maintenant s\'étendre aux grands comptes. Comment l\'équipe de vente doit-elle ajuster sa stratégie GTM ?' },
             options: [
@@ -2510,6 +2728,7 @@
             { zh: 'Certified Information Systems Security Professional (CISSP)', en: 'Certified Information Systems Security Professional (CISSP)', fr: 'Certified Information Systems Security Professional (CISSP)' },
             { zh: 'ISO 27001 主導稽核員認證', en: 'ISO 27001 Lead Auditor Certification', fr: 'Certification Auditeur Principal ISO 27001' }
           ],
+          jobTitles: ['Cloud Security Engineer', 'Solutions Architect', 'Cloud Architect', 'Security Engineer', 'DevSecOps Engineer', 'Compliance Engineer', 'Cloud Infrastructure Engineer'],
           scenario: {
             question: { zh: '一家SaaS新創想要簽下第一個大型企業客戶，但對方要求必須先通過SOC 2 Type II稽核，團隊應如何規劃時程？', en: 'A SaaS startup wants to sign its first major enterprise customer, but the customer requires passing a SOC 2 Type II audit first. How should the team plan the timeline?', fr: 'Une startup SaaS veut signer son premier grand client entreprise, mais celui-ci exige de réussir d\'abord un audit SOC 2 Type II. Comment l\'équipe doit-elle planifier le calendrier ?' },
             options: [
@@ -2626,6 +2845,8 @@
       document.getElementById('label-skills').innerText = uiTranslations[lang].essentialSkills;
       document.getElementById('label-tools').innerText = uiTranslations[lang].industryTools;
       document.getElementById('label-certifications').innerText = uiTranslations[lang].certifications;
+      document.getElementById('label-job-titles').innerText = uiTranslations[lang].jobTitles;
+      document.getElementById('label-job-titles-hint').innerText = uiTranslations[lang].jobTitlesHint;
       document.getElementById('label-scenario').innerText = uiTranslations[lang].scenarioChallenge;
       document.getElementById('label-instructions').innerText = uiTranslations[lang].instructions;
       
@@ -2832,6 +3053,16 @@
         chip.className = 'px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-slate-300 flex items-center gap-1.5';
         chip.innerHTML = `<i class="fa-solid fa-certificate text-[10px]" style="color: ${data.hexColor}"></i> ${t(cert)}`;
         certsContainer.appendChild(chip);
+      });
+
+      // F-3. 渲染職缺搜尋關鍵字
+      const jobTitlesContainer = document.getElementById('detail-job-titles');
+      jobTitlesContainer.innerHTML = '';
+      (branch.jobTitles || []).forEach(title => {
+        const chip = document.createElement('span');
+        chip.className = 'px-3 py-1.5 bg-slate-900/80 border border-blue-500/20 rounded-lg text-xs text-slate-200 flex items-center gap-1.5 hover:border-blue-400/50 hover:bg-slate-800 transition-all duration-200 cursor-default';
+        chip.innerHTML = `<i class="fa-brands fa-linkedin text-[10px] text-blue-400"></i> ${title}`;
+        jobTitlesContainer.appendChild(chip);
       });
 
       // G. 渲染情境題目
