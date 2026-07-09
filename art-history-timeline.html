@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ars Mundi · 世界藝術史時間軸</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant+SC:wght@300;400;500;600&family=Nunito:wght@300;400;500;600;700;800&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0b0806;
+  --bg2:       #120e0a;
+  --gold:      #c9a85c;
+  --gold-hi:   #e8cc84;
+  --gold-lo:   rgba(201,168,92,0.40);
+  --cream:     #ede2cc;
+  --cream2:    #b8a48a;
+  --muted:     #7a6850;
+  --muted2:    #4a3c2a;
+  --panel:     rgba(255,243,210,0.045);
+  --panel-bd:  rgba(201,168,92,0.16);
+}
+
+html, body { min-height: 100%; }
+body {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(120,70,20,0.18), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 90% 10%, rgba(60,40,90,0.14), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 110%, rgba(20,55,70,0.14), transparent 60%),
+    var(--bg);
+  color: var(--cream);
+  font-family: 'Nunito', 'Noto Serif TC', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#wrap { max-width: 1220px; margin: 0 auto; padding: 44px 34px 90px; }
+@media(max-width:680px){ #wrap { padding: 30px 14px 60px; } }
+
+/* ── Header ── */
+header { text-align: center; margin-bottom: 42px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.eyebrow .rule { width: 34px; height: 1px; background: var(--gold-lo); }
+.eyebrow span.txt {
+  font-family: 'Cormorant SC', serif; font-size: 11px; letter-spacing: 0.3em; color: var(--gold-lo);
+}
+h1 {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-style: italic; font-weight: 400;
+  font-size: clamp(44px, 7vw, 76px); line-height: 1.02;
+  color: #f2e6ce; letter-spacing: -1px;
+}
+h1 .gold { color: var(--gold); font-weight: 300; }
+.subtitle {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-style: italic; font-size: 15.5px; color: var(--cream2);
+  margin-top: 14px; line-height: 1.8; max-width: 560px; margin-left: auto; margin-right: auto;
+}
+.orn { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 18px; }
+.orn .l { width: 56px; height: 1px; background: linear-gradient(to right, transparent, var(--gold-lo)); }
+.orn .r { width: 56px; height: 1px; background: linear-gradient(to left, transparent, var(--gold-lo)); }
+.orn .g { color: var(--gold); font-size: 9px; opacity: 0.55; }
+
+/* ── Region filter chips ── */
+#filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 16px; border-radius: 20px; cursor: pointer;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
+  font-family: 'Nunito', sans-serif;
+  background: var(--panel); border: 1px solid var(--panel-bd);
+  color: var(--muted); transition: all .2s; user-select: none;
+}
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+.chip:hover { color: var(--cream); border-color: rgba(201,168,92,0.4); }
+.chip.active { color: var(--gold-hi); background: rgba(201,168,92,0.12); border-color: rgba(201,168,92,0.5); }
+
+/* ── Timeline chart ── */
+#chart-frame {
+  position: relative;
+  background: rgba(255,243,210,0.03);
+  border: 1px solid var(--panel-bd);
+  border-radius: 18px;
+  padding: 0;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,242,170,0.14);
+  overflow: hidden;
+}
+#chart-scroll { overflow-x: auto; overflow-y: hidden; padding: 18px 0 6px; }
+#chart-scroll::-webkit-scrollbar { height: 8px; }
+#chart-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+#chart-scroll::-webkit-scrollbar-thumb { background: rgba(201,168,92,0.25); border-radius: 8px; }
+#canvas { position: relative; }
+
+/* era bands */
+.era-band { position: absolute; top: 0; bottom: 0; pointer-events: none; }
+.era-band.alt { background: rgba(255,240,200,0.022); }
+.era-label {
+  position: absolute; top: 6px;
+  font-family: 'Cormorant SC', serif; font-size: 10.5px; letter-spacing: 0.24em;
+  color: rgba(201,168,92,0.5); white-space: nowrap; transform: translateX(10px);
+}
+
+/* lane */
+.lane { position: relative; border-top: 1px dashed rgba(201,168,92,0.10); }
+.lane-tag {
+  position: sticky; left: 0; float: left;
+  margin: 10px 0 0 0; padding: 5px 14px 5px 12px;
+  border-radius: 0 14px 14px 0;
+  background: linear-gradient(90deg, rgba(11,8,6,0.95), rgba(11,8,6,0.75));
+  border: 1px solid rgba(201,168,92,0.22); border-left: none;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.14em;
+  color: var(--cream2); z-index: 8; display: inline-flex; align-items: center; gap: 7px;
+  backdrop-filter: blur(6px);
+}
+.lane-tag .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+/* movement bar */
+.bar {
+  position: absolute; height: 32px; border-radius: 16px;
+  display: flex; align-items: center; padding: 0 12px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
+  color: rgba(255,252,240,0.95); white-space: nowrap; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.22);
+  transition: transform .18s, box-shadow .25s, opacity .3s, filter .3s;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  z-index: 5;
+}
+.bar:hover { transform: translateY(-3px) scale(1.02); z-index: 9; }
+.bar.selected {
+  outline: 2px solid rgba(255,244,200,0.85); outline-offset: 2px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 34px var(--glow, rgba(201,168,92,0.4)),
+              inset 0 1px 0 rgba(255,255,255,0.3);
+  z-index: 10;
+}
+.bar.dim { opacity: 0.16; filter: grayscale(0.7); pointer-events: none; }
+
+/* axis */
+#axis { position: relative; height: 34px; border-top: 1px solid rgba(201,168,92,0.2); margin-top: 4px; }
+.tick { position: absolute; top: 0; }
+.tick .tl { width: 1px; height: 7px; background: rgba(201,168,92,0.45); }
+.tick .ty {
+  margin-top: 5px; transform: translateX(-50%);
+  font-size: 10px; font-weight: 700; color: var(--muted); white-space: nowrap;
+  font-family: 'Nunito', sans-serif; letter-spacing: 0.04em;
+}
+
+/* hint */
+#hint {
+  text-align: center; margin: 14px 0 34px;
+  font-size: 11.5px; color: var(--muted); font-weight: 600; letter-spacing: 0.06em;
+}
+#hint b { color: var(--gold-lo); font-weight: 800; }
+
+/* ── Tooltip ── */
+#tooltip {
+  position: fixed; z-index: 90; pointer-events: none; display: none;
+  background: rgba(14,10,7,0.95); border: 1px solid rgba(201,168,92,0.35);
+  border-radius: 10px; padding: 8px 13px;
+  font-size: 11.5px; font-weight: 700; color: var(--cream);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px); max-width: 260px;
+}
+#tooltip .yrs { color: var(--gold); font-size: 10.5px; margin-top: 2px; }
+
+/* ── Detail panel ── */
+#detail {
+  background: rgba(255,243,210,0.04);
+  border: 1px solid var(--panel-bd);
+  border-radius: 20px;
+  padding: 34px 36px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1.5px 0 rgba(255,242,170,0.16);
+  position: relative; overflow: hidden;
+  animation: fade-in .45s ease both;
+}
+@keyframes fade-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+#detail::before {
+  content: ''; position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,238,155,0.4) 50%, transparent);
+}
+#detail-grid {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: start;
+}
+@media(max-width:880px){ #detail-grid { grid-template-columns: 1fr; } }
+
+.d-period {
+  font-family: 'Cormorant SC', serif; font-size: 12px; letter-spacing: 0.26em; color: var(--gold);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+}
+.d-period .ln { width: 30px; height: 1px; background: var(--gold-lo); }
+.d-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 34px; font-weight: 600; color: #f3e9d6; line-height: 1.15; letter-spacing: -0.5px;
+}
+.d-title .en { font-style: italic; font-weight: 300; color: var(--gold); font-size: 21px; margin-left: 10px; }
+.d-region-chip {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
+  padding: 5px 13px; border-radius: 16px;
+  background: rgba(201,168,92,0.08); border: 1px solid rgba(201,168,92,0.25);
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; color: var(--cream2);
+}
+.d-region-chip .dot { width: 7px; height: 7px; border-radius: 50%; }
+.d-desc { margin-top: 18px; font-size: 14px; line-height: 1.95; color: var(--cream2); font-weight: 500; }
+.d-sec-label {
+  margin: 22px 0 10px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 10px;
+}
+.d-sec-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,92,0.2), transparent); }
+.d-artists { display: flex; flex-wrap: wrap; gap: 7px; }
+.artist-tag {
+  padding: 5px 12px; border-radius: 9px;
+  background: rgba(255,243,210,0.05); border: 1px solid rgba(201,168,92,0.14);
+  font-size: 11.5px; font-weight: 700; color: var(--cream2);
+}
+
+/* mini map */
+#minimap-box { margin-top: 6px; }
+#minimap { width: 100%; max-width: 340px; display: block; }
+#minimap .land { fill: rgba(201,168,92,0.10); stroke: rgba(201,168,92,0.28); stroke-width: 1; transition: fill .4s, filter .4s; }
+#minimap .land.lit { fill: var(--lit, rgba(201,168,92,0.55)); filter: drop-shadow(0 0 8px var(--lit, rgba(201,168,92,0.5))); }
+.map-caption { font-size: 10px; color: var(--muted); margin-top: 6px; letter-spacing: 0.08em; font-weight: 700; }
+
+/* artwork card */
+#art-card {
+  background: linear-gradient(160deg, rgba(255,243,210,0.055), rgba(255,243,210,0.02));
+  border: 1px solid rgba(201,168,92,0.22);
+  border-radius: 16px; padding: 22px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,242,170,0.18);
+}
+#art-frame {
+  border: 6px solid #2a1f12;
+  outline: 1px solid rgba(201,168,92,0.5);
+  border-radius: 4px;
+  background: #14100b;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55), inset 0 0 22px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+#art-frame svg { display: block; width: 100%; height: auto; }
+.art-caption { margin-top: 14px; }
+.art-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 20px; font-weight: 600; color: #f0e6cf;
+}
+.art-meta { font-size: 11px; font-weight: 700; color: var(--gold-lo); margin-top: 3px; letter-spacing: 0.06em; }
+.art-note { font-size: 9.5px; color: var(--muted); margin-top: 6px; letter-spacing: 0.06em; font-style: italic; }
+.story-label {
+  margin: 16px 0 8px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold-lo);
+  display: flex; align-items: center; gap: 9px;
+}
+.story-label::before { content: '❦'; font-size: 12px; color: var(--gold); opacity: 0.6; }
+.art-story { font-size: 13px; line-height: 1.95; color: var(--cream2); font-weight: 500; }
+
+/* nav arrows */
+#d-nav { display: flex; gap: 8px; position: absolute; top: 24px; right: 26px; z-index: 5; }
+.nav-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,243,210,0.05); border: 1px solid rgba(201,168,92,0.22);
+  color: var(--cream2); cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; font-family: inherit;
+}
+.nav-btn:hover { color: var(--gold-hi); border-color: rgba(201,168,92,0.5); background: rgba(201,168,92,0.1); }
+
+/* footer */
+footer { margin-top: 60px; text-align: center; }
+.footer-orn { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 10px; }
+.footer-orn .fl { width: 44px; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,92,0.28)); }
+.footer-orn .fr { width: 44px; height: 1px; background: linear-gradient(to left, transparent, rgba(201,168,92,0.28)); }
+.footer-orn .fg { color: var(--gold); font-size: 8px; opacity: 0.4; }
+footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+
+:focus-visible { outline: 2px solid rgba(201,168,92,0.6); outline-offset: 2px; }
+@media(prefers-reduced-motion:reduce){ .bar, #detail { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<div id="wrap">
+
+  <header>
+    <div class="eyebrow">
+      <span class="rule"></span><span class="txt">個人知識庫 · 藝術卷</span><span class="rule"></span>
+    </div>
+    <h1>Ars <span class="gold">Mundi</span></h1>
+    <div class="orn"><div class="l"></div><span class="g">✦</span><div class="r"></div></div>
+    <p class="subtitle">世界藝術史互動時間軸 —— 以四大文化區域為緯、三萬年為經，<br>點選任一流派，展開示意圖與名作背後的故事。</p>
+  </header>
+
+  <div id="filters"></div>
+
+  <div id="chart-frame">
+    <div id="chart-scroll">
+      <div id="canvas"></div>
+    </div>
+  </div>
+  <p id="hint">▸ 橫向捲動探索時間軸 · <b>點擊色帶</b>開啟流派詳情 · 上方篩選區域</p>
+
+  <div id="detail" style="display:none;">
+    <div id="d-nav">
+      <button class="nav-btn" onclick="navMove(-1)" aria-label="上一個流派">‹</button>
+      <button class="nav-btn" onclick="navMove(1)" aria-label="下一個流派">›</button>
+    </div>
+    <div id="detail-grid">
+      <div id="d-left"></div>
+      <div id="d-right"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-orn"><div class="fl"></div><span class="fg">✦</span><div class="fr"></div></div>
+    <p>© 2026 個人知識庫 · Ars Mundi · 互動藝術史圖譜</p>
+  </footer>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+/* ═══════════ 資料 ═══════════ */
+
+const REGIONS = {
+  europe:   { name: '歐洲',       color: '#8b7cf6', lit: 'rgba(139,124,246,0.65)' },
+  eastasia: { name: '東亞',       color: '#f0716f', lit: 'rgba(240,113,111,0.65)' },
+  mideast:  { name: '中東 · 非洲', color: '#e3a94f', lit: 'rgba(227,169,79,0.65)' },
+  americas: { name: '美洲',       color: '#4fc3a1', lit: 'rgba(79,195,161,0.65)' },
+};
+
+/* 示意圖 SVG（風格化重繪，非原作複製） */
+const ART_SVG = {
+  lascaux: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#3d2b1a"/><path d="M55 95 Q60 62 95 58 Q135 52 158 66 Q186 60 196 74 Q205 84 191 87 L186 96 Q182 88 172 90 Q168 108 150 110 L146 96 Q120 104 98 100 L92 112 Q84 112 82 100 Q62 104 55 95 Z" fill="#a8542a" stroke="#2a180c" stroke-width="2.5"/><path d="M186 66 Q196 52 204 58 Q198 62 196 74" fill="none" stroke="#2a180c" stroke-width="2.5"/><circle cx="188" cy="72" r="2.4" fill="#2a180c"/><g fill="#d9b98c" opacity="0.85"><circle cx="36" cy="38" r="3"/><circle cx="44" cy="30" r="3"/><circle cx="52" cy="36" r="3"/><circle cx="42" cy="44" r="3"/><path d="M30 52 Q40 46 54 50 L52 60 Q40 56 32 60 Z"/></g><g stroke="#c77b3f" stroke-width="2" opacity="0.6"><line x1="200" y1="112" x2="216" y2="128"/><line x1="208" y1="110" x2="222" y2="124"/></g></svg>`,
+  tut: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#1a1410"/><path d="M120 18 Q166 18 168 62 Q168 86 152 100 L152 118 Q138 132 120 132 Q102 132 88 118 L88 100 Q72 86 72 62 Q74 18 120 18 Z" fill="#d4a832"/><g fill="#2456a0"><path d="M72 50 L60 44 Q52 78 66 104 L82 96 Q70 76 72 50 Z"/><path d="M168 50 L180 44 Q188 78 174 104 L158 96 Q170 76 168 50 Z"/><rect x="88" y="24" width="64" height="7" rx="3"/><rect x="84" y="38" width="72" height="6" rx="3" opacity="0.8"/></g><path d="M114 12 Q120 4 126 12 L124 24 L116 24 Z" fill="#2f8f5b"/><g fill="#171310"><ellipse cx="102" cy="64" rx="9" ry="5"/><ellipse cx="138" cy="64" rx="9" ry="5"/></g><path d="M116 76 Q120 82 124 76" fill="none" stroke="#8a6820" stroke-width="2.5"/><path d="M106 96 Q120 104 134 96 L132 104 Q120 110 108 104 Z" fill="#8a6820"/><rect x="112" y="112" width="16" height="20" rx="4" fill="#2456a0"/></svg>`,
+  venus: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#241d15"/><rect x="86" y="122" width="68" height="14" rx="3" fill="#4a3d2c"/><path d="M112 24 Q124 18 130 28 Q134 38 126 44 Q140 50 142 66 Q144 84 132 94 Q140 106 136 122 L104 122 Q98 104 106 92 Q94 82 98 64 Q100 50 112 44 Q104 34 112 24 Z" fill="#d8cbb4"/><path d="M106 92 Q120 98 132 94" fill="none" stroke="#b3a68c" stroke-width="2"/><path d="M98 64 Q112 70 142 66" fill="none" stroke="#b3a68c" stroke-width="1.6" opacity="0.7"/><path d="M100 56 L84 70" stroke="#d8cbb4" stroke-width="9" stroke-linecap="round"/><path d="M140 58 L150 66" stroke="#d8cbb4" stroke-width="9" stroke-linecap="round"/><ellipse cx="120" cy="140" rx="70" ry="5" fill="#000" opacity="0.35"/></svg>`,
+  byzant: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#8a6a1e"/><defs><pattern id="tess" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#a8842c"/><rect x="0.7" y="0.7" width="8.6" height="8.6" fill="#c9a13a"/></pattern></defs><rect width="240" height="150" fill="url(#tess)"/><circle cx="120" cy="72" r="46" fill="#e8cc7a" stroke="#7a5c14" stroke-width="3"/><path d="M120 44 Q136 44 136 62 Q136 74 120 76 Q104 74 104 62 Q104 44 120 44 Z" fill="#c98d5e"/><path d="M103 58 Q103 38 120 38 Q137 38 137 58 Q129 48 120 48 Q111 48 103 58 Z" fill="#3a2a18"/><g fill="#2a1c10"><ellipse cx="113" cy="60" rx="2.6" ry="3.4"/><ellipse cx="127" cy="60" rx="2.6" ry="3.4"/></g><path d="M116 70 Q120 73 124 70" fill="none" stroke="#8a5c34" stroke-width="1.8"/><path d="M96 118 Q120 82 144 118 Z" fill="#3b4f8c"/><line x1="120" y1="26" x2="120" y2="12" stroke="#7a5c14" stroke-width="3"/><line x1="112" y1="18" x2="128" y2="18" stroke="#7a5c14" stroke-width="3"/></svg>`,
+  mona: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#2e2a1a"/><path d="M0 60 Q40 40 70 52 L70 150 L0 150 Z" fill="#3d4a3a" opacity="0.8"/><path d="M170 55 Q210 38 240 56 L240 150 L170 150 Z" fill="#41503e" opacity="0.8"/><path d="M0 74 Q50 60 80 70 M160 68 Q210 56 240 70" stroke="#59684f" stroke-width="3" fill="none" opacity="0.6"/><path d="M92 150 Q88 96 104 78 Q96 72 96 56 Q96 34 120 34 Q144 34 144 56 Q144 72 136 78 Q152 96 148 150 Z" fill="#6b5636"/><path d="M96 56 Q96 34 120 34 Q144 34 144 56 Q144 74 132 80 Q140 66 138 54 Q134 42 120 42 Q106 42 102 54 Q100 66 108 80 Q96 74 96 56 Z" fill="#3a2c18"/><ellipse cx="120" cy="60" rx="17" ry="20" fill="#cfa87a"/><g fill="#3a2a1a"><ellipse cx="113" cy="57" rx="2.2" ry="2.8"/><ellipse cx="127" cy="57" rx="2.2" ry="2.8"/></g><path d="M113 70 Q120 74.5 127 70" fill="none" stroke="#8a5c38" stroke-width="1.9"/><path d="M104 118 Q120 108 136 118 Q136 128 120 130 Q104 128 104 118 Z" fill="#cfa87a"/></svg>`,
+  nightwatch: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#171008"/><path d="M0 0 H240 V150 H0 Z" fill="#1f1409"/><path d="M30 150 L44 66 Q46 58 54 58 L66 58 Q74 58 76 66 L88 150 Z" fill="#2b1c0c"/><path d="M150 150 L162 72 Q164 64 172 64 L182 64 Q190 64 192 72 L204 150 Z" fill="#241708"/><path d="M96 150 L106 58 Q108 48 118 48 L126 48 Q136 48 138 58 L148 150 Z" fill="#0e0a05"/><ellipse cx="122" cy="40" rx="12" ry="13" fill="#caa06a"/><path d="M104 38 Q122 22 140 38 L136 30 Q122 18 108 30 Z" fill="#0a0704"/><path d="M55 150 L62 78 Q64 68 72 68 Q80 68 82 78 L90 150 Z" fill="#e8d29a"/><ellipse cx="72" cy="58" rx="10" ry="11" fill="#d9b586"/><path d="M58 54 Q72 40 86 54 L82 46 Q72 36 62 46 Z" fill="#3a2a12"/><line x1="150" y1="30" x2="192" y2="118" stroke="#8a7440" stroke-width="4"/><circle cx="40" cy="34" r="16" fill="#c99c3f" opacity="0.14"/><circle cx="76" cy="52" r="26" fill="#e8cc7a" opacity="0.12"/></svg>`,
+  swing: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#26331c"/><g fill="#39502a"><ellipse cx="40" cy="40" rx="52" ry="44"/><ellipse cx="205" cy="34" rx="56" ry="46"/><ellipse cx="120" cy="10" rx="70" ry="34"/></g><g fill="#4a6636" opacity="0.8"><ellipse cx="60" cy="26" rx="30" ry="22"/><ellipse cx="188" cy="52" rx="34" ry="24"/></g><line x1="96" y1="0" x2="112" y2="78" stroke="#7a6844" stroke-width="2.5"/><line x1="168" y1="0" x2="140" y2="78" stroke="#7a6844" stroke-width="2.5"/><rect x="106" y="76" width="42" height="7" rx="3" fill="#6b4a26"/><ellipse cx="126" cy="66" rx="20" ry="15" fill="#f4a7c3"/><path d="M110 70 Q100 84 108 94 Q120 88 126 78 Z" fill="#f4a7c3"/><path d="M142 70 Q158 76 166 66" stroke="#f4a7c3" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="128" cy="48" r="9" fill="#e8c4a0"/><path d="M119 44 Q128 34 138 44 L134 38 Q128 32 122 38 Z" fill="#e8e2d2"/><path d="M170 58 Q182 50 178 42" stroke="#d98a9e" stroke-width="3" fill="none"/><ellipse cx="180" cy="40" rx="6" ry="4" fill="#d98a9e" transform="rotate(-30 180 40)"/><ellipse cx="60" cy="122" rx="16" ry="9" fill="#2c3b20"/><path d="M52 120 Q60 106 70 118 Q64 124 54 124 Z" fill="#7a8a5c"/></svg>`,
+  liberty: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#5a4a34"/><rect y="0" width="240" height="70" fill="#7a6446"/><g opacity="0.55"><ellipse cx="60" cy="56" rx="60" ry="30" fill="#4a3a26"/><ellipse cx="190" cy="50" rx="56" ry="28" fill="#57462e"/></g><g><rect x="128" y="14" width="13" height="34" fill="#2a4a8a"/><rect x="141" y="14" width="13" height="34" fill="#ece2ce"/><rect x="154" y="14" width="13" height="34" fill="#b8382e"/><line x1="128" y1="14" x2="118" y2="96" stroke="#3a2c18" stroke-width="4"/></g><path d="M100 150 L106 92 Q110 78 122 78 Q134 78 136 92 L134 150 Z" fill="#c9b06a"/><path d="M106 92 Q118 84 130 92 L128 78 Q120 70 110 78 Z" fill="#d9b586"/><circle cx="121" cy="66" r="10" fill="#d9a97a"/><path d="M110 62 Q121 50 132 62 L128 54 Q121 48 114 54 Z" fill="#8a2c22"/><path d="M96 88 L118 80" stroke="#d9a97a" stroke-width="6" stroke-linecap="round"/><path d="M132 84 L120 60" stroke="#d9a97a" stroke-width="0" opacity="0"/><g fill="#241a0e"><path d="M40 150 L52 112 Q56 104 64 108 L74 150 Z"/><path d="M170 150 L180 118 Q184 110 192 114 L200 150 Z"/><path d="M20 150 Q30 138 44 142 L40 150 Z"/></g><circle cx="120" cy="120" r="40" fill="#e8cc7a" opacity="0.08"/></svg>`,
+  gleaners: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#c9b98a"/><rect y="0" width="240" height="58" fill="#d9cfae"/><rect y="52" width="240" height="98" fill="#b3a05f"/><g fill="#c9b06a"><ellipse cx="196" cy="52" rx="20" ry="14"/><ellipse cx="164" cy="54" rx="14" ry="10"/><ellipse cx="220" cy="56" rx="14" ry="9"/></g><g stroke="#8a7434" stroke-width="1.4" opacity="0.7"><line x1="10" y1="70" x2="230" y2="66"/><line x1="10" y1="86" x2="230" y2="82"/><line x1="10" y1="104" x2="230" y2="100"/></g><path d="M52 118 Q52 96 66 92 Q76 90 80 100 L84 116 Q70 122 52 118 Z" fill="#4a5a7a"/><circle cx="80" cy="94" r="7" fill="#b08a5e"/><path d="M72 90 Q80 84 88 92 L86 86 Q80 82 74 86 Z" fill="#8a3c2e"/><path d="M84 104 L96 114" stroke="#b08a5e" stroke-width="4" stroke-linecap="round"/><path d="M106 116 Q106 96 120 92 Q130 90 134 100 L138 114 Q122 120 106 116 Z" fill="#7a3c30"/><circle cx="134" cy="94" r="7" fill="#b08a5e"/><path d="M126 90 Q134 84 142 92 L140 86 Q134 82 128 86 Z" fill="#3a4a6a"/><path d="M138 104 L150 112" stroke="#b08a5e" stroke-width="4" stroke-linecap="round"/><path d="M164 120 Q160 100 172 94 Q182 90 188 98 L190 118 Q178 124 164 120 Z" fill="#5a6a44"/><circle cx="186" cy="92" r="7" fill="#b08a5e"/><path d="M178 88 Q186 82 194 90 L192 84 Q186 80 180 84 Z" fill="#8a6a3c"/></svg>`,
+  sunrise: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#7a8a96"/><g opacity="0.85"><rect y="0" width="240" height="80" fill="#8a97a3"/><path d="M0 30 Q60 22 120 30 T240 28 L240 44 Q180 52 120 44 T0 46 Z" fill="#9aa4ad" opacity="0.6"/></g><circle cx="150" cy="44" r="13" fill="#f0603a"/><g stroke="#e8703f" stroke-width="3.2" stroke-linecap="round" opacity="0.9"><line x1="140" y1="66" x2="160" y2="66"/><line x1="144" y1="76" x2="162" y2="75"/><line x1="140" y1="86" x2="156" y2="86"/><line x1="146" y1="96" x2="164" y2="95"/><line x1="142" y1="106" x2="158" y2="106"/></g><g fill="#2c3844"><path d="M60 96 Q72 88 84 96 L82 104 Q70 100 62 104 Z"/><path d="M64 96 L66 82 L70 82 L70 96"/><path d="M100 108 Q112 100 126 108 L124 116 Q110 112 102 116 Z" opacity="0.85"/><path d="M106 108 L108 96 L112 96 L112 108" opacity="0.85"/></g><g stroke="#5c6a76" stroke-width="2.4" opacity="0.7"><line x1="18" y1="34" x2="18" y2="66"/><line x1="34" y1="30" x2="34" y2="64"/><line x1="200" y1="30" x2="200" y2="60"/><line x1="216" y1="34" x2="216" y2="62"/></g><g stroke="#8a97a3" stroke-width="2" opacity="0.8"><path d="M10 120 Q60 116 110 120 T230 118"/><path d="M10 134 Q70 130 130 134 T236 132"/></g></svg>`,
+  starry: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#1c2a52"/><g fill="none" stroke-linecap="round"><path d="M30 46 Q70 22 108 46 Q140 66 178 44" stroke="#3a5a9a" stroke-width="7"/><path d="M36 52 Q74 30 110 52 Q142 72 176 52" stroke="#5a7ec4" stroke-width="4"/><path d="M60 74 Q100 56 140 76 Q170 90 200 74" stroke="#3a5a9a" stroke-width="6"/><path d="M66 80 Q104 62 142 82" stroke="#7a9ad8" stroke-width="3"/></g><g><circle cx="196" cy="30" r="15" fill="#e8c84a"/><circle cx="191" cy="27" r="11" fill="#1c2a52"/><circle cx="196" cy="30" r="21" fill="#e8c84a" opacity="0.18"/></g><g fill="#f0d867"><circle cx="46" cy="26" r="4.5"/><circle cx="46" cy="26" r="8" opacity="0.25"/><circle cx="96" cy="18" r="3.6"/><circle cx="96" cy="18" r="7" opacity="0.25"/><circle cx="140" cy="30" r="4"/><circle cx="140" cy="30" r="7.5" opacity="0.25"/><circle cx="74" cy="46" r="3"/><circle cx="74" cy="46" r="6" opacity="0.25"/></g><path d="M28 150 Q20 96 34 58 Q40 42 46 58 Q56 96 50 150 Z" fill="#0e1a14"/><path d="M34 74 Q40 64 44 74 M30 100 Q38 88 46 100" stroke="#1e3324" stroke-width="2.5" fill="none"/><g fill="#22304a"><path d="M70 150 L70 122 L96 110 L150 110 L150 150 Z"/><path d="M160 150 L160 118 L188 118 L188 150 Z"/></g><path d="M108 110 L108 92 L116 84 L124 92 L124 110" fill="#2a3c5c"/><path d="M104 92 L116 80 L128 92" fill="none" stroke="#16223a" stroke-width="3"/><g fill="#e8c84a"><rect x="78" y="126" width="6" height="8"/><rect x="132" y="120" width="6" height="8"/><rect x="168" y="126" width="6" height="8"/><rect x="112" y="96" width="7" height="9"/></g></svg>`,
+  guernica: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#c8c4ba"/><rect x="8" y="8" width="224" height="134" fill="#22201c"/><path d="M30 42 Q30 24 48 24 Q64 24 64 40 L58 44 Q60 52 50 54 L54 66 L34 62 Q26 52 30 42 Z" fill="#dad6cc"/><g fill="#22201c"><ellipse cx="42" cy="38" rx="3" ry="4"/><ellipse cx="55" cy="36" rx="3" ry="4"/></g><path d="M28 26 L18 14 M62 24 L72 14" stroke="#dad6cc" stroke-width="4"/><path d="M96 20 L116 20 L112 34 Q104 40 100 34 Z" fill="#e8e4da"/><path d="M106 34 L106 46" stroke="#e8e4da" stroke-width="4"/><g stroke="#e8e4da" stroke-width="3"><line x1="106" y1="27" x2="88" y2="27"/><line x1="106" y1="27" x2="124" y2="27"/></g><path d="M138 30 Q152 18 162 32 Q168 44 156 50 L146 64 L136 50 Q130 38 138 30 Z" fill="#b5b1a5"/><path d="M142 36 L158 40 M150 28 L150 48" stroke="#22201c" stroke-width="2.5"/><path d="M176 56 Q190 40 202 56 L206 92 Q192 100 180 92 Z" fill="#d5d1c7"/><path d="M182 60 L198 60 M190 52 L190 74" stroke="#22201c" stroke-width="2.5"/><path d="M186 100 L178 132 M196 100 L204 132" stroke="#d5d1c7" stroke-width="6"/><path d="M36 88 Q56 74 76 90 L72 122 Q52 132 40 120 Z" fill="#8c887c"/><path d="M46 96 L66 100 M56 88 L56 112" stroke="#22201c" stroke-width="2.5"/><path d="M92 74 L100 130 L118 128 L112 72 Z" fill="#4a463c"/><path d="M96 84 Q104 78 110 86" stroke="#c8c4ba" stroke-width="2.5" fill="none"/></svg>`,
+  dali: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#c98d4e"/><rect y="0" width="240" height="64" fill="#7a9aad"/><path d="M0 60 Q60 54 120 60 T240 58 L240 70 L0 70 Z" fill="#b3894e"/><path d="M170 0 L240 0 L240 56 L196 56 Q180 40 186 20 Z" fill="#8a6a3c"/><path d="M0 150 L0 96 Q40 88 80 96 L240 96 L240 150 Z" fill="#a06c34"/><line x1="26" y1="96" x2="26" y2="30" stroke="#4a3418" stroke-width="5"/><path d="M26 44 L66 36" stroke="#4a3418" stroke-width="4"/><path d="M50 34 Q72 34 74 50 Q76 66 58 66 Q46 66 44 52 Q44 38 50 34 Z" fill="#e8c453" transform="rotate(18 58 50)"/><path d="M48 40 Q60 38 68 46" stroke="#8a6820" stroke-width="2" fill="none" transform="rotate(18 58 50)"/><ellipse cx="130" cy="98" rx="34" ry="12" fill="#e8c453"/><path d="M100 96 Q100 84 116 84 Q134 82 140 92 L156 98 Q150 108 128 108 Q104 108 100 96 Z" fill="#f0d067"/><g stroke="#7a5c14" stroke-width="2.2" fill="none"><line x1="128" y1="90" x2="128" y2="98"/><line x1="128" y1="98" x2="138" y2="98"/></g><path d="M186 118 Q198 112 210 120 Q206 130 192 128 Z" fill="#d99a3e"/><circle cx="120" cy="30" r="10" fill="#f0e2c4" opacity="0.85"/></svg>`,
+  pollock: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#c4b598"/><g fill="none" stroke-linecap="round"><path d="M10 30 Q60 90 110 40 T210 60 Q230 80 218 110" stroke="#2a241c" stroke-width="3.4"/><path d="M20 110 Q70 40 130 96 T236 84" stroke="#2a241c" stroke-width="2.6"/><path d="M4 70 Q80 130 160 70 T238 30" stroke="#6b5636" stroke-width="2.8"/><path d="M30 10 Q90 70 60 120 M150 8 Q120 80 170 130" stroke="#8a6a3c" stroke-width="2.2"/><path d="M14 44 Q100 10 190 44 T240 110" stroke="#e8e2d2" stroke-width="2.4"/><path d="M60 140 Q110 60 190 120" stroke="#3a4a6a" stroke-width="2"/></g><g fill="#2a241c"><circle cx="58" cy="62" r="3"/><circle cx="132" cy="44" r="2.4"/><circle cx="186" cy="92" r="3.4"/><circle cx="96" cy="112" r="2.6"/></g><g fill="#8a3c2e"><circle cx="44" cy="94" r="2.6"/><circle cx="160" cy="30" r="2.2"/><circle cx="210" cy="120" r="2.8"/></g></svg>`,
+  soup: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#f0ece2"/><g transform="translate(78,12)"><rect x="0" y="8" width="84" height="118" rx="6" fill="#c8372e"/><rect x="0" y="70" width="84" height="56" rx="6" fill="#f0ece2"/><rect x="0" y="66" width="84" height="10" fill="#f0ece2"/><ellipse cx="42" cy="10" rx="42" ry="9" fill="#d9d4c8" stroke="#8a8478" stroke-width="2"/><ellipse cx="42" cy="10" rx="34" ry="6.5" fill="#b5b0a4"/><text x="42" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#f0ece2" font-weight="bold">Soup&#39;s</text><rect x="10" y="48" width="64" height="1.6" fill="#f0ece2" opacity="0.7"/><circle cx="42" cy="68" r="10" fill="#e8c453" stroke="#8a6820" stroke-width="1.6"/><text x="42" y="100" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#c8372e" font-weight="bold">TOMATO</text><text x="42" y="114" text-anchor="middle" font-family="Georgia,serif" font-size="7.5" fill="#8a3c2e" letter-spacing="2">CONDENSED</text><rect x="0" y="122" width="84" height="5" rx="2.5" fill="#b5b0a4"/></g></svg>`,
+  pumpkin: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#1c1c24"/><g fill="#f0d040" opacity="0.16"><circle cx="30" cy="30" r="4"/><circle cx="70" cy="16" r="3"/><circle cx="200" cy="24" r="4"/><circle cx="222" cy="60" r="3"/><circle cx="20" cy="100" r="3"/><circle cx="220" cy="120" r="4"/></g><path d="M120 34 Q128 22 134 32 L130 44 L114 44 Z" fill="#3a5a2c"/><path d="M120 40 Q178 40 186 88 Q190 122 120 124 Q50 122 54 88 Q62 40 120 40 Z" fill="#f0c832"/><g fill="none" stroke="#c99c1e" stroke-width="2.4" opacity="0.85"><path d="M120 40 Q120 82 120 124"/><path d="M96 44 Q88 84 98 122"/><path d="M144 44 Q152 84 142 122"/><path d="M74 54 Q62 88 76 116"/><path d="M166 54 Q178 88 164 116"/></g><g fill="#1c1c24"><circle cx="120" cy="60" r="3.6"/><circle cx="120" cy="80" r="4.6"/><circle cx="120" cy="102" r="5.4"/><circle cx="98" cy="64" r="3"/><circle cx="100" cy="88" r="4"/><circle cx="102" cy="110" r="4.6"/><circle cx="142" cy="64" r="3"/><circle cx="140" cy="88" r="4"/><circle cx="138" cy="110" r="4.6"/><circle cx="78" cy="72" r="2.4"/><circle cx="80" cy="94" r="3.2"/><circle cx="84" cy="112" r="3.6"/><circle cx="162" cy="72" r="2.4"/><circle cx="160" cy="94" r="3.2"/><circle cx="156" cy="112" r="3.6"/></g><ellipse cx="120" cy="132" rx="76" ry="6" fill="#f0c832" opacity="0.12"/></svg>`,
+  qingming: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#d8cbaa"/><rect x="4" y="4" width="232" height="142" fill="#e4d9bc"/><path d="M0 96 Q60 88 120 96 T240 94 L240 150 L0 150 Z" fill="#c2b48c"/><path d="M40 96 Q80 56 120 56 Q160 56 200 96" fill="none" stroke="#7a6034" stroke-width="7"/><path d="M46 96 Q84 62 120 62 Q156 62 194 96" fill="none" stroke="#9a8050" stroke-width="3"/><g stroke="#7a6034" stroke-width="2"><line x1="70" y1="78" x2="70" y2="96"/><line x1="95" y1="64" x2="95" y2="90"/><line x1="120" y1="60" x2="120" y2="88"/><line x1="145" y1="64" x2="145" y2="90"/><line x1="170" y1="78" x2="170" y2="96"/></g><path d="M30 116 Q54 106 82 112 L78 128 Q52 132 32 126 Z" fill="#8a7444"/><path d="M46 112 L46 96 L52 96 L52 112 M40 100 Q52 92 62 100" stroke="#5a4a24" stroke-width="2.5" fill="none"/><path d="M150 118 Q176 110 204 116 L200 130 Q172 134 152 128 Z" fill="#8a7444"/><g fill="#a89058"><path d="M12 60 L12 40 L34 40 L34 60 L38 60 L23 28 L8 60 Z"/><path d="M200 54 L200 36 L224 36 L224 54 L228 54 L212 24 L196 54 Z"/></g><g fill="#5a4a24"><circle cx="60" cy="92" r="2.4"/><circle cx="88" cy="76" r="2.4"/><circle cx="120" cy="72" r="2.4"/><circle cx="150" cy="78" r="2.4"/><circle cx="180" cy="92" r="2.4"/></g><ellipse cx="50" cy="28" rx="18" ry="8" fill="#c2b48c" opacity="0.8"/><ellipse cx="180" cy="18" rx="22" ry="8" fill="#c2b48c" opacity="0.8"/></svg>`,
+  wave: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#e8dfc8"/><circle cx="120" cy="60" r="44" fill="#ded2b4"/><path d="M100 96 L120 62 L140 96 Z" fill="#5a6a78"/><path d="M113 74 L120 62 L127 74 Q120 70 113 74 Z" fill="#f0ece0"/><path d="M-10 150 Q10 96 46 86 Q30 70 44 48 Q58 26 88 30 Q84 12 108 8 Q92 26 102 40 Q116 20 138 26 Q122 36 126 52 Q150 40 168 54 Q146 58 144 74 Q170 66 188 82 Q160 84 158 100 Q190 96 208 116 Q240 140 240 150 Z" fill="#2c5a86"/><path d="M44 48 Q58 26 88 30 M102 40 Q116 20 138 26 M126 52 Q150 40 168 54 M144 74 Q170 66 188 82" fill="none" stroke="#f0ece0" stroke-width="0"/><g fill="#f0ece0"><path d="M86 28 Q90 20 96 24 Q92 28 94 32 Z"/><path d="M104 10 Q110 4 114 10 Q108 12 108 18 Z"/><path d="M136 24 Q142 18 146 24 Q140 26 140 32 Z"/><path d="M166 52 Q172 46 176 52 Q170 54 170 60 Z"/><path d="M186 80 Q192 74 196 80 Q190 82 190 88 Z"/><circle cx="70" cy="52" r="2.6"/><circle cx="94" cy="44" r="2.2"/><circle cx="118" cy="52" r="2.4"/><circle cx="146" cy="66" r="2.2"/><circle cx="172" cy="86" r="2.4"/></g><path d="M0 150 Q24 108 60 104 Q100 100 124 116 Q160 96 200 118 Q224 130 240 150 Z" fill="#1e4468"/><g fill="#f0ece0" opacity="0.9"><path d="M58 102 Q64 96 68 102 Q62 104 62 110 Z"/><path d="M120 114 Q126 108 130 114 Q124 116 124 122 Z"/></g><rect x="10" y="10" width="30" height="44" fill="#e8dfc8" stroke="#5a5244" stroke-width="1.6"/><g fill="#3a342a" font-family="serif" font-size="9" text-anchor="middle"><text x="25" y="24">神</text><text x="25" y="35">奈</text><text x="25" y="46">川</text></g></svg>`,
+  persian: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#1e3a5a"/><rect x="10" y="8" width="220" height="134" fill="#2a4a72" stroke="#c9a13a" stroke-width="3"/><path d="M120 20 Q160 20 168 58 Q172 84 120 88 Q68 84 72 58 Q80 20 120 20 Z" fill="#3a5c8c" stroke="#c9a13a" stroke-width="2"/><path d="M120 26 Q154 26 161 58 Q164 80 120 83 Q76 80 79 58 Q86 26 120 26 Z" fill="#1e3a5a"/><g fill="#c9a13a"><path d="M120 34 L124 46 L136 46 L127 54 L130 66 L120 58 L110 66 L113 54 L104 46 L116 46 Z"/><circle cx="94" cy="60" r="4"/><circle cx="146" cy="60" r="4"/></g><g fill="#b84a3a"><circle cx="120" cy="74" r="3.4"/><circle cx="106" cy="70" r="2.6"/><circle cx="134" cy="70" r="2.6"/></g><g stroke="#c9a13a" stroke-width="1.6" fill="none" opacity="0.85"><path d="M24 98 Q46 90 68 98 T112 98 T156 98 T200 98 T228 96"/><path d="M24 112 Q46 104 68 112 T112 112 T156 112 T200 112 T228 110"/></g><g fill="#3a8c6a"><path d="M40 128 Q46 116 52 128 Q46 134 40 128 Z"/><path d="M76 128 Q82 116 88 128 Q82 134 76 128 Z"/><path d="M152 128 Q158 116 164 128 Q158 134 152 128 Z"/><path d="M188 128 Q194 116 200 128 Q194 134 188 128 Z"/></g><g fill="#c9a13a"><circle cx="120" cy="128" r="3"/><circle cx="58" cy="124" r="2"/><circle cx="106" cy="124" r="2"/><circle cx="134" cy="124" r="2"/><circle cx="176" cy="124" r="2"/></g></svg>`,
+  sunstone: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#2a2018"/><circle cx="120" cy="75" r="64" fill="#8a7452"/><circle cx="120" cy="75" r="64" fill="none" stroke="#5a4a30" stroke-width="4"/><g stroke="#5a4a30" stroke-width="2.5" fill="none"><circle cx="120" cy="75" r="52"/><circle cx="120" cy="75" r="38"/><circle cx="120" cy="75" r="24"/></g><g fill="#6b5838"><path d="M120 5 L127 22 L113 22 Z"/><path d="M120 145 L127 128 L113 128 Z"/><path d="M50 75 L67 68 L67 82 Z"/><path d="M190 75 L173 68 L173 82 Z"/><path d="M70 26 L82 38 L70 44 Z"/><path d="M170 26 L158 38 L170 44 Z"/><path d="M70 124 L82 112 L70 106 Z"/><path d="M170 124 L158 112 L170 106 Z"/></g><g stroke="#4a3a24" stroke-width="2"><line x1="120" y1="37" x2="120" y2="51"/><line x1="82" y1="75" x2="96" y2="75"/><line x1="144" y1="75" x2="158" y2="75"/><line x1="93" y1="48" x2="103" y2="58"/><line x1="147" y1="48" x2="137" y2="58"/></g><circle cx="120" cy="75" r="15" fill="#a08858"/><g fill="#3a2c1a"><ellipse cx="114" cy="71" rx="2.6" ry="3"/><ellipse cx="126" cy="71" rx="2.6" ry="3"/></g><path d="M112 82 Q120 88 128 82 L126 87 Q120 91 114 87 Z" fill="#3a2c1a"/><path d="M108 62 Q120 54 132 62" fill="none" stroke="#3a2c1a" stroke-width="2.5"/></svg>`,
+};
+
+/* 流派 / 時期 */
+const MOVEMENTS = [
+  {
+    id:'prehistoric', name:'史前洞窟藝術', en:'Prehistoric Art',
+    start:-30000, end:-10000, region:'europe', color:'#a05c34',
+    desc:'人類最早的圖像創作。舊石器時代的獵人以赭石、木炭與礦物顏料，在幽暗洞窟深處描繪野牛、馬匹與鹿群，並在岩壁留下噴繪的手印——既是巫術儀式，也是人類「再現世界」慾望的起點。',
+    artists:['拉斯科洞窟畫師','阿爾塔米拉洞窟畫師','肖維洞窟畫師'],
+    art:{ svg:'lascaux', title:'拉斯科洞窟壁畫', artist:'佚名（舊石器時代）', year:'約公元前 17,000 年',
+      story:'1940 年，法國四名少年為了尋找傳說中的地道，意外墜入拉斯科洞窟，發現了近六百幅史前壁畫，被譽為「史前的西斯汀禮拜堂」。畫中巨牛長逾五公尺，畫師利用岩壁的天然凸起營造立體感，證明兩萬年前的人類已掌握透視與動態的表現。因遊客呼出的二氧化碳侵蝕壁畫，洞窟於 1963 年永久關閉，現今開放的是精確複製的「拉斯科二號」。' }
+  },
+  {
+    id:'egypt', name:'古埃及藝術', en:'Egyptian Art',
+    start:-3000, end:-300, region:'mideast', color:'#c9932e',
+    desc:'為永恆而做的藝術。埃及人相信圖像具有魔力，繪畫與雕塑遵循嚴格的「正面律」——頭側面、眼正面、肩正面、腿側面——三千年間風格幾乎不變，一切服務於法老的來世與神的秩序。',
+    artists:['圖特摩斯（雕塑家）','帝王谷工匠村畫師'],
+    art:{ svg:'tut', title:'圖坦卡門黃金面具', artist:'佚名王室工匠', year:'約公元前 1323 年',
+      story:'1922 年考古學家霍華德·卡特打開圖坦卡門陵墓時，說出了著名的一句：「我看見了奇妙的東西。」這副 10.23 公斤的黃金面具鑲嵌青金石與彩色玻璃，覆蓋在少年法老的木乃伊臉上。圖坦卡門九歲登基、十八歲早逝，本是無足輕重的法老，卻因陵墓未遭盜掘而成為古埃及最著名的面孔。面具背後刻有《死者之書》咒文，守護法老穿越冥界。' }
+  },
+  {
+    id:'greek', name:'古希臘羅馬藝術', en:'Classical Art',
+    start:-800, end:400, region:'europe', color:'#8a94a6',
+    desc:'西方美學的源頭。希臘人以數學比例追求理想化的人體，發展出對立式平衡（contrapposto）與黃金比例；羅馬人繼承其技法，轉向寫實肖像與宏偉建築，奠定此後兩千年歐洲藝術的典範。',
+    artists:['菲迪亞斯','普拉克西特列斯','米隆'],
+    art:{ svg:'venus', title:'米洛的維納斯', artist:'安提阿的亞歷山德羅斯（傳）', year:'約公元前 130–100 年',
+      story:'1820 年，希臘米洛斯島的農夫在田裡挖出這尊斷臂的愛神像，法國海軍軍官買下後獻給路易十八，從此成為羅浮宮鎮館三寶之一。她的雙臂究竟原本是什麼姿勢——持蘋果？攬衣裙？照鏡子？兩百年來無數學者提出復原方案，卻始終無解。也正是這份「殘缺」，讓她成為想像力的容器，斷臂反而成就了永恆。' }
+  },
+  {
+    id:'byzantine', name:'拜占庭與中世紀藝術', en:'Medieval & Byzantine',
+    start:500, end:1400, region:'europe', color:'#b08a2e',
+    desc:'神的光芒取代人的肉身。金底鑲嵌畫、聖像畫與哥德式彩繪玻璃不追求寫實，而以扁平、莊嚴、程式化的形象引導信徒仰望天國——黃金背景象徵超越時空的神聖之光。',
+    artists:['拉溫納鑲嵌畫師','安德烈·魯布列夫','杜喬'],
+    art:{ svg:'byzant', title:'聖索菲亞大教堂鑲嵌畫', artist:'拜占庭宮廷工匠', year:'約 9–13 世紀',
+      story:'聖索菲亞大教堂的金色鑲嵌畫由數百萬片玻璃嵌片組成，工匠刻意將金箔嵌片以微微不同的角度鋪貼，讓燭光下的牆面如星空般閃爍流動。1453 年君士坦丁堡陷落後，教堂改為清真寺，鑲嵌畫被石灰覆蓋——諷刺的是，這層石灰反而保護了它們，讓千年金光得以在二十世紀重見天日。' }
+  },
+  {
+    id:'renaissance', name:'文藝復興', en:'Renaissance',
+    start:1400, end:1600, region:'europe', color:'#7a5cc6',
+    desc:'「人」重新成為萬物的尺度。透視法、解剖學與油彩技術的突破，讓佛羅倫斯與威尼斯的大師們同時是科學家與藝術家；達文西、米開朗基羅、拉斐爾三傑將古典理想與自然觀察熔於一爐。',
+    artists:['達文西','米開朗基羅','拉斐爾','波提切利','提香'],
+    art:{ svg:'mona', title:'蒙娜麗莎', artist:'李奧納多·達文西', year:'約 1503–1519 年',
+      story:'達文西以獨創的「暈塗法」（sfumato）層層罩染三十餘層薄釉，讓嘴角與眼角融入陰影——這正是那抹微笑忽隱忽現的祕密。他終生帶著這幅畫未曾交件，直到客死法國。1911 年，義大利玻璃工佩魯賈把畫藏在大衣裡走出羅浮宮，堅稱要「讓她回到祖國」；失竊兩年間全球報紙頭條追蹤，連畢卡索都一度被列為嫌犯。畫作尋回時，她已從名作變成了世界上最著名的一幅畫。' }
+  },
+  {
+    id:'baroque', name:'巴洛克', en:'Baroque',
+    start:1600, end:1750, region:'europe', color:'#a6392e',
+    desc:'光與影的戲劇。反宗教改革與宮廷權力催生了充滿動感、強烈明暗對比（chiaroscuro）與情感張力的藝術；卡拉瓦喬的聚光燈式打光、林布蘭的靈魂之光、維梅爾的寧靜日光，各自定義了「光」的語言。',
+    artists:['卡拉瓦喬','林布蘭','維梅爾','魯本斯','貝尼尼'],
+    art:{ svg:'nightwatch', title:'夜巡', artist:'林布蘭·范萊因', year:'1642 年',
+      story:'這幅阿姆斯特丹民兵隊的群像本該是整齊排排站的「團體照」，林布蘭卻把它畫成一場正要出發的行動劇——隊長下令、鼓手擊鼓、火槍手裝彈，光線只聚焦在關鍵人物身上。其實畫的是白天場景，因數百年油垢與亮光漆變黑才被誤稱「夜巡」。1975 年畫作遭人持刀劃出十二道裂口，修復後傷痕至今隱約可見，成為名畫滄桑的一部分。' }
+  },
+  {
+    id:'rococo', name:'洛可可', en:'Rococo',
+    start:1720, end:1780, region:'europe', color:'#d4739e',
+    desc:'貴族的甜美黃昏。粉彩色調、渦卷曲線與遊園調情的主題，映照著法國宮廷最後的享樂時光；華托的憂鬱、布雪的粉膩與福拉哥納爾的輕佻，在大革命前夜綻放又凋零。',
+    artists:['華托','布雪','福拉哥納爾'],
+    art:{ svg:'swing', title:'鞦韆', artist:'讓-奧諾雷·福拉哥納爾', year:'1767 年',
+      story:'一位男爵原本委託畫家描繪「主教推鞦韆、自己躲在暗處仰望情婦」的場景，被拒絕後找上了福拉哥納爾。畫中少女盪向高處、鞋子飛脫，裙襬下的風光正對著藏身花叢的年輕男子——推鞦韆的則是渾然不覺的老丈夫。這幅畫將洛可可的輕佻與精緻推到極致，也成為舊制度貴族生活最著名的註腳，大革命後此類畫風隨即被視為腐敗的象徵。' }
+  },
+  {
+    id:'romanticism', name:'新古典與浪漫主義', en:'Neoclassicism & Romanticism',
+    start:1780, end:1850, region:'europe', color:'#3e6bb4',
+    desc:'理性與激情的對決。大衛以古典的莊嚴歌頌共和美德，德拉克洛瓦則以奔放的色彩描繪革命、風暴與異國；哥雅走得更遠，直視戰爭的黑暗深淵。藝術第一次成為時代精神的戰場。',
+    artists:['雅克-路易·大衛','德拉克洛瓦','哥雅','泰納','弗里德里希'],
+    art:{ svg:'liberty', title:'自由引導人民', artist:'歐仁·德拉克洛瓦', year:'1830 年',
+      story:'1830 年七月革命爆發，巴黎市民三日內推翻查理十世。沒有上街的德拉克洛瓦寫信給哥哥：「我雖未為祖國作戰，至少可以為她作畫。」他讓袒胸的自由女神手持三色旗跨過街壘與屍骸，身旁是工人、資產階級與少年——這是首次將「當代革命」畫成史詩。法國政府買下後卻因太具煽動性而長年藏於庫房，直到 1874 年才進入羅浮宮。' }
+  },
+  {
+    id:'realism', name:'寫實主義', en:'Realism',
+    start:1840, end:1880, region:'europe', color:'#6b7a3c',
+    desc:'「我不畫天使，因為我從沒見過。」庫爾貝的宣言揭開序幕：藝術轉向農民、工人與日常勞動，拒絕神話與美化。米勒的田野與杜米埃的三等車廂，讓平凡人第一次成為畫布的主角。',
+    artists:['庫爾貝','米勒','杜米埃','柯洛'],
+    art:{ svg:'gleaners', title:'拾穗', artist:'讓-弗朗索瓦·米勒', year:'1857 年',
+      story:'三名農婦在收割後的田裡彎腰撿拾遺落的麥穗——「拾穗權」是當時最貧困者的最後生計。米勒以史詩般的莊嚴構圖描繪這卑微的勞動，遠處金黃的豐收與近處的貧窮形成無聲對比。沙龍展出時被資產階級評論家抨擊為「煽動革命的社會主義繪畫」，如今卻被視為對勞動者最深沉的致敬，也是台灣觀眾最熟悉的西洋名畫之一（曾兩度來台展出）。' }
+  },
+  {
+    id:'impressionism', name:'印象派', en:'Impressionism',
+    start:1860, end:1890, region:'europe', color:'#5a9ad4',
+    desc:'走出畫室，追逐光線。管裝顏料與火車讓畫家得以在戶外快速捕捉瞬間的光影與色彩；莫內的乾草堆、雷諾瓦的舞會、竇加的芭蕾——筆觸破碎，卻讓空氣第一次在畫布上流動。',
+    artists:['莫內','雷諾瓦','竇加','畢沙羅','莫莉索','卡耶博特'],
+    art:{ svg:'sunrise', title:'印象·日出', artist:'克洛德·莫內', year:'1872 年',
+      story:'莫內在故鄉勒阿弗爾港的旅館窗前，以急促的筆觸記下晨霧中的一輪橘日。1874 年落選沙龍的畫家們自辦聯展，評論家路易·勒華在報上譏諷這幅畫「連壁紙草稿都比它完整」，並用畫名嘲笑整群人是「印象派」。畫家們索性接受這個蔑稱，藝術史上最著名的命名事故就此誕生。1985 年此畫遭武裝搶劫失竊，五年後才在科西嘉島尋回。' }
+  },
+  {
+    id:'postimpressionism', name:'後印象派', en:'Post-Impressionism',
+    start:1885, end:1910, region:'europe', color:'#e0862e',
+    desc:'從「眼睛」走向「心靈」。塞尚重建形體的秩序、梵谷讓色彩承載情感、高更逃往原始的象徵世界——三條路各自通往立體主義、表現主義與現代藝術的大門。',
+    artists:['梵谷','塞尚','高更','秀拉','羅特列克'],
+    art:{ svg:'starry', title:'星夜', artist:'文森·梵谷', year:'1889 年',
+      story:'割耳事件後，梵谷自願住進聖雷米療養院。這幅畫是他從病房鐵窗望見的夜空，加上記憶中的村莊與想像的漩渦星雲──燃燒的柏樹連接大地與天空，十一顆星辰翻滾如浪。他在給弟弟西奧的信中寫道：「我常想，夜晚比白天更有生命力、色彩更豐富。」梵谷生前只賣出一幅畫，逝後《星夜》卻成為現代藝術博物館（MoMA）的鎮館之寶，被複製在無數咖啡杯與雨傘上。' }
+  },
+  {
+    id:'modernism', name:'立體主義與現代主義', en:'Cubism & Modernism',
+    start:1905, end:1940, region:'europe', color:'#8a8578',
+    desc:'打碎再重組的世界。畢卡索與布拉克將物體拆解成多重視角的碎片，馬諦斯以純色解放繪畫，康丁斯基走向完全抽象——短短三十年，繪畫離開了「模仿自然」的五百年軌道。',
+    artists:['畢卡索','布拉克','馬諦斯','康丁斯基','蒙德里安','杜象'],
+    art:{ svg:'guernica', title:'格爾尼卡', artist:'巴勃羅·畢卡索', year:'1937 年',
+      story:'1937 年 4 月 26 日，納粹軍團應佛朗哥之邀轟炸西班牙小鎮格爾尼卡，平民死傷枕藉。正為巴黎世博會西班牙館尋找題材的畢卡索，在一個月內完成這幅近八公尺的黑白巨作：嘶吼的馬、冷眼的公牛、抱著死嬰的母親。傳說納粹軍官指著畫問「這是你做的？」畢卡索答：「不，是你們做的。」他遺願畫作須待西班牙恢復民主才能回國——1981 年，《格爾尼卡》終於返回馬德里。' }
+  },
+  {
+    id:'surrealism', name:'超現實主義', en:'Surrealism',
+    start:1920, end:1950, region:'europe', color:'#c46a9e',
+    desc:'夢境與潛意識的解放。受佛洛伊德啟發，布勒東發表宣言，達利以「偏執狂批判法」繪製精準的夢魘，馬格利特讓日常物件彼此背叛，米羅則放任線條自動生長——理性讓位給奇想。',
+    artists:['達利','馬格利特','米羅','恩斯特','曼·雷'],
+    art:{ svg:'dali', title:'記憶的堅持', artist:'薩爾瓦多·達利', year:'1931 年',
+      story:'某晚加拉外出，達利獨自面對餐桌上一塊在夏夜裡融化的卡蒙貝爾乳酪，凝視兩小時後，他回到畫室，在一幅已畫好利加特港海岸的風景上，添上了三只癱軟如乳酪的時鐘。「軟錶」從此成為二十世紀最著名的超現實圖像——時間在夢中失去硬度。這幅畫僅 24×33 公分，比多數人想像的小得多，1934 年起便館藏於紐約 MoMA。' }
+  },
+  {
+    id:'abstract', name:'抽象表現主義', en:'Abstract Expressionism',
+    start:1943, end:1965, region:'americas', color:'#4a8ab0',
+    desc:'戰後藝術之都從巴黎移往紐約。波洛克把畫布鋪在地上滴灑行走，「行動繪畫」讓過程本身成為作品；羅斯科的巨幅色域則邀請觀者沉入近乎宗教的凝視。美國第一次定義了世界藝術的方向。',
+    artists:['波洛克','羅斯科','德庫寧','紐曼','克萊恩'],
+    art:{ svg:'pollock', title:'第 5 號，1948', artist:'傑克森·波洛克', year:'1948 年',
+      story:'在長島穀倉改建的畫室裡，波洛克把 240×120 公分的纖維板平放地面，用木棍與硬化的畫筆將油漆滴灑、甩擲、澆淋其上，層層交織成無起點亦無終點的網。《生活》雜誌 1949 年以「他是美國最偉大的在世畫家嗎？」為題報導，讓他一夕成名，也讓「我的小孩也畫得出來」成為現代藝術最經典的爭論。2006 年此畫以 1.4 億美元私人成交，一度是史上最貴的畫作。' }
+  },
+  {
+    id:'pop', name:'普普藝術', en:'Pop Art',
+    start:1955, end:1975, region:'americas', color:'#d43e3e',
+    desc:'藝術走進超市。沃荷的濃湯罐與瑪麗蓮、李奇登斯坦的漫畫網點，把消費社會的商標、明星與大眾媒體直接搬上畫布——高雅與通俗的邊界被徹底抹平，「複製」本身成為創作。',
+    artists:['安迪·沃荷','李奇登斯坦','漢彌爾頓','奧登伯格'],
+    art:{ svg:'soup', title:'康寶濃湯罐頭', artist:'安迪·沃荷', year:'1962 年',
+      story:'「我畫它，因為我每天中午都喝它，二十年來天天如此。」沃荷以絲網印刷複製了 32 罐口味各異的康寶濃湯，在洛杉磯首展時每罐排成一列，像超市貨架。畫廊隔壁的商家譏諷地把真罐頭堆在櫥窗，出售「更便宜的原作」。這批畫最初只賣出寥寥數件，畫商急忙買回湊齊全套——如今整組 32 幅為 MoMA 館藏，成為消費時代最鋒利的鏡子。' }
+  },
+  {
+    id:'contemporary', name:'當代藝術', en:'Contemporary Art',
+    start:1970, end:2026, region:'americas', color:'#7a6ad4',
+    desc:'一切皆可為藝術。裝置、行為、錄像、街頭塗鴉到 NFT，藝術的疆界持續擴張；雙年展與美術館網絡橫跨全球，草間彌生、艾未未、班克西等藝術家以截然不同的語言回應同一個時代。',
+    artists:['草間彌生','班克西','傑夫·昆斯','艾未未','瑪莉娜·阿布拉莫維奇'],
+    art:{ svg:'pumpkin', title:'南瓜', artist:'草間彌生', year:'1994 年起（直島等地）',
+      story:'草間彌生十歲起飽受幻覺所苦，眼前的世界會被無盡的圓點吞沒；她選擇把幻覺畫下來，「圓點」成為她對抗恐懼的方式。童年家中經營種苗場，南瓜憨厚的形狀是她最早的慰藉——「南瓜不會勾起嫉妒，它有著寬大的肚量。」1994 年設置於直島碼頭的黃色大南瓜成為當代藝術朝聖地標，2021 年被颱風捲入海中，修復後於 2022 年重新歸位。' }
+  },
+  {
+    id:'chinese', name:'中國書畫傳統', en:'Chinese Painting',
+    start:600, end:1900, region:'eastasia', color:'#c46a4a',
+    desc:'以筆墨寫胸中丘壑。從唐代人物、宋代山水到元明清文人畫，中國繪畫以線條與留白經營意境，詩、書、畫、印四者合一；「外師造化，中得心源」——畫的不是風景，而是宇宙觀。',
+    artists:['吳道子','范寬','張擇端','趙孟頫','八大山人'],
+    art:{ svg:'qingming', title:'清明上河圖', artist:'張擇端（北宋）', year:'約 1101–1124 年',
+      story:'這幅 5.28 公尺的長卷描繪北宋都城汴京的清明時節：八百餘個人物、船隻、駱駝與市招在畫中營生，虹橋上船夫落桅的驚險瞬間是全卷高潮。它像一部超高解析度的紀錄片，保存了整座城市的商業、交通與日常。九百年間此畫五度進出皇宮、屢遭劫掠流轉，末代皇帝溥儀將它帶出紫禁城，1945 年險些散佚，如今為北京故宮鎮院之寶，每次展出都引發「故宮跑」排隊盛況。' }
+  },
+  {
+    id:'ukiyoe', name:'浮世繪', en:'Ukiyo-e',
+    start:1650, end:1880, region:'eastasia', color:'#3e7ab4',
+    desc:'「浮世」即塵世的享樂人間。江戶時代的木刻版畫描繪歌舞伎、美人、風景與妖怪，由畫師、雕師、摺師分工量產，是庶民買得起的藝術；十九世紀傳入歐洲後掀起「日本主義」浪潮，深刻改寫了印象派的構圖與色彩。',
+    artists:['葛飾北齋','歌川廣重','喜多川歌麿','東洲齋寫樂'],
+    art:{ svg:'wave', title:'神奈川沖浪裏', artist:'葛飾北齋', year:'約 1831 年',
+      story:'七十歲的北齋在《富嶽三十六景》首作中，讓巨浪的「鷹爪」凌空撲向三艘運魚快船，遠方的富士山反而縮成浪谷中的小三角——動與靜的對比石破天驚。畫中的深藍使用了當時剛進口的普魯士藍，異國顏料成就了最具日本代表性的圖像。此作估計印製逾八千張，梵谷臨摹它、德布西看著它譜出交響詩《海》，如今它甚至印在日本護照與千元紙鈔上。' }
+  },
+  {
+    id:'islamic', name:'伊斯蘭藝術', en:'Islamic Art',
+    start:700, end:1700, region:'mideast', color:'#3e9a7a',
+    desc:'以幾何與書法讚頌無形之神。因避免偶像崇拜，伊斯蘭藝術將創造力傾注於無限延伸的幾何紋樣、蔓藤花紋與阿拉伯書法；波斯細密畫則在書頁方寸之間，建構出色彩絢爛的敘事宇宙。',
+    artists:['貝赫札德（細密畫）','伊本·穆格拉（書法）','錫南（建築）'],
+    art:{ svg:'persian', title:'波斯細密畫', artist:'赫拉特與伊斯法罕畫坊', year:'約 15–17 世紀',
+      story:'細密畫是手抄本中的插畫，畫師以松鼠毛製成僅數根毫毛的畫筆，在紙上鋪陳金箔與青金石研磨的群青。它不用西方透視，而是讓每個場景以「神之視角」同時展開——庭園、宮殿與人物層層疊起如寶石鑲嵌。傳奇畫師貝赫札德筆下人物僅指甲大小，卻眉目傳神；諾貝爾文學獎小說《我的名字叫紅》，正是以細密畫師的世界為舞台。' }
+  },
+  {
+    id:'mesoamerica', name:'中美洲古文明藝術', en:'Mesoamerican Art',
+    start:-1200, end:1521, region:'americas', color:'#b07a3e',
+    desc:'金字塔、玉石與太陽的信仰。奧爾梅克巨石頭像、馬雅壁畫與阿茲提克雕刻，以神話、曆法與獻祭儀式為核心；1521 年西班牙人到來，這條獨立發展三千年的藝術長河戛然而止。',
+    artists:['奧爾梅克石匠','馬雅博南帕克壁畫師','阿茲提克雕刻工坊'],
+    art:{ svg:'sunstone', title:'阿茲提克太陽石', artist:'阿茲提克雕刻工坊', year:'約 1502–1520 年',
+      story:'這塊直徑 3.6 公尺、重達 24 噸的玄武岩圓盤，中心是太陽神托納蒂烏（一說大地怪物），四周環刻「五個太陽紀」的毀滅神話與二十個曆日符號——阿茲提克人相信世界已毀滅四次，而第五個太陽仍需以獻祭維繫。西班牙征服後，太陽石被埋入墨西哥城大廣場地下近三百年，1790 年鋪設路面時意外出土，如今是墨西哥國家人類學博物館的鎮館之寶與國族象徵。' }
+  },
+];
+
+/* ═══════════ 時間軸比例（分段線性） ═══════════ */
+
+const SEGS = [
+  { from:-32000, to:-3500, pxPerYr: 0.0045 },
+  { from:-3500,  to:500,   pxPerYr: 0.055  },
+  { from:500,    to:1400,  pxPerYr: 0.34   },
+  { from:1400,   to:2032,  pxPerYr: 2.3    },
+];
+const PAD_L = 26, PAD_R = 40;
+
+function yearToX(y) {
+  let x = PAD_L;
+  for (const s of SEGS) {
+    if (y <= s.from) break;
+    const upper = Math.min(y, s.to);
+    x += (upper - s.from) * s.pxPerYr;
+    if (y <= s.to) break;
+  }
+  return x;
+}
+const TOTAL_W = Math.ceil(yearToX(2032)) + PAD_R;
+
+function fmtYear(y) {
+  if (y <= -10000) return '約前 ' + (Math.abs(y)/10000) + ' 萬年';
+  if (y < 0) return '前 ' + Math.abs(y) + ' 年';
+  if (y >= 2024) return '今日';
+  return y + ' 年';
+}
+function fmtRange(m) { return fmtYear(m.start) + ' — ' + fmtYear(m.end); }
+
+/* ═══════════ 建構圖表 ═══════════ */
+
+const ERAS = [
+  { name:'史前 PREHISTORY', from:-32000, to:-3500 },
+  { name:'古代 ANTIQUITY',  from:-3500,  to:500  },
+  { name:'中世紀 MEDIEVAL', from:500,    to:1400 },
+  { name:'近世 EARLY MODERN', from:1400, to:1800 },
+  { name:'現代 MODERN',     from:1800,   to:2032 },
+];
+const TICKS = [-30000, -10000, -3000, -1000, 0, 500, 1000, 1400, 1600, 1800, 1900, 2000];
+const LANE_ORDER = ['europe', 'eastasia', 'mideast', 'americas'];
+
+const BAR_H = 32, BAR_GAP = 10, LANE_PAD_TOP = 42, LANE_PAD_BOT = 12;
+
+let selectedId = null;
+let regionFilter = 'all';
+
+function buildChart() {
+  const canvas = document.getElementById('canvas');
+  canvas.style.width = TOTAL_W + 'px';
+  canvas.innerHTML = '';
+
+  /* era bands + labels */
+  const bandLayer = document.createElement('div');
+  bandLayer.style.cssText = 'position:absolute;inset:0;pointer-events:none;';
+  ERAS.forEach((e, i) => {
+    const x1 = yearToX(e.from), x2 = yearToX(e.to);
+    const band = document.createElement('div');
+    band.className = 'era-band' + (i % 2 ? ' alt' : '');
+    band.style.left = x1 + 'px'; band.style.width = (x2 - x1) + 'px';
+    bandLayer.appendChild(band);
+    const lab = document.createElement('div');
+    lab.className = 'era-label';
+    lab.style.left = x1 + 'px';
+    lab.textContent = e.name;
+    bandLayer.appendChild(lab);
+  });
+
+  /* lanes */
+  let html = '';
+  const laneWrap = document.createElement('div');
+  laneWrap.style.cssText = 'position:relative;padding-top:26px;';
+
+  LANE_ORDER.forEach(rk => {
+    const reg = REGIONS[rk];
+    const items = MOVEMENTS.filter(m => m.region === rk).sort((a,b) => a.start - b.start);
+
+    /* greedy sub-row allocation */
+    const rowEnds = [];
+    items.forEach(m => {
+      let r = rowEnds.findIndex(end => m.start >= end - 1);
+      if (r === -1) { r = rowEnds.length; rowEnds.push(0); }
+      rowEnds[r] = m.end;
+      m._row = r;
+    });
+    const nRows = Math.max(rowEnds.length, 1);
+    const laneH = LANE_PAD_TOP + nRows * (BAR_H + BAR_GAP) + LANE_PAD_BOT;
+
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.style.height = laneH + 'px';
+
+    const tag = document.createElement('div');
+    tag.className = 'lane-tag';
+    tag.innerHTML = '<span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>' + reg.name;
+    lane.appendChild(tag);
+
+    items.forEach(m => {
+      const x1 = yearToX(m.start), x2 = yearToX(m.end);
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.dataset.id = m.id;
+      bar.dataset.region = m.region;
+      bar.style.left = x1 + 'px';
+      bar.style.width = Math.max(x2 - x1, 44) + 'px';
+      bar.style.top = (LANE_PAD_TOP + m._row * (BAR_H + BAR_GAP)) + 'px';
+      bar.style.background = 'linear-gradient(180deg, ' + m.color + 'ee, ' + m.color + '99)';
+      bar.style.setProperty('--glow', m.color + '66');
+      bar.textContent = m.name;
+      bar.setAttribute('role', 'button');
+      bar.setAttribute('tabindex', '0');
+      bar.setAttribute('aria-label', m.name + '，' + fmtRange(m));
+      bar.onclick = () => selectMovement(m.id, true);
+      bar.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectMovement(m.id, true); } };
+      bar.onmousemove = e => showTip(e, m);
+      bar.onmouseleave = hideTip;
+      lane.appendChild(bar);
+    });
+
+    laneWrap.appendChild(lane);
+  });
+
+  /* axis */
+  const axis = document.createElement('div');
+  axis.id = 'axis';
+  TICKS.forEach(t => {
+    const tick = document.createElement('div');
+    tick.className = 'tick';
+    tick.style.left = yearToX(t) + 'px';
+    tick.innerHTML = '<div class="tl"></div><div class="ty">' + (t < 0 ? '前' + Math.abs(t) : t) + '</div>';
+    axis.appendChild(tick);
+  });
+
+  canvas.appendChild(bandLayer);
+  canvas.appendChild(laneWrap);
+  canvas.appendChild(axis);
+}
+
+/* ═══════════ Tooltip ═══════════ */
+const tipEl = document.getElementById('tooltip');
+function showTip(e, m) {
+  tipEl.style.display = 'block';
+  tipEl.innerHTML = m.name + ' <span style="opacity:.55;font-weight:600;">' + m.en + '</span><div class="yrs">' + fmtRange(m) + ' · ' + REGIONS[m.region].name + '</div>';
+  const pad = 14;
+  let x = e.clientX + pad, y = e.clientY + pad;
+  const r = tipEl.getBoundingClientRect();
+  if (x + r.width > window.innerWidth - 10) x = e.clientX - r.width - pad;
+  if (y + r.height > window.innerHeight - 10) y = e.clientY - r.height - pad;
+  tipEl.style.left = x + 'px'; tipEl.style.top = y + 'px';
+}
+function hideTip() { tipEl.style.display = 'none'; }
+
+/* ═══════════ 區域篩選 ═══════════ */
+function buildFilters() {
+  const box = document.getElementById('filters');
+  const mk = (key, label, color) => {
+    const c = document.createElement('div');
+    c.className = 'chip' + (regionFilter === key ? ' active' : '');
+    c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0');
+    c.innerHTML = (color ? '<span class="dot" style="background:' + color + ';box-shadow:0 0 8px ' + color + '"></span>' : '✦ ') + label;
+    c.onclick = () => setFilter(key);
+    c.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFilter(key); } };
+    box.appendChild(c);
+  };
+  box.innerHTML = '';
+  mk('all', '全部區域', null);
+  Object.entries(REGIONS).forEach(([k, r]) => mk(k, r.name, r.color));
+}
+function setFilter(key) {
+  regionFilter = key;
+  buildFilters();
+  document.querySelectorAll('.bar').forEach(b => {
+    b.classList.toggle('dim', key !== 'all' && b.dataset.region !== key);
+  });
+}
+
+/* ═══════════ 詳情面板 ═══════════ */
+
+const MINIMAP = '<svg id="minimap" viewBox="0 0 320 170" xmlns="http://www.w3.org/2000/svg">'
+  + '<rect width="320" height="170" rx="10" fill="rgba(255,243,210,0.02)" stroke="rgba(201,168,92,0.14)"/>'
+  /* Americas */
+  + '<path class="land" data-r="americas" d="M56 28 Q78 20 92 32 Q98 44 88 54 Q94 62 86 72 L74 96 Q70 116 60 132 Q54 118 58 100 L50 78 Q38 66 42 48 Q46 32 56 28 Z"/>'
+  /* Europe */
+  + '<path class="land" data-r="europe" d="M138 34 Q156 24 176 30 Q188 36 184 48 Q176 58 162 60 Q148 64 140 56 Q132 44 138 34 Z"/>'
+  /* Africa + Middle East */
+  + '<path class="land" data-r="mideast" d="M148 66 Q168 60 186 66 Q200 62 210 70 Q214 82 206 88 L196 84 Q192 100 180 116 Q172 130 164 118 Q154 100 150 84 Q144 72 148 66 Z"/>'
+  /* East Asia */
+  + '<path class="land" data-r="eastasia" d="M216 34 Q244 24 268 36 Q282 46 276 62 Q268 76 252 78 Q238 84 228 74 Q214 62 212 48 Q212 38 216 34 Z"/>'
+  + '<circle cx="290" cy="96" r="4" class="land" data-r="eastasia"/>'
+  + '</svg>';
+
+function esc(s) { return s.replace(/</g, '&lt;'); }
+
+function selectMovement(id, scroll) {
+  const m = MOVEMENTS.find(x => x.id === id);
+  if (!m) return;
+  selectedId = id;
+
+  document.querySelectorAll('.bar').forEach(b => b.classList.toggle('selected', b.dataset.id === id));
+
+  const reg = REGIONS[m.region];
+  const dl = document.getElementById('d-left');
+  const dr = document.getElementById('d-right');
+
+  dl.innerHTML =
+    '<div class="d-period"><span class="ln"></span>' + fmtRange(m) + '</div>'
+    + '<h2 class="d-title">' + m.name + '<span class="en">' + m.en + '</span></h2>'
+    + '<div class="d-region-chip"><span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>發源區域 · ' + reg.name + '</div>'
+    + '<p class="d-desc">' + m.desc + '</p>'
+    + '<div class="d-sec-label">代表藝術家 Key Artists</div>'
+    + '<div class="d-artists">' + m.artists.map(a => '<span class="artist-tag">' + a + '</span>').join('') + '</div>'
+    + '<div class="d-sec-label">地理分布 Region</div>'
+    + '<div id="minimap-box">' + MINIMAP + '<div class="map-caption">高亮區域為此流派的主要發源地</div></div>';
+
+  dr.innerHTML =
+    '<div id="art-card">'
+    + '<div id="art-frame">' + ART_SVG[m.art.svg] + '</div>'
+    + '<div class="art-caption">'
+    + '<div class="art-title">《' + m.art.title + '》</div>'
+    + '<div class="art-meta">' + m.art.artist + ' · ' + m.art.year + '</div>'
+    + '<div class="art-note">※ 示意圖為風格化重繪，非原作</div>'
+    + '<div class="story-label">畫作背景故事</div>'
+    + '<p class="art-story">' + m.art.story + '</p>'
+    + '</div></div>';
+
+  /* light up minimap */
+  const map = document.getElementById('minimap');
+  map.style.setProperty('--lit', reg.lit);
+  map.querySelectorAll('.land').forEach(p => p.classList.toggle('lit', p.dataset.r === m.region));
+
+  const panel = document.getElementById('detail');
+  panel.style.display = 'block';
+  panel.style.animation = 'none';
+  void panel.offsetWidth;
+  panel.style.animation = '';
+
+  if (scroll) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function navMove(dir) {
+  const ordered = [...MOVEMENTS].sort((a, b) => a.start - b.start);
+  let i = ordered.findIndex(m => m.id === selectedId);
+  i = (i + dir + ordered.length) % ordered.length;
+  selectMovement(ordered[i].id, false);
+  /* keep bar in view */
+  const bar = document.querySelector('.bar[data-id="' + ordered[i].id + '"]');
+  if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+/* ═══════════ Boot ═══════════ */
+buildFilters();
+buildChart();
+selectMovement('renaissance', false);
+/* scroll chart to renaissance area on load */
+requestAnimationFrame(() => {
+  const sc = document.getElementById('chart-scroll');
+  sc.scrollLeft = yearToX(1400) - 160;
+});
+</script>
+</body>
+</html>
