@@ -98,10 +98,12 @@ h1 .gold { color: var(--gold); font-weight: 300; }
 .era-band { position: absolute; top: 0; bottom: 0; pointer-events: none; }
 .era-band.alt { background: rgba(255,240,200,0.022); }
 .era-label {
-  position: absolute; top: 6px;
-  font-family: 'Cormorant SC', serif; font-size: 10.5px; letter-spacing: 0.24em;
-  color: rgba(201,168,92,0.5); white-space: nowrap; transform: translateX(10px);
+  position: absolute; top: 7px;
+  font-family: 'Cormorant SC', serif; font-size: 10.5px; letter-spacing: 0.26em;
+  color: rgba(201,168,92,0.62); white-space: nowrap; transform: translateX(12px);
+  display: flex; align-items: center; gap: 7px;
 }
+.era-label::before { content: '✦'; font-size: 7px; opacity: 0.7; }
 
 /* lane */
 .lane { position: relative; border-top: 1px dashed rgba(201,168,92,0.10); }
@@ -119,24 +121,62 @@ h1 .gold { color: var(--gold); font-weight: 300; }
 
 /* movement bar */
 .bar {
-  position: absolute; height: 32px; border-radius: 16px;
-  display: flex; align-items: center; padding: 0 12px;
-  font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
-  color: rgba(255,252,240,0.95); white-space: nowrap; cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.22);
-  transition: transform .18s, box-shadow .25s, opacity .3s, filter .3s;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  z-index: 5;
+  position: absolute; height: 40px; border-radius: 20px;
+  display: flex; align-items: center; gap: 9px; padding: 0 15px 0 6px;
+  cursor: pointer; z-index: 5;
+  border: 1px solid rgba(255,255,255,0.20);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.52),
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 1.5px 0 rgba(255,255,255,0.32),
+    inset 0 -8px 14px rgba(0,0,0,0.25);
+  transition: transform .2s cubic-bezier(.34,1.4,.64,1), box-shadow .28s, opacity .3s, filter .3s;
 }
-.bar:hover { transform: translateY(-3px) scale(1.02); z-index: 9; }
+.bar::after {
+  content: ''; position: absolute; top: 1.5px; left: 10px; right: 10px; height: 46%;
+  border-radius: 18px 18px 45% 45%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.26), rgba(255,255,255,0.02));
+  pointer-events: none;
+}
+.bar.slim { padding: 0 12px; gap: 0; }
+.bar-thumb {
+  width: 29px; height: 29px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+  border: 1.5px solid rgba(255,248,220,0.7);
+  box-shadow: 0 2px 7px rgba(0,0,0,0.45), inset 0 0 4px rgba(0,0,0,0.3);
+  background: #221a10;
+}
+.bar-txt { display: flex; flex-direction: column; line-height: 1.2; overflow: hidden; position: relative; z-index: 2; }
+.bar-name {
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em;
+  color: #fffcf0; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+}
+.bar-years {
+  font-size: 8.5px; font-weight: 700; letter-spacing: 0.08em;
+  color: rgba(255,250,230,0.72); white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.bar:hover { transform: translateY(-4px) scale(1.025); z-index: 9; box-shadow: 0 16px 36px rgba(0,0,0,0.6), 0 0 30px var(--glow, rgba(201,168,92,0.3)), inset 0 1.5px 0 rgba(255,255,255,0.4), inset 0 -8px 14px rgba(0,0,0,0.22); }
 .bar.selected {
-  outline: 2px solid rgba(255,244,200,0.85); outline-offset: 2px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 34px var(--glow, rgba(201,168,92,0.4)),
-              inset 0 1px 0 rgba(255,255,255,0.3);
+  outline: 2px solid rgba(255,244,200,0.9); outline-offset: 2.5px;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.62), 0 0 40px var(--glow, rgba(201,168,92,0.45)),
+              inset 0 1.5px 0 rgba(255,255,255,0.38), inset 0 -8px 14px rgba(0,0,0,0.2);
   z-index: 10;
 }
-.bar.dim { opacity: 0.16; filter: grayscale(0.7); pointer-events: none; }
+.bar.dim { opacity: 0.14; filter: grayscale(0.75); pointer-events: none; }
+
+/* vertical gridlines + era boundaries */
+.grid-t {
+  position: absolute; top: 26px; bottom: 0; width: 1px; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(201,168,92,0.09) 18%, rgba(201,168,92,0.09) 85%, transparent);
+}
+.era-edge {
+  position: absolute; top: 0; bottom: 0; width: 1px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(201,168,92,0.38), rgba(201,168,92,0.06) 60%, transparent);
+}
+
+/* edge fades on chart frame */
+.edge-fade { position: absolute; top: 0; bottom: 0; width: 34px; z-index: 7; pointer-events: none; }
+#fade-l { left: 0; background: linear-gradient(to right, rgba(11,8,6,0.8), transparent); border-radius: 18px 0 0 18px; }
+#fade-r { right: 0; background: linear-gradient(to left, rgba(11,8,6,0.8), transparent); border-radius: 0 18px 18px 0; }
 
 /* axis */
 #axis { position: relative; height: 34px; border-top: 1px solid rgba(201,168,92,0.2); margin-top: 4px; }
@@ -232,14 +272,29 @@ h1 .gold { color: var(--gold); font-weight: 300; }
   box-shadow: 0 18px 50px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,242,170,0.18);
 }
 #art-frame {
-  border: 6px solid #2a1f12;
-  outline: 1px solid rgba(201,168,92,0.5);
-  border-radius: 4px;
-  background: #14100b;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.55), inset 0 0 22px rgba(0,0,0,0.5);
-  overflow: hidden;
+  border: 11px solid #241a0e;
+  outline: 1px solid rgba(201,168,92,0.55);
+  border-radius: 3px;
+  background: #0e0b07;
+  box-shadow:
+    0 16px 44px rgba(0,0,0,0.6),
+    0 4px 14px rgba(0,0,0,0.5),
+    inset 0 0 0 1px rgba(201,168,92,0.35),
+    inset 0 0 26px rgba(0,0,0,0.6);
+  overflow: hidden; position: relative;
+}
+#art-frame::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 2px 12px rgba(0,0,0,0.55), inset 0 -1px 6px rgba(0,0,0,0.4);
+}
+#art-frame img {
+  display: block; width: 100%; max-height: 350px; object-fit: contain;
+  background: #0e0b07;
 }
 #art-frame svg { display: block; width: 100%; height: auto; }
+.art-src { font-size: 9.5px; margin-top: 6px; letter-spacing: 0.06em; }
+.art-src a { color: var(--gold-lo); text-decoration: none; font-weight: 700; }
+.art-src a:hover { color: var(--gold-hi); }
 .art-caption { margin-top: 14px; }
 .art-title {
   font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
@@ -297,6 +352,8 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
     <div id="chart-scroll">
       <div id="canvas"></div>
     </div>
+    <div class="edge-fade" id="fade-l"></div>
+    <div class="edge-fade" id="fade-r"></div>
   </div>
   <p id="hint">▸ 橫向捲動探索時間軸 · <b>點擊色帶</b>開啟流派詳情 · 上方篩選區域</p>
 
@@ -352,6 +409,37 @@ const ART_SVG = {
   persian: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#1e3a5a"/><rect x="10" y="8" width="220" height="134" fill="#2a4a72" stroke="#c9a13a" stroke-width="3"/><path d="M120 20 Q160 20 168 58 Q172 84 120 88 Q68 84 72 58 Q80 20 120 20 Z" fill="#3a5c8c" stroke="#c9a13a" stroke-width="2"/><path d="M120 26 Q154 26 161 58 Q164 80 120 83 Q76 80 79 58 Q86 26 120 26 Z" fill="#1e3a5a"/><g fill="#c9a13a"><path d="M120 34 L124 46 L136 46 L127 54 L130 66 L120 58 L110 66 L113 54 L104 46 L116 46 Z"/><circle cx="94" cy="60" r="4"/><circle cx="146" cy="60" r="4"/></g><g fill="#b84a3a"><circle cx="120" cy="74" r="3.4"/><circle cx="106" cy="70" r="2.6"/><circle cx="134" cy="70" r="2.6"/></g><g stroke="#c9a13a" stroke-width="1.6" fill="none" opacity="0.85"><path d="M24 98 Q46 90 68 98 T112 98 T156 98 T200 98 T228 96"/><path d="M24 112 Q46 104 68 112 T112 112 T156 112 T200 112 T228 110"/></g><g fill="#3a8c6a"><path d="M40 128 Q46 116 52 128 Q46 134 40 128 Z"/><path d="M76 128 Q82 116 88 128 Q82 134 76 128 Z"/><path d="M152 128 Q158 116 164 128 Q158 134 152 128 Z"/><path d="M188 128 Q194 116 200 128 Q194 134 188 128 Z"/></g><g fill="#c9a13a"><circle cx="120" cy="128" r="3"/><circle cx="58" cy="124" r="2"/><circle cx="106" cy="124" r="2"/><circle cx="134" cy="124" r="2"/><circle cx="176" cy="124" r="2"/></g></svg>`,
   sunstone: `<svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="150" fill="#2a2018"/><circle cx="120" cy="75" r="64" fill="#8a7452"/><circle cx="120" cy="75" r="64" fill="none" stroke="#5a4a30" stroke-width="4"/><g stroke="#5a4a30" stroke-width="2.5" fill="none"><circle cx="120" cy="75" r="52"/><circle cx="120" cy="75" r="38"/><circle cx="120" cy="75" r="24"/></g><g fill="#6b5838"><path d="M120 5 L127 22 L113 22 Z"/><path d="M120 145 L127 128 L113 128 Z"/><path d="M50 75 L67 68 L67 82 Z"/><path d="M190 75 L173 68 L173 82 Z"/><path d="M70 26 L82 38 L70 44 Z"/><path d="M170 26 L158 38 L170 44 Z"/><path d="M70 124 L82 112 L70 106 Z"/><path d="M170 124 L158 112 L170 106 Z"/></g><g stroke="#4a3a24" stroke-width="2"><line x1="120" y1="37" x2="120" y2="51"/><line x1="82" y1="75" x2="96" y2="75"/><line x1="144" y1="75" x2="158" y2="75"/><line x1="93" y1="48" x2="103" y2="58"/><line x1="147" y1="48" x2="137" y2="58"/></g><circle cx="120" cy="75" r="15" fill="#a08858"/><g fill="#3a2c1a"><ellipse cx="114" cy="71" rx="2.6" ry="3"/><ellipse cx="126" cy="71" rx="2.6" ry="3"/></g><path d="M112 82 Q120 88 128 82 L126 87 Q120 91 114 87 Z" fill="#3a2c1a"/><path d="M108 62 Q120 54 132 62" fill="none" stroke="#3a2c1a" stroke-width="2.5"/></svg>`,
 };
+
+/* 真實畫作圖片（Wikimedia，公有領域或合理使用）— key 與 ART_SVG 相同 */
+const ART_IMG = {
+  lascaux:    ['commons', 'Lascaux painting.jpg'],
+  tut:        ['commons', 'CairoEgMuseumTaaMaskMostlyPhotographed.jpg'],
+  venus:      ['commons', 'Venus de Milo Louvre Ma399 n4.jpg'],
+  byzant:     ['commons', 'Hagia Sophia Southwestern entrance mosaics 2.jpg'],
+  mona:       ['commons', 'Mona Lisa, by Leonardo da Vinci, from C2RMF retouched.jpg'],
+  nightwatch: ['commons', 'The Night Watch - HD.jpg'],
+  swing:      ['commons', 'Fragonard, The Swing.jpg'],
+  liberty:    ['commons', 'Eugène Delacroix - La liberté guidant le peuple.jpg'],
+  gleaners:   ['commons', 'Jean-François Millet (II) 002.jpg'],
+  sunrise:    ['commons', 'Monet - Impression, Sunrise.jpg'],
+  starry:     ['commons', 'Van Gogh - Starry Night - Google Art Project.jpg'],
+  guernica:   ['en',      'PicassoGuernica.jpg'],
+  dali:       ['en',      'The Persistence of Memory.jpg'],
+  pollock:    ['en',      'No. 5, 1948.jpg'],
+  soup:       ['en',      "Campbell's Soup Cans by Andy Warhol.jpg"],
+  pumpkin:    ['commons', 'Yayoi Kusama, Pumpkin, 2015 (37171698741).jpg'],
+  qingming:   ['commons', 'Along the River During the Qingming Festival (detail of original).jpg'],
+  wave:       ['commons', 'The Great Wave off Kanagawa.jpg'],
+  persian:    ['commons', 'Yusuf and Zulaikha.jpg'],
+  sunstone:   ['commons', 'Piedra del Sol.jpg'],
+};
+function imgDomain(key) { return ART_IMG[key][0] === 'en' ? 'en.wikipedia.org' : 'commons.wikimedia.org'; }
+function imgURL(key, w) {
+  return 'https://' + imgDomain(key) + '/wiki/Special:FilePath/' + encodeURIComponent(ART_IMG[key][1]) + '?width=' + w;
+}
+function imgPage(key) {
+  return 'https://' + imgDomain(key) + '/wiki/File:' + encodeURIComponent(ART_IMG[key][1].replace(/ /g, '_'));
+}
 
 /* 流派 / 時期 */
 const MOVEMENTS = [
@@ -480,7 +568,7 @@ const MOVEMENTS = [
     start:1970, end:2026, region:'americas', color:'#7a6ad4',
     desc:'一切皆可為藝術。裝置、行為、錄像、街頭塗鴉到 NFT，藝術的疆界持續擴張；雙年展與美術館網絡橫跨全球，草間彌生、艾未未、班克西等藝術家以截然不同的語言回應同一個時代。',
     artists:['草間彌生','班克西','傑夫·昆斯','艾未未','瑪莉娜·阿布拉莫維奇'],
-    art:{ svg:'pumpkin', title:'南瓜', artist:'草間彌生', year:'1994 年起（直島等地）',
+    art:{ svg:'pumpkin', title:'南瓜', artist:'草間彌生', year:'1994 年起 · 圖為 2015 年蒙特婁展出版本',
       story:'草間彌生十歲起飽受幻覺所苦，眼前的世界會被無盡的圓點吞沒；她選擇把幻覺畫下來，「圓點」成為她對抗恐懼的方式。童年家中經營種苗場，南瓜憨厚的形狀是她最早的慰藉——「南瓜不會勾起嫉妒，它有著寬大的肚量。」1994 年設置於直島碼頭的黃色大南瓜成為當代藝術朝聖地標，2021 年被颱風捲入海中，修復後於 2022 年重新歸位。' }
   },
   {
@@ -559,7 +647,7 @@ const ERAS = [
 const TICKS = [-30000, -10000, -3000, -1000, 0, 500, 1000, 1400, 1600, 1800, 1900, 2000];
 const LANE_ORDER = ['europe', 'eastasia', 'mideast', 'americas'];
 
-const BAR_H = 32, BAR_GAP = 10, LANE_PAD_TOP = 42, LANE_PAD_BOT = 12;
+const BAR_H = 40, BAR_GAP = 12, LANE_PAD_TOP = 44, LANE_PAD_BOT = 14;
 
 let selectedId = null;
 let regionFilter = 'all';
@@ -583,6 +671,20 @@ function buildChart() {
     lab.style.left = x1 + 'px';
     lab.textContent = e.name;
     bandLayer.appendChild(lab);
+    if (i > 0) {
+      const edge = document.createElement('div');
+      edge.className = 'era-edge';
+      edge.style.left = x1 + 'px';
+      bandLayer.appendChild(edge);
+    }
+  });
+
+  /* faint vertical gridlines at each tick */
+  TICKS.forEach(t => {
+    const g = document.createElement('div');
+    g.className = 'grid-t';
+    g.style.left = yearToX(t) + 'px';
+    bandLayer.appendChild(g);
   });
 
   /* lanes */
@@ -608,6 +710,7 @@ function buildChart() {
     const lane = document.createElement('div');
     lane.className = 'lane';
     lane.style.height = laneH + 'px';
+    lane.style.background = 'linear-gradient(90deg, ' + reg.color + '12, transparent 460px)';
 
     const tag = document.createElement('div');
     tag.className = 'lane-tag';
@@ -616,16 +719,21 @@ function buildChart() {
 
     items.forEach(m => {
       const x1 = yearToX(m.start), x2 = yearToX(m.end);
+      const w = Math.max(x2 - x1, 56);
       const bar = document.createElement('div');
-      bar.className = 'bar';
+      bar.className = 'bar' + (w < 96 ? ' slim' : '');
       bar.dataset.id = m.id;
       bar.dataset.region = m.region;
       bar.style.left = x1 + 'px';
-      bar.style.width = Math.max(x2 - x1, 44) + 'px';
+      bar.style.width = w + 'px';
       bar.style.top = (LANE_PAD_TOP + m._row * (BAR_H + BAR_GAP)) + 'px';
-      bar.style.background = 'linear-gradient(180deg, ' + m.color + 'ee, ' + m.color + '99)';
+      bar.style.background = 'linear-gradient(180deg, ' + m.color + 'f2, ' + m.color + '8c)';
       bar.style.setProperty('--glow', m.color + '66');
-      bar.textContent = m.name;
+      const thumb = (w >= 96)
+        ? '<img class="bar-thumb" loading="lazy" alt="" src="' + imgURL(m.art.svg, 96) + '" onerror="this.style.display=\'none\'">'
+        : '';
+      const years = (w >= 160) ? '<span class="bar-years">' + fmtRange(m) + '</span>' : '';
+      bar.innerHTML = thumb + '<span class="bar-txt"><span class="bar-name">' + m.name + '</span>' + years + '</span>';
       bar.setAttribute('role', 'button');
       bar.setAttribute('tabindex', '0');
       bar.setAttribute('aria-label', m.name + '，' + fmtRange(m));
@@ -731,13 +839,18 @@ function selectMovement(id, scroll) {
     + '<div class="d-sec-label">地理分布 Region</div>'
     + '<div id="minimap-box">' + MINIMAP + '<div class="map-caption">高亮區域為此流派的主要發源地</div></div>';
 
+  const key = m.art.svg;
   dr.innerHTML =
     '<div id="art-card">'
-    + '<div id="art-frame">' + ART_SVG[m.art.svg] + '</div>'
+    + '<div id="art-frame">'
+    + '<img src="' + imgURL(key, 1000) + '" alt="' + m.art.title + '" '
+    + 'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\';">'
+    + '<div style="display:none;">' + ART_SVG[key] + '</div>'
+    + '</div>'
     + '<div class="art-caption">'
     + '<div class="art-title">《' + m.art.title + '》</div>'
     + '<div class="art-meta">' + m.art.artist + ' · ' + m.art.year + '</div>'
-    + '<div class="art-note">※ 示意圖為風格化重繪，非原作</div>'
+    + '<div class="art-src">圖片來源：<a href="' + imgPage(key) + '" target="_blank" rel="noopener">Wikimedia ↗</a></div>'
     + '<div class="story-label">畫作背景故事</div>'
     + '<p class="art-story">' + m.art.story + '</p>'
     + '</div></div>';
