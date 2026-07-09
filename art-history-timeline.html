@@ -250,11 +250,37 @@ h1 .gold { color: var(--gold); font-weight: 300; }
   display: flex; align-items: center; gap: 10px;
 }
 .d-sec-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,92,0.2), transparent); }
-.d-artists { display: flex; flex-wrap: wrap; gap: 7px; }
-.artist-tag {
-  padding: 5px 12px; border-radius: 9px;
-  background: rgba(255,243,210,0.05); border: 1px solid rgba(201,168,92,0.14);
-  font-size: 11.5px; font-weight: 700; color: var(--cream2);
+/* masters & works */
+#d-masters { margin-top: 30px; }
+.masters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 13px; }
+.artist-card {
+  background: rgba(255,243,210,0.035);
+  border: 1px solid rgba(201,168,92,0.14);
+  border-radius: 14px; padding: 17px 19px;
+  box-shadow: inset 0 1px 0 rgba(255,242,170,0.09);
+  transition: border-color .25s, background .25s, transform .25s;
+}
+.artist-card:hover { border-color: rgba(201,168,92,0.34); background: rgba(255,243,210,0.055); transform: translateY(-2px); }
+.ac-head { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+.ac-name {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 18.5px; font-weight: 600; color: #f0e6cf; letter-spacing: -0.2px;
+}
+.ac-name a { color: inherit; text-decoration: none; border-bottom: 1px dotted transparent; transition: all .2s; }
+.ac-name a:hover { color: var(--gold-hi); border-bottom-color: var(--gold-lo); }
+.ac-en { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 12.5px; color: var(--gold-lo); }
+.ac-years { margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); white-space: nowrap; }
+.ac-note { font-size: 12px; line-height: 1.75; color: var(--cream2); margin-top: 7px; font-weight: 500; }
+.ac-works { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 11px; }
+.work-chip {
+  font-size: 11px; font-weight: 700; color: var(--cream2);
+  padding: 4px 11px; border-radius: 9px;
+  background: rgba(201,168,92,0.06); border: 1px solid rgba(201,168,92,0.16);
+}
+.work-chip .wy { color: var(--gold-lo); font-size: 9px; margin-left: 4px; letter-spacing: 0.03em; }
+.work-chip.feat {
+  color: var(--gold-hi); background: rgba(201,168,92,0.15); border-color: rgba(201,168,92,0.45);
+  box-shadow: 0 0 12px rgba(201,168,92,0.12);
 }
 
 /* mini map */
@@ -366,6 +392,7 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
       <div id="d-left"></div>
       <div id="d-right"></div>
     </div>
+    <div id="d-masters"></div>
   </div>
 
   <footer>
@@ -441,13 +468,196 @@ function imgPage(key) {
   return 'https://' + imgDomain(key) + '/wiki/File:' + encodeURIComponent(ART_IMG[key][1].replace(/ /g, '_'));
 }
 
+/* 各時期重要藝術家與代表作 */
+const MASTERS = {
+  prehistoric: [
+    { name:'肖維洞窟畫師', en:'Chauvet', years:'約公元前 36,000 年', note:'目前已知最古老的具象壁畫，動物姿態已具驚人的動感與立體感。',
+      works:[['獅群圖',''],['犀牛群像','']] },
+    { name:'拉斯科洞窟畫師', en:'Lascaux', years:'約公元前 17,000 年', note:'「史前的西斯汀禮拜堂」，以礦物顏料與岩壁起伏營造巨獸的量感。',
+      works:[['公牛大廳',''],['井底的人與野牛','']] },
+    { name:'阿爾塔米拉洞窟畫師', en:'Altamira', years:'約公元前 14,000 年', note:'1879 年首個被發現的史前洞窟，曾因太精美而被斥為偽作。',
+      works:[['大天花板野牛群','']] },
+  ],
+  egypt: [
+    { name:'圖特摩斯', en:'Thutmose', years:'活躍於約前 1350 年', note:'阿瑪納時期的宮廷首席雕塑家，作品罕見地流露自然主義。',
+      works:[['娜芙蒂蒂胸像','約前1345']] },
+    { name:'帝王谷工匠村', en:'Deir el-Medina', years:'約前 16–11 世紀', note:'世代居住於尼羅河西岸的王室工匠聚落，打造法老的永恆居所。',
+      works:[['圖坦卡門黃金面具','約前1323'],['塞提一世墓室壁畫','約前1279']] },
+    { name:'古王國雕刻工坊', en:'Old Kingdom Workshops', years:'約前 27–22 世紀', note:'確立埃及雕像三千年不變的正面律與威嚴程式。',
+      works:[['卡夫拉坐像','約前2570'],['羅浮宮書記官坐像','約前2450']] },
+  ],
+  greek: [
+    { name:'米隆', en:'Myron', years:'活躍於前 5 世紀中葉', note:'捕捉運動瞬間平衡的大師，原作皆佚，僅存羅馬複製品。',
+      works:[['擲鐵餅者','約前450']] },
+    { name:'菲迪亞斯', en:'Phidias', years:'約前 480–430', note:'古典盛期的總設計師，主持雅典衛城的雕刻工程。',
+      works:[['帕德嫩神廟雕刻','前447–432'],['奧林匹亞宙斯巨像','約前435']] },
+    { name:'普拉克西特列斯', en:'Praxiteles', years:'活躍於前 4 世紀', note:'首開全裸女神像先河，S 形體態優雅柔美。',
+      works:[['尼多斯的阿芙蘿黛蒂','約前350'],['赫米斯與幼年戴奧尼索斯','約前340']] },
+  ],
+  byzantine: [
+    { name:'喬托', en:'Giotto', years:'約 1267–1337', note:'讓聖像走下金色天國、擁有人的重量與眼淚，被譽為歐洲繪畫之父。',
+      works:[['斯克羅威尼禮拜堂濕壁畫','1305'],['哀悼基督','1305']] },
+    { name:'杜喬', en:'Duccio', years:'約 1255–1319', note:'西恩納畫派之首，將拜占庭金底傳統注入哥德式的細膩情感。',
+      works:[['莊嚴聖母祭壇畫','1311']] },
+    { name:'安德烈·魯布列夫', en:'Andrei Rublev', years:'約 1360–1430', note:'俄羅斯聖像畫的巔峰，以澄澈色彩表現神學的寧靜。',
+      works:[['三位一體聖像','約1425']] },
+  ],
+  renaissance: [
+    { name:'達文西', en:'Leonardo da Vinci', years:'1452–1519', note:'畫家、解剖學家、工程師——「文藝復興人」的原型，傳世畫作不足二十幅。',
+      works:[['蒙娜麗莎','約1503'],['最後的晚餐','1498'],['維特魯威人','約1490']] },
+    { name:'米開朗基羅', en:'Michelangelo', years:'1475–1564', note:'自視為雕刻家，卻在仰躺四年後留下史上最壯闊的天頂畫。',
+      works:[['大衛像','1504'],['西斯汀禮拜堂天頂畫','1512'],['聖殤','1499']] },
+    { name:'拉斐爾', en:'Raphael', years:'1483–1520', note:'三傑中最年輕者，將和諧與優雅推到古典的極致，37 歲早逝。',
+      works:[['雅典學院','1511'],['西斯汀聖母','約1512']] },
+    { name:'波提切利', en:'Sandro Botticelli', years:'1445–1510', note:'梅迪奇家族的宮廷詩人畫家，以流動線條描繪神話之美。',
+      works:[['維納斯的誕生','約1485'],['春','約1482']] },
+  ],
+  baroque: [
+    { name:'卡拉瓦喬', en:'Caravaggio', years:'1571–1610', note:'以市井小民入畫、以黑暗襯托神蹟的天才與亡命之徒。',
+      works:[['聖馬太蒙召','1600'],['朱迪斯斬首荷羅孚尼','約1599']] },
+    { name:'林布蘭', en:'Rembrandt van Rijn', years:'1606–1669', note:'荷蘭黃金時代的靈魂，一生近百幅自畫像是最誠實的自傳。',
+      works:[['夜巡','1642'],['杜爾博士的解剖學課','1632'],['晚年自畫像系列','1650s–60s']] },
+    { name:'維梅爾', en:'Johannes Vermeer', years:'1632–1675', note:'台夫特的寧靜大師，傳世僅三十餘幅，日光與珍珠是他的簽名。',
+      works:[['戴珍珠耳環的少女','約1665'],['倒牛奶的女僕','約1658']] },
+    { name:'貝尼尼', en:'Gian Lorenzo Bernini', years:'1598–1680', note:'巴洛克羅馬的總導演，讓大理石擁有肌膚的溫度與布料的飄動。',
+      works:[['聖泰瑞莎的狂喜','1652'],['阿波羅與達芙妮','1625']] },
+  ],
+  rococo: [
+    { name:'華托', en:'Antoine Watteau', years:'1684–1721', note:'開創「雅宴畫」，在歡愉中總帶著一絲憂鬱的告別感。',
+      works:[['塞瑟島朝聖','1717'],['丑角吉爾','約1719']] },
+    { name:'布雪', en:'François Boucher', years:'1703–1770', note:'路易十五的首席畫家，龐巴度夫人的御用肖像師。',
+      works:[['龐巴度夫人像','1756'],['維納斯的凱旋','1740']] },
+    { name:'福拉哥納爾', en:'Jean-Honoré Fragonard', years:'1732–1806', note:'洛可可最後的煙火，筆觸輕快如即興演奏。',
+      works:[['鞦韆','1767'],['門閂','約1777']] },
+  ],
+  romanticism: [
+    { name:'雅克-路易·大衛', en:'Jacques-Louis David', years:'1748–1825', note:'新古典主義旗手，從革命者畫到皇帝的首席宣傳家。',
+      works:[['荷拉斯兄弟之誓','1784'],['馬拉之死','1793'],['拿破崙加冕禮','1807']] },
+    { name:'哥雅', en:'Francisco Goya', years:'1746–1828', note:'從宮廷畫師走入失聰的黑暗，直視戰爭與瘋狂的深淵。',
+      works:[['1808年5月3日','1814'],['農神吞噬其子','約1823']] },
+    { name:'德拉克洛瓦', en:'Eugène Delacroix', years:'1798–1863', note:'浪漫主義掌旗官，色彩的激情啟發了後來的印象派。',
+      works:[['自由引導人民','1830'],['薩達那帕拉之死','1827']] },
+    { name:'泰納', en:'J. M. W. Turner', years:'1775–1851', note:'將風暴、蒸汽與光暈化為近乎抽象的大氣詩篇。',
+      works:[['雨、蒸汽和速度','1844'],['被拖去解體的戰艦無畏號','1839']] },
+  ],
+  realism: [
+    { name:'庫爾貝', en:'Gustave Courbet', years:'1819–1877', note:'寫實主義宣言者：「給我看天使，我就畫天使。」',
+      works:[['奧南的葬禮','1850'],['畫家的工作室','1855']] },
+    { name:'米勒', en:'Jean-François Millet', years:'1814–1875', note:'巴比松派農民畫家，賦予田間勞動宗教般的莊嚴。',
+      works:[['拾穗','1857'],['晚禱','1859'],['播種者','1850']] },
+    { name:'杜米埃', en:'Honoré Daumier', years:'1808–1879', note:'以石版諷刺畫針砭時政，曾因嘲弄國王入獄六個月。',
+      works:[['三等車廂','約1862'],['高康大','1831']] },
+  ],
+  impressionism: [
+    { name:'莫內', en:'Claude Monet', years:'1840–1926', note:'印象派的定名者與最忠實的信徒，晚年在吉維尼花園追光三十年。',
+      works:[['印象·日出','1872'],['睡蓮系列','1897–1926'],['盧昂大教堂系列','1894']] },
+    { name:'雷諾瓦', en:'Pierre-Auguste Renoir', years:'1841–1919', note:'描繪陽光下的歡愉人群，「痛苦會過去，美會留下」。',
+      works:[['煎餅磨坊的舞會','1876'],['船上的午宴','1881']] },
+    { name:'竇加', en:'Edgar Degas', years:'1834–1917', note:'以攝影般的裁切捕捉芭蕾舞者與都市生活的瞬間。',
+      works:[['舞蹈課','1874'],['苦艾酒','1876']] },
+    { name:'莫莉索', en:'Berthe Morisot', years:'1841–1895', note:'印象派創始展的核心成員，以輕盈筆觸描繪女性日常。',
+      works:[['搖籃','1872']] },
+  ],
+  postimpressionism: [
+    { name:'梵谷', en:'Vincent van Gogh', years:'1853–1890', note:'十年畫齡、兩千餘件作品、生前僅售一幅——用色彩燃燒生命。',
+      works:[['星夜','1889'],['向日葵','1888'],['麥田群鴉','1890']] },
+    { name:'塞尚', en:'Paul Cézanne', years:'1839–1906', note:'「以圓柱、球體、圓錐處理自然」，被尊為現代藝術之父。',
+      works:[['聖維克多山系列','1880s–1906'],['玩紙牌的人','約1895']] },
+    { name:'高更', en:'Paul Gauguin', years:'1848–1903', note:'拋下股票經紀人生涯，遠走大溪地尋找原始的象徵樂園。',
+      works:[['我們從何處來？我們是誰？我們往何處去？','1897'],['黃色基督','1889']] },
+    { name:'秀拉', en:'Georges Seurat', years:'1859–1891', note:'以科學的色點理論作畫，一幅大畫耗時兩年、31 歲早逝。',
+      works:[['大碗島的星期日下午','1886']] },
+  ],
+  modernism: [
+    { name:'畢卡索', en:'Pablo Picasso', years:'1881–1973', note:'二十世紀藝術的代名詞，一生風格多變、作品逾三萬件。',
+      works:[['亞維農的少女','1907'],['格爾尼卡','1937'],['哭泣的女人','1937']] },
+    { name:'馬諦斯', en:'Henri Matisse', years:'1869–1954', note:'野獸派領袖，晚年臥病仍以剪刀「用色彩雕刻」。',
+      works:[['舞蹈','1910'],['紅色的和諧','1908'],['藍色裸體（剪紙）','1952']] },
+    { name:'康丁斯基', en:'Wassily Kandinsky', years:'1866–1944', note:'公認第一位純抽象畫家，相信色彩如音樂般直擊靈魂。',
+      works:[['構成第八號','1923'],['即興系列','1910s']] },
+    { name:'蒙德里安', en:'Piet Mondrian', years:'1872–1944', note:'把世界簡化為垂直、水平與三原色的「新造形主義」。',
+      works:[['紅、黃、藍的構成','1930'],['百老匯布基伍基','1943']] },
+  ],
+  surrealism: [
+    { name:'達利', en:'Salvador Dalí', years:'1904–1989', note:'自稱天才的表演大師，以照相般精準的筆法描繪夢魘。',
+      works:[['記憶的堅持','1931'],['聖安東尼的誘惑','1946']] },
+    { name:'馬格利特', en:'René Magritte', years:'1898–1967', note:'西裝革履的比利時紳士，讓日常物件彼此背叛、質問圖像本身。',
+      works:[['形象的叛逆（這不是一支菸斗）','1929'],['人子','1964']] },
+    { name:'米羅', en:'Joan Miró', years:'1893–1983', note:'放任線條與符號自動生長，童趣中藏著加泰隆尼亞的詩。',
+      works:[['小丑的狂歡節','1925'],['星座系列','1940–41']] },
+    { name:'芙烈達·卡蘿', en:'Frida Kahlo', years:'1907–1954', note:'「我畫自畫像，因為我最了解的人是我自己。」',
+      works:[['兩個芙烈達','1939'],['戴荊棘與蜂鳥項鍊的自畫像','1940']] },
+  ],
+  abstract: [
+    { name:'波洛克', en:'Jackson Pollock', years:'1912–1956', note:'「行動繪畫」的化身，把畫布變成事件發生的競技場。',
+      works:[['第5號，1948','1948'],['秋天的韻律','1950']] },
+    { name:'羅斯科', en:'Mark Rothko', years:'1903–1970', note:'巨幅色域邀請觀者靠近沉浸，「我的畫是關於悲劇與狂喜」。',
+      works:[['橙與黃','1956'],['羅斯科教堂壁畫','1971']] },
+    { name:'德庫寧', en:'Willem de Kooning', years:'1904–1997', note:'在抽象與具象之間狂暴往返的荷裔美國巨匠。',
+      works:[['女人一號','1952']] },
+  ],
+  pop: [
+    { name:'安迪·沃荷', en:'Andy Warhol', years:'1928–1987', note:'「工廠」的主人，預言人人都能成名十五分鐘。',
+      works:[['康寶濃湯罐頭','1962'],['瑪麗蓮雙聯畫','1962'],['布里洛盒','1964']] },
+    { name:'李奇登斯坦', en:'Roy Lichtenstein', years:'1923–1997', note:'把漫畫的網點與對話框放大成美術館尺度的史詩。',
+      works:[['Whaam!','1963'],['溺水的女孩','1963']] },
+    { name:'奧登伯格', en:'Claes Oldenburg', years:'1929–2022', note:'把日常物件放大成紀念碑，幽默地顛覆公共雕塑。',
+      works:[['湯匙橋與櫻桃','1988'],['衣夾','1976']] },
+  ],
+  contemporary: [
+    { name:'草間彌生', en:'Yayoi Kusama', years:'1929–', note:'以圓點與鏡室把幻覺變成療癒，在世藝術家中拍價最高的女性。',
+      works:[['南瓜','1994–'],['無限鏡屋','1965–'],['消融之屋','2002–']] },
+    { name:'班克西', en:'Banksy', years:'身分不明', note:'匿名街頭塗鴉者，作品在拍賣槌落瞬間自我碎裂。',
+      works:[['氣球女孩','2002'],['花束投擲者','2003']] },
+    { name:'艾未未', en:'Ai Weiwei', years:'1957–', note:'以裝置與行動介入社會議題的中國異議藝術家。',
+      works:[['葵花籽','2010'],['十二生肖獸首','2010']] },
+    { name:'阿布拉莫維奇', en:'Marina Abramović', years:'1946–', note:'「行為藝術之祖母」，以身體與意志為媒材。',
+      works:[['藝術家在場','2010'],['節奏 0','1974']] },
+  ],
+  chinese: [
+    { name:'吳道子', en:'Wu Daozi', years:'約 685–758', note:'唐代「畫聖」，「吳帶當風」形容其衣紋線條的飄舉之勢。',
+      works:[['送子天王圖（傳）',''],['八十七神仙卷（傳）','']] },
+    { name:'范寬', en:'Fan Kuan', years:'約 950–1032', note:'北宋山水巨碑式構圖的巔峰，「與其師人，不若師諸造化」。',
+      works:[['谿山行旅圖','北宋'],['雪景寒林圖','北宋']] },
+    { name:'張擇端', en:'Zhang Zeduan', years:'12 世紀初', note:'翰林圖畫院畫家，以界畫功力記錄整座汴京城的呼吸。',
+      works:[['清明上河圖','約1101–1124']] },
+    { name:'八大山人', en:'Bada Shanren', years:'1626–1705', note:'明宗室遺民，筆下白眼向天的魚鳥是亡國之痛的化身。',
+      works:[['荷石水禽圖','清初'],['河上花圖卷','1697']] },
+  ],
+  ukiyoe: [
+    { name:'葛飾北齋', en:'Katsushika Hokusai', years:'1760–1849', note:'自號「畫狂老人」，九十歲仍嘆「再給我十年便能成真畫工」。',
+      works:[['神奈川沖浪裏','約1831'],['凱風快晴（紅富士）','約1831'],['北齋漫畫','1814–']] },
+    { name:'歌川廣重', en:'Utagawa Hiroshige', years:'1797–1858', note:'以抒情的雨雪與旅愁描繪日本風景，梵谷曾臨摹其作。',
+      works:[['東海道五十三次','1833'],['名所江戶百景','1856–58']] },
+    { name:'喜多川歌麿', en:'Kitagawa Utamaro', years:'約 1753–1806', note:'美人畫第一人，首創聚焦臉部的「大首繪」。',
+      works:[['寬政三美人','約1793'],['婦女人相十品','1792–93']] },
+    { name:'東洲齋寫樂', en:'Tōshūsai Sharaku', years:'活躍 1794–95', note:'僅活動十個月便消失的謎樣畫師，役者繪誇張傳神。',
+      works:[['三代目大谷鬼次之奴江戶兵衛','1794']] },
+  ],
+  islamic: [
+    { name:'貝赫札德', en:'Kamāl ud-Dīn Behzād', years:'約 1450–1535', note:'赫拉特畫派宗師，方寸之間人物眉目傳神。',
+      works:[['優素福與祖萊卡','1488'],['建造霍爾納克城堡','約1494']] },
+    { name:'蘇丹·穆罕默德', en:'Sultan Mohammed', years:'活躍於 16 世紀', note:'薩非王朝宮廷畫坊領袖，《列王紀》插畫絢爛如寶石。',
+      works:[['蓋尤瑪斯的宮廷','約1525']] },
+    { name:'米瑪爾·錫南', en:'Mimar Sinan', years:'1489–1588', note:'鄂圖曼首席建築師，一生營造清真寺與橋梁逾三百座。',
+      works:[['蘇萊曼尼耶清真寺','1557'],['塞利米耶清真寺','1575']] },
+  ],
+  mesoamerica: [
+    { name:'奧爾梅克石匠', en:'Olmec', years:'約前 1200–400', note:'中美洲「母文化」，不知名巨匠以玄武岩刻出統治者巨顏。',
+      works:[['巨石頭像','約前1200–900'],['摔跤者雕像','約前1200']] },
+    { name:'博南帕克壁畫師', en:'Bonampak', years:'8 世紀末', note:'馬雅壁畫的巔峰，宮廷儀式與戰爭場面色彩如新。',
+      works:[['博南帕克神廟壁畫','約790']] },
+    { name:'阿茲提克雕刻工坊', en:'Aztec (Mexica)', years:'15–16 世紀', note:'特諾奇提特蘭的神殿雕刻群，神話與曆法刻進石頭。',
+      works:[['太陽石','約1502–1520'],['大地女神科亞特利庫埃像','15世紀末'],['雙頭蛇綠松石胸飾','15–16世紀']] },
+  ],
+};
+
 /* 流派 / 時期 */
 const MOVEMENTS = [
   {
     id:'prehistoric', name:'史前洞窟藝術', en:'Prehistoric Art',
     start:-30000, end:-10000, region:'europe', color:'#a05c34',
     desc:'人類最早的圖像創作。舊石器時代的獵人以赭石、木炭與礦物顏料，在幽暗洞窟深處描繪野牛、馬匹與鹿群，並在岩壁留下噴繪的手印——既是巫術儀式，也是人類「再現世界」慾望的起點。',
-    artists:['拉斯科洞窟畫師','阿爾塔米拉洞窟畫師','肖維洞窟畫師'],
     art:{ svg:'lascaux', title:'拉斯科洞窟壁畫', artist:'佚名（舊石器時代）', year:'約公元前 17,000 年',
       story:'1940 年，法國四名少年為了尋找傳說中的地道，意外墜入拉斯科洞窟，發現了近六百幅史前壁畫，被譽為「史前的西斯汀禮拜堂」。畫中巨牛長逾五公尺，畫師利用岩壁的天然凸起營造立體感，證明兩萬年前的人類已掌握透視與動態的表現。因遊客呼出的二氧化碳侵蝕壁畫，洞窟於 1963 年永久關閉，現今開放的是精確複製的「拉斯科二號」。' }
   },
@@ -455,7 +665,6 @@ const MOVEMENTS = [
     id:'egypt', name:'古埃及藝術', en:'Egyptian Art',
     start:-3000, end:-300, region:'mideast', color:'#c9932e',
     desc:'為永恆而做的藝術。埃及人相信圖像具有魔力，繪畫與雕塑遵循嚴格的「正面律」——頭側面、眼正面、肩正面、腿側面——三千年間風格幾乎不變，一切服務於法老的來世與神的秩序。',
-    artists:['圖特摩斯（雕塑家）','帝王谷工匠村畫師'],
     art:{ svg:'tut', title:'圖坦卡門黃金面具', artist:'佚名王室工匠', year:'約公元前 1323 年',
       story:'1922 年考古學家霍華德·卡特打開圖坦卡門陵墓時，說出了著名的一句：「我看見了奇妙的東西。」這副 10.23 公斤的黃金面具鑲嵌青金石與彩色玻璃，覆蓋在少年法老的木乃伊臉上。圖坦卡門九歲登基、十八歲早逝，本是無足輕重的法老，卻因陵墓未遭盜掘而成為古埃及最著名的面孔。面具背後刻有《死者之書》咒文，守護法老穿越冥界。' }
   },
@@ -463,7 +672,6 @@ const MOVEMENTS = [
     id:'greek', name:'古希臘羅馬藝術', en:'Classical Art',
     start:-800, end:400, region:'europe', color:'#8a94a6',
     desc:'西方美學的源頭。希臘人以數學比例追求理想化的人體，發展出對立式平衡（contrapposto）與黃金比例；羅馬人繼承其技法，轉向寫實肖像與宏偉建築，奠定此後兩千年歐洲藝術的典範。',
-    artists:['菲迪亞斯','普拉克西特列斯','米隆'],
     art:{ svg:'venus', title:'米洛的維納斯', artist:'安提阿的亞歷山德羅斯（傳）', year:'約公元前 130–100 年',
       story:'1820 年，希臘米洛斯島的農夫在田裡挖出這尊斷臂的愛神像，法國海軍軍官買下後獻給路易十八，從此成為羅浮宮鎮館三寶之一。她的雙臂究竟原本是什麼姿勢——持蘋果？攬衣裙？照鏡子？兩百年來無數學者提出復原方案，卻始終無解。也正是這份「殘缺」，讓她成為想像力的容器，斷臂反而成就了永恆。' }
   },
@@ -471,7 +679,6 @@ const MOVEMENTS = [
     id:'byzantine', name:'拜占庭與中世紀藝術', en:'Medieval & Byzantine',
     start:500, end:1400, region:'europe', color:'#b08a2e',
     desc:'神的光芒取代人的肉身。金底鑲嵌畫、聖像畫與哥德式彩繪玻璃不追求寫實，而以扁平、莊嚴、程式化的形象引導信徒仰望天國——黃金背景象徵超越時空的神聖之光。',
-    artists:['拉溫納鑲嵌畫師','安德烈·魯布列夫','杜喬'],
     art:{ svg:'byzant', title:'聖索菲亞大教堂鑲嵌畫', artist:'拜占庭宮廷工匠', year:'約 9–13 世紀',
       story:'聖索菲亞大教堂的金色鑲嵌畫由數百萬片玻璃嵌片組成，工匠刻意將金箔嵌片以微微不同的角度鋪貼，讓燭光下的牆面如星空般閃爍流動。1453 年君士坦丁堡陷落後，教堂改為清真寺，鑲嵌畫被石灰覆蓋——諷刺的是，這層石灰反而保護了它們，讓千年金光得以在二十世紀重見天日。' }
   },
@@ -479,7 +686,6 @@ const MOVEMENTS = [
     id:'renaissance', name:'文藝復興', en:'Renaissance',
     start:1400, end:1600, region:'europe', color:'#7a5cc6',
     desc:'「人」重新成為萬物的尺度。透視法、解剖學與油彩技術的突破，讓佛羅倫斯與威尼斯的大師們同時是科學家與藝術家；達文西、米開朗基羅、拉斐爾三傑將古典理想與自然觀察熔於一爐。',
-    artists:['達文西','米開朗基羅','拉斐爾','波提切利','提香'],
     art:{ svg:'mona', title:'蒙娜麗莎', artist:'李奧納多·達文西', year:'約 1503–1519 年',
       story:'達文西以獨創的「暈塗法」（sfumato）層層罩染三十餘層薄釉，讓嘴角與眼角融入陰影——這正是那抹微笑忽隱忽現的祕密。他終生帶著這幅畫未曾交件，直到客死法國。1911 年，義大利玻璃工佩魯賈把畫藏在大衣裡走出羅浮宮，堅稱要「讓她回到祖國」；失竊兩年間全球報紙頭條追蹤，連畢卡索都一度被列為嫌犯。畫作尋回時，她已從名作變成了世界上最著名的一幅畫。' }
   },
@@ -487,7 +693,6 @@ const MOVEMENTS = [
     id:'baroque', name:'巴洛克', en:'Baroque',
     start:1600, end:1750, region:'europe', color:'#a6392e',
     desc:'光與影的戲劇。反宗教改革與宮廷權力催生了充滿動感、強烈明暗對比（chiaroscuro）與情感張力的藝術；卡拉瓦喬的聚光燈式打光、林布蘭的靈魂之光、維梅爾的寧靜日光，各自定義了「光」的語言。',
-    artists:['卡拉瓦喬','林布蘭','維梅爾','魯本斯','貝尼尼'],
     art:{ svg:'nightwatch', title:'夜巡', artist:'林布蘭·范萊因', year:'1642 年',
       story:'這幅阿姆斯特丹民兵隊的群像本該是整齊排排站的「團體照」，林布蘭卻把它畫成一場正要出發的行動劇——隊長下令、鼓手擊鼓、火槍手裝彈，光線只聚焦在關鍵人物身上。其實畫的是白天場景，因數百年油垢與亮光漆變黑才被誤稱「夜巡」。1975 年畫作遭人持刀劃出十二道裂口，修復後傷痕至今隱約可見，成為名畫滄桑的一部分。' }
   },
@@ -495,7 +700,6 @@ const MOVEMENTS = [
     id:'rococo', name:'洛可可', en:'Rococo',
     start:1720, end:1780, region:'europe', color:'#d4739e',
     desc:'貴族的甜美黃昏。粉彩色調、渦卷曲線與遊園調情的主題，映照著法國宮廷最後的享樂時光；華托的憂鬱、布雪的粉膩與福拉哥納爾的輕佻，在大革命前夜綻放又凋零。',
-    artists:['華托','布雪','福拉哥納爾'],
     art:{ svg:'swing', title:'鞦韆', artist:'讓-奧諾雷·福拉哥納爾', year:'1767 年',
       story:'一位男爵原本委託畫家描繪「主教推鞦韆、自己躲在暗處仰望情婦」的場景，被拒絕後找上了福拉哥納爾。畫中少女盪向高處、鞋子飛脫，裙襬下的風光正對著藏身花叢的年輕男子——推鞦韆的則是渾然不覺的老丈夫。這幅畫將洛可可的輕佻與精緻推到極致，也成為舊制度貴族生活最著名的註腳，大革命後此類畫風隨即被視為腐敗的象徵。' }
   },
@@ -503,7 +707,6 @@ const MOVEMENTS = [
     id:'romanticism', name:'新古典與浪漫主義', en:'Neoclassicism & Romanticism',
     start:1780, end:1850, region:'europe', color:'#3e6bb4',
     desc:'理性與激情的對決。大衛以古典的莊嚴歌頌共和美德，德拉克洛瓦則以奔放的色彩描繪革命、風暴與異國；哥雅走得更遠，直視戰爭的黑暗深淵。藝術第一次成為時代精神的戰場。',
-    artists:['雅克-路易·大衛','德拉克洛瓦','哥雅','泰納','弗里德里希'],
     art:{ svg:'liberty', title:'自由引導人民', artist:'歐仁·德拉克洛瓦', year:'1830 年',
       story:'1830 年七月革命爆發，巴黎市民三日內推翻查理十世。沒有上街的德拉克洛瓦寫信給哥哥：「我雖未為祖國作戰，至少可以為她作畫。」他讓袒胸的自由女神手持三色旗跨過街壘與屍骸，身旁是工人、資產階級與少年——這是首次將「當代革命」畫成史詩。法國政府買下後卻因太具煽動性而長年藏於庫房，直到 1874 年才進入羅浮宮。' }
   },
@@ -511,7 +714,6 @@ const MOVEMENTS = [
     id:'realism', name:'寫實主義', en:'Realism',
     start:1840, end:1880, region:'europe', color:'#6b7a3c',
     desc:'「我不畫天使，因為我從沒見過。」庫爾貝的宣言揭開序幕：藝術轉向農民、工人與日常勞動，拒絕神話與美化。米勒的田野與杜米埃的三等車廂，讓平凡人第一次成為畫布的主角。',
-    artists:['庫爾貝','米勒','杜米埃','柯洛'],
     art:{ svg:'gleaners', title:'拾穗', artist:'讓-弗朗索瓦·米勒', year:'1857 年',
       story:'三名農婦在收割後的田裡彎腰撿拾遺落的麥穗——「拾穗權」是當時最貧困者的最後生計。米勒以史詩般的莊嚴構圖描繪這卑微的勞動，遠處金黃的豐收與近處的貧窮形成無聲對比。沙龍展出時被資產階級評論家抨擊為「煽動革命的社會主義繪畫」，如今卻被視為對勞動者最深沉的致敬，也是台灣觀眾最熟悉的西洋名畫之一（曾兩度來台展出）。' }
   },
@@ -519,7 +721,6 @@ const MOVEMENTS = [
     id:'impressionism', name:'印象派', en:'Impressionism',
     start:1860, end:1890, region:'europe', color:'#5a9ad4',
     desc:'走出畫室，追逐光線。管裝顏料與火車讓畫家得以在戶外快速捕捉瞬間的光影與色彩；莫內的乾草堆、雷諾瓦的舞會、竇加的芭蕾——筆觸破碎，卻讓空氣第一次在畫布上流動。',
-    artists:['莫內','雷諾瓦','竇加','畢沙羅','莫莉索','卡耶博特'],
     art:{ svg:'sunrise', title:'印象·日出', artist:'克洛德·莫內', year:'1872 年',
       story:'莫內在故鄉勒阿弗爾港的旅館窗前，以急促的筆觸記下晨霧中的一輪橘日。1874 年落選沙龍的畫家們自辦聯展，評論家路易·勒華在報上譏諷這幅畫「連壁紙草稿都比它完整」，並用畫名嘲笑整群人是「印象派」。畫家們索性接受這個蔑稱，藝術史上最著名的命名事故就此誕生。1985 年此畫遭武裝搶劫失竊，五年後才在科西嘉島尋回。' }
   },
@@ -527,7 +728,6 @@ const MOVEMENTS = [
     id:'postimpressionism', name:'後印象派', en:'Post-Impressionism',
     start:1885, end:1910, region:'europe', color:'#e0862e',
     desc:'從「眼睛」走向「心靈」。塞尚重建形體的秩序、梵谷讓色彩承載情感、高更逃往原始的象徵世界——三條路各自通往立體主義、表現主義與現代藝術的大門。',
-    artists:['梵谷','塞尚','高更','秀拉','羅特列克'],
     art:{ svg:'starry', title:'星夜', artist:'文森·梵谷', year:'1889 年',
       story:'割耳事件後，梵谷自願住進聖雷米療養院。這幅畫是他從病房鐵窗望見的夜空，加上記憶中的村莊與想像的漩渦星雲──燃燒的柏樹連接大地與天空，十一顆星辰翻滾如浪。他在給弟弟西奧的信中寫道：「我常想，夜晚比白天更有生命力、色彩更豐富。」梵谷生前只賣出一幅畫，逝後《星夜》卻成為現代藝術博物館（MoMA）的鎮館之寶，被複製在無數咖啡杯與雨傘上。' }
   },
@@ -535,7 +735,6 @@ const MOVEMENTS = [
     id:'modernism', name:'立體主義與現代主義', en:'Cubism & Modernism',
     start:1905, end:1940, region:'europe', color:'#8a8578',
     desc:'打碎再重組的世界。畢卡索與布拉克將物體拆解成多重視角的碎片，馬諦斯以純色解放繪畫，康丁斯基走向完全抽象——短短三十年，繪畫離開了「模仿自然」的五百年軌道。',
-    artists:['畢卡索','布拉克','馬諦斯','康丁斯基','蒙德里安','杜象'],
     art:{ svg:'guernica', title:'格爾尼卡', artist:'巴勃羅·畢卡索', year:'1937 年',
       story:'1937 年 4 月 26 日，納粹軍團應佛朗哥之邀轟炸西班牙小鎮格爾尼卡，平民死傷枕藉。正為巴黎世博會西班牙館尋找題材的畢卡索，在一個月內完成這幅近八公尺的黑白巨作：嘶吼的馬、冷眼的公牛、抱著死嬰的母親。傳說納粹軍官指著畫問「這是你做的？」畢卡索答：「不，是你們做的。」他遺願畫作須待西班牙恢復民主才能回國——1981 年，《格爾尼卡》終於返回馬德里。' }
   },
@@ -543,7 +742,6 @@ const MOVEMENTS = [
     id:'surrealism', name:'超現實主義', en:'Surrealism',
     start:1920, end:1950, region:'europe', color:'#c46a9e',
     desc:'夢境與潛意識的解放。受佛洛伊德啟發，布勒東發表宣言，達利以「偏執狂批判法」繪製精準的夢魘，馬格利特讓日常物件彼此背叛，米羅則放任線條自動生長——理性讓位給奇想。',
-    artists:['達利','馬格利特','米羅','恩斯特','曼·雷'],
     art:{ svg:'dali', title:'記憶的堅持', artist:'薩爾瓦多·達利', year:'1931 年',
       story:'某晚加拉外出，達利獨自面對餐桌上一塊在夏夜裡融化的卡蒙貝爾乳酪，凝視兩小時後，他回到畫室，在一幅已畫好利加特港海岸的風景上，添上了三只癱軟如乳酪的時鐘。「軟錶」從此成為二十世紀最著名的超現實圖像——時間在夢中失去硬度。這幅畫僅 24×33 公分，比多數人想像的小得多，1934 年起便館藏於紐約 MoMA。' }
   },
@@ -551,7 +749,6 @@ const MOVEMENTS = [
     id:'abstract', name:'抽象表現主義', en:'Abstract Expressionism',
     start:1943, end:1965, region:'americas', color:'#4a8ab0',
     desc:'戰後藝術之都從巴黎移往紐約。波洛克把畫布鋪在地上滴灑行走，「行動繪畫」讓過程本身成為作品；羅斯科的巨幅色域則邀請觀者沉入近乎宗教的凝視。美國第一次定義了世界藝術的方向。',
-    artists:['波洛克','羅斯科','德庫寧','紐曼','克萊恩'],
     art:{ svg:'pollock', title:'第 5 號，1948', artist:'傑克森·波洛克', year:'1948 年',
       story:'在長島穀倉改建的畫室裡，波洛克把 240×120 公分的纖維板平放地面，用木棍與硬化的畫筆將油漆滴灑、甩擲、澆淋其上，層層交織成無起點亦無終點的網。《生活》雜誌 1949 年以「他是美國最偉大的在世畫家嗎？」為題報導，讓他一夕成名，也讓「我的小孩也畫得出來」成為現代藝術最經典的爭論。2006 年此畫以 1.4 億美元私人成交，一度是史上最貴的畫作。' }
   },
@@ -559,7 +756,6 @@ const MOVEMENTS = [
     id:'pop', name:'普普藝術', en:'Pop Art',
     start:1955, end:1975, region:'americas', color:'#d43e3e',
     desc:'藝術走進超市。沃荷的濃湯罐與瑪麗蓮、李奇登斯坦的漫畫網點，把消費社會的商標、明星與大眾媒體直接搬上畫布——高雅與通俗的邊界被徹底抹平，「複製」本身成為創作。',
-    artists:['安迪·沃荷','李奇登斯坦','漢彌爾頓','奧登伯格'],
     art:{ svg:'soup', title:'康寶濃湯罐頭', artist:'安迪·沃荷', year:'1962 年',
       story:'「我畫它，因為我每天中午都喝它，二十年來天天如此。」沃荷以絲網印刷複製了 32 罐口味各異的康寶濃湯，在洛杉磯首展時每罐排成一列，像超市貨架。畫廊隔壁的商家譏諷地把真罐頭堆在櫥窗，出售「更便宜的原作」。這批畫最初只賣出寥寥數件，畫商急忙買回湊齊全套——如今整組 32 幅為 MoMA 館藏，成為消費時代最鋒利的鏡子。' }
   },
@@ -567,7 +763,6 @@ const MOVEMENTS = [
     id:'contemporary', name:'當代藝術', en:'Contemporary Art',
     start:1970, end:2026, region:'americas', color:'#7a6ad4',
     desc:'一切皆可為藝術。裝置、行為、錄像、街頭塗鴉到 NFT，藝術的疆界持續擴張；雙年展與美術館網絡橫跨全球，草間彌生、艾未未、班克西等藝術家以截然不同的語言回應同一個時代。',
-    artists:['草間彌生','班克西','傑夫·昆斯','艾未未','瑪莉娜·阿布拉莫維奇'],
     art:{ svg:'pumpkin', title:'南瓜', artist:'草間彌生', year:'1994 年起 · 圖為 2015 年蒙特婁展出版本',
       story:'草間彌生十歲起飽受幻覺所苦，眼前的世界會被無盡的圓點吞沒；她選擇把幻覺畫下來，「圓點」成為她對抗恐懼的方式。童年家中經營種苗場，南瓜憨厚的形狀是她最早的慰藉——「南瓜不會勾起嫉妒，它有著寬大的肚量。」1994 年設置於直島碼頭的黃色大南瓜成為當代藝術朝聖地標，2021 年被颱風捲入海中，修復後於 2022 年重新歸位。' }
   },
@@ -575,7 +770,6 @@ const MOVEMENTS = [
     id:'chinese', name:'中國書畫傳統', en:'Chinese Painting',
     start:600, end:1900, region:'eastasia', color:'#c46a4a',
     desc:'以筆墨寫胸中丘壑。從唐代人物、宋代山水到元明清文人畫，中國繪畫以線條與留白經營意境，詩、書、畫、印四者合一；「外師造化，中得心源」——畫的不是風景，而是宇宙觀。',
-    artists:['吳道子','范寬','張擇端','趙孟頫','八大山人'],
     art:{ svg:'qingming', title:'清明上河圖', artist:'張擇端（北宋）', year:'約 1101–1124 年',
       story:'這幅 5.28 公尺的長卷描繪北宋都城汴京的清明時節：八百餘個人物、船隻、駱駝與市招在畫中營生，虹橋上船夫落桅的驚險瞬間是全卷高潮。它像一部超高解析度的紀錄片，保存了整座城市的商業、交通與日常。九百年間此畫五度進出皇宮、屢遭劫掠流轉，末代皇帝溥儀將它帶出紫禁城，1945 年險些散佚，如今為北京故宮鎮院之寶，每次展出都引發「故宮跑」排隊盛況。' }
   },
@@ -583,7 +777,6 @@ const MOVEMENTS = [
     id:'ukiyoe', name:'浮世繪', en:'Ukiyo-e',
     start:1650, end:1880, region:'eastasia', color:'#3e7ab4',
     desc:'「浮世」即塵世的享樂人間。江戶時代的木刻版畫描繪歌舞伎、美人、風景與妖怪，由畫師、雕師、摺師分工量產，是庶民買得起的藝術；十九世紀傳入歐洲後掀起「日本主義」浪潮，深刻改寫了印象派的構圖與色彩。',
-    artists:['葛飾北齋','歌川廣重','喜多川歌麿','東洲齋寫樂'],
     art:{ svg:'wave', title:'神奈川沖浪裏', artist:'葛飾北齋', year:'約 1831 年',
       story:'七十歲的北齋在《富嶽三十六景》首作中，讓巨浪的「鷹爪」凌空撲向三艘運魚快船，遠方的富士山反而縮成浪谷中的小三角——動與靜的對比石破天驚。畫中的深藍使用了當時剛進口的普魯士藍，異國顏料成就了最具日本代表性的圖像。此作估計印製逾八千張，梵谷臨摹它、德布西看著它譜出交響詩《海》，如今它甚至印在日本護照與千元紙鈔上。' }
   },
@@ -591,7 +784,6 @@ const MOVEMENTS = [
     id:'islamic', name:'伊斯蘭藝術', en:'Islamic Art',
     start:700, end:1700, region:'mideast', color:'#3e9a7a',
     desc:'以幾何與書法讚頌無形之神。因避免偶像崇拜，伊斯蘭藝術將創造力傾注於無限延伸的幾何紋樣、蔓藤花紋與阿拉伯書法；波斯細密畫則在書頁方寸之間，建構出色彩絢爛的敘事宇宙。',
-    artists:['貝赫札德（細密畫）','伊本·穆格拉（書法）','錫南（建築）'],
     art:{ svg:'persian', title:'波斯細密畫', artist:'赫拉特與伊斯法罕畫坊', year:'約 15–17 世紀',
       story:'細密畫是手抄本中的插畫，畫師以松鼠毛製成僅數根毫毛的畫筆，在紙上鋪陳金箔與青金石研磨的群青。它不用西方透視，而是讓每個場景以「神之視角」同時展開——庭園、宮殿與人物層層疊起如寶石鑲嵌。傳奇畫師貝赫札德筆下人物僅指甲大小，卻眉目傳神；諾貝爾文學獎小說《我的名字叫紅》，正是以細密畫師的世界為舞台。' }
   },
@@ -599,7 +791,6 @@ const MOVEMENTS = [
     id:'mesoamerica', name:'中美洲古文明藝術', en:'Mesoamerican Art',
     start:-1200, end:1521, region:'americas', color:'#b07a3e',
     desc:'金字塔、玉石與太陽的信仰。奧爾梅克巨石頭像、馬雅壁畫與阿茲提克雕刻，以神話、曆法與獻祭儀式為核心；1521 年西班牙人到來，這條獨立發展三千年的藝術長河戛然而止。',
-    artists:['奧爾梅克石匠','馬雅博南帕克壁畫師','阿茲提克雕刻工坊'],
     art:{ svg:'sunstone', title:'阿茲提克太陽石', artist:'阿茲提克雕刻工坊', year:'約 1502–1520 年',
       story:'這塊直徑 3.6 公尺、重達 24 噸的玄武岩圓盤，中心是太陽神托納蒂烏（一說大地怪物），四周環刻「五個太陽紀」的毀滅神話與二十個曆日符號——阿茲提克人相信世界已毀滅四次，而第五個太陽仍需以獻祭維繫。西班牙征服後，太陽石被埋入墨西哥城大廣場地下近三百年，1790 年鋪設路面時意外出土，如今是墨西哥國家人類學博物館的鎮館之寶與國族象徵。' }
   },
@@ -834,8 +1025,6 @@ function selectMovement(id, scroll) {
     + '<h2 class="d-title">' + m.name + '<span class="en">' + m.en + '</span></h2>'
     + '<div class="d-region-chip"><span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>發源區域 · ' + reg.name + '</div>'
     + '<p class="d-desc">' + m.desc + '</p>'
-    + '<div class="d-sec-label">代表藝術家 Key Artists</div>'
-    + '<div class="d-artists">' + m.artists.map(a => '<span class="artist-tag">' + a + '</span>').join('') + '</div>'
     + '<div class="d-sec-label">地理分布 Region</div>'
     + '<div id="minimap-box">' + MINIMAP + '<div class="map-caption">高亮區域為此流派的主要發源地</div></div>';
 
@@ -854,6 +1043,28 @@ function selectMovement(id, scroll) {
     + '<div class="story-label">畫作背景故事</div>'
     + '<p class="art-story">' + m.art.story + '</p>'
     + '</div></div>';
+
+  /* masters & works */
+  const masters = MASTERS[m.id] || [];
+  document.getElementById('d-masters').innerHTML =
+    '<div class="d-sec-label">重要藝術家與代表作 Masters &amp; Masterpieces</div>'
+    + '<div class="masters-grid">'
+    + masters.map(a =>
+        '<div class="artist-card">'
+        + '<div class="ac-head">'
+        + '<span class="ac-name"><a href="https://zh.wikipedia.org/w/index.php?search=' + encodeURIComponent(a.name) + '" target="_blank" rel="noopener">' + a.name + '</a></span>'
+        + (a.en ? '<span class="ac-en">' + a.en + '</span>' : '')
+        + '<span class="ac-years">' + a.years + '</span>'
+        + '</div>'
+        + (a.note ? '<div class="ac-note">' + a.note + '</div>' : '')
+        + '<div class="ac-works">'
+        + a.works.map(w =>
+            '<span class="work-chip' + (w[0] === m.art.title ? ' feat' : '') + '">《' + w[0] + '》'
+            + (w[1] ? '<span class="wy">' + w[1] + '</span>' : '') + '</span>'
+          ).join('')
+        + '</div></div>'
+      ).join('')
+    + '</div>';
 
   /* light up minimap */
   const map = document.getElementById('minimap');
