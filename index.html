@@ -182,8 +182,8 @@ body {
 #viewer-lang {
   margin-left: auto;
   display: flex; gap: 3px; padding: 4px;
-  background: rgba(255,242,200,0.038);
-  border: 1px solid rgba(201,168,92,0.12);
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(var(--va), 0.2);
   border-radius: 11px;
 }
 #viewer-lang button {
@@ -194,7 +194,7 @@ body {
   background: transparent; color: var(--muted);
 }
 #viewer-lang button:hover { color: var(--cream); }
-#viewer-lang button.active { background: rgba(201,168,92,0.18); color: var(--gold); }
+#viewer-lang button.active { background: rgba(var(--va), 0.22); color: var(--vac); }
 
 /* Lang switcher */
 #lang-switch {
@@ -530,11 +530,27 @@ body.edit-mode .glass-card:hover { transform: none !important; }
   background: var(--bg); animation: slide-up 0.42s cubic-bezier(0.4,0,0.2,1);
 }
 #viewer-bar {
+  --va: 201,168,92;           /* 依模組主色調整（JS 設定） */
+  --vac: #e8cc84;
   position: absolute; top: 0; left: 0; right: 0; height: 52px; z-index: 101;
   display: flex; align-items: center; padding: 0 18px;
-  background: rgba(11,8,6,0.92); backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(201,168,92,0.14);
+  background:
+    linear-gradient(180deg, rgba(var(--va), 0.13), rgba(var(--va), 0.04)),
+    rgba(8,7,9,0.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(var(--va), 0.24);
+  transition: border-color .4s;
 }
+.vback {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 18px 9px 13px; border-radius: 22px;
+  border: 1px solid rgba(var(--va), 0.26);
+  background: rgba(255,255,255,0.03);
+  color: var(--cream2);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: all .2s; font-family: 'Nunito', sans-serif;
+}
+.vback:hover { color: var(--cream); border-color: rgba(var(--va), 0.55); }
 @keyframes slide-up { from{transform:translateY(8%);opacity:0;} to{transform:translateY(0);opacity:1;} }
 
 /* ─── Footer ─── */
@@ -674,10 +690,7 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
 <!-- Full-screen Viewer -->
 <div id="module-viewer">
   <div id="viewer-bar">
-    <button onclick="closeViewer()" aria-label="Back to library"
-      style="display:flex;align-items:center;gap:8px;padding:9px 18px 9px 13px;border-radius:22px;border:1px solid rgba(201,168,92,0.18);background:rgba(255,255,255,0.03);color:var(--cream2);font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;"
-      onmouseover="this.style.color='var(--cream)';this.style.borderColor='rgba(201,168,92,0.40)'"
-      onmouseout="this.style.color='var(--cream2)';this.style.borderColor='rgba(201,168,92,0.18)'">
+    <button class="vback" onclick="closeViewer()" aria-label="Back to library">
       <i class="fa-solid fa-chevron-left" style="font-size:9px;"></i> Back
     </button>
     <div id="viewer-lang">
@@ -964,11 +977,11 @@ function renderGrid() {
     const roman     = ROMAN[idx] || String(idx+1);
 
     if (!editMode) {
-      card.onclick = () => openModule(mod.file);
+      card.onclick = () => openModule(mod);
       card.setAttribute('tabindex','0');
       card.setAttribute('role','button');
       card.setAttribute('aria-label','Open '+mod.title);
-      card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod.file); } };
+      card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod); } };
     }
 
     card.innerHTML = `
@@ -1078,12 +1091,70 @@ function deleteModule(id, e) {
 }
 
 /* ─── Viewer ─── */
-function openModule(file) {
+
+/* 依模組主色 (Tailwind 漸層鍵) 決定 Back 列色調：[rgb 字串, 高亮色] */
+const BAR_ACCENTS = {
+  'from-violet-400 to-indigo-600':  ['167,139,250', '#c4b5fd'],
+  'from-emerald-400 to-teal-600':   ['52,211,153',  '#6ee7b7'],
+  'from-pink-400 to-rose-600':      ['244,114,182', '#f9a8d4'],
+  'from-amber-400 to-orange-500':   ['251,191,36',  '#fcd34d'],
+  'from-sky-400 to-blue-600':       ['56,189,248',  '#7dd3fc'],
+  'from-fuchsia-400 to-purple-700': ['232,121,249', '#f0abfc'],
+  'from-lime-400 to-green-600':     ['163,230,53',  '#bef264'],
+  'from-cyan-400 to-sky-600':       ['34,211,238',  '#67e8f9'],
+};
+/* 個別模組覆寫（藝術卷頁面實為金色調，非模組卡的紫色） */
+const BAR_ACCENT_OVERRIDE = {
+  art: ['201,168,92', '#e8cc84'],
+};
+
+/* 支援多語的模組：切換函式名稱 + 內頁切換鈕（取其父容器隱藏） */
+const MODULE_I18N = {
+  art:      { fn: 'switchLang',     btn: 'lang-zh' },
+  finance:  { fn: 'setLanguage',    btn: 'lang-zh' },
+  beer:     { fn: 'setLanguage',    btn: 'btn-lang-zh' },
+  skincare: { fn: 'switchLang',     btn: 'hdr-zh' },
+  perfume:  { fn: 'switchLanguage', btn: 'hdr-zh' },
+};
+
+const OPEN_KEY = 'kb_open_module';
+let currentModId = null;
+
+function openModule(mod) {
   if (editMode) return;
-  document.getElementById('viewer-frame').src  = file;
+  currentModId = mod.id;
+
+  /* Back 列配色 */
+  const acc = BAR_ACCENT_OVERRIDE[mod.id] || BAR_ACCENTS[mod.color] || ['201,168,92', '#e8cc84'];
+  const bar = document.getElementById('viewer-bar');
+  bar.style.setProperty('--va', acc[0]);
+  bar.style.setProperty('--vac', acc[1]);
+
+  /* 只有支援多語的模組才顯示語言鈕 */
+  const adapter = MODULE_I18N[mod.id];
+  document.getElementById('viewer-lang').style.display = adapter ? 'flex' : 'none';
+
+  const frame = document.getElementById('viewer-frame');
+  frame.onload = () => {
+    if (!adapter) return;
+    try {
+      const fw = frame.contentWindow;
+      /* 隱藏內頁自己的語言切換鈕（由 Back 列代管） */
+      const b = fw.document.getElementById(adapter.btn);
+      if (b && b.parentElement) b.parentElement.style.display = 'none';
+      /* 同步目前語言 */
+      if (typeof fw[adapter.fn] === 'function') fw[adapter.fn](currentLang);
+    } catch (e) { /* ignore */ }
+  };
+  frame.src = mod.file;
+
   document.body.style.overflow = 'hidden';
   document.getElementById('module-viewer').style.display = 'block';
   updateViewerLangButtons();
+
+  /* 記住開啟中的筆記（自訂上傳的 blob 無法跨刷新還原，略過） */
+  if (!mod.custom) localStorage.setItem(OPEN_KEY, mod.id);
+  else localStorage.removeItem(OPEN_KEY);
 }
 function updateViewerLangButtons() {
   document.querySelectorAll('#viewer-lang button').forEach(b =>
@@ -1092,16 +1163,19 @@ function updateViewerLangButtons() {
 function viewerSwitchLang(l) {
   switchLang(l);
   updateViewerLangButtons();
-  /* 同源 iframe：若模組支援 switchLang 就即時切換 */
+  const adapter = MODULE_I18N[currentModId];
+  if (!adapter) return;
   try {
     const fw = document.getElementById('viewer-frame').contentWindow;
-    if (fw && typeof fw.switchLang === 'function') fw.switchLang(l);
-  } catch (e) { /* cross-origin or module without i18n — ignore */ }
+    if (fw && typeof fw[adapter.fn] === 'function') fw[adapter.fn](l);
+  } catch (e) { /* ignore */ }
 }
 function closeViewer() {
   document.getElementById('module-viewer').style.display = 'none';
   document.getElementById('viewer-frame').src = '';
   document.body.style.overflow = 'auto';
+  currentModId = null;
+  localStorage.removeItem(OPEN_KEY);
 }
 
 /* ─── Modal ─── */
@@ -1170,6 +1244,15 @@ document.head.appendChild(tw);
 
 const saved = localStorage.getItem('kb_lang');
 switchLang(['zh','en','fr'].includes(saved) ? saved : 'zh');
+
+/* 重新整理後回到上次開啟的筆記 */
+(function restoreOpenModule() {
+  const oid = localStorage.getItem(OPEN_KEY);
+  if (!oid) return;
+  const m = modules.find(x => x.id === oid && !String(x.file).startsWith('blob:'));
+  if (m) openModule(m);
+  else localStorage.removeItem(OPEN_KEY);
+})();
 </script>
 </body>
 </html>
