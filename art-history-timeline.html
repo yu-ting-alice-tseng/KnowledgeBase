@@ -166,6 +166,79 @@ h1 .gold { color: var(--gold); font-weight: 300; }
   padding-left: 15px; margin-top: 4px;
 }
 
+/* ── Artists view ── */
+#artist-search-wrap { position: relative; max-width: 480px; margin: 0 auto 30px; }
+#artist-search {
+  width: 100%;
+  background: rgba(255,242,200,0.045);
+  border: 1px solid rgba(201,168,92,0.18);
+  border-radius: 14px;
+  padding: 12px 20px 12px 44px;
+  color: var(--cream);
+  font-family: 'Nunito', 'Noto Serif TC', sans-serif; font-size: 13.5px; font-weight: 600;
+  outline: none; transition: all .25s;
+  box-shadow: inset 0 1px 0 rgba(255,235,160,0.1), 0 6px 22px rgba(0,0,0,0.25);
+  backdrop-filter: blur(20px);
+}
+#artist-search::placeholder { color: var(--muted); font-style: italic; font-weight: 500; }
+#artist-search:focus {
+  border-color: rgba(201,168,92,0.42); background: rgba(255,242,200,0.075);
+  box-shadow: 0 0 0 3px rgba(201,168,92,0.1), inset 0 1px 0 rgba(255,235,160,0.15);
+}
+#artist-search-ic {
+  position: absolute; left: 17px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); font-size: 13px; pointer-events: none;
+}
+#artist-none { display: none; text-align: center; color: var(--muted); padding: 48px 0; font-size: 13.5px; font-style: italic; font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; }
+.ac-bio { font-size: 12px; line-height: 1.85; color: var(--muted); margin-top: 8px; font-weight: 500; }
+.artist-card .ac-mv {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 9px;
+  padding: 3px 11px; border-radius: 11px; cursor: pointer;
+  background: rgba(201,168,92,0.06); border: 1px solid rgba(201,168,92,0.16);
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; color: var(--cream2);
+  transition: all .2s;
+}
+.artist-card .ac-mv:hover { color: var(--gold-hi); border-color: rgba(201,168,92,0.45); }
+.artist-card .ac-mv .dot { width: 6px; height: 6px; border-radius: 50%; }
+.work-chip.wk-btn { cursor: zoom-in; transition: all .2s; }
+.work-chip.wk-btn:hover { color: var(--gold-hi); border-color: rgba(232,204,132,0.65); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+
+/* ── Artwork lightbox ── */
+#wlb {
+  display: none; position: fixed; inset: 0; z-index: 400;
+  background: rgba(5,3,2,0.82); backdrop-filter: blur(18px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+#wlb.open { display: flex; }
+#wlb-box {
+  position: relative; max-width: 760px; width: 100%; max-height: 88vh; overflow-y: auto;
+  background: rgba(16,12,8,0.97);
+  border: 1px solid rgba(201,168,92,0.3);
+  border-radius: 18px; padding: 26px;
+  box-shadow: 0 60px 140px rgba(0,0,0,0.8), inset 0 1.5px 0 rgba(255,238,160,0.2);
+  animation: fade-in .3s ease both;
+}
+#wlb-close {
+  position: absolute; top: 14px; right: 14px; z-index: 5;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,242,200,0.06); border: 1px solid rgba(201,168,92,0.25);
+  color: var(--cream2); font-size: 13px; cursor: pointer; transition: all .2s;
+}
+#wlb-close:hover { color: var(--gold-hi); border-color: rgba(201,168,92,0.55); }
+.wlb-frame {
+  border: 9px solid #241a0e; outline: 1px solid rgba(201,168,92,0.5); border-radius: 3px;
+  background: #0e0b07; overflow: hidden;
+}
+.wlb-frame img { display: block; width: 100%; max-height: 62vh; object-fit: contain; background: #0e0b07; }
+.wlb-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 21px; font-weight: 600; color: #f0e6cf; margin-top: 15px;
+}
+.wlb-meta { font-size: 11.5px; font-weight: 700; color: var(--gold-lo); margin-top: 4px; letter-spacing: 0.05em; }
+.wlb-link { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 800; color: var(--gold); text-decoration: none; border-bottom: 1px dotted var(--gold-lo); }
+.wlb-link:hover { color: var(--gold-hi); }
+.wlb-status { text-align: center; color: var(--muted); font-size: 13px; font-style: italic; padding: 46px 0; font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; }
+
 /* ── Region filter chips ── */
 #filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
 .chip {
@@ -530,6 +603,7 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
   <nav id="view-tabs" role="tablist">
     <button class="vtab active" id="vtab-timeline" role="tab" onclick="showView('timeline')"><span class="vt-ic">◷</span><span class="vt-txt">時間軸</span></button>
     <button class="vtab" id="vtab-movements" role="tab" onclick="showView('movements')"><span class="vt-ic">✦</span><span class="vt-txt">藝術流派</span></button>
+    <button class="vtab" id="vtab-artists" role="tab" onclick="showView('artists')"><span class="vt-ic">❦</span><span class="vt-txt">藝術家</span></button>
     <button class="vtab" id="vtab-museums" role="tab" onclick="showView('museums')"><span class="vt-ic">◈</span><span class="vt-txt">博物館</span></button>
   </nav>
 
@@ -560,6 +634,8 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
 
   <div id="view-movements" class="view-hidden"></div>
 
+  <div id="view-artists" class="view-hidden"></div>
+
   <div id="view-museums" class="view-hidden">
     <section id="museums"></section>
   </div>
@@ -571,6 +647,14 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
 </div>
 
 <div id="tooltip"></div>
+
+<!-- 畫作圖片燈箱 -->
+<div id="wlb" role="dialog" aria-modal="true" onclick="if(event.target===this)closeWlb()">
+  <div id="wlb-box">
+    <button id="wlb-close" onclick="closeWlb()" aria-label="Close">✕</button>
+    <div id="wlb-body"></div>
+  </div>
+</div>
 
 <script>
 /* ═══════════ 資料 ═══════════ */
@@ -601,6 +685,13 @@ const UI = {
     tabTimeline: '時間軸',
     tabMovements: '藝術流派',
     tabMuseums: '博物館',
+    tabArtists: '藝術家',
+    artistsSub: '七十位藝術家的生平與代表作——點擊作品籤章即可查看畫作圖片。',
+    searchPH: '搜尋藝術家、流派或作品…',
+    searchNone: '找不到符合的藝術家。',
+    lbLoading: '正在搜尋畫作圖片…',
+    lbNone: '未能找到這件作品的圖片。',
+    lbWiki: '在 Wikipedia 檢視 ↗',
     originLabel: '歷史背景與萌芽 Origins',
     mvxSub: '二十個流派的誕生背景——點選卡片開啟完整詳情。',
     museumsTitle: '博物館導覽 Museum Guide',
@@ -625,6 +716,13 @@ const UI = {
     tabTimeline: 'Timeline',
     tabMovements: 'Movements',
     tabMuseums: 'Museums',
+    tabArtists: 'Artists',
+    artistsSub: 'Lives and masterpieces of seventy artists — click any work chip to see the picture.',
+    searchPH: 'Search artists, movements or works…',
+    searchNone: 'No artists match your search.',
+    lbLoading: 'Fetching the artwork image…',
+    lbNone: 'No image could be found for this work.',
+    lbWiki: 'View on Wikipedia ↗',
     originLabel: 'Historical Background &amp; Origins',
     mvxSub: 'How each of the twenty movements came to be — click a card for full details.',
     museumsTitle: 'Museum Guide',
@@ -649,6 +747,13 @@ const UI = {
     tabTimeline: 'Frise',
     tabMovements: 'Mouvements',
     tabMuseums: 'Musées',
+    tabArtists: 'Artistes',
+    artistsSub: 'Vies et chefs-d’œuvre de soixante-dix artistes — cliquez une pastille d’œuvre pour voir l’image.',
+    searchPH: 'Rechercher artistes, mouvements ou œuvres…',
+    searchNone: 'Aucun artiste ne correspond à votre recherche.',
+    lbLoading: 'Recherche de l’image en cours…',
+    lbNone: 'Aucune image trouvée pour cette œuvre.',
+    lbWiki: 'Voir sur Wikipédia ↗',
     originLabel: 'Contexte historique et origines',
     mvxSub: 'Comment chacun des vingt mouvements est né — cliquez une carte pour le détail complet.',
     museumsTitle: 'Guide des musées',
@@ -1550,6 +1655,260 @@ const ORIGINS = {
     fr: 'Coupées de l’Ancien Monde, les civilisations mésoaméricaines inventèrent seules agriculture, calendriers et écriture. Dans leur cosmologie, les dieux avaient créé le monde par leur propre sacrifice, et l’humanité leur devait le sang en retour — l’art gravita donc autour du temple, du calendrier et du rite. Le jade valait plus que l’or, les plumes étaient la couleur des dieux : un système de valeurs sans équivalent eurasien.' },
 };
 
+/* ═══════════ 藝術家詳細生平（與 MASTERS 依序對齊） ═══════════ */
+const BIOS = {
+prehistoric: [
+  { zh: "1994 年三名洞穴探勘者在法國阿爾代什峽谷發現肖維洞窟，內有獅群、犀牛與熊的壁畫，年代早於拉斯科近兩萬年。畫師已懂得利用炭筆暈染與岩壁弧度製造動態，顛覆了「藝術由簡入繁」的演化想像。",
+    en: "Discovered by three cavers in the Ardèche gorge in 1994, the Chauvet cave holds lions, rhinos and bears painted nearly twenty thousand years before Lascaux. Its painters already used charcoal shading and the curve of the rock to create motion — overturning the idea that art evolved from crude to refined.",
+    fr: "Découverte par trois spéléologues dans les gorges de l’Ardèche en 1994, la grotte Chauvet abrite lions, rhinocéros et ours peints près de vingt mille ans avant Lascaux. Ses peintres maîtrisaient déjà l’estompe au charbon et la courbe de la roche pour créer le mouvement — renversant l’idée d’un art évoluant du fruste au raffiné." },
+  { zh: "拉斯科壁畫出自舊石器時代馬格德林文化的獵人集團，顏料以赭石、氧化錳調和動物脂肪製成，藉獸脂燈在全黑洞窟中作業。近六百幅動物中沒有一幅人像肖像，唯一的人形出現在神祕的「井底場景」。",
+    en: "The Lascaux paintings were made by Magdalenian hunter bands, grinding ochre and manganese with animal fat and working by tallow lamp in total darkness. Among nearly six hundred animals there is no true human portrait — the only figure appears in the enigmatic Shaft Scene.",
+    fr: "Les peintures de Lascaux sont l’œuvre de chasseurs magdaléniens, broyant ocre et manganèse au gras animal et travaillant à la lampe à suif dans l’obscurité totale. Parmi près de six cents animaux, aucun portrait humain — la seule silhouette apparaît dans l’énigmatique Scène du Puits." },
+  { zh: "1879 年業餘考古學者索圖拉的八歲女兒仰頭喊出「爸爸，牛！」，天花板上的野牛群才重見天日。學界起初斥為偽作，索圖拉含冤而終，直到 1902 年學界公開道歉——史前藝術自此獲得正名。",
+    en: "In 1879 the eight-year-old daughter of amateur archaeologist Sautuola looked up and cried “Papa, oxen!” — revealing the bison on the ceiling. Scholars denounced the find as a forgery and Sautuola died discredited; only in 1902 did academia publicly apologise, finally legitimising prehistoric art.",
+    fr: "En 1879, la fillette de huit ans de l’archéologue amateur Sautuola leva les yeux et cria « Papa, des bœufs ! » — révélant les bisons du plafond. Les savants crièrent au faux et Sautuola mourut discrédité ; l’académie ne s’excusa publiquement qu’en 1902, légitimant enfin l’art préhistorique." },
+],
+egypt: [
+  { zh: "阿肯那頓宗教革命時期的首席雕塑家，工作室 1912 年在阿瑪納出土，娜芙蒂蒂胸像即在其中。他打破千年正面律，捕捉王后頸項的弧度與眼神的溫度，是古埃及最接近「個人風格」的藝術家。",
+    en: "Chief sculptor during Akhenaten’s religious revolution; his workshop, excavated at Amarna in 1912, yielded the bust of Nefertiti. Breaking with a millennium of frontality, he caught the curve of the queen’s neck and the warmth of her gaze — the closest ancient Egypt came to a personal style.",
+    fr: "Sculpteur en chef de la révolution religieuse d’Akhenaton ; son atelier, fouillé à Amarna en 1912, livra le buste de Néfertiti. Rompant avec un millénaire de frontalité, il saisit la courbe du cou de la reine et la chaleur de son regard — ce que l’Égypte connut de plus proche d’un style personnel." },
+  { zh: "居住在帝王谷旁的工匠村，村民世代負責開鑿與彩繪王陵，識字率遠高於平民，留下大量工作日誌、情詩與罷工紀錄——人類歷史上第一次有紀錄的罷工，正是為了遲發的口糧。",
+    en: "A village of craftsmen beside the Valley of the Kings, its families cutting and painting royal tombs for generations. Unusually literate, they left work journals, love poems — and the first recorded strike in history, staged over late grain rations.",
+    fr: "Village d’artisans jouxtant la Vallée des Rois, dont les familles creusèrent et peignirent les tombes royales sur des générations. Étonnamment lettrés, ils laissèrent journaux de chantier, poèmes d’amour — et la première grève documentée de l’histoire, déclenchée par des rations en retard." },
+  { zh: "金字塔時代的皇家作坊以閃長岩、片岩等最堅硬的石材雕鑿法老，確立「雕像是靈魂永恆居所」的功能：軀體理想化、姿態永恆靜止。書記官坐像則例外地寫實——連鬆弛的腹部也如實刻出。",
+    en: "The royal workshops of the pyramid age carved pharaohs from diorite and schist, the hardest stones, fixing the statue’s function as an eternal home for the soul: idealised bodies, eternally still. The Seated Scribe is the great exception — realistic down to his slackening belly.",
+    fr: "Les ateliers royaux de l’âge des pyramides taillèrent les pharaons dans la diorite et le schiste, pierres les plus dures, fixant la fonction de la statue : demeure éternelle de l’âme, corps idéalisé, immobilité parfaite. Le Scribe accroupi fait exception — réaliste jusqu’au ventre relâché." },
+],
+greek: [
+  { zh: "活躍於雅典的青銅雕刻家，善於凝結運動的臨界瞬間——擲鐵餅者被定格在蓄力與釋放之間的千分之一秒。原作青銅全數佚失，今日所見皆為羅馬時代的大理石摹本。",
+    en: "A bronze sculptor active in Athens, he froze athletic motion at its critical instant — the Discobolus caught in the split second between coiling and release. All his bronzes are lost; what survives are Roman marble copies.",
+    fr: "Sculpteur en bronze actif à Athènes, il figea le mouvement athlétique à l’instant critique — le Discobole saisi entre la torsion et le lancer. Tous ses bronzes sont perdus ; ne survivent que des copies romaines en marbre." },
+  { zh: "伯里克利的摯友與雅典衛城工程的總監，帕德嫩的神像與浮雕皆出自其擘畫；奧林匹亞宙斯巨像名列古代世界七大奇觀。晚年遭政敵以侵吞黃金與瀆神罪構陷，死於獄中或流亡途中。",
+    en: "Friend of Pericles and overseer of the Acropolis programme, he conceived the Parthenon’s sculptures and the Zeus at Olympia, one of the Seven Wonders of the ancient world. His enemies charged him with embezzling gold and impiety; he died in prison or in exile.",
+    fr: "Ami de Périclès et maître d’œuvre de l’Acropole, il conçut les sculptures du Parthénon et le Zeus d’Olympie, l’une des Sept Merveilles du monde antique. Ses ennemis l’accusèrent de détournement d’or et d’impiété ; il mourut en prison ou en exil." },
+  { zh: "雅典雕刻世家之後，以大理石的柔潤肌理聞名。尼多斯的阿芙蘿黛蒂是西方藝術第一尊等身全裸女神，據傳以名妓芙里尼為模特兒，古代旅人專程環航只為一睹。",
+    en: "Heir to an Athenian sculpting dynasty, famed for marble that seems to soften into flesh. His Aphrodite of Knidos was the first life-size female nude in Western art, reputedly modelled on the courtesan Phryne — ancient travellers sailed across the sea just to see her.",
+    fr: "Héritier d’une dynastie de sculpteurs athéniens, célèbre pour un marbre qui semble devenir chair. Son Aphrodite de Cnide fut le premier nu féminin grandeur nature de l’art occidental, inspiré dit-on de la courtisane Phryné — les voyageurs antiques prenaient la mer pour la voir." },
+],
+byzantine: [
+  { zh: "牧童出身，傳說契馬布耶見他在石頭上畫羊而收為徒。他讓聖經人物第一次擁有重量、悲傷與擁抱，但丁在《神曲》中已預言其名聲將蓋過老師。",
+    en: "A shepherd boy by legend, taken on by Cimabue after being found drawing sheep on a stone. He gave biblical figures weight, grief and embrace for the first time; Dante wrote in the Commedia that his fame had already eclipsed his master’s.",
+    fr: "Berger selon la légende, recruté par Cimabue qui l’aurait surpris dessinant ses moutons sur une pierre. Il donna aux figures bibliques poids, chagrin et étreinte ; Dante écrivit dans la Comédie que sa gloire éclipsait déjà celle de son maître." },
+  { zh: "西恩納畫派的奠基者。《莊嚴聖母》完成之日，全城敲鐘遊行將祭壇畫從畫室迎入大教堂，商鋪歇業如國定假日——一幅畫成為全城的節慶。檔案也記載他屢因欠債與拒服兵役被罰款。",
+    en: "Founder of the Sienese school. When his Maestà was finished, the whole city processed it from workshop to cathedral with bells ringing and shops shuttered — a painting turned civic festival. Archives also record his fines for debt and for refusing militia duty.",
+    fr: "Fondateur de l’école siennoise. À l’achèvement de sa Maestà, la ville entière la porta en procession de l’atelier à la cathédrale, cloches sonnant, boutiques closes — un tableau devenu fête civique. Les archives notent aussi ses amendes pour dettes et refus de milice." },
+  { zh: "莫斯科附近修道院的僧侶畫家，生平幾乎無文字紀錄。《三位一體》以三位天使的無言圍坐表現神學的循環之愛，1551 年被教會大公會議定為聖像的最高典範；1966 年塔可夫斯基以他為名拍成史詩電影。",
+    en: "A monk-painter near Moscow whose life is nearly undocumented. His Trinity renders divine love as three angels seated in silent communion; a church council of 1551 declared it the supreme model for icons, and Tarkovsky’s 1966 epic film bears his name.",
+    fr: "Moine-peintre des environs de Moscou, à la vie presque sans archives. Sa Trinité rend l’amour divin par trois anges en communion silencieuse ; un concile de 1551 la déclara modèle suprême de l’icône, et l’épopée de Tarkovski (1966) porte son nom." },
+],
+renaissance: [
+  { zh: "文西鎮公證人的私生子，於維洛及歐工作坊出師。一生解剖三十餘具屍體、設計飛行器與水利工程，以鏡像字寫下七千頁筆記；繪畫於他只是理解宇宙的方式之一。晚年受法王法蘭索瓦一世禮聘，逝於昂布瓦茲。",
+    en: "Illegitimate son of a notary from Vinci, trained in Verrocchio’s workshop. He dissected over thirty corpses, designed flying machines and waterworks, and filled seven thousand pages of mirror-written notes — painting was merely one of his instruments for understanding the universe. He died at Amboise, guest of Francis I.",
+    fr: "Fils illégitime d’un notaire de Vinci, formé chez Verrocchio. Il disséqua plus de trente cadavres, dessina machines volantes et ouvrages hydrauliques, remplit sept mille pages d’écriture en miroir — la peinture n’était qu’un de ses instruments pour comprendre l’univers. Il mourut à Amboise, hôte de François Ier." },
+  { zh: "由佛羅倫斯石匠之妻哺育長大，自稱「連鑿子與錘都是隨奶水吸來的」。二十四歲以《聖殤》成名，一生橫跨雕刻、繪畫、建築與詩歌，與教宗爭執不斷；八十八歲逝世前數日，仍在鑿刻《隆達尼尼聖殤》。",
+    en: "Nursed by a stonecutter’s wife in Florence — he claimed to have drunk in chisel and mallet with her milk. Famous at twenty-four with the Pietà, he ranged across sculpture, painting, architecture and poetry, feuding with popes all the way; days before dying at eighty-eight he was still carving the Rondanini Pietà.",
+    fr: "Nourri par la femme d’un tailleur de pierre de Florence — il disait avoir tété le ciseau et le maillet avec son lait. Célèbre à vingt-quatre ans avec la Pietà, il embrassa sculpture, peinture, architecture et poésie, querellant les papes sans relâche ; quelques jours avant de mourir à quatre-vingt-huit ans, il taillait encore la Pietà Rondanini." },
+  { zh: "烏爾比諾宮廷畫師之子，先後吸收佩魯吉諾、達文西與米開朗基羅之長。三十歲上下已主持梵蒂岡簽字廳與聖彼得大教堂工程，工作坊龐大如企業；三十七歲生日當天病逝，全羅馬為之送葬，安眠於萬神殿。",
+    en: "Son of the Urbino court painter, he absorbed Perugino, Leonardo and Michelangelo in turn. Around thirty he was directing the Vatican Stanze and St Peter’s, running a workshop the size of a firm; he died on his thirty-seventh birthday, mourned by all Rome and buried in the Pantheon.",
+    fr: "Fils du peintre de cour d’Urbino, il assimila tour à tour Pérugin, Léonard et Michel-Ange. Vers trente ans, il dirigeait les Chambres du Vatican et Saint-Pierre, à la tête d’un atelier grand comme une entreprise ; il mourut le jour de ses trente-sept ans, pleuré par Rome entière et inhumé au Panthéon." },
+  { zh: "本名菲利佩皮，「波提切利（小桶）」原是綽號。梅迪奇圈子的寵兒，把新柏拉圖主義的理想之美畫成維納斯的臉。晚年受薩佛納羅拉「虛榮之火」運動震撼，據傳親手焚毀部分作品，在拉斐爾的時代寂寞離世。",
+    en: "Born Filipepi — “Botticelli”, little barrel, was a nickname. Darling of the Medici circle, he gave Neoplatonic ideal beauty the face of Venus. Shaken late in life by Savonarola’s bonfire of the vanities — reputedly burning some of his own works — he died forgotten in Raphael’s era.",
+    fr: "Né Filipepi — « Botticelli », petit tonneau, n’était qu’un surnom. Chéri du cercle des Médicis, il donna à la beauté néoplatonicienne le visage de Vénus. Bouleversé sur le tard par le bûcher des vanités de Savonarole — brûlant, dit-on, certaines de ses œuvres — il mourut oublié à l’époque de Raphaël." },
+],
+baroque: [
+  { zh: "米蘭出身，在羅馬以酒館鬥毆與天才齊名。1606 年因網球賭局殺人而亡命那不勒斯、馬爾他與西西里，通緝令下仍畫出最深沉的祭壇畫；三十八歲死於熱病與逃亡途中。",
+    en: "Milanese by origin, equally famous in Rome for genius and tavern brawls. In 1606 he killed a man over a tennis wager and fled through Naples, Malta and Sicily, painting his darkest altarpieces with a price on his head; he died at thirty-eight, feverish and still on the run.",
+    fr: "Milanais d’origine, aussi célèbre à Rome pour son génie que pour ses rixes. En 1606, il tua un homme pour un pari au jeu de paume et s’enfuit par Naples, Malte et la Sicile, peignant ses retables les plus sombres avec sa tête mise à prix ; il mourut à trente-huit ans, fiévreux, toujours en cavale." },
+  { zh: "磨坊主之子，二十多歲即成阿姆斯特丹肖像畫首選。妻兒相繼離世、揮霍成性導致 1656 年破產，房屋與收藏悉數拍賣；晚年筆觸愈粗放、目光愈深邃，貧困中葬於無名墓穴。",
+    en: "A miller’s son who became Amsterdam’s portraitist of choice in his twenties. Bereaved of wife and children and ruinously extravagant, he went bankrupt in 1656, house and collections auctioned; his late brushwork grew rougher, his gaze deeper, and he was buried in an unmarked pauper’s grave.",
+    fr: "Fils de meunier, portraitiste favori d’Amsterdam dès la vingtaine. Frappé par les deuils et ruiné par ses prodigalités, il fit faillite en 1656, maison et collections vendues aux enchères ; sa touche tardive se fit plus rude, son regard plus profond, et il fut enterré dans une fosse anonyme." },
+  { zh: "台夫特的畫商兼旅店主，一生未離故鄉，年產僅兩三幅。法荷戰爭摧毀藝術市場，他負債猝逝，妻子以畫抵債；此後被遺忘兩百年，直到十九世紀評論家托雷—比爾格重新「發現」他。",
+    en: "A Delft art dealer and innkeeper who never left his hometown, producing only two or three paintings a year. The Franco-Dutch war wrecked the art market; he died suddenly in debt, his widow settling accounts with pictures — then two centuries of oblivion, until the critic Thoré-Bürger rediscovered him.",
+    fr: "Marchand d’art et aubergiste de Delft, jamais sorti de sa ville, produisant deux ou trois toiles par an. La guerre de Hollande ruina le marché ; il mourut brusquement, endetté, sa veuve payant en tableaux — puis deux siècles d’oubli, jusqu’à sa redécouverte par le critique Thoré-Bürger." },
+  { zh: "八歲即能刻大理石的神童，歷仕八任教宗，聖彼得廣場的環抱柱廊即其手筆。戲劇、佈景、噴泉無所不能，讓整座羅馬成為巴洛克的舞台；對手波洛米尼的每一座教堂，都是與他競技的回聲。",
+    en: "A prodigy carving marble at eight, he served eight popes and designed the embracing colonnade of St Peter’s Square. Playwright, stage designer, fountain-maker, he turned all Rome into a Baroque theatre; every church by his rival Borromini echoes their duel.",
+    fr: "Prodige taillant le marbre à huit ans, il servit huit papes et dessina la colonnade de la place Saint-Pierre. Dramaturge, scénographe, fontainier, il fit de Rome entière un théâtre baroque ; chaque église de son rival Borromini résonne de leur duel." },
+],
+rococo: [
+  { zh: "法蘭德斯邊城瓦朗謝訥出身，體弱多病。他發明「雅宴畫」這一新畫種，學院為此破格增設類別；筆下的遊園盛會總籠罩著離別的微光。三十六歲死於肺癆，臨終前仍要求畫筆。",
+    en: "Born in Valenciennes on the Flemish border, frail all his life. He invented the fête galante — a genre so new the Academy created a category for it — and his garden parties always shimmer with imminent farewell; dying of consumption at thirty-six, he asked for his brushes at the end.",
+    fr: "Né à Valenciennes, aux marches flamandes, de santé fragile. Il inventa la fête galante — genre si neuf que l’Académie créa une catégorie pour lui — et ses fêtes champêtres luisent toujours d’un adieu imminent ; mourant de phtisie à trente-six ans, il réclama ses pinceaux jusqu’à la fin." },
+  { zh: "從版畫學徒一路做到皇家首席畫家與戈布蘭織毯廠總監，是龐巴度夫人的繪畫教師與形象設計師。狄德羅罵他「只有取悅的才能」——而取悅，正是那個時代宮廷藝術的全部任務。",
+    en: "From engraver’s apprentice to First Painter to the King and director of the Gobelins, he was Madame de Pompadour’s drawing master and image-maker. Diderot sneered that he had “nothing but the talent to please” — but pleasing was precisely the court’s whole commission.",
+    fr: "D’apprenti graveur à Premier peintre du Roi et directeur des Gobelins, il fut le maître de dessin et l’imagier de la Pompadour. Diderot railla son « seul talent de plaire » — mais plaire était précisément toute la commande de la cour." },
+  { zh: "南法香水之鄉格拉斯出身，夏爾丹與布雪的弟子，羅馬大獎得主卻放棄學院正途，轉攻私人客戶的輕快小品。大革命後品味丕變、客戶上了斷頭台，他在貧困中被遺忘，靠大衛安排的美術館職位餬口。",
+    en: "Born in Grasse, the perfume town, pupil of Chardin and Boucher, he won the Prix de Rome then abandoned the academic path for sparkling private commissions. The Revolution guillotined his clientele and his style fell from favour; he died poor and forgotten, kept afloat by a museum post arranged by David.",
+    fr: "Né à Grasse, ville des parfums, élève de Chardin et de Boucher, il gagna le prix de Rome puis délaissa la voie académique pour de pétillantes commandes privées. La Révolution guillotina sa clientèle et démoda son style ; il mourut pauvre et oublié, soutenu par un poste de musée obtenu grâce à David." },
+],
+romanticism: [
+  { zh: "大革命的首席畫家與雅各賓黨人，投票處死路易十六，親自導演革命慶典；羅伯斯比爾倒台後入獄，出獄後轉而效忠拿破崙。滑鐵盧之後流亡布魯塞爾，至死未獲返法特赦。",
+    en: "First painter of the Revolution and a Jacobin who voted to execute Louis XVI and choreographed its festivals; jailed after Robespierre fell, he re-emerged as Napoleon’s image-maker. After Waterloo he died in Brussels exile, never pardoned.",
+    fr: "Premier peintre de la Révolution, jacobin qui vota la mort de Louis XVI et mit en scène ses fêtes ; emprisonné à la chute de Robespierre, il ressurgit en imagier de Napoléon. Après Waterloo, il mourut exilé à Bruxelles, jamais gracié." },
+  { zh: "薩拉戈薩鍍金匠之子，官至西班牙宮廷首席畫家。1793 年重病失聰後畫風轉暗，半島戰爭的暴行催生《戰爭的災難》蝕刻集；晚年在「聾人之家」牆上畫下十四幅黑畫，最後自我流放波爾多。",
+    en: "A gilder’s son from Zaragoza who rose to First Court Painter of Spain. Deafened by illness in 1793, his art darkened; the atrocities of the Peninsular War bred the Disasters of War etchings, and in old age he painted the fourteen Black Paintings on the walls of his “Deaf Man’s House” before self-exile in Bordeaux.",
+    fr: "Fils de doreur de Saragosse devenu Premier peintre de la cour d’Espagne. Assourdi par la maladie en 1793, son art s’assombrit ; les atrocités de la guerre d’Espagne engendrèrent les Désastres de la guerre, et, vieillard, il peignit les quatorze Peintures noires sur les murs de sa « Maison du Sourd » avant l’exil volontaire à Bordeaux." },
+  { zh: "外交官之子（傳聞生父是塔列朗），文學與音樂圈的摯友，蕭邦與喬治桑皆入其肖像。1832 年出使摩洛哥的旅程給了他一生的色彩寶庫；日記與書信之精彩不下於畫作，波特萊爾尊他為「最後的文藝復興人、最初的現代人」。",
+    en: "Son of a diplomat (rumour named Talleyrand his real father), intimate of writers and musicians — he painted Chopin and George Sand. An 1832 journey to Morocco stocked his palette for life; his journals rival his canvases, and Baudelaire crowned him “the last Renaissance man and the first modern”.",
+    fr: "Fils de diplomate (la rumeur donnait Talleyrand pour père), proche des écrivains et musiciens — il peignit Chopin et George Sand. Le voyage au Maroc de 1832 nourrit sa palette pour la vie ; son Journal rivalise avec ses toiles, et Baudelaire le sacra « dernier homme de la Renaissance et premier moderne »." },
+  { zh: "倫敦理髮師之子，十四歲入皇家美術院，一生高產逾兩萬件。傳說他曾把自己綁上暴風雪中的船桅四小時只為觀察；遺囑將全部作品捐給國家——泰特美術館的特納展廳與當代藝術的特納獎，皆以他為名。",
+    en: "A London barber’s son, admitted to the Royal Academy at fourteen, he left over twenty thousand works. Legend has him lashed to a ship’s mast for four hours in a snowstorm, just to watch; he willed his entire output to the nation — hence Tate’s Turner galleries and the Turner Prize.",
+    fr: "Fils d’un barbier de Londres, admis à la Royal Academy à quatorze ans, il laissa plus de vingt mille œuvres. La légende le dit attaché quatre heures au mât d’un navire dans la tempête, pour voir ; il légua tout à la nation — d’où les salles Turner de la Tate et le Turner Prize." },
+],
+realism: [
+  { zh: "法瑞邊境奧南的地主之子，自學成家、自我行銷的先驅：1855 年世博會拒收其巨作，他索性在對街自建「寫實主義館」個展。巴黎公社期間主持藝術委員會，因凡登圓柱被推倒一案入獄並賠償鉅款，流亡瑞士而終。",
+    en: "A landowner’s son from Ornans, self-taught and a pioneer of self-promotion: when the 1855 World’s Fair refused his masterpieces he built his own “Pavilion of Realism” across the street. Head of the arts commission under the Paris Commune, he was jailed and ruinously fined for the toppling of the Vendôme Column, dying in Swiss exile.",
+    fr: "Fils de propriétaires d’Ornans, autodidacte et pionnier de l’autopromotion : refusé à l’Exposition de 1855, il bâtit en face son propre « Pavillon du Réalisme ». Responsable des arts sous la Commune, il fut emprisonné et ruiné pour la chute de la colonne Vendôme, et mourut exilé en Suisse." },
+  { zh: "諾曼第農家長子，熟讀維吉爾與聖經。定居巴比松後專畫農民的勞動與尊嚴，生前毀譽參半、身後聲名暴漲——《晚禱》在他死後被炒到五十五萬法郎，遺孀卻仍在領救濟金。梵谷臨摹其作二十餘幅。",
+    en: "Eldest son of a Normandy farming family, raised on Virgil and the Bible. Settled in Barbizon, he painted peasant labour and its dignity; scorned and praised in life, wildly priced after death — The Angelus fetched 550,000 francs while his widow lived on charity. Van Gogh copied him more than twenty times.",
+    fr: "Aîné d’une famille paysanne normande, nourri de Virgile et de la Bible. Fixé à Barbizon, il peignit le labeur paysan et sa dignité ; contesté de son vivant, flambant après sa mort — L’Angélus atteignit 550 000 francs quand sa veuve vivait d’aumônes. Van Gogh le copia plus de vingt fois." },
+  { zh: "馬賽玻璃匠之子，一生創作四千餘幅石版畫，因《高康大》諷刺國王路易—菲力普而坐牢半年。油畫生前幾乎無人聞問，直到臨終前一年好友們才為他辦了首次個展；晚年失明，在柯洛默默相贈的屋子裡安度餘生。",
+    en: "A Marseille glazier’s son who produced over four thousand lithographs, jailed six months for caricaturing King Louis-Philippe as Gargantua. His paintings went unnoticed until friends mounted his first show a year before his death; blind in old age, he lived out his days in a house quietly given him by Corot.",
+    fr: "Fils d’un vitrier marseillais, auteur de plus de quatre mille lithographies, emprisonné six mois pour son Gargantua visant Louis-Philippe. Ses peintures restèrent ignorées jusqu’à sa première exposition, montée par ses amis un an avant sa mort ; aveugle, il finit ses jours dans une maison discrètement offerte par Corot." },
+],
+impressionism: [
+  { zh: "勒阿弗爾雜貨商之子，少年以諷刺肖像小有名氣，被布丹拉去戶外寫生而「開竅」。窮困半生後靠《乾草堆》系列翻身，親手打造吉維尼的水園；白內障近盲仍畫下巨幅《睡蓮》，直到八十六歲辭世。",
+    en: "Son of a Le Havre grocer, locally famous as a teenage caricaturist until Boudin dragged him outdoors to paint. After decades of poverty the Haystacks series made his fortune; he built the water garden at Giverny himself and, nearly blind with cataracts, painted the vast Water Lilies until his death at eighty-six.",
+    fr: "Fils d’un épicier du Havre, caricaturiste adolescent réputé jusqu’à ce que Boudin l’entraîne peindre dehors. Après des décennies de gêne, les Meules firent sa fortune ; il créa lui-même le jardin d’eau de Giverny et, presque aveugle de cataracte, peignit les immenses Nymphéas jusqu’à sa mort à quatre-vingt-six ans." },
+  { zh: "里摩日裁縫之子，十三歲進瓷器廠描花，在茶杯上練出明快的筆觸。晚年類風濕使雙手變形，把畫筆綁在手上繼續作畫，並口述指導助手完成雕塑——「若非作畫之樂，我不會成為畫家。」",
+    en: "A Limoges tailor’s son who painted porcelain from thirteen, learning his light touch on teacups. Crippled by rheumatoid arthritis in old age, he painted with brushes strapped to his hands and dictated sculpture to assistants — “I would never have been a painter without the pleasure of it.”",
+    fr: "Fils d’un tailleur de Limoges, décorateur de porcelaine dès treize ans — sa touche légère vient des tasses à thé. Perclus de polyarthrite, il peignit les pinceaux attachés aux mains et dicta ses sculptures à des assistants — « sans le plaisir, je n’aurais jamais été peintre »." },
+  { zh: "銀行世家出身、學院派訓練，自稱「寫實主義者」而非印象派，鄙視戶外寫生，卻參加了八次聯展中的七次。晚年視力衰退轉向粉彩與蠟塑；《十四歲的小舞者》因使用真髮與真紗裙，在當年掀起軒然大波。",
+    en: "Banker’s family, academically trained, he called himself a realist, despised outdoor painting — and still showed in seven of the eight Impressionist exhibitions. As his sight failed he turned to pastel and wax; his Little Dancer Aged Fourteen, with real hair and tutu, scandalised the public.",
+    fr: "Issu de la banque, de formation académique, il se disait réaliste, méprisait le plein air — et participa pourtant à sept des huit expositions impressionnistes. La vue déclinant, il passa au pastel et à la cire ; sa Petite Danseuse de quatorze ans, vrais cheveux et vrai tutu, fit scandale." },
+  { zh: "家族相傳是布雪的後裔，馬奈的弟媳與最愛的模特兒。身為上流社會女性，她無法出入咖啡館與畫室社交，便把客廳、花園與育兒畫成印象派最溫柔的一翼；首屆聯展中，她是唯一的女性成員。",
+    en: "By family legend a descendant of Boucher, sister-in-law and favourite model of Manet. Barred as a society woman from café and studio life, she made drawing rooms, gardens and motherhood the tenderest wing of Impressionism — the only woman in the first exhibition.",
+    fr: "Descendante de Boucher selon la légende familiale, belle-sœur et modèle préféré de Manet. Exclue, en femme du monde, des cafés et des ateliers, elle fit des salons, jardins et maternités l’aile la plus tendre de l’impressionnisme — seule femme de la première exposition." },
+],
+postimpressionism: [
+  { zh: "牧師之子，做過畫廊店員、教師與傳道人，二十七歲才決心作畫。與弟弟西奧的六百餘封書信是藝術史上最動人的文獻；在阿爾、聖雷米與奧維的最後三年畫出近五百幅，三十七歲死於槍傷。",
+    en: "A pastor’s son who tried art dealing, teaching and preaching before deciding at twenty-seven to paint. His six hundred letters to his brother Theo are art history’s most moving archive; in his last three years at Arles, Saint-Rémy and Auvers he made nearly five hundred paintings, dying of a gunshot wound at thirty-seven.",
+    fr: "Fils de pasteur, tour à tour marchand, maître d’école et prédicateur avant de choisir la peinture à vingt-sept ans. Ses six cents lettres à Théo forment l’archive la plus émouvante de l’histoire de l’art ; en trois dernières années à Arles, Saint-Rémy et Auvers, il peignit près de cinq cents toiles avant de mourir d’une balle à trente-sept ans." },
+  { zh: "普羅旺斯銀行家之子，與左拉是少年摯友（後因小說《傑作》反目）。沙龍落選數十年，五十六歲才辦首次個展；晚年隱居艾克斯，一座聖維克多山畫了八十餘遍，臨終前一週仍冒雨寫生。",
+    en: "Son of an Aix banker and boyhood friend of Zola (until the novel L’Œuvre broke them apart). Rejected by the Salon for decades, he had his first solo show at fifty-six; a recluse at Aix, he painted Mont Sainte-Victoire more than eighty times and was out sketching in the rain a week before he died.",
+    fr: "Fils d’un banquier d’Aix, ami d’enfance de Zola (jusqu’à la brouille de L’Œuvre). Refusé au Salon des décennies durant, il eut sa première exposition personnelle à cinquante-six ans ; reclus à Aix, il peignit plus de quatre-vingts fois la Sainte-Victoire et travaillait encore sous la pluie une semaine avant sa mort." },
+  { zh: "童年在祕魯度過，當過水手與股票經紀人，三十五歲拋下職業與家庭獻身繪畫。與梵谷在阿爾同住九週，以割耳事件告終；晚年遠走大溪地與馬克薩斯群島，貧病中寫下《諾亞·諾亞》，死後兩年畫價暴漲。",
+    en: "Raised partly in Peru, he was a sailor and a stockbroker before abandoning career and family at thirty-five. His nine weeks with Van Gogh in Arles ended with the severed ear; he sailed for Tahiti and the Marquesas, wrote Noa Noa in poverty and sickness, and his prices exploded two years after his death.",
+    fr: "Élevé en partie au Pérou, marin puis agent de change, il abandonna carrière et famille à trente-cinq ans. Ses neuf semaines avec Van Gogh à Arles finirent par l’oreille coupée ; parti pour Tahiti et les Marquises, il écrivit Noa Noa dans la misère, et ses prix explosèrent deux ans après sa mort." },
+  { zh: "巴黎富裕家庭出身、受過嚴格學院訓練，卻以光學與色彩科學重造繪畫，自創點彩「分光法」。個性沉默隱密，連摯友都不知他有同居情人與孩子；三十一歲死於白喉，畫齡僅僅十年。",
+    en: "From a comfortable Paris family and strict academic training, he rebuilt painting on optics and colour science, inventing pointillist “divisionism”. So secretive that even close friends never knew of his companion and son, he died of diphtheria at thirty-one, after barely ten working years.",
+    fr: "Issu d’une famille parisienne aisée et d’une stricte formation académique, il refonda la peinture sur l’optique et la science des couleurs, inventant le divisionnisme. Si secret que ses proches ignoraient sa compagne et son fils, il mourut de diphtérie à trente et un ans, après dix ans de carrière à peine." },
+],
+modernism: [
+  { zh: "馬拉加美術教師之子，據說會說話之前先會畫畫。從藍色時期、粉紅時期到立體主義、新古典與陶藝，每十年自我革命一次；九十一年人生留下逾三萬件作品與複雜的情感史，是二十世紀名利與創造力的同義詞。",
+    en: "Son of a Málaga drawing master — said to draw before he could speak. From Blue and Rose periods through Cubism, neoclassicism and ceramics, he revolutionised himself each decade; ninety-one years yielded over thirty thousand works, a tangled love life, and a name synonymous with twentieth-century fame and invention.",
+    fr: "Fils d’un professeur de dessin de Malaga — il aurait dessiné avant de parler. Des périodes bleue et rose au cubisme, au néoclassicisme et à la céramique, il se révolutionna chaque décennie ; quatre-vingt-onze ans, plus de trente mille œuvres, une vie amoureuse enchevêtrée, et un nom synonyme du siècle." },
+  { zh: "法國北方穀商之子，本習法律，二十歲盲腸炎臥床時獲母親贈畫具而改行。1905 年秋季沙龍與同儕被譏為「野獸」；晚年腸癌手術後臥床，改以剪刀剪彩紙「用剪刀繪畫」，稱之為自己的第二次生命。",
+    en: "Son of a northern grain merchant, trained in law until appendicitis at twenty and a paint-box from his mother changed everything. Mocked as a “wild beast” at the 1905 Salon d’Automne, he later survived cancer surgery bedridden — and began cutting painted paper with scissors, calling it his second life.",
+    fr: "Fils d’un grainetier du Nord, juriste jusqu’à ce qu’une appendicite à vingt ans et une boîte de couleurs offerte par sa mère changent tout. Raillé en « fauve » au Salon d’automne de 1905, il survécut alité à une chirurgie du cancer — et se mit à découper des papiers peints aux ciseaux, sa « seconde vie »." },
+  { zh: "莫斯科的法學與經濟學教授，三十歲看了莫內《乾草堆》、聽了華格納歌劇後棄職赴慕尼黑習畫。具聯覺、能「聽見色彩」，著《藝術中的精神》奠定抽象理論，任教包浩斯；納粹掌權後入籍法國。",
+    en: "A Moscow professor of law and economics who, at thirty, saw Monet’s Haystacks and heard Wagner — and left for Munich to paint. A synaesthete who heard colours, he wrote Concerning the Spiritual in Art, taught at the Bauhaus, and took French citizenship when the Nazis closed it down.",
+    fr: "Professeur de droit et d’économie à Moscou qui, à trente ans, vit les Meules de Monet, entendit Wagner — et partit peindre à Munich. Synesthète entendant les couleurs, il écrivit Du spirituel dans l’art, enseigna au Bauhaus, et prit la nationalité française quand les nazis le fermèrent." },
+  { zh: "荷蘭喀爾文教派家庭出身，從風車與樹的寫生一步步走向抽象，與杜斯堡共創《風格派》。工作室如畫作般以原色方格布置，一生熱愛社交舞；因對方堅持使用斜線而與風格派決裂，晚年在紐約迷上布基伍基爵士。",
+    en: "Raised in a Dutch Calvinist family, he abstracted step by step from windmills and trees, co-founding De Stijl with van Doesburg. His studio was arranged like his paintings, in primary-coloured rectangles; a passionate ballroom dancer, he broke with De Stijl over a diagonal line and fell for boogie-woogie in New York.",
+    fr: "Élevé dans le calvinisme hollandais, il abstraya pas à pas moulins et arbres, cofondant De Stijl avec van Doesburg. Son atelier était rangé comme ses toiles, en rectangles primaires ; danseur passionné, il rompit avec De Stijl pour une diagonale et s’éprit du boogie-woogie à New York." },
+],
+surrealism: [
+  { zh: "加泰隆尼亞公證人之子，取名自夭折的兄長，自幼活在「替身」的陰影下。就讀美術學校時因宣稱「無人有資格評我」被開除；與加拉的共生關係貫穿一生，晚年簽署空白畫紙的醜聞與城堡隱居同樣傳奇。",
+    en: "Son of a Catalan notary, named after a dead elder brother whose shadow haunted him. Expelled from art school for declaring no professor fit to examine him, he lived in symbiosis with Gala all his life; the late scandal of signed blank sheets was as legendary as his castle seclusion.",
+    fr: "Fils d’un notaire catalan, prénommé d’après un frère aîné mort dont l’ombre le hanta. Renvoyé des Beaux-Arts pour avoir jugé aucun professeur digne de l’examiner, il vécut en symbiose avec Gala ; le scandale tardif des feuilles blanches signées fut aussi légendaire que sa retraite au château." },
+  { zh: "比利時裁縫與帽商之子，十三歲目睹母親投河的遺體被打撈上岸（傳說臉被睡衣覆蓋）。做過壁紙設計與廣告畫師，一生過著西裝革履的中產生活——正是這種平凡，讓他畫中的異常更加鋒利。",
+    en: "Son of a Belgian tailor and a milliner; at thirteen he reportedly saw his drowned mother recovered from the river, her face veiled by her nightgown. A former wallpaper designer and advertising artist, he lived an impeccably bourgeois life in a suit — and that very ordinariness sharpens the strangeness of his images.",
+    fr: "Fils d’un tailleur belge et d’une modiste ; à treize ans, il aurait vu repêcher sa mère noyée, le visage voilé par sa chemise de nuit. Ancien dessinateur de papiers peints et publicitaire, il mena en complet-veston une vie parfaitement bourgeoise — banalité qui aiguise l’étrangeté de ses images." },
+  { zh: "巴塞隆納金匠與鐘錶商之家出身，先依父命做會計而精神崩潰，養病後全心作畫。自稱要「暗殺繪畫」，從農莊寫實走向星座般的符號宇宙；加泰隆尼亞的紅、黃、藍從未離開過他。",
+    en: "Born to a Barcelona goldsmith’s family, he obeyed his father into bookkeeping until a breakdown freed him for painting. Vowing to “assassinate painting”, he moved from farm realism to a universe of constellation-like signs; the reds, yellows and blues of Catalonia never left him.",
+    fr: "Né dans une famille d’orfèvres barcelonais, comptable par obéissance jusqu’à la dépression qui le rendit à la peinture. Jurant d’« assassiner la peinture », il passa du réalisme paysan à un univers de signes-constellations ; les rouges, jaunes et bleus de la Catalogne ne le quittèrent jamais." },
+  { zh: "墨西哥城出生，六歲罹小兒麻痺、十八歲電車事故碎裂脊椎與骨盆，一生手術三十餘次，多數作品是在病床上對著鏡子畫成。與壁畫家里維拉兩度結婚；布勒東稱她超現實主義者，她答：「我畫的是我自己的現實。」",
+    en: "Born in Mexico City, polio at six, her spine and pelvis shattered in a streetcar crash at eighteen — thirty-odd operations, much of her work painted in bed before a mirror. Twice married to the muralist Rivera; when Breton called her a Surrealist she replied, “I paint my own reality.”",
+    fr: "Née à Mexico, polio à six ans, colonne et bassin brisés à dix-huit dans un accident de tramway — une trentaine d’opérations, une œuvre souvent peinte au lit, face au miroir. Deux fois mariée au muraliste Rivera ; à Breton qui la disait surréaliste, elle répondit : « Je peins ma propre réalité. »" },
+],
+abstract: [
+  { zh: "懷俄明農家么子，曾隨墨西哥壁畫家西凱羅斯實驗噴漆與流動顏料。酗酒與心理治療貫穿一生，榮格派分析師鼓勵他畫下潛意識；1956 年酒駕車禍身亡，年僅四十四，是暴烈與脆弱同體的美國神話。",
+    en: "Youngest son of a Wyoming farm family, he experimented with spray and poured paint under the Mexican muralist Siqueiros. Alcoholism and therapy shadowed his life — a Jungian analyst urged him to paint the unconscious; he died at forty-four in a drunken car crash, an American myth of violence fused with fragility.",
+    fr: "Benjamin d’une famille fermière du Wyoming, initié à la peinture pulvérisée et coulée par le muraliste Siqueiros. Alcool et psychanalyse hantèrent sa vie — un analyste jungien l’incita à peindre l’inconscient ; il mourut à quarante-quatre ans dans un accident en état d’ivresse, mythe américain de violence et de fragilité mêlées." },
+  { zh: "出生於帝俄治下拉脫維亞的猶太家庭，十歲移民美國，耶魯輟學。堅持畫作須在低光下近距觀看、拒絕淪為裝飾，曾退還四季餐廳的鉅額委託；1970 年在畫室自盡，同年羅斯科教堂落成。",
+    en: "Born to a Jewish family in Russian-ruled Latvia, emigrating at ten, a Yale dropout. He demanded his canvases be seen close and in low light, refusing to let them decorate — famously returning the Four Seasons restaurant commission; he took his own life in his studio in 1970, the year the Rothko Chapel was completed.",
+    fr: "Né dans une famille juive de Lettonie russe, émigré à dix ans, décrocheur de Yale. Il exigeait qu’on voie ses toiles de près, dans la pénombre, refusant d’en faire un décor — rendant son fameux contrat du restaurant Four Seasons ; il se donna la mort dans son atelier en 1970, l’année où s’acheva la chapelle Rothko." },
+  { zh: "鹿特丹出身，二十二歲偷渡貨輪抵美，靠漆匠與櫥窗設計維生多年。「女人」系列以狂暴筆觸撕開具象與抽象的邊界，連同儕都為之譁然；晚年罹阿茲海默症仍持續作畫，簡淨如緞帶的線條成為告別之作。",
+    en: "Rotterdam-born, he stowed away on a freighter at twenty-two and survived years as a house painter and window dresser. His Woman series tore open the border between figure and abstraction, scandalising even his peers; painting on through Alzheimer’s, his late ribbon-like lines became his farewell.",
+    fr: "Né à Rotterdam, passager clandestin d’un cargo à vingt-deux ans, longtemps peintre en bâtiment et étalagiste. Sa série des Women déchira la frontière entre figure et abstraction, scandalisant jusqu’à ses pairs ; peignant malgré l’Alzheimer, ses derniers rubans de lignes furent son adieu." },
+],
+pop: [
+  { zh: "匹茲堡斯洛伐克移民家庭出身，先是紐約最搶手的商業插畫家。銀色「工廠」聚集了明星、詩人與邊緣人；1968 年遭槍擊重傷，改變了後半生。從絲網印刷、電影到《訪談》雜誌，他把「藝術家」本身做成了品牌。",
+    en: "Born to Slovak immigrants in Pittsburgh, first New York’s hottest commercial illustrator. His silver Factory drew stars, poets and outcasts; shot and gravely wounded in 1968, he was never the same. Across silkscreens, films and Interview magazine, he made the artist himself into a brand.",
+    fr: "Né à Pittsburgh d’immigrés slovaques, d’abord l’illustrateur commercial le plus couru de New York. Sa Factory argentée attira stars, poètes et marginaux ; grièvement blessé par balle en 1968, il ne fut plus jamais le même. Sérigraphies, films, magazine Interview : il fit de l’artiste lui-même une marque." },
+  { zh: "紐約中產家庭出身，教過大學、畫過抽象表現主義。傳說兒子指著米老鼠漫畫說「爸爸你一定畫不出這個」，激他畫出第一幅漫畫放大作《看，米奇》；他把最廉價的印刷網點，提煉成最冷靜的古典構圖。",
+    en: "From a middle-class New York family, a former professor and Abstract Expressionist. Legend says his son pointed at a Mickey Mouse comic — “Bet you can’t paint that, Dad” — provoking Look Mickey, his first blow-up; he distilled the cheapest printed dots into the coolest classical composition.",
+    fr: "Issu de la bourgeoisie new-yorkaise, ancien professeur passé par l’expressionnisme abstrait. La légende veut que son fils, désignant Mickey — « t’es pas cap’, papa » — ait provoqué Look Mickey, son premier agrandissement ; il distilla la trame d’imprimerie la moins chère en la composition la plus classique." },
+  { zh: "瑞典外交官之子，生於斯德哥爾摩、長於芝加哥。1961 年在紐約下東區開設「商店」，販售石膏製的食物雕塑；之後把口紅、衣夾、湯匙放大成城市紀念碑——「我要的是一種不從美術館出發的藝術。」",
+    en: "Son of a Swedish diplomat, born in Stockholm, raised in Chicago. In 1961 he opened The Store on the Lower East Side, selling plaster food sculptures; later he blew lipsticks, clothespins and spoons up to the scale of civic monuments — “an art that does not start from the museum.”",
+    fr: "Fils d’un diplomate suédois, né à Stockholm, élevé à Chicago. En 1961, il ouvrit The Store dans le Lower East Side, vendant des aliments en plâtre ; puis il agrandit rouges à lèvres, pinces à linge et cuillères à l’échelle du monument — « un art qui ne parte pas du musée »." },
+],
+contemporary: [
+  { zh: "長野縣種苗商之家出身，十歲起為幻覺所苦。1957 年隻身赴美，「無限網」與偶發藝術走在時代之前，卻備受剽竊與忽視；1973 年返日後自願住進精神療養院，工作室就在對街，至今每日通勤作畫。",
+    en: "Born to a seed-nursery family in Nagano, hallucinating since the age of ten. Alone in New York from 1957, her Infinity Nets and happenings ran ahead of the age while being plagiarised and overlooked; back in Japan she checked herself into a psychiatric hospital in 1973 — her studio across the street, commuting daily to paint ever since.",
+    fr: "Née dans une famille de grainetiers de Nagano, hallucinée depuis ses dix ans. Seule à New York dès 1957, ses Infinity Nets et happenings devancèrent l’époque tout en étant pillés et ignorés ; rentrée au Japon, elle s’installa volontairement en hôpital psychiatrique en 1973 — l’atelier en face, s’y rendant chaque jour depuis." },
+  { zh: "一般認為出身 1990 年代布里斯托的塗鴉圈，以模板噴漆在世界各地牆上留下反戰、反消費的黑色幽默。《氣球女孩》2018 年在蘇富比落槌瞬間自動碎裂，更名《垃圾桶中的愛》後再上拍，價格翻了十八倍。",
+    en: "Generally traced to Bristol’s 1990s graffiti scene, leaving stencilled black humour against war and consumerism on walls worldwide. His Girl with Balloon shredded itself the instant the Sotheby’s hammer fell in 2018; renamed Love Is in the Bin, it later resold for eighteen times the price.",
+    fr: "Rattaché à la scène graffiti de Bristol des années 1990, semant au pochoir sur les murs du monde un humour noir contre la guerre et la consommation. Sa Fille au ballon s’autodétruisit au marteau de Sotheby’s en 2018 ; rebaptisée Love Is in the Bin, elle se revendit dix-huit fois plus cher." },
+  { zh: "詩人艾青之子，文革中隨父流放新疆。參與設計北京奧運「鳥巢」後轉而批判體制，2011 年被祕密拘押八十一天；其後移居柏林、劍橋與里斯本，以裝置、紀錄片與社群媒體持續介入難民與言論自由議題。",
+    en: "Son of the poet Ai Qing, exiled with his father to Xinjiang during the Cultural Revolution. After helping design the Olympic “Bird’s Nest” he turned against the system and was secretly detained for 81 days in 2011; from Berlin, Cambridge and Lisbon he keeps intervening on refugees and free speech through installation, film and social media.",
+    fr: "Fils du poète Ai Qing, exilé enfant au Xinjiang pendant la Révolution culturelle. Après avoir co-conçu le « Nid d’oiseau » olympique, il se retourna contre le système et fut détenu au secret 81 jours en 2011 ; de Berlin, Cambridge et Lisbonne, il intervient sans relâche sur les réfugiés et la liberté d’expression." },
+  { zh: "貝爾格勒游擊隊英雄之家出身，管教嚴苛。半世紀以身體測試極限：《節奏 0》任觀眾以七十二件物品處置她六小時；與烏雷自長城兩端相向而行作為分手儀式；2010 年 MoMA《藝術家在場》靜坐七百餘小時，與陌生人對視。",
+    en: "Raised in Belgrade by partisan-hero parents under iron discipline. For half a century she has tested the body’s limits: in Rhythm 0 the audience could use 72 objects on her for six hours; she and Ulay walked the Great Wall from opposite ends as a break-up rite; at MoMA in 2010 she sat over seven hundred hours meeting strangers’ eyes.",
+    fr: "Élevée à Belgrade par des parents héros partisans, à la discipline de fer. Depuis un demi-siècle, elle éprouve les limites du corps : dans Rythme 0, le public disposa d’elle six heures avec 72 objets ; avec Ulay, elle parcourut la Grande Muraille en sens inverse en rite d’adieu ; au MoMA en 2010, elle resta assise plus de sept cents heures, les yeux dans ceux des inconnus." },
+],
+chinese: [
+  { zh: "唐玄宗召入宮中的傳奇畫工，壁畫遍及長安、洛陽三百餘堵，畫地獄變相竟使屠夫漁夫懼罪改業。真跡無一存世；傳說他畫嘉陵江三百里山水，對皇帝說：「臣無粉本，並記在心。」一日而成。",
+    en: "Summoned to court by Emperor Xuanzong, he painted over three hundred temple walls in Chang’an and Luoyang — his vision of hell reportedly made butchers and fishmongers change trades. Nothing authentic survives; legend says he painted three hundred li of the Jialing River in a single day, telling the emperor: “I keep no sketches — it is all in my heart.”",
+    fr: "Appelé à la cour par l’empereur Xuanzong, il peignit plus de trois cents murs de temples à Chang’an et Luoyang — sa vision des enfers aurait fait changer de métier bouchers et poissonniers. Rien d’authentique ne survit ; la légende dit qu’il peignit en un jour trois cents lis de la rivière Jialing : « Je n’ai pas d’esquisses, tout est dans mon cœur. »" },
+  { zh: "關中人，性情寬厚嗜酒，隱居終南山「對景造意」。《谿山行旅圖》主峰壓頂、占絹面三分之二，行旅人馬小如螻蟻——以山之巨反襯人之微；他的簽名藏在樹叢裡，直到 1958 年才被發現。",
+    en: "A man of Shaanxi, easy-going and fond of wine, he withdrew into the Zhongnan mountains to “form ideas before the scenery itself”. In Travelers Among Mountains and Streams the peak fills two-thirds of the silk while men and mules crawl like ants below; his signature, hidden in the foliage, was discovered only in 1958.",
+    fr: "Homme du Shaanxi, débonnaire et amateur de vin, retiré dans les monts Zhongnan pour « concevoir devant le paysage même ». Dans Voyageurs parmi monts et torrents, le pic emplit deux tiers de la soie, hommes et mules rampant comme fourmis ; sa signature, cachée dans le feuillage, ne fut découverte qu’en 1958." },
+  { zh: "山東諸城人，徽宗朝翰林圖畫院畫家，生平僅見於卷後金人張著的八十五字題跋。以「界畫」的尺規功夫繪船橋屋宇而不失生氣——一卷《清明上河圖》，就是他存世的全部。",
+    en: "From Zhucheng in Shandong, a painter of Emperor Huizong’s academy, his entire biography rests on an 85-character colophon added by a Jin-dynasty hand. A master of ruled-line architecture that never stiffens into diagram, he survives through one single scroll — the Qingming masterpiece itself.",
+    fr: "Originaire de Zhucheng au Shandong, peintre de l’académie de Huizong, sa biographie tient en un colophon de 85 caractères ajouté sous les Jin. Maître de l’architecture à la règle jamais figée en diagramme, il ne survit que par un seul rouleau — le chef-d’œuvre de Qingming lui-même." },
+  { zh: "明宗室後裔朱耷，十九歲遭國變，裝聾作啞、出家為僧又還俗，號哭號笑於市。筆下魚鳥皆向天翻白眼，構圖大片留白，墨點極簡而情緒極滿；三百年後齊白石嘆：「恨不生前三百年，為青藤八大磨墨理紙。」",
+    en: "Born Zhu Da, a Ming prince who saw his dynasty fall at nineteen; he feigned muteness, became a monk, returned to the world, laughing and wailing in the streets. His fish and birds roll their eyes heavenward in expanses of emptiness — minimal ink, maximal feeling; three centuries later Qi Baishi wished he had been born earlier “just to grind his ink and prepare his paper”.",
+    fr: "Né Zhu Da, prince Ming qui vit sa dynastie tomber à dix-neuf ans ; il simula le mutisme, se fit moine, revint au monde, riant et gémissant par les rues. Ses poissons et oiseaux lèvent au ciel des yeux blancs dans de grands vides — encre minimale, émotion maximale ; trois siècles après, Qi Baishi rêvait d’être né plus tôt « juste pour broyer son encre et préparer son papier »." },
+],
+ukiyoe: [
+  { zh: "江戶工匠圈的養子，九十年生涯搬家九十三次、改號三十餘回。六十歲後才創作《富嶽三十六景》，臨終猶嘆「天再假我五年，方能成為真正的畫工」。給徒弟的素描百科《北齋漫畫》共十五編，後來成為「漫畫」一詞的源頭。",
+    en: "An adopted son of Edo’s artisan world, he moved house ninety-three times and changed his art name over thirty times in ninety years. The Thirty-six Views came only after sixty; dying, he sighed that five more years would have made him a true painter. His fifteen-volume Hokusai Manga, a sketch encyclopaedia for pupils, gave the word “manga” its career.",
+    fr: "Fils adoptif du monde artisan d’Edo, il déménagea quatre-vingt-treize fois et changea de nom d’artiste plus de trente fois en quatre-vingt-dix ans. Les Trente-six Vues ne vinrent qu’après soixante ans ; mourant, il soupira que cinq années de plus auraient fait de lui un vrai peintre. Son Hokusai Manga en quinze volumes, encyclopédie de croquis pour élèves, lança la carrière du mot « manga »." },
+  { zh: "江戶消防武士之子，世襲父職卻醉心繪畫。《東海道五十三次》取材他隨幕府隊伍的旅程，雨、雪與暮色的抒情使他成為「鄉愁的畫師」；晚年出家，辭世句云：「拋筆東路去，魂遊西方名所矣。」",
+    en: "Son of an Edo fire-brigade samurai, inheriting the post but living for pictures. The Fifty-three Stations drew on his journey with a shogunal procession; his lyric rain, snow and dusk made him the painter of homesickness. Taking Buddhist orders late in life, his death poem reads: “I leave my brush at Azuma and go to view the famous sights of the Western Paradise.”",
+    fr: "Fils d’un samouraï pompier d’Edo, héritier du poste mais vivant pour l’image. Les Cinquante-trois Stations naquirent de son voyage avec un cortège shogunal ; ses pluies, neiges et crépuscules lyriques firent de lui le peintre de la nostalgie. Moine sur le tard, son poème d’adieu dit : « Je laisse mon pinceau à Azuma et pars contempler les sites célèbres du Paradis de l’Ouest. »" },
+  { zh: "出版商蔦屋重三郎旗下的明星畫師，以「大首繪」特寫美人的頸項與眼波，據說常宿吉原，只為觀察藝妓卸妝後的真實神情。1804 年因描繪豐臣秀吉的禁題被銬五十日，兩年後鬱鬱而終。",
+    en: "Star of the publisher Tsutaya’s stable, he framed beauties in the ōkubi-e close-up — the nape, the glance — reportedly lodging in the Yoshiwara to watch geisha unpainted. In 1804 he was manacled for fifty days for depicting the proscribed Hideyoshi, and died dispirited two years later.",
+    fr: "Vedette de l’éditeur Tsutaya, il cadra les beautés en gros plan ōkubi-e — la nuque, le regard — logeant dit-on au Yoshiwara pour surprendre les geishas sans fard. En 1804, cinquante jours aux fers pour avoir figuré le sujet interdit Hideyoshi ; il mourut découragé deux ans plus tard." },
+  { zh: "1794 年 5 月橫空出世，十個月內出版約一百四十五幅役者繪後徹底消失，身分至今成謎（能樂師齋藤十郎兵衛是最有力的假說）。誇張近乎諷刺的演員肖像當年滯銷；百年後德國學者將他與林布蘭並列為世界肖像大師。",
+    en: "He appeared from nowhere in May 1794, published some 145 actor prints in ten months, then vanished; his identity — most plausibly the Noh actor Saitō Jūrōbei — remains a riddle. His near-caricature portraits sold poorly at the time; a century later a German scholar ranked him beside Rembrandt among the world’s great portraitists.",
+    fr: "Surgi de nulle part en mai 1794, il publia quelque 145 estampes d’acteurs en dix mois puis disparut ; son identité — l’acteur de nô Saitō Jūrōbei selon l’hypothèse la plus solide — reste une énigme. Ses portraits presque caricaturaux se vendirent mal ; un siècle après, un savant allemand le classa aux côtés de Rembrandt parmi les grands portraitistes du monde." },
+],
+islamic: [
+  { zh: "幼年成孤，由赫拉特書法家收養成才，後執掌帖木兒與薩非兩朝的宮廷書坊。他把個體神情與日常細節帶進程式化的細密畫；君王視他為國寶，戰爭中把他與皇家圖書館一同轉移。",
+    en: "Orphaned young and raised by a Herat calligrapher, he came to direct the royal ateliers of both the Timurid and Safavid courts. He brought individual expression and everyday detail into the codified miniature; kings counted him a state treasure, moving him with the royal library in wartime.",
+    fr: "Orphelin recueilli par un calligraphe de Hérat, il dirigea les ateliers royaux des cours timouride puis safavide. Il introduisit l’expression individuelle et le détail quotidien dans la miniature codifiée ; les rois le comptaient parmi les trésors d’État, déplacé avec la bibliothèque royale en temps de guerre." },
+  { zh: "薩非王朝大不里士畫坊的首席，為沙阿·塔赫瑪斯普的《列王紀》抄本繪製領銜之作《蓋尤瑪斯的宮廷》——雲石與花樹之間藏著數十張精靈面孔，被譽為波斯繪畫的巔峰單頁。",
+    en: "Head of the Safavid atelier at Tabriz, he led the great Shahnameh made for Shah Tahmasp; his Court of Gayumars hides dozens of sprite faces among marbled rocks and blossoming trees — often called the single finest page in all Persian painting.",
+    fr: "Chef de l’atelier safavide de Tabriz, il dirigea le grand Shahnameh de Shah Tahmasp ; sa Cour de Gayumars cache des dizaines de visages d’esprits parmi rochers marbrés et arbres en fleur — souvent tenue pour la plus belle page de toute la peinture persane." },
+  { zh: "出身安納托利亞基督徒家庭，經「血稅」徵召入禁衛軍，以軍事工程起家，五十歲才任帝國首席建築師。此後五十年建成清真寺、橋梁與水道逾四百處；他自評唯有塞利米耶清真寺，堪稱「大師之作」。",
+    en: "Born to an Anatolian Christian family, levied into the Janissaries, he rose through military engineering and became chief imperial architect only at fifty. In the fifty years that followed he raised over four hundred mosques, bridges and aqueducts — judging only the Selimiye his true masterwork.",
+    fr: "Né chrétien d’Anatolie, levé par le devchirmé chez les janissaires, formé au génie militaire, il ne devint architecte impérial qu’à cinquante ans. En cinquante années, il éleva plus de quatre cents mosquées, ponts et aqueducs — ne tenant que la Selimiye pour son vrai chef-d’œuvre." },
+],
+mesoamerica: [
+  { zh: "公元前 1200 年起活躍於墨西哥灣岸的無名石匠集團，在沒有金屬工具、沒有輪子的條件下，把數十噸的玄武岩從八十公里外運抵工坊，刻成唇厚鼻寬的統治者頭像——每一顆面孔都不重複。",
+    en: "Nameless sculptor guilds of the Gulf Coast from 1200 BC, who — without metal tools or the wheel — hauled basalt blocks of dozens of tonnes from eighty kilometres away and carved them into thick-lipped, broad-nosed rulers’ heads, no two faces alike.",
+    fr: "Guildes anonymes de sculpteurs du golfe du Mexique dès 1200 av. J.-C., qui — sans outils de métal ni roue — halèrent sur quatre-vingts kilomètres des blocs de basalte de dizaines de tonnes pour en tailler des têtes de souverains aux lèvres épaisses, aucun visage semblable à l’autre." },
+  { zh: "8 世紀末奇亞帕斯雨林中的馬雅畫師團隊，在三室神廟裡以藍綠礦彩畫滿宮廷冊封、戰爭與凱旋，直到 1946 年才被外界看見。壁畫推翻了「馬雅是和平的天文學家」的想像，成為研究古典期宮廷的第一手文獻。",
+    en: "A late-eighth-century Maya workshop in the Chiapas rainforest, covering a three-roomed temple with courtly investiture, battle and triumph in mineral blues and greens — unseen by outsiders until 1946. The murals overturned the myth of the Maya as peaceful stargazers and remain the primary document of Classic court life.",
+    fr: "Atelier maya de la fin du VIIIe siècle dans la forêt du Chiapas, couvrant un temple de trois salles d’investitures, de batailles et de triomphes en bleus et verts minéraux — invisibles au monde jusqu’en 1946. Ces fresques renversèrent le mythe des Mayas paisibles astronomes et restent le document premier de la vie de cour classique." },
+  { zh: "特諾奇提特蘭大神廟直屬的雕刻工坊，以黑曜石與硬石工具刻製神像、曆石與祭壇。西班牙人熔毀了金器、拆毀了神廟；倖存的石雕，多在十八世紀後的市政工程中意外重見天日。",
+    en: "Workshops attached to the Great Temple of Tenochtitlan, carving gods, calendar stones and altars with obsidian and hardstone tools. The Spaniards melted the goldwork and razed the temples; most surviving sculpture resurfaced by accident during the civic works of later centuries.",
+    fr: "Ateliers rattachés au Grand Temple de Tenochtitlan, taillant dieux, pierres calendaires et autels aux outils d’obsidienne. Les Espagnols fondirent l’orfèvrerie et rasèrent les temples ; la plupart des sculptures survivantes resurgirent par hasard lors des travaux urbains des siècles suivants." },
+],
+};
+
 /* 流派 → 現藏博物館（取第一個標記該流派的館） */
 const MV2MUSEUM = {};
 MUSEUMS.forEach(mu => mu.treasures.forEach(tr => {
@@ -1608,7 +1967,7 @@ let currentView = 'timeline';
 function showView(v) {
   if (!document.getElementById('view-' + v)) return;
   currentView = v;
-  ['timeline', 'movements', 'museums'].forEach(k => {
+  ['timeline', 'movements', 'artists', 'museums'].forEach(k => {
     document.getElementById('view-' + k).classList.toggle('view-hidden', k !== v);
     const t = document.getElementById('vtab-' + k);
     t.classList.toggle('active', k === v);
@@ -2099,11 +2458,9 @@ function selectMovement(id, scroll) {
         + '<span class="ac-years">' + years + '</span>'
         + '</div>'
         + (note ? '<div class="ac-note">' + note + '</div>' : '')
+        + bioHtml(m.id, i)
         + '<div class="ac-works">'
-        + works.map(w =>
-            '<span class="work-chip' + (w[0] === art.title ? ' feat' : '') + '">' + qt(w[0])
-            + (w[1] ? '<span class="wy">' + w[1] + '</span>' : '') + '</span>'
-          ).join('')
+        + works.map((w, wi) => workChipHtml(m.id, i, wi, art.title)).join('')
         + '</div></div>';
       }).join('')
     + '</div>';
@@ -2132,6 +2489,142 @@ function navMove(dir) {
   if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 }
 
+/* ═══════════ 藝術家頁、搜尋與畫作燈箱 ═══════════ */
+
+function bioHtml(mvId, i) {
+  const b = BIOS[mvId] && BIOS[mvId][i];
+  return b ? '<div class="ac-bio">' + T(b) + '</div>' : '';
+}
+
+function workChipHtml(mvId, ai, wi, featTitle) {
+  const tr = trMa(mvId, ai);
+  const w = ((tr && tr.w) || MASTERS[mvId][ai].works)[wi];
+  return '<span class="work-chip wk-btn' + (w[0] === featTitle ? ' feat' : '') + '" role="button" tabindex="0"'
+    + ' onclick="openWork(\'' + mvId + '\',' + ai + ',' + wi + ')"'
+    + ' onkeydown="if(event.key===\'Enter\'){openWork(\'' + mvId + '\',' + ai + ',' + wi + ')}">'
+    + qtitle(w[0]) + (w[1] ? '<span class="wy">' + w[1] + '</span>' : '') + '</span>';
+}
+
+function renderArtistIndex() {
+  const box = document.getElementById('view-artists');
+  const ordered = [...MOVEMENTS].sort((a, b) => a.start - b.start);
+  let html =
+    '<div id="mvx-head">'
+    + '<div class="orn"><div class="l"></div><span class="g">✦</span><div class="r"></div></div>'
+    + '<h2>' + uiStr('tabArtists') + '</h2>'
+    + '<p>' + uiStr('artistsSub') + '</p>'
+    + '</div>'
+    + '<div id="artist-search-wrap"><span id="artist-search-ic">⌕</span>'
+    + '<input id="artist-search" type="search" placeholder="' + uiStr('searchPH') + '" oninput="filterArtists(this.value)"></div>';
+  ordered.forEach(m => {
+    const arr = MASTERS[m.id] || [];
+    if (!arr.length) return;
+    html += '<div class="mvx-era artist-group-head" data-g="' + m.id + '">'
+      + '<span class="t">' + mvName(m) + '</span>'
+      + '<span class="yrs">' + fmtRange(m) + '</span><span class="ln"></span></div>'
+      + '<div class="masters-grid artist-group" data-g="' + m.id + '">'
+      + arr.map((a, i) => {
+          const tr = trMa(m.id, i);
+          const mainName = LANG === 'zh' ? a.name : ((tr && tr.name) || a.en);
+          const subName  = LANG === 'zh' ? a.en : a.name;
+          const years    = (tr && tr.y) || a.years;
+          const note     = (tr && tr.n) || a.note;
+          const works    = (tr && tr.w) || a.works;
+          const sParts = [a.name, a.en || '', a.note || '', a.works.map(w => w[0]).join(' '), m.name, m.en];
+          ['en', 'fr'].forEach(l => {
+            const t = TR[l].ma[m.id] && TR[l].ma[m.id][i];
+            if (t) sParts.push(t.name || '', t.n || '', (t.w || []).map(w => w[0]).join(' '));
+          });
+          const b = BIOS[m.id] && BIOS[m.id][i];
+          if (b) sParts.push(b.zh, b.en, b.fr);
+          const sAttr = sParts.join(' ').toLowerCase().replace(/"/g, '');
+          return '<div class="artist-card" data-s="' + sAttr + '">'
+          + '<div class="ac-head">'
+          + '<span class="ac-name"><a href="' + wikiSearch(mainName) + '" target="_blank" rel="noopener">' + mainName + '</a></span>'
+          + (subName ? '<span class="ac-en">' + subName + '</span>' : '')
+          + '<span class="ac-years">' + years + '</span>'
+          + '</div>'
+          + '<span class="ac-mv" role="button" tabindex="0" onclick="goMv(\'' + m.id + '\')"'
+          + ' onkeydown="if(event.key===\'Enter\'){goMv(\'' + m.id + '\')}">'
+          + '<span class="dot" style="background:' + m.color + '"></span>' + mvName(m) + '</span>'
+          + (note ? '<div class="ac-note">' + note + '</div>' : '')
+          + bioHtml(m.id, i)
+          + '<div class="ac-works">'
+          + works.map((w, wi) => workChipHtml(m.id, i, wi, null)).join('')
+          + '</div></div>';
+        }).join('')
+      + '</div>';
+  });
+  html += '<div id="artist-none">' + uiStr('searchNone') + '</div>';
+  box.innerHTML = html;
+}
+
+function filterArtists(q) {
+  q = (q || '').trim().toLowerCase();
+  let anyAtAll = false;
+  document.querySelectorAll('#view-artists .artist-group').forEach(g => {
+    let any = false;
+    g.querySelectorAll('.artist-card').forEach(c => {
+      const show = !q || c.dataset.s.indexOf(q) !== -1;
+      c.style.display = show ? '' : 'none';
+      if (show) any = true;
+    });
+    g.style.display = any ? '' : 'none';
+    const head = document.querySelector('.artist-group-head[data-g="' + g.dataset.g + '"]');
+    if (head) head.style.display = any ? '' : 'none';
+    if (any) anyAtAll = true;
+  });
+  document.getElementById('artist-none').style.display = anyAtAll ? 'none' : 'block';
+}
+
+/* 畫作圖片燈箱：透過 Wikipedia API 即時查圖 */
+const WLB_CACHE = {};
+function openWork(mvId, ai, wi) {
+  const tr = trMa(mvId, ai);
+  const disp = ((tr && tr.w) || MASTERS[mvId][ai].works)[wi];
+  const enMa = TR.en.ma[mvId] && TR.en.ma[mvId][ai];
+  const searchTitle = (enMa && enMa.w[wi] && enMa.w[wi][0]) || disp[0];
+  const artistDisp = LANG === 'zh' ? MASTERS[mvId][ai].name : ((tr && tr.name) || MASTERS[mvId][ai].en);
+  const artistEn = (enMa && enMa.name) || MASTERS[mvId][ai].en || '';
+
+  const wlb = document.getElementById('wlb');
+  const body = document.getElementById('wlb-body');
+  wlb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  const cap = '<div class="wlb-title">' + qtitle(disp[0]) + '</div>'
+    + '<div class="wlb-meta">' + artistDisp + (disp[1] ? ' · ' + disp[1] : '') + '</div>';
+  const key = LANG + '|' + mvId + '|' + ai + '|' + wi;
+  if (WLB_CACHE[key]) { body.innerHTML = WLB_CACHE[key]; return; }
+
+  body.innerHTML = '<div class="wlb-status">' + uiStr('lbLoading') + '</div>' + cap;
+
+  const url = 'https://en.wikipedia.org/w/api.php?action=query&generator=search'
+    + '&gsrsearch=' + encodeURIComponent(searchTitle + ' ' + artistEn)
+    + '&gsrlimit=1&prop=pageimages%7Cinfo&piprop=thumbnail&pithumbsize=1000&inprop=url&format=json&origin=*';
+  fetch(url).then(r => r.json()).then(d => {
+    const pages = d.query && d.query.pages;
+    const p = pages && Object.values(pages)[0];
+    let html;
+    if (p && p.thumbnail) {
+      html = '<div class="wlb-frame"><img src="' + p.thumbnail.source + '" alt=""></div>' + cap
+        + '<a class="wlb-link" href="' + p.fullurl + '" target="_blank" rel="noopener">' + uiStr('lbWiki') + '</a>';
+    } else {
+      html = '<div class="wlb-status">' + uiStr('lbNone') + '</div>' + cap
+        + '<a class="wlb-link" href="https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(searchTitle) + '" target="_blank" rel="noopener">' + uiStr('lbWiki') + '</a>';
+    }
+    WLB_CACHE[key] = html;
+    if (wlb.classList.contains('open')) body.innerHTML = html;
+  }).catch(() => {
+    body.innerHTML = '<div class="wlb-status">' + uiStr('lbNone') + '</div>' + cap;
+  });
+}
+function closeWlb() {
+  document.getElementById('wlb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWlb(); });
+
 /* ═══════════ 語言切換 ═══════════ */
 function applyStatic() {
   document.getElementById('eyebrow-txt').textContent = uiStr('eyebrow');
@@ -2140,6 +2633,7 @@ function applyStatic() {
   document.getElementById('footer-txt').innerHTML    = uiStr('footer');
   document.querySelector('#vtab-timeline .vt-txt').textContent  = uiStr('tabTimeline');
   document.querySelector('#vtab-movements .vt-txt').textContent = uiStr('tabMovements');
+  document.querySelector('#vtab-artists .vt-txt').textContent   = uiStr('tabArtists');
   document.querySelector('#vtab-museums .vt-txt').textContent   = uiStr('tabMuseums');
   ['zh','en','fr'].forEach(k => {
     const b = document.getElementById('lang-' + k);
@@ -2160,6 +2654,7 @@ function switchLang(l) {
   setFilter(regionFilter);
   renderMuseums();
   renderMovementIndex();
+  renderArtistIndex();
   if (selectedId) selectMovement(selectedId, false);
   sc.scrollLeft = keepScroll;
 }
@@ -2172,6 +2667,7 @@ buildFilters();
 buildChart();
 renderMuseums();
 renderMovementIndex();
+renderArtistIndex();
 selectMovement('renaissance', false);
 /* scroll chart to renaissance area on load */
 requestAnimationFrame(() => {
