@@ -303,6 +303,54 @@ h1 .gold { color: var(--gold); font-weight: 300; }
   box-shadow: 0 0 12px rgba(201,168,92,0.12);
 }
 
+/* artwork location line */
+.art-loc { font-size: 11px; font-weight: 700; margin-top: 8px; color: var(--cream2); letter-spacing: 0.03em; }
+.art-loc a { color: var(--gold); cursor: pointer; text-decoration: none; border-bottom: 1px dotted var(--gold-lo); transition: color .2s; }
+.art-loc a:hover { color: var(--gold-hi); }
+
+/* ── Museum guide ── */
+#museums { margin-top: 46px; }
+#museums-head { text-align: center; margin-bottom: 24px; }
+#museums-head h2 {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-style: italic; font-weight: 500; font-size: 30px; color: #f0e6cf; letter-spacing: -0.5px;
+}
+#museums-head p { font-size: 12px; color: var(--muted); margin-top: 8px; font-weight: 600; letter-spacing: 0.04em; }
+.museums-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 13px; }
+.museum-card {
+  background: rgba(255,243,210,0.035);
+  border: 1px solid rgba(201,168,92,0.16);
+  border-radius: 14px; padding: 18px 20px;
+  box-shadow: inset 0 1px 0 rgba(255,242,170,0.09);
+  transition: border-color .25s, background .25s, transform .25s;
+}
+.museum-card:hover { border-color: rgba(201,168,92,0.36); background: rgba(255,243,210,0.055); transform: translateY(-2px); }
+.museum-card.flash { animation: mu-flash 1.8s ease; }
+@keyframes mu-flash {
+  0%, 35% { border-color: rgba(232,204,132,0.95); box-shadow: 0 0 0 2px rgba(232,204,132,0.55), 0 0 44px rgba(201,168,92,0.3); }
+  100% { border-color: rgba(201,168,92,0.16); box-shadow: inset 0 1px 0 rgba(255,242,170,0.09); }
+}
+.mu-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.mu-name {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 19px; font-weight: 600; color: #f0e6cf; letter-spacing: -0.2px;
+}
+.mu-city {
+  margin-left: auto; white-space: nowrap;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; color: var(--gold-lo);
+  padding: 3px 10px; border-radius: 10px;
+  background: rgba(201,168,92,0.07); border: 1px solid rgba(201,168,92,0.18);
+}
+.mu-blurb { font-size: 12px; line-height: 1.78; color: var(--cream2); margin-top: 8px; font-weight: 500; }
+.mu-label {
+  margin: 13px 0 8px;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 9px;
+}
+.mu-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,92,0.18), transparent); }
+.work-chip.mu-link { cursor: pointer; transition: all .2s; }
+.work-chip.mu-link:hover { color: var(--gold-hi); border-color: rgba(232,204,132,0.7); transform: translateY(-1px); }
+
 /* mini map */
 #minimap-box { margin-top: 6px; }
 #minimap { width: 100%; max-width: 340px; display: block; }
@@ -420,6 +468,8 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
     <div id="d-masters"></div>
   </div>
 
+  <section id="museums"></section>
+
   <footer>
     <div class="footer-orn"><div class="fl"></div><span class="fg">✦</span><div class="fr"></div></div>
     <p id="footer-txt">© 2026 個人知識庫 · Ars Mundi · 互動藝術史圖譜</p>
@@ -454,6 +504,11 @@ const UI = {
     imgSrc: '圖片來源：',
     story: '畫作背景故事',
     masters: '重要藝術家與代表作 Masters &amp; Masterpieces',
+    museumsTitle: '博物館導覽 Museum Guide',
+    museumsSub: '名作現藏何處？各館又以什麼鎮館？金色籤章可點擊，跳回對應流派。',
+    treasuresLabel: '鎮館之寶 Star Treasures',
+    onView: '現藏於',
+    privateColl: '私人收藏',
     footer: '© 2026 個人知識庫 · Ars Mundi · 互動藝術史圖譜',
     eras: null,
   },
@@ -468,6 +523,11 @@ const UI = {
     imgSrc: 'Image source: ',
     story: 'The Story Behind',
     masters: 'Masters &amp; Masterpieces',
+    museumsTitle: 'Museum Guide',
+    museumsSub: 'Where the works on this page hang today — and each museum’s star treasures. Gold chips jump back to their movement.',
+    treasuresLabel: 'Star Treasures',
+    onView: 'On view at',
+    privateColl: 'Private collection',
     footer: '© 2026 Personal Knowledge Library · Ars Mundi · Interactive Art History Atlas',
     eras: ['PREHISTORY', 'ANTIQUITY', 'MEDIEVAL', 'EARLY MODERN', 'MODERN'],
   },
@@ -482,6 +542,11 @@ const UI = {
     imgSrc: 'Source de l’image : ',
     story: 'L’histoire derrière l’œuvre',
     masters: 'Maîtres et chefs-d’œuvre',
+    museumsTitle: 'Guide des musées',
+    museumsSub: 'Où sont conservées les œuvres de cette page — et les trésors de chaque musée. Les pastilles dorées renvoient à leur mouvement.',
+    treasuresLabel: 'Trésors du musée',
+    onView: 'Conservé à',
+    privateColl: 'Collection privée',
     footer: '© 2026 Bibliothèque de connaissances · Ars Mundi · Atlas interactif de l’histoire de l’art',
     eras: ['PRÉHISTOIRE', 'ANTIQUITÉ', 'MOYEN ÂGE', 'ÉPOQUE MODERNE', 'ÈRE CONTEMPORAINE'],
   },
@@ -1103,6 +1168,246 @@ const MASTERS = {
   ],
 };
 
+/* ═══════════ 博物館導覽 ═══════════ */
+/* treasures 內 mv 欄位＝對應本頁流派（金色籤章、可點擊跳轉） */
+const MUSEUMS = [
+  { id:'lascaux',
+    name:{ zh:'拉斯科四號洞穴藝術中心', en:'Lascaux IV', fr:'Lascaux IV — Centre International de l’Art Pariétal' },
+    city:{ zh:'法國蒙提尼亞克', en:'Montignac, France', fr:'Montignac, France' },
+    blurb:{ zh:'原洞窟為保護壁畫已永久封閉，四號中心以毫米級精度重建全窟，讓兩萬年前的獸群重見天日。',
+            en:'The original cave is sealed for preservation; Lascaux IV recreates every wall to millimetre precision, bringing the 20,000-year-old herds back into view.',
+            fr:'La grotte originale est scellée pour sa préservation ; Lascaux IV en recrée chaque paroi au millimètre, rendant leurs troupeaux vieux de 20 000 ans aux visiteurs.' },
+    treasures:[
+      { t:{ zh:'公牛大廳（精確復原）', en:'Hall of the Bulls (exact replica)', fr:'Salle des Taureaux (réplique exacte)' }, mv:'prehistoric' },
+      { t:{ zh:'井底場景', en:'The Shaft Scene', fr:'Scène du Puits' } },
+      { t:{ zh:'原洞窟（永久封存）', en:'The original cave (sealed)', fr:'La grotte originale (scellée)' } },
+    ] },
+  { id:'gem',
+    name:{ zh:'大埃及博物館', en:'Grand Egyptian Museum', fr:'Grand Musée égyptien' },
+    city:{ zh:'埃及吉薩', en:'Giza, Egypt', fr:'Gizeh, Égypte' },
+    blurb:{ zh:'2025 年全面開幕、全球最大單一文明博物館，圖坦卡門五千餘件陪葬品首次全數同室展出。',
+            en:'Fully opened in 2025 as the world’s largest museum devoted to a single civilisation — Tutankhamun’s five thousand burial treasures shown together for the first time.',
+            fr:'Ouvert pleinement en 2025, plus grand musée du monde consacré à une seule civilisation — les cinq mille trésors funéraires de Toutânkhamon réunis pour la première fois.' },
+    treasures:[
+      { t:{ zh:'圖坦卡門黃金面具', en:'Gold Mask of Tutankhamun', fr:'Masque funéraire de Toutânkhamon' }, mv:'egypt' },
+      { t:{ zh:'圖坦卡門黃金王座', en:'Golden Throne of Tutankhamun', fr:'Trône d’or de Toutânkhamon' } },
+      { t:{ zh:'胡夫太陽船', en:'Khufu’s Solar Barque', fr:'Barque solaire de Khéops' } },
+      { t:{ zh:'拉美西斯二世巨像', en:'Colossus of Ramses II', fr:'Colosse de Ramsès II' } },
+    ] },
+  { id:'louvre',
+    name:{ zh:'羅浮宮', en:'The Louvre', fr:'Musée du Louvre' },
+    city:{ zh:'法國巴黎', en:'Paris, France', fr:'Paris, France' },
+    blurb:{ zh:'從中世紀城堡、王宮到博物館，館藏縱貫五千年，是全球參觀人次最多的美術館。',
+            en:'Medieval fortress, royal palace, then museum: five millennia of art under one roof, and the most visited museum on earth.',
+            fr:'Forteresse médiévale, palais royal, puis musée : cinq millénaires d’art sous un même toit, le musée le plus visité du monde.' },
+    treasures:[
+      { t:{ zh:'蒙娜麗莎', en:'Mona Lisa', fr:'La Joconde' }, mv:'renaissance' },
+      { t:{ zh:'米洛的維納斯', en:'Venus de Milo', fr:'Vénus de Milo' }, mv:'greek' },
+      { t:{ zh:'自由引導人民', en:'Liberty Leading the People', fr:'La Liberté guidant le peuple' }, mv:'romanticism' },
+      { t:{ zh:'薩莫色雷斯的勝利女神', en:'Winged Victory of Samothrace', fr:'Victoire de Samothrace' } },
+      { t:{ zh:'漢摩拉比法典', en:'Code of Hammurabi', fr:'Code de Hammurabi' } },
+    ] },
+  { id:'british',
+    name:{ zh:'大英博物館', en:'The British Museum', fr:'British Museum' },
+    city:{ zh:'英國倫敦', en:'London, UK', fr:'Londres, Royaume-Uni' },
+    blurb:{ zh:'啟蒙時代誕生的百科全書式博物館，八百萬件藏品、免費入場。',
+            en:'The Enlightenment’s encyclopaedic museum: eight million objects, free to all.',
+            fr:'Le musée encyclopédique des Lumières : huit millions d’objets, entrée libre.' },
+    treasures:[
+      { t:{ zh:'神奈川沖浪裏（初刷之一）', en:'The Great Wave (early impression)', fr:'La Grande Vague (tirage ancien)' }, mv:'ukiyoe' },
+      { t:{ zh:'帕德嫩神廟雕刻', en:'Parthenon Sculptures', fr:'Sculptures du Parthénon' }, mv:'greek' },
+      { t:{ zh:'羅塞塔石碑', en:'Rosetta Stone', fr:'Pierre de Rosette' } },
+      { t:{ zh:'路易斯西洋棋', en:'Lewis Chessmen', fr:'Échiquier de Lewis' } },
+    ] },
+  { id:'hagia',
+    name:{ zh:'聖索菲亞大教堂', en:'Hagia Sophia', fr:'Sainte-Sophie' },
+    city:{ zh:'土耳其伊斯坦堡', en:'Istanbul, Türkiye', fr:'Istanbul, Turquie' },
+    blurb:{ zh:'一千五百年間由大教堂而清真寺而博物館再回清真寺，金色鑲嵌畫仍在原位俯視眾生。',
+            en:'Cathedral, mosque, museum and mosque again across fifteen centuries — the golden mosaics still look down from their original walls.',
+            fr:'Cathédrale, mosquée, musée puis mosquée à nouveau en quinze siècles — les mosaïques d’or veillent toujours depuis leurs murs d’origine.' },
+    treasures:[
+      { t:{ zh:'祈禱圖（Deësis）鑲嵌畫', en:'Deësis Mosaic', fr:'Mosaïque de la Déisis' }, mv:'byzantine' },
+      { t:{ zh:'康門努斯帝后鑲嵌畫', en:'Comnenus Mosaics', fr:'Mosaïques des Comnène' } },
+      { t:{ zh:'六翼天使像', en:'Seraphim figures', fr:'Séraphins' } },
+    ] },
+  { id:'topkapi',
+    name:{ zh:'托普卡匹皇宮博物館', en:'Topkapı Palace Museum', fr:'Palais de Topkapı' },
+    city:{ zh:'土耳其伊斯坦堡', en:'Istanbul, Türkiye', fr:'Istanbul, Turquie' },
+    blurb:{ zh:'鄂圖曼蘇丹四百年的宮廷，細密畫手抄本與伊斯蘭聖物的頂級收藏。',
+            en:'Four centuries of Ottoman sultans; supreme collections of miniature manuscripts and Islamic holy relics.',
+            fr:'Quatre siècles de sultans ottomans ; collections suprêmes de manuscrits à miniatures et de reliques islamiques.' },
+    treasures:[
+      { t:{ zh:'宮廷細密畫手抄本', en:'Court miniature manuscripts', fr:'Manuscrits à miniatures de la cour' }, mv:'islamic' },
+      { t:{ zh:'托普卡匹匕首', en:'Topkapı Dagger', fr:'Poignard de Topkapı' } },
+      { t:{ zh:'湯匙製造者之鑽（86 克拉）', en:'Spoonmaker’s Diamond (86 ct)', fr:'Diamant du Cuilleriste (86 ct)' } },
+    ] },
+  { id:'rijks',
+    name:{ zh:'阿姆斯特丹國家博物館', en:'Rijksmuseum', fr:'Rijksmuseum' },
+    city:{ zh:'荷蘭阿姆斯特丹', en:'Amsterdam, Netherlands', fr:'Amsterdam, Pays-Bas' },
+    blurb:{ zh:'荷蘭黃金時代的殿堂，《夜巡》擁有專屬展廳，修復工程曾對公眾全程直播。',
+            en:'Temple of the Dutch Golden Age; The Night Watch has its own gallery, and its restoration was live-streamed to the world.',
+            fr:'Temple du Siècle d’or hollandais ; La Ronde de nuit possède sa propre salle et sa restauration fut retransmise en direct.' },
+    treasures:[
+      { t:{ zh:'夜巡', en:'The Night Watch', fr:'La Ronde de nuit' }, mv:'baroque' },
+      { t:{ zh:'倒牛奶的女僕', en:'The Milkmaid', fr:'La Laitière' } },
+      { t:{ zh:'猶太新娘', en:'The Jewish Bride', fr:'La Fiancée juive' } },
+    ] },
+  { id:'wallace',
+    name:{ zh:'華勒斯典藏館', en:'The Wallace Collection', fr:'Wallace Collection' },
+    city:{ zh:'英國倫敦', en:'London, UK', fr:'Londres, Royaume-Uni' },
+    blurb:{ zh:'侯爵家族五代的私人收藏，依遺囑作品永不外借——想看《鞦韆》只能親自到倫敦。',
+            en:'Five generations of a marquess’s collecting, bequeathed on condition it never be lent — to see The Swing you must come to London.',
+            fr:'Cinq générations de collection d’une famille de marquis, léguée à condition de ne jamais prêter — pour voir L’Escarpolette, il faut venir à Londres.' },
+    treasures:[
+      { t:{ zh:'鞦韆', en:'The Swing', fr:'L’Escarpolette' }, mv:'rococo' },
+      { t:{ zh:'微笑的騎士（哈爾斯）', en:'The Laughing Cavalier (Hals)', fr:'Le Cavalier riant (Hals)' } },
+      { t:{ zh:'塞夫爾瓷器收藏', en:'Sèvres porcelain collection', fr:'Collection de porcelaines de Sèvres' } },
+    ] },
+  { id:'orsay',
+    name:{ zh:'奧塞美術館', en:'Musée d’Orsay', fr:'Musée d’Orsay' },
+    city:{ zh:'法國巴黎', en:'Paris, France', fr:'Paris, France' },
+    blurb:{ zh:'由美好年代的火車站改建，專藏 1848–1914，是印象派與寫實主義的世界最大寶庫。',
+            en:'A Belle Époque railway station reborn, devoted to 1848–1914 — the greatest trove of Impressionism and Realism anywhere.',
+            fr:'Une gare de la Belle Époque ressuscitée, vouée à 1848–1914 — le plus grand trésor impressionniste et réaliste au monde.' },
+    treasures:[
+      { t:{ zh:'拾穗', en:'The Gleaners', fr:'Des glaneuses' }, mv:'realism' },
+      { t:{ zh:'晚禱', en:'The Angelus', fr:'L’Angélus' } },
+      { t:{ zh:'煎餅磨坊的舞會', en:'Bal du moulin de la Galette', fr:'Bal du moulin de la Galette' } },
+      { t:{ zh:'奧林匹亞（馬奈）', en:'Olympia (Manet)', fr:'Olympia (Manet)' } },
+    ] },
+  { id:'marmottan',
+    name:{ zh:'瑪摩丹莫內美術館', en:'Musée Marmottan Monet', fr:'Musée Marmottan Monet' },
+    city:{ zh:'法國巴黎', en:'Paris, France', fr:'Paris, France' },
+    blurb:{ zh:'莫內么子將父親遺產全數捐贈於此，成就全球最大莫內收藏，《印象·日出》即藏於此。',
+            en:'Monet’s youngest son bequeathed his father’s estate here, creating the world’s largest Monet collection — Impression, Sunrise included.',
+            fr:'Le fils cadet de Monet légua ici l’héritage paternel : la plus grande collection Monet au monde, Impression, soleil levant comprise.' },
+    treasures:[
+      { t:{ zh:'印象·日出', en:'Impression, Sunrise', fr:'Impression, soleil levant' }, mv:'impressionism' },
+      { t:{ zh:'晚期睡蓮系列', en:'Late Water Lilies', fr:'Nymphéas tardifs' } },
+      { t:{ zh:'莫莉索作品群', en:'Berthe Morisot collection', fr:'Fonds Berthe Morisot' } },
+    ] },
+  { id:'moma',
+    name:{ zh:'紐約現代藝術博物館 MoMA', en:'Museum of Modern Art (MoMA)', fr:'MoMA — Museum of Modern Art' },
+    city:{ zh:'美國紐約', en:'New York, USA', fr:'New York, États-Unis' },
+    blurb:{ zh:'現代藝術的聖殿與敘事制定者，從後印象派、超現實到普普一路收齊經典。',
+            en:'The temple of modern art and author of its canon, from Post-Impressionism through Surrealism to Pop.',
+            fr:'Temple de l’art moderne et auteur de son canon, du post-impressionnisme au pop en passant par le surréalisme.' },
+    treasures:[
+      { t:{ zh:'星夜', en:'The Starry Night', fr:'La Nuit étoilée' }, mv:'postimpressionism' },
+      { t:{ zh:'記憶的堅持', en:'The Persistence of Memory', fr:'La Persistance de la mémoire' }, mv:'surrealism' },
+      { t:{ zh:'康寶濃湯罐頭', en:'Campbell’s Soup Cans', fr:'Boîtes de soupe Campbell' }, mv:'pop' },
+      { t:{ zh:'亞維農的少女', en:'Les Demoiselles d’Avignon', fr:'Les Demoiselles d’Avignon' } },
+      { t:{ zh:'舞蹈（馬諦斯）', en:'Dance (Matisse)', fr:'La Danse (Matisse)' } },
+    ] },
+  { id:'reina',
+    name:{ zh:'索菲亞王后藝術中心', en:'Museo Reina Sofía', fr:'Musée Reina Sofía' },
+    city:{ zh:'西班牙馬德里', en:'Madrid, Spain', fr:'Madrid, Espagne' },
+    blurb:{ zh:'西班牙現當代藝術國家館，《格爾尼卡》獨佔一室、莊嚴如祭壇。',
+            en:'Spain’s national museum of modern art; Guernica commands a room of its own, solemn as an altar.',
+            fr:'Musée national espagnol d’art moderne ; Guernica règne seul dans sa salle, solennel comme un autel.' },
+    treasures:[
+      { t:{ zh:'格爾尼卡', en:'Guernica', fr:'Guernica' }, mv:'modernism' },
+      { t:{ zh:'窗邊少女（達利）', en:'Figure at a Window (Dalí)', fr:'Jeune fille à la fenêtre (Dalí)' } },
+      { t:{ zh:'米羅晚期繪畫', en:'Late Miró paintings', fr:'Miró tardifs' } },
+    ] },
+  { id:'beijing',
+    name:{ zh:'北京故宮博物院', en:'The Palace Museum', fr:'Musée du Palais (Cité interdite)' },
+    city:{ zh:'中國北京', en:'Beijing, China', fr:'Pékin, Chine' },
+    blurb:{ zh:'明清兩代紫禁城原址，186 萬件文物之家，書畫名品每展必現「故宮跑」。',
+            en:'The Ming–Qing Forbidden City itself, home to 1.86 million objects; every showing of its great scrolls sets off a sprint through the gates.',
+            fr:'La Cité interdite des Ming et des Qing elle-même, 1,86 million d’objets ; chaque sortie de ses grands rouleaux déclenche une course à l’ouverture.' },
+    treasures:[
+      { t:{ zh:'清明上河圖', en:'Along the River During the Qingming Festival', fr:'Le Jour de Qingming au bord de la rivière' }, mv:'chinese' },
+      { t:{ zh:'千里江山圖', en:'A Thousand Li of Rivers and Mountains', fr:'Mille lis de rivières et de montagnes' } },
+      { t:{ zh:'歷代青銅與玉器', en:'Ancient bronzes and jades', fr:'Bronzes et jades anciens' } },
+    ] },
+  { id:'taipei',
+    name:{ zh:'國立故宮博物院', en:'National Palace Museum', fr:'Musée national du Palais' },
+    city:{ zh:'台灣台北', en:'Taipei, Taiwan', fr:'Taipei, Taïwan' },
+    blurb:{ zh:'承載渡海來台的清宮舊藏菁華，宋畫與玉器獨步天下。',
+            en:'Heir to the finest of the Qing imperial collection brought across the strait; unmatched in Song painting and jade.',
+            fr:'Héritier du meilleur de la collection impériale Qing passée par le détroit ; inégalé en peinture Song et en jades.' },
+    treasures:[
+      { t:{ zh:'谿山行旅圖（范寬）', en:'Travelers Among Mountains and Streams (Fan Kuan)', fr:'Voyageurs parmi monts et torrents (Fan Kuan)' }, mv:'chinese' },
+      { t:{ zh:'翠玉白菜', en:'Jadeite Cabbage', fr:'Chou en jadéite' } },
+      { t:{ zh:'肉形石', en:'Meat-Shaped Stone', fr:'Pierre en forme de viande' } },
+      { t:{ zh:'快雪時晴帖（王羲之）', en:'Timely Clearing After Snow (Wang Xizhi)', fr:'Éclaircie après une neige soudaine (Wang Xizhi)' } },
+    ] },
+  { id:'anthro',
+    name:{ zh:'墨西哥國家人類學博物館', en:'National Museum of Anthropology', fr:'Musée national d’anthropologie' },
+    city:{ zh:'墨西哥墨西哥城', en:'Mexico City, Mexico', fr:'Mexico, Mexique' },
+    blurb:{ zh:'中美洲古文明的總殿堂，中庭的巨傘噴泉與太陽石同為墨西哥的象徵。',
+            en:'The great hall of Mesoamerican civilisations; its umbrella fountain and the Sun Stone are both emblems of Mexico.',
+            fr:'Le grand sanctuaire des civilisations mésoaméricaines ; sa fontaine-parapluie et la Pierre du Soleil sont deux emblèmes du Mexique.' },
+    treasures:[
+      { t:{ zh:'太陽石', en:'Aztec Sun Stone', fr:'Pierre du Soleil' }, mv:'mesoamerica' },
+      { t:{ zh:'帕卡爾王玉面具', en:'Jade Mask of Pakal', fr:'Masque de jade de Pakal' } },
+      { t:{ zh:'科亞特利庫埃神像', en:'Coatlicue', fr:'Coatlicue' } },
+    ] },
+  { id:'naoshima',
+    name:{ zh:'直島 · 貝樂思藝術之地', en:'Benesse Art Site Naoshima', fr:'Benesse Art Site Naoshima' },
+    city:{ zh:'日本瀨戶內海', en:'Naoshima, Japan', fr:'Naoshima, Japon' },
+    blurb:{ zh:'以藝術重生的瀨戶內小島：安藤忠雄的地中美術館與海堤上的黃南瓜，是當代藝術的朝聖路。',
+            en:'An island reborn through art: Tadao Ando’s Chichu Art Museum and the yellow pumpkin on the pier form a contemporary pilgrimage route.',
+            fr:'Une île ressuscitée par l’art : le musée Chichu de Tadao Andō et la citrouille jaune sur la jetée forment un chemin de pèlerinage contemporain.' },
+    treasures:[
+      { t:{ zh:'南瓜（草間彌生）', en:'Pumpkin (Kusama)', fr:'Citrouille (Kusama)' }, mv:'contemporary' },
+      { t:{ zh:'地中美術館《睡蓮》', en:'Monet’s Water Lilies at Chichu', fr:'Nymphéas du musée Chichu' } },
+      { t:{ zh:'特瑞爾《開放天空》', en:'Turrell’s Open Sky', fr:'Open Sky de Turrell' } },
+    ] },
+];
+
+/* 流派 → 現藏博物館（取第一個標記該流派的館） */
+const MV2MUSEUM = {};
+MUSEUMS.forEach(mu => mu.treasures.forEach(tr => {
+  if (tr.mv && !MV2MUSEUM[tr.mv]) MV2MUSEUM[tr.mv] = mu;
+}));
+
+function qtitle(s) { return LANG === 'zh' ? '《' + s + '》' : s; }
+
+function renderMuseums() {
+  const box = document.getElementById('museums');
+  box.innerHTML =
+    '<div id="museums-head">'
+    + '<div class="orn"><div class="l"></div><span class="g">✦</span><div class="r"></div></div>'
+    + '<h2>' + uiStr('museumsTitle') + '</h2>'
+    + '<p>' + uiStr('museumsSub') + '</p>'
+    + '</div>'
+    + '<div class="museums-grid">'
+    + MUSEUMS.map(mu =>
+        '<div class="museum-card" id="mus-' + mu.id + '">'
+        + '<div class="mu-head"><span class="mu-name">' + T(mu.name) + '</span>'
+        + '<span class="mu-city">' + T(mu.city) + '</span></div>'
+        + '<div class="mu-blurb">' + T(mu.blurb) + '</div>'
+        + '<div class="mu-label">' + uiStr('treasuresLabel') + '</div>'
+        + '<div class="ac-works">'
+        + mu.treasures.map(tr => tr.mv
+            ? '<span class="work-chip feat mu-link" role="button" tabindex="0"'
+              + ' onclick="goMv(\'' + tr.mv + '\')"'
+              + ' onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();goMv(\'' + tr.mv + '\')}">'
+              + qtitle(T(tr.t)) + '</span>'
+            : '<span class="work-chip">' + qtitle(T(tr.t)) + '</span>'
+          ).join('')
+        + '</div></div>'
+      ).join('')
+    + '</div>';
+}
+
+function jumpMuseum(id) {
+  const card = document.getElementById('mus-' + id);
+  if (!card) return;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.classList.remove('flash');
+  void card.offsetWidth;
+  card.classList.add('flash');
+}
+
+function goMv(id) {
+  selectMovement(id, true);
+  const bar = document.querySelector('.bar[data-id="' + id + '"]');
+  if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
 /* 流派 / 時期 */
 const MOVEMENTS = [
   {
@@ -1487,7 +1792,7 @@ function selectMovement(id, scroll) {
   const dr = document.getElementById('d-right');
 
   const art = mvArt(m);
-  const qt = s => LANG === 'zh' ? '《' + s + '》' : s;
+  const qt = qtitle;
 
   dl.innerHTML =
     '<div class="d-period"><span class="ln"></span>' + fmtRange(m) + '</div>'
@@ -1508,6 +1813,17 @@ function selectMovement(id, scroll) {
     + '<div class="art-caption">'
     + '<div class="art-title">' + qt(art.title) + '</div>'
     + '<div class="art-meta">' + art.artist + ' · ' + art.year + '</div>'
+    + (function(){
+        const mus = MV2MUSEUM[m.id];
+        const sep = LANG === 'zh' ? '：' : (LANG === 'fr' ? ' : ' : ': ');
+        return '<div class="art-loc">✦ ' + uiStr('onView') + sep
+          + (mus
+              ? '<a onclick="jumpMuseum(\'' + mus.id + '\')" role="button" tabindex="0"'
+                + ' onkeydown="if(event.key===\'Enter\'){jumpMuseum(\'' + mus.id + '\')}">'
+                + T(mus.name) + ' · ' + T(mus.city) + '</a>'
+              : uiStr('privateColl'))
+          + '</div>';
+      })()
     + '<div class="art-src">' + uiStr('imgSrc') + '<a href="' + imgPage(key) + '" target="_blank" rel="noopener">Wikimedia ↗</a></div>'
     + '<div class="story-label">' + uiStr('story') + '</div>'
     + '<p class="art-story">' + art.story + '</p>'
@@ -1588,6 +1904,7 @@ function switchLang(l) {
   applyStatic();
   buildChart();
   setFilter(regionFilter);
+  renderMuseums();
   if (selectedId) selectMovement(selectedId, false);
   sc.scrollLeft = keepScroll;
 }
@@ -1598,6 +1915,7 @@ if (['zh','en','fr'].includes(savedLang)) LANG = savedLang;
 applyStatic();
 buildFilters();
 buildChart();
+renderMuseums();
 selectMovement('renaissance', false);
 /* scroll chart to renaissance area on load */
 requestAnimationFrame(() => {
