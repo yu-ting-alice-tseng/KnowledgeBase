@@ -178,6 +178,24 @@ body {
   max-width: 420px; margin: 0 auto;
 }
 
+/* Viewer-bar lang switcher */
+#viewer-lang {
+  margin-left: auto;
+  display: flex; gap: 3px; padding: 4px;
+  background: rgba(255,242,200,0.038);
+  border: 1px solid rgba(201,168,92,0.12);
+  border-radius: 11px;
+}
+#viewer-lang button {
+  padding: 5px 13px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+  border-radius: 7px; border: none; cursor: pointer;
+  font-family: 'Nunito', sans-serif; transition: all .22s;
+  background: transparent; color: var(--muted);
+}
+#viewer-lang button:hover { color: var(--cream); }
+#viewer-lang button.active { background: rgba(201,168,92,0.18); color: var(--gold); }
+
 /* Lang switcher */
 #lang-switch {
   position: absolute; top: 0; right: 0;
@@ -662,6 +680,11 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
       onmouseout="this.style.color='var(--cream2)';this.style.borderColor='rgba(201,168,92,0.18)'">
       <i class="fa-solid fa-chevron-left" style="font-size:9px;"></i> Back
     </button>
+    <div id="viewer-lang">
+      <button data-l="zh" onclick="viewerSwitchLang('zh')">繁中</button>
+      <button data-l="en" onclick="viewerSwitchLang('en')">EN</button>
+      <button data-l="fr" onclick="viewerSwitchLang('fr')">FR</button>
+    </div>
   </div>
   <iframe id="viewer-frame" style="position:absolute;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 52px);border:none;" src=""></iframe>
 </div>
@@ -1060,6 +1083,20 @@ function openModule(file) {
   document.getElementById('viewer-frame').src  = file;
   document.body.style.overflow = 'hidden';
   document.getElementById('module-viewer').style.display = 'block';
+  updateViewerLangButtons();
+}
+function updateViewerLangButtons() {
+  document.querySelectorAll('#viewer-lang button').forEach(b =>
+    b.classList.toggle('active', b.dataset.l === currentLang));
+}
+function viewerSwitchLang(l) {
+  switchLang(l);
+  updateViewerLangButtons();
+  /* 同源 iframe：若模組支援 switchLang 就即時切換 */
+  try {
+    const fw = document.getElementById('viewer-frame').contentWindow;
+    if (fw && typeof fw.switchLang === 'function') fw.switchLang(l);
+  } catch (e) { /* cross-origin or module without i18n — ignore */ }
 }
 function closeViewer() {
   document.getElementById('module-viewer').style.display = 'none';

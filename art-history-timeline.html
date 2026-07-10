@@ -2660,6 +2660,10 @@ function switchLang(l) {
 }
 
 /* ═══════════ Boot ═══════════ */
+/* 內嵌於書庫檢視器時，語言切換由上方 Back 列代管，隱藏頁內切換器 */
+if (window.self !== window.top) {
+  document.getElementById('lang-switch').style.display = 'none';
+}
 const savedLang = localStorage.getItem('kb_lang');
 if (['zh','en','fr'].includes(savedLang)) LANG = savedLang;
 applyStatic();
