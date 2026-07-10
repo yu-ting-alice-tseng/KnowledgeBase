@@ -39,7 +39,27 @@ body {
 @media(max-width:680px){ #wrap { padding: 30px 14px 60px; } }
 
 /* ── Header ── */
-header { text-align: center; margin-bottom: 42px; }
+header { text-align: center; margin-bottom: 42px; position: relative; }
+
+/* lang switcher */
+#lang-switch {
+  position: absolute; top: 0; right: 0; z-index: 20;
+  display: flex; gap: 3px; padding: 4px;
+  background: rgba(255,242,200,0.038);
+  border: 1px solid rgba(201,168,92,0.12);
+  border-radius: 11px;
+  backdrop-filter: blur(16px);
+}
+#lang-switch button {
+  padding: 5px 13px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+  border-radius: 7px; border: none; cursor: pointer;
+  font-family: 'Nunito', sans-serif; transition: all .22s;
+  background: transparent; color: var(--muted);
+}
+#lang-switch button:hover { color: var(--cream); }
+#lang-switch button.active { background: rgba(201,168,92,0.18); color: var(--gold); }
+@media(max-width:680px){ #lang-switch { position: static; justify-content: center; margin-bottom: 18px; display: inline-flex; } }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 12px; margin-bottom: 16px;
 }
@@ -364,12 +384,17 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
 <div id="wrap">
 
   <header>
+    <div id="lang-switch">
+      <button onclick="switchLang('zh')" id="lang-zh" class="active">繁中</button>
+      <button onclick="switchLang('en')" id="lang-en">EN</button>
+      <button onclick="switchLang('fr')" id="lang-fr">FR</button>
+    </div>
     <div class="eyebrow">
-      <span class="rule"></span><span class="txt">個人知識庫 · 藝術卷</span><span class="rule"></span>
+      <span class="rule"></span><span class="txt" id="eyebrow-txt">個人知識庫 · 藝術卷</span><span class="rule"></span>
     </div>
     <h1>Ars <span class="gold">Mundi</span></h1>
     <div class="orn"><div class="l"></div><span class="g">✦</span><div class="r"></div></div>
-    <p class="subtitle">世界藝術史互動時間軸 —— 以四大文化區域為緯、三萬年為經，<br>點選任一流派，展開示意圖與名作背後的故事。</p>
+    <p class="subtitle" id="subtitle-txt">世界藝術史互動時間軸 —— 以四大文化區域為緯、三萬年為經，<br>點選任一流派，展開名作真跡與背後的故事。</p>
   </header>
 
   <div id="filters"></div>
@@ -397,7 +422,7 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
 
   <footer>
     <div class="footer-orn"><div class="fl"></div><span class="fg">✦</span><div class="fr"></div></div>
-    <p>© 2026 個人知識庫 · Ars Mundi · 互動藝術史圖譜</p>
+    <p id="footer-txt">© 2026 個人知識庫 · Ars Mundi · 互動藝術史圖譜</p>
   </footer>
 </div>
 
@@ -407,11 +432,81 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
 /* ═══════════ 資料 ═══════════ */
 
 const REGIONS = {
-  europe:   { name: '歐洲',       color: '#8b7cf6', lit: 'rgba(139,124,246,0.65)' },
-  eastasia: { name: '東亞',       color: '#f0716f', lit: 'rgba(240,113,111,0.65)' },
-  mideast:  { name: '中東 · 非洲', color: '#e3a94f', lit: 'rgba(227,169,79,0.65)' },
-  americas: { name: '美洲',       color: '#4fc3a1', lit: 'rgba(79,195,161,0.65)' },
+  europe:   { name: { zh:'歐洲', en:'Europe', fr:'Europe' },                    color: '#8b7cf6', lit: 'rgba(139,124,246,0.65)' },
+  eastasia: { name: { zh:'東亞', en:'East Asia', fr:'Asie de l’Est' },          color: '#f0716f', lit: 'rgba(240,113,111,0.65)' },
+  mideast:  { name: { zh:'中東 · 非洲', en:'Middle East · Africa', fr:'Moyen-Orient · Afrique' }, color: '#e3a94f', lit: 'rgba(227,169,79,0.65)' },
+  americas: { name: { zh:'美洲', en:'Americas', fr:'Amériques' },               color: '#4fc3a1', lit: 'rgba(79,195,161,0.65)' },
 };
+
+/* ═══════════ i18n ═══════════ */
+
+let LANG = 'zh';
+
+const UI = {
+  zh: {
+    eyebrow: '個人知識庫 · 藝術卷',
+    subtitle: '世界藝術史互動時間軸 —— 以四大文化區域為緯、三萬年為經，<br>點選任一流派，展開名作真跡與背後的故事。',
+    hint: '▸ 橫向捲動探索時間軸 · <b>點擊色帶</b>開啟流派詳情 · 上方篩選區域',
+    allRegions: '全部區域',
+    origin: '發源區域',
+    geo: '地理分布 Region',
+    mapCaption: '高亮區域為此流派的主要發源地',
+    imgSrc: '圖片來源：',
+    story: '畫作背景故事',
+    masters: '重要藝術家與代表作 Masters &amp; Masterpieces',
+    footer: '© 2026 個人知識庫 · Ars Mundi · 互動藝術史圖譜',
+    eras: null,
+  },
+  en: {
+    eyebrow: 'Personal Knowledge Library · Art Volume',
+    subtitle: 'An interactive timeline of world art — four cultural regions across thirty millennia.<br>Click any coloured band to unfold the masterpieces and the stories behind them.',
+    hint: '▸ Scroll the timeline horizontally · <b>click a band</b> to open details · filter by region above',
+    allRegions: 'All Regions',
+    origin: 'Origin',
+    geo: 'Geographic Reach',
+    mapCaption: 'The highlighted area marks the movement’s heartland',
+    imgSrc: 'Image source: ',
+    story: 'The Story Behind',
+    masters: 'Masters &amp; Masterpieces',
+    footer: '© 2026 Personal Knowledge Library · Ars Mundi · Interactive Art History Atlas',
+    eras: ['PREHISTORY', 'ANTIQUITY', 'MEDIEVAL', 'EARLY MODERN', 'MODERN'],
+  },
+  fr: {
+    eyebrow: 'Bibliothèque personnelle · Volume d’art',
+    subtitle: 'Frise interactive de l’histoire de l’art — quatre régions culturelles, trente millénaires.<br>Cliquez sur une bande colorée pour découvrir les chefs-d’œuvre et leurs histoires.',
+    hint: '▸ Faites défiler la frise horizontalement · <b>cliquez une bande</b> pour les détails · filtrez par région ci-dessus',
+    allRegions: 'Toutes les régions',
+    origin: 'Foyer',
+    geo: 'Aire géographique',
+    mapCaption: 'La zone en surbrillance marque le foyer du mouvement',
+    imgSrc: 'Source de l’image : ',
+    story: 'L’histoire derrière l’œuvre',
+    masters: 'Maîtres et chefs-d’œuvre',
+    footer: '© 2026 Bibliothèque de connaissances · Ars Mundi · Atlas interactif de l’histoire de l’art',
+    eras: ['PRÉHISTOIRE', 'ANTIQUITÉ', 'MOYEN ÂGE', 'ÉPOQUE MODERNE', 'ÈRE CONTEMPORAINE'],
+  },
+};
+
+function T(field) { return (field && typeof field === 'object') ? (field[LANG] || field.zh) : field; }
+function uiStr(k) { return UI[LANG][k]; }
+function regName(k) { return T(REGIONS[k].name); }
+function trMv(m) { return (LANG !== 'zh' && TR[LANG]) ? TR[LANG].mv[m.id] : null; }
+function mvName(m) {
+  if (LANG === 'zh') return m.name;
+  if (LANG === 'en') return m.en;
+  const t = trMv(m); return (t && t.name) || m.en;
+}
+function mvSub(m) { return LANG === 'zh' ? m.en : m.name; }
+function mvDesc(m) { const t = trMv(m); return (t && t.desc) || m.desc; }
+function mvArt(m) { const t = trMv(m); return (t && t.art) || m.art; }
+function trMa(id, i) {
+  const t = (LANG !== 'zh' && TR[LANG]) ? TR[LANG].ma[id] : null;
+  return (t && t[i]) || null;
+}
+function wikiSearch(name) {
+  const dom = LANG === 'zh' ? 'zh' : (LANG === 'fr' ? 'fr' : 'en');
+  return 'https://' + dom + '.wikipedia.org/w/index.php?search=' + encodeURIComponent(name);
+}
 
 /* 示意圖 SVG（風格化重繪，非原作複製） */
 const ART_SVG = {
@@ -467,6 +562,362 @@ function imgURL(key, w) {
 function imgPage(key) {
   return 'https://' + imgDomain(key) + '/wiki/File:' + encodeURIComponent(ART_IMG[key][1].replace(/ /g, '_'));
 }
+
+/* 英文 / 法文翻譯（zh 為 MOVEMENTS / MASTERS 原生內容） */
+const TR = {
+en: {
+mv: {
+  prehistoric: { desc: "Humanity's first images. Deep inside caves, Paleolithic hunters painted bison, horses and deer with ochre and charcoal, leaving stencilled handprints on the rock — ritual magic, and the beginning of the human urge to represent the world.",
+    art: { title: "Lascaux Cave Paintings", artist: "Unknown (Paleolithic)", year: "c. 17,000 BC",
+    story: "In 1940 four French teenagers chasing a legend of buried treasure dropped into the Lascaux cave and found nearly six hundred prehistoric paintings — the “Sistine Chapel of Prehistory”. The great bulls stretch over five metres, and the painters used the rock's natural bulges to give them volume: proof that humans mastered perspective and motion twenty thousand years ago. Visitors' breath eroded the pigments, so the cave was sealed for good in 1963; what tourists visit today is the exact replica, Lascaux II." } },
+  egypt: { desc: "Art made for eternity. Believing images held magical power, the Egyptians bound painting and sculpture to a strict frontal canon — head in profile, eye and shoulders facing front — almost unchanged for three thousand years, all in service of the pharaoh's afterlife and divine order.",
+    art: { title: "Gold Mask of Tutankhamun", artist: "Anonymous royal workshop", year: "c. 1323 BC",
+    story: "When Howard Carter opened Tutankhamun's tomb in 1922, he famously whispered that he saw “wonderful things”. The 10.23-kilogram gold mask, inlaid with lapis lazuli and coloured glass, covered the young pharaoh's mummified face. Crowned at nine and dead by eighteen, Tutankhamun was a minor king — yet his untouched tomb made his the most famous face of ancient Egypt. Spells from the Book of the Dead engraved on the back guard his passage through the underworld." } },
+  greek: { desc: "The wellspring of Western aesthetics. The Greeks pursued the idealised body through mathematical proportion, inventing contrapposto and the golden ratio; Rome inherited the craft and turned it toward realistic portraiture and monumental building, setting the template for two thousand years of European art.",
+    art: { title: "Venus de Milo", artist: "Attributed to Alexandros of Antioch", year: "c. 130–100 BC",
+    story: "In 1820 a farmer on the island of Melos dug up this armless goddess of love; a French naval officer secured her for Louis XVIII, and she became one of the Louvre's three great treasures. What were her arms doing — holding an apple, clutching drapery, gazing into a mirror? Two centuries of scholars have proposed reconstructions, none conclusive. That very incompleteness turned her into a vessel for the imagination: the missing arms made her eternal." } },
+  byzantine: { desc: "God's radiance in place of the flesh. Gold-ground mosaics, icons and Gothic stained glass renounced realism for flat, solemn, codified figures that lift the believer's gaze toward heaven — the golden field standing for a sacred light beyond time and space.",
+    art: { title: "Mosaics of Hagia Sophia", artist: "Byzantine court workshops", year: "9th–13th century",
+    story: "The golden mosaics of Hagia Sophia are built from millions of glass tesserae, each gold-leaf cube deliberately set at a slightly different angle so that by candlelight the walls shimmer and flow like a living sky. After Constantinople fell in 1453 the church became a mosque and the mosaics were plastered over — and, ironically, that very whitewash preserved them, letting their thousand-year glow re-emerge in the twentieth century." } },
+  renaissance: { desc: "Man becomes the measure of all things again. Breakthroughs in perspective, anatomy and oil technique made the masters of Florence and Venice scientists as much as artists; Leonardo, Michelangelo and Raphael fused classical ideals with the direct observation of nature.",
+    art: { title: "Mona Lisa", artist: "Leonardo da Vinci", year: "c. 1503–1519",
+    story: "Leonardo glazed the portrait with dozens of translucent layers — his sfumato — letting the corners of the mouth and eyes dissolve into shadow: the secret of the flickering smile. He carried the unfinished panel with him until his death in France. In 1911 the Italian glazier Vincenzo Peruggia walked it out of the Louvre under his coat, insisting she belonged to Italy; during the two-year worldwide hunt even Picasso was questioned. By the time she was recovered, she had become the most famous painting on earth." } },
+  baroque: { desc: "The drama of light and shadow. The Counter-Reformation and court power bred an art of movement, chiaroscuro and emotional force; Caravaggio's spotlight, Rembrandt's inner glow and Vermeer's quiet daylight each defined a language of light.",
+    art: { title: "The Night Watch", artist: "Rembrandt van Rijn", year: "1642",
+    story: "This militia group portrait should have been a tidy row of faces; Rembrandt staged it instead as a drama caught mid-motion — the captain giving orders, a drummer beating, musketeers loading, light falling only on the key players. It is actually a daylight scene: centuries of darkened varnish earned it the wrong nickname. In 1975 a man slashed the canvas twelve times; the scars, still faintly visible after restoration, are now part of its history." } },
+  rococo: { desc: "The sweet twilight of the aristocracy. Pastel tones, scrolling curves and flirtatious garden parties mirrored the last pleasures of the French court — Watteau's melancholy, Boucher's powdered charm and Fragonard's mischief blooming, then withering, on the eve of Revolution.",
+    art: { title: "The Swing", artist: "Jean-Honoré Fragonard", year: "1767",
+    story: "A baron first asked another painter for a scene of a bishop pushing his mistress on a swing while he admired her from below — and was refused; Fragonard took the commission. The girl swings high, a slipper flies off, and her skirts open toward the young man hidden in the roses, while the unsuspecting old husband pulls the ropes. It became the definitive image of aristocratic frivolity — a style condemned as decadence the moment the Revolution arrived." } },
+  romanticism: { desc: "Reason against passion. David exalted republican virtue with classical gravity; Delacroix painted revolution, storm and the exotic in unleashed colour; Goya went further still, staring straight into the darkness of war. For the first time, art became the battlefield of the spirit of the age.",
+    art: { title: "Liberty Leading the People", artist: "Eugène Delacroix", year: "1830",
+    story: "When the July Revolution of 1830 toppled Charles X in three days, Delacroix wrote to his brother: “If I have not fought for my country, at least I shall paint for her.” A bare-breasted Liberty strides over the barricade and the fallen, tricolour aloft, flanked by a worker, a bourgeois and a street boy — the first time a contemporary revolution was painted as epic. The state bought the canvas, then hid it for decades as too inflammatory; it entered the Louvre only in 1874." } },
+  realism: { desc: "“Show me an angel and I will paint one.” With Courbet's manifesto, art turned to peasants, workers and everyday labour, refusing myth and embellishment; Millet's fields and Daumier's third-class carriage made ordinary people the protagonists of painting for the first time.",
+    art: { title: "The Gleaners", artist: "Jean-François Millet", year: "1857",
+    story: "Three peasant women bend to pick up the wheat left after the harvest — gleaning was the last legal resort of the rural poor. Millet gave this humble labour the gravity of an epic frieze, the golden abundance in the distance silently confronting the poverty of the foreground. Bourgeois critics at the 1857 Salon attacked it as socialist agitation; today it stands as the most solemn homage ever paid to those who work the land." } },
+  impressionism: { desc: "Out of the studio, chasing the light. Paint tubes and railways let painters seize fleeting light and colour outdoors; Monet's haystacks, Renoir's dance halls, Degas's ballerinas — broken brushwork that made the air itself move on canvas for the first time.",
+    art: { title: "Impression, Sunrise", artist: "Claude Monet", year: "1872",
+    story: "From a hotel window in his native Le Havre, Monet jotted down an orange sun in the morning haze with quick, broken strokes. At the independents' exhibition of 1874 the critic Louis Leroy sneered that embryonic wallpaper was more finished, and mockingly dubbed the whole group “Impressionists” after the title. The painters adopted the insult — art history's most famous accidental christening. Stolen at gunpoint in 1985, the canvas was recovered five years later in Corsica." } },
+  postimpressionism: { desc: "From the eye to the mind. Cézanne rebuilt the order of form, Van Gogh charged colour with emotion, Gauguin fled to a primitive symbolic world — three roads leading to Cubism, Expressionism and the gates of modern art.",
+    art: { title: "The Starry Night", artist: "Vincent van Gogh", year: "1889",
+    story: "After the ear incident, Van Gogh committed himself to the asylum at Saint-Rémy. This is the night sky from his barred window, joined to a remembered village and an imagined whirlpool of stars — a burning cypress linking earth and heaven. “I often think the night is more alive and more richly coloured than the day,” he wrote to his brother Theo. He sold a single painting in his lifetime; The Starry Night now anchors MoMA's collection and adorns a million coffee mugs and umbrellas." } },
+  modernism: { desc: "A world shattered and reassembled. Picasso and Braque split objects into facets seen from many angles at once, Matisse freed pure colour, Kandinsky reached total abstraction — in thirty years painting left the five-century orbit of imitating nature.",
+    art: { title: "Guernica", artist: "Pablo Picasso", year: "1937",
+    story: "On 26 April 1937 Nazi bombers, at Franco's invitation, levelled the Basque town of Guernica. Picasso, searching for a subject for the Spanish pavilion at the Paris World's Fair, produced this eight-metre black-and-white colossus within weeks: a screaming horse, an impassive bull, a mother cradling her dead child. Legend has a Nazi officer pointing at it and asking, “Did you do this?” — “No,” Picasso replied, “you did.” He forbade its return until Spain was democratic again; Guernica finally came home to Madrid in 1981." } },
+  surrealism: { desc: "The liberation of dream and the unconscious. Inspired by Freud, Breton issued the manifesto; Dalí painted meticulous nightmares with his “paranoiac-critical method”, Magritte made everyday objects betray one another, Miró let his lines grow by themselves — reason yields to the marvellous.",
+    art: { title: "The Persistence of Memory", artist: "Salvador Dalí", year: "1931",
+    story: "One evening while Gala was out, Dalí sat contemplating a Camembert melting in the summer heat. After two hours he walked into his studio and added three soft watches to a small painted view of the Port Lligat coast. The “melting clocks” became the century's most famous surreal image — time losing its hardness inside a dream. The panel measures only 24 by 33 centimetres, far smaller than most people imagine, and has hung at MoMA in New York since 1934." } },
+  abstract: { desc: "After the war, the capital of art moved from Paris to New York. Pollock laid the canvas on the floor and made the act of painting the work itself; Rothko's vast colour fields invite an almost religious contemplation. For the first time, America set the direction of world art.",
+    art: { title: "No. 5, 1948", artist: "Jackson Pollock", year: "1948",
+    story: "In a barn studio on Long Island, Pollock laid the fibreboard flat on the floor and dripped, flung and poured paint from sticks and hardened brushes, weaving a web with no beginning and no end. Life magazine asked in 1949, “Is he the greatest living painter in the United States?” — instant fame, and the birth of the eternal retort “my kid could do that”. In 2006 the work reportedly changed hands privately for 140 million dollars, then the highest price ever paid for a painting." } },
+  pop: { desc: "Art goes to the supermarket. Warhol's soup cans and Marilyns and Lichtenstein's comic-strip dots hauled brands, stars and mass media straight onto canvas — the border between high and low erased, replication itself become creation.",
+    art: { title: "Campbell's Soup Cans", artist: "Andy Warhol", year: "1962",
+    story: "“I used to have the same lunch every day, for twenty years” — Campbell's soup. Warhol silkscreened all thirty-two varieties and showed them in Los Angeles lined up on narrow shelves like a supermarket aisle; a gallery next door mockingly stacked real cans in its window as “cheaper originals”. Few sold, and the dealer scrambled to buy them back to keep the set together — the complete series now belongs to MoMA, the sharpest mirror of the consumer age." } },
+  contemporary: { desc: "Anything can be art. Installation, performance, video, street art and NFTs keep expanding the territory; through biennials and global museum networks, Kusama, Ai Weiwei and Banksy answer the same era in utterly different tongues.",
+    art: { title: "Pumpkin", artist: "Yayoi Kusama", year: "since 1994 · photo: Montreal, 2015",
+    story: "Since the age of ten Kusama has been haunted by hallucinations in which the world dissolves into endless dots; painting them became her way of taming fear. Her family ran a seed nursery, and the pumpkin's homely bulk was her earliest comfort — “pumpkins do not inspire envy; they have a generous, unpretentious spirit.” The yellow pumpkin installed on a Naoshima pier in 1994 became a pilgrimage site of contemporary art; swept into the sea by a typhoon in 2021, it was restored to its post the following year." } },
+  chinese: { desc: "Mountains and streams of the heart, written in brush and ink. From Tang figures through Song landscape to the literati painting of the Yuan, Ming and Qing, Chinese painting composes mood through line and emptiness, uniting poem, calligraphy, painting and seal — not scenery, but a view of the cosmos.",
+    art: { title: "Along the River During the Qingming Festival", artist: "Zhang Zeduan (Northern Song)", year: "c. 1101–1124",
+    story: "This 5.28-metre handscroll unrolls the Northern Song capital of Bianjing at festival time: more than eight hundred figures, boats, camels and shop signs go about their business, climaxing at the Rainbow Bridge, where a boat's mast is lowered in the nick of time. It is an ultra-high-resolution documentary of an entire city. Over nine centuries the scroll entered and left the palace five times; the last emperor Puyi smuggled it out of the Forbidden City and it nearly vanished in 1945. Every showing at Beijing's Palace Museum still triggers queues lasting hours." } },
+  ukiyoe: { desc: "The “floating world” of earthly pleasures. Edo-period woodblock prints of kabuki actors, beauties, landscapes and ghosts were mass-produced by painter, carver and printer together — art the townsfolk could afford. Reaching Europe in the nineteenth century, they ignited Japonisme and rewrote Impressionist composition and colour.",
+    art: { title: "The Great Wave off Kanagawa", artist: "Katsushika Hokusai", year: "c. 1831",
+    story: "At seventy, opening his Thirty-six Views of Mount Fuji, Hokusai sent the wave's “claws” lunging over three fishing boats while Fuji shrinks to a small triangle in the trough — a thunderclap of motion against stillness. The deep blue was Prussian blue, a pigment newly imported from Europe: a foreign colour created Japan's most iconic image. An estimated eight thousand impressions were printed; Van Gogh copied it, Debussy composed La Mer beside it, and it now graces Japanese passports and the 1,000-yen note." } },
+  islamic: { desc: "Praising the formless God with geometry and calligraphy. Shunning idolatry, Islamic art poured its genius into endlessly extending geometric pattern, arabesque and script; Persian miniatures built dazzling narrative universes within the pages of books.",
+    art: { title: "Persian Miniatures", artist: "Herat and Isfahan workshops", year: "15th–17th century",
+    story: "Miniatures are manuscript paintings made with brushes of a few squirrel hairs, gold leaf, and ultramarine ground from lapis lazuli. Rejecting Western perspective, they unfold every scene from a God's-eye view — gardens, palaces and figures stacked like inlaid jewels. The legendary Behzād gave full expression to faces the size of a fingernail; Orhan Pamuk's Nobel-crowned novel My Name Is Red is set entirely in the miniaturists' world." } },
+  mesoamerica: { desc: "Pyramids, jade and the faith of the sun. Olmec colossal heads, Maya murals and Aztec carving revolve around myth, calendar and sacrificial rite; with the Spanish arrival in 1521, an artistic river that had flowed independently for three thousand years was cut short.",
+    art: { title: "Aztec Sun Stone", artist: "Aztec sculpture workshops", year: "c. 1502–1520",
+    story: "This basalt disc, 3.6 metres across and 24 tonnes, centres on the sun god Tonatiuh — some say the earth monster — ringed by the myth of the Five Suns and the twenty day-signs: the Aztecs believed four worlds had already perished and the fifth sun had to be fed with sacrifice. Buried under Mexico City's main square after the Conquest, it resurfaced in 1790 during paving works and is now the centrepiece of the National Museum of Anthropology — and a national emblem." } },
+},
+ma: {
+  prehistoric: [
+    { name: "Chauvet Cave painters", y: "c. 36,000 BC", n: "The oldest known figurative paintings, already astonishingly dynamic and volumetric.", w: [["Panel of the Lions",""],["Rhinoceros Frieze",""]] },
+    { name: "Lascaux Cave painters", y: "c. 17,000 BC", n: "The “Sistine Chapel of Prehistory”: mineral pigments and rock relief give the great beasts their mass.", w: [["Hall of the Bulls",""],["The Shaft Scene",""]] },
+    { name: "Altamira Cave painters", y: "c. 14,000 BC", n: "The first prehistoric cave ever discovered (1879) — so fine it was long dismissed as a forgery.", w: [["Bison of the Great Ceiling",""]] },
+  ],
+  egypt: [
+    { name: "Thutmose", y: "fl. c. 1350 BC", n: "Chief court sculptor of the Amarna period, whose work shows a rare naturalism.", w: [["Bust of Nefertiti","c. 1345 BC"]] },
+    { name: "Deir el-Medina craftsmen", y: "16th–11th c. BC", n: "The royal workmen's village on the west bank that built the pharaohs' eternal homes.", w: [["Gold Mask of Tutankhamun","c. 1323 BC"],["Tomb paintings of Seti I","c. 1279 BC"]] },
+    { name: "Old Kingdom workshops", y: "27th–22nd c. BC", n: "Fixed the frontal canon that ruled Egyptian statuary for three thousand years.", w: [["Statue of Khafre","c. 2570 BC"],["The Seated Scribe","c. 2450 BC"]] },
+  ],
+  greek: [
+    { name: "Myron", y: "fl. mid-5th c. BC", n: "Master of the balanced instant; his originals are lost, known through Roman copies.", w: [["Discobolus","c. 450 BC"]] },
+    { name: "Phidias", y: "c. 480–430 BC", n: "Master planner of the Acropolis sculptures at the zenith of the classical age.", w: [["Parthenon sculptures","447–432 BC"],["Zeus at Olympia","c. 435 BC"]] },
+    { name: "Praxiteles", y: "fl. 4th c. BC", n: "Carved the first fully nude goddess; grace embodied in the S-curved stance.", w: [["Aphrodite of Knidos","c. 350 BC"],["Hermes and the Infant Dionysus","c. 340 BC"]] },
+  ],
+  byzantine: [
+    { name: "Giotto", y: "c. 1267–1337", n: "Brought icons down from the golden heaven into human weight and tears — the father of European painting.", w: [["Scrovegni Chapel frescoes","1305"],["Lamentation","1305"]] },
+    { name: "Duccio", y: "c. 1255–1319", n: "Head of the Sienese school, fusing Byzantine gold with Gothic tenderness.", w: [["Maestà Altarpiece","1311"]] },
+    { name: "Andrei Rublev", y: "c. 1360–1430", n: "The summit of Russian icon painting: theology rendered as serenity.", w: [["The Trinity","c. 1425"]] },
+  ],
+  renaissance: [
+    { name: "Leonardo da Vinci", y: "1452–1519", n: "Painter, anatomist, engineer — the archetype of the “Renaissance man”; fewer than twenty paintings survive.", w: [["Mona Lisa","c. 1503"],["The Last Supper","1498"],["Vitruvian Man","c. 1490"]] },
+    { name: "Michelangelo", y: "1475–1564", n: "Saw himself as a sculptor, yet after four years on his back left the mightiest ceiling ever painted.", w: [["David","1504"],["Sistine Chapel ceiling","1512"],["Pietà","1499"]] },
+    { name: "Raphael", y: "1483–1520", n: "Youngest of the three giants; harmony and grace at their classical peak, dead at thirty-seven.", w: [["The School of Athens","1511"],["Sistine Madonna","c. 1512"]] },
+    { name: "Sandro Botticelli", y: "1445–1510", n: "Poet-painter of the Medici court; myth drawn in flowing line.", w: [["The Birth of Venus","c. 1485"],["Primavera","c. 1482"]] },
+  ],
+  baroque: [
+    { name: "Caravaggio", y: "1571–1610", n: "Street models and holy darkness — genius and outlaw in one man.", w: [["The Calling of Saint Matthew","1600"],["Judith Beheading Holofernes","c. 1599"]] },
+    { name: "Rembrandt van Rijn", y: "1606–1669", n: "Soul of the Dutch Golden Age; nearly a hundred self-portraits form his most honest autobiography.", w: [["The Night Watch","1642"],["The Anatomy Lesson of Dr. Tulp","1632"],["Late self-portraits","1650s–60s"]] },
+    { name: "Johannes Vermeer", y: "1632–1675", n: "The quiet master of Delft; barely thirty works survive, signed in daylight and pearl.", w: [["Girl with a Pearl Earring","c. 1665"],["The Milkmaid","c. 1658"]] },
+    { name: "Gian Lorenzo Bernini", y: "1598–1680", n: "Director-general of Baroque Rome; marble given skin and wind-blown cloth.", w: [["Ecstasy of Saint Teresa","1652"],["Apollo and Daphne","1625"]] },
+  ],
+  rococo: [
+    { name: "Antoine Watteau", y: "1684–1721", n: "Invented the fête galante — joy always tinged with farewell.", w: [["Pilgrimage to Cythera","1717"],["Pierrot (Gilles)","c. 1719"]] },
+    { name: "François Boucher", y: "1703–1770", n: "First Painter to Louis XV and favourite portraitist of Madame de Pompadour.", w: [["Madame de Pompadour","1756"],["The Triumph of Venus","1740"]] },
+    { name: "Jean-Honoré Fragonard", y: "1732–1806", n: "Rococo's final firework, his brushwork quick as improvisation.", w: [["The Swing","1767"],["The Bolt","c. 1777"]] },
+  ],
+  romanticism: [
+    { name: "Jacques-Louis David", y: "1748–1825", n: "Standard-bearer of Neoclassicism, chief propagandist from Revolution to Empire.", w: [["Oath of the Horatii","1784"],["The Death of Marat","1793"],["The Coronation of Napoleon","1807"]] },
+    { name: "Francisco Goya", y: "1746–1828", n: "From court painter into deaf darkness, facing war and madness without blinking.", w: [["The Third of May 1808","1814"],["Saturn Devouring His Son","c. 1823"]] },
+    { name: "Eugène Delacroix", y: "1798–1863", n: "Flag-bearer of Romanticism; his fire of colour lit the road to Impressionism.", w: [["Liberty Leading the People","1830"],["The Death of Sardanapalus","1827"]] },
+    { name: "J. M. W. Turner", y: "1775–1851", n: "Storm, steam and haze dissolved into near-abstract atmospheres.", w: [["Rain, Steam and Speed","1844"],["The Fighting Temeraire","1839"]] },
+  ],
+  realism: [
+    { name: "Gustave Courbet", y: "1819–1877", n: "Author of the Realist manifesto: “Show me an angel and I will paint one.”", w: [["A Burial at Ornans","1850"],["The Painter's Studio","1855"]] },
+    { name: "Jean-François Millet", y: "1814–1875", n: "Barbizon painter of peasants, giving field labour a sacred gravity.", w: [["The Gleaners","1857"],["The Angelus","1859"],["The Sower","1850"]] },
+    { name: "Honoré Daumier", y: "1808–1879", n: "Lithographic satirist of politics — jailed six months for mocking the king.", w: [["The Third-Class Carriage","c. 1862"],["Gargantua","1831"]] },
+  ],
+  impressionism: [
+    { name: "Claude Monet", y: "1840–1926", n: "Namer and truest believer of Impressionism; thirty years chasing light in his Giverny garden.", w: [["Impression, Sunrise","1872"],["Water Lilies series","1897–1926"],["Rouen Cathedral series","1894"]] },
+    { name: "Pierre-Auguste Renoir", y: "1841–1919", n: "Painter of sunlit crowds: “pain passes, beauty remains.”", w: [["Bal du moulin de la Galette","1876"],["Luncheon of the Boating Party","1881"]] },
+    { name: "Edgar Degas", y: "1834–1917", n: "Photographic croppings of ballerinas and modern city life.", w: [["The Dance Class","1874"],["L'Absinthe","1876"]] },
+    { name: "Berthe Morisot", y: "1841–1895", n: "Core member of the first Impressionist show; women's daily life in weightless strokes.", w: [["The Cradle","1872"]] },
+  ],
+  postimpressionism: [
+    { name: "Vincent van Gogh", y: "1853–1890", n: "Ten years, two thousand works, one sale in his lifetime — life burned into colour.", w: [["The Starry Night","1889"],["Sunflowers","1888"],["Wheatfield with Crows","1890"]] },
+    { name: "Paul Cézanne", y: "1839–1906", n: "“Treat nature by the cylinder, the sphere, the cone” — honoured as the father of modern art.", w: [["Mont Sainte-Victoire series","1880s–1906"],["The Card Players","c. 1895"]] },
+    { name: "Paul Gauguin", y: "1848–1903", n: "Left the stock exchange for a primitive, symbolic Eden in Tahiti.", w: [["Where Do We Come From? What Are We? Where Are We Going?","1897"],["The Yellow Christ","1889"]] },
+    { name: "Georges Seurat", y: "1859–1891", n: "Painted with scientific dots of colour; two years for one canvas, dead at thirty-one.", w: [["A Sunday Afternoon on La Grande Jatte","1886"]] },
+  ],
+  modernism: [
+    { name: "Pablo Picasso", y: "1881–1973", n: "The very name of twentieth-century art; more than thirty thousand works in ever-changing styles.", w: [["Les Demoiselles d'Avignon","1907"],["Guernica","1937"],["The Weeping Woman","1937"]] },
+    { name: "Henri Matisse", y: "1869–1954", n: "Leader of the Fauves; bedridden late in life, he “sculpted colour” with scissors.", w: [["Dance","1910"],["The Red Room","1908"],["Blue Nudes (cut-outs)","1952"]] },
+    { name: "Wassily Kandinsky", y: "1866–1944", n: "Widely held to be the first purely abstract painter; colour striking the soul like music.", w: [["Composition VIII","1923"],["Improvisations","1910s"]] },
+    { name: "Piet Mondrian", y: "1872–1944", n: "Reduced the world to verticals, horizontals and primary colours — Neoplasticism.", w: [["Composition with Red, Yellow and Blue","1930"],["Broadway Boogie Woogie","1943"]] },
+  ],
+  surrealism: [
+    { name: "Salvador Dalí", y: "1904–1989", n: "Self-declared genius and showman, painting nightmares with photographic precision.", w: [["The Persistence of Memory","1931"],["The Temptation of St. Anthony","1946"]] },
+    { name: "René Magritte", y: "1898–1967", n: "The bowler-hatted Belgian who made everyday objects betray each other and questioned the image itself.", w: [["The Treachery of Images","1929"],["The Son of Man","1964"]] },
+    { name: "Joan Miró", y: "1893–1983", n: "Let lines and signs grow by themselves — Catalan poetry in a child's guise.", w: [["Harlequin's Carnival","1925"],["Constellations","1940–41"]] },
+    { name: "Frida Kahlo", y: "1907–1954", n: "“I paint self-portraits because I am the person I know best.”", w: [["The Two Fridas","1939"],["Self-Portrait with Thorn Necklace and Hummingbird","1940"]] },
+  ],
+  abstract: [
+    { name: "Jackson Pollock", y: "1912–1956", n: "The embodiment of action painting: the canvas as an arena where events happen.", w: [["No. 5, 1948","1948"],["Autumn Rhythm","1950"]] },
+    { name: "Mark Rothko", y: "1903–1970", n: "Vast colour fields for immersion: “my paintings are about tragedy and ecstasy.”", w: [["Orange and Yellow","1956"],["Rothko Chapel murals","1971"]] },
+    { name: "Willem de Kooning", y: "1904–1997", n: "Dutch-American titan raging back and forth between abstraction and the figure.", w: [["Woman I","1952"]] },
+  ],
+  pop: [
+    { name: "Andy Warhol", y: "1928–1987", n: "Master of The Factory; prophesied fifteen minutes of fame for everyone.", w: [["Campbell's Soup Cans","1962"],["Marilyn Diptych","1962"],["Brillo Boxes","1964"]] },
+    { name: "Roy Lichtenstein", y: "1923–1997", n: "Blew the comic strip's Ben-Day dots up to museum-scale epic.", w: [["Whaam!","1963"],["Drowning Girl","1963"]] },
+    { name: "Claes Oldenburg", y: "1929–2022", n: "Monumentalised everyday objects with public wit and humour.", w: [["Spoonbridge and Cherry","1988"],["Clothespin","1976"]] },
+  ],
+  contemporary: [
+    { name: "Yayoi Kusama", y: "1929–", n: "Turned hallucination into healing polka dots; the highest-priced living female artist.", w: [["Pumpkin","1994–"],["Infinity Mirror Rooms","1965–"],["The Obliteration Room","2002–"]] },
+    { name: "Banksy", y: "identity unknown", n: "Anonymous street artist whose work shredded itself the moment the auction hammer fell.", w: [["Girl with Balloon","2002"],["Flower Thrower","2003"]] },
+    { name: "Ai Weiwei", y: "1957–", n: "Chinese dissident wielding installation and action as social intervention.", w: [["Sunflower Seeds","2010"],["Circle of Animals / Zodiac Heads","2010"]] },
+    { name: "Marina Abramović", y: "1946–", n: "The “grandmother of performance art” — body and will as her medium.", w: [["The Artist Is Present","2010"],["Rhythm 0","1974"]] },
+  ],
+  chinese: [
+    { name: "Wu Daozi", y: "c. 685–758", n: "The Tang “Sage of Painting”; his robes were said to billow as if in the wind.", w: [["Heavenly King Sending His Son (attr.)",""],["Eighty-Seven Immortals (attr.)",""]] },
+    { name: "Fan Kuan", y: "c. 950–1032", n: "Peak of monumental Song landscape: “learn from nature rather than from men.”", w: [["Travelers Among Mountains and Streams","N. Song"],["Snowy Forest","N. Song"]] },
+    { name: "Zhang Zeduan", y: "early 12th c.", n: "Academy painter who recorded the breath of an entire capital city.", w: [["Along the River During the Qingming Festival","c. 1101–1124"]] },
+    { name: "Bada Shanren", y: "1626–1705", n: "Ming loyalist; his white-eyed birds embody the grief of a fallen dynasty.", w: [["Lotus and Waterbirds","early Qing"],["River of Flowers scroll","1697"]] },
+  ],
+  ukiyoe: [
+    { name: "Katsushika Hokusai", y: "1760–1849", n: "The “old man mad about painting” — at ninety still begging heaven for ten more years.", w: [["The Great Wave off Kanagawa","c. 1831"],["Fine Wind, Clear Morning","c. 1831"],["Hokusai Manga","1814–"]] },
+    { name: "Utagawa Hiroshige", y: "1797–1858", n: "Lyric rain, snow and the melancholy of travel; copied faithfully by Van Gogh.", w: [["The Fifty-three Stations of the Tōkaidō","1833"],["One Hundred Famous Views of Edo","1856–58"]] },
+    { name: "Kitagawa Utamaro", y: "c. 1753–1806", n: "First among masters of the beauty print; invented the close-up ōkubi-e.", w: [["Three Beauties of the Present Day","c. 1793"],["Ten Types of Female Physiognomy","1792–93"]] },
+    { name: "Tōshūsai Sharaku", y: "active 1794–95", n: "Vanished after ten months of activity; his actor portraits remain unsettlingly vivid.", w: [["Ōtani Oniji III as Edobei","1794"]] },
+  ],
+  islamic: [
+    { name: "Kamāl ud-Dīn Behzād", y: "c. 1450–1535", n: "Grand master of the Herat school; expression alive in faces the size of a fingernail.", w: [["Yusuf and Zulaikha","1488"],["Construction of the Khornaq Castle","c. 1494"]] },
+    { name: "Sultan Mohammed", y: "fl. 16th century", n: "Head of the Safavid court atelier; his Shahnameh pages glow like set jewels.", w: [["The Court of Gayumars","c. 1525"]] },
+    { name: "Mimar Sinan", y: "1489–1588", n: "Ottoman chief architect: over three hundred mosques and bridges in one lifetime.", w: [["Süleymaniye Mosque","1557"],["Selimiye Mosque","1575"]] },
+  ],
+  mesoamerica: [
+    { name: "Olmec sculptors", y: "c. 1200–400 BC", n: "The “mother culture” of Mesoamerica; rulers' faces hewn from basalt by unknown masters.", w: [["Colossal Heads","c. 1200–900 BC"],["The Wrestler","c. 1200 BC"]] },
+    { name: "Bonampak muralists", y: "late 8th century", n: "The summit of Maya mural art: court ritual and battle, colours still fresh.", w: [["Bonampak Murals","c. 790"]] },
+    { name: "Aztec workshops", y: "15th–16th century", n: "Temple sculptors of Tenochtitlan, carving myth and calendar into stone.", w: [["Aztec Sun Stone","c. 1502–1520"],["Coatlicue","late 15th c."],["Double-headed Serpent","15th–16th c."]] },
+  ],
+},
+},
+fr: {
+mv: {
+  prehistoric: { name: "Art préhistorique", desc: "Les premières images de l'humanité. Au fond des grottes, les chasseurs du Paléolithique peignirent bisons, chevaux et cerfs à l'ocre et au charbon, laissant l'empreinte de leurs mains sur la roche — magie rituelle, et premier désir humain de représenter le monde.",
+    art: { title: "Grotte de Lascaux", artist: "Anonyme (Paléolithique)", year: "v. 17 000 av. J.-C.",
+    story: "En 1940, quatre adolescents à la recherche d'un souterrain légendaire tombent dans la grotte de Lascaux et découvrent près de six cents peintures préhistoriques — la « chapelle Sixtine de la Préhistoire ». Les grands taureaux dépassent cinq mètres, et les peintres exploitaient les reliefs naturels de la roche pour leur donner du volume : preuve que l'homme maîtrisait perspective et mouvement il y a vingt mille ans. Le souffle des visiteurs rongeant les parois, la grotte fut fermée définitivement en 1963 : on visite aujourd'hui sa réplique fidèle, Lascaux II." } },
+  egypt: { name: "Art égyptien", desc: "Un art fait pour l'éternité. Convaincus du pouvoir magique des images, les Égyptiens soumirent peinture et sculpture à un canon rigoureux — tête de profil, œil et épaules de face — presque immuable pendant trois millénaires, au service de l'au-delà du pharaon et de l'ordre divin.",
+    art: { title: "Masque funéraire de Toutânkhamon", artist: "Atelier royal, anonyme", year: "v. 1323 av. J.-C.",
+    story: "En ouvrant la tombe de Toutânkhamon en 1922, Howard Carter murmura qu'il voyait « des merveilles ». Le masque d'or de 10,23 kg, incrusté de lapis-lazuli et de verre coloré, couvrait le visage momifié du jeune pharaon. Couronné à neuf ans, mort à dix-huit, ce roi mineur devint, grâce à sa tombe inviolée, le visage le plus célèbre de l'Égypte ancienne. Au revers, des formules du Livre des Morts protègent son voyage dans l'au-delà." } },
+  greek: { name: "Art gréco-romain", desc: "La source de l'esthétique occidentale. Les Grecs cherchèrent le corps idéal par la proportion mathématique — contrapposto, nombre d'or ; Rome hérita du métier et le tourna vers le portrait réaliste et l'architecture monumentale, fixant le modèle des deux millénaires suivants.",
+    art: { title: "Vénus de Milo", artist: "Attribuée à Alexandros d'Antioche", year: "v. 130–100 av. J.-C.",
+    story: "En 1820, un paysan de l'île de Milo déterre cette déesse de l'amour sans bras ; un officier de marine français l'obtient pour Louis XVIII et elle devient l'un des trois trésors du Louvre. Que faisaient ses bras — tenaient-ils une pomme, un drapé, un miroir ? Deux siècles de conjectures savantes n'ont rien tranché. C'est cette incomplétude même qui fit d'elle un réceptacle de l'imaginaire : ses bras perdus l'ont rendue éternelle." } },
+  byzantine: { name: "Art médiéval et byzantin", desc: "L'éclat de Dieu plutôt que la chair. Mosaïques à fond d'or, icônes et vitraux renoncent au réalisme pour des figures planes, solennelles et codifiées qui élèvent le regard du fidèle vers le ciel — l'or figurant une lumière sacrée hors du temps et de l'espace.",
+    art: { title: "Mosaïques de Sainte-Sophie", artist: "Ateliers impériaux byzantins", year: "IXe–XIIIe siècle",
+    story: "Les mosaïques dorées de Sainte-Sophie comptent des millions de tesselles de verre, chaque cube doré posé sous un angle légèrement différent, si bien qu'à la lueur des cierges les murs scintillent comme un ciel vivant. Après la chute de Constantinople en 1453, l'église devint mosquée et les mosaïques furent recouvertes de chaux — badigeon qui, ironie de l'histoire, les préserva jusqu'à leur redécouverte au XXe siècle." } },
+  renaissance: { name: "Renaissance", desc: "L'homme redevient la mesure de toute chose. Perspective, anatomie, peinture à l'huile : les maîtres de Florence et de Venise furent autant savants qu'artistes ; Léonard, Michel-Ange et Raphaël fondirent l'idéal antique et l'observation directe de la nature.",
+    art: { title: "La Joconde", artist: "Léonard de Vinci", year: "v. 1503–1519",
+    story: "Léonard superposa des dizaines de glacis translucides — son sfumato — laissant les commissures des lèvres et des yeux se fondre dans l'ombre : c'est le secret du sourire insaisissable. Il garda le panneau inachevé jusqu'à sa mort en France. En 1911, le vitrier italien Vincenzo Peruggia l'emporta du Louvre sous son manteau, jurant de la rendre à l'Italie ; pendant deux ans de traque mondiale, Picasso lui-même fut interrogé. À son retour, elle était devenue le tableau le plus célèbre du monde." } },
+  baroque: { name: "Baroque", desc: "Le drame de l'ombre et de la lumière. Contre-Réforme et pouvoir des cours engendrent un art du mouvement, du clair-obscur et de l'émotion ; le projecteur du Caravage, la lueur intérieure de Rembrandt, le jour paisible de Vermeer — trois langues de la lumière.",
+    art: { title: "La Ronde de nuit", artist: "Rembrandt van Rijn", year: "1642",
+    story: "Ce portrait de milice aurait dû aligner sagement les visages ; Rembrandt en fit un drame saisi en plein mouvement — le capitaine ordonne, le tambour bat, les mousquetaires chargent, la lumière ne tombant que sur les protagonistes. C'est en réalité une scène de jour : des siècles de vernis noirci lui valurent son surnom erroné. En 1975, un homme lacéra la toile de douze coups de couteau ; les cicatrices, encore perceptibles après restauration, font désormais partie de son histoire." } },
+  rococo: { name: "Rococo", desc: "Le doux crépuscule de l'aristocratie. Tons pastel, courbes en volute et fêtes galantes reflètent les derniers plaisirs de la cour de France — mélancolie de Watteau, grâce poudrée de Boucher, malice de Fragonard, écloses puis fanées à la veille de la Révolution.",
+    art: { title: "L'Escarpolette", artist: "Jean-Honoré Fragonard", year: "1767",
+    story: "Un baron demanda d'abord à un autre peintre un évêque poussant la balançoire de sa maîtresse qu'il admirerait d'en bas — refus ; Fragonard accepta la commande. La jeune femme s'élance, une mule s'envole, ses jupons s'ouvrent vers le jeune homme caché dans les rosiers, tandis que le vieux mari, ignorant tout, tire les cordes. L'image même de la frivolité aristocratique — un art condamné comme décadent dès la Révolution venue." } },
+  romanticism: { name: "Néoclassicisme et romantisme", desc: "La raison contre la passion. David exalte la vertu républicaine avec une gravité antique ; Delacroix peint la révolution, l'orage et l'Orient en couleurs déchaînées ; Goya, plus loin encore, fixe les ténèbres de la guerre. L'art devient pour la première fois le champ de bataille de l'esprit du temps.",
+    art: { title: "La Liberté guidant le peuple", artist: "Eugène Delacroix", year: "1830",
+    story: "Quand la révolution de Juillet 1830 renverse Charles X en trois jours, Delacroix écrit à son frère : « Si je n'ai pas vaincu pour la patrie, au moins peindrai-je pour elle. » La Liberté, sein nu, drapeau tricolore au poing, enjambe la barricade et les morts, entourée d'un ouvrier, d'un bourgeois et d'un gamin — première épopée peinte d'une révolution contemporaine. L'État acheta la toile… puis la cacha des décennies, jugée trop incendiaire ; elle n'entra au Louvre qu'en 1874." } },
+  realism: { name: "Réalisme", desc: "« Montrez-moi un ange et j'en peindrai un. » Avec le manifeste de Courbet, l'art se tourne vers paysans, ouvriers et labeur quotidien, refusant mythe et embellissement ; les champs de Millet, le wagon de troisième classe de Daumier font du peuple, pour la première fois, le héros du tableau.",
+    art: { title: "Des glaneuses", artist: "Jean-François Millet", year: "1857",
+    story: "Trois paysannes se courbent pour ramasser les épis oubliés après la moisson — le glanage, dernier recours légal des plus pauvres. Millet donna à ce labeur humble la gravité d'une frise antique, l'abondance dorée du fond répondant en silence à la misère du premier plan. La critique bourgeoise du Salon de 1857 y vit une peinture socialiste et séditieuse ; on y voit aujourd'hui le plus grave hommage jamais rendu aux travailleurs de la terre." } },
+  impressionism: { name: "Impressionnisme", desc: "Hors de l'atelier, à la poursuite de la lumière. Tubes de peinture et chemin de fer permettent de saisir sur le motif l'instant lumineux ; meules de Monet, bals de Renoir, danseuses de Degas — la touche fragmentée fait, pour la première fois, vibrer l'air même sur la toile.",
+    art: { title: "Impression, soleil levant", artist: "Claude Monet", year: "1872",
+    story: "De la fenêtre d'un hôtel du Havre, sa ville natale, Monet nota d'une touche rapide un soleil orange dans la brume matinale. À l'exposition des indépendants de 1874, le critique Louis Leroy railla : « le papier peint à l'état embryonnaire est plus fait » — et baptisa par dérision tout le groupe « impressionnistes ». Les peintres adoptèrent l'insulte : le baptême accidentel le plus célèbre de l'histoire de l'art. Volée à main armée en 1985, la toile fut retrouvée cinq ans plus tard en Corse." } },
+  postimpressionism: { name: "Post-impressionnisme", desc: "De l'œil à l'esprit. Cézanne reconstruit l'ordre des formes, Van Gogh charge la couleur d'émotion, Gauguin s'enfuit vers un monde symbolique primitif — trois chemins menant au cubisme, à l'expressionnisme et aux portes de l'art moderne.",
+    art: { title: "La Nuit étoilée", artist: "Vincent van Gogh", year: "1889",
+    story: "Après le drame de l'oreille, Van Gogh se fait interner à Saint-Rémy. Voici le ciel nocturne vu de sa fenêtre grillagée, uni à un village de mémoire et à des tourbillons d'étoiles imaginés — un cyprès en flamme reliant la terre au ciel. « La nuit est plus vivante et plus richement colorée que le jour », écrit-il à son frère Théo. Il ne vendit qu'une toile de son vivant ; La Nuit étoilée est aujourd'hui le joyau du MoMA — et orne des millions de tasses et de parapluies." } },
+  modernism: { name: "Cubisme et modernisme", desc: "Un monde brisé puis recomposé. Picasso et Braque éclatent les objets en facettes vues sous plusieurs angles à la fois ; Matisse libère la couleur pure ; Kandinsky atteint l'abstraction totale — en trente ans, la peinture quitte cinq siècles d'imitation de la nature.",
+    art: { title: "Guernica", artist: "Pablo Picasso", year: "1937",
+    story: "Le 26 avril 1937, l'aviation nazie, à l'invitation de Franco, rase la ville basque de Guernica. Picasso, qui cherchait un sujet pour le pavillon espagnol de l'Exposition de Paris, peint en quelques semaines ce colosse noir et blanc de huit mètres : cheval hurlant, taureau impassible, mère à l'enfant mort. La légende veut qu'un officier nazi ait demandé « C'est vous qui avez fait ça ? » — « Non, répondit Picasso, c'est vous. » Il interdit son retour avant le rétablissement de la démocratie ; Guernica rentra à Madrid en 1981." } },
+  surrealism: { name: "Surréalisme", desc: "La libération du rêve et de l'inconscient. Sous l'influence de Freud, Breton signe le manifeste ; Dalí peint des cauchemars méticuleux par sa « méthode paranoïaque-critique », Magritte fait se trahir les objets familiers, Miró laisse la ligne pousser seule — la raison cède au merveilleux.",
+    art: { title: "La Persistance de la mémoire", artist: "Salvador Dalí", year: "1931",
+    story: "Un soir d'absence de Gala, Dalí resta deux heures à contempler un camembert fondant dans la chaleur estivale. De retour à l'atelier, il ajouta trois montres molles à un petit paysage déjà peint de la côte de Port Lligat. Les « montres molles » devinrent l'image surréaliste la plus célèbre du siècle — le temps perdant sa dureté dans le rêve. Le panneau ne mesure que 24 × 33 cm, bien plus petit qu'on ne l'imagine, et appartient au MoMA de New York depuis 1934." } },
+  abstract: { name: "Expressionnisme abstrait", desc: "Après-guerre, la capitale de l'art passe de Paris à New York. Pollock pose la toile au sol et fait du geste l'œuvre elle-même ; les vastes champs colorés de Rothko appellent une contemplation quasi religieuse. L'Amérique dicte pour la première fois le cap de l'art mondial.",
+    art: { title: "No. 5, 1948", artist: "Jackson Pollock", year: "1948",
+    story: "Dans une grange de Long Island transformée en atelier, Pollock posa le panneau au sol et fit goutter, gicler, couler la peinture au bâton et au pinceau durci, tissant un réseau sans commencement ni fin. En 1949, Life titrait : « Est-il le plus grand peintre vivant d'Amérique ? » — gloire immédiate, et naissance de l'éternel « mon gosse en ferait autant ». En 2006, l'œuvre se serait vendue de gré à gré 140 millions de dollars, record absolu de l'époque." } },
+  pop: { name: "Pop Art", desc: "L'art entre au supermarché. Boîtes de soupe et Marilyn de Warhol, trames de bande dessinée de Lichtenstein : marques, stars et médias de masse montent droit sur la toile — la frontière entre noble et populaire s'efface, la copie elle-même devient création.",
+    art: { title: "Boîtes de soupe Campbell", artist: "Andy Warhol", year: "1962",
+    story: "« J'ai mangé la même chose à midi pendant vingt ans » — la soupe Campbell. Warhol sérigraphia les trente-deux variétés et les exposa à Los Angeles alignées sur d'étroites étagères, comme au supermarché ; la galerie voisine empila par dérision de vraies boîtes en vitrine, « originaux moins chers ». Presque rien ne se vendit, et le marchand racheta les toiles une à une pour garder la série complète — aujourd'hui au MoMA, miroir le plus acéré de l'ère de la consommation." } },
+  contemporary: { name: "Art contemporain", desc: "Tout peut être art. Installation, performance, vidéo, street art, NFT : le territoire ne cesse de s'étendre ; par les biennales et les réseaux muséaux mondiaux, Kusama, Ai Weiwei et Banksy répondent à la même époque en des langues radicalement différentes.",
+    art: { title: "Citrouille", artist: "Yayoi Kusama", year: "depuis 1994 · photo : Montréal, 2015",
+    story: "Depuis ses dix ans, Kusama est hantée par des hallucinations où le monde se dissout en pois infinis ; les peindre devint sa façon d'apprivoiser la peur. Sa famille tenait une pépinière : la rondeur débonnaire de la citrouille fut sa première consolation — « la citrouille n'attire pas la jalousie ; elle a l'esprit large et sans prétention ». La citrouille jaune posée en 1994 sur une jetée de Naoshima devint un lieu de pèlerinage de l'art contemporain ; emportée en mer par un typhon en 2021, elle retrouva son poste l'année suivante." } },
+  chinese: { name: "Peinture chinoise", desc: "Monts et eaux du cœur, écrits au pinceau et à l'encre. Des figures Tang aux paysages Song et à la peinture lettrée des Yuan, Ming et Qing, la peinture chinoise compose l'esprit par la ligne et le vide, unissant poème, calligraphie, peinture et sceau — non un paysage, mais une vision du cosmos.",
+    art: { title: "Le Jour de Qingming au bord de la rivière", artist: "Zhang Zeduan (Song du Nord)", year: "v. 1101–1124",
+    story: "Ce rouleau de 5,28 mètres déploie Bianjing, capitale des Song du Nord, au moment de la fête de Qingming : plus de huit cents personnages, barques, chameaux et enseignes s'affairent, jusqu'au pont Arc-en-ciel où l'on abaisse un mât in extremis. C'est le documentaire en très haute résolution d'une ville entière. En neuf siècles, le rouleau entra et sortit cinq fois du palais ; le dernier empereur Puyi l'emporta hors de la Cité interdite et il faillit disparaître en 1945. Chaque exposition au Musée du Palais de Pékin déclenche encore des files d'attente de plusieurs heures." } },
+  ukiyoe: { name: "Ukiyo-e", desc: "Le « monde flottant » des plaisirs terrestres. Les estampes d'Edo — acteurs de kabuki, beautés, paysages, fantômes — étaient produites en série par peintre, graveur et imprimeur : un art à la portée du peuple. Parvenues en Europe au XIXe siècle, elles allumèrent le japonisme et récrivirent la composition et la couleur impressionnistes.",
+    art: { title: "La Grande Vague de Kanagawa", artist: "Katsushika Hokusai", year: "v. 1831",
+    story: "À soixante-dix ans, ouvrant ses Trente-six vues du mont Fuji, Hokusai lance les « griffes » de la vague sur trois barques de pêcheurs, tandis que le Fuji se réduit à un petit triangle au creux de la houle — fracas du mouvement contre l'immobile. Le bleu profond est du bleu de Prusse, pigment fraîchement importé d'Europe : une couleur étrangère fit l'image la plus japonaise qui soit. Tirée à quelque huit mille exemplaires, elle fut copiée par Van Gogh, accompagna Debussy composant La Mer, et orne aujourd'hui passeports japonais et billets de 1 000 yens." } },
+  islamic: { name: "Art islamique", desc: "Louer le Dieu sans forme par la géométrie et la calligraphie. Refusant l'idole, l'art islamique versa son génie dans l'entrelacs géométrique infini, l'arabesque et l'écriture ; la miniature persane bâtit des univers narratifs éclatants dans les pages des livres.",
+    art: { title: "Miniatures persanes", artist: "Ateliers de Hérat et d'Ispahan", year: "XVe–XVIIe siècle",
+    story: "La miniature est une peinture de manuscrit, exécutée au pinceau de quelques poils d'écureuil, à la feuille d'or et à l'outremer broyé de lapis-lazuli. Refusant la perspective occidentale, elle déploie chaque scène du point de vue de Dieu : jardins, palais et personnages s'étagent comme des joyaux sertis. Le légendaire Behzād donnait toute leur expression à des visages grands comme l'ongle ; le roman Mon nom est Rouge d'Orhan Pamuk, prix Nobel, se déroule tout entier dans ce monde des miniaturistes." } },
+  mesoamerica: { name: "Art mésoaméricain", desc: "Pyramides, jade et culte du soleil. Têtes colossales olmèques, fresques mayas et sculpture aztèque gravitent autour du mythe, du calendrier et du sacrifice ; avec l'arrivée espagnole en 1521, un fleuve artistique indépendant depuis trois millénaires s'interrompt net.",
+    art: { title: "Pierre du Soleil", artist: "Ateliers de sculpture aztèques", year: "v. 1502–1520",
+    story: "Ce disque de basalte de 3,6 mètres et 24 tonnes s'organise autour du dieu solaire Tonatiuh — certains y voient le monstre terrestre — entouré du mythe des Cinq Soleils et des vingt signes des jours : les Aztèques croyaient quatre mondes déjà détruits, le cinquième soleil devant être nourri de sacrifices. Enfoui sous la grand-place de Mexico après la Conquête, il resurgit en 1790 lors de travaux de pavage ; c'est aujourd'hui la pièce maîtresse du Musée national d'anthropologie — et un emblème national." } },
+},
+ma: {
+  prehistoric: [
+    { name: "Peintres de Chauvet", y: "v. 36 000 av. J.-C.", n: "Les plus anciennes peintures figuratives connues, d'un dynamisme et d'un relief stupéfiants.", w: [["Panneau des Lions",""],["Frise des rhinocéros",""]] },
+    { name: "Peintres de Lascaux", y: "v. 17 000 av. J.-C.", n: "La « chapelle Sixtine de la Préhistoire » : pigments minéraux et reliefs de la roche donnent leur masse aux grands animaux.", w: [["Salle des Taureaux",""],["Scène du Puits",""]] },
+    { name: "Peintres d'Altamira", y: "v. 14 000 av. J.-C.", n: "Première grotte ornée découverte (1879), si belle qu'on la crut longtemps fausse.", w: [["Bisons du Grand Plafond",""]] },
+  ],
+  egypt: [
+    { name: "Thoutmès", y: "actif v. 1350 av. J.-C.", n: "Sculpteur en chef de la période amarnienne, d'un naturalisme rare.", w: [["Buste de Néfertiti","v. 1345 av. J.-C."]] },
+    { name: "Artisans de Deir el-Médineh", y: "XVIe–XIe s. av. J.-C.", n: "Le village d'artisans royaux qui bâtit les demeures éternelles des pharaons.", w: [["Masque funéraire de Toutânkhamon","v. 1323 av. J.-C."],["Peintures de la tombe de Séthi Ier","v. 1279 av. J.-C."]] },
+    { name: "Ateliers de l'Ancien Empire", y: "XXVIIe–XXIIe s. av. J.-C.", n: "Fixèrent le canon frontal qui régit la statuaire égyptienne trois millénaires durant.", w: [["Statue de Khéphren","v. 2570 av. J.-C."],["Le Scribe accroupi","v. 2450 av. J.-C."]] },
+  ],
+  greek: [
+    { name: "Myron", y: "actif au milieu du Ve s. av. J.-C.", n: "Maître de l'instant en équilibre ; originaux perdus, connus par les copies romaines.", w: [["Le Discobole","v. 450 av. J.-C."]] },
+    { name: "Phidias", y: "v. 480–430 av. J.-C.", n: "Grand ordonnateur des sculptures de l'Acropole au sommet du classicisme.", w: [["Sculptures du Parthénon","447–432 av. J.-C."],["Zeus d'Olympie","v. 435 av. J.-C."]] },
+    { name: "Praxitèle", y: "actif au IVe s. av. J.-C.", n: "Première déesse entièrement nue ; la grâce de la courbe en S.", w: [["Aphrodite de Cnide","v. 350 av. J.-C."],["Hermès portant Dionysos","v. 340 av. J.-C."]] },
+  ],
+  byzantine: [
+    { name: "Giotto", y: "v. 1267–1337", n: "Fit descendre l'icône du ciel d'or vers le poids et les larmes humaines — père de la peinture européenne.", w: [["Fresques de la chapelle Scrovegni","1305"],["La Lamentation","1305"]] },
+    { name: "Duccio", y: "v. 1255–1319", n: "Chef de l'école siennoise, unissant l'or byzantin à la tendresse gothique.", w: [["Retable de la Maestà","1311"]] },
+    { name: "Andreï Roublev", y: "v. 1360–1430", n: "Sommet de l'icône russe : la théologie faite sérénité.", w: [["La Trinité","v. 1425"]] },
+  ],
+  renaissance: [
+    { name: "Léonard de Vinci", y: "1452–1519", n: "Peintre, anatomiste, ingénieur — archétype de « l'homme de la Renaissance » ; moins de vingt tableaux conservés.", w: [["La Joconde","v. 1503"],["La Cène","1498"],["L'Homme de Vitruve","v. 1490"]] },
+    { name: "Michel-Ange", y: "1475–1564", n: "Se voulait sculpteur ; après quatre ans sur le dos, il laissa le plafond le plus grandiose jamais peint.", w: [["David","1504"],["Plafond de la Sixtine","1512"],["Pietà","1499"]] },
+    { name: "Raphaël", y: "1483–1520", n: "Le plus jeune des trois géants ; harmonie et grâce portées au sommet classique, mort à 37 ans.", w: [["L'École d'Athènes","1511"],["La Madone Sixtine","v. 1512"]] },
+    { name: "Sandro Botticelli", y: "1445–1510", n: "Peintre-poète de la cour des Médicis ; le mythe en lignes fluides.", w: [["La Naissance de Vénus","v. 1485"],["Le Printemps","v. 1482"]] },
+  ],
+  baroque: [
+    { name: "Le Caravage", y: "1571–1610", n: "Modèles des rues et ténèbres sacrées — génie et hors-la-loi à la fois.", w: [["La Vocation de saint Matthieu","1600"],["Judith décapitant Holopherne","v. 1599"]] },
+    { name: "Rembrandt van Rijn", y: "1606–1669", n: "Âme du Siècle d'or hollandais ; près de cent autoportraits, la plus honnête des autobiographies.", w: [["La Ronde de nuit","1642"],["La Leçon d'anatomie du docteur Tulp","1632"],["Autoportraits tardifs","1650–60"]] },
+    { name: "Johannes Vermeer", y: "1632–1675", n: "Maître silencieux de Delft ; à peine trente œuvres, signées de lumière et de perle.", w: [["La Jeune Fille à la perle","v. 1665"],["La Laitière","v. 1658"]] },
+    { name: "Le Bernin", y: "1598–1680", n: "Metteur en scène de la Rome baroque ; le marbre doté de peau et d'étoffes au vent.", w: [["L'Extase de sainte Thérèse","1652"],["Apollon et Daphné","1625"]] },
+  ],
+  rococo: [
+    { name: "Antoine Watteau", y: "1684–1721", n: "Inventeur de la fête galante — la joie toujours teintée d'adieu.", w: [["Pèlerinage à l'île de Cythère","1717"],["Pierrot, dit Gilles","v. 1719"]] },
+    { name: "François Boucher", y: "1703–1770", n: "Premier peintre de Louis XV, portraitiste favori de la Pompadour.", w: [["Madame de Pompadour","1756"],["Le Triomphe de Vénus","1740"]] },
+    { name: "Jean-Honoré Fragonard", y: "1732–1806", n: "Dernier feu d'artifice du rococo, la touche vive comme une improvisation.", w: [["L'Escarpolette","1767"],["Le Verrou","v. 1777"]] },
+  ],
+  romanticism: [
+    { name: "Jacques-Louis David", y: "1748–1825", n: "Porte-étendard du néoclassicisme, propagandiste de la Révolution à l'Empire.", w: [["Le Serment des Horaces","1784"],["La Mort de Marat","1793"],["Le Sacre de Napoléon","1807"]] },
+    { name: "Francisco Goya", y: "1746–1828", n: "Du peintre de cour à la surdité noire, fixant sans ciller la guerre et la folie.", w: [["Tres de Mayo","1814"],["Saturne dévorant un de ses fils","v. 1823"]] },
+    { name: "Eugène Delacroix", y: "1798–1863", n: "Chef de file du romantisme ; son feu coloré ouvrit la voie aux impressionnistes.", w: [["La Liberté guidant le peuple","1830"],["La Mort de Sardanapale","1827"]] },
+    { name: "J. M. W. Turner", y: "1775–1851", n: "Tempête, vapeur et brume fondues en atmosphères quasi abstraites.", w: [["Pluie, Vapeur et Vitesse","1844"],["Le Dernier Voyage du Téméraire","1839"]] },
+  ],
+  realism: [
+    { name: "Gustave Courbet", y: "1819–1877", n: "Auteur du manifeste réaliste : « Montrez-moi un ange et j'en peindrai un. »", w: [["Un enterrement à Ornans","1850"],["L'Atelier du peintre","1855"]] },
+    { name: "Jean-François Millet", y: "1814–1875", n: "Peintre paysan de Barbizon, donnant au labeur des champs une gravité sacrée.", w: [["Des glaneuses","1857"],["L'Angélus","1859"],["Le Semeur","1850"]] },
+    { name: "Honoré Daumier", y: "1808–1879", n: "Satiriste lithographe — six mois de prison pour avoir raillé le roi.", w: [["Le Wagon de troisième classe","v. 1862"],["Gargantua","1831"]] },
+  ],
+  impressionism: [
+    { name: "Claude Monet", y: "1840–1926", n: "Parrain et fidèle absolu de l'impressionnisme ; trente ans à Giverny à poursuivre la lumière.", w: [["Impression, soleil levant","1872"],["Les Nymphéas","1897–1926"],["Cathédrales de Rouen","1894"]] },
+    { name: "Pierre-Auguste Renoir", y: "1841–1919", n: "Peintre des foules ensoleillées : « la douleur passe, la beauté reste ».", w: [["Bal du moulin de la Galette","1876"],["Le Déjeuner des canotiers","1881"]] },
+    { name: "Edgar Degas", y: "1834–1917", n: "Cadrages photographiques de danseuses et de la vie urbaine moderne.", w: [["La Classe de danse","1874"],["L'Absinthe","1876"]] },
+    { name: "Berthe Morisot", y: "1841–1895", n: "Membre fondatrice de la première exposition impressionniste ; le quotidien féminin en touches légères.", w: [["Le Berceau","1872"]] },
+  ],
+  postimpressionism: [
+    { name: "Vincent van Gogh", y: "1853–1890", n: "Dix ans, deux mille œuvres, une seule vendue de son vivant — la vie brûlée en couleur.", w: [["La Nuit étoilée","1889"],["Les Tournesols","1888"],["Champ de blé aux corbeaux","1890"]] },
+    { name: "Paul Cézanne", y: "1839–1906", n: "« Traiter la nature par le cylindre, la sphère, le cône » — honoré comme père de l'art moderne.", w: [["Montagne Sainte-Victoire","1880–1906"],["Les Joueurs de cartes","v. 1895"]] },
+    { name: "Paul Gauguin", y: "1848–1903", n: "Quitta la Bourse pour un éden symbolique et primitif à Tahiti.", w: [["D'où venons-nous ? Que sommes-nous ? Où allons-nous ?","1897"],["Le Christ jaune","1889"]] },
+    { name: "Georges Seurat", y: "1859–1891", n: "Peignit par points scientifiques ; deux ans pour une toile, mort à 31 ans.", w: [["Un dimanche après-midi à la Grande Jatte","1886"]] },
+  ],
+  modernism: [
+    { name: "Pablo Picasso", y: "1881–1973", n: "Le nom même de l'art du XXe siècle ; plus de trente mille œuvres, styles sans fin.", w: [["Les Demoiselles d'Avignon","1907"],["Guernica","1937"],["La Femme qui pleure","1937"]] },
+    { name: "Henri Matisse", y: "1869–1954", n: "Chef des Fauves ; alité à la fin de sa vie, il « sculptait la couleur » aux ciseaux.", w: [["La Danse","1910"],["La Desserte rouge","1908"],["Nus bleus (papiers découpés)","1952"]] },
+    { name: "Vassily Kandinsky", y: "1866–1944", n: "Tenu pour le premier peintre pleinement abstrait ; la couleur frappe l'âme comme la musique.", w: [["Composition VIII","1923"],["Improvisations","années 1910"]] },
+    { name: "Piet Mondrian", y: "1872–1944", n: "Réduisit le monde aux verticales, horizontales et couleurs primaires — le néoplasticisme.", w: [["Composition en rouge, jaune et bleu","1930"],["Broadway Boogie-Woogie","1943"]] },
+  ],
+  surrealism: [
+    { name: "Salvador Dalí", y: "1904–1989", n: "Génie autoproclamé et showman, peignant le cauchemar avec une précision photographique.", w: [["La Persistance de la mémoire","1931"],["La Tentation de saint Antoine","1946"]] },
+    { name: "René Magritte", y: "1898–1967", n: "Le Belge au chapeau melon qui fit se trahir les objets et douter l'image d'elle-même.", w: [["La Trahison des images","1929"],["Le Fils de l'homme","1964"]] },
+    { name: "Joan Miró", y: "1893–1983", n: "Lignes et signes poussant en liberté — poésie catalane sous des airs d'enfance.", w: [["Le Carnaval d'Arlequin","1925"],["Constellations","1940–41"]] },
+    { name: "Frida Kahlo", y: "1907–1954", n: "« Je me peins moi-même, car je suis la personne que je connais le mieux. »", w: [["Les Deux Fridas","1939"],["Autoportrait au collier d'épines et colibri","1940"]] },
+  ],
+  abstract: [
+    { name: "Jackson Pollock", y: "1912–1956", n: "Incarnation de l'action painting : la toile comme arène où l'événement advient.", w: [["No. 5, 1948","1948"],["Rythme d'automne","1950"]] },
+    { name: "Mark Rothko", y: "1903–1970", n: "Vastes champs colorés d'immersion : « mes toiles parlent de tragédie et d'extase ».", w: [["Orange et jaune","1956"],["Chapelle Rothko","1971"]] },
+    { name: "Willem de Kooning", y: "1904–1997", n: "Titan néerlando-américain oscillant furieusement entre abstraction et figure.", w: [["Woman I","1952"]] },
+  ],
+  pop: [
+    { name: "Andy Warhol", y: "1928–1987", n: "Maître de la Factory ; prophétisa quinze minutes de gloire pour chacun.", w: [["Boîtes de soupe Campbell","1962"],["Diptyque Marilyn","1962"],["Boîtes Brillo","1964"]] },
+    { name: "Roy Lichtenstein", y: "1923–1997", n: "Agrandit la trame de la bande dessinée à l'échelle épique du musée.", w: [["Whaam!","1963"],["Drowning Girl","1963"]] },
+    { name: "Claes Oldenburg", y: "1929–2022", n: "Monumentalisa l'objet quotidien avec un humour public.", w: [["Spoonbridge and Cherry","1988"],["Clothespin","1976"]] },
+  ],
+  contemporary: [
+    { name: "Yayoi Kusama", y: "1929–", n: "Fit de l'hallucination des pois guérisseurs ; l'artiste vivante la plus cotée au monde.", w: [["Citrouille","1994–"],["Infinity Mirror Rooms","1965–"],["The Obliteration Room","2002–"]] },
+    { name: "Banksy", y: "identité inconnue", n: "Graffeur anonyme dont l'œuvre s'autodétruisit au moment de l'adjudication.", w: [["La Fille au ballon","2002"],["Le Lanceur de fleurs","2003"]] },
+    { name: "Ai Weiwei", y: "1957–", n: "Dissident chinois maniant l'installation et l'action comme intervention sociale.", w: [["Graines de tournesol","2010"],["Têtes du zodiaque","2010"]] },
+    { name: "Marina Abramović", y: "1946–", n: "« Grand-mère de la performance » — corps et volonté pour matériau.", w: [["The Artist Is Present","2010"],["Rythme 0","1974"]] },
+  ],
+  chinese: [
+    { name: "Wu Daozi", y: "v. 685–758", n: "« Saint de la peinture » des Tang ; ses draperies semblaient flotter au vent.", w: [["Le Roi céleste et son fils (attr.)",""],["Quatre-vingt-sept Immortels (attr.)",""]] },
+    { name: "Fan Kuan", y: "v. 950–1032", n: "Sommet du paysage monumental Song : « prendre pour maître la nature plutôt que les hommes ».", w: [["Voyageurs parmi monts et torrents","Song du N."],["Forêt sous la neige","Song du N."]] },
+    { name: "Zhang Zeduan", y: "début du XIIe s.", n: "Peintre d'académie qui consigna le souffle d'une capitale entière.", w: [["Le Jour de Qingming au bord de la rivière","v. 1101–1124"]] },
+    { name: "Bada Shanren", y: "1626–1705", n: "Loyaliste Ming ; ses oiseaux au regard blanc portent le deuil d'une dynastie déchue.", w: [["Lotus et oiseaux d'eau","début Qing"],["Fleurs au fil de l'eau","1697"]] },
+  ],
+  ukiyoe: [
+    { name: "Katsushika Hokusai", y: "1760–1849", n: "Le « vieux fou de peinture » — à quatre-vingt-dix ans, il réclamait encore dix années au ciel.", w: [["La Grande Vague de Kanagawa","v. 1831"],["Vent frais par matin clair","v. 1831"],["Hokusai Manga","1814–"]] },
+    { name: "Utagawa Hiroshige", y: "1797–1858", n: "Pluies et neiges lyriques, mélancolie du voyage ; copié fidèlement par Van Gogh.", w: [["Les Cinquante-trois Stations du Tōkaidō","1833"],["Cent vues d'Edo","1856–58"]] },
+    { name: "Kitagawa Utamaro", y: "v. 1753–1806", n: "Premier des maîtres du portrait féminin ; inventa le gros plan ōkubi-e.", w: [["Trois Beautés de notre temps","v. 1793"],["Dix physionomies de femmes","1792–93"]] },
+    { name: "Tōshūsai Sharaku", y: "actif 1794–95", n: "Disparu après dix mois d'activité ; ses portraits d'acteurs restent d'une intensité troublante.", w: [["Ōtani Oniji III en Edobei","1794"]] },
+  ],
+  islamic: [
+    { name: "Kamāl ud-Dīn Behzād", y: "v. 1450–1535", n: "Grand maître de l'école de Hérat ; l'expression vit dans des visages grands comme l'ongle.", w: [["Yusuf et Zulaykha","1488"],["La Construction du château de Khornaq","v. 1494"]] },
+    { name: "Sultan Mohammed", y: "actif au XVIe s.", n: "Chef de l'atelier safavide ; ses pages du Shahnameh brillent comme des joyaux sertis.", w: [["La Cour de Gayumars","v. 1525"]] },
+    { name: "Mimar Sinan", y: "1489–1588", n: "Architecte en chef ottoman : plus de trois cents mosquées et ponts en une vie.", w: [["Mosquée Süleymaniye","1557"],["Mosquée Selimiye","1575"]] },
+  ],
+  mesoamerica: [
+    { name: "Sculpteurs olmèques", y: "v. 1200–400 av. J.-C.", n: "La « culture mère » de la Mésoamérique ; visages de souverains taillés dans le basalte.", w: [["Têtes colossales","v. 1200–900 av. J.-C."],["Le Lutteur","v. 1200 av. J.-C."]] },
+    { name: "Fresquistes de Bonampak", y: "fin du VIIIe s.", n: "Sommet de la fresque maya : rites de cour et batailles, couleurs intactes.", w: [["Fresques de Bonampak","v. 790"]] },
+    { name: "Ateliers aztèques", y: "XVe–XVIe s.", n: "Sculpteurs des temples de Tenochtitlan : mythe et calendrier gravés dans la pierre.", w: [["Pierre du Soleil","v. 1502–1520"],["Coatlicue","fin XVe s."],["Serpent bicéphale","XVe–XVIe s."]] },
+  ],
+},
+},
+};
 
 /* 各時期重要藝術家與代表作 */
 const MASTERS = {
@@ -819,6 +1270,18 @@ function yearToX(y) {
 const TOTAL_W = Math.ceil(yearToX(2032)) + PAD_R;
 
 function fmtYear(y) {
+  if (LANG === 'en') {
+    if (y <= -10000) return 'c. ' + Math.abs(y).toLocaleString('en') + ' BC';
+    if (y < 0) return Math.abs(y) + ' BC';
+    if (y >= 2024) return 'today';
+    return String(y);
+  }
+  if (LANG === 'fr') {
+    if (y <= -10000) return 'v. ' + Math.abs(y).toLocaleString('fr-FR') + ' av. J.-C.';
+    if (y < 0) return Math.abs(y) + ' av. J.-C.';
+    if (y >= 2024) return "aujourd'hui";
+    return String(y);
+  }
   if (y <= -10000) return '約前 ' + (Math.abs(y)/10000) + ' 萬年';
   if (y < 0) return '前 ' + Math.abs(y) + ' 年';
   if (y >= 2024) return '今日';
@@ -860,7 +1323,7 @@ function buildChart() {
     const lab = document.createElement('div');
     lab.className = 'era-label';
     lab.style.left = x1 + 'px';
-    lab.textContent = e.name;
+    lab.textContent = (LANG === 'zh') ? e.name : UI[LANG].eras[i];
     bandLayer.appendChild(lab);
     if (i > 0) {
       const edge = document.createElement('div');
@@ -905,7 +1368,7 @@ function buildChart() {
 
     const tag = document.createElement('div');
     tag.className = 'lane-tag';
-    tag.innerHTML = '<span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>' + reg.name;
+    tag.innerHTML = '<span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>' + regName(rk);
     lane.appendChild(tag);
 
     items.forEach(m => {
@@ -924,10 +1387,10 @@ function buildChart() {
         ? '<img class="bar-thumb" loading="lazy" alt="" src="' + imgURL(m.art.svg, 96) + '" onerror="this.style.display=\'none\'">'
         : '';
       const years = (w >= 160) ? '<span class="bar-years">' + fmtRange(m) + '</span>' : '';
-      bar.innerHTML = thumb + '<span class="bar-txt"><span class="bar-name">' + m.name + '</span>' + years + '</span>';
+      bar.innerHTML = thumb + '<span class="bar-txt"><span class="bar-name">' + mvName(m) + '</span>' + years + '</span>';
       bar.setAttribute('role', 'button');
       bar.setAttribute('tabindex', '0');
-      bar.setAttribute('aria-label', m.name + '，' + fmtRange(m));
+      bar.setAttribute('aria-label', mvName(m) + ' · ' + fmtRange(m));
       bar.onclick = () => selectMovement(m.id, true);
       bar.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectMovement(m.id, true); } };
       bar.onmousemove = e => showTip(e, m);
@@ -945,7 +1408,10 @@ function buildChart() {
     const tick = document.createElement('div');
     tick.className = 'tick';
     tick.style.left = yearToX(t) + 'px';
-    tick.innerHTML = '<div class="tl"></div><div class="ty">' + (t < 0 ? '前' + Math.abs(t) : t) + '</div>';
+    const tickTxt = t < 0
+      ? (LANG === 'zh' ? '前' + Math.abs(t) : (LANG === 'fr' ? Math.abs(t) + ' av. J.-C.' : Math.abs(t) + ' BC'))
+      : t;
+    tick.innerHTML = '<div class="tl"></div><div class="ty">' + tickTxt + '</div>';
     axis.appendChild(tick);
   });
 
@@ -958,7 +1424,7 @@ function buildChart() {
 const tipEl = document.getElementById('tooltip');
 function showTip(e, m) {
   tipEl.style.display = 'block';
-  tipEl.innerHTML = m.name + ' <span style="opacity:.55;font-weight:600;">' + m.en + '</span><div class="yrs">' + fmtRange(m) + ' · ' + REGIONS[m.region].name + '</div>';
+  tipEl.innerHTML = mvName(m) + ' <span style="opacity:.55;font-weight:600;">' + mvSub(m) + '</span><div class="yrs">' + fmtRange(m) + ' · ' + regName(m.region) + '</div>';
   const pad = 14;
   let x = e.clientX + pad, y = e.clientY + pad;
   const r = tipEl.getBoundingClientRect();
@@ -981,8 +1447,8 @@ function buildFilters() {
     box.appendChild(c);
   };
   box.innerHTML = '';
-  mk('all', '全部區域', null);
-  Object.entries(REGIONS).forEach(([k, r]) => mk(k, r.name, r.color));
+  mk('all', uiStr('allRegions'), null);
+  Object.entries(REGIONS).forEach(([k, r]) => mk(k, regName(k), r.color));
 }
 function setFilter(key) {
   regionFilter = key;
@@ -1020,50 +1486,59 @@ function selectMovement(id, scroll) {
   const dl = document.getElementById('d-left');
   const dr = document.getElementById('d-right');
 
+  const art = mvArt(m);
+  const qt = s => LANG === 'zh' ? '《' + s + '》' : s;
+
   dl.innerHTML =
     '<div class="d-period"><span class="ln"></span>' + fmtRange(m) + '</div>'
-    + '<h2 class="d-title">' + m.name + '<span class="en">' + m.en + '</span></h2>'
-    + '<div class="d-region-chip"><span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>發源區域 · ' + reg.name + '</div>'
-    + '<p class="d-desc">' + m.desc + '</p>'
-    + '<div class="d-sec-label">地理分布 Region</div>'
-    + '<div id="minimap-box">' + MINIMAP + '<div class="map-caption">高亮區域為此流派的主要發源地</div></div>';
+    + '<h2 class="d-title">' + mvName(m) + '<span class="en">' + mvSub(m) + '</span></h2>'
+    + '<div class="d-region-chip"><span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>' + uiStr('origin') + ' · ' + regName(m.region) + '</div>'
+    + '<p class="d-desc">' + mvDesc(m) + '</p>'
+    + '<div class="d-sec-label">' + uiStr('geo') + '</div>'
+    + '<div id="minimap-box">' + MINIMAP + '<div class="map-caption">' + uiStr('mapCaption') + '</div></div>';
 
   const key = m.art.svg;
   dr.innerHTML =
     '<div id="art-card">'
     + '<div id="art-frame">'
-    + '<img src="' + imgURL(key, 1000) + '" alt="' + m.art.title + '" '
+    + '<img src="' + imgURL(key, 1000) + '" alt="' + art.title + '" '
     + 'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\';">'
     + '<div style="display:none;">' + ART_SVG[key] + '</div>'
     + '</div>'
     + '<div class="art-caption">'
-    + '<div class="art-title">《' + m.art.title + '》</div>'
-    + '<div class="art-meta">' + m.art.artist + ' · ' + m.art.year + '</div>'
-    + '<div class="art-src">圖片來源：<a href="' + imgPage(key) + '" target="_blank" rel="noopener">Wikimedia ↗</a></div>'
-    + '<div class="story-label">畫作背景故事</div>'
-    + '<p class="art-story">' + m.art.story + '</p>'
+    + '<div class="art-title">' + qt(art.title) + '</div>'
+    + '<div class="art-meta">' + art.artist + ' · ' + art.year + '</div>'
+    + '<div class="art-src">' + uiStr('imgSrc') + '<a href="' + imgPage(key) + '" target="_blank" rel="noopener">Wikimedia ↗</a></div>'
+    + '<div class="story-label">' + uiStr('story') + '</div>'
+    + '<p class="art-story">' + art.story + '</p>'
     + '</div></div>';
 
   /* masters & works */
   const masters = MASTERS[m.id] || [];
   document.getElementById('d-masters').innerHTML =
-    '<div class="d-sec-label">重要藝術家與代表作 Masters &amp; Masterpieces</div>'
+    '<div class="d-sec-label">' + uiStr('masters') + '</div>'
     + '<div class="masters-grid">'
-    + masters.map(a =>
-        '<div class="artist-card">'
+    + masters.map((a, i) => {
+        const tr = trMa(m.id, i);
+        const mainName = LANG === 'zh' ? a.name : ((tr && tr.name) || a.en);
+        const subName  = LANG === 'zh' ? a.en : a.name;
+        const years    = (tr && tr.y) || a.years;
+        const note     = (tr && tr.n) || a.note;
+        const works    = (tr && tr.w) || a.works;
+        return '<div class="artist-card">'
         + '<div class="ac-head">'
-        + '<span class="ac-name"><a href="https://zh.wikipedia.org/w/index.php?search=' + encodeURIComponent(a.name) + '" target="_blank" rel="noopener">' + a.name + '</a></span>'
-        + (a.en ? '<span class="ac-en">' + a.en + '</span>' : '')
-        + '<span class="ac-years">' + a.years + '</span>'
+        + '<span class="ac-name"><a href="' + wikiSearch(mainName) + '" target="_blank" rel="noopener">' + mainName + '</a></span>'
+        + (subName ? '<span class="ac-en">' + subName + '</span>' : '')
+        + '<span class="ac-years">' + years + '</span>'
         + '</div>'
-        + (a.note ? '<div class="ac-note">' + a.note + '</div>' : '')
+        + (note ? '<div class="ac-note">' + note + '</div>' : '')
         + '<div class="ac-works">'
-        + a.works.map(w =>
-            '<span class="work-chip' + (w[0] === m.art.title ? ' feat' : '') + '">《' + w[0] + '》'
+        + works.map(w =>
+            '<span class="work-chip' + (w[0] === art.title ? ' feat' : '') + '">' + qt(w[0])
             + (w[1] ? '<span class="wy">' + w[1] + '</span>' : '') + '</span>'
           ).join('')
-        + '</div></div>'
-      ).join('')
+        + '</div></div>';
+      }).join('')
     + '</div>';
 
   /* light up minimap */
@@ -1090,7 +1565,37 @@ function navMove(dir) {
   if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 }
 
+/* ═══════════ 語言切換 ═══════════ */
+function applyStatic() {
+  document.getElementById('eyebrow-txt').textContent = uiStr('eyebrow');
+  document.getElementById('subtitle-txt').innerHTML  = uiStr('subtitle');
+  document.getElementById('hint').innerHTML          = uiStr('hint');
+  document.getElementById('footer-txt').innerHTML    = uiStr('footer');
+  ['zh','en','fr'].forEach(k => {
+    const b = document.getElementById('lang-' + k);
+    b.classList.toggle('active', k === LANG);
+    b.setAttribute('aria-pressed', k === LANG ? 'true' : 'false');
+  });
+  document.documentElement.lang = LANG === 'zh' ? 'zh-Hant' : LANG;
+}
+
+function switchLang(l) {
+  if (!['zh','en','fr'].includes(l) || l === LANG) return;
+  LANG = l;
+  localStorage.setItem('kb_lang', l);
+  const sc = document.getElementById('chart-scroll');
+  const keepScroll = sc.scrollLeft;
+  applyStatic();
+  buildChart();
+  setFilter(regionFilter);
+  if (selectedId) selectMovement(selectedId, false);
+  sc.scrollLeft = keepScroll;
+}
+
 /* ═══════════ Boot ═══════════ */
+const savedLang = localStorage.getItem('kb_lang');
+if (['zh','en','fr'].includes(savedLang)) LANG = savedLang;
+applyStatic();
 buildFilters();
 buildChart();
 selectMovement('renaissance', false);
