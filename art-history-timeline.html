@@ -84,6 +84,88 @@ h1 .gold { color: var(--gold); font-weight: 300; }
 .orn .r { width: 56px; height: 1px; background: linear-gradient(to left, transparent, var(--gold-lo)); }
 .orn .g { color: var(--gold); font-size: 9px; opacity: 0.55; }
 
+/* ── View tabs ── */
+#view-tabs {
+  display: flex; justify-content: center; gap: 6px;
+  margin: 0 auto 30px; padding: 5px;
+  width: fit-content; border-radius: 16px;
+  background: rgba(255,243,210,0.04);
+  border: 1px solid rgba(201,168,92,0.16);
+  box-shadow: inset 0 1px 0 rgba(255,242,170,0.08), 0 10px 30px rgba(0,0,0,0.35);
+  backdrop-filter: blur(14px);
+}
+.vtab {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 22px; border-radius: 12px; border: none; cursor: pointer;
+  font-family: 'Nunito', 'Noto Serif TC', sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.08em;
+  background: transparent; color: var(--muted); transition: all .22s;
+}
+.vtab:hover { color: var(--cream); }
+.vtab.active {
+  background: linear-gradient(180deg, rgba(201,168,92,0.22), rgba(160,125,50,0.13));
+  color: var(--gold-hi);
+  box-shadow: inset 0 1px 0 rgba(255,238,160,0.25), 0 4px 14px rgba(0,0,0,0.3);
+}
+.vtab .vt-ic { font-size: 10px; opacity: 0.7; }
+.view-hidden { display: none !important; }
+
+/* ── Movement index (流派總覽) ── */
+#mvx-head { text-align: center; margin-bottom: 26px; }
+#mvx-head h2 {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-style: italic; font-weight: 500; font-size: 30px; color: #f0e6cf;
+}
+#mvx-head p { font-size: 12px; color: var(--muted); margin-top: 8px; font-weight: 600; letter-spacing: 0.04em; }
+.mvx-era {
+  display: flex; align-items: center; gap: 16px; margin: 30px 0 14px;
+}
+.mvx-era .t {
+  font-family: 'Cormorant SC', serif; font-size: 13px; letter-spacing: 0.26em; color: var(--gold);
+  white-space: nowrap;
+}
+.mvx-era .yrs { font-size: 10px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.mvx-era .ln { flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,92,0.28), transparent); }
+.mvx-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 13px; }
+.mvx-card {
+  display: flex; gap: 15px; align-items: flex-start;
+  background: rgba(255,243,210,0.035);
+  border: 1px solid rgba(201,168,92,0.15);
+  border-radius: 14px; padding: 16px 18px; cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,242,170,0.08);
+  transition: border-color .25s, background .25s, transform .25s, box-shadow .3s;
+}
+.mvx-card:hover {
+  border-color: rgba(201,168,92,0.4); background: rgba(255,243,210,0.06);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.4), 0 0 26px var(--glow, rgba(201,168,92,0.15));
+}
+.mvx-thumb {
+  width: 54px; height: 54px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+  border: 2px solid var(--ring, rgba(201,168,92,0.5));
+  box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+  background: #221a10;
+}
+.mvx-body { min-width: 0; }
+.mvx-name {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 17.5px; font-weight: 600; color: #f0e6cf; line-height: 1.2;
+}
+.mvx-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+.mvx-meta .yrs { font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; color: var(--gold-lo); }
+.mvx-meta .reg { display: inline-flex; align-items: center; gap: 5px; font-size: 9.5px; font-weight: 800; color: var(--muted); }
+.mvx-meta .reg .dot { width: 6px; height: 6px; border-radius: 50%; }
+.mvx-teaser {
+  margin-top: 7px; font-size: 11.5px; line-height: 1.7; color: var(--cream2); font-weight: 500;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* origin paragraph in detail */
+.d-origin {
+  border-left: 2px solid rgba(201,168,92,0.35);
+  padding-left: 15px; margin-top: 4px;
+}
+
 /* ── Region filter chips ── */
 #filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
 .chip {
@@ -445,30 +527,42 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
     <p class="subtitle" id="subtitle-txt">世界藝術史互動時間軸 —— 以四大文化區域為緯、三萬年為經，<br>點選任一流派，展開名作真跡與背後的故事。</p>
   </header>
 
-  <div id="filters"></div>
+  <nav id="view-tabs" role="tablist">
+    <button class="vtab active" id="vtab-timeline" role="tab" onclick="showView('timeline')"><span class="vt-ic">◷</span><span class="vt-txt">時間軸</span></button>
+    <button class="vtab" id="vtab-movements" role="tab" onclick="showView('movements')"><span class="vt-ic">✦</span><span class="vt-txt">藝術流派</span></button>
+    <button class="vtab" id="vtab-museums" role="tab" onclick="showView('museums')"><span class="vt-ic">◈</span><span class="vt-txt">博物館</span></button>
+  </nav>
 
-  <div id="chart-frame">
-    <div id="chart-scroll">
-      <div id="canvas"></div>
+  <div id="view-timeline">
+    <div id="filters"></div>
+
+    <div id="chart-frame">
+      <div id="chart-scroll">
+        <div id="canvas"></div>
+      </div>
+      <div class="edge-fade" id="fade-l"></div>
+      <div class="edge-fade" id="fade-r"></div>
     </div>
-    <div class="edge-fade" id="fade-l"></div>
-    <div class="edge-fade" id="fade-r"></div>
+    <p id="hint">▸ 橫向捲動探索時間軸 · <b>點擊色帶</b>開啟流派詳情 · 上方篩選區域</p>
+
+    <div id="detail" style="display:none;">
+      <div id="d-nav">
+        <button class="nav-btn" onclick="navMove(-1)" aria-label="上一個流派">‹</button>
+        <button class="nav-btn" onclick="navMove(1)" aria-label="下一個流派">›</button>
+      </div>
+      <div id="detail-grid">
+        <div id="d-left"></div>
+        <div id="d-right"></div>
+      </div>
+      <div id="d-masters"></div>
+    </div>
   </div>
-  <p id="hint">▸ 橫向捲動探索時間軸 · <b>點擊色帶</b>開啟流派詳情 · 上方篩選區域</p>
 
-  <div id="detail" style="display:none;">
-    <div id="d-nav">
-      <button class="nav-btn" onclick="navMove(-1)" aria-label="上一個流派">‹</button>
-      <button class="nav-btn" onclick="navMove(1)" aria-label="下一個流派">›</button>
-    </div>
-    <div id="detail-grid">
-      <div id="d-left"></div>
-      <div id="d-right"></div>
-    </div>
-    <div id="d-masters"></div>
+  <div id="view-movements" class="view-hidden"></div>
+
+  <div id="view-museums" class="view-hidden">
+    <section id="museums"></section>
   </div>
-
-  <section id="museums"></section>
 
   <footer>
     <div class="footer-orn"><div class="fl"></div><span class="fg">✦</span><div class="fr"></div></div>
@@ -504,6 +598,11 @@ const UI = {
     imgSrc: '圖片來源：',
     story: '畫作背景故事',
     masters: '重要藝術家與代表作 Masters &amp; Masterpieces',
+    tabTimeline: '時間軸',
+    tabMovements: '藝術流派',
+    tabMuseums: '博物館',
+    originLabel: '歷史背景與萌芽 Origins',
+    mvxSub: '二十個流派的誕生背景——點選卡片開啟完整詳情。',
     museumsTitle: '博物館導覽 Museum Guide',
     museumsSub: '名作現藏何處？各館又以什麼鎮館？金色籤章可點擊，跳回對應流派。',
     treasuresLabel: '鎮館之寶 Star Treasures',
@@ -523,6 +622,11 @@ const UI = {
     imgSrc: 'Image source: ',
     story: 'The Story Behind',
     masters: 'Masters &amp; Masterpieces',
+    tabTimeline: 'Timeline',
+    tabMovements: 'Movements',
+    tabMuseums: 'Museums',
+    originLabel: 'Historical Background &amp; Origins',
+    mvxSub: 'How each of the twenty movements came to be — click a card for full details.',
     museumsTitle: 'Museum Guide',
     museumsSub: 'Where the works on this page hang today — and each museum’s star treasures. Gold chips jump back to their movement.',
     treasuresLabel: 'Star Treasures',
@@ -542,6 +646,11 @@ const UI = {
     imgSrc: 'Source de l’image : ',
     story: 'L’histoire derrière l’œuvre',
     masters: 'Maîtres et chefs-d’œuvre',
+    tabTimeline: 'Frise',
+    tabMovements: 'Mouvements',
+    tabMuseums: 'Musées',
+    originLabel: 'Contexte historique et origines',
+    mvxSub: 'Comment chacun des vingt mouvements est né — cliquez une carte pour le détail complet.',
     museumsTitle: 'Guide des musées',
     museumsSub: 'Où sont conservées les œuvres de cette page — et les trésors de chaque musée. Les pastilles dorées renvoient à leur mouvement.',
     treasuresLabel: 'Trésors du musée',
@@ -1357,6 +1466,90 @@ const MUSEUMS = [
     ] },
 ];
 
+/* ═══════════ 各流派歷史背景與萌芽原因 ═══════════ */
+const ORIGINS = {
+  prehistoric: {
+    zh: '冰河時期末期，狩獵採集者的生存全繫於獸群。在無文字的時代，深入幽暗洞窟繪下獵物很可能是巫術儀式——「畫下即擁有」，祈求狩獵豐收與部族繁衍；另一說是薩滿通靈的紀錄。藝術在此誕生於生存的焦慮，與掌控自然的渴望。',
+    en: 'At the end of the Ice Age, hunter-gatherers lived or died by the herds. In a world without writing, painting prey deep inside dark caves was most likely ritual magic — to depict was to possess, securing the hunt and the tribe; others read the images as records of shamanic trance. Art was born here, out of the anxiety of survival and the longing to command nature.',
+    fr: 'À la fin de l’ère glaciaire, la survie des chasseurs-cueilleurs dépendait des troupeaux. Dans un monde sans écriture, peindre le gibier au fond des grottes relevait sans doute de la magie rituelle — représenter, c’était posséder, garantir la chasse et la survie du clan ; d’autres y lisent des transes chamaniques. L’art naît ici de l’angoisse de survivre et du désir de maîtriser la nature.' },
+  egypt: {
+    zh: '尼羅河每年規律氾濫，孕育出高度中央集權的神權國家。埃及人相信死後世界是現世的延續，法老是神在人間的化身——藝術因此不為欣賞而作，而是宗教與政治的工具：陵墓壁畫供養亡靈，雕像是靈魂「卡」的居所。穩定的信仰結構，讓風格三千年幾乎不變。',
+    en: 'The Nile’s clockwork floods nurtured a highly centralised theocracy. Egyptians believed the afterlife continued this world and that pharaoh was god incarnate — so art was made not to be admired but to work: tomb paintings fed the dead, statues housed the soul, the ka. So stable a system of belief kept the style nearly unchanged for three thousand years.',
+    fr: 'Les crues régulières du Nil nourrirent une théocratie hautement centralisée. Pour les Égyptiens, l’au-delà prolongeait ce monde et pharaon incarnait le dieu — l’art n’était donc pas fait pour plaire mais pour agir : les peintures nourrissaient les morts, les statues logeaient l’âme, le ka. Cette foi stable maintint le style presque inchangé trois millénaires durant.' },
+  greek: {
+    zh: '城邦民主與海上貿易造就了以「人」為中心的世界觀；哲學家追問宇宙的秩序，雕刻家便以數學比例追求人體的完美。奧林匹克的裸體競技提供了觀察人體的機會，波希戰爭勝利後的自信，則讓雅典把黃金時代的理想刻進了帕德嫩神廟。',
+    en: 'Civic democracy and maritime trade bred a worldview centred on man; as philosophers sought the order of the cosmos, sculptors sought the perfect body through mathematical proportion. The nude contests of Olympia offered anatomy lessons, and the confidence that followed victory over Persia let Athens carve its golden-age ideals into the Parthenon.',
+    fr: 'Démocratie civique et commerce maritime forgèrent une vision du monde centrée sur l’homme ; tandis que les philosophes cherchaient l’ordre du cosmos, les sculpteurs cherchaient le corps parfait par la proportion mathématique. Les concours nus d’Olympie offraient des leçons d’anatomie, et la confiance née de la victoire sur les Perses permit à Athènes de graver son idéal dans le Parthénon.' },
+  byzantine: {
+    zh: '西羅馬帝國衰亡後，基督教會成為歐洲僅存的秩序。教會需要讓不識字的信眾「看見」神學——藝術於是放棄肉身寫實，轉向金底、平面與程式化的聖像；君士坦丁堡的宮廷財富與東方工藝傳統，把這套視覺神學推向了極致。',
+    en: 'After the Western Roman Empire fell, the Church remained Europe’s only order. It needed illiterate believers to see theology — so art abandoned realism of the flesh for gold grounds, flatness and codified icons; the wealth of Constantinople’s court and Eastern craft traditions carried this visual theology to its summit.',
+    fr: 'Après la chute de l’Empire romain d’Occident, l’Église resta le seul ordre de l’Europe. Il lui fallait faire voir la théologie aux fidèles illettrés — l’art abandonna donc le réalisme de la chair pour l’or, la planéité et l’icône codifiée ; la richesse de la cour de Constantinople et les savoir-faire orientaux portèrent cette théologie visuelle à son sommet.' },
+  renaissance: {
+    zh: '十四世紀黑死病奪走歐洲三分之一人口，動搖了教會的絕對權威；佛羅倫斯的銀行家族（如梅迪奇）以贊助藝術彰顯榮耀；1453 年君士坦丁堡陷落，又把希臘典籍與學者送回義大利。古典的重新發現、市民財富與印刷術，共同點燃了人文主義的火焰。',
+    en: 'The Black Death took a third of Europe and shook the Church’s absolute authority; Florentine banking dynasties like the Medici displayed their glory through patronage; and when Constantinople fell in 1453, Greek texts and scholars flowed back into Italy. The rediscovery of antiquity, civic wealth and the printing press together lit the flame of humanism.',
+    fr: 'La Peste noire emporta un tiers de l’Europe et ébranla l’autorité absolue de l’Église ; les dynasties bancaires florentines comme les Médicis affichèrent leur gloire par le mécénat ; et la chute de Constantinople en 1453 ramena en Italie textes et savants grecs. Redécouverte de l’Antiquité, richesse citadine et imprimerie allumèrent ensemble la flamme de l’humanisme.' },
+  baroque: {
+    zh: '宗教改革撕裂歐洲後，天主教會在特倫托會議定調：藝術要成為感動信眾的武器，繪畫於是變得戲劇化、直擊情感；同時各國專制王權需要壯麗的排場彰顯權力，新教荷蘭的市民階級則催生出肖像與風俗畫的自由市場。',
+    en: 'After the Reformation tore Europe apart, the Council of Trent decreed that art should be a weapon to move the faithful — painting turned theatrical and emotionally direct. Absolute monarchs meanwhile demanded splendour as proof of power, while the Protestant Dutch middle class created a free market for portraits and scenes of daily life.',
+    fr: 'Après la déchirure de la Réforme, le concile de Trente décréta que l’art serait une arme pour émouvoir les fidèles — la peinture devint théâtrale et directe. Les monarchies absolues exigeaient parallèlement le faste comme preuve de puissance, tandis que la bourgeoisie hollandaise protestante créait un marché libre du portrait et de la scène de genre.' },
+  rococo: {
+    zh: '路易十四駕崩後，貴族從凡爾賽的宮廷儀典中解放，遷回巴黎的私人沙龍；藝術跟著從宏大轉向親密，服務於享樂、調情與精緻品味。這是舊制度最後的黃金年代——優雅的表象之下，大革命的暗流已在湧動。',
+    en: 'When Louis XIV died, the aristocracy escaped the rituals of Versailles for private salons in Paris; art followed, trading grandeur for intimacy in the service of pleasure, flirtation and exquisite taste. It was the old regime’s last golden hour — beneath the elegance, the currents of Revolution were already stirring.',
+    fr: 'À la mort de Louis XIV, l’aristocratie échappa au cérémonial de Versailles pour les salons parisiens ; l’art suivit, troquant la grandeur contre l’intimité, au service du plaisir, du badinage et du goût exquis. Dernier âge d’or de l’Ancien Régime — sous l’élégance, les courants de la Révolution grondaient déjà.' },
+  romanticism: {
+    zh: '法國大革命與拿破崙戰爭撕碎了理性時代的樂觀，啟蒙的秩序無法解釋斷頭台與戰場的血。藝術家轉而擁抱情感、想像、自然的崇高與民族的靈魂——新古典主義以古典道德回應革命理想，浪漫主義則直接把時代的激情與創傷搬上畫布。',
+    en: 'The French Revolution and the Napoleonic Wars shredded the optimism of the Age of Reason; Enlightenment order could not explain the guillotine or the battlefield. Artists turned to emotion, imagination, the sublime in nature and the soul of nations — Neoclassicism answered revolutionary ideals with antique virtue, while Romanticism painted the era’s passion and trauma directly onto canvas.',
+    fr: 'La Révolution française et les guerres napoléoniennes déchirèrent l’optimisme du siècle de la Raison ; l’ordre des Lumières n’expliquait ni la guillotine ni les champs de bataille. Les artistes se tournèrent vers l’émotion, l’imagination, le sublime et l’âme des nations — le néoclassicisme répondit par la vertu antique, le romantisme porta directement sur la toile la passion et le traumatisme du temps.' },
+  realism: {
+    zh: '1848 年革命席捲歐洲，工業化讓城市湧入無產階級；攝影術的發明（1839）更逼問繪畫存在的意義。庫爾貝們拒絕學院的神話與貴族肖像，主張只畫眼睛看得見的世界——把畫筆對準農民與工人，本身就是一種政治宣言。',
+    en: 'The revolutions of 1848 swept Europe as industrialisation crowded cities with a new working class; the invention of photography (1839) demanded painting justify itself. Courbet and his allies rejected academic myth and aristocratic portraiture, insisting on painting only what the eye can see — pointing the brush at peasants and workers was itself a political manifesto.',
+    fr: 'Les révolutions de 1848 balayèrent l’Europe tandis que l’industrialisation remplissait les villes d’un prolétariat nouveau ; l’invention de la photographie (1839) somma la peinture de se justifier. Courbet et les siens rejetèrent le mythe académique et le portrait aristocratique pour ne peindre que le visible — braquer le pinceau sur paysans et ouvriers était en soi un manifeste politique.' },
+  impressionism: {
+    zh: '三項發明改寫了繪畫：錫管顏料讓畫家走出畫室、鐵路把他們載到郊外與海濱、攝影搶走了「如實記錄」的任務。加上奧斯曼改造後的巴黎林蔭大道與咖啡館生活，以及沙龍評審一再拒絕年輕人——他們索性自辦展覽，畫下眼睛此刻看見的光。',
+    en: 'Three inventions rewrote painting: paint in tin tubes freed artists from the studio, railways carried them to suburbs and coasts, and photography took over the job of faithful record. Add Haussmann’s new boulevards and café life, and a Salon jury that kept rejecting the young — so they mounted their own exhibition and painted the light their eyes saw at that instant.',
+    fr: 'Trois inventions récrivirent la peinture : la couleur en tube libéra les artistes de l’atelier, le chemin de fer les porta vers les banlieues et les côtes, la photographie s’empara du compte rendu fidèle. Ajoutez les boulevards d’Haussmann, la vie de café, et un jury du Salon qui refusait obstinément les jeunes — ils montèrent leur propre exposition et peignirent la lumière de l’instant.' },
+  postimpressionism: {
+    zh: '印象派解放了色彩，卻留下疑問：若只捕捉瞬間的表象，繪畫還剩下什麼？塞尚想找回結構與永恆，梵谷要色彩替情感說話，高更則逃離工業文明尋找象徵與原始。三人各自出走，替二十世紀所有前衛藝術鋪好了路。',
+    en: 'Impressionism freed colour but left a question: if painting only catches the surface of a moment, what remains? Cézanne sought structure and permanence, Van Gogh made colour speak for feeling, Gauguin fled industrial civilisation for symbol and the primitive. Three separate departures paved the road for every avant-garde of the twentieth century.',
+    fr: 'L’impressionnisme libéra la couleur mais laissa une question : si la peinture ne saisit que la surface de l’instant, que reste-t-il ? Cézanne chercha la structure et la permanence, Van Gogh fit parler la couleur pour l’émotion, Gauguin fuit la civilisation industrielle vers le symbole et le primitif. Trois départs séparés qui pavèrent la route de toutes les avant-gardes du XXe siècle.' },
+  modernism: {
+    zh: '二十世紀初的世界劇烈加速：汽車、飛機、電影、X 光與相對論徹底改變了「觀看」這件事；非洲與大洋洲藝術傳入巴黎，展示了寫實以外的可能。第一次世界大戰的幻滅更讓藝術家確信——舊世界的再現方式已死，必須打碎重來。',
+    en: 'The early twentieth century accelerated violently: cars, aeroplanes, cinema, X-rays and relativity changed the very act of seeing, while African and Oceanic art arriving in Paris revealed possibilities beyond realism. The disillusion of the First World War convinced artists that the old ways of representing the world were dead — it had to be broken apart and rebuilt.',
+    fr: 'Le début du XXe siècle accéléra brutalement : automobile, avion, cinéma, rayons X et relativité changèrent l’acte même de voir, tandis que les arts d’Afrique et d’Océanie, arrivés à Paris, révélaient d’autres voies que le réalisme. La désillusion de la Grande Guerre convainquit les artistes que l’ancienne représentation du monde était morte — il fallait la briser et recommencer.' },
+  surrealism: {
+    zh: '一戰的屠殺讓「理性」信用破產——達達主義先以荒謬回應荒謬，佛洛伊德的《夢的解析》則提供了新大陸：潛意識。1924 年布勒東發表《超現實主義宣言》，主張讓夢境、慾望與偶然接管創作，在兩次大戰之間焦慮的歐洲蔓延開來。',
+    en: 'The slaughter of the First World War bankrupted the credit of reason — Dada first answered absurdity with absurdity, then Freud’s Interpretation of Dreams offered a new continent: the unconscious. In 1924 Breton published the Surrealist Manifesto, calling on dream, desire and chance to take over creation; the movement spread across an anxious interwar Europe.',
+    fr: 'La boucherie de 14-18 mit la raison en faillite — Dada répondit d’abord à l’absurde par l’absurde, puis L’Interprétation des rêves de Freud offrit un continent neuf : l’inconscient. En 1924, Breton publia le Manifeste du surréalisme, appelant le rêve, le désir et le hasard à prendre les commandes ; le mouvement gagna toute une Europe anxieuse de l’entre-deux-guerres.' },
+  abstract: {
+    zh: '二戰讓歐洲前衛藝術家（蒙德里安、恩斯特、布勒東）流亡紐約，帶來現代主義的火種；戰後的美國急欲證明文化實力，冷戰中「自由奔放的美國藝術」更被賦予對抗蘇聯官方寫實主義的象徵意義。存在主義的焦慮、爵士的即興與美國的巨大尺度，共同催生了行動繪畫。',
+    en: 'The Second World War drove Europe’s avant-garde — Mondrian, Ernst, Breton — into New York exile, carrying the seeds of modernism. Postwar America was eager to prove its cultural power, and in the Cold War a “free, unbridled American art” became a symbol against Soviet official realism. Existentialist anxiety, jazz improvisation and American scale together begot action painting.',
+    fr: 'La Seconde Guerre mondiale exila à New York l’avant-garde européenne — Mondrian, Ernst, Breton — porteuse des germes du modernisme. L’Amérique d’après-guerre voulait prouver sa puissance culturelle, et dans la guerre froide un « art américain libre et débridé » devint un symbole face au réalisme officiel soviétique. Angoisse existentialiste, improvisation du jazz et démesure américaine engendrèrent ensemble l’action painting.' },
+  pop: {
+    zh: '戰後消費社會全面來臨：超市、電視廣告、好萊塢明星與流水線商品構成新的日常風景。年輕藝術家覺得抽象表現主義的「崇高」與生活無關——既然環境已被商標與媒體佔領，那就把它們原樣搬上畫布。普普是對消費文明既擁抱又諷刺的回應。',
+    en: 'The postwar consumer society arrived in full: supermarkets, TV commercials, Hollywood stars and assembly-line goods formed the new everyday landscape. Young artists found Abstract Expressionism’s “sublime” irrelevant to life — if brands and media had already occupied the world, why not put them on canvas as they were? Pop embraced and satirised consumer civilisation in the same gesture.',
+    fr: 'La société de consommation d’après-guerre arriva en force : supermarchés, publicités télévisées, stars hollywoodiennes et produits en série formaient le nouveau paysage quotidien. Les jeunes artistes jugèrent le « sublime » de l’expressionnisme abstrait étranger à la vie — puisque marques et médias occupaient déjà le monde, autant les porter tels quels sur la toile. Le pop embrassa et railla d’un même geste la civilisation de consommation.' },
+  contemporary: {
+    zh: '1960 年代末的社會運動（反戰、民權、女性主義）讓藝術走出美術館、介入現實；觀念藝術宣告「想法比物件重要」，錄像與網路接連提供新媒材。冷戰結束後全球雙年展體系成形、藝術市場金融化——「什麼是藝術」的邊界，從此永遠處於協商之中。',
+    en: 'The movements of the late 1960s — antiwar, civil rights, feminism — pushed art out of the museum and into the world; conceptual art declared the idea more important than the object, while video and the internet kept supplying new media. After the Cold War a global biennial circuit formed and the market financialised — the border of “what counts as art” has been under negotiation ever since.',
+    fr: 'Les mouvements de la fin des années 1960 — antiguerre, droits civiques, féminisme — firent sortir l’art du musée vers le monde ; l’art conceptuel déclara l’idée supérieure à l’objet, tandis que la vidéo puis Internet fournissaient sans cesse de nouveaux médias. Après la guerre froide, le circuit mondial des biennales se forma et le marché se financiarisa — la frontière de « ce qui est art » est depuis en négociation permanente.' },
+  chinese: {
+    zh: '科舉制度造就了士大夫階層——他們既是官員，也是詩人與書法家，繪畫因此與人格修養綁定。宋代宮廷畫院追求格物致知的精微；元代文人在異族統治下，以山水寄託遺民心緒——「寫意」高於「形似」的傳統由此確立，與西方的寫實道路徹底分岔。',
+    en: 'The civil-service examinations created the scholar-official class — statesmen who were also poets and calligraphers, binding painting to self-cultivation. The Song court academy pursued the fine-grained study of things; under foreign rule, Yuan literati poured their loyalist grief into landscape — establishing a tradition where capturing spirit outranks likeness, parting ways with Western realism for good.',
+    fr: 'Les concours mandarinaux créèrent la classe des lettrés-fonctionnaires — hommes d’État, poètes et calligraphes à la fois, liant la peinture à la culture de soi. L’académie des Song poursuivit l’étude minutieuse des choses ; sous domination étrangère, les lettrés Yuan versèrent leur deuil loyaliste dans le paysage — fondant une tradition où l’esprit prime la ressemblance, divergeant à jamais du réalisme occidental.' },
+  ukiyoe: {
+    zh: '德川幕府鎖國兩百餘年，江戶膨脹為百萬人口的和平都市；町人（商人階級）有錢有閒卻無政治地位，便把熱情投向歌舞伎、遊里與旅行。木刻分工量產讓版畫便宜如一碗蕎麥麵——庶民的娛樂需求，孕育出世界最早的大眾流行視覺文化。',
+    en: 'Under the Tokugawa shogunate’s two centuries of seclusion, Edo swelled into a peaceful city of a million; the merchant class had money and leisure but no political standing, so they poured their passion into kabuki, the pleasure quarters and travel. Division-of-labour woodblock printing made a picture as cheap as a bowl of noodles — popular entertainment begot the world’s first mass visual culture.',
+    fr: 'Sous les deux siècles de fermeture des Tokugawa, Edo enfla en une ville pacifique d’un million d’âmes ; la classe marchande, riche et oisive mais sans statut politique, versa sa passion dans le kabuki, les quartiers de plaisir et le voyage. La gravure sur bois, produite en série, coûtait le prix d’un bol de nouilles — le divertissement populaire engendra la première culture visuelle de masse au monde.' },
+  islamic: {
+    zh: '伊斯蘭教義嚴防偶像崇拜，聖像之路被關閉，創造力於是轉入幾何、書法與植物紋樣——無限延伸的圖案暗喻真主的無限。橫跨三洲的貿易帝國匯集了拜占庭、波斯與中亞的工藝，宮廷書坊則讓細密畫在書頁之中，發展出獨立的敘事宇宙。',
+    en: 'Islamic doctrine guarded strictly against idolatry, closing the road of the sacred image; creativity turned instead to geometry, calligraphy and vegetal pattern — designs extending without end as a metaphor for God’s infinity. An empire trading across three continents gathered Byzantine, Persian and Central Asian craft, while court scriptoria let the miniature build its own narrative universe within the page.',
+    fr: 'La doctrine islamique, gardienne stricte contre l’idolâtrie, ferma la voie de l’image sacrée ; la créativité se tourna vers la géométrie, la calligraphie et le motif végétal — l’ornement sans fin comme métaphore de l’infini divin. Un empire commerçant sur trois continents rassembla les savoir-faire byzantins, persans et centrasiatiques, et les ateliers de cour laissèrent la miniature bâtir son propre univers narratif dans la page.' },
+  mesoamerica: {
+    zh: '與舊大陸完全隔絕，中美洲文明獨立發展出農業、曆法與文字；其宇宙觀認為諸神以自我犧牲創造世界，人必須以血祭回報——藝術因此圍繞神廟、曆法與獻祭儀式展開。玉比黃金珍貴、羽毛是神的顏色，價值體系與歐亞大陸截然不同。',
+    en: 'Cut off entirely from the Old World, Mesoamerican civilisations independently invented agriculture, calendars and writing. In their cosmology the gods created the world through self-sacrifice, and humanity owed them blood in return — so art revolved around temple, calendar and rite. Jade outranked gold and feathers were the colour of the gods: a value system utterly unlike Eurasia’s.',
+    fr: 'Coupées de l’Ancien Monde, les civilisations mésoaméricaines inventèrent seules agriculture, calendriers et écriture. Dans leur cosmologie, les dieux avaient créé le monde par leur propre sacrifice, et l’humanité leur devait le sang en retour — l’art gravita donc autour du temple, du calendrier et du rite. Le jade valait plus que l’or, les plumes étaient la couleur des dieux : un système de valeurs sans équivalent eurasien.' },
+};
+
 /* 流派 → 現藏博物館（取第一個標記該流派的館） */
 const MV2MUSEUM = {};
 MUSEUMS.forEach(mu => mu.treasures.forEach(tr => {
@@ -1396,6 +1589,7 @@ function renderMuseums() {
 function jumpMuseum(id) {
   const card = document.getElementById('mus-' + id);
   if (!card) return;
+  showView('museums');
   card.scrollIntoView({ behavior: 'smooth', block: 'center' });
   card.classList.remove('flash');
   void card.offsetWidth;
@@ -1403,9 +1597,64 @@ function jumpMuseum(id) {
 }
 
 function goMv(id) {
+  showView('timeline');
   selectMovement(id, true);
   const bar = document.querySelector('.bar[data-id="' + id + '"]');
   if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+/* ═══════════ 視圖切換（時間軸 / 流派 / 博物館） ═══════════ */
+let currentView = 'timeline';
+function showView(v) {
+  if (!document.getElementById('view-' + v)) return;
+  currentView = v;
+  ['timeline', 'movements', 'museums'].forEach(k => {
+    document.getElementById('view-' + k).classList.toggle('view-hidden', k !== v);
+    const t = document.getElementById('vtab-' + k);
+    t.classList.toggle('active', k === v);
+    t.setAttribute('aria-selected', k === v ? 'true' : 'false');
+  });
+}
+
+/* 流派總覽（依紀元分組） */
+function renderMovementIndex() {
+  const box = document.getElementById('view-movements');
+  const ordered = [...MOVEMENTS].sort((a, b) => a.start - b.start);
+  const eraOf = m => {
+    let idx = 0;
+    ERAS.forEach((e, i) => { if (e.from <= m.start) idx = i; });
+    return idx;
+  };
+  let html =
+    '<div id="mvx-head">'
+    + '<div class="orn"><div class="l"></div><span class="g">✦</span><div class="r"></div></div>'
+    + '<h2>' + uiStr('tabMovements') + '</h2>'
+    + '<p>' + uiStr('mvxSub') + '</p>'
+    + '</div>';
+  ERAS.forEach((e, i) => {
+    const items = ordered.filter(m => eraOf(m) === i);
+    if (!items.length) return;
+    const eraName = (LANG === 'zh') ? e.name : UI[LANG].eras[i];
+    html += '<div class="mvx-era"><span class="t">' + eraName + '</span>'
+      + '<span class="yrs">' + fmtYear(e.from) + ' — ' + fmtYear(Math.min(e.to, 2026)) + '</span>'
+      + '<span class="ln"></span></div>'
+      + '<div class="mvx-grid">'
+      + items.map(m => {
+          const reg = REGIONS[m.region];
+          return '<div class="mvx-card" style="--glow:' + m.color + '44;--ring:' + m.color + 'aa"'
+          + ' role="button" tabindex="0" onclick="goMv(\'' + m.id + '\')"'
+          + ' onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();goMv(\'' + m.id + '\')}">'
+          + '<img class="mvx-thumb" loading="lazy" alt="" src="' + imgURL(m.art.svg, 120) + '" onerror="this.style.display=\'none\'">'
+          + '<div class="mvx-body">'
+          + '<div class="mvx-name">' + mvName(m) + '</div>'
+          + '<div class="mvx-meta"><span class="yrs">' + fmtRange(m) + '</span>'
+          + '<span class="reg"><span class="dot" style="background:' + reg.color + '"></span>' + regName(m.region) + '</span></div>'
+          + '<div class="mvx-teaser">' + T(ORIGINS[m.id]) + '</div>'
+          + '</div></div>';
+        }).join('')
+      + '</div>';
+  });
+  box.innerHTML = html;
 }
 
 /* 流派 / 時期 */
@@ -1799,6 +2048,8 @@ function selectMovement(id, scroll) {
     + '<h2 class="d-title">' + mvName(m) + '<span class="en">' + mvSub(m) + '</span></h2>'
     + '<div class="d-region-chip"><span class="dot" style="background:' + reg.color + ';box-shadow:0 0 8px ' + reg.color + '"></span>' + uiStr('origin') + ' · ' + regName(m.region) + '</div>'
     + '<p class="d-desc">' + mvDesc(m) + '</p>'
+    + '<div class="d-sec-label">' + uiStr('originLabel') + '</div>'
+    + '<p class="d-desc d-origin">' + T(ORIGINS[m.id]) + '</p>'
     + '<div class="d-sec-label">' + uiStr('geo') + '</div>'
     + '<div id="minimap-box">' + MINIMAP + '<div class="map-caption">' + uiStr('mapCaption') + '</div></div>';
 
@@ -1887,6 +2138,9 @@ function applyStatic() {
   document.getElementById('subtitle-txt').innerHTML  = uiStr('subtitle');
   document.getElementById('hint').innerHTML          = uiStr('hint');
   document.getElementById('footer-txt').innerHTML    = uiStr('footer');
+  document.querySelector('#vtab-timeline .vt-txt').textContent  = uiStr('tabTimeline');
+  document.querySelector('#vtab-movements .vt-txt').textContent = uiStr('tabMovements');
+  document.querySelector('#vtab-museums .vt-txt').textContent   = uiStr('tabMuseums');
   ['zh','en','fr'].forEach(k => {
     const b = document.getElementById('lang-' + k);
     b.classList.toggle('active', k === LANG);
@@ -1905,6 +2159,7 @@ function switchLang(l) {
   buildChart();
   setFilter(regionFilter);
   renderMuseums();
+  renderMovementIndex();
   if (selectedId) selectMovement(selectedId, false);
   sc.scrollLeft = keepScroll;
 }
@@ -1916,6 +2171,7 @@ applyStatic();
 buildFilters();
 buildChart();
 renderMuseums();
+renderMovementIndex();
 selectMovement('renaissance', false);
 /* scroll chart to renaissance area on load */
 requestAnimationFrame(() => {
