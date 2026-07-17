@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>International Law Atlas | Sources, Regimes & Institutions</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] },
+        boxShadow: {
+          'glow-teal':   '0 0 20px rgba(45,212,191,0.35)',
+          'glow-sky':    '0 0 20px rgba(56,189,248,0.35)',
+          'glow-amber':  '0 0 20px rgba(245,158,11,0.35)',
+          'glow-rose':   '0 0 20px rgba(244,63,94,0.35)',
+          'glow-lime':   '0 0 20px rgba(163,230,53,0.35)',
+          'glow-violet': '0 0 20px rgba(167,139,250,0.35)',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body {
+    background-color: #04070f;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(45,212,191,0.08) 0px, transparent 40%),
+      radial-gradient(at 100% 0%, rgba(56,189,248,0.07) 0px, transparent 40%),
+      radial-gradient(at 50% 100%, rgba(244,63,94,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .theory-card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .theory-card:hover { transform: translateY(-4px); }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(90deg); }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-teal-500 selection:text-white">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:600px;height:600px;top:-200px;left:-150px;background:radial-gradient(circle,rgba(45,212,191,0.15) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:500px;height:500px;top:-100px;right:-100px;background:radial-gradient(circle,rgba(56,189,248,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:700px;height:700px;bottom:-200px;left:30%;background:radial-gradient(circle,rgba(244,63,94,0.08) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<!-- Header -->
+<header class="border-b border-slate-900/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-teal-500 via-sky-500 to-rose-500 rounded-xl blur opacity-75 animate-pulse"></div>
+        <div class="relative bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-scale-balanced text-teal-400 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-teal-400 uppercase bg-teal-500/10 rounded-full border border-teal-500/20">LEGAL SYSTEMS ATLAS</span>
+        <h1 class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight">
+          International Law
+        </h1>
+      </div>
+    </div>
+    <nav class="flex flex-wrap gap-2 text-xs">
+      <a href="#sources" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-teal-500/50 hover:text-teal-300 transition-colors">Sources</a>
+      <a href="#treaties" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors">Treaties & Statehood</a>
+      <a href="#hr" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Human Rights</a>
+      <a href="#ihl" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors">Humanitarian & Criminal Law</a>
+      <a href="#seas" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-lime-500/50 hover:text-lime-300 transition-colors">Law of the Sea & Economy</a>
+      <a href="#dispute" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-400/50 hover:text-violet-300 transition-colors">Institutions & Comparison</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <!-- Intro -->
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p class="text-slate-300 leading-relaxed max-w-4xl">
+      International law is the body of rules and principles that govern relations between sovereign states and, increasingly, international organizations, corporations, and individuals. Unlike domestic law, it has no single legislature, executive, or compulsory court — its authority rests on <span class="text-teal-300 font-semibold">state consent</span>, custom, and institutional practice. The regimes below — <span class="text-teal-300 font-semibold">sources & foundations</span>, <span class="text-sky-300 font-semibold">treaties & statehood</span>, <span class="text-emerald-300 font-semibold">human rights law</span>, <span class="text-rose-300 font-semibold">humanitarian & criminal law</span>, and <span class="text-lime-300 font-semibold">law of the sea & international economic law</span> — form the core structure taught in most public international law curricula.
+    </p>
+  </section>
+
+  <!-- SOURCES & FOUNDATIONS -->
+  <section id="sources" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-teal-500/10 rounded-2xl text-teal-400 border border-teal-500/20 shadow-glow-teal"><i class="fa-solid fa-book-open text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider text-teal-400 font-bold">Foundations</span>
+        <h2 class="text-2xl font-black text-white">Sources of International Law</h2>
+      </div>
+    </div>
+    <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
+      <p class="text-slate-300 leading-relaxed"><strong class="text-white">Article 38(1) of the Statute of the International Court of Justice</strong> (1945) is the standard reference for the sources of international law: international conventions (treaties), international custom, general principles of law recognized by civilized nations, and — as subsidiary means — judicial decisions and the teachings of highly qualified publicists.</p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-teal-300 mb-2"><i class="fa-solid fa-file-signature mr-1.5"></i>Treaties (Conventional Law)</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Binding written agreements between states, governed by the <strong class="text-white">Vienna Convention on the Law of Treaties</strong> (VCLT, 1969) — often called the "treaty on treaties." Binds only consenting parties (<em>pacta tertiis nec nocent nec prosunt</em>) unless a rule also reflects custom.</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-teal-300 mb-2"><i class="fa-solid fa-repeat mr-1.5"></i>Customary International Law</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Arises from two elements: <strong class="text-white">state practice</strong> (general and consistent conduct) and <strong class="text-white">opinio juris</strong> (a belief that the practice is legally required). Binds all states except "persistent objectors." Established in the <em>North Sea Continental Shelf</em> cases (ICJ, 1969).</p>
+        </div>
+      </div>
+
+      <details class="bg-slate-900/30 rounded-2xl border border-slate-800 p-5">
+        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-teal-400"></i>Key concepts & hierarchy</span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
+        <ul class="mt-4 text-sm text-slate-400 space-y-2 list-disc list-inside">
+          <li><strong class="text-slate-300">Jus cogens (peremptory norms)</strong> — non-derogable rules (e.g., prohibitions on genocide, slavery, torture, aggression) that override any conflicting treaty (VCLT Art. 53).</li>
+          <li><strong class="text-slate-300">Erga omnes obligations</strong> — duties owed to the international community as a whole, not just to a single injured state (<em>Barcelona Traction</em>, ICJ, 1970).</li>
+          <li><strong class="text-slate-300">Soft law</strong> — non-binding instruments (declarations, resolutions, guidelines) that shape expectations and can crystallize into custom over time, e.g., the Universal Declaration of Human Rights (1948).</li>
+          <li><strong class="text-slate-300">Monism vs. dualism</strong> — competing theories of how international law enters domestic legal systems: automatically (monist) or only through domestic incorporation (dualist).</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- TREATIES & STATEHOOD -->
+  <section id="treaties" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-sky-500/10 rounded-2xl text-sky-400 border border-sky-500/20 shadow-glow-sky"><i class="fa-solid fa-flag text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider text-sky-400 font-bold">Statehood, Sovereignty & Responsibility</span>
+        <h2 class="text-2xl font-black text-white">Subjects, Treaties & State Responsibility</h2>
+      </div>
+    </div>
+    <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
+      <p class="text-slate-300 leading-relaxed">States are the primary "subjects" of international law, but international organizations (e.g., the UN), and to a limited degree individuals and corporations, also hold rights and duties under it.</p>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-sky-300 mb-2">Statehood</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">The <strong class="text-white">Montevideo Convention</strong> (1933) criteria: a permanent population, a defined territory, an effective government, and the capacity to enter into relations with other states. Recognition by other states is politically significant but, under the declaratory theory, not legally constitutive of statehood.</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-sky-300 mb-2">Law of Treaties (VCLT)</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Governs formation, interpretation (<em>pacta sunt servanda</em> — agreements must be kept), reservations, invalidity (e.g., coercion, error), and termination (including <em>rebus sic stantibus</em> — fundamental change of circumstances).</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-sky-300 mb-2">State Responsibility</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">The ILC's <strong class="text-white">Articles on State Responsibility</strong> (2001) set out when an internationally wrongful act (attribution + breach) triggers a state's obligation to cease the conduct and make reparation — restitution, compensation, or satisfaction.</p>
+        </div>
+      </div>
+
+      <details class="bg-slate-900/30 rounded-2xl border border-slate-800 p-5">
+        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-sky-400"></i>Sovereignty, jurisdiction & the UN Charter regime</span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
+        <ul class="mt-4 text-sm text-slate-400 space-y-2 list-disc list-inside">
+          <li><strong class="text-slate-300">Sovereign equality</strong> — UN Charter Art. 2(1); each state, regardless of size or power, possesses equal legal standing.</li>
+          <li><strong class="text-slate-300">Non-intervention & the use of force</strong> — Art. 2(4) prohibits the threat or use of force against territorial integrity or political independence, subject to Chapter VII Security Council authorization (Art. 42) and self-defense (Art. 51).</li>
+          <li><strong class="text-slate-300">Jurisdiction</strong> — territorial, nationality, protective, passive personality, and (contested) universal jurisdiction bases for a state to prescribe and enforce law.</li>
+          <li><strong class="text-slate-300">State immunity</strong> — the restrictive doctrine distinguishes sovereign acts (<em>acta jure imperii</em>, immune) from commercial acts (<em>acta jure gestionis</em>, not immune).</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- HUMAN RIGHTS -->
+  <section id="hr" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-teal"><i class="fa-solid fa-hand-fist text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Individual Rights & Protection</span>
+        <h2 class="text-2xl font-black text-white">International Human Rights Law</h2>
+      </div>
+    </div>
+    <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
+      <p class="text-slate-300 leading-relaxed">Human rights law binds states to protect individuals — including, in principle, against their own government — marking a major departure from the classical state-centric model. Its modern architecture began with the <strong class="text-white">Universal Declaration of Human Rights</strong> (UDHR, 1948) and expanded into binding treaty law.</p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-emerald-300 mb-2">The International Bill of Rights</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">The UDHR plus the two 1966 covenants: the <span class="text-slate-300 font-semibold">International Covenant on Civil and Political Rights</span> (ICCPR) and the <span class="text-slate-300 font-semibold">International Covenant on Economic, Social and Cultural Rights</span> (ICESCR) — reflecting a Cold War-era split between "negative" liberty rights and "positive" welfare rights.</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-emerald-300 mb-2">Specialized & regional regimes</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Topic-specific treaties (CEDAW 1979, CRC 1989, CAT 1984, CRPD 2006) and regional courts — the European Court of Human Rights, Inter-American Court of Human Rights, and African Court on Human and Peoples' Rights — which offer individuals direct routes to binding adjudication unavailable at the UN level.</p>
+        </div>
+      </div>
+
+      <details class="bg-slate-900/30 rounded-2xl border border-slate-800 p-5">
+        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-emerald-400"></i>Enforcement & recurring debates</span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
+        <ul class="mt-4 text-sm text-slate-400 space-y-2 list-disc list-inside">
+          <li><strong class="text-slate-300">Treaty bodies</strong> — UN committees (e.g., the Human Rights Committee) monitor compliance via state reports and, where accepted, individual complaints — but lack direct enforcement power.</li>
+          <li><strong class="text-slate-300">Universality vs. cultural relativism</strong> — a longstanding debate over whether human rights norms are genuinely universal or reflect particular (often Western liberal) traditions.</li>
+          <li><strong class="text-slate-300">Responsibility to Protect (R2P)</strong> — a 2005 World Summit doctrine holding that states have a duty to protect populations from genocide, war crimes, ethnic cleansing, and crimes against humanity, with the international community stepping in if a state fails.</li>
+          <li><strong class="text-slate-300">Derogation</strong> — most civil-political rights (not jus cogens rights like the prohibition on torture) may be suspended "in time of public emergency" under ICCPR Art. 4.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- IHL & ICL -->
+  <section id="ihl" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-rose-500/10 rounded-2xl text-rose-400 border border-rose-500/20 shadow-glow-rose"><i class="fa-solid fa-gavel text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider text-rose-400 font-bold">Conflict, Accountability & Atrocity</span>
+        <h2 class="text-2xl font-black text-white">Humanitarian & Criminal Law</h2>
+      </div>
+    </div>
+    <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
+      <p class="text-slate-300 leading-relaxed">Two closely related but distinct regimes: <strong class="text-white">international humanitarian law (IHL)</strong>, or the law of armed conflict, which regulates how wars are fought; and <strong class="text-white">international criminal law (ICL)</strong>, which holds individuals personally accountable for the gravest violations.</p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-rose-300 mb-2"><i class="fa-solid fa-shield-halved mr-1.5"></i>International Humanitarian Law</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Codified chiefly by the four <strong class="text-white">1949 Geneva Conventions</strong> and their 1977 Additional Protocols, plus customary rules. Governed by core principles: <em>distinction</em> (combatants vs. civilians), <em>proportionality</em>, <em>military necessity</em>, and <em>precaution</em>. Applies alongside — but distinct from — the jus ad bellum (law on when force may be used).</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-rose-300 mb-2"><i class="fa-solid fa-scale-unbalanced mr-1.5"></i>International Criminal Law</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">The <strong class="text-white">Rome Statute</strong> (1998) established the permanent <span class="text-slate-300 font-semibold">International Criminal Court</span> (ICC, seated in The Hague), with jurisdiction over four core crimes: genocide, crimes against humanity, war crimes, and (since 2018) the crime of aggression. Built on the precedent of the Nuremberg and Tokyo Tribunals (1945–46) and the ad hoc ICTY/ICTR of the 1990s.</p>
+        </div>
+      </div>
+
+      <details class="bg-slate-900/30 rounded-2xl border border-slate-800 p-5">
+        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-rose-400"></i>Key concepts & institutional limits</span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
+        <ul class="mt-4 text-sm text-slate-400 space-y-2 list-disc list-inside">
+          <li><strong class="text-slate-300">Complementarity</strong> — the ICC only acts when national courts are "unwilling or unable" to genuinely prosecute (Rome Statute Art. 17); it is a court of last resort, not a substitute for domestic justice.</li>
+          <li><strong class="text-slate-300">Command responsibility</strong> — commanders can be held liable for crimes committed by subordinates they knew of, or should have known of, and failed to prevent or punish.</li>
+          <li><strong class="text-slate-300">Universal jurisdiction</strong> — some grave crimes (piracy, genocide, torture) may be prosecuted by any state regardless of where they occurred or the nationality of the accused.</li>
+          <li><strong class="text-slate-300">Jurisdictional gaps</strong> — the ICC has no independent enforcement arm and relies on state cooperation for arrests; major powers including the US, China, and Russia are not parties to the Rome Statute.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- SEAS & ECONOMIC LAW -->
+  <section id="seas" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-lime-500/10 rounded-2xl text-lime-400 border border-lime-500/20 shadow-glow-lime"><i class="fa-solid fa-water text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider text-lime-400 font-bold">Territory, Resources & Trade</span>
+        <h2 class="text-2xl font-black text-white">Law of the Sea & International Economic Law</h2>
+      </div>
+    </div>
+    <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-lime-300 mb-2">Law of the Sea (UNCLOS)</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">The <strong class="text-white">UN Convention on the Law of the Sea</strong> (1982), often called a "constitution for the oceans," establishes maritime zones radiating from a state's baseline: <span class="text-slate-300 font-semibold">territorial sea</span> (12 nm, full sovereignty), <span class="text-slate-300 font-semibold">contiguous zone</span> (24 nm), <span class="text-slate-300 font-semibold">exclusive economic zone</span> (EEZ, 200 nm, resource rights), and the <span class="text-slate-300 font-semibold">continental shelf</span>. Beyond national jurisdiction lies the "high seas" and the deep seabed, designated the "common heritage of mankind."</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
+          <h3 class="text-sm font-bold text-lime-300 mb-2">International Economic Law</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Governs cross-border trade and investment through institutions like the <strong class="text-white">World Trade Organization</strong> (WTO, 1995), whose Dispute Settlement Body issues binding rulings on trade disputes, and a dense web of bilateral investment treaties (BITs) providing for investor-state dispute settlement (ISDS).</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed">Also within this cluster: international environmental law (e.g., the Paris Agreement, 2015; Convention on Biological Diversity, 1992), built on principles like <em>common but differentiated responsibilities</em> and the <em>precautionary principle</em>, which increasingly intersects with both the law of the sea (ocean acidification, fisheries) and economic law (carbon border measures).</p>
+    </div>
+  </section>
+
+  <!-- INSTITUTIONS & COMPARISON -->
+  <section id="dispute" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-violet-500/10 rounded-2xl text-violet-400 border border-violet-500/20 shadow-glow-violet"><i class="fa-solid fa-table-cells text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider text-violet-400 font-bold">Where Disputes Get Resolved</span>
+        <h2 class="text-2xl font-black text-white">Key Institutions & Comparison</h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-4 md:p-6 border border-slate-900 shadow-2xl">
+      <div class="table-scroll overflow-x-auto">
+        <table class="w-full text-sm min-w-[900px]">
+          <thead>
+            <tr class="text-left text-slate-400 border-b border-slate-800">
+              <th class="py-3 px-4 font-bold">Institution</th>
+              <th class="py-3 px-4 font-bold">Seat</th>
+              <th class="py-3 px-4 font-bold">Jurisdiction</th>
+              <th class="py-3 px-4 font-bold">Who can bring a case</th>
+              <th class="py-3 px-4 font-bold">Binding?</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60">
+            <tr>
+              <td class="py-3 px-4 font-semibold text-teal-300">International Court of Justice (ICJ)</td>
+              <td class="py-3 px-4 text-slate-400">The Hague</td>
+              <td class="py-3 px-4 text-slate-400">Disputes between states; advisory opinions for UN organs</td>
+              <td class="py-3 px-4 text-slate-400">States only</td>
+              <td class="py-3 px-4 text-slate-400">Yes (contentious cases), no enforcement mechanism beyond UNSC referral</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-rose-300">International Criminal Court (ICC)</td>
+              <td class="py-3 px-4 text-slate-400">The Hague</td>
+              <td class="py-3 px-4 text-slate-400">Genocide, crimes against humanity, war crimes, aggression</td>
+              <td class="py-3 px-4 text-slate-400">Prosecutor, states parties, UN Security Council</td>
+              <td class="py-3 px-4 text-slate-400">Yes, but relies on state cooperation for enforcement</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-lime-300">WTO Dispute Settlement Body</td>
+              <td class="py-3 px-4 text-slate-400">Geneva</td>
+              <td class="py-3 px-4 text-slate-400">Trade disputes between WTO members</td>
+              <td class="py-3 px-4 text-slate-400">WTO member states</td>
+              <td class="py-3 px-4 text-slate-400">Yes, authorizes trade retaliation for non-compliance</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-emerald-300">UN Human Rights Committee</td>
+              <td class="py-3 px-4 text-slate-400">Geneva</td>
+              <td class="py-3 px-4 text-slate-400">ICCPR compliance; individual complaints (Optional Protocol)</td>
+              <td class="py-3 px-4 text-slate-400">States (reports) & individuals (if state opted in)</td>
+              <td class="py-3 px-4 text-slate-400">No — issues "views," not binding judgments</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-sky-300">Permanent Court of Arbitration (PCA)</td>
+              <td class="py-3 px-4 text-slate-400">The Hague</td>
+              <td class="py-3 px-4 text-slate-400">Ad hoc arbitration — territorial, maritime & investment disputes</td>
+              <td class="py-3 px-4 text-slate-400">States, state-investor pairs, IOs (by agreement)</td>
+              <td class="py-3 px-4 text-slate-400">Yes, between consenting parties</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-6 gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900">
+      <h3 class="text-sm font-bold text-violet-300 mb-3"><i class="fa-solid fa-lightbulb mr-1.5"></i>The recurring tension: consent vs. authority</h3>
+      <ul class="text-sm text-slate-400 space-y-2 list-disc list-inside leading-relaxed">
+        <li>International law's core structural feature is that it binds primarily through <strong class="text-slate-300">state consent</strong> — a state is generally not bound by a treaty it hasn't ratified, and the ICJ has jurisdiction over a state only if that state has accepted it. This makes the system fundamentally different from a domestic legal order with compulsory jurisdiction.</li>
+        <li>Jus cogens norms and the UN Security Council's Chapter VII powers are the two main exceptions to pure consent-based obligation — the former binds regardless of consent, the latter can bind even non-consenting states via Council resolution.</li>
+        <li>Enforcement remains the field's persistent weak point: most compliance is driven by reciprocity, reputational cost, and domestic incorporation rather than centralized coercion — which is why international law is sometimes called "law without a sovereign."</li>
+        <li>The proliferation of specialized regimes (trade, human rights, environment, criminal law) since 1990 has raised concerns about the <strong class="text-slate-300">"fragmentation"</strong> of international law into self-contained regimes with inconsistent rules and overlapping tribunals.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-600 pt-6 pb-2">
+    Reference atlas of public international law — for study and quick review, not exhaustive of every sub-field or a substitute for legal advice.
+  </footer>
+</main>
+
+</body>
+</html>
