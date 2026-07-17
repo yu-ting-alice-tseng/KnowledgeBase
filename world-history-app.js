@@ -107,6 +107,8 @@ function buildChart() {
 
     const lane = document.createElement('div');
     lane.className = 'lane';
+    lane.dataset.region = rk;
+    lane.classList.toggle('lane-hidden', regionFilter !== 'all' && regionFilter !== rk);
     lane.style.height = laneH + 'px';
     lane.style.background = 'linear-gradient(90deg, ' + reg.color + '12, transparent 460px)';
 
@@ -196,6 +198,9 @@ function setFilter(key) {
   buildFilters();
   document.querySelectorAll('.bar').forEach(b => {
     b.classList.toggle('dim', key !== 'all' && b.dataset.region !== key);
+  });
+  document.querySelectorAll('.lane').forEach(l => {
+    l.classList.toggle('lane-hidden', key !== 'all' && l.dataset.region !== key);
   });
 }
 
