@@ -276,6 +276,7 @@ function selectHistory(id, scroll) {
     const sc = document.getElementById('chart-scroll');
     const x1 = yearToX(h.start);
     sc.scrollTo({ left: Math.max(x1 - 160, 0), behavior: 'smooth' });
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
