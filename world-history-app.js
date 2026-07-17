@@ -249,6 +249,21 @@ function selectHistory(id, scroll) {
   map.style.setProperty('--lit', reg.lit);
   map.querySelectorAll('.land').forEach(p => p.classList.toggle('lit', p.dataset.r === h.region));
 
+  const subCard = it => '<div class="d-sub-card">'
+    + '<div class="d-sub-head"><span class="d-sub-name">' + T(it.name) + '</span><span class="d-sub-year">' + T(it.year) + '</span></div>'
+    + '<div class="d-sub-desc">' + T(it.desc) + '</div></div>';
+  const devents = document.getElementById('d-events');
+  let evHtml = '';
+  if (h.battles && h.battles.length) {
+    evHtml += '<div class="d-sec-label">' + uiStr('battlesLabel') + '</div>'
+      + '<div class="d-sub-grid">' + h.battles.map(subCard).join('') + '</div>';
+  }
+  if (h.aftermath && h.aftermath.length) {
+    evHtml += '<div class="d-sec-label">' + uiStr('aftermathLabel') + '</div>'
+      + '<div class="d-sub-grid">' + h.aftermath.map(subCard).join('') + '</div>';
+  }
+  devents.innerHTML = evHtml;
+
   const panel = document.getElementById('detail');
   panel.style.display = 'block';
 
