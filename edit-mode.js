@@ -5,8 +5,6 @@
    HTML file and replace the original with it.
    ═══════════════════════════════════════════════════════════ */
 (function () {
-  if (window.self !== window.top) return; // don't double-inject inside index.html's module iframe (the module page itself already loads this script)
-
   let editing = false;
   let hoverBlock = null;
 
