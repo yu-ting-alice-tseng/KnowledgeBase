@@ -897,6 +897,10 @@ const DEFAULT_MODULES = [
     description:'Trilingual atlas of world art: timeline, movements, 70 artist biographies, artwork lightbox and museum guide across four cultural regions.',
     icon:'fa-palette', color:'from-violet-400 to-indigo-600',
     file:'art-history-timeline.html', custom:false },
+  { id:'worldhistory', title:'Chronos Mundi: World History', subtitle:'Timeline & Civilizations Atlas',
+    description:'Trilingual interactive timeline of world history: 20 civilizations and eras, key events, historical significance and legacy across four cultural regions.',
+    icon:'fa-landmark', color:'from-cyan-400 to-sky-600',
+    file:'world-history-timeline.html', custom:false },
   { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',
     description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.',
     icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',
@@ -1106,15 +1110,17 @@ const BAR_ACCENTS = {
 /* 個別模組覆寫（藝術卷頁面實為金色調，非模組卡的紫色） */
 const BAR_ACCENT_OVERRIDE = {
   art: ['201,168,92', '#e8cc84'],
+  worldhistory: ['201,168,92', '#e8cc84'],
 };
 
 /* 支援多語的模組：切換函式名稱 + 內頁切換鈕（取其父容器隱藏） */
 const MODULE_I18N = {
-  art:      { fn: 'switchLang',     btn: 'lang-zh' },
-  finance:  { fn: 'setLanguage',    btn: 'lang-zh' },
-  beer:     { fn: 'setLanguage',    btn: 'btn-lang-zh' },
-  skincare: { fn: 'switchLang',     btn: 'hdr-zh' },
-  perfume:  { fn: 'switchLanguage', btn: 'hdr-zh' },
+  art:          { fn: 'switchLang',     btn: 'lang-zh' },
+  worldhistory: { fn: 'switchLang',     btn: 'lang-zh' },
+  finance:      { fn: 'setLanguage',    btn: 'lang-zh' },
+  beer:         { fn: 'setLanguage',    btn: 'btn-lang-zh' },
+  skincare:     { fn: 'switchLang',     btn: 'hdr-zh' },
+  perfume:      { fn: 'switchLanguage', btn: 'hdr-zh' },
 };
 
 const OPEN_KEY = 'kb_open_module';
