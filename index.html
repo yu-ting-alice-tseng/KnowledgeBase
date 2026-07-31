@@ -233,6 +233,63 @@ body {
   font-family: 'Nunito', sans-serif; letter-spacing: 0.08em;
 }
 
+/* ─── Category filter ─── */
+#cat-filter {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 7px; margin-bottom: 46px;
+}
+.cat-chip {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 15px; border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.09em;
+  cursor: pointer; transition: all 0.22s;
+  background: rgba(255,242,200,0.030);
+  border: 1px solid rgba(201,168,92,0.11);
+  color: var(--muted);
+  backdrop-filter: blur(14px);
+}
+.cat-chip i { font-size: 9px; opacity: .72; }
+.cat-chip:hover { color: var(--cream); border-color: rgba(201,168,92,0.26); background: rgba(255,242,200,0.07); }
+.cat-chip.active {
+  color: var(--gold); border-color: rgba(201,168,92,0.40);
+  background: linear-gradient(135deg, rgba(201,168,92,0.16), rgba(160,125,50,0.10));
+  box-shadow: inset 0 1px 0 rgba(255,238,155,0.16), 0 4px 16px rgba(0,0,0,0.28);
+}
+.cat-chip .chip-n {
+  font-size: 9px; font-weight: 800; opacity: .55;
+  font-variant-numeric: tabular-nums;
+}
+.cat-chip.empty { opacity: .34; }
+.cat-chip.empty:hover { opacity: .6; }
+
+/* ─── Shelf (one category) ─── */
+.shelf { margin-bottom: 54px; }
+.shelf:last-child { margin-bottom: 0; }
+.shelf-header { display: flex; align-items: center; gap: 15px; margin-bottom: 26px; }
+.shelf-header .sh-icon {
+  width: 26px; height: 26px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; font-size: 10px;
+  color: var(--gold-lo);
+  background: rgba(201,168,92,0.08);
+  border: 1px solid rgba(201,168,92,0.16);
+}
+.shelf-header .sh-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px; font-weight: 600; font-style: italic;
+  color: #efe4cb; white-space: nowrap; letter-spacing: 0.01em;
+}
+.shelf-header .sh-rule {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(201,168,92,0.22), transparent);
+}
+.shelf-header .sh-count {
+  font-family: 'Nunito', sans-serif;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.10em;
+  color: var(--muted2); white-space: nowrap;
+}
+
 /* ─── Search ─── */
 #search-wrap { position: relative; max-width: 520px; margin: 0 auto 28px; }
 #search-input {
@@ -279,7 +336,7 @@ body {
 #upload-btn:hover { color: var(--gold); border-color: rgba(201,168,92,0.38); background: rgba(201,168,92,0.07); }
 
 /* ─── Grid ─── */
-#knowledge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 24px; }
+.shelf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 24px; }
 
 /* ─── Liquid Glass Card ─── */
 .glass-card {
@@ -664,16 +721,19 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
     <span class="col-count" id="col-count">— 5 volumes</span>
   </div>
 
-  <!-- Grid -->
-  <div id="knowledge-grid">
-    <div id="no-results">
-      <i class="fa-solid fa-book-open-reader"
-         style="font-size:36px;margin-bottom:16px;display:block;opacity:.18;"></i>
-      <span id="no-results-text"
-            style="font-size:14px;font-style:italic;font-family:'Cormorant Garamond',serif;">
-        找不到符合的館藏。
-      </span>
-    </div>
+  <!-- Category filter -->
+  <div id="cat-filter"></div>
+
+  <!-- Shelves (one grid per category) -->
+  <div id="shelves"></div>
+
+  <div id="no-results">
+    <i class="fa-solid fa-book-open-reader"
+       style="font-size:36px;margin-bottom:16px;display:block;opacity:.18;"></i>
+    <span id="no-results-text"
+          style="font-size:14px;font-style:italic;font-family:'Cormorant Garamond',serif;">
+      找不到符合的館藏。
+    </span>
   </div>
 
   <!-- Footer -->
@@ -743,6 +803,9 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
     <label class="modal-label" id="label-mod-icon">圖示（FontAwesome 類名）</label>
     <input class="modal-input" id="new-icon" type="text" placeholder="fa-book  fa-flask  fa-brain">
 
+    <label class="modal-label" id="label-mod-cat">分類</label>
+    <div id="cat-opts" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;"></div>
+
     <label class="modal-label" id="label-mod-color">顏色主題</label>
     <div class="color-opts" id="color-opts">
       <div class="color-opt selected" data-grad="from-violet-400 to-indigo-600"  style="background:linear-gradient(135deg,#a78bfa,#4f46e5)"></div>
@@ -803,7 +866,7 @@ const UI = {
     dropLabel:'拖曳 <strong>.html</strong> 至此，或 <u>點擊瀏覽</u>',
     lTitle:'模組標題', lSub:'副標題', lDesc:'描述',
     lIcon:'圖示（FontAwesome 類名）', lColor:'顏色主題',
-    confirmBtn:'加入書庫', volumes:'冊'
+    confirmBtn:'加入書庫', volumes:'冊', allCat:'全部', lCat:'分類'
   },
   en: {
     badge:'Personal Knowledge Library',
@@ -817,7 +880,7 @@ const UI = {
     dropLabel:'Drop an <strong>.html</strong> file here or <u>click to browse</u>',
     lTitle:'Module Title', lSub:'Subtitle', lDesc:'Description',
     lIcon:'Icon (FontAwesome class)', lColor:'Color Theme',
-    confirmBtn:'Add to Library', volumes:'volumes'
+    confirmBtn:'Add to Library', volumes:'volumes', allCat:'All', lCat:'Category'
   },
   fr: {
     badge:'Bibliothèque Personnelle',
@@ -831,7 +894,7 @@ const UI = {
     dropLabel:'Déposez un <strong>.html</strong> ici ou <u>cliquez</u>',
     lTitle:'Titre du module', lSub:'Sous-titre', lDesc:'Description',
     lIcon:'Icône (classe FontAwesome)', lColor:'Thème de couleur',
-    confirmBtn:'Ajouter', volumes:'volumes'
+    confirmBtn:'Ajouter', volumes:'volumes', allCat:'Tous', lCat:'Catégorie'
   }
 };
 
@@ -859,6 +922,7 @@ function switchLang(l) {
   document.getElementById('label-mod-subtitle').textContent = u.lSub;
   document.getElementById('label-mod-desc').textContent   = u.lDesc;
   document.getElementById('label-mod-icon').textContent   = u.lIcon;
+  document.getElementById('label-mod-cat').textContent    = u.lCat;
   document.getElementById('label-mod-color').textContent  = u.lColor;
   document.getElementById('modal-confirm-text').textContent = u.confirmBtn;
   document.documentElement.lang = l==='zh' ? 'zh-Hant' : l;
@@ -892,47 +956,59 @@ const GLOW = {
 const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X',
                'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
 
+/* ─── Categories (shelves) ─── */
+const CATEGORIES = [
+  { id:'humanities', icon:'fa-feather',          zh:'人文與歷史',   en:'Arts & Humanities',   fr:'Arts & humanités' },
+  { id:'politics',   icon:'fa-scale-balanced',   zh:'政治與法律',   en:'Politics & Law',      fr:'Politique & droit' },
+  { id:'business',   icon:'fa-chart-line',       zh:'商業與產業',   en:'Business & Industry', fr:'Économie & industrie' },
+  { id:'science',    icon:'fa-flask',            zh:'科學與工藝',   en:'Science & Craft',     fr:'Sciences & savoir-faire' },
+  { id:'tools',      icon:'fa-screwdriver-wrench', zh:'實用工具',   en:'Tools',               fr:'Outils' },
+  { id:'custom',     icon:'fa-box-archive',      zh:'自訂館藏',     en:'Custom Volumes',      fr:'Volumes personnalisés' },
+];
+const catLabel = c => c[currentLang] || c.en;
+const catById  = id => CATEGORIES.find(c => c.id === id) || CATEGORIES[CATEGORIES.length-1];
+
 const DEFAULT_MODULES = [
   { id:'art',        title:'Ars Mundi: Art History',  subtitle:'Timeline & Regional Atlas',
     description:'Trilingual atlas of world art: timeline, movements, 70 artist biographies, artwork lightbox and museum guide across four cultural regions.',
     icon:'fa-palette', color:'from-violet-400 to-indigo-600',
-    file:'art-history-timeline.html', custom:false },
+    cat:'humanities', file:'art-history-timeline.html', custom:false },
   { id:'worldhistory', title:'Chronos Mundi: World History', subtitle:'Timeline & Civilizations Atlas',
     description:'Trilingual interactive timeline of world history: 20 civilizations and eras, key events, historical significance and legacy across four cultural regions.',
     icon:'fa-landmark', color:'from-cyan-400 to-sky-600',
-    file:'world-history-timeline.html', custom:false },
+    cat:'humanities', file:'world-history-timeline.html', custom:false },
   { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',
     description:'Integrated intelligence mapping modern finance, accounting, and marketing strategies.',
     icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',
-    file:'business-finance-knowledge-map.html', custom:false },
+    cat:'business', file:'business-finance-knowledge-map.html', custom:false },
   { id:'ir-theory',  title:'International Relations Theory', subtitle:'Paradigms, Scholars & Studies',
     description:'Reference atlas of Realism, Liberalism, Constructivism, Critical/Marxist theory, English School and Feminist IR, with key scholars, studies, and a side-by-side comparison.',
     icon:'fa-globe', color:'from-sky-400 to-blue-600',
-    file:'ir-theories.html', custom:false },
+    cat:'politics', file:'ir-theories.html', custom:false },
   { id:'intl-law',   title:'International Law',        subtitle:'Sources, Regimes & Institutions',
     description:'Reference atlas of public international law: sources & jus cogens, treaties & state responsibility, human rights, humanitarian & criminal law, law of the sea, and key institutions.',
     icon:'fa-scale-balanced', color:'from-lime-400 to-green-600',
-    file:'international-law.html', custom:false },
+    cat:'politics', file:'international-law.html', custom:false },
   { id:'lifestyle',  title:'Lifestyle & Luxury',       subtitle:'Cross-Domain Knowledge Map',
     description:'Trilingual atlas of the lifestyle and luxury industries: cosmetics, fragrance, spirits, fashion and hospitality — ingredients, houses, terroirs and craft techniques.',
     icon:'fa-gem', color:'from-fuchsia-400 to-purple-700',
-    file:'lifestyle-luxury-knowledge-map.html', custom:false },
+    cat:'business', file:'lifestyle-luxury-knowledge-map.html', custom:false },
   { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',
     description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.',
     icon:'fa-beer-mug-empty',  color:'from-amber-400 to-orange-500',
-    file:'zymos_beer_mind_map.html', custom:false },
+    cat:'science', file:'zymos_beer_mind_map.html', custom:false },
   { id:'skincare',   title:'Skincare Actives',        subtitle:'Science & Market Trends',
     description:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.',
     icon:'fa-sparkles',        color:'from-pink-400 to-rose-600',
-    file:'skincare-trilingual.html', custom:false },
+    cat:'science', file:'skincare-trilingual.html', custom:false },
   { id:'perfume',    title:'Perfume Intelligence',    subtitle:'Market Analysis & Brands',
     description:'Coty portfolio analysis and perfume market competition mind map.',
     icon:'fa-bottle-droplet',  color:'from-fuchsia-400 to-purple-700',
-    file:'coty_perfume_market_mindmap.html', custom:false },
+    cat:'business', file:'coty_perfume_market_mindmap.html', custom:false },
   { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',
     description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',
     icon:'fa-file-invoice',    color:'from-sky-400 to-blue-600',
-    file:'cv_prompt_builder_v2.html', custom:false }
+    cat:'tools', file:'cv_prompt_builder_v2.html', custom:false }
 ];
 
 const REMOVED_KEY = 'knowledge_galaxy_removed_builtins';
@@ -955,42 +1031,110 @@ function saveModules() {
   localStorage.setItem(REMOVED_KEY, JSON.stringify(removedIds));
 }
 
+const CAT_KEY = 'knowledge_galaxy_category';
+
 let modules     = loadModules();
 let searchQuery = '';
 let editMode    = false;
 let pendingURL  = null;
 let selColor    = 'from-violet-400 to-indigo-600';
+let selCat      = 'humanities';
+let activeCat   = localStorage.getItem(CAT_KEY) || 'all';
+if (activeCat !== 'all' && !CATEGORIES.some(c => c.id === activeCat)) activeCat = 'all';
 
-/* ─── Render grid ─── */
-function renderGrid() {
-  const grid  = document.getElementById('knowledge-grid');
-  const noRes = document.getElementById('no-results');
-  const q     = searchQuery.toLowerCase();
-  const shown = modules.filter(m =>
-    !q ||
+/* ─── Render shelves ─── */
+function matchesSearch(m) {
+  const q = searchQuery.toLowerCase();
+  return !q ||
     m.title.toLowerCase().includes(q) ||
     (m.subtitle||'').toLowerCase().includes(q) ||
-    (m.description||'').toLowerCase().includes(q)
-  );
+    (m.description||'').toLowerCase().includes(q);
+}
+/* A volume keeps its numeral wherever it is shelved, filtered or searched. */
+function romanOf(mod) {
+  const i = modules.findIndex(m => m.id === mod.id);
+  return ROMAN[i] || String(i+1);
+}
+function catOf(mod) {
+  return CATEGORIES.some(c => c.id === mod.cat) ? mod.cat : 'custom';
+}
 
-  grid.querySelectorAll('.glass-card').forEach(c => c.remove());
+function renderGrid() {
+  const shelves = document.getElementById('shelves');
+  const noRes   = document.getElementById('no-results');
+  const shown   = modules.filter(matchesSearch);
 
-  /* update count */
+  /* update total count */
   const cnt = document.getElementById('col-count');
   if (cnt) cnt.textContent = `— ${shown.length} ${UI[currentLang].volumes}`;
 
-  if (!shown.length) { noRes.style.display='block'; return; }
-  noRes.style.display = 'none';
+  renderCatFilter(shown);
 
-  shown.forEach((mod, idx) => {
+  shelves.innerHTML = '';
+  let visible = 0, animIdx = 0;
+
+  CATEGORIES.forEach(cat => {
+    if (activeCat !== 'all' && activeCat !== cat.id) return;
+    const inCat = shown.filter(m => catOf(m) === cat.id);
+    if (!inCat.length) return;
+    visible += inCat.length;
+
+    const shelf = document.createElement('section');
+    shelf.className = 'shelf';
+    shelf.dataset.cat = cat.id;
+    shelf.innerHTML = `
+      <div class="shelf-header">
+        <div class="sh-icon"><i class="fa-solid ${cat.icon}"></i></div>
+        <span class="sh-name">${catLabel(cat)}</span>
+        <div class="sh-rule"></div>
+        <span class="sh-count">${inCat.length} ${UI[currentLang].volumes}</span>
+      </div>
+      <div class="shelf-grid"></div>`;
+
+    const grid = shelf.querySelector('.shelf-grid');
+    inCat.forEach(mod => grid.appendChild(buildCard(mod, animIdx++)));
+    shelves.appendChild(shelf);
+  });
+
+  noRes.style.display = visible ? 'none' : 'block';
+}
+
+/* ─── Category filter chips ─── */
+function renderCatFilter(shown) {
+  const bar = document.getElementById('cat-filter');
+  if (!bar) return;
+  const used = CATEGORIES.filter(c => modules.some(m => catOf(m) === c.id));
+
+  const chip = (id, icon, label, n, active) =>
+    `<button class="cat-chip${active?' active':''}${n?'':' empty'}" onclick="setCategory('${id}')"
+             aria-pressed="${active}">
+       <i class="fa-solid ${icon}"></i><span>${label}</span><span class="chip-n">${n}</span>
+     </button>`;
+
+  bar.innerHTML =
+    chip('all', 'fa-layer-group', UI[currentLang].allCat, shown.length, activeCat === 'all') +
+    used.map(c => chip(c.id, c.icon, catLabel(c),
+                       shown.filter(m => catOf(m) === c.id).length,
+                       activeCat === c.id)).join('');
+}
+
+function setCategory(id) {
+  activeCat = (activeCat === id && id !== 'all') ? 'all' : id;
+  localStorage.setItem(CAT_KEY, activeCat);
+  renderGrid();
+}
+
+/* ─── Card ─── */
+function buildCard(mod, animIdx) {
+  {
     const card = document.createElement('div');
     card.className = 'glass-card';
     card.dataset.id = mod.id;
-    card.style.animationDelay = (idx * 0.07) + 's';
+    card.style.animationDelay = (animIdx * 0.07) + 's';
 
     const spineGrad = SPINE[mod.color] || SPINE['from-violet-400 to-indigo-600'];
     const glowClr   = GLOW[mod.color]  || 'rgba(139,92,246,0.18)';
-    const roman     = ROMAN[idx] || String(idx+1);
+    const roman     = romanOf(mod);
 
     if (!editMode) {
       card.onclick = () => openModule(mod);
@@ -1072,8 +1216,8 @@ function renderGrid() {
       });
     }
 
-    grid.appendChild(card);
-  });
+    return card;
+  }
 }
 
 /* ─── Search ─── */
@@ -1206,6 +1350,22 @@ function openAddModal() {
   document.getElementById('drop-label').innerHTML = UI[currentLang].dropLabel;
   document.getElementById('modal-error').style.display = 'none';
   pendingURL = null; selectColor('from-violet-400 to-indigo-600');
+  renderCatOptions(); selectCat(activeCat !== 'all' ? activeCat : 'humanities');
+}
+
+/* category picker inside the Add-Volume modal */
+function renderCatOptions() {
+  const box = document.getElementById('cat-opts');
+  if (!box) return;
+  box.innerHTML = CATEGORIES.map(c =>
+    `<button type="button" class="cat-chip" data-cat="${c.id}" onclick="selectCat('${c.id}')">
+       <i class="fa-solid ${c.icon}"></i><span>${catLabel(c)}</span>
+     </button>`).join('');
+}
+function selectCat(id) {
+  selCat = id;
+  document.querySelectorAll('#cat-opts .cat-chip')
+    .forEach(b => b.classList.toggle('active', b.dataset.cat === id));
 }
 function closeAddModal() { document.getElementById('add-modal').classList.remove('open'); }
 function handleDrop(e) {
@@ -1232,8 +1392,9 @@ function confirmAddModule() {
     subtitle:    document.getElementById('new-subtitle').value.trim() || 'Custom Volume',
     description: document.getElementById('new-desc').value.trim() || '',
     icon:        document.getElementById('new-icon').value.trim()  || 'fa-file',
-    color:       selColor, file: pendingURL, custom: true
+    color:       selColor, cat: selCat, file: pendingURL, custom: true
   });
+  if (activeCat !== 'all' && activeCat !== selCat) activeCat = selCat;
   saveModules(); renderGrid(); closeAddModal();
 }
 function showModalError(msg) {
