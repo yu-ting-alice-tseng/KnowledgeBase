@@ -69,20 +69,28 @@
         </div>
       </div>
       <div>
-        <span class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-indigo-400 uppercase bg-indigo-500/10 rounded-full border border-indigo-500/20">POLITICAL SCIENCE ATLAS</span>
-        <h1 class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight">
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-indigo-400 uppercase bg-indigo-500/10 rounded-full border border-indigo-500/20">POLITICAL SCIENCE ATLAS</span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight">
           International Relations Theory
         </h1>
       </div>
     </div>
-    <nav class="flex flex-wrap gap-2 text-xs">
-      <a href="#realism" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 hover:text-indigo-300 transition-colors">Realism</a>
-      <a href="#liberalism" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors">Liberalism</a>
-      <a href="#constructivism" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Constructivism</a>
-      <a href="#critical" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors">Critical / Marxist</a>
-      <a href="#other" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">English School & Feminist IR</a>
-      <a href="#comparison" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-purple-400/50 hover:text-purple-300 transition-colors">Comparison</a>
-    </nav>
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Language switcher -->
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 bg-indigo-500/15 text-indigo-400 border border-indigo-500/20">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav class="flex flex-wrap gap-2 text-xs">
+        <a href="#realism" data-i18n="nav.realism" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 hover:text-indigo-300 transition-colors">Realism</a>
+        <a href="#liberalism" data-i18n="nav.liberalism" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors">Liberalism</a>
+        <a href="#constructivism" data-i18n="nav.constructivism" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Constructivism</a>
+        <a href="#critical" data-i18n="nav.critical" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors">Critical / Marxist</a>
+        <a href="#other" data-i18n="nav.other" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">English School &amp; Feminist IR</a>
+        <a href="#comparison" data-i18n="nav.comparison" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-purple-400/50 hover:text-purple-300 transition-colors">Comparison</a>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -90,7 +98,7 @@
 
   <!-- Intro -->
   <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
-    <p class="text-slate-300 leading-relaxed max-w-4xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl">
       International Relations (IR) theory offers competing lenses for explaining why states and other actors behave as they do in world politics — why wars break out, why states cooperate, and what forces (power, institutions, ideas, or class) really drive the international system. The five families below — <span class="text-indigo-300 font-semibold">Realism</span>, <span class="text-sky-300 font-semibold">Liberalism</span>, <span class="text-emerald-300 font-semibold">Constructivism</span>, <span class="text-rose-300 font-semibold">Critical &amp; Marxist theory</span>, and the <span class="text-amber-300 font-semibold">English School / Feminist IR</span> — remain the core paradigms taught in most IR curricula.
     </p>
   </section>
@@ -100,37 +108,37 @@
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-indigo-500/10 rounded-2xl text-indigo-400 border border-indigo-500/20 shadow-glow-indigo"><i class="fa-solid fa-chess-knight text-xl"></i></div>
       <div>
-        <span class="text-xs uppercase tracking-wider text-indigo-400 font-bold">Power & Anarchy</span>
-        <h2 class="text-2xl font-black text-white">Realism</h2>
+        <span data-i18n="rea.eyebrow" class="text-xs uppercase tracking-wider text-indigo-400 font-bold">Power &amp; Anarchy</span>
+        <h2 data-i18n="rea.h2" class="text-2xl font-black text-white">Realism</h2>
       </div>
     </div>
     <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
-      <p class="text-slate-300 leading-relaxed">Realism holds that the international system is <strong class="text-white">anarchic</strong> — there is no higher authority above sovereign states — so states must rely on self-help to survive. States are the primary actors, are assumed to behave rationally, and pursue power and security as core interests. Cooperation is possible but always constrained by the underlying struggle for relative power.</p>
+      <p data-i18n="rea.lead" class="text-slate-300 leading-relaxed">Realism holds that the international system is <strong class="text-white">anarchic</strong> — there is no higher authority above sovereign states — so states must rely on self-help to survive. States are the primary actors, are assumed to behave rationally, and pursue power and security as core interests. Cooperation is possible but always constrained by the underlying struggle for relative power.</p>
 
       <div class="grid md:grid-cols-2 gap-4">
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-indigo-300 mb-2"><i class="fa-solid fa-landmark-dome mr-1.5"></i>Classical Realism</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">Grounds the drive for power in human nature and the flawed, self-interested character of political actors. States pursue power because leaders and peoples inherently do.</p>
-          <p class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Hans Morgenthau</span> — <em>Politics Among Nations</em> (1948), the founding text of post-war realism, laid out six principles of political realism centered on "interest defined as power."<br>
+          <h3 class="text-sm font-bold text-indigo-300 mb-2"><i class="fa-solid fa-landmark-dome mr-1.5"></i><span data-i18n="rea.c1.h">Classical Realism</span></h3>
+          <p data-i18n="rea.c1.p" class="text-sm text-slate-400 leading-relaxed">Grounds the drive for power in human nature and the flawed, self-interested character of political actors. States pursue power because leaders and peoples inherently do.</p>
+          <p data-i18n="rea.c1.s" class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Hans Morgenthau</span> — <em>Politics Among Nations</em> (1948), the founding text of post-war realism, laid out six principles of political realism centered on "interest defined as power."<br>
           <span class="text-slate-300 font-semibold">E.H. Carr</span> — <em>The Twenty Years' Crisis, 1919–1939</em> (1939), a critique of interwar liberal idealism.<br>
           <span class="text-slate-300 font-semibold">Thucydides</span> — <em>History of the Peloponnesian War</em> (c. 5th century BCE), the "Melian Dialogue" is a touchstone realist text ("the strong do what they can and the weak suffer what they must").</p>
         </div>
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-indigo-300 mb-2"><i class="fa-solid fa-diagram-project mr-1.5"></i>Neorealism (Structural Realism)</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">Locates the cause of state behavior not in human nature but in the <strong class="text-white">structure of the international system</strong> — its anarchic ordering principle and the distribution of capabilities (polarity) among states.</p>
-          <p class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Kenneth Waltz</span> — <em>Theory of International Politics</em> (1979), the foundational neorealist text; also <em>Man, the State, and War</em> (1959).<br>
+          <h3 class="text-sm font-bold text-indigo-300 mb-2"><i class="fa-solid fa-diagram-project mr-1.5"></i><span data-i18n="rea.c2.h">Neorealism (Structural Realism)</span></h3>
+          <p data-i18n="rea.c2.p" class="text-sm text-slate-400 leading-relaxed">Locates the cause of state behavior not in human nature but in the <strong class="text-white">structure of the international system</strong> — its anarchic ordering principle and the distribution of capabilities (polarity) among states.</p>
+          <p data-i18n="rea.c2.s" class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Kenneth Waltz</span> — <em>Theory of International Politics</em> (1979), the foundational neorealist text; also <em>Man, the State, and War</em> (1959).<br>
           <span class="text-slate-300 font-semibold">John Mearsheimer</span> — <em>The Tragedy of Great Power Politics</em> (2001), developed <strong class="text-white">offensive realism</strong>: great powers maximize power because security is never guaranteed.<br>
           <span class="text-slate-300 font-semibold">Stephen Walt</span> — <em>The Origins of Alliances</em> (1987), proposed "balance of threat" over pure balance-of-power logic.</p>
         </div>
       </div>
 
       <details class="bg-slate-900/30 rounded-2xl border border-slate-800 p-5">
-        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-indigo-400"></i>Key concepts & debates</span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
+        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-indigo-400"></i><span data-i18n="rea.det">Key concepts &amp; debates</span></span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
         <ul class="mt-4 text-sm text-slate-400 space-y-2 list-disc list-inside">
-          <li><strong class="text-slate-300">Balance of power</strong> — states form alliances to prevent any one power from dominating the system.</li>
-          <li><strong class="text-slate-300">Security dilemma</strong> (John Herz, 1950) — one state's efforts to increase its security (e.g., arms buildup) make others less secure, spiraling into arms races.</li>
-          <li><strong class="text-slate-300">Offensive vs. defensive realism</strong> — Mearsheimer argues states should maximize power; Waltz and defensive realists (e.g., Charles Glaser) argue states seek only an appropriate amount of power to survive.</li>
-          <li><strong class="text-slate-300">Hegemonic stability theory</strong> (Robert Gilpin, <em>War and Change in World Politics</em>, 1981) — a dominant hegemon can stabilize the international order.</li>
+          <li data-i18n="rea.li1"><strong class="text-slate-300">Balance of power</strong> — states form alliances to prevent any one power from dominating the system.</li>
+          <li data-i18n="rea.li2"><strong class="text-slate-300">Security dilemma</strong> (John Herz, 1950) — one state's efforts to increase its security (e.g., arms buildup) make others less secure, spiraling into arms races.</li>
+          <li data-i18n="rea.li3"><strong class="text-slate-300">Offensive vs. defensive realism</strong> — Mearsheimer argues states should maximize power; Waltz and defensive realists (e.g., Charles Glaser) argue states seek only an appropriate amount of power to survive.</li>
+          <li data-i18n="rea.li4"><strong class="text-slate-300">Hegemonic stability theory</strong> (Robert Gilpin, <em>War and Change in World Politics</em>, 1981) — a dominant hegemon can stabilize the international order.</li>
         </ul>
       </details>
     </div>
@@ -141,37 +149,37 @@
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-sky-500/10 rounded-2xl text-sky-400 border border-sky-500/20 shadow-glow-sky"><i class="fa-solid fa-handshake text-xl"></i></div>
       <div>
-        <span class="text-xs uppercase tracking-wider text-sky-400 font-bold">Institutions & Cooperation</span>
-        <h2 class="text-2xl font-black text-white">Liberalism</h2>
+        <span data-i18n="lib.eyebrow" class="text-xs uppercase tracking-wider text-sky-400 font-bold">Institutions &amp; Cooperation</span>
+        <h2 data-i18n="lib.h2" class="text-2xl font-black text-white">Liberalism</h2>
       </div>
     </div>
     <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
-      <p class="text-slate-300 leading-relaxed">Liberal theory shares realism's assumption of anarchy but argues that cooperation is not merely possible but common, sustained through <strong class="text-white">international institutions, economic interdependence, and shared democratic norms</strong>. States are not the only relevant actors — international organizations, NGOs, and domestic political processes also shape outcomes.</p>
+      <p data-i18n="lib.lead" class="text-slate-300 leading-relaxed">Liberal theory shares realism's assumption of anarchy but argues that cooperation is not merely possible but common, sustained through <strong class="text-white">international institutions, economic interdependence, and shared democratic norms</strong>. States are not the only relevant actors — international organizations, NGOs, and domestic political processes also shape outcomes.</p>
 
       <div class="grid md:grid-cols-3 gap-4">
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-sky-300 mb-2">Neoliberal Institutionalism</h3>
-          <p class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Robert Keohane</span> — <em>After Hegemony</em> (1984), argues institutions reduce transaction costs and enable cooperation even under anarchy.<br>
-          <span class="text-slate-300 font-semibold">Keohane & Nye</span> — <em>Power and Interdependence</em> (1977), coined "complex interdependence" as an alternative to realist state-centrism.</p>
+          <h3 data-i18n="lib.c1.h" class="text-sm font-bold text-sky-300 mb-2">Neoliberal Institutionalism</h3>
+          <p data-i18n="lib.c1.p" class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Robert Keohane</span> — <em>After Hegemony</em> (1984), argues institutions reduce transaction costs and enable cooperation even under anarchy.<br>
+          <span class="text-slate-300 font-semibold">Keohane &amp; Nye</span> — <em>Power and Interdependence</em> (1977), coined "complex interdependence" as an alternative to realist state-centrism.</p>
         </div>
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-sky-300 mb-2">Democratic Peace Theory</h3>
-          <p class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Michael Doyle</span> — "Kant, Liberal Legacies, and Foreign Affairs" (1983), revived the empirical claim that established democracies rarely if ever go to war with one another.<br>
+          <h3 data-i18n="lib.c2.h" class="text-sm font-bold text-sky-300 mb-2">Democratic Peace Theory</h3>
+          <p data-i18n="lib.c2.p" class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Michael Doyle</span> — "Kant, Liberal Legacies, and Foreign Affairs" (1983), revived the empirical claim that established democracies rarely if ever go to war with one another.<br>
           <span class="text-slate-300 font-semibold">Bruce Russett</span> — <em>Grasping the Democratic Peace</em> (1993).</p>
         </div>
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-sky-300 mb-2">Liberal Intergovernmentalism</h3>
-          <p class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Andrew Moravcsik</span> — "Taking Preferences Seriously: A Liberal Theory of International Politics" (<em>International Organization</em>, 1997), grounds state preferences in domestic society and economic interests rather than systemic structure.</p>
+          <h3 data-i18n="lib.c3.h" class="text-sm font-bold text-sky-300 mb-2">Liberal Intergovernmentalism</h3>
+          <p data-i18n="lib.c3.p" class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Andrew Moravcsik</span> — "Taking Preferences Seriously: A Liberal Theory of International Politics" (<em>International Organization</em>, 1997), grounds state preferences in domestic society and economic interests rather than systemic structure.</p>
         </div>
       </div>
 
       <details class="bg-slate-900/30 rounded-2xl border border-slate-800 p-5">
-        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-sky-400"></i>Roots & key concepts</span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
+        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-sky-400"></i><span data-i18n="lib.det">Roots &amp; key concepts</span></span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
         <ul class="mt-4 text-sm text-slate-400 space-y-2 list-disc list-inside">
-          <li><strong class="text-slate-300">Immanuel Kant</strong> — <em>Perpetual Peace</em> (1795), the philosophical foundation for liberal IR, proposing that republican constitutions, a pacific federation of states, and commerce would produce lasting peace.</li>
-          <li><strong class="text-slate-300">Woodrow Wilson</strong> — early 20th-century "idealism," championed collective security and the League of Nations, the precursor to institutionalist liberalism.</li>
-          <li><strong class="text-slate-300">Absolute vs. relative gains</strong> — liberals argue states care about absolute gains from cooperation, not merely gains relative to rivals (contra realism).</li>
-          <li><strong class="text-slate-300">Regime theory</strong> — Stephen Krasner (ed.), <em>International Regimes</em> (1983), on how norms and rules structure issue-areas like trade or the environment.</li>
+          <li data-i18n="lib.li1"><strong class="text-slate-300">Immanuel Kant</strong> — <em>Perpetual Peace</em> (1795), the philosophical foundation for liberal IR, proposing that republican constitutions, a pacific federation of states, and commerce would produce lasting peace.</li>
+          <li data-i18n="lib.li2"><strong class="text-slate-300">Woodrow Wilson</strong> — early 20th-century "idealism," championed collective security and the League of Nations, the precursor to institutionalist liberalism.</li>
+          <li data-i18n="lib.li3"><strong class="text-slate-300">Absolute vs. relative gains</strong> — liberals argue states care about absolute gains from cooperation, not merely gains relative to rivals (contra realism).</li>
+          <li data-i18n="lib.li4"><strong class="text-slate-300">Regime theory</strong> — Stephen Krasner (ed.), <em>International Regimes</em> (1983), on how norms and rules structure issue-areas like trade or the environment.</li>
         </ul>
       </details>
     </div>
@@ -182,26 +190,26 @@
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-emerald"><i class="fa-solid fa-brain text-xl"></i></div>
       <div>
-        <span class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Ideas, Norms & Identity</span>
-        <h2 class="text-2xl font-black text-white">Constructivism</h2>
+        <span data-i18n="con.eyebrow" class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Ideas, Norms &amp; Identity</span>
+        <h2 data-i18n="con.h2" class="text-2xl font-black text-white">Constructivism</h2>
       </div>
     </div>
     <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
-      <p class="text-slate-300 leading-relaxed">Constructivism rejects the materialism of realism and liberalism, arguing that <strong class="text-white">international structures are made of shared ideas, norms, and identities</strong> rather than fixed material facts. Anarchy itself has no inherent meaning — as Alexander Wendt famously put it, "anarchy is what states make of it." Interests are not given but socially constructed through interaction.</p>
+      <p data-i18n="con.lead" class="text-slate-300 leading-relaxed">Constructivism rejects the materialism of realism and liberalism, arguing that <strong class="text-white">international structures are made of shared ideas, norms, and identities</strong> rather than fixed material facts. Anarchy itself has no inherent meaning — as Alexander Wendt famously put it, "anarchy is what states make of it." Interests are not given but socially constructed through interaction.</p>
 
       <div class="grid md:grid-cols-2 gap-4">
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-emerald-300 mb-2">Foundational works</h3>
-          <p class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Alexander Wendt</span> — "Anarchy is What States Make of It" (<em>International Organization</em>, 1992) and <em>Social Theory of International Politics</em> (1999), the canonical statement of constructivist IR.<br>
+          <h3 data-i18n="con.c1.h" class="text-sm font-bold text-emerald-300 mb-2">Foundational works</h3>
+          <p data-i18n="con.c1.p" class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Alexander Wendt</span> — "Anarchy is What States Make of It" (<em>International Organization</em>, 1992) and <em>Social Theory of International Politics</em> (1999), the canonical statement of constructivist IR.<br>
           <span class="text-slate-300 font-semibold">Nicholas Onuf</span> — <em>World of Our Making</em> (1989), coined the term "constructivism" in IR.</p>
         </div>
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-emerald-300 mb-2">Norms & identity research</h3>
-          <p class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Martha Finnemore & Kathryn Sikkink</span> — "International Norm Dynamics and Political Change" (1998), the "norm life cycle" model (emergence → cascade → internalization).<br>
+          <h3 data-i18n="con.c2.h" class="text-sm font-bold text-emerald-300 mb-2">Norms &amp; identity research</h3>
+          <p data-i18n="con.c2.p" class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Martha Finnemore &amp; Kathryn Sikkink</span> — "International Norm Dynamics and Political Change" (1998), the "norm life cycle" model (emergence → cascade → internalization).<br>
           <span class="text-slate-300 font-semibold">Peter Katzenstein</span> (ed.) — <em>The Culture of National Security</em> (1996), on how identity and norms shape security policy.</p>
         </div>
       </div>
-      <p class="text-sm text-slate-400 leading-relaxed">Constructivism has since branched into conventional (positivist, e.g., Finnemore, Katzenstein) and critical/post-structuralist strands, and strongly influences the study of human rights norms, humanitarian intervention, and the diffusion of institutional models across states.</p>
+      <p data-i18n="con.close" class="text-sm text-slate-400 leading-relaxed">Constructivism has since branched into conventional (positivist, e.g., Finnemore, Katzenstein) and critical/post-structuralist strands, and strongly influences the study of human rights norms, humanitarian intervention, and the diffusion of institutional models across states.</p>
     </div>
   </section>
 
@@ -210,31 +218,31 @@
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-rose-500/10 rounded-2xl text-rose-400 border border-rose-500/20 shadow-glow-rose"><i class="fa-solid fa-scale-unbalanced text-xl"></i></div>
       <div>
-        <span class="text-xs uppercase tracking-wider text-rose-400 font-bold">Class, Power & Emancipation</span>
-        <h2 class="text-2xl font-black text-white">Critical & Marxist Theories</h2>
+        <span data-i18n="cri.eyebrow" class="text-xs uppercase tracking-wider text-rose-400 font-bold">Class, Power &amp; Emancipation</span>
+        <h2 data-i18n="cri.h2" class="text-2xl font-black text-white">Critical &amp; Marxist Theories</h2>
       </div>
     </div>
     <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
-      <p class="text-slate-300 leading-relaxed">Critical theories reject the problem-solving stance of realism and liberalism — which take the existing world order for granted — in favor of interrogating <strong class="text-white">whose interests that order serves</strong>. Marxist-inflected IR traces global politics to capitalist class relations and economic structures rather than state-level power politics.</p>
+      <p data-i18n="cri.lead" class="text-slate-300 leading-relaxed">Critical theories reject the problem-solving stance of realism and liberalism — which take the existing world order for granted — in favor of interrogating <strong class="text-white">whose interests that order serves</strong>. Marxist-inflected IR traces global politics to capitalist class relations and economic structures rather than state-level power politics.</p>
 
       <div class="grid md:grid-cols-2 gap-4">
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-rose-300 mb-2">World-Systems & Dependency Theory</h3>
-          <p class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Immanuel Wallerstein</span> — <em>The Modern World-System</em> (1974–89, 4 vols.), divides the globe into core, periphery, and semi-periphery zones bound by unequal exchange.<br>
+          <h3 data-i18n="cri.c1.h" class="text-sm font-bold text-rose-300 mb-2">World-Systems &amp; Dependency Theory</h3>
+          <p data-i18n="cri.c1.p" class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Immanuel Wallerstein</span> — <em>The Modern World-System</em> (1974–89, 4 vols.), divides the globe into core, periphery, and semi-periphery zones bound by unequal exchange.<br>
           <span class="text-slate-300 font-semibold">Raúl Prebisch / Andre Gunder Frank</span> — dependency theory, arguing peripheral "underdevelopment" is produced by, not separate from, core capitalist development.</p>
         </div>
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-rose-300 mb-2">Critical Theory & Gramscian IR</h3>
-          <p class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Robert Cox</span> — "Social Forces, States and World Orders: Beyond International Relations Theory" (1981); famous distinction between <em>problem-solving theory</em> and <em>critical theory</em>. Applied Gramsci's concept of hegemony to explain how a dominant class's worldview becomes globally naturalized.<br>
+          <h3 data-i18n="cri.c2.h" class="text-sm font-bold text-rose-300 mb-2">Critical Theory &amp; Gramscian IR</h3>
+          <p data-i18n="cri.c2.p" class="text-xs text-slate-500 leading-relaxed"><span class="text-slate-300 font-semibold">Robert Cox</span> — "Social Forces, States and World Orders: Beyond International Relations Theory" (1981); famous distinction between <em>problem-solving theory</em> and <em>critical theory</em>. Applied Gramsci's concept of hegemony to explain how a dominant class's worldview becomes globally naturalized.<br>
           <span class="text-slate-300 font-semibold">Antonio Gramsci</span> — <em>Prison Notebooks</em> (written 1929–35), the concept of cultural/ideological hegemony that underpins neo-Gramscian IR.</p>
         </div>
       </div>
       <details class="bg-slate-900/30 rounded-2xl border border-slate-800 p-5">
-        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-rose-400"></i>Related strands</span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
+        <summary class="flex items-center justify-between font-semibold text-slate-200"><span><i class="fa-solid fa-circle-info mr-2 text-rose-400"></i><span data-i18n="cri.det">Related strands</span></span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform"></i></summary>
         <ul class="mt-4 text-sm text-slate-400 space-y-2 list-disc list-inside">
-          <li><strong class="text-slate-300">Frankfurt School critical theory</strong> — Jürgen Habermas's emancipatory epistemology influenced Cox and Andrew Linklater's cosmopolitan critical IR (<em>The Transformation of Political Community</em>, 1998).</li>
-          <li><strong class="text-slate-300">Post-colonial IR</strong> — critiques Eurocentrism in mainstream theory; e.g., Sankaran Krishna, Siba Grovogui.</li>
-          <li><strong class="text-slate-300">Post-structuralist IR</strong> — R.B.J. Walker, <em>Inside/Outside: International Relations as Political Theory</em> (1993), questions the inside/outside, sovereign/anarchic binary itself.</li>
+          <li data-i18n="cri.li1"><strong class="text-slate-300">Frankfurt School critical theory</strong> — Jürgen Habermas's emancipatory epistemology influenced Cox and Andrew Linklater's cosmopolitan critical IR (<em>The Transformation of Political Community</em>, 1998).</li>
+          <li data-i18n="cri.li2"><strong class="text-slate-300">Post-colonial IR</strong> — critiques Eurocentrism in mainstream theory; e.g., Sankaran Krishna, Siba Grovogui.</li>
+          <li data-i18n="cri.li3"><strong class="text-slate-300">Post-structuralist IR</strong> — R.B.J. Walker, <em>Inside/Outside: International Relations as Political Theory</em> (1993), questions the inside/outside, sovereign/anarchic binary itself.</li>
         </ul>
       </details>
     </div>
@@ -245,22 +253,22 @@
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-amber-500/10 rounded-2xl text-amber-400 border border-amber-500/20 shadow-glow-amber"><i class="fa-solid fa-people-group text-xl"></i></div>
       <div>
-        <span class="text-xs uppercase tracking-wider text-amber-400 font-bold">Society, Order & Gender</span>
-        <h2 class="text-2xl font-black text-white">English School & Feminist IR</h2>
+        <span data-i18n="oth.eyebrow" class="text-xs uppercase tracking-wider text-amber-400 font-bold">Society, Order &amp; Gender</span>
+        <h2 data-i18n="oth.h2" class="text-2xl font-black text-white">English School &amp; Feminist IR</h2>
       </div>
     </div>
     <div class="theory-card gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
       <div class="grid md:grid-cols-2 gap-4">
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-amber-300 mb-2">English School (International Society)</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">Argues states form an "international society" bound by shared rules, institutions, and diplomatic culture — occupying a middle ground ("via media") between realism's anarchy and liberalism's cosmopolitanism.</p>
-          <p class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Hedley Bull</span> — <em>The Anarchical Society</em> (1977), the school's central text, distinguishing "system," "society," and "world society."<br>
+          <h3 data-i18n="oth.c1.h" class="text-sm font-bold text-amber-300 mb-2">English School (International Society)</h3>
+          <p data-i18n="oth.c1.p" class="text-sm text-slate-400 leading-relaxed">Argues states form an "international society" bound by shared rules, institutions, and diplomatic culture — occupying a middle ground ("via media") between realism's anarchy and liberalism's cosmopolitanism.</p>
+          <p data-i18n="oth.c1.s" class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Hedley Bull</span> — <em>The Anarchical Society</em> (1977), the school's central text, distinguishing "system," "society," and "world society."<br>
           <span class="text-slate-300 font-semibold">Martin Wight</span> — <em>International Theory: The Three Traditions</em> (published 1991), mapped Realist, Rationalist (Grotian), and Revolutionist traditions.</p>
         </div>
         <div class="bg-slate-900/50 rounded-2xl p-5 border border-slate-800">
-          <h3 class="text-sm font-bold text-amber-300 mb-2">Feminist IR</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">Examines how gender shapes and is shaped by international politics — critiquing the masculinized assumptions (autonomy, rationality, power-as-domination) embedded in mainstream theory.</p>
-          <p class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Cynthia Enloe</span> — <em>Bananas, Beaches and Bases</em> (1989), showed how militarism and global political economy depend on gendered labor.<br>
+          <h3 data-i18n="oth.c2.h" class="text-sm font-bold text-amber-300 mb-2">Feminist IR</h3>
+          <p data-i18n="oth.c2.p" class="text-sm text-slate-400 leading-relaxed">Examines how gender shapes and is shaped by international politics — critiquing the masculinized assumptions (autonomy, rationality, power-as-domination) embedded in mainstream theory.</p>
+          <p data-i18n="oth.c2.s" class="text-xs text-slate-500 mt-3"><span class="text-slate-300 font-semibold">Cynthia Enloe</span> — <em>Bananas, Beaches and Bases</em> (1989), showed how militarism and global political economy depend on gendered labor.<br>
           <span class="text-slate-300 font-semibold">J. Ann Tickner</span> — <em>Gender in International Relations</em> (1992), reformulated Morgenthau's realist principles from a feminist standpoint.</p>
         </div>
       </div>
@@ -272,8 +280,8 @@
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-purple-500/10 rounded-2xl text-purple-400 border border-purple-500/20"><i class="fa-solid fa-table-cells text-xl"></i></div>
       <div>
-        <span class="text-xs uppercase tracking-wider text-purple-400 font-bold">Side-by-Side</span>
-        <h2 class="text-2xl font-black text-white">Comparing the Theories</h2>
+        <span data-i18n="cmp.eyebrow" class="text-xs uppercase tracking-wider text-purple-400 font-bold">Side-by-Side</span>
+        <h2 data-i18n="cmp.h2" class="text-2xl font-black text-white">Comparing the Theories</h2>
       </div>
     </div>
     <div class="gradient-border bg-slate-950/40 rounded-3xl p-4 md:p-6 border border-slate-900 shadow-2xl">
@@ -281,62 +289,62 @@
         <table class="w-full text-sm min-w-[900px]">
           <thead>
             <tr class="text-left text-slate-400 border-b border-slate-800">
-              <th class="py-3 px-4 font-bold">Dimension</th>
-              <th class="py-3 px-4 font-bold text-indigo-300">Realism</th>
-              <th class="py-3 px-4 font-bold text-sky-300">Liberalism</th>
-              <th class="py-3 px-4 font-bold text-emerald-300">Constructivism</th>
-              <th class="py-3 px-4 font-bold text-rose-300">Critical / Marxist</th>
+              <th data-i18n="cmp.th0" class="py-3 px-4 font-bold">Dimension</th>
+              <th data-i18n="cmp.th1" class="py-3 px-4 font-bold text-indigo-300">Realism</th>
+              <th data-i18n="cmp.th2" class="py-3 px-4 font-bold text-sky-300">Liberalism</th>
+              <th data-i18n="cmp.th3" class="py-3 px-4 font-bold text-emerald-300">Constructivism</th>
+              <th data-i18n="cmp.th4" class="py-3 px-4 font-bold text-rose-300">Critical / Marxist</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800/60">
             <tr>
-              <td class="py-3 px-4 font-semibold text-slate-300">Core actor</td>
-              <td class="py-3 px-4 text-slate-400">Sovereign states, unitary & rational</td>
-              <td class="py-3 px-4 text-slate-400">States, institutions, NGOs, individuals</td>
-              <td class="py-3 px-4 text-slate-400">Any socially embedded agent; identities matter</td>
-              <td class="py-3 px-4 text-slate-400">Classes, capital, transnational elites</td>
+              <td data-i18n="cmp.r1c0" class="py-3 px-4 font-semibold text-slate-300">Core actor</td>
+              <td data-i18n="cmp.r1c1" class="py-3 px-4 text-slate-400">Sovereign states, unitary &amp; rational</td>
+              <td data-i18n="cmp.r1c2" class="py-3 px-4 text-slate-400">States, institutions, NGOs, individuals</td>
+              <td data-i18n="cmp.r1c3" class="py-3 px-4 text-slate-400">Any socially embedded agent; identities matter</td>
+              <td data-i18n="cmp.r1c4" class="py-3 px-4 text-slate-400">Classes, capital, transnational elites</td>
             </tr>
             <tr>
-              <td class="py-3 px-4 font-semibold text-slate-300">View of anarchy</td>
-              <td class="py-3 px-4 text-slate-400">Fixed condition forcing self-help</td>
-              <td class="py-3 px-4 text-slate-400">Mitigated by institutions & interdependence</td>
-              <td class="py-3 px-4 text-slate-400">Socially constructed — "what states make of it"</td>
-              <td class="py-3 px-4 text-slate-400">Secondary to material/class structures</td>
+              <td data-i18n="cmp.r2c0" class="py-3 px-4 font-semibold text-slate-300">View of anarchy</td>
+              <td data-i18n="cmp.r2c1" class="py-3 px-4 text-slate-400">Fixed condition forcing self-help</td>
+              <td data-i18n="cmp.r2c2" class="py-3 px-4 text-slate-400">Mitigated by institutions &amp; interdependence</td>
+              <td data-i18n="cmp.r2c3" class="py-3 px-4 text-slate-400">Socially constructed — "what states make of it"</td>
+              <td data-i18n="cmp.r2c4" class="py-3 px-4 text-slate-400">Secondary to material/class structures</td>
             </tr>
             <tr>
-              <td class="py-3 px-4 font-semibold text-slate-300">Primary driver</td>
-              <td class="py-3 px-4 text-slate-400">Power & security</td>
-              <td class="py-3 px-4 text-slate-400">Absolute gains, trade, shared norms</td>
-              <td class="py-3 px-4 text-slate-400">Ideas, norms, discourse, identity</td>
-              <td class="py-3 px-4 text-slate-400">Capitalist economic structure & class interest</td>
+              <td data-i18n="cmp.r3c0" class="py-3 px-4 font-semibold text-slate-300">Primary driver</td>
+              <td data-i18n="cmp.r3c1" class="py-3 px-4 text-slate-400">Power &amp; security</td>
+              <td data-i18n="cmp.r3c2" class="py-3 px-4 text-slate-400">Absolute gains, trade, shared norms</td>
+              <td data-i18n="cmp.r3c3" class="py-3 px-4 text-slate-400">Ideas, norms, discourse, identity</td>
+              <td data-i18n="cmp.r3c4" class="py-3 px-4 text-slate-400">Capitalist economic structure &amp; class interest</td>
             </tr>
             <tr>
-              <td class="py-3 px-4 font-semibold text-slate-300">Prospects for cooperation</td>
-              <td class="py-3 px-4 text-slate-400">Limited, tactical, undermined by relative gains</td>
-              <td class="py-3 px-4 text-slate-400">Substantial & durable via institutions</td>
-              <td class="py-3 px-4 text-slate-400">Depends on evolving shared norms</td>
-              <td class="py-3 px-4 text-slate-400">Cooperation among elites reproduces inequality</td>
+              <td data-i18n="cmp.r4c0" class="py-3 px-4 font-semibold text-slate-300">Prospects for cooperation</td>
+              <td data-i18n="cmp.r4c1" class="py-3 px-4 text-slate-400">Limited, tactical, undermined by relative gains</td>
+              <td data-i18n="cmp.r4c2" class="py-3 px-4 text-slate-400">Substantial &amp; durable via institutions</td>
+              <td data-i18n="cmp.r4c3" class="py-3 px-4 text-slate-400">Depends on evolving shared norms</td>
+              <td data-i18n="cmp.r4c4" class="py-3 px-4 text-slate-400">Cooperation among elites reproduces inequality</td>
             </tr>
             <tr>
-              <td class="py-3 px-4 font-semibold text-slate-300">Key scholars</td>
-              <td class="py-3 px-4 text-slate-400">Morgenthau, Waltz, Mearsheimer, Walt</td>
-              <td class="py-3 px-4 text-slate-400">Keohane, Nye, Doyle, Moravcsik</td>
-              <td class="py-3 px-4 text-slate-400">Wendt, Onuf, Finnemore, Sikkink</td>
-              <td class="py-3 px-4 text-slate-400">Wallerstein, Cox, Gramsci, Linklater</td>
+              <td data-i18n="cmp.r5c0" class="py-3 px-4 font-semibold text-slate-300">Key scholars</td>
+              <td data-i18n="cmp.r5c1" class="py-3 px-4 text-slate-400">Morgenthau, Waltz, Mearsheimer, Walt</td>
+              <td data-i18n="cmp.r5c2" class="py-3 px-4 text-slate-400">Keohane, Nye, Doyle, Moravcsik</td>
+              <td data-i18n="cmp.r5c3" class="py-3 px-4 text-slate-400">Wendt, Onuf, Finnemore, Sikkink</td>
+              <td data-i18n="cmp.r5c4" class="py-3 px-4 text-slate-400">Wallerstein, Cox, Gramsci, Linklater</td>
             </tr>
             <tr>
-              <td class="py-3 px-4 font-semibold text-slate-300">Signature text</td>
-              <td class="py-3 px-4 text-slate-400"><em>Theory of International Politics</em> (1979)</td>
-              <td class="py-3 px-4 text-slate-400"><em>After Hegemony</em> (1984)</td>
-              <td class="py-3 px-4 text-slate-400"><em>Social Theory of International Politics</em> (1999)</td>
-              <td class="py-3 px-4 text-slate-400"><em>The Modern World-System</em> (1974)</td>
+              <td data-i18n="cmp.r6c0" class="py-3 px-4 font-semibold text-slate-300">Signature text</td>
+              <td data-i18n="cmp.r6c1" class="py-3 px-4 text-slate-400"><em>Theory of International Politics</em> (1979)</td>
+              <td data-i18n="cmp.r6c2" class="py-3 px-4 text-slate-400"><em>After Hegemony</em> (1984)</td>
+              <td data-i18n="cmp.r6c3" class="py-3 px-4 text-slate-400"><em>Social Theory of International Politics</em> (1999)</td>
+              <td data-i18n="cmp.r6c4" class="py-3 px-4 text-slate-400"><em>The Modern World-System</em> (1974)</td>
             </tr>
             <tr>
-              <td class="py-3 px-4 font-semibold text-slate-300">Main critique of rivals</td>
-              <td class="py-3 px-4 text-slate-400">Liberals underestimate power politics; ignore relative gains</td>
-              <td class="py-3 px-4 text-slate-400">Realists overstate conflict, ignore institutional effects</td>
-              <td class="py-3 px-4 text-slate-400">Both realism & liberalism treat interests as pre-given, not constructed</td>
-              <td class="py-3 px-4 text-slate-400">Mainstream theories naturalize an unjust status quo instead of questioning it</td>
+              <td data-i18n="cmp.r7c0" class="py-3 px-4 font-semibold text-slate-300">Main critique of rivals</td>
+              <td data-i18n="cmp.r7c1" class="py-3 px-4 text-slate-400">Liberals underestimate power politics; ignore relative gains</td>
+              <td data-i18n="cmp.r7c2" class="py-3 px-4 text-slate-400">Realists overstate conflict, ignore institutional effects</td>
+              <td data-i18n="cmp.r7c3" class="py-3 px-4 text-slate-400">Both realism &amp; liberalism treat interests as pre-given, not constructed</td>
+              <td data-i18n="cmp.r7c4" class="py-3 px-4 text-slate-400">Mainstream theories naturalize an unjust status quo instead of questioning it</td>
             </tr>
           </tbody>
         </table>
@@ -344,20 +352,290 @@
     </div>
 
     <div class="mt-6 gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900">
-      <h3 class="text-sm font-bold text-purple-300 mb-3"><i class="fa-solid fa-lightbulb mr-1.5"></i>How they talk past — and to — each other</h3>
+      <h3 class="text-sm font-bold text-purple-300 mb-3"><i class="fa-solid fa-lightbulb mr-1.5"></i><span data-i18n="cmp.h3">How they talk past — and to — each other</span></h3>
       <ul class="text-sm text-slate-400 space-y-2 list-disc list-inside leading-relaxed">
-        <li>Realism and liberalism are both broadly <strong class="text-slate-300">rationalist / positivist</strong> — they share materialist assumptions and largely disagree about whether the material world favors conflict or cooperation. This is why the 1990s "neo-neo debate" (neorealism vs. neoliberal institutionalism) could be framed as a family quarrel over a shared methodology.</li>
-        <li>Constructivism is often described as a <strong class="text-slate-300">bridge</strong> between rationalist theories and more radical post-positivist approaches: it uses conventional social-science methods but insists that the material world realists and liberals treat as fixed is itself given meaning by ideas.</li>
-        <li>Critical and Marxist theories reject the entire rationalist/problem-solving frame, per Cox's line that <em>"theory is always for someone and for some purpose"</em> — the sharpest methodological break in the field.</li>
-        <li>The English School and feminist IR are often read as correctives that reintroduce, respectively, <strong class="text-slate-300">shared normative order</strong> and <strong class="text-slate-300">gender as a category of analysis</strong> into debates the "big three" (realism, liberalism, constructivism) tend to overlook.</li>
+        <li data-i18n="cmp.li1">Realism and liberalism are both broadly <strong class="text-slate-300">rationalist / positivist</strong> — they share materialist assumptions and largely disagree about whether the material world favors conflict or cooperation. This is why the 1990s "neo-neo debate" (neorealism vs. neoliberal institutionalism) could be framed as a family quarrel over a shared methodology.</li>
+        <li data-i18n="cmp.li2">Constructivism is often described as a <strong class="text-slate-300">bridge</strong> between rationalist theories and more radical post-positivist approaches: it uses conventional social-science methods but insists that the material world realists and liberals treat as fixed is itself given meaning by ideas.</li>
+        <li data-i18n="cmp.li3">Critical and Marxist theories reject the entire rationalist/problem-solving frame, per Cox's line that <em>"theory is always for someone and for some purpose"</em> — the sharpest methodological break in the field.</li>
+        <li data-i18n="cmp.li4">The English School and feminist IR are often read as correctives that reintroduce, respectively, <strong class="text-slate-300">shared normative order</strong> and <strong class="text-slate-300">gender as a category of analysis</strong> into debates the "big three" (realism, liberalism, constructivism) tend to overlook.</li>
       </ul>
     </div>
   </section>
 
-  <footer class="text-center text-xs text-slate-600 pt-6 pb-2">
+  <footer data-i18n="footer" class="text-center text-xs text-slate-600 pt-6 pb-2">
     Reference atlas of major International Relations paradigms — for study and quick review, not exhaustive of every sub-school.
   </footer>
 </main>
+
+<script>
+/* ─── Trilingual dictionary (zh-Hant / en / fr) ─── */
+const I18N = {
+  en: {
+    'doc.title':'International Relations Theory Atlas | Key Theories, Scholars & Studies',
+    'hdr.badge':'POLITICAL SCIENCE ATLAS',
+    'hdr.title':'International Relations Theory',
+    'nav.realism':'Realism','nav.liberalism':'Liberalism','nav.constructivism':'Constructivism',
+    'nav.critical':'Critical / Marxist','nav.other':'English School &amp; Feminist IR','nav.comparison':'Comparison',
+    'intro':'International Relations (IR) theory offers competing lenses for explaining why states and other actors behave as they do in world politics — why wars break out, why states cooperate, and what forces (power, institutions, ideas, or class) really drive the international system. The five families below — <span class="text-indigo-300 font-semibold">Realism</span>, <span class="text-sky-300 font-semibold">Liberalism</span>, <span class="text-emerald-300 font-semibold">Constructivism</span>, <span class="text-rose-300 font-semibold">Critical &amp; Marxist theory</span>, and the <span class="text-amber-300 font-semibold">English School / Feminist IR</span> — remain the core paradigms taught in most IR curricula.',
+
+    'rea.eyebrow':'Power &amp; Anarchy','rea.h2':'Realism',
+    'rea.lead':'Realism holds that the international system is <strong class="text-white">anarchic</strong> — there is no higher authority above sovereign states — so states must rely on self-help to survive. States are the primary actors, are assumed to behave rationally, and pursue power and security as core interests. Cooperation is possible but always constrained by the underlying struggle for relative power.',
+    'rea.c1.h':'Classical Realism',
+    'rea.c1.p':'Grounds the drive for power in human nature and the flawed, self-interested character of political actors. States pursue power because leaders and peoples inherently do.',
+    'rea.c1.s':'<span class="text-slate-300 font-semibold">Hans Morgenthau</span> — <em>Politics Among Nations</em> (1948), the founding text of post-war realism, laid out six principles of political realism centered on "interest defined as power."<br><span class="text-slate-300 font-semibold">E.H. Carr</span> — <em>The Twenty Years\' Crisis, 1919–1939</em> (1939), a critique of interwar liberal idealism.<br><span class="text-slate-300 font-semibold">Thucydides</span> — <em>History of the Peloponnesian War</em> (c. 5th century BCE), the "Melian Dialogue" is a touchstone realist text ("the strong do what they can and the weak suffer what they must").',
+    'rea.c2.h':'Neorealism (Structural Realism)',
+    'rea.c2.p':'Locates the cause of state behavior not in human nature but in the <strong class="text-white">structure of the international system</strong> — its anarchic ordering principle and the distribution of capabilities (polarity) among states.',
+    'rea.c2.s':'<span class="text-slate-300 font-semibold">Kenneth Waltz</span> — <em>Theory of International Politics</em> (1979), the foundational neorealist text; also <em>Man, the State, and War</em> (1959).<br><span class="text-slate-300 font-semibold">John Mearsheimer</span> — <em>The Tragedy of Great Power Politics</em> (2001), developed <strong class="text-white">offensive realism</strong>: great powers maximize power because security is never guaranteed.<br><span class="text-slate-300 font-semibold">Stephen Walt</span> — <em>The Origins of Alliances</em> (1987), proposed "balance of threat" over pure balance-of-power logic.',
+    'rea.det':'Key concepts &amp; debates',
+    'rea.li1':'<strong class="text-slate-300">Balance of power</strong> — states form alliances to prevent any one power from dominating the system.',
+    'rea.li2':'<strong class="text-slate-300">Security dilemma</strong> (John Herz, 1950) — one state\'s efforts to increase its security (e.g., arms buildup) make others less secure, spiraling into arms races.',
+    'rea.li3':'<strong class="text-slate-300">Offensive vs. defensive realism</strong> — Mearsheimer argues states should maximize power; Waltz and defensive realists (e.g., Charles Glaser) argue states seek only an appropriate amount of power to survive.',
+    'rea.li4':'<strong class="text-slate-300">Hegemonic stability theory</strong> (Robert Gilpin, <em>War and Change in World Politics</em>, 1981) — a dominant hegemon can stabilize the international order.',
+
+    'lib.eyebrow':'Institutions &amp; Cooperation','lib.h2':'Liberalism',
+    'lib.lead':'Liberal theory shares realism\'s assumption of anarchy but argues that cooperation is not merely possible but common, sustained through <strong class="text-white">international institutions, economic interdependence, and shared democratic norms</strong>. States are not the only relevant actors — international organizations, NGOs, and domestic political processes also shape outcomes.',
+    'lib.c1.h':'Neoliberal Institutionalism',
+    'lib.c1.p':'<span class="text-slate-300 font-semibold">Robert Keohane</span> — <em>After Hegemony</em> (1984), argues institutions reduce transaction costs and enable cooperation even under anarchy.<br><span class="text-slate-300 font-semibold">Keohane &amp; Nye</span> — <em>Power and Interdependence</em> (1977), coined "complex interdependence" as an alternative to realist state-centrism.',
+    'lib.c2.h':'Democratic Peace Theory',
+    'lib.c2.p':'<span class="text-slate-300 font-semibold">Michael Doyle</span> — "Kant, Liberal Legacies, and Foreign Affairs" (1983), revived the empirical claim that established democracies rarely if ever go to war with one another.<br><span class="text-slate-300 font-semibold">Bruce Russett</span> — <em>Grasping the Democratic Peace</em> (1993).',
+    'lib.c3.h':'Liberal Intergovernmentalism',
+    'lib.c3.p':'<span class="text-slate-300 font-semibold">Andrew Moravcsik</span> — "Taking Preferences Seriously: A Liberal Theory of International Politics" (<em>International Organization</em>, 1997), grounds state preferences in domestic society and economic interests rather than systemic structure.',
+    'lib.det':'Roots &amp; key concepts',
+    'lib.li1':'<strong class="text-slate-300">Immanuel Kant</strong> — <em>Perpetual Peace</em> (1795), the philosophical foundation for liberal IR, proposing that republican constitutions, a pacific federation of states, and commerce would produce lasting peace.',
+    'lib.li2':'<strong class="text-slate-300">Woodrow Wilson</strong> — early 20th-century "idealism," championed collective security and the League of Nations, the precursor to institutionalist liberalism.',
+    'lib.li3':'<strong class="text-slate-300">Absolute vs. relative gains</strong> — liberals argue states care about absolute gains from cooperation, not merely gains relative to rivals (contra realism).',
+    'lib.li4':'<strong class="text-slate-300">Regime theory</strong> — Stephen Krasner (ed.), <em>International Regimes</em> (1983), on how norms and rules structure issue-areas like trade or the environment.',
+
+    'con.eyebrow':'Ideas, Norms &amp; Identity','con.h2':'Constructivism',
+    'con.lead':'Constructivism rejects the materialism of realism and liberalism, arguing that <strong class="text-white">international structures are made of shared ideas, norms, and identities</strong> rather than fixed material facts. Anarchy itself has no inherent meaning — as Alexander Wendt famously put it, "anarchy is what states make of it." Interests are not given but socially constructed through interaction.',
+    'con.c1.h':'Foundational works',
+    'con.c1.p':'<span class="text-slate-300 font-semibold">Alexander Wendt</span> — "Anarchy is What States Make of It" (<em>International Organization</em>, 1992) and <em>Social Theory of International Politics</em> (1999), the canonical statement of constructivist IR.<br><span class="text-slate-300 font-semibold">Nicholas Onuf</span> — <em>World of Our Making</em> (1989), coined the term "constructivism" in IR.',
+    'con.c2.h':'Norms &amp; identity research',
+    'con.c2.p':'<span class="text-slate-300 font-semibold">Martha Finnemore &amp; Kathryn Sikkink</span> — "International Norm Dynamics and Political Change" (1998), the "norm life cycle" model (emergence → cascade → internalization).<br><span class="text-slate-300 font-semibold">Peter Katzenstein</span> (ed.) — <em>The Culture of National Security</em> (1996), on how identity and norms shape security policy.',
+    'con.close':'Constructivism has since branched into conventional (positivist, e.g., Finnemore, Katzenstein) and critical/post-structuralist strands, and strongly influences the study of human rights norms, humanitarian intervention, and the diffusion of institutional models across states.',
+
+    'cri.eyebrow':'Class, Power &amp; Emancipation','cri.h2':'Critical &amp; Marxist Theories',
+    'cri.lead':'Critical theories reject the problem-solving stance of realism and liberalism — which take the existing world order for granted — in favor of interrogating <strong class="text-white">whose interests that order serves</strong>. Marxist-inflected IR traces global politics to capitalist class relations and economic structures rather than state-level power politics.',
+    'cri.c1.h':'World-Systems &amp; Dependency Theory',
+    'cri.c1.p':'<span class="text-slate-300 font-semibold">Immanuel Wallerstein</span> — <em>The Modern World-System</em> (1974–89, 4 vols.), divides the globe into core, periphery, and semi-periphery zones bound by unequal exchange.<br><span class="text-slate-300 font-semibold">Raúl Prebisch / Andre Gunder Frank</span> — dependency theory, arguing peripheral "underdevelopment" is produced by, not separate from, core capitalist development.',
+    'cri.c2.h':'Critical Theory &amp; Gramscian IR',
+    'cri.c2.p':'<span class="text-slate-300 font-semibold">Robert Cox</span> — "Social Forces, States and World Orders: Beyond International Relations Theory" (1981); famous distinction between <em>problem-solving theory</em> and <em>critical theory</em>. Applied Gramsci\'s concept of hegemony to explain how a dominant class\'s worldview becomes globally naturalized.<br><span class="text-slate-300 font-semibold">Antonio Gramsci</span> — <em>Prison Notebooks</em> (written 1929–35), the concept of cultural/ideological hegemony that underpins neo-Gramscian IR.',
+    'cri.det':'Related strands',
+    'cri.li1':'<strong class="text-slate-300">Frankfurt School critical theory</strong> — Jürgen Habermas\'s emancipatory epistemology influenced Cox and Andrew Linklater\'s cosmopolitan critical IR (<em>The Transformation of Political Community</em>, 1998).',
+    'cri.li2':'<strong class="text-slate-300">Post-colonial IR</strong> — critiques Eurocentrism in mainstream theory; e.g., Sankaran Krishna, Siba Grovogui.',
+    'cri.li3':'<strong class="text-slate-300">Post-structuralist IR</strong> — R.B.J. Walker, <em>Inside/Outside: International Relations as Political Theory</em> (1993), questions the inside/outside, sovereign/anarchic binary itself.',
+
+    'oth.eyebrow':'Society, Order &amp; Gender','oth.h2':'English School &amp; Feminist IR',
+    'oth.c1.h':'English School (International Society)',
+    'oth.c1.p':'Argues states form an "international society" bound by shared rules, institutions, and diplomatic culture — occupying a middle ground ("via media") between realism\'s anarchy and liberalism\'s cosmopolitanism.',
+    'oth.c1.s':'<span class="text-slate-300 font-semibold">Hedley Bull</span> — <em>The Anarchical Society</em> (1977), the school\'s central text, distinguishing "system," "society," and "world society."<br><span class="text-slate-300 font-semibold">Martin Wight</span> — <em>International Theory: The Three Traditions</em> (published 1991), mapped Realist, Rationalist (Grotian), and Revolutionist traditions.',
+    'oth.c2.h':'Feminist IR',
+    'oth.c2.p':'Examines how gender shapes and is shaped by international politics — critiquing the masculinized assumptions (autonomy, rationality, power-as-domination) embedded in mainstream theory.',
+    'oth.c2.s':'<span class="text-slate-300 font-semibold">Cynthia Enloe</span> — <em>Bananas, Beaches and Bases</em> (1989), showed how militarism and global political economy depend on gendered labor.<br><span class="text-slate-300 font-semibold">J. Ann Tickner</span> — <em>Gender in International Relations</em> (1992), reformulated Morgenthau\'s realist principles from a feminist standpoint.',
+
+    'cmp.eyebrow':'Side-by-Side','cmp.h2':'Comparing the Theories',
+    'cmp.th0':'Dimension','cmp.th1':'Realism','cmp.th2':'Liberalism','cmp.th3':'Constructivism','cmp.th4':'Critical / Marxist',
+    'cmp.r1c0':'Core actor','cmp.r1c1':'Sovereign states, unitary &amp; rational','cmp.r1c2':'States, institutions, NGOs, individuals','cmp.r1c3':'Any socially embedded agent; identities matter','cmp.r1c4':'Classes, capital, transnational elites',
+    'cmp.r2c0':'View of anarchy','cmp.r2c1':'Fixed condition forcing self-help','cmp.r2c2':'Mitigated by institutions &amp; interdependence','cmp.r2c3':'Socially constructed — "what states make of it"','cmp.r2c4':'Secondary to material/class structures',
+    'cmp.r3c0':'Primary driver','cmp.r3c1':'Power &amp; security','cmp.r3c2':'Absolute gains, trade, shared norms','cmp.r3c3':'Ideas, norms, discourse, identity','cmp.r3c4':'Capitalist economic structure &amp; class interest',
+    'cmp.r4c0':'Prospects for cooperation','cmp.r4c1':'Limited, tactical, undermined by relative gains','cmp.r4c2':'Substantial &amp; durable via institutions','cmp.r4c3':'Depends on evolving shared norms','cmp.r4c4':'Cooperation among elites reproduces inequality',
+    'cmp.r5c0':'Key scholars','cmp.r5c1':'Morgenthau, Waltz, Mearsheimer, Walt','cmp.r5c2':'Keohane, Nye, Doyle, Moravcsik','cmp.r5c3':'Wendt, Onuf, Finnemore, Sikkink','cmp.r5c4':'Wallerstein, Cox, Gramsci, Linklater',
+    'cmp.r6c0':'Signature text','cmp.r6c1':'<em>Theory of International Politics</em> (1979)','cmp.r6c2':'<em>After Hegemony</em> (1984)','cmp.r6c3':'<em>Social Theory of International Politics</em> (1999)','cmp.r6c4':'<em>The Modern World-System</em> (1974)',
+    'cmp.r7c0':'Main critique of rivals','cmp.r7c1':'Liberals underestimate power politics; ignore relative gains','cmp.r7c2':'Realists overstate conflict, ignore institutional effects','cmp.r7c3':'Both realism &amp; liberalism treat interests as pre-given, not constructed','cmp.r7c4':'Mainstream theories naturalize an unjust status quo instead of questioning it',
+    'cmp.h3':'How they talk past — and to — each other',
+    'cmp.li1':'Realism and liberalism are both broadly <strong class="text-slate-300">rationalist / positivist</strong> — they share materialist assumptions and largely disagree about whether the material world favors conflict or cooperation. This is why the 1990s "neo-neo debate" (neorealism vs. neoliberal institutionalism) could be framed as a family quarrel over a shared methodology.',
+    'cmp.li2':'Constructivism is often described as a <strong class="text-slate-300">bridge</strong> between rationalist theories and more radical post-positivist approaches: it uses conventional social-science methods but insists that the material world realists and liberals treat as fixed is itself given meaning by ideas.',
+    'cmp.li3':'Critical and Marxist theories reject the entire rationalist/problem-solving frame, per Cox\'s line that <em>"theory is always for someone and for some purpose"</em> — the sharpest methodological break in the field.',
+    'cmp.li4':'The English School and feminist IR are often read as correctives that reintroduce, respectively, <strong class="text-slate-300">shared normative order</strong> and <strong class="text-slate-300">gender as a category of analysis</strong> into debates the "big three" (realism, liberalism, constructivism) tend to overlook.',
+    'footer':'Reference atlas of major International Relations paradigms — for study and quick review, not exhaustive of every sub-school.'
+  },
+
+  zh: {
+    'doc.title':'國際關係理論圖譜 | 核心理論、學者與經典研究',
+    'hdr.badge':'政治學圖譜',
+    'hdr.title':'國際關係理論',
+    'nav.realism':'現實主義','nav.liberalism':'自由主義','nav.constructivism':'建構主義',
+    'nav.critical':'批判／馬克思主義','nav.other':'英國學派與女性主義','nav.comparison':'理論比較',
+    'intro':'國際關係（IR）理論提供彼此競逐的分析視角，用以解釋國家與其他行為者為何在世界政治中如此行動——戰爭為何爆發、國家為何合作，以及究竟是哪一種力量（權力、制度、觀念或階級）在真正驅動國際體系。以下五大理論家族——<span class="text-indigo-300 font-semibold">現實主義</span>、<span class="text-sky-300 font-semibold">自由主義</span>、<span class="text-emerald-300 font-semibold">建構主義</span>、<span class="text-rose-300 font-semibold">批判與馬克思主義理論</span>，以及<span class="text-amber-300 font-semibold">英國學派／女性主義國關</span>——至今仍是多數國際關係課程的核心典範。',
+
+    'rea.eyebrow':'權力與無政府狀態','rea.h2':'現實主義',
+    'rea.lead':'現實主義主張國際體系處於<strong class="text-white">無政府狀態</strong>——主權國家之上並不存在更高權威——因此國家必須依靠自助（self-help）才能生存。國家是首要行為者，被假定為理性行動，並以權力與安全為核心利益。合作雖有可能，但始終受制於相對權力的根本競逐。',
+    'rea.c1.h':'古典現實主義',
+    'rea.c1.p':'將追逐權力的動力歸因於人性，以及政治行為者有缺陷、自利的本質。國家追求權力，是因為領導者與人民本就如此。',
+    'rea.c1.s':'<span class="text-slate-300 font-semibold">摩根索（Hans Morgenthau）</span>——《國家間政治》（1948），戰後現實主義的奠基之作，提出以「以權力界定利益」為核心的政治現實主義六原則。<br><span class="text-slate-300 font-semibold">卡爾（E. H. Carr）</span>——《二十年危機，1919–1939》（1939），對兩戰之間自由派理想主義的批判。<br><span class="text-slate-300 font-semibold">修昔底德</span>——《伯羅奔尼撒戰爭史》（約西元前五世紀），其中的「米洛斯對話」是現實主義的經典文本（「強者為所能為，弱者受所必受」）。',
+    'rea.c2.h':'新現實主義（結構現實主義）',
+    'rea.c2.p':'將國家行為的成因，從人性移轉至<strong class="text-white">國際體系的結構</strong>——即其無政府的排序原則，以及國家之間能力分配（極性）的樣態。',
+    'rea.c2.s':'<span class="text-slate-300 font-semibold">華爾茲（Kenneth Waltz）</span>——《國際政治理論》（1979），新現實主義的奠基文本；另著《人、國家與戰爭》（1959）。<br><span class="text-slate-300 font-semibold">米爾斯海默（John Mearsheimer）</span>——《大國政治的悲劇》（2001），發展出<strong class="text-white">攻勢現實主義</strong>：因安全永無保障，大國必然極大化自身權力。<br><span class="text-slate-300 font-semibold">華特（Stephen Walt）</span>——《聯盟的起源》（1987），以「威脅平衡」取代單純的權力平衡邏輯。',
+    'rea.det':'關鍵概念與辯論',
+    'rea.li1':'<strong class="text-slate-300">權力平衡</strong>——國家締結聯盟，以防止任何單一強權支配整個體系。',
+    'rea.li2':'<strong class="text-slate-300">安全困境</strong>（John Herz, 1950）——一國提升自身安全的舉措（如擴軍）反而使他國更不安全，最終演成軍備競賽的螺旋。',
+    'rea.li3':'<strong class="text-slate-300">攻勢與守勢現實主義</strong>——米爾斯海默主張國家應極大化權力；華爾茲與守勢現實主義者（如 Charles Glaser）則認為國家只追求足以生存的適度權力。',
+    'rea.li4':'<strong class="text-slate-300">霸權穩定論</strong>（Robert Gilpin，《世界政治中的戰爭與變遷》，1981）——支配性的霸權有能力穩定國際秩序。',
+
+    'lib.eyebrow':'制度與合作','lib.h2':'自由主義',
+    'lib.lead':'自由主義同樣接受無政府狀態的前提，但主張合作不僅可能，而且相當普遍，並藉由<strong class="text-white">國際制度、經濟相互依存與共享的民主規範</strong>得以維繫。國家並非唯一相關的行為者——國際組織、非政府組織與國內政治過程同樣形塑結果。',
+    'lib.c1.h':'新自由制度主義',
+    'lib.c1.p':'<span class="text-slate-300 font-semibold">基歐漢（Robert Keohane）</span>——《霸權之後》（1984），主張制度可降低交易成本，即使在無政府狀態下也能促成合作。<br><span class="text-slate-300 font-semibold">基歐漢與奈伊</span>——《權力與相互依賴》（1977），提出「複合相互依賴」，作為現實主義國家中心論的替代方案。',
+    'lib.c2.h':'民主和平論',
+    'lib.c2.p':'<span class="text-slate-300 font-semibold">道爾（Michael Doyle）</span>——〈康德、自由主義遺產與外交事務〉（1983），重新提出成熟民主國家之間鮮少（甚至從未）彼此開戰的經驗命題。<br><span class="text-slate-300 font-semibold">羅塞特（Bruce Russett）</span>——《掌握民主和平》（1993）。',
+    'lib.c3.h':'自由政府間主義',
+    'lib.c3.p':'<span class="text-slate-300 font-semibold">莫拉夫奇克（Andrew Moravcsik）</span>——〈認真看待偏好：國際政治的自由主義理論〉（《國際組織》，1997），將國家偏好奠基於國內社會與經濟利益，而非體系結構。',
+    'lib.det':'思想根源與關鍵概念',
+    'lib.li1':'<strong class="text-slate-300">康德</strong>——《論永久和平》（1795），自由主義國關的哲學基礎，主張共和憲政、和平的國家聯邦與商業往來將帶來持久和平。',
+    'lib.li2':'<strong class="text-slate-300">威爾遜</strong>——二十世紀初的「理想主義」，倡議集體安全與國際聯盟，是制度自由主義的先聲。',
+    'lib.li3':'<strong class="text-slate-300">絕對收益與相對收益</strong>——自由主義者認為國家在意的是合作帶來的絕對收益，而非僅僅相對於對手的收益（與現實主義相反）。',
+    'lib.li4':'<strong class="text-slate-300">建制理論</strong>——克拉斯納（Stephen Krasner）主編《國際建制》（1983），探討規範與規則如何結構化貿易、環境等議題領域。',
+
+    'con.eyebrow':'觀念、規範與認同','con.h2':'建構主義',
+    'con.lead':'建構主義拒斥現實主義與自由主義的物質主義，主張<strong class="text-white">國際結構是由共享的觀念、規範與認同所構成</strong>，而非固定的物質事實。無政府狀態本身並無內在意義——正如溫特（Alexander Wendt）的名言：「無政府狀態是國家造就的。」利益並非既定，而是在互動中被社會建構出來。',
+    'con.c1.h':'奠基之作',
+    'con.c1.p':'<span class="text-slate-300 font-semibold">溫特（Alexander Wendt）</span>——〈無政府狀態是國家造就的〉（《國際組織》，1992）與《國際政治的社會理論》（1999），建構主義國關的經典宣言。<br><span class="text-slate-300 font-semibold">歐努夫（Nicholas Onuf）</span>——《我們造就的世界》（1989），在國關領域首創「建構主義」一詞。',
+    'con.c2.h':'規範與認同研究',
+    'con.c2.p':'<span class="text-slate-300 font-semibold">芬尼莫爾與辛金克</span>——〈國際規範動態與政治變遷〉（1998），提出「規範生命週期」模型（浮現 → 擴散 → 內化）。<br><span class="text-slate-300 font-semibold">卡贊斯坦（Peter Katzenstein）</span>主編——《國家安全的文化》（1996），論認同與規範如何形塑安全政策。',
+    'con.close':'建構主義其後分化為常規（實證主義，如芬尼莫爾、卡贊斯坦）與批判／後結構主義兩條路徑，並深刻影響人權規範、人道干預，以及制度模式跨國擴散等研究領域。',
+
+    'cri.eyebrow':'階級、權力與解放','cri.h2':'批判與馬克思主義理論',
+    'cri.lead':'批判理論拒斥現實主義與自由主義的「解題式」立場——後者將既有世界秩序視為理所當然——轉而追問<strong class="text-white">這套秩序究竟服務於誰的利益</strong>。帶有馬克思主義色彩的國關研究，將全球政治追溯至資本主義的階級關係與經濟結構，而非國家層次的權力政治。',
+    'cri.c1.h':'世界體系論與依賴理論',
+    'cri.c1.p':'<span class="text-slate-300 font-semibold">華勒斯坦（Immanuel Wallerstein）</span>——《現代世界體系》（1974–89，共四卷），將全球劃分為核心、邊陲與半邊陲三種地帶，並由不平等交換相互綁縛。<br><span class="text-slate-300 font-semibold">普雷維什／法蘭克</span>——依賴理論，主張邊陲的「低度發展」正是核心資本主義發展的產物，而非與之無關的狀態。',
+    'cri.c2.h':'批判理論與葛蘭西式國關',
+    'cri.c2.p':'<span class="text-slate-300 font-semibold">考克斯（Robert Cox）</span>——〈社會力量、國家與世界秩序：超越國際關係理論〉（1981），提出著名的<em>解題式理論</em>與<em>批判理論</em>之分；並援引葛蘭西的霸權概念，說明支配階級的世界觀如何被全球自然化。<br><span class="text-slate-300 font-semibold">葛蘭西（Antonio Gramsci）</span>——《獄中札記》（1929–35 撰寫），其文化／意識形態霸權概念構成新葛蘭西學派的理論基礎。',
+    'cri.det':'相關理論支流',
+    'cri.li1':'<strong class="text-slate-300">法蘭克福學派批判理論</strong>——哈伯瑪斯的解放性知識論影響了考克斯與林克萊特的世界主義批判國關（《政治共同體的轉型》，1998）。',
+    'cri.li2':'<strong class="text-slate-300">後殖民國關</strong>——批判主流理論中的歐洲中心主義，如 Sankaran Krishna、Siba Grovogui。',
+    'cri.li3':'<strong class="text-slate-300">後結構主義國關</strong>——沃克（R. B. J. Walker）《內／外：作為政治理論的國際關係》（1993），直接質疑內外之分、主權／無政府這組二元對立本身。',
+
+    'oth.eyebrow':'社會、秩序與性別','oth.h2':'英國學派與女性主義國關',
+    'oth.c1.h':'英國學派（國際社會）',
+    'oth.c1.p':'主張國家形成一個由共享規則、制度與外交文化所維繫的「國際社會」——在現實主義的無政府狀態與自由主義的世界主義之間，取得「中道」（via media）。',
+    'oth.c1.s':'<span class="text-slate-300 font-semibold">布爾（Hedley Bull）</span>——《無政府社會》（1977），該學派的核心文本，區分「體系」、「社會」與「世界社會」三層概念。<br><span class="text-slate-300 font-semibold">懷特（Martin Wight）</span>——《國際理論：三大傳統》（1991 年出版），梳理現實主義、理性主義（格勞秀斯派）與革命主義三種傳統。',
+    'oth.c2.h':'女性主義國關',
+    'oth.c2.p':'探討性別如何形塑國際政治、又如何被國際政治所形塑——並批判主流理論中內建的男性化假設（自主、理性、以支配為權力）。',
+    'oth.c2.s':'<span class="text-slate-300 font-semibold">恩洛（Cynthia Enloe）</span>——《香蕉、海灘與軍事基地》（1989），揭示軍事主義與全球政治經濟如何仰賴性別化的勞動。<br><span class="text-slate-300 font-semibold">蒂克納（J. Ann Tickner）</span>——《國際關係中的性別》（1992），從女性主義立場重新改寫摩根索的現實主義原則。',
+
+    'cmp.eyebrow':'並列對照','cmp.h2':'各理論比較',
+    'cmp.th0':'比較面向','cmp.th1':'現實主義','cmp.th2':'自由主義','cmp.th3':'建構主義','cmp.th4':'批判／馬克思主義',
+    'cmp.r1c0':'核心行為者','cmp.r1c1':'主權國家，單一且理性','cmp.r1c2':'國家、制度、非政府組織、個人','cmp.r1c3':'任何鑲嵌於社會中的行為者；認同至關重要','cmp.r1c4':'階級、資本、跨國菁英',
+    'cmp.r2c0':'對無政府狀態的看法','cmp.r2c1':'既定條件，迫使國家自助','cmp.r2c2':'可由制度與相互依存加以緩和','cmp.r2c3':'社會建構的產物——「是國家造就的」','cmp.r2c4':'次於物質／階級結構',
+    'cmp.r3c0':'主要驅動力','cmp.r3c1':'權力與安全','cmp.r3c2':'絕對收益、貿易、共享規範','cmp.r3c3':'觀念、規範、論述、認同','cmp.r3c4':'資本主義經濟結構與階級利益',
+    'cmp.r4c0':'合作前景','cmp.r4c1':'有限而戰術性，受相對收益侵蝕','cmp.r4c2':'透過制度可觀且持久','cmp.r4c3':'取決於共享規範的演化','cmp.r4c4':'菁英之間的合作只會再生產不平等',
+    'cmp.r5c0':'代表學者','cmp.r5c1':'摩根索、華爾茲、米爾斯海默、華特','cmp.r5c2':'基歐漢、奈伊、道爾、莫拉夫奇克','cmp.r5c3':'溫特、歐努夫、芬尼莫爾、辛金克','cmp.r5c4':'華勒斯坦、考克斯、葛蘭西、林克萊特',
+    'cmp.r6c0':'代表著作','cmp.r6c1':'《國際政治理論》（1979）','cmp.r6c2':'《霸權之後》（1984）','cmp.r6c3':'《國際政治的社會理論》（1999）','cmp.r6c4':'《現代世界體系》（1974）',
+    'cmp.r7c0':'對其他理論的主要批評','cmp.r7c1':'自由主義低估權力政治，忽視相對收益','cmp.r7c2':'現實主義誇大衝突，忽視制度效應','cmp.r7c3':'現實與自由主義都把利益視為既定，而非被建構','cmp.r7c4':'主流理論將不義的現狀自然化，而非加以質疑',
+    'cmp.h3':'它們如何彼此錯身——又彼此對話',
+    'cmp.li1':'現實主義與自由主義大體上同屬<strong class="text-slate-300">理性主義／實證主義</strong>陣營——兩者共享物質主義假設，主要分歧只在於物質世界究竟偏向衝突或合作。這正是 1990 年代的「新新辯論」（新現實主義對新自由制度主義）之所以可被視為方法論同源下的家族爭執。',
+    'cmp.li2':'建構主義常被描述為理性主義理論與更激進的後實證主義取徑之間的<strong class="text-slate-300">橋樑</strong>：它使用常規社會科學方法，卻堅持現實與自由主義視為固定的物質世界，其意義本身正是由觀念所賦予。',
+    'cmp.li3':'批判與馬克思主義理論則全盤拒斥理性主義／解題式框架，正如考克斯的名言：<em>「理論總是為某些人、為某些目的而存在。」</em>這是該領域中最尖銳的方法論斷裂。',
+    'cmp.li4':'英國學派與女性主義國關常被讀作兩種校正：分別把<strong class="text-slate-300">共享的規範秩序</strong>與<strong class="text-slate-300">作為分析範疇的性別</strong>，重新帶回「三大理論」（現實主義、自由主義、建構主義）慣於忽略的辯論之中。',
+    'footer':'國際關係主要典範的參考圖譜——供研讀與快速複習之用，並未窮盡所有次級學派。'
+  },
+
+  fr: {
+    'doc.title':'Atlas des théories des relations internationales | Théories, auteurs et travaux clés',
+    'hdr.badge':'ATLAS DE SCIENCE POLITIQUE',
+    'hdr.title':'Théories des relations internationales',
+    'nav.realism':'Réalisme','nav.liberalism':'Libéralisme','nav.constructivism':'Constructivisme',
+    'nav.critical':'Critique / marxiste','nav.other':'École anglaise &amp; RI féministes','nav.comparison':'Comparaison',
+    'intro':'La théorie des relations internationales (RI) propose des grilles de lecture concurrentes pour expliquer le comportement des États et des autres acteurs de la politique mondiale — pourquoi les guerres éclatent, pourquoi les États coopèrent, et quelles forces (puissance, institutions, idées ou classes) animent réellement le système international. Les cinq familles ci-dessous — <span class="text-indigo-300 font-semibold">réalisme</span>, <span class="text-sky-300 font-semibold">libéralisme</span>, <span class="text-emerald-300 font-semibold">constructivisme</span>, <span class="text-rose-300 font-semibold">théories critiques et marxistes</span> et <span class="text-amber-300 font-semibold">École anglaise / RI féministes</span> — demeurent les paradigmes enseignés dans la plupart des cursus de RI.',
+
+    'rea.eyebrow':'Puissance &amp; anarchie','rea.h2':'Réalisme',
+    'rea.lead':'Le réalisme postule que le système international est <strong class="text-white">anarchique</strong> — aucune autorité ne surplombe les États souverains — de sorte que ceux-ci ne peuvent compter que sur eux-mêmes pour survivre. Les États sont les acteurs premiers, supposés rationnels, et poursuivent la puissance et la sécurité comme intérêts fondamentaux. La coopération reste possible, mais toujours bridée par la lutte sous-jacente pour la puissance relative.',
+    'rea.c1.h':'Réalisme classique',
+    'rea.c1.p':'Enracine la quête de puissance dans la nature humaine et dans le caractère faillible et intéressé des acteurs politiques. Les États recherchent la puissance parce que leurs dirigeants et leurs peuples le font par nature.',
+    'rea.c1.s':'<span class="text-slate-300 font-semibold">Hans Morgenthau</span> — <em>Politics Among Nations</em> (1948), texte fondateur du réalisme d\'après-guerre, énonce six principes du réalisme politique articulés autour de « l\'intérêt défini en termes de puissance ».<br><span class="text-slate-300 font-semibold">E. H. Carr</span> — <em>The Twenty Years\' Crisis, 1919–1939</em> (1939), critique de l\'idéalisme libéral de l\'entre-deux-guerres.<br><span class="text-slate-300 font-semibold">Thucydide</span> — <em>La Guerre du Péloponnèse</em> (v. Ve siècle av. J.-C.) ; le « Dialogue des Méliens » demeure un texte réaliste de référence (« les forts font ce qu\'ils peuvent, les faibles subissent ce qu\'ils doivent »).',
+    'rea.c2.h':'Néoréalisme (réalisme structurel)',
+    'rea.c2.p':'Situe la cause du comportement étatique non dans la nature humaine mais dans la <strong class="text-white">structure du système international</strong> — son principe ordonnateur anarchique et la distribution des capacités (polarité) entre États.',
+    'rea.c2.s':'<span class="text-slate-300 font-semibold">Kenneth Waltz</span> — <em>Theory of International Politics</em> (1979), texte fondateur du néoréalisme ; également <em>Man, the State, and War</em> (1959).<br><span class="text-slate-300 font-semibold">John Mearsheimer</span> — <em>The Tragedy of Great Power Politics</em> (2001), développe le <strong class="text-white">réalisme offensif</strong> : les grandes puissances maximisent leur puissance car la sécurité n\'est jamais garantie.<br><span class="text-slate-300 font-semibold">Stephen Walt</span> — <em>The Origins of Alliances</em> (1987), substitue l\'« équilibre des menaces » à la simple logique d\'équilibre des puissances.',
+    'rea.det':'Concepts clés &amp; débats',
+    'rea.li1':'<strong class="text-slate-300">Équilibre des puissances</strong> — les États nouent des alliances pour empêcher qu\'une seule puissance ne domine le système.',
+    'rea.li2':'<strong class="text-slate-300">Dilemme de sécurité</strong> (John Herz, 1950) — les efforts d\'un État pour accroître sa sécurité (réarmement, par exemple) rendent les autres moins sûrs, enclenchant une spirale de course aux armements.',
+    'rea.li3':'<strong class="text-slate-300">Réalisme offensif et défensif</strong> — Mearsheimer soutient que les États doivent maximiser leur puissance ; Waltz et les réalistes défensifs (Charles Glaser, par ex.) estiment qu\'ils n\'en recherchent que la juste mesure nécessaire à leur survie.',
+    'rea.li4':'<strong class="text-slate-300">Théorie de la stabilité hégémonique</strong> (Robert Gilpin, <em>War and Change in World Politics</em>, 1981) — une puissance hégémonique dominante peut stabiliser l\'ordre international.',
+
+    'lib.eyebrow':'Institutions &amp; coopération','lib.h2':'Libéralisme',
+    'lib.lead':'La théorie libérale partage le postulat réaliste d\'anarchie, mais soutient que la coopération n\'est pas seulement possible : elle est courante, entretenue par les <strong class="text-white">institutions internationales, l\'interdépendance économique et des normes démocratiques partagées</strong>. Les États ne sont pas les seuls acteurs pertinents — organisations internationales, ONG et processus politiques internes façonnent également les résultats.',
+    'lib.c1.h':'Institutionnalisme néolibéral',
+    'lib.c1.p':'<span class="text-slate-300 font-semibold">Robert Keohane</span> — <em>After Hegemony</em> (1984) : les institutions réduisent les coûts de transaction et rendent la coopération possible même en situation d\'anarchie.<br><span class="text-slate-300 font-semibold">Keohane &amp; Nye</span> — <em>Power and Interdependence</em> (1977), forgent la notion d\'« interdépendance complexe » en alternative au stato-centrisme réaliste.',
+    'lib.c2.h':'Théorie de la paix démocratique',
+    'lib.c2.p':'<span class="text-slate-300 font-semibold">Michael Doyle</span> — « Kant, Liberal Legacies, and Foreign Affairs » (1983), relance la thèse empirique selon laquelle les démocraties établies ne se font que très rarement, voire jamais, la guerre entre elles.<br><span class="text-slate-300 font-semibold">Bruce Russett</span> — <em>Grasping the Democratic Peace</em> (1993).',
+    'lib.c3.h':'Intergouvernementalisme libéral',
+    'lib.c3.p':'<span class="text-slate-300 font-semibold">Andrew Moravcsik</span> — « Taking Preferences Seriously: A Liberal Theory of International Politics » (<em>International Organization</em>, 1997) : les préférences étatiques trouvent leur origine dans la société et les intérêts économiques internes plutôt que dans la structure systémique.',
+    'lib.det':'Racines &amp; concepts clés',
+    'lib.li1':'<strong class="text-slate-300">Emmanuel Kant</strong> — <em>Vers la paix perpétuelle</em> (1795), fondement philosophique des RI libérales : constitutions républicaines, fédération pacifique d\'États et commerce produiraient une paix durable.',
+    'lib.li2':'<strong class="text-slate-300">Woodrow Wilson</strong> — l\'« idéalisme » du début du XX<sup>e</sup> siècle, promoteur de la sécurité collective et de la Société des Nations, préfiguration du libéralisme institutionnaliste.',
+    'lib.li3':'<strong class="text-slate-300">Gains absolus et gains relatifs</strong> — pour les libéraux, les États se soucient des gains absolus tirés de la coopération, et non des seuls gains rapportés à ceux de leurs rivaux (contre le réalisme).',
+    'lib.li4':'<strong class="text-slate-300">Théorie des régimes</strong> — Stephen Krasner (dir.), <em>International Regimes</em> (1983), sur la façon dont normes et règles structurent des domaines comme le commerce ou l\'environnement.',
+
+    'con.eyebrow':'Idées, normes &amp; identité','con.h2':'Constructivisme',
+    'con.lead':'Le constructivisme rejette le matérialisme du réalisme et du libéralisme : les <strong class="text-white">structures internationales sont faites d\'idées, de normes et d\'identités partagées</strong> plutôt que de faits matériels figés. L\'anarchie n\'a en soi aucune signification intrinsèque — selon la formule célèbre d\'Alexander Wendt, « l\'anarchie est ce que les États en font ». Les intérêts ne sont pas donnés : ils se construisent socialement dans l\'interaction.',
+    'con.c1.h':'Travaux fondateurs',
+    'con.c1.p':'<span class="text-slate-300 font-semibold">Alexander Wendt</span> — « Anarchy is What States Make of It » (<em>International Organization</em>, 1992) et <em>Social Theory of International Politics</em> (1999), énoncé canonique des RI constructivistes.<br><span class="text-slate-300 font-semibold">Nicholas Onuf</span> — <em>World of Our Making</em> (1989), introduit le terme « constructivisme » en RI.',
+    'con.c2.h':'Recherches sur les normes &amp; l\'identité',
+    'con.c2.p':'<span class="text-slate-300 font-semibold">Martha Finnemore &amp; Kathryn Sikkink</span> — « International Norm Dynamics and Political Change » (1998), modèle du « cycle de vie des normes » (émergence → cascade → intériorisation).<br><span class="text-slate-300 font-semibold">Peter Katzenstein</span> (dir.) — <em>The Culture of National Security</em> (1996), sur la manière dont identité et normes façonnent la politique de sécurité.',
+    'con.close':'Le constructivisme s\'est depuis scindé en courants conventionnels (positivistes : Finnemore, Katzenstein) et critiques/post-structuralistes, et irrigue fortement l\'étude des normes des droits humains, de l\'intervention humanitaire et de la diffusion des modèles institutionnels entre États.',
+
+    'cri.eyebrow':'Classe, pouvoir &amp; émancipation','cri.h2':'Théories critiques &amp; marxistes',
+    'cri.lead':'Les théories critiques récusent la posture « résolutrice de problèmes » du réalisme et du libéralisme — qui tiennent l\'ordre mondial existant pour acquis — au profit d\'une interrogation sur <strong class="text-white">les intérêts que cet ordre sert</strong>. Les RI d\'inspiration marxiste rapportent la politique mondiale aux rapports de classe capitalistes et aux structures économiques plutôt qu\'aux jeux de puissance interétatiques.',
+    'cri.c1.h':'Système-monde &amp; théorie de la dépendance',
+    'cri.c1.p':'<span class="text-slate-300 font-semibold">Immanuel Wallerstein</span> — <em>Le Système du monde moderne</em> (1974–89, 4 vol.), divise le globe en zones de centre, de périphérie et de semi-périphérie liées par l\'échange inégal.<br><span class="text-slate-300 font-semibold">Raúl Prebisch / Andre Gunder Frank</span> — théorie de la dépendance : le « sous-développement » périphérique est produit par le développement capitaliste du centre, et non extérieur à lui.',
+    'cri.c2.h':'Théorie critique &amp; RI gramsciennes',
+    'cri.c2.p':'<span class="text-slate-300 font-semibold">Robert Cox</span> — « Social Forces, States and World Orders » (1981) ; célèbre distinction entre <em>théorie résolutrice de problèmes</em> et <em>théorie critique</em>. Applique le concept gramscien d\'hégémonie pour expliquer comment la vision du monde d\'une classe dominante se naturalise à l\'échelle mondiale.<br><span class="text-slate-300 font-semibold">Antonio Gramsci</span> — <em>Cahiers de prison</em> (rédigés 1929–35), concept d\'hégémonie culturelle et idéologique qui fonde les RI néo-gramsciennes.',
+    'cri.det':'Courants apparentés',
+    'cri.li1':'<strong class="text-slate-300">Théorie critique de l\'École de Francfort</strong> — l\'épistémologie émancipatrice de Jürgen Habermas a inspiré Cox et les RI critiques cosmopolitiques d\'Andrew Linklater (<em>The Transformation of Political Community</em>, 1998).',
+    'cri.li2':'<strong class="text-slate-300">RI postcoloniales</strong> — critique de l\'eurocentrisme des théories dominantes ; par ex. Sankaran Krishna, Siba Grovogui.',
+    'cri.li3':'<strong class="text-slate-300">RI post-structuralistes</strong> — R. B. J. Walker, <em>Inside/Outside: International Relations as Political Theory</em> (1993), met en cause la binarité même du dedans/dehors et du souverain/anarchique.',
+
+    'oth.eyebrow':'Société, ordre &amp; genre','oth.h2':'École anglaise &amp; RI féministes',
+    'oth.c1.h':'École anglaise (société internationale)',
+    'oth.c1.p':'Soutient que les États forment une « société internationale » liée par des règles, des institutions et une culture diplomatique communes — une voie moyenne (« via media ») entre l\'anarchie réaliste et le cosmopolitisme libéral.',
+    'oth.c1.s':'<span class="text-slate-300 font-semibold">Hedley Bull</span> — <em>The Anarchical Society</em> (1977), texte central de l\'école, qui distingue « système », « société » et « société mondiale ».<br><span class="text-slate-300 font-semibold">Martin Wight</span> — <em>International Theory: The Three Traditions</em> (publié en 1991), cartographie les traditions réaliste, rationaliste (grotienne) et révolutionnaire.',
+    'oth.c2.h':'RI féministes',
+    'oth.c2.p':'Étudient comment le genre façonne la politique internationale et se trouve façonné par elle — en critiquant les présupposés masculinisés (autonomie, rationalité, puissance comme domination) inscrits dans les théories dominantes.',
+    'oth.c2.s':'<span class="text-slate-300 font-semibold">Cynthia Enloe</span> — <em>Bananas, Beaches and Bases</em> (1989), montre combien militarisme et économie politique mondiale reposent sur un travail genré.<br><span class="text-slate-300 font-semibold">J. Ann Tickner</span> — <em>Gender in International Relations</em> (1992), reformule les principes réalistes de Morgenthau depuis un point de vue féministe.',
+
+    'cmp.eyebrow':'En vis-à-vis','cmp.h2':'Comparaison des théories',
+    'cmp.th0':'Dimension','cmp.th1':'Réalisme','cmp.th2':'Libéralisme','cmp.th3':'Constructivisme','cmp.th4':'Critique / marxiste',
+    'cmp.r1c0':'Acteur central','cmp.r1c1':'États souverains, unitaires &amp; rationnels','cmp.r1c2':'États, institutions, ONG, individus','cmp.r1c3':'Tout agent socialement situé ; les identités comptent','cmp.r1c4':'Classes, capital, élites transnationales',
+    'cmp.r2c0':'Conception de l\'anarchie','cmp.r2c1':'Condition fixe imposant l\'auto-assistance','cmp.r2c2':'Atténuée par les institutions &amp; l\'interdépendance','cmp.r2c3':'Socialement construite — « ce que les États en font »','cmp.r2c4':'Secondaire par rapport aux structures matérielles/de classe',
+    'cmp.r3c0':'Moteur principal','cmp.r3c1':'Puissance &amp; sécurité','cmp.r3c2':'Gains absolus, commerce, normes partagées','cmp.r3c3':'Idées, normes, discours, identité','cmp.r3c4':'Structure économique capitaliste &amp; intérêt de classe',
+    'cmp.r4c0':'Perspectives de coopération','cmp.r4c1':'Limitées, tactiques, minées par les gains relatifs','cmp.r4c2':'Substantielles &amp; durables via les institutions','cmp.r4c3':'Dépendent de l\'évolution des normes partagées','cmp.r4c4':'La coopération entre élites reproduit l\'inégalité',
+    'cmp.r5c0':'Auteurs clés','cmp.r5c1':'Morgenthau, Waltz, Mearsheimer, Walt','cmp.r5c2':'Keohane, Nye, Doyle, Moravcsik','cmp.r5c3':'Wendt, Onuf, Finnemore, Sikkink','cmp.r5c4':'Wallerstein, Cox, Gramsci, Linklater',
+    'cmp.r6c0':'Ouvrage emblématique','cmp.r6c1':'<em>Theory of International Politics</em> (1979)','cmp.r6c2':'<em>After Hegemony</em> (1984)','cmp.r6c3':'<em>Social Theory of International Politics</em> (1999)','cmp.r6c4':'<em>Le Système du monde moderne</em> (1974)',
+    'cmp.r7c0':'Principale critique des rivaux','cmp.r7c1':'Les libéraux sous-estiment la politique de puissance et ignorent les gains relatifs','cmp.r7c2':'Les réalistes exagèrent le conflit et négligent les effets institutionnels','cmp.r7c3':'Réalisme et libéralisme traitent les intérêts comme donnés, non construits','cmp.r7c4':'Les théories dominantes naturalisent un statu quo injuste au lieu de le questionner',
+    'cmp.h3':'Comment elles se manquent — et se répondent',
+    'cmp.li1':'Réalisme et libéralisme relèvent tous deux, largement, du <strong class="text-slate-300">rationalisme / positivisme</strong> : ils partagent des postulats matérialistes et divergent surtout sur la question de savoir si le monde matériel favorise le conflit ou la coopération. D\'où le « débat néo-néo » des années 1990 (néoréalisme contre institutionnalisme néolibéral), querelle de famille au sein d\'une méthodologie commune.',
+    'cmp.li2':'Le constructivisme est souvent décrit comme un <strong class="text-slate-300">pont</strong> entre théories rationalistes et approches post-positivistes plus radicales : il mobilise les méthodes classiques des sciences sociales tout en soutenant que le monde matériel, tenu pour fixe par réalistes et libéraux, ne prend sens que par les idées.',
+    'cmp.li3':'Les théories critiques et marxistes rejettent tout le cadre rationaliste/résolutif, selon la formule de Cox : <em>« une théorie est toujours pour quelqu\'un et pour quelque chose »</em> — la rupture méthodologique la plus nette du champ.',
+    'cmp.li4':'L\'École anglaise et les RI féministes se lisent souvent comme des correctifs qui réintroduisent, respectivement, <strong class="text-slate-300">un ordre normatif partagé</strong> et <strong class="text-slate-300">le genre comme catégorie d\'analyse</strong> dans des débats que les « trois grandes » (réalisme, libéralisme, constructivisme) tendent à négliger.',
+    'footer':'Atlas de référence des grands paradigmes des relations internationales — pour l\'étude et la révision rapide, sans prétendre à l\'exhaustivité des sous-écoles.'
+  }
+};
+
+const LANG_BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 bg-indigo-500/15 text-indigo-400 border border-indigo-500/20';
+const LANG_BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200';
+
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  const dict = I18N[lang];
+  localStorage.setItem('kb_lang', lang);
+
+  ['zh','en','fr'].forEach(l => {
+    const btn = document.getElementById('lang-' + l);
+    if (btn) btn.className = (l === lang) ? LANG_BTN_ON : LANG_BTN_OFF;
+  });
+
+  document.title = dict['doc.title'];
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = dict[el.dataset.i18n];
+    if (v != null) el.innerHTML = v;
+  });
+}
+
+setLanguage(['zh','en','fr'].includes(localStorage.getItem('kb_lang'))
+  ? localStorage.getItem('kb_lang') : 'zh');
+</script>
 
 </body>
 </html>
