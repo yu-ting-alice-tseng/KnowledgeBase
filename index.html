@@ -724,8 +724,9 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
   <!-- Category filter -->
   <div id="cat-filter"></div>
 
-  <!-- Shelves (one grid per category) -->
-  <div id="shelves"></div>
+  <!-- Shelves (one grid per category) — note: #shelves is taken by the
+       fixed decorative shelf-line layer, so this container uses its own id -->
+  <div id="shelf-stack"></div>
 
   <div id="no-results">
     <i class="fa-solid fa-book-open-reader"
@@ -1060,7 +1061,7 @@ function catOf(mod) {
 }
 
 function renderGrid() {
-  const shelves = document.getElementById('shelves');
+  const shelves = document.getElementById('shelf-stack');
   const noRes   = document.getElementById('no-results');
   const shown   = modules.filter(matchesSearch);
 
