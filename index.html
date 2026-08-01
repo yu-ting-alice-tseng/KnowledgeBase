@@ -414,12 +414,25 @@ body {
 }
 .glass-card:hover .card-glare { opacity: 1.4; }
 
-/* Book spine */
+/* Book spine — raised hardcover bands + gutter shadow where cover meets spine */
 .book-spine {
   position: absolute; left: 0; top: 0; bottom: 0;
-  width: 5px; border-radius: 18px 0 0 18px;
+  width: 9px; border-radius: 18px 0 0 18px;
   z-index: 6;
-  box-shadow: inset -1px 0 3px rgba(0,0,0,0.25);
+  box-shadow:
+    inset -1px 0 3px rgba(0,0,0,0.28),
+    inset 1px 0 0 rgba(255,255,255,0.16),
+    4px 0 10px -3px rgba(0,0,0,0.55);
+}
+.book-spine::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 16px,
+    rgba(0,0,0,0.30) 16px 18px,
+    rgba(255,255,255,0.13) 18px 19px,
+    transparent 19px 35px
+  );
 }
 
 /* Page-edge texture on right */
@@ -437,7 +450,7 @@ body {
 }
 
 /* Card content */
-.card-body { padding: 28px 30px 28px 38px; position: relative; z-index: 7; }
+.card-body { padding: 28px 30px 28px 42px; position: relative; z-index: 7; }
 
 /* Card entry animation */
 @keyframes card-in {
@@ -581,11 +594,71 @@ body.edit-mode .glass-card:hover { transform: none !important; }
 }
 .color-opt.selected { border-color: rgba(255,255,255,0.78); transform: scale(1.18); box-shadow: 0 0 10px rgba(255,255,255,0.18); }
 
+/* ─── Book-opening transition ─── */
+#book-fx {
+  position: fixed; inset: 0; z-index: 99;
+  pointer-events: none; display: none;
+  overflow: hidden;          /* cover swings past the edge — never spawn scrollbars */
+  perspective: 2000px;
+}
+#book-fx.on { display: block; }
+
+.bk { position: fixed; perspective: 1800px; will-change: transform, opacity; }
+.bk-inner { position: absolute; inset: 0; transform-style: preserve-3d; }
+
+/* the leaves revealed once the cover swings open */
+.bk-pages {
+  position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
+  background:
+    linear-gradient(100deg, #0f0c09 0%, #191410 38%, #221b13 62%, #14100b 100%);
+  border: 1px solid rgba(201,168,92,0.20);
+  box-shadow:
+    inset 44px 0 60px -40px rgba(0,0,0,0.92),   /* gutter shadow near spine */
+    inset 0 0 70px rgba(0,0,0,0.55),
+    0 46px 100px rgba(0,0,0,0.72);
+}
+.bk-lines {
+  position: absolute; inset: 15% 11% 15% 16%;
+  opacity: 0.55;
+  background: repeating-linear-gradient(
+    180deg, transparent 0 11px, rgba(201,168,92,0.11) 11px 12px);
+}
+.bk-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 55% at 62% 40%, rgba(255,226,150,0.10), transparent 70%);
+}
+
+/* the cover: two-sided, hinged on its left edge */
+.bk-cover {
+  position: absolute; inset: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.bk-face {
+  position: absolute; inset: 0;
+  border-radius: 18px; overflow: hidden;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.bk-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(100deg, #1a1510, #241d15 55%, #16110c);
+  border: 1px solid rgba(201,168,92,0.18);
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
+}
+.bk-back::after {              /* endpaper panel on the inside of the cover */
+  content: ''; position: absolute; inset: 13%;
+  border: 1px solid rgba(201,168,92,0.13); border-radius: 5px;
+  background: linear-gradient(160deg, rgba(201,168,92,0.05), transparent 60%);
+}
+
 /* ─── Module viewer ─── */
 #module-viewer {
   display: none; position: fixed; inset: 0; z-index: 100;
   background: var(--bg); animation: slide-up 0.42s cubic-bezier(0.4,0,0.2,1);
 }
+#module-viewer.from-book { animation: viewer-fade 0.34s ease-out; }
+@keyframes viewer-fade { from{opacity:0;} to{opacity:1;} }
 #viewer-bar {
   --va: 201,168,92;           /* 依模組主色調整（JS 設定） */
   --vac: #e8cc84;
@@ -747,6 +820,9 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
     <span id="footer-text">© 2026 個人知識庫 · 互動智識架構</span>
   </footer>
 </div><!-- /#wrap -->
+
+<!-- Book-opening animation layer -->
+<div id="book-fx" aria-hidden="true"></div>
 
 <!-- Full-screen Viewer -->
 <div id="module-viewer">
@@ -1138,11 +1214,11 @@ function buildCard(mod, animIdx) {
     const roman     = romanOf(mod);
 
     if (!editMode) {
-      card.onclick = () => openModule(mod);
+      card.onclick = () => openModule(mod, card);
       card.setAttribute('tabindex','0');
       card.setAttribute('role','button');
       card.setAttribute('aria-label','Open '+mod.title);
-      card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod); } };
+      card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod, card); } };
     }
 
     card.innerHTML = `
@@ -1286,8 +1362,114 @@ const MODULE_I18N = {
 const OPEN_KEY = 'kb_open_module';
 let currentModId = null;
 
-function openModule(mod) {
-  if (editMode) return;
+/* ─── Book-opening transition ───────────────────────────────
+   Clones the clicked card into a fixed overlay, swings its cover
+   open on the left edge to reveal the leaves, then expands into
+   the viewer. Skipped entirely when the reader prefers less motion. */
+const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EASE_BOOK = 'cubic-bezier(0.22,1,0.36,1)';
+let bookBusy = false;
+
+function buildBook(cardEl) {
+  const r = cardEl.getBoundingClientRect();
+  const layer = document.getElementById('book-fx');
+  layer.innerHTML = '';
+  layer.classList.add('on');
+
+  const bk = document.createElement('div');
+  bk.className = 'bk';
+  bk.style.cssText =
+    `left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;`;
+
+  /* the clicked card becomes the front of the cover */
+  const clone = cardEl.cloneNode(true);
+  clone.querySelectorAll('.delete-btn').forEach(n => n.remove());
+  ['transform','boxShadow','background','borderColor','transition']
+    .forEach(p => clone.style[p] = '');
+  clone.style.cssText +=
+    ';position:absolute;inset:0;width:100%;height:100%;margin:0;animation:none;transition:none;';
+
+  bk.innerHTML =
+    `<div class="bk-inner">
+       <div class="bk-pages"><div class="bk-lines"></div><div class="bk-glow"></div></div>
+       <div class="bk-cover">
+         <div class="bk-face bk-front"></div>
+         <div class="bk-face bk-back"></div>
+       </div>
+     </div>`;
+  bk.querySelector('.bk-front').appendChild(clone);
+  layer.appendChild(bk);
+
+  const vw = innerWidth, vh = innerHeight;
+  return {
+    layer, bk,
+    cover: bk.querySelector('.bk-cover'),
+    pages: bk.querySelector('.bk-pages'),
+    /* lift the book to the middle of the screen, comfortably enlarged */
+    scale: Math.min(vw * 0.40 / r.width, vh * 0.60 / r.height, 2.4),
+    tx: vw / 2 - (r.left + r.width / 2),
+    ty: vh / 2 - (r.top + r.height / 2),
+    grow: Math.max(vw / r.width, vh / r.height) * 1.18
+  };
+}
+function clearBook() {
+  const layer = document.getElementById('book-fx');
+  layer.classList.remove('on');
+  layer.innerHTML = '';
+}
+
+function playBookOpen(cardEl) {
+  const b = buildBook(cardEl);
+  const mid = `translate(${b.tx}px,${b.ty}px) scale(${b.scale})`;
+
+  const lift = b.bk.animate(
+    [{ transform: 'translate(0,0) scale(1)' }, { transform: mid }],
+    { duration: 560, easing: EASE_BOOK, fill: 'forwards' });
+
+  /* the cover has weight: it starts slowly, swings, then settles */
+  const flip = b.cover.animate(
+    [{ transform: 'rotateY(0deg)' }, { transform: 'rotateY(-150deg)' }],
+    { duration: 640, delay: 90, easing: 'cubic-bezier(0.45,0.05,0.3,1)', fill: 'forwards' });
+
+  b.pages.animate([{ opacity: 0.12 }, { opacity: 1 }],
+    { duration: 460, delay: 240, easing: 'ease-out', fill: 'forwards' });
+
+  return Promise.all([lift.finished, flip.finished])
+    .then(() => b.bk.animate(
+      [{ transform: mid, opacity: 1 },
+       { transform: `translate(${b.tx}px,${b.ty}px) scale(${b.grow})`, opacity: 0 }],
+      { duration: 320, easing: 'cubic-bezier(0.6,0,0.9,0.4)', fill: 'forwards' }).finished)
+    .catch(() => {});
+}
+
+function playBookClose(cardEl) {
+  const b = buildBook(cardEl);
+  const mid = `translate(${b.tx}px,${b.ty}px) scale(${b.scale})`;
+  b.cover.style.transform = 'rotateY(-150deg)';
+
+  const settle = b.bk.animate(
+    [{ transform: `translate(${b.tx}px,${b.ty}px) scale(${b.grow})`, opacity: 0 },
+     { transform: mid, opacity: 1, offset: 0.34 },
+     { transform: 'translate(0,0) scale(1)', opacity: 1 }],
+    { duration: 620, easing: EASE_BOOK, fill: 'forwards' });
+
+  const shut = b.cover.animate(
+    [{ transform: 'rotateY(-150deg)' }, { transform: 'rotateY(0deg)' }],
+    { duration: 480, delay: 140, easing: 'cubic-bezier(0.4,0,0.25,1)', fill: 'forwards' });
+
+  return Promise.all([settle.finished, shut.finished]).catch(() => {});
+}
+
+/* the card a given module is currently shelved on, if it is still rendered */
+function cardOf(id) {
+  const el = document.querySelector(`.glass-card[data-id="${id}"]`);
+  if (!el) return null;
+  const r = el.getBoundingClientRect();
+  return (r.bottom > 0 && r.top < innerHeight) ? el : null;
+}
+
+function openModule(mod, cardEl) {
+  if (editMode || bookBusy) return;
   currentModId = mod.id;
 
   /* Back 列配色 */
@@ -1312,15 +1494,33 @@ function openModule(mod) {
       if (typeof fw[adapter.fn] === 'function') fw[adapter.fn](currentLang);
     } catch (e) { /* ignore */ }
   };
-  frame.src = mod.file;
-
   document.body.style.overflow = 'hidden';
-  document.getElementById('module-viewer').style.display = 'block';
   updateViewerLangButtons();
 
   /* 記住開啟中的筆記（自訂上傳的 blob 無法跨刷新還原，略過） */
   if (!mod.custom) localStorage.setItem(OPEN_KEY, mod.id);
   else localStorage.removeItem(OPEN_KEY);
+
+  const viewer = document.getElementById('module-viewer');
+  if (!cardEl || REDUCE_MOTION) {          /* 還原開啟中的筆記、或使用者偏好減少動態 */
+    frame.src = mod.file;
+    viewer.classList.remove('from-book');
+    viewer.style.display = 'block';
+    return;
+  }
+
+  bookBusy = true;
+  viewer.classList.add('from-book');
+  const opening = playBookOpen(cardEl);
+
+  /* 讓封面先動起來，再開始載入 iframe——否則載入的同步成本會卡住開場那一刻 */
+  requestAnimationFrame(() => requestAnimationFrame(() => { frame.src = mod.file; }));
+
+  opening.then(() => {
+    viewer.style.display = 'block';
+    clearBook();
+    bookBusy = false;
+  });
 }
 function updateViewerLangButtons() {
   document.querySelectorAll('#viewer-lang button').forEach(b =>
@@ -1337,11 +1537,18 @@ function viewerSwitchLang(l) {
   } catch (e) { /* ignore */ }
 }
 function closeViewer() {
+  if (bookBusy) return;
+  const card = currentModId ? cardOf(currentModId) : null;
+
   document.getElementById('module-viewer').style.display = 'none';
   document.getElementById('viewer-frame').src = '';
   document.body.style.overflow = 'auto';
   currentModId = null;
   localStorage.removeItem(OPEN_KEY);
+
+  if (!card || REDUCE_MOTION) return;      /* 卡片已被篩掉或不在畫面上就不播 */
+  bookBusy = true;
+  playBookClose(card).then(() => { clearBook(); bookBusy = false; });
 }
 
 /* ─── Modal ─── */
