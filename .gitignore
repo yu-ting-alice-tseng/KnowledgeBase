@@ -1,0 +1,12 @@
+# Windows / OneDrive 產生的資料夾中繼檔
+desktop.ini
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+
+# 編輯器暫存
+*.swp
+*~
