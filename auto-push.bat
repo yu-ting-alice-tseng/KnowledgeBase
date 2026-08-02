@@ -4,10 +4,17 @@ setlocal enabledelayedexpansion
 cd /d "%~dp0"
 
 rem ===================================================
-rem  雙向自動同步
-rem    - 本機有變動 -> commit + pull --rebase + push
-rem    - 沒有變動時 -> 每 60 秒仍會 pull 一次遠端更新
-rem    - 成功訊息依實際結果顯示，失敗會明確警告
+rem  Two-way auto sync.
+rem    local changes  : commit, pull --rebase, then push
+rem    no changes     : still pull every 60s to pick up
+rem                     work pushed from anywhere else
+rem    success is reported only when push really worked;
+rem    failures print git's own error message
+rem
+rem  KEEP THIS FILE PURE ASCII. cmd.exe reads .bat files
+rem  byte by byte, and non-ASCII text combined with
+rem  chcp 65001 makes it split lines mid-character and
+rem  run the remainder as a command.
 rem ===================================================
 
 set "BRANCH=main"
@@ -19,26 +26,25 @@ set /a "PULL_SECS=%PULL_EVERY%*%INTERVAL%"
 
 title Auto-Sync [%BRANCH%] - %~dp0
 
-rem --- 啟動前檢查 ---
 git rev-parse --is-inside-work-tree > nul 2>&1
 if errorlevel 1 (
     echo.
-    echo  [錯誤] 這個資料夾不是 git repository：
-    echo         %CD%
+    echo  [ERROR] Not a git repository:
+    echo          %CD%
     echo.
     pause
     exit /b 1
 )
 
 echo ===================================================
-echo  [AUTO-SYNC] 雙向同步監控中
+echo  [AUTO-SYNC] two-way sync is running
 echo.
-echo   資料夾 : %CD%
-echo   分支   : %BRANCH%
-echo   本機變動 每 %INTERVAL% 秒檢查一次，有變動就上傳
-echo   遠端更新 每 %PULL_SECS% 秒自動拉取一次
+echo   folder : %CD%
+echo   branch : %BRANCH%
+echo   local changes  : checked every %INTERVAL%s, pushed when found
+echo   remote updates : pulled every %PULL_SECS%s
 echo.
-echo   請不要關閉這個視窗
+echo   Please leave this window open.
 echo ===================================================
 echo.
 
@@ -70,14 +76,14 @@ goto loop
 
 
 rem ---------------------------------------------------
-rem  本機有變動：commit -> pull --rebase -> push
+rem  Local changes: commit, rebase onto remote, push
 rem ---------------------------------------------------
 :sync_up
-echo [%time:~0,8%] 偵測到變動，開始同步...
+echo [%time:~0,8%] change detected, syncing...
 
 git commit -m "Auto-update: File changed" > nul
 if errorlevel 1 (
-    call :warn "commit 失敗，變動尚未儲存"
+    call :warn "commit failed - nothing was saved"
     exit /b 1
 )
 
@@ -87,20 +93,20 @@ if errorlevel 1 exit /b 1
 git push origin %BRANCH% > "%TEMP%\autosync_push.log" 2>&1
 if errorlevel 1 (
     echo.
-    echo  --- git 的實際錯誤訊息 ---
+    echo  --- git error ---
     type "%TEMP%\autosync_push.log"
-    echo  --------------------------
-    call :warn "push 失敗！變動已在本機 commit，但沒有上傳到 GitHub"
+    echo  -----------------
+    call :warn "push FAILED - changes are committed locally but NOT on GitHub"
     exit /b 1
 )
 
-echo [%time:~0,8%] [OK] 已上傳到 GitHub
+echo [%time:~0,8%] [OK] pushed to GitHub
 echo.
 exit /b 0
 
 
 rem ---------------------------------------------------
-rem  從遠端拉取（rebase 模式，衝突時自動還原並警告）
+rem  Pull with rebase; on conflict restore and report
 rem ---------------------------------------------------
 :do_pull
 for /f %%i in ('git rev-parse HEAD') do set "BEFORE=%%i"
@@ -109,24 +115,24 @@ git pull --rebase origin %BRANCH% > "%TEMP%\autosync_pull.log" 2>&1
 if errorlevel 1 (
     git rebase --abort > nul 2>&1
     echo.
-    echo  --- git 的實際錯誤訊息 ---
+    echo  --- git error ---
     type "%TEMP%\autosync_pull.log"
-    echo  --------------------------
+    echo  -----------------
     call :diag
-    call :warn "pull 失敗或發生衝突，已還原成原本的狀態，請手動處理後再重開此視窗"
+    call :warn "pull FAILED or conflicted - restored previous state, fix it by hand then reopen this window"
     exit /b 1
 )
 
 for /f %%i in ('git rev-parse HEAD') do set "AFTER=%%i"
 if not "!BEFORE!"=="!AFTER!" (
-    echo [%time:~0,8%] [下載] 已取得 GitHub 上的新更新
+    echo [%time:~0,8%] [PULL] got new updates from GitHub
 )
 exit /b 0
 
 
 rem ---------------------------------------------------
-rem  清掉 OneDrive 在 .git 內產生的 desktop.ini
-rem  （它會讓 git 報 "fatal: bad object refs/desktop.ini"）
+rem  Remove desktop.ini that OneDrive drops inside .git
+rem  (it makes git fail with "bad object refs/desktop.ini")
 rem ---------------------------------------------------
 :clean_ini
 if exist ".git\" del /f /s /q /a ".git\desktop.ini" > nul 2>&1
@@ -134,16 +140,16 @@ exit /b 0
 
 
 rem ---------------------------------------------------
-rem  失敗時印出足以判斷原因的現場資訊
+rem  Print enough state to diagnose a failure
 rem ---------------------------------------------------
 :diag
 echo.
-echo  --- 目前狀態 ---
-echo  [本機有、遠端沒有的 commit]
+echo  --- current state ---
+echo  [commits here but not on GitHub]
 git log --oneline origin/%BRANCH%..HEAD
-echo  [工作區]
+echo  [working tree]
 git status --short
-echo  ----------------
+echo  ---------------------
 exit /b 0
 
 
@@ -151,7 +157,7 @@ rem ---------------------------------------------------
 :warn
 echo.
 echo  ***************************************************
-echo   [%time:~0,8%] 警告：%~1
+echo   [%time:~0,8%] WARNING: %~1
 echo  ***************************************************
 echo.
 exit /b 0
