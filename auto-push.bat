@@ -84,8 +84,12 @@ if errorlevel 1 (
 call :do_pull
 if errorlevel 1 exit /b 1
 
-git push origin %BRANCH%
+git push origin %BRANCH% > "%TEMP%\autosync_push.log" 2>&1
 if errorlevel 1 (
+    echo.
+    echo  --- git 的實際錯誤訊息 ---
+    type "%TEMP%\autosync_push.log"
+    echo  --------------------------
     call :warn "push 失敗！變動已在本機 commit，但沒有上傳到 GitHub"
     exit /b 1
 )
@@ -101,9 +105,14 @@ rem ---------------------------------------------------
 :do_pull
 for /f %%i in ('git rev-parse HEAD') do set "BEFORE=%%i"
 
-git pull --rebase origin %BRANCH% > nul 2>&1
+git pull --rebase origin %BRANCH% > "%TEMP%\autosync_pull.log" 2>&1
 if errorlevel 1 (
     git rebase --abort > nul 2>&1
+    echo.
+    echo  --- git 的實際錯誤訊息 ---
+    type "%TEMP%\autosync_pull.log"
+    echo  --------------------------
+    call :diag
     call :warn "pull 失敗或發生衝突，已還原成原本的狀態，請手動處理後再重開此視窗"
     exit /b 1
 )
@@ -121,6 +130,20 @@ rem  （它會讓 git 報 "fatal: bad object refs/desktop.ini"）
 rem ---------------------------------------------------
 :clean_ini
 if exist ".git\" del /f /s /q /a ".git\desktop.ini" > nul 2>&1
+exit /b 0
+
+
+rem ---------------------------------------------------
+rem  失敗時印出足以判斷原因的現場資訊
+rem ---------------------------------------------------
+:diag
+echo.
+echo  --- 目前狀態 ---
+echo  [本機有、遠端沒有的 commit]
+git log --oneline origin/%BRANCH%..HEAD
+echo  [工作區]
+git status --short
+echo  ----------------
 exit /b 0
 
 
