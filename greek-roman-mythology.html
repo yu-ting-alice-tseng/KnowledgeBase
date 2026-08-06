@@ -69,6 +69,68 @@
   }
   .art-chip:hover { background: rgba(245,158,11,0.18); border-color: rgba(245,158,11,0.5); color: #fde68a; }
 
+  /* ── Diagram tokens ──
+     Mark fills are the validated dark-surface steps (lightness band + >=3:1
+     on this page's card surface #0b0b14; Greek/Roman pair CVD dE 20.9).
+     Text keeps the lighter ink tints -- marks and ink are separate scales. */
+  .viz {
+    --gr-mark:  #0284c7;  --gr-ink:  #7dd3fc;   /* Greek  */
+    --ro-mark:  #e11d48;  --ro-ink:  #fda4af;   /* Roman  */
+    --bar-mark: #d97706;  --bar-ink: #fcd34d;   /* chart  */
+    --mid-mark: #57534e;  --mid-ink: #a8a29e;   /* medieval / neutral */
+    --line:     rgba(148,163,184,0.28);
+  }
+
+  /* Vertical spine timeline */
+  .tl { position: relative; padding-left: 0; }
+  .tl-row { display: grid; grid-template-columns: 7.5rem 1.25rem 1fr; gap: 0 .75rem; }
+  @media (max-width: 640px) { .tl-row { grid-template-columns: 5.25rem 1.25rem 1fr; } }
+  .tl-rail { position: relative; display: flex; justify-content: center; align-self: stretch; }
+  .tl-rail::before {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 2px;
+    background: var(--rail, var(--line));
+  }
+  .tl-row:first-child .tl-rail::before { top: .55rem; }
+  .tl-row:last-child  .tl-rail::before { bottom: calc(100% - .55rem); }
+  .tl-dot {
+    position: relative; flex: 0 0 auto; width: .6rem; height: .6rem; margin-top: .3rem; border-radius: 50%;
+    background: var(--rail, var(--line)); box-shadow: 0 0 0 3px #0b0b14;
+  }
+  .tl-row.is-key .tl-dot { width: .85rem; height: .85rem; margin-top: .18rem; }
+
+  /* Generation bands (theogony) */
+  .gen { border-radius: 1rem; border: 1px solid rgba(148,163,184,0.16); background: rgba(15,23,42,0.45); padding: 1rem 1.1rem; }
+  .gen-pill {
+    display: inline-block; padding: .2rem .55rem; border-radius: 9999px;
+    font-size: .65rem; font-weight: 800; letter-spacing: .04em;
+  }
+  .fig { display: inline-block; padding: .28rem .6rem; border-radius: .55rem; font-size: .78rem;
+         background: rgba(148,163,184,0.10); border: 1px solid rgba(148,163,184,0.18); }
+  .fig.is-lead { background: rgba(217,119,6,0.14); border-color: rgba(217,119,6,0.45); color: #fcd34d; font-weight: 700; }
+  .coup { display: flex; align-items: center; gap: .6rem; padding: .55rem 0 .55rem 1.1rem; }
+  .coup-bar { width: 2px; align-self: stretch; background: linear-gradient(180deg, var(--line), rgba(217,119,6,0.55)); }
+
+  /* Fork (Greek line / Roman line) */
+  .fork { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  @media (max-width: 720px) { .fork { grid-template-columns: 1fr; } }
+
+  /* Era band (reception) — position of each era across the whole span */
+  .band { display: block; width: 100%; position: relative; height: .5rem; border-radius: 9999px; background: rgba(148,163,184,0.12); overflow: hidden; }
+  .band-fill { position: absolute; top: 0; bottom: 0; border-radius: 9999px; background: var(--seg, var(--mid-mark)); }
+
+  /* Bar chart — horizontal, single hue, 2px surface gap between bars */
+  .bars { display: flex; flex-direction: column; gap: 2px; }
+  .bar-row { display: grid; grid-template-columns: 9.5rem 1fr auto; align-items: center; gap: .6rem; }
+  @media (max-width: 640px) { .bar-row { grid-template-columns: 6.5rem 1fr auto; } }
+  .bar-track { display: block; width: 100%; position: relative; height: 1.35rem; }
+  .bar-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; min-width: 2px;
+    background: var(--bar-mark); border-radius: 0 4px 4px 0;
+    transition: width .5s cubic-bezier(.2,.7,.3,1);
+  }
+  .bar-row:hover .bar-fill { background: #f59e0b; }
+  .bar-axis { border-left: 1px solid rgba(148,163,184,0.22); }
+
   /* lightbox */
   #lb { position: fixed; inset: 0; z-index: 100; display: none; }
   #lb.open { display: block; }
@@ -115,6 +177,7 @@
       </div>
       <nav class="flex flex-wrap gap-2 text-xs">
         <a href="#basics" data-i18n="nav.basics" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Basics</a>
+        <a href="#chronology" data-i18n="nav.chronology" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">Chronology</a>
         <a href="#pantheon" data-i18n="nav.pantheon" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">Pantheon</a>
         <a href="#origins" data-i18n="nav.origins" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors">Cosmogony</a>
         <a href="#heroes" data-i18n="nav.heroes" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors">Heroes</a>
@@ -206,6 +269,31 @@
     </div>
   </section>
 
+  <!-- CHRONOLOGY & GENEALOGY (diagrams) -->
+  <section id="chronology" class="scroll-mt-24 viz">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-amber-500/10 rounded-2xl text-amber-400 border border-amber-500/20 shadow-glow-amber"><i class="fa-solid fa-diagram-project text-xl"></i></div>
+      <div>
+        <span data-i18n="chr.eyebrow" class="text-xs uppercase tracking-wider text-amber-400 font-bold"></span>
+        <h2 data-i18n="chr.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="space-y-6">
+
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900">
+        <h3 data-i18n="chr.h.tree" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="chr.p.tree" class="text-xs text-slate-500 mb-5"></p>
+        <div id="diagram-theogony"></div>
+      </div>
+
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900">
+        <h3 data-i18n="chr.h.time" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="chr.p.time" class="text-xs text-slate-500 mb-5"></p>
+        <div id="diagram-mythtime"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- PANTHEON -->
   <section id="pantheon" class="scroll-mt-24">
     <div class="flex items-center gap-3 mb-5">
@@ -272,7 +360,23 @@
       </div>
     </div>
     <p data-i18n="rec.lead" class="text-slate-400 leading-relaxed mb-6 max-w-4xl text-sm"></p>
+
+    <!-- where each era sits across the whole 2,700-year span -->
+    <div class="viz gradient-border bg-slate-950/40 rounded-3xl p-5 md:p-6 border border-slate-900 mb-6">
+      <p data-i18n="rec.band" class="text-xs text-slate-500 mb-4"></p>
+      <div id="reception-band" class="space-y-2"></div>
+      <div id="reception-scale" class="flex justify-between text-[0.65rem] text-slate-600 font-mono mt-3 pt-2 border-t border-slate-800"></div>
+    </div>
+
     <div id="reception-list" class="space-y-4"></div>
+
+    <!-- when the 51 artworks in this atlas were actually made -->
+    <div class="viz gradient-border bg-slate-950/40 rounded-3xl p-5 md:p-6 border border-slate-900 mt-6">
+      <h3 data-i18n="rec.chart.h" class="text-base font-black text-white mb-1"></h3>
+      <p data-i18n="rec.chart.p" class="text-xs text-slate-500 mb-5"></p>
+      <div id="art-chart" class="bars"></div>
+      <p id="art-chart-note" class="text-sm text-slate-400 leading-relaxed mt-5 bg-slate-900/40 border border-slate-800 rounded-2xl p-4"></p>
+    </div>
   </section>
 
   <!-- COMPARE -->
@@ -350,7 +454,7 @@ uranus: {
   wiki: 'Uranus (mythology)',
   t:{zh:'薩圖恩閹割烏拉諾斯', en:'The Mutilation of Uranus by Saturn', fr:'La Mutilation d’Ouranos par Saturne'},
   a:{zh:'瓦薩里與蓋拉爾迪 Vasari &amp; Gherardi', en:'Giorgio Vasari &amp; Cristofano Gherardi'},
-  y:'c. 1560', m:{zh:'濕壁畫．佛羅倫斯舊宮', en:'Fresco · Palazzo Vecchio, Florence', fr:'Fresque · Palazzo Vecchio, Florence'},
+  y:'c. 1560', yr:1560, m:{zh:'濕壁畫．佛羅倫斯舊宮', en:'Fresco · Palazzo Vecchio, Florence', fr:'Fresque · Palazzo Vecchio, Florence'},
   why:{zh:'赫西俄德《神譜》開篇的暴力場景：時間之神以鐮刀推翻天空之神，濺入海中的血沫生出阿芙蘿黛蒂。文藝復興宮廷把這幕畫在天花板上，是要用宇宙起源為統治者的權力世系背書。',
        en:'The violent opening of Hesiod’s <em>Theogony</em>: Time overthrows Sky with a sickle, and Aphrodite is born from the foam where the severed flesh falls into the sea. Renaissance courts put this on their ceilings to anchor a ruling dynasty in the origin of the cosmos itself.',
        fr:'L’ouverture violente de la <em>Théogonie</em> d’Hésiode : le Temps renverse le Ciel à la faux, et Aphrodite naît de l’écume. Les cours de la Renaissance peignaient cette scène aux plafonds pour ancrer une dynastie dans l’origine même du cosmos.'} },
@@ -359,7 +463,7 @@ saturn: {
   wiki: 'Saturn Devouring His Son',
   t:{zh:'農神吞噬其子', en:'Saturn Devouring His Son', fr:'Saturne dévorant un de ses fils'},
   a:{zh:'哥雅 Goya', en:'Francisco de Goya'},
-  y:'1819–23', m:{zh:'壁畫移置畫布．馬德里普拉多美術館', en:'Mural transferred to canvas · Museo del Prado, Madrid', fr:'Peinture murale transposée sur toile · Musée du Prado, Madrid'},
+  y:'1819–23', yr:1821, m:{zh:'壁畫移置畫布．馬德里普拉多美術館', en:'Mural transferred to canvas · Museo del Prado, Madrid', fr:'Peinture murale transposée sur toile · Musée du Prado, Madrid'},
   why:{zh:'克洛諾斯（羅馬名薩圖恩）吞食親生兒女以阻止預言。魯本斯畫過同一題材的古典版本；哥雅則把它畫在自家餐廳牆上，變成毫無神性的瘋狂——同一則神話，兩百年間從宮廷裝飾墜落為現代心理的深淵。',
        en:'Cronus (Roman Saturn) devours his children to cheat a prophecy. Rubens painted the same subject as classical narrative; Goya painted it on his own dining-room wall as sheer godless madness — one myth, and in two centuries it falls from courtly décor into the modern psychological abyss.',
        fr:'Cronos (Saturne chez les Romains) dévore ses enfants pour déjouer une prophétie. Rubens en fit un récit classique ; Goya la peignit sur le mur de sa salle à manger comme une folie sans dieu — un même mythe qui, en deux siècles, passe du décor de cour à l’abîme psychologique moderne.'} },
@@ -368,7 +472,7 @@ prometheus: {
   wiki: 'Prometheus Bound (Rubens)',
   t:{zh:'被縛的普羅米修斯', en:'Prometheus Bound', fr:'Prométhée enchaîné'},
   a:{zh:'魯本斯 Rubens', en:'Peter Paul Rubens'},
-  y:'1611–18', m:{zh:'油彩畫布．費城美術館', en:'Oil on canvas · Philadelphia Museum of Art', fr:'Huile sur toile · Philadelphia Museum of Art'},
+  y:'1611–18', yr:1614, m:{zh:'油彩畫布．費城美術館', en:'Oil on canvas · Philadelphia Museum of Art', fr:'Huile sur toile · Philadelphia Museum of Art'},
   why:{zh:'盜火者被鎖在高加索山，鷹每日啄食其肝。魯本斯畫身體，老鷹由動物畫家史奈德斯代筆——巴洛克「痛苦的雄辯」典範。此後普羅米修斯成為啟蒙與浪漫主義最愛的反叛象徵。',
        en:'The fire-thief chained to the Caucasus, his liver torn daily by an eagle. Rubens painted the body; the eagle was left to the animal specialist Frans Snyders — a textbook case of Baroque “eloquent suffering.” Prometheus then became the favourite rebel-symbol of the Enlightenment and Romanticism.',
        fr:'Le voleur du feu enchaîné au Caucase, le foie déchiré chaque jour par un aigle. Rubens peignit le corps, l’aigle revenant au spécialiste animalier Frans Snyders — cas d’école de la « souffrance éloquente » baroque. Prométhée devint ensuite le symbole rebelle des Lumières et du romantisme.'} },
@@ -377,7 +481,7 @@ pergamon: {
   wiki: 'Pergamon Altar',
   t:{zh:'佩加蒙祭壇．巨人之戰浮雕', en:'Pergamon Altar — Gigantomachy Frieze', fr:'Autel de Pergame — frise de la Gigantomachie'},
   a:{zh:'佚名（希臘化時期）', en:'Unknown (Hellenistic)', fr:'Anonyme (période hellénistique)'},
-  y:'c. 165–156 BC', m:{zh:'大理石浮雕．柏林佩加蒙博物館', en:'Marble relief · Pergamonmuseum, Berlin', fr:'Relief en marbre · Pergamonmuseum, Berlin'},
+  y:'c. 165–156 BC', yr:-160, m:{zh:'大理石浮雕．柏林佩加蒙博物館', en:'Marble relief · Pergamonmuseum, Berlin', fr:'Relief en marbre · Pergamonmuseum, Berlin'},
   why:{zh:'奧林帕斯諸神對抗巨人族的宇宙級戰爭，被雕成一百二十公尺長的浮雕。翻騰的衣褶、深挖的陰影與痛苦扭曲的身體，界定了「希臘化激情風格」，也直接哺育了《勞孔》與後來的巴洛克。',
        en:'The cosmic war of the Olympians against the Giants, carved as a 120-metre frieze. Churning drapery, deep undercut shadow and bodies twisted in agony define the Hellenistic “pathos style” that fed directly into the <em>Laocoön</em> and, much later, the Baroque.',
        fr:'La guerre cosmique des Olympiens contre les Géants, sculptée sur 120 mètres. Draperies tourbillonnantes, ombres profondément creusées et corps tordus de douleur définissent le « style pathétique » hellénistique, qui nourrit directement le <em>Laocoon</em> puis, bien plus tard, le baroque.'} },
@@ -387,7 +491,7 @@ jupiter_thetis: {
   wiki: 'Jupiter and Thetis',
   t:{zh:'朱庇特與忒提斯', en:'Jupiter and Thetis', fr:'Jupiter et Thétis'},
   a:{zh:'安格爾 Ingres', en:'Jean-Auguste-Dominique Ingres'},
-  y:'1811', m:{zh:'油彩畫布．普羅旺斯艾克斯格拉內美術館', en:'Oil on canvas · Musée Granet, Aix-en-Provence', fr:'Huile sur toile · Musée Granet, Aix-en-Provence'},
+  y:'1811', yr:1811, m:{zh:'油彩畫布．普羅旺斯艾克斯格拉內美術館', en:'Oil on canvas · Musée Granet, Aix-en-Provence', fr:'Huile sur toile · Musée Granet, Aix-en-Provence'},
   why:{zh:'《伊利亞德》第一卷：海洋女神忒提斯跪求宙斯替兒子阿基里斯出頭。安格爾刻意讓神王巨大而僵直、女神的手臂拉長變形——新古典主義用解剖上的「錯誤」來製造神性的壓迫感。',
        en:'<em>Iliad</em>, Book I: the sea-nymph Thetis kneels to beg Zeus to favour her son Achilles. Ingres makes the king of gods colossal and rigid while stretching Thetis’s arm out of all anatomy — Neoclassicism using deliberate “error” to manufacture divine pressure.',
        fr:'<em>Iliade</em>, chant I : la nymphe Thétis supplie Zeus à genoux en faveur de son fils Achille. Ingres rend le roi des dieux colossal et rigide et étire le bras de Thétis hors de toute anatomie — le néoclassicisme se sert de « l’erreur » délibérée pour fabriquer la pression du divin.'} },
@@ -396,7 +500,7 @@ milky_way: {
   wiki: 'The Origin of the Milky Way',
   t:{zh:'銀河的起源', en:'The Origin of the Milky Way', fr:'L’Origine de la Voie lactée'},
   a:{zh:'丁托列托 Tintoretto', en:'Jacopo Tintoretto'},
-  y:'c. 1575', m:{zh:'油彩畫布．倫敦國家美術館', en:'Oil on canvas · The National Gallery, London', fr:'Huile sur toile · National Gallery, Londres'},
+  y:'c. 1575', yr:1575, m:{zh:'油彩畫布．倫敦國家美術館', en:'Oil on canvas · The National Gallery, London', fr:'Huile sur toile · National Gallery, Londres'},
   why:{zh:'宙斯把私生子赫拉克勒斯偷偷放到熟睡的赫拉胸前吸奶，好讓他得到不死；乳汁噴濺，上成銀河、下化百合。此畫是「神話解釋自然現象」的最佳範例，也是威尼斯畫派飛旋構圖的展示。',
        en:'Zeus smuggles the infant Heracles to the breast of the sleeping Hera so the boy will gain immortality; the spurting milk becomes the Milky Way above and lilies below. The clearest example of myth as aetiology — a story told to explain a natural fact — and a showcase of Venetian spiralling composition.',
        fr:'Zeus glisse l’enfant Héraclès au sein d’Héra endormie pour le rendre immortel ; le lait jaillit et forme la Voie lactée en haut, les lis en bas. Exemple parfait du mythe étiologique — un récit qui explique un fait naturel — et démonstration de la composition tournoyante vénitienne.'} },
@@ -405,7 +509,7 @@ artemision: {
   wiki: 'Artemision Bronze',
   t:{zh:'阿特米西翁青銅像（宙斯或波賽頓）', en:'Artemision Bronze (Zeus or Poseidon)', fr:'Bronze d’Artémision (Zeus ou Poséidon)'},
   a:{zh:'佚名（古典早期）', en:'Unknown (Early Classical)', fr:'Anonyme (premier classicisme)'},
-  y:'c. 460 BC', m:{zh:'青銅．雅典國家考古博物館', en:'Bronze · National Archaeological Museum, Athens', fr:'Bronze · Musée national archéologique, Athènes'},
+  y:'c. 460 BC', yr:-460, m:{zh:'青銅．雅典國家考古博物館', en:'Bronze · National Archaeological Museum, Athens', fr:'Bronze · Musée national archéologique, Athènes'},
   why:{zh:'學界至今爭論他擲的是宙斯的雷霆還是波賽頓的三叉戟——因為手中的物件遺失了。這正說明希臘藝術中「屬性物」的決定性：拿走屬性，連神的身分都無從辨認。',
        en:'Scholars still argue whether he hurls Zeus’s thunderbolt or Poseidon’s trident, because the object in his hand is lost. That single gap proves how decisive <em>attributes</em> are in classical art: remove the attribute and even a god becomes unidentifiable.',
        fr:'Les spécialistes débattent encore : lance-t-il la foudre de Zeus ou le trident de Poséidon ? L’objet a disparu. Cette seule lacune prouve le rôle décisif des <em>attributs</em> dans l’art antique : ôtez l’attribut, et même un dieu devient méconnaissable.'} },
@@ -414,7 +518,7 @@ pallas_centaur: {
   wiki: 'Pallas and the Centaur',
   t:{zh:'帕拉斯與半人馬', en:'Pallas and the Centaur', fr:'Pallas et le Centaure'},
   a:{zh:'波提切利 Botticelli', en:'Sandro Botticelli'},
-  y:'c. 1482', m:{zh:'蛋彩畫布．佛羅倫斯烏菲茲美術館', en:'Tempera on canvas · Uffizi, Florence', fr:'Tempera sur toile · Galerie des Offices, Florence'},
+  y:'c. 1482', yr:1482, m:{zh:'蛋彩畫布．佛羅倫斯烏菲茲美術館', en:'Tempera on canvas · Uffizi, Florence', fr:'Tempera sur toile · Galerie des Offices, Florence'},
   why:{zh:'雅典娜輕輕揪住半人馬的頭髮——理性馴服獸性。她衣上滿佈美第奇家族的鑽石環徽記，於是新柏拉圖主義的道德寓言同時是一則政治宣傳：美第奇即智慧本身。',
        en:'Athena calmly grips the centaur’s hair — reason bridling the beast. Her dress is strewn with the Medici diamond-ring device, so a Neoplatonic moral allegory doubles as political advertising: the Medici <em>are</em> wisdom.',
        fr:'Athéna saisit calmement la chevelure du centaure — la raison bridant la bête. Sa robe est semée de l’emblème médicéen de l’anneau de diamant : l’allégorie morale néoplatonicienne sert aussi de propagande — les Médicis <em>sont</em> la sagesse.'} },
@@ -423,7 +527,7 @@ apollo_belvedere: {
   wiki: 'Apollo Belvedere',
   t:{zh:'貝爾維德雷的阿波羅', en:'Apollo Belvedere', fr:'Apollon du Belvédère'},
   a:{zh:'羅馬複製自雷歐卡雷斯 after Leochares', en:'Roman copy after Leochares'},
-  y:'c. 120–140 AD', m:{zh:'大理石．梵蒂岡博物館', en:'Marble · Vatican Museums', fr:'Marbre · Musées du Vatican'},
+  y:'c. 120–140 AD', yr:130, m:{zh:'大理石．梵蒂岡博物館', en:'Marble · Vatican Museums', fr:'Marbre · Musées du Vatican'},
   why:{zh:'溫克爾曼稱它為「古代藝術的最高理想」，一句話讓這尊羅馬複製品統治了新古典主義的審美標準近一個世紀。它也提醒我們：歐洲人心中的「希臘」，多半是透過羅馬複製品認識的。',
        en:'Winckelmann called it “the highest ideal of art among all the works of antiquity” — one sentence that let a Roman copy rule Neoclassical taste for nearly a century. It is also the reminder that Europe’s idea of “Greek” art was mostly learned from Roman copies.',
        fr:'Winckelmann y voyait « l’idéal le plus élevé de l’art antique » : une phrase qui fit régner une copie romaine sur le goût néoclassique pendant près d’un siècle. Rappel utile : l’idée européenne de l’art « grec » vient surtout de copies romaines.'} },
@@ -432,7 +536,7 @@ diana_versailles: {
   wiki: 'Diana of Versailles',
   t:{zh:'凡爾賽的黛安娜', en:'Diana of Versailles', fr:'Diane de Versailles'},
   a:{zh:'羅馬複製自雷歐卡雷斯 after Leochares', en:'Roman copy after Leochares'},
-  y:'c. 1st–2nd c. AD', m:{zh:'大理石．巴黎羅浮宮', en:'Marble · Musée du Louvre, Paris', fr:'Marbre · Musée du Louvre, Paris'},
+  y:'c. 1st–2nd c. AD', yr:150, m:{zh:'大理石．巴黎羅浮宮', en:'Marble · Musée du Louvre, Paris', fr:'Marbre · Musée du Louvre, Paris'},
   why:{zh:'獵犬、短獵裝、伸手取箭——三個屬性就足以宣告「這是狩獵女神」。法王將她安置於凡爾賽，讓王室狩獵權與神話直接接軌。',
        en:'A hound, a short hunting chiton, a hand reaching for an arrow: three attributes are enough to announce “goddess of the hunt.” Installed at Versailles, she wired the royal privilege of the chase straight into myth.',
        fr:'Un chien, une courte tunique de chasse, la main qui saisit une flèche : trois attributs suffisent à dire « déesse de la chasse ». Installée à Versailles, elle branche le privilège royal de la chasse directement sur le mythe.'} },
@@ -441,7 +545,7 @@ venus_mars: {
   wiki: 'Venus and Mars (Botticelli)',
   t:{zh:'維納斯與馬爾斯', en:'Venus and Mars', fr:'Vénus et Mars'},
   a:{zh:'波提切利 Botticelli', en:'Sandro Botticelli'},
-  y:'c. 1485', m:{zh:'蛋彩與油彩木板．倫敦國家美術館', en:'Tempera and oil on panel · The National Gallery, London', fr:'Tempera et huile sur bois · National Gallery, Londres'},
+  y:'c. 1485', yr:1485, m:{zh:'蛋彩與油彩木板．倫敦國家美術館', en:'Tempera and oil on panel · The National Gallery, London', fr:'Tempera et huile sur bois · National Gallery, Londres'},
   why:{zh:'戰神癱睡，愛神清醒——小薩堤爾們偷走他的長矛與盔甲當玩具。這是文藝復興最著名的視覺格言：<em>愛征服戰爭</em>。長條形的畫幅顯示它原是婚房家具的背板。',
        en:'Mars sleeps helpless while Venus stays awake; baby satyrs make toys of his lance and armour. The Renaissance’s most famous visual maxim — <em>love conquers war</em> — and its long, narrow format shows it was made as the backboard of marriage-chamber furniture.',
        fr:'Mars dort, impuissant, tandis que Vénus veille ; de petits satyres jouent avec sa lance et son armure. La maxime visuelle la plus célèbre de la Renaissance — <em>l’amour vainc la guerre</em> — et son format allongé trahit un dossier de meuble de chambre nuptiale.'} },
@@ -450,7 +554,7 @@ birth_venus: {
   wiki: 'The Birth of Venus',
   t:{zh:'維納斯的誕生', en:'The Birth of Venus', fr:'La Naissance de Vénus'},
   a:{zh:'波提切利 Botticelli', en:'Sandro Botticelli'},
-  y:'c. 1485', m:{zh:'蛋彩畫布．佛羅倫斯烏菲茲美術館', en:'Tempera on canvas · Uffizi, Florence', fr:'Tempera sur toile · Galerie des Offices, Florence'},
+  y:'c. 1485', yr:1485, m:{zh:'蛋彩畫布．佛羅倫斯烏菲茲美術館', en:'Tempera on canvas · Uffizi, Florence', fr:'Tempera sur toile · Galerie des Offices, Florence'},
   why:{zh:'她從烏拉諾斯落海的血沫中生成，乘貝殼上岸——中世紀千年之後，第一件以真人大小、非宗教理由呈現裸體的作品。神話在此成為讓裸體重返西方藝術的「通行證」。',
        en:'Born from the sea-foam of Uranus’s severed flesh, she arrives on a shell — the first life-size nude painted for a non-religious reason after a thousand medieval years. Myth here is the licence that let the nude re-enter Western art.',
        fr:'Née de l’écume marine, elle aborde sur une conque : le premier nu grandeur nature peint pour une raison non religieuse après mille ans de Moyen Âge. Le mythe sert ici de laissez-passer au retour du nu dans l’art occidental.'} },
@@ -459,7 +563,7 @@ vulcan_forge: {
   wiki: 'Apollo in the Forge of Vulcan',
   t:{zh:'火神的鍛冶場', en:'Apollo in the Forge of Vulcan', fr:'La Forge de Vulcain'},
   a:{zh:'委拉斯奎茲 Velázquez', en:'Diego Velázquez'},
-  y:'1630', m:{zh:'油彩畫布．馬德里普拉多美術館', en:'Oil on canvas · Museo del Prado, Madrid', fr:'Huile sur toile · Musée du Prado, Madrid'},
+  y:'1630', yr:1630, m:{zh:'油彩畫布．馬德里普拉多美術館', en:'Oil on canvas · Museo del Prado, Madrid', fr:'Huile sur toile · Musée du Prado, Madrid'},
   why:{zh:'阿波羅前來通報：你的妻子維納斯與馬爾斯私通。委拉斯奎茲把奧林帕斯神話搬進一間真實的鐵匠鋪，工人有汗、有肌肉、有錯愕的表情——神話被「日常化」，正是西班牙黃金時代寫實主義的宣言。',
        en:'Apollo arrives to tell Vulcan that his wife Venus is sleeping with Mars. Velázquez relocates Olympus into a real blacksmith’s shop with sweating, startled workmen — myth made everyday, and a manifesto of Spanish Golden Age realism.',
        fr:'Apollon vient annoncer à Vulcain que Vénus le trompe avec Mars. Velázquez transporte l’Olympe dans une vraie forge, avec des ouvriers en sueur et stupéfaits : le mythe rendu quotidien, manifeste du réalisme du Siècle d’or espagnol.'} },
@@ -468,7 +572,7 @@ giambologna_mercury: {
   wiki: 'Mercury (Giambologna)',
   t:{zh:'飛翔的墨丘利', en:'Flying Mercury', fr:'Mercure volant'},
   a:{zh:'詹波隆那 Giambologna', en:'Giambologna'},
-  y:'1580', m:{zh:'青銅．佛羅倫斯巴傑羅美術館', en:'Bronze · Museo Nazionale del Bargello, Florence', fr:'Bronze · Musée national du Bargello, Florence'},
+  y:'1580', yr:1580, m:{zh:'青銅．佛羅倫斯巴傑羅美術館', en:'Bronze · Museo Nazionale del Bargello, Florence', fr:'Bronze · Musée national du Bargello, Florence'},
   why:{zh:'全身重量落在一縷西風之神吹出的氣息上——矯飾主義用青銅的抗拉強度炫技，把「神的輕盈」變成一道工程難題的解答。帶翼涼鞋與雙蛇杖是墨丘利不變的身分證。',
        en:'The entire body balances on a breath exhaled by a wind-god — Mannerist virtuosity turning “divine weightlessness” into a solved engineering problem in bronze. The winged sandals and caduceus are Mercury’s permanent ID.',
        fr:'Tout le corps repose sur un souffle exhalé par un dieu du vent : virtuosité maniériste qui fait de « l’apesanteur divine » un problème d’ingénierie résolu en bronze. Sandales ailées et caducée sont la carte d’identité de Mercure.'} },
@@ -477,7 +581,7 @@ bacchus_ariadne: {
   wiki: 'Bacchus and Ariadne',
   t:{zh:'巴克斯與阿里阿德涅', en:'Bacchus and Ariadne', fr:'Bacchus et Ariane'},
   a:{zh:'提香 Titian', en:'Titian'},
-  y:'1522–23', m:{zh:'油彩畫布．倫敦國家美術館', en:'Oil on canvas · The National Gallery, London', fr:'Huile sur toile · National Gallery, Londres'},
+  y:'1522–23', yr:1523, m:{zh:'油彩畫布．倫敦國家美術館', en:'Oil on canvas · The National Gallery, London', fr:'Huile sur toile · National Gallery, Londres'},
   why:{zh:'被忒修斯拋棄在納克索斯島的阿里阿德涅，回頭撞見酒神從豹車上一躍而下。畫面左上角的星冠，是她死後被升上天空的王冠座。提香用當時最昂貴的青金石群青畫天空——顏料本身就是敘事的一部分。',
        en:'Abandoned on Naxos by Theseus, Ariadne turns to find Bacchus leaping from his leopard-drawn car. The ring of stars at upper left is the constellation Corona Borealis she will become. Titian painted that sky in ultramarine ground from lapis lazuli — the pigment itself is part of the storytelling.',
        fr:'Abandonnée à Naxos par Thésée, Ariane se retourne : Bacchus bondit de son char tiré par des léopards. La couronne d’étoiles en haut à gauche est la Couronne boréale qu’elle deviendra. Titien peignit ce ciel en outremer de lapis-lazuli : le pigment fait partie du récit.'} },
@@ -486,7 +590,7 @@ caravaggio_bacchus: {
   wiki: 'Bacchus (Caravaggio)',
   t:{zh:'巴克斯', en:'Bacchus', fr:'Bacchus'},
   a:{zh:'卡拉瓦喬 Caravaggio', en:'Caravaggio'},
-  y:'c. 1596', m:{zh:'油彩畫布．佛羅倫斯烏菲茲美術館', en:'Oil on canvas · Uffizi, Florence', fr:'Huile sur toile · Galerie des Offices, Florence'},
+  y:'c. 1596', yr:1596, m:{zh:'油彩畫布．佛羅倫斯烏菲茲美術館', en:'Oil on canvas · Uffizi, Florence', fr:'Huile sur toile · Galerie des Offices, Florence'},
   why:{zh:'神被畫成一個指甲有污垢、臉頰泛紅的羅馬少年，果籃裡的水果已開始腐爛。卡拉瓦喬用「不完美」擊碎理想化的古典神祇——這是巴洛克寫實主義對神話最挑釁的一次介入。',
        en:'The god is a flushed Roman boy with dirt under his fingernails, and the fruit in his basket is already rotting. Caravaggio breaks the idealized classical deity with imperfection — the most provocative intervention Baroque realism ever made in myth.',
        fr:'Le dieu est un garçon romain au teint rouge, les ongles sales, et les fruits de sa corbeille pourrissent déjà. Caravage brise la divinité classique idéalisée par l’imperfection : l’intervention la plus provocante du réalisme baroque dans le mythe.'} },
@@ -495,7 +599,7 @@ proserpina: {
   wiki: 'The Rape of Proserpina',
   t:{zh:'冥王劫持普洛塞庇娜', en:'The Rape of Proserpina', fr:'L’Enlèvement de Proserpine'},
   a:{zh:'貝尼尼 Bernini', en:'Gian Lorenzo Bernini', fr:'Le Bernin'},
-  y:'1621–22', m:{zh:'大理石．羅馬博爾蓋塞美術館', en:'Marble · Galleria Borghese, Rome', fr:'Marbre · Galerie Borghèse, Rome'},
+  y:'1621–22', yr:1622, m:{zh:'大理石．羅馬博爾蓋塞美術館', en:'Marble · Galleria Borghese, Rome', fr:'Marbre · Galerie Borghèse, Rome'},
   why:{zh:'普魯托的手指陷入少女大腿的那一小塊「凹陷」，是西方雕塑史上最常被引用的細節：貝尼尼讓堅硬的大理石模仿出皮膚的柔軟。神話（四季的起源）在此被壓縮成一個觸覺瞬間。',
        en:'Pluto’s fingers sinking into the flesh of her thigh is the most-cited detail in Western sculpture: Bernini makes hard marble impersonate soft skin. The myth that explains the seasons is compressed into a single tactile instant.',
        fr:'Les doigts de Pluton s’enfonçant dans la cuisse : le détail le plus cité de la sculpture occidentale — Le Bernin fait imiter au marbre la douceur de la peau. Le mythe qui explique les saisons se condense en un instant tactile.'} },
@@ -504,7 +608,7 @@ amor_vincit: {
   wiki: 'Amor Vincit Omnia (Caravaggio)',
   t:{zh:'愛征服一切', en:'Amor Vincit Omnia', fr:'L’Amour victorieux'},
   a:{zh:'卡拉瓦喬 Caravaggio', en:'Caravaggio'},
-  y:'1601–02', m:{zh:'油彩畫布．柏林畫廊', en:'Oil on canvas · Gemäldegalerie, Berlin', fr:'Huile sur toile · Gemäldegalerie, Berlin'},
+  y:'1601–02', yr:1602, m:{zh:'油彩畫布．柏林畫廊', en:'Oil on canvas · Gemäldegalerie, Berlin', fr:'Huile sur toile · Gemäldegalerie, Berlin'},
   why:{zh:'邱比特踩踏著盔甲、樂器、圓規與王冠——象徵戰爭、藝術、科學與權力全數敗給愛慾。維吉爾的詩句「愛征服一切」被翻譯成一個赤裸、帶著壞笑的真實男孩。',
        en:'Cupid tramples armour, instruments, compasses and a crown — war, art, science and power all defeated by desire. Virgil’s line <em>omnia vincit amor</em> translated into one naked, smirking, unmistakably real boy.',
        fr:'Cupidon piétine armure, instruments, compas et couronne : guerre, art, science et pouvoir vaincus par le désir. Le vers de Virgile <em>omnia vincit amor</em> traduit en un garçon nu, narquois et bien réel.'} },
@@ -513,7 +617,7 @@ canova_psyche: {
   wiki: "Psyche Revived by Cupid's Kiss",
   t:{zh:'被邱比特之吻喚醒的賽姬', en:'Psyche Revived by Cupid’s Kiss', fr:'Psyché ranimée par le baiser de l’Amour'},
   a:{zh:'卡諾瓦 Canova', en:'Antonio Canova'},
-  y:'1787–93', m:{zh:'大理石．巴黎羅浮宮', en:'Marble · Musée du Louvre, Paris', fr:'Marbre · Musée du Louvre, Paris'},
+  y:'1787–93', yr:1790, m:{zh:'大理石．巴黎羅浮宮', en:'Marble · Musée du Louvre, Paris', fr:'Marbre · Musée du Louvre, Paris'},
   why:{zh:'故事出自阿普列尤斯《金驢記》：靈魂（Psyche）因愛而復活。兩人的手臂交織成一個 X 形，觀者必須繞行才能看完——卡諾瓦把新古典主義的「靜穆」變成需要走動的體驗。',
        en:'From Apuleius’s <em>Golden Ass</em>: the Soul (Psyche) revived by Love. The two figures’ arms lock into an X that cannot be read from one viewpoint — Canova turns Neoclassical “calm grandeur” into something you must walk around to receive.',
        fr:'D’après <em>L’Âne d’or</em> d’Apulée : l’Âme (Psyché) ranimée par l’Amour. Les bras des deux figures forment un X illisible d’un seul point de vue : Canova fait de la « calme grandeur » néoclassique une expérience qu’il faut contourner.'} },
@@ -523,7 +627,7 @@ farnese: {
   wiki: 'Farnese Hercules',
   t:{zh:'法爾內塞的海克力斯', en:'Farnese Hercules', fr:'Hercule Farnèse'},
   a:{zh:'格利孔複製自呂西波斯 Glykon, after Lysippos', en:'Glykon, after Lysippos'},
-  y:'early 3rd c. AD', m:{zh:'大理石．拿坡里國家考古博物館', en:'Marble · National Archaeological Museum, Naples', fr:'Marbre · Musée archéologique national de Naples'},
+  y:'early 3rd c. AD', yr:220, m:{zh:'大理石．拿坡里國家考古博物館', en:'Marble · National Archaeological Museum, Naples', fr:'Marbre · Musée archéologique national de Naples'},
   why:{zh:'英雄倚著棍棒喘息，背在身後的手裡藏著金蘋果——十二項苦差已經完成。誇張的肌肉配上疲憊的低頭，把「力量」與「代價」同時放進一個身體，成為後世描繪英雄的原型。',
        en:'The hero leans exhausted on his club, the golden apples hidden in the hand behind his back — the Twelve Labours are done. Overwhelming muscle plus a lowered, weary head puts strength and its cost into one body, the prototype for heroic figures ever after.',
        fr:'Le héros s’appuie, épuisé, sur sa massue, les pommes d’or cachées dans la main derrière son dos : les Douze Travaux sont accomplis. Musculature écrasante et tête baissée de fatigue placent la force et son prix dans un même corps — prototype de toute figure héroïque ultérieure.'} },
@@ -532,7 +636,7 @@ pollaiuolo_hercules: {
   wiki: 'Hercules Slaying Antaeus',
   t:{zh:'海克力斯與安泰俄斯', en:'Hercules and Antaeus', fr:'Hercule et Antée'},
   a:{zh:'波拉伊烏歐洛 Pollaiuolo', en:'Antonio del Pollaiuolo'},
-  y:'c. 1475', m:{zh:'青銅．佛羅倫斯巴傑羅美術館', en:'Bronze · Museo Nazionale del Bargello, Florence', fr:'Bronze · Musée national du Bargello, Florence'},
+  y:'c. 1475', yr:1475, m:{zh:'青銅．佛羅倫斯巴傑羅美術館', en:'Bronze · Museo Nazionale del Bargello, Florence', fr:'Bronze · Musée national du Bargello, Florence'},
   why:{zh:'巨人安泰俄斯只要碰到大地母親就能回復力量，海克力斯於是把他舉離地面勒死。這件小銅像是文藝復興「動態解剖學」的實驗場：兩具身體在空中扭成一個不穩定的螺旋。',
        en:'The giant Antaeus regains strength whenever he touches his mother Earth, so Heracles lifts him clear of the ground and crushes him. This small bronze is a Renaissance laboratory of anatomy in motion: two bodies twisted into one unstable airborne spiral.',
        fr:'Le géant Antée retrouve ses forces dès qu’il touche la Terre, sa mère : Héraclès le soulève donc et l’étouffe. Ce petit bronze est un laboratoire d’anatomie en mouvement : deux corps tordus en une spirale instable, sans appui.'} },
@@ -541,7 +645,7 @@ cellini_perseus: {
   wiki: 'Perseus with the Head of Medusa',
   t:{zh:'手持梅杜莎頭顱的柏修斯', en:'Perseus with the Head of Medusa', fr:'Persée tenant la tête de Méduse'},
   a:{zh:'切利尼 Cellini', en:'Benvenuto Cellini'},
-  y:'1545–54', m:{zh:'青銅．佛羅倫斯傭兵涼廊', en:'Bronze · Loggia dei Lanzi, Florence', fr:'Bronze · Loggia dei Lanzi, Florence'},
+  y:'1545–54', yr:1550, m:{zh:'青銅．佛羅倫斯傭兵涼廊', en:'Bronze · Loggia dei Lanzi, Florence', fr:'Bronze · Loggia dei Lanzi, Florence'},
   why:{zh:'它就立在市政廣場上，正對著多那太羅與米開朗基羅的作品，而且刻意讓梅杜莎的頭朝向他們——柯西莫一世用一則斬首神話宣告：反抗美第奇者，下場如此。神話是政治語言。',
        en:'It stands on the civic square facing Donatello’s and Michelangelo’s works, with Medusa’s severed head deliberately turned toward them. Cosimo I used a decapitation myth to announce what happens to those who resist the Medici — myth as political speech.',
        fr:'Elle se dresse sur la place civique face aux œuvres de Donatello et Michel-Ange, la tête tranchée de Méduse délibérément tournée vers elles. Côme Ier utilise un mythe de décapitation pour dire le sort réservé aux ennemis des Médicis : le mythe comme parole politique.'} },
@@ -550,7 +654,7 @@ medusa: {
   wiki: 'Medusa (Caravaggio)',
   t:{zh:'梅杜莎', en:'Medusa', fr:'Méduse'},
   a:{zh:'卡拉瓦喬 Caravaggio', en:'Caravaggio'},
-  y:'1597', m:{zh:'油彩畫布裱於凸面木盾．佛羅倫斯烏菲茲美術館', en:'Oil on canvas over a convex wooden shield · Uffizi, Florence', fr:'Huile sur toile marouflée sur bouclier de bois convexe · Offices, Florence'},
+  y:'1597', yr:1597, m:{zh:'油彩畫布裱於凸面木盾．佛羅倫斯烏菲茲美術館', en:'Oil on canvas over a convex wooden shield · Uffizi, Florence', fr:'Huile sur toile marouflée sur bouclier de bois convexe · Offices, Florence'},
   why:{zh:'畫在凸面盾牌上：觀者站在本該被石化的位置，卻看見梅杜莎自己驚駭的表情——她看見的是自己的倒影。卡拉瓦喬把「凝視」這個神話核心，做成一件會回望你的物件。',
        en:'Painted on a convex shield: you stand where you should be turned to stone, yet what you see is Medusa’s own horror — she is looking at her reflection. Caravaggio turns the myth’s central theme, the gaze, into an object that looks back.',
        fr:'Peinte sur un bouclier convexe : vous occupez la place où l’on devrait être pétrifié, mais c’est l’effroi de Méduse elle-même que vous voyez — elle contemple son reflet. Caravage fait du regard, cœur du mythe, un objet qui vous regarde.'} },
@@ -559,7 +663,7 @@ canova_theseus: {
   wiki: 'Theseus and the Minotaur (sculpture)',
   t:{zh:'忒修斯與米諾陶洛斯', en:'Theseus and the Minotaur', fr:'Thésée et le Minotaure'},
   a:{zh:'卡諾瓦 Canova', en:'Antonio Canova'},
-  y:'1781–83', m:{zh:'大理石．倫敦維多利亞與亞伯特博物館', en:'Marble · Victoria and Albert Museum, London', fr:'Marbre · Victoria and Albert Museum, Londres'},
+  y:'1781–83', yr:1782, m:{zh:'大理石．倫敦維多利亞與亞伯特博物館', en:'Marble · Victoria and Albert Museum, London', fr:'Marbre · Victoria and Albert Museum, Londres'},
   why:{zh:'卡諾瓦不選搏鬥的高潮，而選了戰鬥「之後」：英雄坐在屍體上平靜地喘息。新古典主義相信最高貴的時刻不是暴力本身，而是暴力的收束——這正是溫克爾曼「高貴的單純、靜穆的偉大」。',
        en:'Canova skips the fight and takes the moment <em>after</em>: the hero sits on the corpse, quietly catching his breath. Neoclassicism held that the noblest moment is not violence but its aftermath — Winckelmann’s “noble simplicity and quiet grandeur.”',
        fr:'Canova écarte le combat pour l’instant d’<em>après</em> : le héros assis sur le cadavre, reprenant calmement son souffle. Le néoclassicisme tient que le moment le plus noble n’est pas la violence mais sa retombée — la « noble simplicité et calme grandeur » de Winckelmann.'} },
@@ -568,7 +672,7 @@ delacroix_medea: {
   wiki: 'Medea about to Kill Her Children',
   t:{zh:'即將殺子的美狄亞', en:'Medea about to Kill Her Children', fr:'Médée furieuse'},
   a:{zh:'德拉克洛瓦 Delacroix', en:'Eugène Delacroix'},
-  y:'1838', m:{zh:'油彩畫布．里爾美術館', en:'Oil on canvas · Palais des Beaux-Arts, Lille', fr:'Huile sur toile · Palais des Beaux-Arts de Lille'},
+  y:'1838', yr:1838, m:{zh:'油彩畫布．里爾美術館', en:'Oil on canvas · Palais des Beaux-Arts, Lille', fr:'Huile sur toile · Palais des Beaux-Arts de Lille'},
   why:{zh:'金羊毛故事的黑暗結局：被伊阿宋背叛的女巫殺死自己的孩子。德拉克洛瓦讓陰影切過她的雙眼，我們看不見她的眼神——浪漫主義用「看不見」來表達無法被理性化的激情。',
        en:'The dark ending of the Golden Fleece story: the sorceress, betrayed by Jason, kills her own children. Delacroix throws a band of shadow across her eyes so we cannot read them — Romanticism using visual withholding for a passion reason cannot process.',
        fr:'La fin sombre de la Toison d’or : la magicienne, trahie par Jason, tue ses enfants. Delacroix jette une bande d’ombre sur ses yeux, illisibles — le romantisme dérobe le regard pour dire une passion que la raison ne peut traiter.'} },
@@ -577,7 +681,7 @@ corot_orpheus: {
   wiki: 'Orpheus and Eurydice',
   t:{zh:'俄耳甫斯引領歐律狄刻走出冥界', en:'Orpheus Leading Eurydice from the Underworld', fr:'Orphée ramenant Eurydice des Enfers'},
   a:{zh:'柯洛 Corot', en:'Jean-Baptiste-Camille Corot'},
-  y:'1861', m:{zh:'油彩畫布．休士頓美術館', en:'Oil on canvas · Museum of Fine Arts, Houston', fr:'Huile sur toile · Museum of Fine Arts, Houston'},
+  y:'1861', yr:1861, m:{zh:'油彩畫布．休士頓美術館', en:'Oil on canvas · Museum of Fine Arts, Houston', fr:'Huile sur toile · Museum of Fine Arts, Houston'},
   why:{zh:'整則神話的關鍵是一個禁令：走出冥界前不准回頭。柯洛因此把敘事完全交給風景——朦朧的銀灰樹林本身就是「不可回望」的焦慮。音樂之神舉起里拉琴，仍然失敗。',
        en:'The whole myth turns on one prohibition: do not look back before you are out. Corot therefore hands the narrative to landscape — the hazy silver woods <em>are</em> the anxiety of not looking. The god of music raises his lyre, and still fails.',
        fr:'Tout le mythe tient à un interdit : ne pas se retourner avant d’être sorti. Corot confie donc le récit au paysage — ces bois d’argent brumeux <em>sont</em> l’angoisse de ne pas regarder. Le dieu de la musique lève sa lyre, et échoue pourtant.'} },
@@ -586,7 +690,7 @@ ingres_oedipus: {
   wiki: 'Oedipus and the Sphinx',
   t:{zh:'伊底帕斯與斯芬克斯', en:'Oedipus and the Sphinx', fr:'Œdipe explique l’énigme du Sphinx'},
   a:{zh:'安格爾 Ingres', en:'Jean-Auguste-Dominique Ingres'},
-  y:'1808/1827', m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
+  y:'1808/1827', yr:1808, m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
   why:{zh:'謎題是「什麼動物早晨四足、中午兩足、晚上三足」，答案是「人」。安格爾把英雄畫成裸體、直視怪物——這是理性面對未知的圖像。摩洛在 1864 年重畫同一場景，卻讓斯芬克斯攀附上身，象徵主義由此誕生。',
        en:'The riddle — what walks on four legs, then two, then three? — has one answer: <em>man</em>. Ingres paints the hero nude and staring the monster down: an image of reason facing the unknown. When Moreau repainted the scene in 1864 he let the Sphinx cling to Oedipus’s body, and Symbolism was born.',
        fr:'L’énigme — quel être marche à quatre pattes, puis deux, puis trois ? — n’a qu’une réponse : <em>l’homme</em>. Ingres peint le héros nu, fixant le monstre : image de la raison devant l’inconnu. Quand Moreau reprend la scène en 1864, le Sphinx s’agrippe au corps d’Œdipe : le symbolisme est né.'} },
@@ -595,7 +699,7 @@ icarus: {
   wiki: 'Landscape with the Fall of Icarus',
   t:{zh:'有伊卡洛斯墜落的風景', en:'Landscape with the Fall of Icarus', fr:'La Chute d’Icare'},
   a:{zh:'老布勒哲爾（傳）after Bruegel', en:'After Pieter Bruegel the Elder'},
-  y:'c. 1560s', m:{zh:'油彩畫布．布魯塞爾比利時皇家美術館', en:'Oil on canvas · Royal Museums of Fine Arts of Belgium, Brussels', fr:'Huile sur toile · Musées royaux des Beaux-Arts de Belgique, Bruxelles'},
+  y:'c. 1560s', yr:1565, m:{zh:'油彩畫布．布魯塞爾比利時皇家美術館', en:'Oil on canvas · Royal Museums of Fine Arts of Belgium, Brussels', fr:'Huile sur toile · Musées royaux des Beaux-Arts de Belgique, Bruxelles'},
   why:{zh:'農夫繼續耕田，牧羊人抬頭看天，只有畫面右下角一雙腿沒入海中——那就是伊卡洛斯。把神話高潮縮到近乎看不見，是西方藝術對「災難的旁觀者」最早也最冷靜的反省（後來成為奧登名詩的主題）。',
        en:'The ploughman ploughs on, the shepherd looks the wrong way, and only a pair of legs disappearing into the sea at lower right is Icarus. Shrinking the mythic climax to near-invisibility is Western art’s earliest and coolest meditation on bystanders to catastrophe — later the subject of Auden’s famous poem.',
        fr:'Le laboureur laboure, le berger regarde ailleurs, et seules deux jambes qui s’enfoncent dans la mer, en bas à droite, signalent Icare. Réduire le sommet du mythe à l’invisible est la plus ancienne et la plus froide méditation de l’art occidental sur les témoins du désastre — plus tard sujet du célèbre poème d’Auden.'} },
@@ -605,7 +709,7 @@ rubens_paris: {
   wiki: 'The Judgement of Paris (Rubens)',
   t:{zh:'帕里斯的評判', en:'The Judgement of Paris', fr:'Le Jugement de Pâris'},
   a:{zh:'魯本斯 Rubens', en:'Peter Paul Rubens'},
-  y:'c. 1636', m:{zh:'油彩木板．倫敦國家美術館', en:'Oil on panel · The National Gallery, London', fr:'Huile sur bois · National Gallery, Londres'},
+  y:'c. 1636', yr:1636, m:{zh:'油彩木板．倫敦國家美術館', en:'Oil on panel · The National Gallery, London', fr:'Huile sur bois · National Gallery, Londres'},
   why:{zh:'牧羊人帕里斯必須在三位女神之間選出「最美者」，他選了維納斯，代價是特洛伊戰爭。這個題材是西方畫家唯一能「合法」同時畫三個裸體、且各以正面、側面、背面呈現的機會——神話成為人體研究的藉口。',
        en:'The shepherd Paris must judge which of three goddesses is fairest; he chooses Venus, and the price is the Trojan War. The subject was the one legitimate excuse for painting three nudes at once — front, side and back — so myth became a pretext for the study of the body.',
        fr:'Le berger Pâris doit désigner la plus belle des trois déesses ; il choisit Vénus, et le prix en sera la guerre de Troie. Le sujet offrait le seul prétexte légitime pour peindre trois nus de face, de profil et de dos : le mythe comme alibi de l’étude du corps.'} },
@@ -614,7 +718,7 @@ exekias: {
   wiki: 'Exekias',
   t:{zh:'阿基里斯與埃阿斯擲骰（黑繪雙耳瓶）', en:'Achilles and Ajax Playing Dice (black-figure amphora)', fr:'Achille et Ajax jouant aux dés (amphore à figures noires)'},
   a:{zh:'埃克塞基亞斯 Exekias', en:'Exekias'},
-  y:'c. 540–530 BC', m:{zh:'陶器．梵蒂岡博物館', en:'Ceramic · Vatican Museums', fr:'Céramique · Musées du Vatican'},
+  y:'c. 540–530 BC', yr:-535, m:{zh:'陶器．梵蒂岡博物館', en:'Ceramic · Vatican Museums', fr:'Céramique · Musées du Vatican'},
   why:{zh:'荷馬從沒寫過這一幕：兩位最偉大的戰士在戰場邊安靜地擲骰子。畫家自己「補寫」了史詩，並用兩人俯身的弧線構成一個屋頂形——這是希臘瓶畫從裝飾走向敘事心理的轉捩點。',
        en:'Homer never wrote this scene: the two greatest warriors quietly throwing dice beside the battlefield. The painter has extended the epic himself, and framed the pair’s bent backs into a gable — the turning point where Greek vase painting moves from ornament to narrative psychology.',
        fr:'Homère n’a jamais écrit cette scène : les deux plus grands guerriers jouant tranquillement aux dés en marge de la bataille. Le peintre prolonge lui-même l’épopée et fait de leurs dos courbés un fronton — le moment où la céramique grecque passe de l’ornement à la psychologie narrative.'} },
@@ -623,7 +727,7 @@ laocoon: {
   wiki: 'Laocoön and His Sons',
   t:{zh:'勞孔群像', en:'Laocoön and His Sons', fr:'Laocoon et ses fils'},
   a:{zh:'阿格桑德羅斯等三位羅得島雕刻家', en:'Agesander, Athenodoros and Polydorus of Rhodes'},
-  y:'c. 27 BC–68 AD', m:{zh:'大理石．梵蒂岡博物館', en:'Marble · Vatican Museums', fr:'Marbre · Musées du Vatican'},
+  y:'c. 27 BC–68 AD', yr:20, m:{zh:'大理石．梵蒂岡博物館', en:'Marble · Vatican Museums', fr:'Marbre · Musées du Vatican'},
   why:{zh:'祭司警告特洛伊人別收下木馬，被海蛇絞死。1506 年在羅馬出土時米開朗基羅親自到場，此後它重新定義了西方對「痛苦」的表現；萊辛更以《拉奧孔》一書用它劃分詩與畫的界線——一件雕像觸發了整個美學學科。',
        en:'The priest who warned Troy against the wooden horse, strangled by sea-serpents. Michelangelo was present at its unearthing in Rome in 1506, and it redefined how the West depicts pain; Lessing then used it in <em>Laokoon</em> to draw the border between poetry and painting — one statue that launched a whole discipline of aesthetics.',
        fr:'Le prêtre qui mit Troie en garde contre le cheval de bois, étouffé par des serpents marins. Michel-Ange assista à sa découverte à Rome en 1506 ; l’œuvre redéfinit la représentation occidentale de la douleur, et Lessing s’en servit dans son <em>Laocoon</em> pour tracer la frontière entre poésie et peinture — une statue à l’origine de toute une esthétique.'} },
@@ -632,7 +736,7 @@ turner_polyphemus: {
   wiki: 'Ulysses Deriding Polyphemus',
   t:{zh:'嘲弄波呂斐摩斯的尤利西斯', en:'Ulysses Deriding Polyphemus', fr:'Ulysse raillant Polyphème'},
   a:{zh:'透納 Turner', en:'J. M. W. Turner'},
-  y:'1829', m:{zh:'油彩畫布．倫敦國家美術館', en:'Oil on canvas · The National Gallery, London', fr:'Huile sur toile · National Gallery, Londres'},
+  y:'1829', yr:1829, m:{zh:'油彩畫布．倫敦國家美術館', en:'Oil on canvas · The National Gallery, London', fr:'Huile sur toile · National Gallery, Londres'},
   why:{zh:'奧德修斯逃出獨眼巨人的洞穴後高喊自己的名字，招來波賽頓十年的怒火。透納幾乎把巨人溶進山霧裡，讓真正的主角變成日出的光——神話題材成為純粹光線實驗的載體，直指印象派。',
        en:'Having escaped the Cyclops’ cave, Odysseus shouts his own name and earns ten years of Poseidon’s rage. Turner all but dissolves the giant into the mountain haze so that the real protagonist becomes sunrise itself — a mythological subject repurposed as pure light experiment, pointing straight at Impressionism.',
        fr:'Échappé de la caverne du Cyclope, Ulysse crie son nom et s’attire dix ans de colère de Poséidon. Turner dissout presque le géant dans la brume : le vrai protagoniste devient le lever du soleil — sujet mythologique reconverti en expérience de lumière pure, annonçant l’impressionnisme.'} },
@@ -641,7 +745,7 @@ waterhouse_sirens: {
   wiki: 'Ulysses and the Sirens (Waterhouse)',
   t:{zh:'尤利西斯與賽壬', en:'Ulysses and the Sirens', fr:'Ulysse et les Sirènes'},
   a:{zh:'瓦特豪斯 Waterhouse', en:'John William Waterhouse'},
-  y:'1891', m:{zh:'油彩畫布．墨爾本維多利亞國家美術館', en:'Oil on canvas · National Gallery of Victoria, Melbourne', fr:'Huile sur toile · National Gallery of Victoria, Melbourne'},
+  y:'1891', yr:1891, m:{zh:'油彩畫布．墨爾本維多利亞國家美術館', en:'Oil on canvas · National Gallery of Victoria, Melbourne', fr:'Huile sur toile · National Gallery of Victoria, Melbourne'},
   why:{zh:'奧德修斯把自己綁在桅杆上、替水手塞住耳朵，好在不喪命的前提下聽見禁忌的歌聲。瓦特豪斯依照古希臘瓶畫把賽壬畫成鳥身女首（而非後世的美人魚），是十九世紀學術考據進入繪畫的證據。',
        en:'Odysseus has himself lashed to the mast and plugs his crew’s ears so he can hear the forbidden song and survive it. Following Greek vase painting, Waterhouse gives the Sirens bird bodies rather than the later mermaid form — nineteenth-century archaeology entering the picture itself.',
        fr:'Ulysse se fait attacher au mât et bouche les oreilles de ses marins pour entendre le chant interdit sans y périr. Fidèle à la céramique grecque, Waterhouse donne aux Sirènes des corps d’oiseau plutôt que la forme tardive de sirène-poisson : l’archéologie du XIXᵉ siècle entre dans le tableau.'} },
@@ -650,7 +754,7 @@ apotheosis_homer: {
   wiki: 'The Apotheosis of Homer',
   t:{zh:'荷馬的神化', en:'The Apotheosis of Homer', fr:'L’Apothéose d’Homère'},
   a:{zh:'安格爾 Ingres', en:'Jean-Auguste-Dominique Ingres'},
-  y:'1827', m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
+  y:'1827', yr:1827, m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
   why:{zh:'詩人被勝利女神加冕，腳下坐著擬人化的《伊利亞德》與《奧德賽》，兩側是拉斐爾、莫札特、普桑等後世大師。這是新古典主義的信仰告白：整個歐洲藝術的族譜，都從一位希臘盲詩人開始。',
        en:'Victory crowns the poet; personifications of the <em>Iliad</em> and <em>Odyssey</em> sit at his feet while Raphael, Poussin, Mozart and others assemble on either side. It is Neoclassicism’s creed made visible: the entire genealogy of European art begins with one blind Greek poet.',
        fr:'La Victoire couronne le poète ; l’<em>Iliade</em> et l’<em>Odyssée</em> personnifiées siègent à ses pieds, tandis que Raphaël, Poussin, Mozart et d’autres se rassemblent de part et d’autre. Credo visible du néoclassicisme : toute la généalogie de l’art européen commence avec un aède aveugle.'} },
@@ -660,7 +764,7 @@ bernini_aeneas: {
   wiki: 'Aeneas, Anchises, and Ascanius',
   t:{zh:'埃涅阿斯、安基塞斯與阿斯卡尼俄斯', en:'Aeneas, Anchises, and Ascanius', fr:'Énée, Anchise et Ascagne'},
   a:{zh:'貝尼尼（與其父）Bernini', en:'Gian Lorenzo Bernini (with Pietro Bernini)', fr:'Le Bernin (avec Pietro Bernini)'},
-  y:'1618–19', m:{zh:'大理石．羅馬博爾蓋塞美術館', en:'Marble · Galleria Borghese, Rome', fr:'Marbre · Galerie Borghèse, Rome'},
+  y:'1618–19', yr:1619, m:{zh:'大理石．羅馬博爾蓋塞美術館', en:'Marble · Galleria Borghese, Rome', fr:'Marbre · Galerie Borghèse, Rome'},
   why:{zh:'埃涅阿斯背著老父逃出燃燒的特洛伊，父親手中捧著家族神像，幼子跟在腳邊。三代人垂直疊成一根柱子，正是羅馬最高德性 <em>pietas</em>（對神、父、國的責任）的圖像定義。',
        en:'Aeneas carries his father out of burning Troy, the old man clutching the household gods, the small son at his heels. Three generations stacked into a single vertical column: the visual definition of <em>pietas</em>, Rome’s supreme virtue — duty to gods, father and state.',
        fr:'Énée porte son père hors de Troie en flammes, le vieillard serrant les dieux domestiques, le fils cadet à ses pieds. Trois générations empilées en une colonne verticale : définition visuelle de la <em>pietas</em>, vertu suprême de Rome — devoir envers les dieux, le père et l’État.'} },
@@ -669,7 +773,7 @@ capitoline_wolf: {
   wiki: 'Capitoline Wolf',
   t:{zh:'卡比托利歐母狼', en:'Capitoline Wolf', fr:'Louve du Capitole'},
   a:{zh:'佚名（母狼），雙嬰為文藝復興補作', en:'Unknown (wolf); twins added in the Renaissance', fr:'Anonyme (louve) ; jumeaux ajoutés à la Renaissance'},
-  y:{zh:'母狼年代仍具爭議；雙嬰約 1471–1509', en:'Wolf date disputed; twins c. 1471–1509', fr:'Datation de la louve discutée ; jumeaux v. 1471–1509'},
+  y:{zh:'母狼年代仍具爭議；雙嬰約 1471–1509', en:'Wolf date disputed; twins c. 1471–1509', fr:'Datation de la louve discutée ; jumeaux v. 1471–1509'}, yr:null,
   m:{zh:'青銅．羅馬卡比托利歐博物館', en:'Bronze · Capitoline Museums, Rome', fr:'Bronze · Musées du Capitole, Rome'},
   why:{zh:'羅慕勒斯與雷穆斯由母狼哺育——羅馬把自己的起源訴說為「被野性拯救」。有趣的是母狼原本可能沒有雙嬰，是文藝復興才加上去的：連建國神話的圖像本身，都是後人不斷補寫的結果。',
        en:'Romulus and Remus suckled by a she-wolf: Rome tells its own origin as a rescue by the wild. Tellingly, the wolf may originally have had no twins at all — they were added in the Renaissance. Even the image of a foundation myth keeps being rewritten by later hands.',
@@ -679,7 +783,7 @@ giambologna_sabine: {
   wiki: 'Abduction of a Sabine Woman',
   t:{zh:'劫掠薩賓婦女', en:'Abduction of a Sabine Woman', fr:'Enlèvement d’une Sabine'},
   a:{zh:'詹波隆那 Giambologna', en:'Giambologna'},
-  y:'1579–83', m:{zh:'大理石．佛羅倫斯傭兵涼廊', en:'Marble · Loggia dei Lanzi, Florence', fr:'Marbre · Loggia dei Lanzi, Florence'},
+  y:'1579–83', yr:1581, m:{zh:'大理石．佛羅倫斯傭兵涼廊', en:'Marble · Loggia dei Lanzi, Florence', fr:'Marbre · Loggia dei Lanzi, Florence'},
   why:{zh:'早期羅馬男多女少，遂設局擄走鄰邦薩賓的婦女。詹波隆那自陳先做出這個螺旋上升的三人結構，才替它「找」了一個題目——矯飾主義的 <em>figura serpentinata</em> 讓形式先於敘事。',
        en:'Short of women, early Rome seized them from the neighbouring Sabines. Giambologna admitted he built the upward-spiralling group of three figures first and only then found a subject for it — Mannerism’s <em>figura serpentinata</em>, where form precedes narrative.',
        fr:'Manquant de femmes, la Rome primitive enleva celles des Sabins voisins. Giambologna avoua avoir d’abord conçu ce groupe en spirale ascendante, puis lui avoir cherché un sujet — la <em>figura serpentinata</em> maniériste, où la forme précède le récit.'} },
@@ -688,7 +792,7 @@ david_sabines: {
   wiki: 'The Intervention of the Sabine Women',
   t:{zh:'薩賓婦女的調停', en:'The Intervention of the Sabine Women', fr:'Les Sabines'},
   a:{zh:'大衛 David', en:'Jacques-Louis David'},
-  y:'1799', m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
+  y:'1799', yr:1799, m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
   why:{zh:'被擄的薩賓婦女多年後衝入戰場，用自己的身體隔開丈夫與父兄。大衛在恐怖統治後入獄、獲釋，選這個「和解」的神話向法國喊話——同一位畫家先前用《荷拉斯兄弟之誓》呼籲犧牲，如今用神話呼籲停手。',
        en:'Years after the abduction, the Sabine women hurl themselves between their husbands and their fathers. David painted it after imprisonment in the wake of the Terror, choosing a myth of reconciliation to address France — the same artist who had once used the <em>Oath of the Horatii</em> to demand sacrifice now used myth to demand that the killing stop.',
        fr:'Des années après l’enlèvement, les Sabines se jettent entre leurs maris et leurs pères. David la peint après son emprisonnement, au sortir de la Terreur, choisissant un mythe de réconciliation pour parler à la France — le peintre qui avait exigé le sacrifice avec <em>Le Serment des Horaces</em> réclame désormais l’arrêt du carnage.'} },
@@ -697,7 +801,7 @@ horatii: {
   wiki: 'Oath of the Horatii',
   t:{zh:'荷拉斯兄弟之誓', en:'Oath of the Horatii', fr:'Le Serment des Horaces'},
   a:{zh:'大衛 David', en:'Jacques-Louis David'},
-  y:'1784', m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
+  y:'1784', yr:1784, m:{zh:'油彩畫布．巴黎羅浮宮', en:'Oil on canvas · Musée du Louvre, Paris', fr:'Huile sur toile · Musée du Louvre, Paris'},
   why:{zh:'李維記載的羅馬傳說：三兄弟受命與敵城代表決鬥，母姊在右側癱軟哭泣。左側的直線與右側的曲線，把「國家／男性／理性」與「家庭／女性／情感」對立起來——革命前夕最有名的道德號令。',
        en:'A Roman legend from Livy: three brothers swear to fight for the city while the women collapse in grief on the right. Straight lines on the left against curves on the right split state/male/reason from family/female/feeling — the most famous moral summons on the eve of the Revolution.',
        fr:'Légende romaine rapportée par Tite-Live : trois frères jurent de combattre pour la cité tandis que les femmes s’effondrent à droite. Lignes droites à gauche contre courbes à droite : l’État/le masculin/la raison contre la famille/le féminin/le sentiment — la plus célèbre sommation morale à la veille de la Révolution.'} },
@@ -706,7 +810,7 @@ prima_porta: {
   wiki: 'Augustus of Prima Porta',
   t:{zh:'第一門的奧古斯都', en:'Augustus of Prima Porta', fr:'Auguste de Prima Porta'},
   a:{zh:'佚名（羅馬帝國）', en:'Unknown (Roman Imperial)', fr:'Anonyme (Rome impériale)'},
-  y:'c. 20 BC (copy 1st c. AD)', m:{zh:'大理石．梵蒂岡博物館', en:'Marble · Vatican Museums', fr:'Marbre · Musées du Vatican'},
+  y:'c. 20 BC (copy 1st c. AD)', yr:-20, m:{zh:'大理石．梵蒂岡博物館', en:'Marble · Vatican Museums', fr:'Marbre · Musées du Vatican'},
   why:{zh:'請看皇帝右腳邊：一個騎海豚的小邱比特。那是在提醒觀者——尤利烏斯家族自稱是埃涅阿斯之後，而埃涅阿斯是維納斯之子。神話在此不是裝飾，而是政權合法性的法律文件。',
        en:'Look at the emperor’s right ankle: a small Cupid riding a dolphin. It reminds the viewer that the Julian family claimed descent from Aeneas, and Aeneas was the son of Venus. Here myth is not decoration but the legal paperwork of legitimacy.',
        fr:'Regardez à la cheville droite de l’empereur : un petit Cupidon chevauchant un dauphin. Il rappelle que la gens Julia se disait issue d’Énée, fils de Vénus. Le mythe n’est pas ici un décor mais le titre juridique de la légitimité.'} },
@@ -715,7 +819,7 @@ ara_pacis: {
   wiki: 'Ara Pacis',
   t:{zh:'和平祭壇', en:'Ara Pacis', fr:'Ara Pacis'},
   a:{zh:'佚名（羅馬帝國）', en:'Unknown (Roman Imperial)', fr:'Anonyme (Rome impériale)'},
-  y:'13–9 BC', m:{zh:'大理石．羅馬和平祭壇博物館', en:'Marble · Museo dell’Ara Pacis, Rome', fr:'Marbre · Museo dell’Ara Pacis, Rome'},
+  y:'13–9 BC', yr:-11, m:{zh:'大理石．羅馬和平祭壇博物館', en:'Marble · Museo dell’Ara Pacis, Rome', fr:'Marbre · Museo dell’Ara Pacis, Rome'},
   why:{zh:'浮雕上，埃涅阿斯獻祭、母狼哺育雙嬰、大地女神懷抱豐饒，與真實的奧古斯都家族遊行並列。神話場景與當代人物出現在同一圈牆上——這是把當朝政治直接寫進神譜的官方宣傳。',
        en:'Its reliefs set Aeneas sacrificing, the she-wolf with the twins, and a fertile Earth goddess beside a procession of the real Augustan family. Mythical scenes and living contemporaries share one wall — state propaganda writing the current regime directly into the genealogy of the gods.',
        fr:'Ses reliefs placent Énée sacrifiant, la louve et les jumeaux, une déesse Terre féconde à côté d’un cortège de la famille augustéenne réelle. Scènes mythiques et contemporains vivants sur un même mur : la propagande d’État inscrit le régime dans la généalogie des dieux.'} },
@@ -725,7 +829,7 @@ bernini_daphne: {
   wiki: 'Apollo and Daphne (Bernini)',
   t:{zh:'阿波羅與達芙妮', en:'Apollo and Daphne', fr:'Apollon et Daphné'},
   a:{zh:'貝尼尼 Bernini', en:'Gian Lorenzo Bernini', fr:'Le Bernin'},
-  y:'1622–25', m:{zh:'大理石．羅馬博爾蓋塞美術館', en:'Marble · Galleria Borghese, Rome', fr:'Marbre · Galerie Borghèse, Rome'},
+  y:'1622–25', yr:1623, m:{zh:'大理石．羅馬博爾蓋塞美術館', en:'Marble · Galleria Borghese, Rome', fr:'Marbre · Galerie Borghèse, Rome'},
   why:{zh:'寧芙求父親救她，於是手指抽長為枝、腳趾扎根、皮膚變成月桂樹皮——而阿波羅的手才剛碰到她。貝尼尼選中「變形進行到一半」的那一秒，把《變形記》的核心動詞刻進石頭；月桂從此成為詩人的桂冠。',
        en:'The nymph begs her father for rescue, and her fingers lengthen into branches, her toes root, her skin turns to laurel bark — at the exact instant Apollo’s hand touches her. Bernini chooses the half-second in which the change is still happening, carving the central verb of the <em>Metamorphoses</em>; the laurel becomes the poet’s crown ever after.',
        fr:'La nymphe supplie son père : ses doigts s’allongent en rameaux, ses orteils s’enracinent, sa peau devient écorce de laurier — à l’instant précis où la main d’Apollon la touche. Le Bernin choisit la demi-seconde où la métamorphose est en cours, gravant dans la pierre le verbe central des <em>Métamorphoses</em> ; le laurier deviendra la couronne des poètes.'} },
@@ -734,7 +838,7 @@ narcissus: {
   wiki: 'Narcissus (Caravaggio)',
   t:{zh:'納西瑟斯', en:'Narcissus', fr:'Narcisse'},
   a:{zh:'卡拉瓦喬（傳）Caravaggio', en:'Caravaggio (attributed)', fr:'Caravage (attribué)'},
-  y:'c. 1597–99', m:{zh:'油彩畫布．羅馬國立古代藝術美術館', en:'Oil on canvas · Galleria Nazionale d’Arte Antica, Rome', fr:'Huile sur toile · Galleria Nazionale d’Arte Antica, Rome'},
+  y:'c. 1597–99', yr:1598, m:{zh:'油彩畫布．羅馬國立古代藝術美術館', en:'Oil on canvas · Galleria Nazionale d’Arte Antica, Rome', fr:'Huile sur toile · Galleria Nazionale d’Arte Antica, Rome'},
   why:{zh:'少年愛上自己的倒影而枯萎。畫面被水面切成上下對稱的兩半，中央是他發亮的膝蓋——構圖本身就是「自戀」的幾何學。阿爾伯提甚至說：繪畫的發明者就是納西瑟斯。',
        en:'The boy who withers loving his own reflection. The canvas is split into mirrored halves by the water, hinged on his glowing knee — the composition itself is the geometry of self-love. Alberti went further: the inventor of painting, he wrote, <em>was</em> Narcissus.',
        fr:'L’adolescent qui dépérit d’aimer son reflet. La toile est coupée en deux moitiés symétriques par l’eau, pivotant sur son genou lumineux : la composition est la géométrie même de l’amour de soi. Alberti allait plus loin : l’inventeur de la peinture, écrivait-il, <em>était</em> Narcisse.'} },
@@ -743,7 +847,7 @@ titian_europa: {
   wiki: 'The Rape of Europa (Titian)',
   t:{zh:'劫奪歐羅巴', en:'The Rape of Europa', fr:'L’Enlèvement d’Europe'},
   a:{zh:'提香 Titian', en:'Titian'},
-  y:'1560–62', m:{zh:'油彩畫布．波士頓伊莎貝拉嘉納藝術博物館', en:'Oil on canvas · Isabella Stewart Gardner Museum, Boston', fr:'Huile sur toile · Isabella Stewart Gardner Museum, Boston'},
+  y:'1560–62', yr:1561, m:{zh:'油彩畫布．波士頓伊莎貝拉嘉納藝術博物館', en:'Oil on canvas · Isabella Stewart Gardner Museum, Boston', fr:'Huile sur toile · Isabella Stewart Gardner Museum, Boston'},
   why:{zh:'宙斯化為白牛把腓尼基公主馱過海，她的名字後來成為「歐洲」。這是提香為西班牙腓力二世所作《詩畫》系列之一——他自稱在畫「poesie（視覺的詩）」，等於主張畫家與詩人平起平坐。',
        en:'Zeus, disguised as a white bull, carries the Phoenician princess across the sea; her name becomes “Europe.” One of the <em>poesie</em> Titian made for Philip II of Spain — by calling them visual poems he claimed for the painter the standing of the poet.',
        fr:'Zeus, changé en taureau blanc, emporte la princesse phénicienne par-delà la mer ; son nom deviendra « Europe ». L’une des <em>poesie</em> peintes par Titien pour Philippe II d’Espagne : en les nommant poèmes visuels, il revendique pour le peintre le rang du poète.'} },
@@ -752,7 +856,7 @@ titian_actaeon: {
   wiki: 'Diana and Actaeon (Titian)',
   t:{zh:'黛安娜與阿克泰翁', en:'Diana and Actaeon', fr:'Diane et Actéon'},
   a:{zh:'提香 Titian', en:'Titian'},
-  y:'1556–59', m:{zh:'油彩畫布．倫敦與愛丁堡國家美術館共有', en:'Oil on canvas · National Gallery, London / National Galleries of Scotland', fr:'Huile sur toile · National Gallery, Londres / National Galleries of Scotland'},
+  y:'1556–59', yr:1557, m:{zh:'油彩畫布．倫敦與愛丁堡國家美術館共有', en:'Oil on canvas · National Gallery, London / National Galleries of Scotland', fr:'Huile sur toile · National Gallery, Londres / National Galleries of Scotland'},
   why:{zh:'獵人偶然撞見沐浴中的月神，被變成鹿、遭自己的獵犬撕碎。整幅畫在講「看見」的罪與罰；提香晚年鬆散的筆觸讓形體幾乎溶解，預告了三百年後的印象派。',
        en:'A hunter blunders upon the bathing goddess, is turned into a stag and torn apart by his own hounds. The whole picture is about the crime and punishment of <em>seeing</em>; Titian’s late, loosened brushwork half-dissolves the forms, three centuries ahead of Impressionism.',
        fr:'Un chasseur surprend la déesse au bain, est changé en cerf et déchiré par ses propres chiens. Tout le tableau traite du crime et du châtiment de <em>voir</em> ; la touche tardive et relâchée de Titien dissout à demi les formes, trois siècles avant l’impressionnisme.'} },
@@ -761,7 +865,7 @@ rembrandt_danae: {
   wiki: 'Danaë (Rembrandt painting)',
   t:{zh:'達娜厄', en:'Danaë', fr:'Danaé'},
   a:{zh:'林布蘭 Rembrandt', en:'Rembrandt van Rijn'},
-  y:'1636–43', m:{zh:'油彩畫布．聖彼得堡艾爾米塔什博物館', en:'Oil on canvas · Hermitage Museum, St Petersburg', fr:'Huile sur toile · Musée de l’Ermitage, Saint-Pétersbourg'},
+  y:'1636–43', yr:1640, m:{zh:'油彩畫布．聖彼得堡艾爾米塔什博物館', en:'Oil on canvas · Hermitage Museum, St Petersburg', fr:'Huile sur toile · Musée de l’Ermitage, Saint-Pétersbourg'},
   why:{zh:'宙斯化作金雨進入被囚的公主房中。多數畫家真的畫出金幣，林布蘭卻只用一道暖光——神的臨在被翻譯成純粹的光線。克林姆在 1907 年重畫同一題材，則把金雨變成裝飾性的金色渦流。',
        en:'Zeus enters the imprisoned princess’s chamber as a shower of gold. Most painters render actual coins; Rembrandt gives only a wash of warm light — divine presence translated into pure illumination. Klimt repainted the subject in 1907, turning the golden rain into an ornamental swirl.',
        fr:'Zeus pénètre en pluie d’or dans la chambre de la princesse enfermée. La plupart des peintres montrent de vraies pièces ; Rembrandt ne donne qu’une nappe de lumière chaude — la présence divine traduite en pure clarté. Klimt reprendra le sujet en 1907, changeant la pluie d’or en tourbillon ornemental.'} },
@@ -770,7 +874,7 @@ gerome_pygmalion: {
   wiki: 'Pygmalion and Galatea (Gérôme painting)',
   t:{zh:'皮格馬利翁與加拉泰亞', en:'Pygmalion and Galatea', fr:'Pygmalion et Galatée'},
   a:{zh:'傑洛姆 Gérôme', en:'Jean-Léon Gérôme'},
-  y:'c. 1890', m:{zh:'油彩畫布．紐約大都會藝術博物館', en:'Oil on canvas · The Metropolitan Museum of Art, New York', fr:'Huile sur toile · Metropolitan Museum of Art, New York'},
+  y:'c. 1890', yr:1890, m:{zh:'油彩畫布．紐約大都會藝術博物館', en:'Oil on canvas · The Metropolitan Museum of Art, New York', fr:'Huile sur toile · Metropolitan Museum of Art, New York'},
   why:{zh:'雕刻家愛上自己的作品，維納斯讓象牙變成血肉。傑洛姆讓下半身仍是灰白石頭、上半身已泛出膚色——這是藝術家關於自身職業的終極神話：創作能否真的賦予生命？',
        en:'A sculptor falls in love with his own statue and Venus turns ivory into flesh. Gérôme keeps the legs chalky stone while the upper body already flushes with skin tone — the ultimate myth artists tell about their own trade: can making really give life?',
        fr:'Un sculpteur s’éprend de sa propre statue et Vénus change l’ivoire en chair. Gérôme laisse les jambes de pierre blafarde tandis que le buste rosit déjà : le mythe ultime que les artistes racontent sur leur métier — créer peut-il vraiment donner la vie ?'} },
@@ -779,7 +883,7 @@ las_hilanderas: {
   wiki: 'Las Hilanderas',
   t:{zh:'紡紗女（阿拉克涅的寓言）', en:'The Spinners (The Fable of Arachne)', fr:'Les Fileuses (La Fable d’Arachné)'},
   a:{zh:'委拉斯奎茲 Velázquez', en:'Diego Velázquez'},
-  y:'c. 1655–60', m:{zh:'油彩畫布．馬德里普拉多美術館', en:'Oil on canvas · Museo del Prado, Madrid', fr:'Huile sur toile · Musée du Prado, Madrid'},
+  y:'c. 1655–60', yr:1657, m:{zh:'油彩畫布．馬德里普拉多美術館', en:'Oil on canvas · Museo del Prado, Madrid', fr:'Huile sur toile · Musée du Prado, Madrid'},
   why:{zh:'前景是馬德里的織坊女工，後景掛毯裡才是雅典娜懲罰凡人織女阿拉克涅的神話。委拉斯奎茲把神話推到畫中畫的深處，讓「勞動」占據前台——一幅關於藝術家地位與技藝競賽的宣言。',
        en:'The foreground holds real Madrid weavers; the myth — Athena punishing the mortal weaver Arachne — appears only in the tapestry at the back. Velázquez pushes myth into a picture-within-a-picture and gives the front to labour: a manifesto about craft, contest and the artist’s status.',
        fr:'Au premier plan, de vraies fileuses madrilènes ; le mythe — Athéna châtiant la mortelle Arachné — n’apparaît que dans la tapisserie du fond. Velázquez relègue le mythe dans le tableau-dans-le-tableau et donne le devant au travail : manifeste sur le métier, le concours et le statut de l’artiste.'} },
@@ -788,7 +892,7 @@ raphael_galatea: {
   wiki: 'The Triumph of Galatea',
   t:{zh:'加拉泰亞的凱旋', en:'The Triumph of Galatea', fr:'Le Triomphe de Galatée'},
   a:{zh:'拉斐爾 Raphael', en:'Raphael', fr:'Raphaël'},
-  y:'c. 1512', m:{zh:'濕壁畫．羅馬法爾內西納別墅', en:'Fresco · Villa Farnesina, Rome', fr:'Fresque · Villa Farnésine, Rome'},
+  y:'c. 1512', yr:1512, m:{zh:'濕壁畫．羅馬法爾內西納別墅', en:'Fresco · Villa Farnesina, Rome', fr:'Fresque · Villa Farnésine, Rome'},
   why:{zh:'海中寧芙乘海豚貝車，四周小愛神拉弓。拉斐爾說他畫的不是任何真實模特兒，而是「心中的某個理念」——這句話後來成為藝術理論中「理想美」概念的起點。',
        en:'The sea-nymph rides a shell-car drawn by dolphins while cupids take aim. Raphael said he painted no living model but “a certain idea” in his mind — a sentence that became the starting point for the whole theory of ideal beauty.',
        fr:'La nymphe marine file sur un char-coquille tiré par des dauphins, sous les flèches des amours. Raphaël disait ne peindre aucun modèle vivant mais « une certaine idée » présente à son esprit — phrase fondatrice de toute la théorie de la beauté idéale.'} },
@@ -797,7 +901,7 @@ bronzino_venus: {
   wiki: 'Venus, Cupid, Folly and Time',
   t:{zh:'維納斯、邱比特、愚妄與時間', en:'Venus, Cupid, Folly and Time', fr:'Vénus, Cupidon, la Folie et le Temps'},
   a:{zh:'布隆津諾 Bronzino', en:'Agnolo Bronzino'},
-  y:'c. 1545', m:{zh:'油彩木板．倫敦國家美術館', en:'Oil on panel · The National Gallery, London', fr:'Huile sur bois · National Gallery, Londres'},
+  y:'c. 1545', yr:1545, m:{zh:'油彩木板．倫敦國家美術館', en:'Oil on panel · The National Gallery, London', fr:'Huile sur bois · National Gallery, Londres'},
   why:{zh:'冰冷光滑的裸體、蜂蜜與蠍尾的少女、右上角拉開帷幕的時間老人。矯飾主義用一堆難解的神話符號堆出一則關於情慾與其代價的謎題，正是宮廷文化「越難懂越高級」的極致。',
        en:'Glassy cold nudes, a girl who is honey in front and scorpion behind, and old Father Time hauling back the curtain at upper right. Mannerism piles up deliberately unreadable mythological signs into a riddle about desire and its cost — courtly culture at its most “the harder, the better.”',
        fr:'Des nus froids et lisses, une fille de miel par-devant et de scorpion par-derrière, et le vieux Temps tirant le rideau en haut à droite. Le maniérisme accumule des signes mythologiques volontairement illisibles en une énigme sur le désir et son prix : la culture de cour dans son goût du plus obscur possible.'} },
@@ -806,7 +910,7 @@ moreau_sphinx: {
   wiki: 'Oedipus and the Sphinx (Moreau)',
   t:{zh:'伊底帕斯與斯芬克斯（摩洛）', en:'Oedipus and the Sphinx', fr:'Œdipe et le Sphinx'},
   a:{zh:'摩洛 Moreau', en:'Gustave Moreau'},
-  y:'1864', m:{zh:'油彩畫布．紐約大都會藝術博物館', en:'Oil on canvas · The Metropolitan Museum of Art, New York', fr:'Huile sur toile · Metropolitan Museum of Art, New York'},
+  y:'1864', yr:1864, m:{zh:'油彩畫布．紐約大都會藝術博物館', en:'Oil on canvas · The Metropolitan Museum of Art, New York', fr:'Huile sur toile · Metropolitan Museum of Art, New York'},
   why:{zh:'與安格爾的版本相對照：這裡斯芬克斯用爪子攀上英雄胸口，兩人四目相接。象徵主義不再把神話當歷史場景，而當成慾望與死亡的內在心像——直通後來的佛洛伊德。',
        en:'Set this against Ingres: here the Sphinx claws its way up onto the hero’s chest and the two lock eyes. Symbolism stops treating myth as a historical scene and treats it as an inner image of desire and death — the road that leads straight to Freud.',
        fr:'À comparer avec Ingres : ici le Sphinx grimpe, griffes plantées, sur la poitrine du héros, et leurs regards se soudent. Le symbolisme cesse de voir dans le mythe une scène historique pour y lire une image intérieure du désir et de la mort — la route qui mène droit à Freud.'} },
@@ -824,42 +928,42 @@ const BASICS = {
     fr:'La réponse la plus brève : <strong class="text-white">le mythe grec est l’original ; le mythe romain est ce que les Romains en ont fait après l’avoir repris.</strong> Zeus et Jupiter ne sont pas deux dieux : ce sont le nom grec et le nom romain d’un même dieu. Mais « ils ont juste changé les noms » n’est vrai qu’à moitié — et l’autre moitié est l’objet de cette section.'},
 
   timeline:[
-    { y:'約前 1600–1100', ye:'c. 1600–1100 BC',
+    { era:'greek', y:'約前 1600–1100', ye:'c. 1600–1100 BC',
       t:{zh:'邁錫尼文明', en:'Mycenaean Greece', fr:'Grèce mycénienne'},
       p:{zh:'希臘神話最早的根。當時的泥板文書上已經出現宙斯、赫拉、波賽頓的名字——所以這些神至少有三千五百年歷史，比荷馬還早了八百年。',
          en:'The oldest root of Greek myth. Clay tablets from this period already carry the names Zeus, Hera and Poseidon — so these gods are at least 3,500 years old, eight centuries older than Homer.',
          fr:'La plus ancienne racine du mythe grec. Des tablettes d’argile de cette période portent déjà les noms de Zeus, Héra et Poséidon : ces dieux ont donc au moins 3 500 ans, huit siècles de plus qu’Homère.'} },
-    { y:'約前 700', ye:'c. 700 BC',
+    { era:'greek', y:'約前 700', ye:'c. 700 BC',
       t:{zh:'荷馬與赫西俄德', en:'Homer and Hesiod', fr:'Homère et Hésiode'},
       p:{zh:'口耳相傳幾百年的故事第一次被寫下來。荷馬寫戰爭與英雄（《伊利亞德》《奧德賽》），赫西俄德寫諸神的家譜（《神譜》）。從此希臘人有了一套大致固定的神話。',
          en:'Stories passed by mouth for centuries are written down for the first time. Homer takes war and heroes (the <em>Iliad</em> and <em>Odyssey</em>), Hesiod takes the family tree of the gods (the <em>Theogony</em>). From here on the Greeks have a roughly settled mythology.',
          fr:'Des récits transmis oralement pendant des siècles sont mis par écrit pour la première fois. Homère prend la guerre et les héros (l’<em>Iliade</em>, l’<em>Odyssée</em>), Hésiode la généalogie des dieux (la <em>Théogonie</em>). Les Grecs disposent dès lors d’une mythologie à peu près fixée.'} },
-    { y:'約前 500–400', ye:'c. 500–400 BC',
+    { era:'greek', y:'約前 500–400', ye:'c. 500–400 BC',
       t:{zh:'雅典的黃金時代', en:'The Athenian golden age', fr:'L’âge d’or athénien'},
       p:{zh:'悲劇作家把神話搬上舞台（伊底帕斯、美狄亞都在這時成為劇本），帕德嫩神廟落成。神話同時是宗教、文學和公共藝術。',
          en:'The tragedians put myth on stage — Oedipus and Medea become plays in these years — and the Parthenon is built. Myth is simultaneously religion, literature and public art.',
          fr:'Les tragiques portent le mythe à la scène — Œdipe et Médée deviennent des pièces en ces années — et le Parthénon s’élève. Le mythe est à la fois religion, littérature et art public.'} },
-    { y:'前 146', ye:'146 BC',
+    { era:'rome', y:'前 146', ye:'146 BC',
       t:{zh:'羅馬征服希臘', en:'Rome conquers Greece', fr:'Rome conquiert la Grèce'},
       p:{zh:'這是關鍵的轉折點。希臘成為羅馬的行省，大量希臘雕像被運回羅馬，希臘教師成為羅馬貴族子弟的家教。羅馬人在軍事上贏了，卻在文化上被希臘同化——羅馬詩人賀拉斯自己就這樣寫：「被征服的希臘，反過來征服了她粗野的征服者。」',
          en:'The hinge. Greece becomes a Roman province, Greek statues are shipped to Rome by the boatload, and Greek tutors teach the children of the Roman elite. Rome won militarily and was culturally absorbed by the loser — a Roman poet said exactly that himself.',
          fr:'Le tournant. La Grèce devient province romaine, les statues grecques affluent à Rome par bateaux entiers, et des précepteurs grecs enseignent aux enfants de l’élite romaine. Rome a gagné militairement et s’est fait absorber culturellement par le vaincu — un poète romain l’a écrit lui-même.'} },
-    { y:'前 29–19', ye:'29–19 BC',
+    { era:'rome', y:'前 29–19', ye:'29–19 BC',
       t:{zh:'維吉爾《埃涅阿斯紀》', en:'Virgil’s Aeneid', fr:'L’Énéide de Virgile'},
       p:{zh:'羅馬終於有了自己的國家史詩：特洛伊王子埃涅阿斯逃出焚城、遠渡義大利，成為羅馬人的祖先。這不是希臘故事的翻譯，是羅馬人用希臘材料寫的自家起源。',
          en:'Rome finally gets a national epic of its own: the Trojan prince Aeneas escapes the burning city, sails to Italy and becomes the ancestor of the Romans. This is not a translation of a Greek story — it is Rome writing its own origin out of Greek materials.',
          fr:'Rome se dote enfin d’une épopée nationale : le prince troyen Énée fuit la ville en flammes, gagne l’Italie et devient l’ancêtre des Romains. Ce n’est pas la traduction d’un récit grec, c’est Rome écrivant sa propre origine avec des matériaux grecs.'} },
-    { y:'後 8', ye:'AD 8',
+    { era:'rome', y:'後 8', ye:'AD 8',
       t:{zh:'奧維德《變形記》', en:'Ovid’s Metamorphoses', fr:'Les Métamorphoses d’Ovide'},
       p:{zh:'兩百五十則神話被編成一本拉丁文的故事集。它日後成為歐洲畫家的教科書——本圖譜裡超過三分之一的作品，題材都出自這本書。',
          en:'Some 250 myths collected into one Latin storybook. It later becomes the working textbook of European painters — more than a third of the artworks in this atlas take their subject from it.',
          fr:'Quelque 250 mythes réunis en un recueil latin. Il deviendra le manuel de travail des peintres européens — plus d’un tiers des œuvres de cet atlas y puisent leur sujet.'} },
-    { y:'約 500–1400', ye:'c. 500–1400',
+    { era:'mid', y:'約 500–1400', ye:'c. 500–1400',
       t:{zh:'中世紀：希臘文失傳', en:'The Middle Ages: Greek is lost', fr:'Le Moyen Âge : le grec se perd'},
       p:{zh:'西歐幾乎沒有人讀得懂希臘文了，荷馬因此中斷。但拉丁文一直是教會與學者的語言，所以維吉爾和奧維德活了下來。這一步決定了後面所有事情。',
          en:'Almost nobody in Western Europe can read Greek any more, so Homer drops out of circulation. But Latin remains the language of the Church and of scholarship, so Virgil and Ovid survive. This single fact determines everything that follows.',
          fr:'Presque plus personne en Europe occidentale ne lit le grec : Homère sort de la circulation. Mais le latin demeure la langue de l’Église et du savoir, et Virgile comme Ovide survivent. Ce seul fait détermine tout le reste.'} },
-    { y:'1400 之後', ye:'after 1400',
+    { era:'ren', y:'1400 之後', ye:'after 1400',
       t:{zh:'文藝復興：重新發現古典', en:'The Renaissance rediscovers antiquity', fr:'La Renaissance redécouvre l’Antiquité'},
       p:{zh:'歐洲人重新熱愛古典世界，但他們手上讀的主要還是拉丁文本。於是畫家畫的是希臘故事，寫在畫框上的卻是羅馬名字——這個習慣一直延續到今天的美術館標籤。',
          en:'Europe falls in love with antiquity again — but what it actually reads is still mostly the Latin texts. So painters paint Greek stories and write Roman names on the frames, a habit that runs unbroken to the labels in museums today.',
@@ -967,6 +1071,138 @@ const BASICS = {
     zh:'最後回到看畫這件事。您站在美術館裡，標籤上寫著《維納斯的誕生》——這是<strong class="text-white">羅馬名字</strong>，因為畫家讀的是拉丁文的奧維德。但畫裡那具身體的比例、站姿與衣褶，來自<strong class="text-white">希臘雕塑</strong>（而且多半是透過羅馬人的複製品輾轉學來的）。<br><br>所以有一句話可以帶著走：<strong class="text-white">名字看羅馬，形體看希臘。</strong>把這一點放在心裡，接下來的章節就不會再混亂了——後面會依序介紹諸神長什麼樣、神話怎麼開始、英雄做了什麼，以及每一則故事被畫成了哪些作品。',
     en:'Finally, back to looking at pictures. You stand in a museum and the label says <em>The Birth of Venus</em> — a <strong class="text-white">Roman name</strong>, because the painter was reading Ovid in Latin. But the proportions, the stance and the fall of the drapery in that body come from <strong class="text-white">Greek sculpture</strong>, mostly learned second-hand through Roman copies.<br><br>So here is one line worth carrying with you: <strong class="text-white">the names are Roman, the bodies are Greek.</strong> Keep that in mind and the rest of this atlas will stay clear — the sections that follow introduce what each god looks like, how the myths begin, what the heroes did, and which artworks each story became.',
     fr:'Revenons enfin au fait de regarder des tableaux. Vous êtes au musée, le cartel indique <em>La Naissance de Vénus</em> — un <strong class="text-white">nom romain</strong>, parce que le peintre lisait Ovide en latin. Mais les proportions, l’attitude et la chute des draperies de ce corps viennent de la <strong class="text-white">sculpture grecque</strong>, apprise le plus souvent de seconde main, par des copies romaines.<br><br>Une phrase à emporter : <strong class="text-white">les noms sont romains, les corps sont grecs.</strong> Gardez-la en tête et la suite restera claire — les sections qui viennent présentent l’aspect de chaque dieu, le commencement des mythes, les exploits des héros, et les œuvres qu’est devenue chaque histoire.'}
+};
+
+/* ─────────────────────────────────────────────────────────────
+   THEOGONY — the three divine generations and the two coups
+   between them. This is the shape of Greek cosmogony: every
+   ruling generation is overthrown by its own son.
+   ───────────────────────────────────────────────────────────── */
+const THEOGONY = [
+  { gen:{zh:'第一代', en:'1st generation', fr:'1ʳᵉ génération'},
+    t:{zh:'原初之神', en:'The primordials', fr:'Les primordiaux'},
+    figs:[{zh:'卡俄斯 Chaos',en:'Chaos'},{zh:'蓋亞 Gaia（大地）',en:'Gaia (Earth)',fr:'Gaïa (la Terre)'},{zh:'烏拉諾斯 Uranus（天空）',en:'Uranus (Sky)',fr:'Ouranos (le Ciel)'}],
+    lead:1,
+    p:{zh:'最初只有「混沌」——一個裂口。接著大地蓋亞出現，生出天空烏拉諾斯，並與之結合，生下十二位泰坦。烏拉諾斯害怕子女奪權，把他們塞回大地深處。',
+       en:'First there is only Chaos — a gap. Then Gaia the Earth appears, gives birth to Uranus the Sky, couples with him and bears the twelve Titans. Fearing his children, Uranus stuffs them back inside the earth.',
+       fr:'D’abord le seul Chaos — une béance. Puis Gaïa la Terre paraît, enfante Ouranos le Ciel, s’unit à lui et met au monde les douze Titans. Craignant ses enfants, Ouranos les repousse au fond de la terre.'} },
+  { gen:{zh:'第二代', en:'2nd generation', fr:'2ᵉ génération'},
+    t:{zh:'泰坦', en:'The Titans', fr:'Les Titans'},
+    figs:[{zh:'克洛諾斯 Cronus（羅馬：薩圖恩）',en:'Cronus (Roman: Saturn)',fr:'Cronos (romain : Saturne)'},{zh:'瑞亞 Rhea',en:'Rhea',fr:'Rhéa'},{zh:'其餘十位泰坦',en:'the other ten Titans',fr:'les dix autres Titans'},{zh:'普羅米修斯（泰坦後裔）',en:'Prometheus (a Titan’s son)',fr:'Prométhée (fils de Titan)'}],
+    lead:0,
+    p:{zh:'克洛諾斯與姊妹瑞亞結合統治世界，這是神話中的「黃金時代」。但他得知自己也將被兒子推翻，於是逐一吞下新生的孩子。',
+       en:'Cronus rules with his sister Rhea — the mythic Golden Age. But warned that a son will overthrow him in turn, he swallows each newborn child.',
+       fr:'Cronos règne avec sa sœur Rhéa — l’Âge d’or du mythe. Mais averti qu’un fils le renversera à son tour, il avale chacun de ses nouveau-nés.'} },
+  { gen:{zh:'第三代', en:'3rd generation', fr:'3ᵉ génération'},
+    t:{zh:'奧林帕斯：克洛諾斯的六個孩子', en:'Olympus: the six children of Cronus', fr:'L’Olympe : les six enfants de Cronos'},
+    figs:[{zh:'宙斯 Zeus',en:'Zeus'},{zh:'赫拉 Hera',en:'Hera',fr:'Héra'},{zh:'波賽頓 Poseidon',en:'Poseidon',fr:'Poséidon'},{zh:'黑帝斯 Hades',en:'Hades',fr:'Hadès'},{zh:'狄蜜特 Demeter',en:'Demeter',fr:'Déméter'},{zh:'希絲提亞 Hestia',en:'Hestia',fr:'Hestia'}],
+    lead:0,
+    p:{zh:'瑞亞用襁褓包住石頭掉包，保住了么子宙斯。宙斯長大後逼父親吐出兄姊，三兄弟抽籤分治世界：宙斯得天空，波賽頓得海洋，黑帝斯得冥界。',
+       en:'Rhea swaps a swaddled stone for her youngest and saves Zeus. Grown, he forces his father to disgorge the others, and the three brothers draw lots for the world: Zeus takes the sky, Poseidon the sea, Hades the underworld.',
+       fr:'Rhéa substitue une pierre emmaillotée et sauve son cadet, Zeus. Adulte, il contraint son père à recracher les autres, et les trois frères tirent le monde au sort : à Zeus le ciel, à Poséidon la mer, à Hadès les Enfers.'} },
+  { gen:{zh:'第四代', en:'4th generation', fr:'4ᵉ génération'},
+    t:{zh:'宙斯的子女', en:'The children of Zeus', fr:'Les enfants de Zeus'},
+    figs:[{zh:'雅典娜 Athena',en:'Athena',fr:'Athéna'},{zh:'阿波羅 Apollo',en:'Apollo',fr:'Apollon'},{zh:'阿特蜜斯 Artemis',en:'Artemis',fr:'Artémis'},{zh:'阿瑞斯 Ares',en:'Ares',fr:'Arès'},{zh:'赫菲斯托斯 Hephaestus',en:'Hephaestus',fr:'Héphaïstos'},{zh:'赫密斯 Hermes',en:'Hermes',fr:'Hermès'},{zh:'狄奧尼索斯 Dionysus',en:'Dionysus',fr:'Dionysos'}],
+    lead:-1,
+    p:{zh:'第三代加上這一代，湊成「奧林帕斯十二主神」。到此政變停止——宙斯是第一位沒有被兒子推翻的統治者，希臘神話的世界秩序就此固定下來。',
+       en:'This generation plus the previous one makes up the Twelve Olympians. Here the coups stop: Zeus is the first ruler not overthrown by a son, and the world order of Greek myth is fixed from this point on.',
+       fr:'Cette génération et la précédente forment les Douze Olympiens. Ici s’arrêtent les coups d’État : Zeus est le premier souverain que son fils ne renverse pas, et l’ordre du monde grec se fige.'} },
+];
+const COUPS = [
+  { after:0, t:{zh:'第一次政變', en:'Coup no. 1', fr:'1ᵉʳ coup d’État'},
+    p:{zh:'蓋亞打造鐮刀，唆使最小的兒子克洛諾斯閹割並推翻父親烏拉諾斯。落入海中的血沫生出了阿芙蘿黛蒂（維納斯）。',
+       en:'Gaia forges a sickle and sets her youngest son Cronus on his father: Uranus is castrated and overthrown. From the foam where the severed flesh falls into the sea, Aphrodite (Venus) is born.',
+       fr:'Gaïa forge une faucille et arme son plus jeune fils Cronos contre son père : Ouranos est châtré et renversé. De l’écume où tombe la chair jaillit Aphrodite (Vénus).'} },
+  { after:1, t:{zh:'第二次政變', en:'Coup no. 2', fr:'2ᵉ coup d’État'},
+    p:{zh:'宙斯率領兄姊對抗泰坦，史稱「泰坦之戰」，打了十年。泰坦戰敗被打入地底深淵塔耳塔羅斯。',
+       en:'Zeus leads his brothers and sisters against the Titans in the ten-year Titanomachy. The defeated Titans are hurled into Tartarus, the pit below the earth.',
+       fr:'Zeus mène ses frères et sœurs contre les Titans : la Titanomachie, dix ans de guerre. Vaincus, les Titans sont précipités au Tartare, l’abîme sous la terre.'} },
+];
+
+/* ─────────────────────────────────────────────────────────────
+   MYTHIC CHRONOLOGY — the order of events *inside* the myths,
+   which is where Greek myth flows into Roman myth.
+   ───────────────────────────────────────────────────────────── */
+const MYTHTIME = {
+  before:[
+    { n:'1', t:{zh:'創世', en:'The world begins', fr:'Le monde commence'},
+      p:{zh:'混沌 → 大地與天空 → 泰坦 → 奧林帕斯諸神。兩次政變之後，宙斯確立統治。',
+         en:'Chaos → Earth and Sky → the Titans → the Olympians. After two coups, Zeus’s rule is settled.',
+         fr:'Chaos → Terre et Ciel → les Titans → les Olympiens. Après deux coups d’État, le règne de Zeus s’établit.'},
+      arts:['saturn','pergamon'] },
+    { n:'2', t:{zh:'人類的誕生與墮落', en:'Humans appear, and fall', fr:'L’humanité paraît, et déchoit'},
+      p:{zh:'普羅米修斯用泥土造人並盜火，因此受罰；宙斯以潘朵拉與那只甕作為報復。人類從黃金時代一路衰退。',
+         en:'Prometheus shapes humans from clay and steals fire for them, and is punished; Zeus retaliates with Pandora and her jar. Humanity declines from a golden age.',
+         fr:'Prométhée façonne les hommes et leur vole le feu ; il est châtié, et Zeus riposte par Pandore et sa jarre. L’humanité déchoit depuis un âge d’or.'},
+      arts:['prometheus'] },
+    { n:'3', t:{zh:'英雄時代', en:'The age of heroes', fr:'L’âge des héros'},
+      p:{zh:'神與凡人生下的英雄清除怪物：海克力斯的十二苦差、柏修斯斬梅杜莎、忒修斯殺米諾陶洛斯、伊阿宋取金羊毛。',
+         en:'Heroes born of gods and mortals clear the world of monsters: the Twelve Labours, Perseus and Medusa, Theseus and the Minotaur, Jason and the Fleece.',
+         fr:'Des héros nés de dieux et de mortels débarrassent le monde des monstres : les Douze Travaux, Persée et Méduse, Thésée et le Minotaure, Jason et la Toison.'},
+      arts:['farnese','cellini_perseus','canova_theseus'] },
+    { n:'4', t:{zh:'特洛伊戰爭爆發', en:'The Trojan War breaks out', fr:'La guerre de Troie éclate'},
+      p:{zh:'金蘋果引發三位女神的爭執，帕里斯選了維納斯、拐走海倫，希臘聯軍出兵。圍城十年。',
+         en:'A golden apple sets three goddesses quarrelling; Paris chooses Venus, carries off Helen, and the Greek fleet sails. The siege lasts ten years.',
+         fr:'Une pomme d’or brouille trois déesses ; Pâris choisit Vénus, enlève Hélène, et la flotte grecque appareille. Le siège dure dix ans.'},
+      arts:['rubens_paris','exekias'] },
+    { n:'5', t:{zh:'特洛伊陷落', en:'Troy falls', fr:'Troie tombe'},
+      p:{zh:'阿基里斯殺死赫克托後自己也戰死；希臘人用木馬破城。祭司勞孔警告不要收下木馬，被海蛇絞殺。城破之夜，故事在此分岔成兩條路線。',
+         en:'Achilles kills Hector and is then killed himself; the Greeks take the city with the wooden horse. The priest Laocoön, who warned against it, is strangled by serpents. On the night the city burns, the story forks in two.',
+         fr:'Achille tue Hector puis périt à son tour ; les Grecs prennent la ville par le cheval de bois. Le prêtre Laocoon, qui avait mis en garde, est étouffé par des serpents. La nuit de l’incendie, le récit bifurque.'},
+      arts:['laocoon'] },
+  ],
+  fork:{
+    label:{zh:'城破之夜，兩條路線就此分開', en:'On the night Troy burns, the two lines separate', fr:'La nuit où Troie brûle, les deux lignes se séparent'},
+    greek:{
+      head:{zh:'希臘線：回家', en:'The Greek line: going home', fr:'La ligne grecque : rentrer'},
+      steps:[
+        { t:{zh:'奧德修斯漂流十年', en:'Odysseus wanders for ten years', fr:'Ulysse erre dix ans'},
+          p:{zh:'獨眼巨人、瑟茜、賽壬、卡呂普索——他因為觸怒波賽頓而無法歸鄉。',
+             en:'The Cyclops, Circe, the Sirens, Calypso — he cannot get home because he has angered Poseidon.',
+             fr:'Le Cyclope, Circé, les Sirènes, Calypso — il ne peut rentrer, ayant offensé Poséidon.'},
+          arts:['turner_polyphemus','waterhouse_sirens'] },
+        { t:{zh:'回到伊薩卡', en:'He reaches Ithaca', fr:'Il atteint Ithaque'},
+          p:{zh:'喬裝乞丐、射殺追求者、與妻子重逢。希臘英雄時代到此結束——故事收在一個人的家裡。',
+             en:'Disguised as a beggar, he kills the suitors and is reunited with his wife. The Greek heroic age ends here — the story closes inside one man’s house.',
+             fr:'Déguisé en mendiant, il tue les prétendants et retrouve son épouse. L’âge héroïque grec s’achève ici — le récit se referme dans la maison d’un homme.'},
+          arts:[] },
+      ] },
+    roman:{
+      head:{zh:'羅馬線：往西方去', en:'The Roman line: sailing west', fr:'La ligne romaine : vers l’ouest'},
+      steps:[
+        { t:{zh:'埃涅阿斯逃出焚城', en:'Aeneas escapes the burning city', fr:'Énée fuit la ville en flammes'},
+          p:{zh:'背著父親、牽著幼子，帶著家族神像離開特洛伊。他是維納斯的兒子。',
+             en:'He carries his father, leads his small son, and takes the household gods out of Troy. He is the son of Venus.',
+             fr:'Il porte son père, tient son jeune fils et emporte les dieux domestiques hors de Troie. Il est fils de Vénus.'},
+          arts:['bernini_aeneas'] },
+        { t:{zh:'迦太基與狄多', en:'Carthage and Dido', fr:'Carthage et Didon'},
+          p:{zh:'他愛上迦太基女王狄多，卻為了神諭的任務離開；狄多自焚而死，並詛咒兩國世代為敵——這是羅馬人對布匿戰爭的神話解釋。',
+             en:'He loves Queen Dido of Carthage but leaves to fulfil his destiny; she burns herself and curses the two nations to eternal enmity — Rome’s mythic explanation of the Punic Wars.',
+             fr:'Il aime la reine Didon mais part accomplir son destin ; elle se donne au bûcher et voue les deux nations à une haine éternelle — l’explication mythique des guerres puniques.'},
+          arts:[] },
+        { t:{zh:'抵達義大利', en:'He reaches Italy', fr:'Il atteint l’Italie'},
+          p:{zh:'在拉丁姆落腳、娶了當地公主，成為羅馬人的血緣祖先。維吉爾《埃涅阿斯紀》寫到這裡。',
+             en:'He settles in Latium, marries a local princess and becomes the bloodline ancestor of the Romans. Virgil’s <em>Aeneid</em> ends here.',
+             fr:'Il s’installe dans le Latium, épouse une princesse locale et devient l’ancêtre des Romains. L’<em>Énéide</em> s’arrête là.'},
+          arts:[] },
+      ] },
+  },
+  after:[
+    { n:'6', t:{zh:'羅慕勒斯建城（傳統定為前 753 年）', en:'Romulus founds the city (traditionally 753 BC)', fr:'Romulus fonde la ville (traditionnellement 753 av. J.-C.)'},
+      p:{zh:'埃涅阿斯的後代生下雙胞胎，被母狼哺育。兄弟為城牆爭執，羅慕勒斯殺了雷穆斯，以自己的名字命名羅馬。',
+         en:'Twins descended from Aeneas are suckled by a she-wolf. The brothers quarrel over the wall, Romulus kills Remus and names Rome for himself.',
+         fr:'Des jumeaux issus d’Énée sont allaités par une louve. Les frères se disputent le mur, Romulus tue Rémus et donne son nom à Rome.'},
+      arts:['capitoline_wolf','giambologna_sabine'] },
+    { n:'7', t:{zh:'神話接上真實歷史', en:'Myth joins real history', fr:'Le mythe rejoint l’histoire'},
+      p:{zh:'奧古斯都主張自己是埃涅阿斯、因而是維納斯的後代，並把這條血脈刻在和平祭壇與雕像上。<strong class="text-white">神話年表就此與羅馬的官方歷史接軌</strong>——這正是羅馬人要的效果。',
+         en:'Augustus claims descent from Aeneas and therefore from Venus, and has that bloodline carved on the Ara Pacis and on his statues. <strong class="text-white">The mythic timeline is spliced onto Rome’s official history</strong> — which was exactly the point.',
+         fr:'Auguste se dit issu d’Énée, donc de Vénus, et fait graver cette filiation sur l’Ara Pacis et ses statues. <strong class="text-white">La chronologie mythique est raccordée à l’histoire officielle de Rome</strong> — c’était précisément le but.'},
+      arts:['prima_porta','ara_pacis'] },
+  ],
+  close:{
+    zh:'看懂這張圖，就看懂了希臘與羅馬神話的關係：<strong class="text-white">它們不是兩套平行的故事，而是同一條敘事線在特洛伊城破的那一夜分岔。</strong>希臘那條線往回走、收在家裡；羅馬那條線往西走、收在一個帝國的誕生。這正是為什麼羅馬人願意接手希臘神話——因為他們把自己寫進了故事的續集。',
+    en:'Read this diagram and you have the relationship between the two mythologies: <strong class="text-white">they are not two parallel sets of stories but one narrative line that forks on the night Troy falls.</strong> The Greek branch turns back and ends in a house; the Roman branch sails west and ends in the birth of an empire. This is precisely why Rome was willing to adopt Greek myth — it had written itself into the sequel.',
+    fr:'Comprenez ce schéma et vous tenez le rapport entre les deux mythologies : <strong class="text-white">ce ne sont pas deux ensembles parallèles mais une seule ligne narrative qui bifurque la nuit de la chute de Troie.</strong> La branche grecque revient en arrière et s’achève dans une maison ; la branche romaine cingle vers l’ouest et s’achève sur la naissance d’un empire. Voilà pourquoi Rome a adopté le mythe grec — elle s’était écrite dans la suite.'}
 };
 
 /* ─────────────────────────────────────────────────────────────
@@ -1337,57 +1573,57 @@ const DECODER = [
    RECEPTION — mythology through the history of art
    ───────────────────────────────────────────────────────────── */
 const RECEPTION = [
-  { era:{zh:'古風與古典希臘', en:'Archaic &amp; Classical Greece', fr:'Grèce archaïque &amp; classique'}, y:'c. 700–323 BC',
+  { era:{zh:'古風與古典希臘', en:'Archaic &amp; Classical Greece', fr:'Grèce archaïque &amp; classique'}, s:-700, e:-323, y:'c. 700–323 BC',
     p:{zh:'神話首先活在陶瓶與神廟上。黑繪、紅繪瓶畫把故事帶進日常器物，神廟山牆與柱間板則把它變成城邦的公共宣示（帕德嫩神廟的雅典娜誕生與諸神之戰）。此時的重點不是「畫得像」，而是讓觀者一眼認出是誰、在做什麼——屬性系統就此建立。',
        en:'Myth first lives on pots and temples. Black- and red-figure vase painting carries the stories into everyday objects, while pediments and metopes turn them into civic statements (the birth of Athena and the battles of the gods on the Parthenon). The aim is not likeness but instant recognition of who is doing what — this is where the attribute system is established.',
        fr:'Le mythe vit d’abord sur les vases et les temples. Les figures noires et rouges portent les récits dans les objets quotidiens ; frontons et métopes en font des déclarations civiques (naissance d’Athéna, combats des dieux au Parthénon). L’enjeu n’est pas la ressemblance mais la reconnaissance immédiate — c’est là que naît le système des attributs.'},
     arts:['exekias'] },
-  { era:{zh:'希臘化時期', en:'Hellenistic period', fr:'Période hellénistique'}, y:'323–31 BC',
+  { era:{zh:'希臘化時期', en:'Hellenistic period', fr:'Période hellénistique'}, s:-323, e:-31, y:'323–31 BC',
     p:{zh:'古典的均衡讓位給激情：扭轉的身體、痛苦的表情、翻飛的衣褶。《勞孔》與佩加蒙祭壇把神話變成情緒的極限展示，這套「激情語彙」在一千七百年後被米開朗基羅與巴洛克整批取用。',
        en:'Classical balance gives way to passion: twisting bodies, agonized faces, storming drapery. The <em>Laocoön</em> and the Pergamon Altar turn myth into a demonstration of emotional extremity — a vocabulary of pathos that Michelangelo and the Baroque would take over wholesale seventeen centuries later.',
        fr:'L’équilibre classique cède à la passion : corps tordus, visages en agonie, draperies tempétueuses. Le <em>Laocoon</em> et l’autel de Pergame font du mythe une démonstration d’extrémité émotionnelle — un vocabulaire du pathos que Michel-Ange et le baroque reprendront en bloc dix-sept siècles plus tard.'},
     arts:['laocoon','pergamon'] },
-  { era:{zh:'羅馬', en:'Rome', fr:'Rome'}, y:'31 BC–476 AD',
+  { era:{zh:'羅馬', en:'Rome', fr:'Rome'}, s:-31, e:476, y:'31 BC–476 AD',
     p:{zh:'羅馬人大量複製希臘雕像（今日我們認識的「希臘藝術」多半是這些複製品），同時把神話用於國家宣傳：和平祭壇、凱旋門、皇帝雕像。龐貝的壁畫則顯示神話也是私人住宅的裝飾主題。',
        en:'Romans copy Greek statues in bulk — most “Greek art” we know today is in fact these copies — while putting myth to work as state messaging on altars, arches and imperial portraits. The wall paintings of Pompeii show the same stories decorating private houses.',
        fr:'Les Romains copient massivement les statues grecques — l’« art grec » que nous connaissons est surtout fait de ces copies — tout en mettant le mythe au service du message d’État sur les autels, les arcs et les portraits impériaux. Les fresques de Pompéi montrent les mêmes récits décorant les maisons privées.'},
     arts:['prima_porta','ara_pacis','apollo_belvedere'] },
-  { era:{zh:'中世紀的存續', en:'Medieval survival', fr:'Survivance médiévale'}, y:'c. 500–1400',
+  { era:{zh:'中世紀的存續', en:'Medieval survival', fr:'Survivance médiévale'}, s:500, e:1400, y:'c. 500–1400',
     p:{zh:'神祇沒有消失，只是換了身分：《道德化的奧維德》把每則故事重新解釋為基督教訓誡（達芙妮＝守貞的靈魂），諸神則以行星與月份勞作的形象活在曆書與星象書裡。這條隱蔽的通道，保住了文藝復興得以「復興」的材料。',
        en:'The gods do not vanish, they change papers. The <em>Ovide moralisé</em> re-reads every story as Christian instruction (Daphne = the soul preserving chastity), while the gods survive as planets and as labours of the months in calendars and astrological manuscripts. This underground channel preserved the material the Renaissance would later “revive.”',
        fr:'Les dieux ne disparaissent pas, ils changent de papiers. L’<em>Ovide moralisé</em> relit chaque récit en leçon chrétienne (Daphné = l’âme gardant sa chasteté), tandis que les dieux survivent en planètes et en travaux des mois dans les calendriers et les manuscrits astrologiques. Ce canal souterrain a conservé la matière que la Renaissance « ressuscitera ».'},
     arts:[] },
-  { era:{zh:'文藝復興', en:'Renaissance', fr:'Renaissance'}, y:'c. 1400–1530',
+  { era:{zh:'文藝復興', en:'Renaissance', fr:'Renaissance'}, s:1400, e:1530, y:'c. 1400–1530',
     p:{zh:'佛羅倫斯的新柏拉圖主義圈子主張異教神話與基督教真理可以並存，於是神話重新獲得獨立的畫題地位。波提切利為美第奇所作的《春》與《維納斯的誕生》是關鍵轉折：裸體與異教題材第一次以哲學之名堂堂進入牆面。',
        en:'The Neoplatonic circle in Florence argued that pagan fable and Christian truth could coexist, and myth regained standing as a subject in its own right. Botticelli’s <em>Primavera</em> and <em>Birth of Venus</em> for the Medici are the hinge: the nude and the pagan subject enter the wall openly, in the name of philosophy.',
        fr:'Le cercle néoplatonicien florentin soutint que fable païenne et vérité chrétienne pouvaient coexister, et le mythe redevint un sujet à part entière. Le <em>Printemps</em> et la <em>Naissance de Vénus</em> de Botticelli pour les Médicis font charnière : le nu et le sujet païen accèdent ouvertement au mur, au nom de la philosophie.'},
     arts:['birth_venus','pallas_centaur','raphael_galatea'] },
-  { era:{zh:'矯飾主義', en:'Mannerism', fr:'Maniérisme'}, y:'c. 1520–1600',
+  { era:{zh:'矯飾主義', en:'Mannerism', fr:'Maniérisme'}, s:1520, e:1600, y:'c. 1520–1600',
     p:{zh:'題材越冷僻越好、姿態越扭轉越妙。宮廷觀眾以「能否解讀」作為身分證明，於是神話成為菁英的密碼遊戲；同時，形式本身開始凌駕敘事（詹波隆那先做結構、再找題目）。',
        en:'The more obscure the subject and the more twisted the pose, the better. Court audiences used decipherment as a badge of rank, so myth became an elite code game — and at the same time form began to outrank narrative (Giambologna built the group first and found the subject afterwards).',
        fr:'Plus le sujet est obscur et la pose contournée, mieux c’est. Le public de cour faisait du déchiffrement une preuve de rang : le mythe devint un jeu de codes élitaire — et la forme commença à primer le récit (Giambologna conçut le groupe avant d’en chercher le sujet).'},
     arts:['bronzino_venus','giambologna_sabine','cellini_perseus'] },
-  { era:{zh:'巴洛克', en:'Baroque', fr:'Baroque'}, y:'c. 1600–1720',
+  { era:{zh:'巴洛克', en:'Baroque', fr:'Baroque'}, s:1600, e:1720, y:'c. 1600–1720',
     p:{zh:'神話被推向動作的最高點與情緒的最強處。貝尼尼讓大理石模仿肉體與樹皮的質感，魯本斯讓身體在對角線上翻滾，卡拉瓦喬與委拉斯奎茲則反其道而行，把神拉回人間的酒館與鐵匠鋪。',
        en:'Myth is pushed to the peak of action and the maximum of feeling. Bernini makes marble impersonate flesh and bark, Rubens rolls bodies along diagonals — while Caravaggio and Velázquez go the other way and drag the gods down into taverns and forges.',
        fr:'Le mythe est poussé au sommet de l’action et au maximum du sentiment. Le Bernin fait imiter au marbre la chair et l’écorce, Rubens roule les corps sur des diagonales — tandis que Caravage et Velázquez font l’inverse et ramènent les dieux dans les tavernes et les forges.'},
     arts:['bernini_daphne','proserpina','rubens_paris','vulcan_forge','las_hilanderas'] },
-  { era:{zh:'洛可可', en:'Rococo', fr:'Rococo'}, y:'c. 1720–1770',
+  { era:{zh:'洛可可', en:'Rococo', fr:'Rococo'}, s:1720, e:1770, y:'c. 1720–1770',
     p:{zh:'奧林帕斯搬進臥房與天花板。布雪與提也波洛用粉彩色調與輕盈構圖，把神話變成貴族生活的裝飾背景——這也正是後來新古典主義猛烈批判的對象：神話被降格為壁紙。',
        en:'Olympus moves into the boudoir and onto the ceiling. Boucher and Tiepolo turn myth into pastel-toned, weightless decoration for aristocratic life — precisely what Neoclassicism would later attack: myth demoted to wallpaper.',
        fr:'L’Olympe s’installe dans le boudoir et au plafond. Boucher et Tiepolo font du mythe un décor pastel et sans poids pour la vie aristocratique — cela même que le néoclassicisme attaquera : le mythe ravalé au rang de papier peint.'},
     arts:[] },
-  { era:{zh:'新古典主義', en:'Neoclassicism', fr:'Néoclassicisme'}, y:'c. 1760–1830',
+  { era:{zh:'新古典主義', en:'Neoclassicism', fr:'Néoclassicisme'}, s:1760, e:1830, y:'c. 1760–1830',
     p:{zh:'龐貝與赫庫蘭尼姆的發掘、溫克爾曼《古代藝術史》的出版，讓「回到希臘」成為道德要求。卡諾瓦、大衛與安格爾用古典題材談論當下的公民責任與革命政治——神話再次成為嚴肅的政治語言。',
        en:'The excavation of Pompeii and Herculaneum and Winckelmann’s <em>History of Ancient Art</em> made a return to Greece a moral demand. Canova, David and Ingres used classical subjects to talk about present-day civic duty and revolutionary politics — myth becomes serious political speech again.',
        fr:'Les fouilles de Pompéi et d’Herculanum et l’<em>Histoire de l’art antique</em> de Winckelmann firent du retour à la Grèce une exigence morale. Canova, David et Ingres utilisèrent les sujets classiques pour parler de devoir civique et de politique révolutionnaire — le mythe redevient parole politique sérieuse.'},
     arts:['canova_theseus','canova_psyche','horatii','david_sabines','apotheosis_homer'] },
-  { era:{zh:'浪漫主義與象徵主義', en:'Romanticism &amp; Symbolism', fr:'Romantisme &amp; symbolisme'}, y:'c. 1820–1900',
+  { era:{zh:'浪漫主義與象徵主義', en:'Romanticism &amp; Symbolism', fr:'Romantisme &amp; symbolisme'}, s:1820, e:1900, y:'c. 1820–1900',
     p:{zh:'重點從「故事」轉向「心理」。德拉克洛瓦挑選最失控的瞬間，摩洛與伯恩瓊斯讓神話沉入夢境與情慾的曖昧，透納則幾乎把敘事燒成光。神話不再是要被讀懂的文本，而是要被感受的狀態。',
        en:'The emphasis shifts from story to psyche. Delacroix picks the moment of maximum loss of control; Moreau and Burne-Jones sink myth into dream and erotic ambiguity; Turner nearly burns the narrative away into light. Myth stops being a text to decode and becomes a state to feel.',
        fr:'L’accent passe du récit à la psyché. Delacroix choisit l’instant de perte de contrôle maximale ; Moreau et Burne-Jones plongent le mythe dans le rêve et l’ambiguïté érotique ; Turner en réduit presque le récit à de la lumière. Le mythe cesse d’être un texte à décoder pour devenir un état à ressentir.'},
     arts:['delacroix_medea','moreau_sphinx','turner_polyphemus','waterhouse_sirens','gerome_pygmalion'] },
-  { era:{zh:'現代與當代', en:'Modern &amp; contemporary', fr:'Moderne &amp; contemporain'}, y:'1900–',
+  { era:{zh:'現代與當代', en:'Modern &amp; contemporary', fr:'Moderne &amp; contemporain'}, s:1900, e:2000, y:'1900–',
     p:{zh:'佛洛伊德與榮格把神話變成心理學術語（伊底帕斯情結、自戀、原型），藝術家則把它當成私人語言：畢卡索的米諾陶洛斯是自己的分身，德・基里科的廣場住著失去神話的雕像，達利重畫納西瑟斯的變形，馬諦斯剪出墜落的伊卡洛斯。神話不再是共享的信仰，而是可任意重組的素材庫。',
        en:'Freud and Jung convert myth into psychological vocabulary (the Oedipus complex, narcissism, archetypes), and artists take it up as private language: Picasso’s Minotaur is his own alter ego, de Chirico’s squares are haunted by statues without their myths, Dalí repaints the metamorphosis of Narcissus, Matisse cuts out a falling Icarus. Myth is no longer a shared belief but a freely recombinable image bank.',
        fr:'Freud et Jung convertissent le mythe en vocabulaire psychologique (complexe d’Œdipe, narcissisme, archétypes), et les artistes s’en emparent comme langue privée : le Minotaure de Picasso est son alter ego, les places de De Chirico sont hantées par des statues sans mythe, Dalí repeint la métamorphose de Narcisse, Matisse découpe un Icare qui tombe. Le mythe n’est plus une croyance partagée mais une banque d’images librement recombinable.'},
@@ -1440,7 +1676,12 @@ const I18N = {
   zh: {
     'doc.title':'希臘與羅馬神話圖譜 | 諸神、傳說與藝術',
     'hdr.badge':'神話與藝術圖譜','hdr.title':'希臘與羅馬神話',
-    'nav.basics':'入門','nav.pantheon':'諸神','nav.origins':'創世','nav.heroes':'英雄','nav.troy':'特洛伊','nav.rome':'羅馬',
+    'nav.basics':'入門','nav.chronology':'年表與家系','nav.pantheon':'諸神',
+    'chr.eyebrow':'圖解','chr.h2':'神話的家系與時間軸',
+    'chr.h.tree':'一、神譜：四個世代，兩次政變','chr.p.tree':'希臘創世神話的形狀很單純——每一代統治者都被自己的兒子推翻，直到宙斯為止。由上往下讀。',
+    'chr.h.time':'二、神話自己的時間順序','chr.p.time':'這是神話「內部」的先後：從創世一路到羅馬建國。請特別注意中間那個分岔——希臘與羅馬的關係，全在那一格。',
+    'rec.band':'先看每個時期在整條時間軸上的位置與長度。您會發現古代與中世紀各佔了極長的時間，而文藝復興其實只是很窄的一段。',
+    'rec.chart.h':'這本圖譜裡的 51 件作品，是什麼時候畫的？','rec.chart.p':'依作品完成年代分組。橫條長度代表件數。','nav.origins':'創世','nav.heroes':'英雄','nav.troy':'特洛伊','nav.rome':'羅馬',
     'nav.ovid':'變形記','nav.decoder':'圖像辨識','nav.gallery':'作品廊','nav.reception':'藝術史流變','nav.compare':'希臘 vs 羅馬',
     'intro':'希臘神話是一套解釋世界的故事系統；羅馬人接手之後，把它變成一套論證權力的語言。兩者合流之後所形成的圖像庫，成為西方藝術兩千五百年來最主要的題材來源——理解神話，等於拿到讀懂歐洲美術館半數作品的鑰匙。',
     'intro2':'本圖譜依序處理：諸神譜系與其屬性、創世與泰坦、英雄傳說、特洛伊史詩、羅馬建國神話，以及奧維德《變形記》；每一段都連結到對應的重要藝術作品，並說明「為什麼是這件作品」。最後三節提供實用工具：辨識神祇的屬性對照表、神話在藝術史各時期的處理方式，以及希臘與羅馬的系統性比較。',
@@ -1472,7 +1713,12 @@ const I18N = {
   en: {
     'doc.title':'Greek &amp; Roman Mythology Atlas | Gods, Cycles &amp; Their Art',
     'hdr.badge':'MYTHOLOGY &amp; ART ATLAS','hdr.title':'Greek &amp; Roman Mythology',
-    'nav.basics':'Basics','nav.pantheon':'Pantheon','nav.origins':'Cosmogony','nav.heroes':'Heroes','nav.troy':'Troy','nav.rome':'Rome',
+    'nav.basics':'Basics','nav.chronology':'Chronology','nav.pantheon':'Pantheon',
+    'chr.eyebrow':'Diagrams','chr.h2':'The Genealogy and the Timeline of Myth',
+    'chr.h.tree':'1 · The Theogony: four generations, two coups','chr.p.tree':'Greek cosmogony has a very simple shape — every ruling generation is overthrown by its own son, until Zeus. Read downward.',
+    'chr.h.time':'2 · The order of events inside the myths','chr.p.time':'This is the sequence <em>within</em> the stories, from the creation of the world to the founding of Rome. Watch the fork in the middle — the whole Greek/Roman relationship is in that one step.',
+    'rec.band':'First, where each period sits on the whole span, and how long it lasted. Antiquity and the Middle Ages each occupy enormous stretches; the Renaissance is a surprisingly narrow band.',
+    'rec.chart.h':'When were the 51 works in this atlas actually made?','rec.chart.p':'Grouped by date of execution. Bar length is the number of works.','nav.origins':'Cosmogony','nav.heroes':'Heroes','nav.troy':'Troy','nav.rome':'Rome',
     'nav.ovid':'Metamorphoses','nav.decoder':'Attribute Decoder','nav.gallery':'Gallery','nav.reception':'Reception','nav.compare':'Greek vs Roman',
     'intro':'Greek mythology is a system of stories for explaining the world; when Rome took it over, it became a language for justifying power. The image-bank the two produced together has been the principal subject matter of Western art for twenty-five centuries — knowing the myths is effectively the key to reading half the works in any European museum.',
     'intro2':'This atlas works through the pantheon and its attributes, cosmogony and the Titans, the heroic cycles, the Trojan epics, Rome’s foundation myths, and Ovid’s <em>Metamorphoses</em> — each section linked to the artworks that matter, with an explanation of why <em>that</em> work. Three practical sections close it: a decoder for identifying deities by their attributes, a period-by-period account of how art has handled myth, and a systematic Greek/Roman comparison.',
@@ -1504,7 +1750,12 @@ const I18N = {
   fr: {
     'doc.title':'Atlas de la mythologie grecque &amp; romaine | Dieux, cycles &amp; leur art',
     'hdr.badge':'ATLAS MYTHOLOGIE &amp; ART','hdr.title':'Mythologie grecque &amp; romaine',
-    'nav.basics':'Bases','nav.pantheon':'Panthéon','nav.origins':'Cosmogonie','nav.heroes':'Héros','nav.troy':'Troie','nav.rome':'Rome',
+    'nav.basics':'Bases','nav.chronology':'Chronologie','nav.pantheon':'Panthéon',
+    'chr.eyebrow':'Schémas','chr.h2':'Généalogie et chronologie du mythe',
+    'chr.h.tree':'1 · La Théogonie : quatre générations, deux coups d’État','chr.p.tree':'La cosmogonie grecque a une forme très simple — chaque génération régnante est renversée par son propre fils, jusqu’à Zeus. À lire de haut en bas.',
+    'chr.h.time':'2 · L’ordre des événements à l’intérieur des mythes','chr.p.time':'Voici la succession <em>interne</em> aux récits, de la création du monde à la fondation de Rome. Observez la bifurcation centrale — tout le rapport gréco-romain tient dans cette étape.',
+    'rec.band':'D’abord, la place de chaque période sur l’ensemble de la durée, et sa longueur. L’Antiquité et le Moyen Âge occupent des étendues considérables ; la Renaissance n’est qu’une bande étonnamment étroite.',
+    'rec.chart.h':'Quand les 51 œuvres de cet atlas ont-elles été réalisées ?','rec.chart.p':'Regroupées par date d’exécution. La longueur de la barre indique le nombre d’œuvres.','nav.origins':'Cosmogonie','nav.heroes':'Héros','nav.troy':'Troie','nav.rome':'Rome',
     'nav.ovid':'Métamorphoses','nav.decoder':'Attributs','nav.gallery':'Galerie','nav.reception':'Réception','nav.compare':'Grèce vs Rome',
     'intro':'La mythologie grecque est un système de récits pour expliquer le monde ; en la reprenant, Rome en fit une langue pour justifier le pouvoir. Le répertoire d’images né de leur fusion constitue depuis vingt-cinq siècles la principale matière de l’art occidental — connaître les mythes revient à détenir la clé de la moitié des salles d’un musée européen.',
     'intro2':'Cet atlas parcourt le panthéon et ses attributs, la cosmogonie et les Titans, les cycles héroïques, les épopées troyennes, les mythes fondateurs de Rome et les <em>Métamorphoses</em> d’Ovide — chaque section renvoyant aux œuvres qui comptent, avec l’explication du choix de <em>cette</em> œuvre. Trois sections pratiques concluent : un décodeur des attributs, une histoire période par période du traitement du mythe, et une comparaison systématique Grèce/Rome.',
@@ -1616,6 +1867,103 @@ function artChips(keys) {
 /* ─────────────────────────────────────────────────────────────
    Renderers
    ───────────────────────────────────────────────────────────── */
+/* Era colours used by the spine, the fork and the reception band. */
+const ERA_MARK = { greek:'var(--gr-mark)', rome:'var(--ro-mark)', mid:'var(--mid-mark)', ren:'var(--bar-mark)' };
+const ERA_INK  = { greek:'var(--gr-ink)',  rome:'var(--ro-ink)',  mid:'var(--mid-ink)',  ren:'var(--bar-ink)' };
+const ERA_LABEL = {
+  greek:{zh:'希臘時期',en:'Greek',fr:'Grec'}, rome:{zh:'羅馬時期',en:'Roman',fr:'Romain'},
+  mid:{zh:'中世紀',en:'Medieval',fr:'Moyen Âge'}, ren:{zh:'文藝復興之後',en:'Renaissance on',fr:'À partir de la Renaissance'},
+};
+
+/* Chronological spine for the historical timeline in Basics. */
+function renderSpine() {
+  const el = document.getElementById('bas-timeline');
+  el.innerHTML = BASICS.timeline.map(e => {
+    const mark = ERA_MARK[e.era], ink = ERA_INK[e.era];
+    const key = (e.era === 'rome' && /146/.test(e.ye));
+    return '<li class="tl-row' + (key ? ' is-key' : '') + '" style="--rail:' + mark + '">'
+      + '<span class="text-right text-[0.7rem] font-mono pt-0.5" style="color:' + ink + '">'
+      +   (LANG === 'zh' ? e.y : e.ye) + '</span>'
+      + '<span class="tl-rail"><span class="tl-dot"></span></span>'
+      + '<span class="min-w-0 pb-5">'
+      +   '<span class="flex flex-wrap items-baseline gap-x-2 gap-y-1">'
+      +     '<span class="text-sm font-bold ' + (key ? 'text-white' : 'text-slate-200') + '">' + t(e.t) + '</span>'
+      +     '<span class="gen-pill" style="color:' + ink + ';background:rgba(148,163,184,0.10)">' + t(ERA_LABEL[e.era]) + '</span>'
+      +   '</span>'
+      +   '<span class="block text-xs text-slate-500 leading-relaxed mt-1.5">' + t(e.p) + '</span>'
+      + '</span></li>';
+  }).join('');
+}
+
+/* Four divine generations, with the coup that ends each one. */
+function renderTheogony() {
+  const el = document.getElementById('diagram-theogony');
+  if (!el) return;
+  let html = '';
+  THEOGONY.forEach((g, i) => {
+    html += '<div class="gen">'
+      + '<div class="flex flex-wrap items-baseline gap-2 mb-2">'
+      +   '<span class="gen-pill" style="color:var(--bar-ink);background:rgba(217,119,6,0.15)">' + t(g.gen) + '</span>'
+      +   '<h4 class="text-sm font-black text-white">' + t(g.t) + '</h4>'
+      + '</div>'
+      + '<div class="flex flex-wrap gap-1.5 mb-3">'
+      +   g.figs.map((f, j) => '<span class="fig' + (j === g.lead ? ' is-lead' : '') + '">' + t(f) + '</span>').join('')
+      + '</div>'
+      + '<p class="text-xs text-slate-400 leading-relaxed">' + t(g.p) + '</p>'
+      + '</div>';
+    const coup = COUPS.find(c => c.after === i);
+    if (coup) {
+      html += '<div class="coup"><span class="coup-bar"></span>'
+        + '<span class="min-w-0 py-1">'
+        +   '<span class="text-xs font-bold" style="color:var(--bar-ink)">'
+        +     '<i class="fa-solid fa-bolt mr-1.5"></i>' + t(coup.t) + '</span>'
+        +   '<span class="block text-xs text-slate-500 leading-relaxed mt-1">' + t(coup.p) + '</span>'
+        + '</span></div>';
+    }
+  });
+  el.innerHTML = html;
+}
+
+/* The order of events inside the myths, forking at the fall of Troy. */
+function renderMythTime() {
+  const el = document.getElementById('diagram-mythtime');
+  if (!el) return;
+  const stage = (s, tone) =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<div class="flex items-baseline gap-2.5">'
+    +     (s.n ? '<span class="shrink-0 w-6 h-6 rounded-full grid place-items-center text-[0.7rem] font-black"'
+    +            + ' style="background:' + tone + ';color:#fff">' + s.n + '</span>' : '')
+    +     '<h4 class="text-sm font-bold text-white">' + t(s.t) + '</h4>'
+    +   '</div>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-2' + (s.n ? ' pl-[2.1rem]' : '') + '">' + t(s.p) + '</p>'
+    +   (s.arts && s.arts.length ? '<div class="' + (s.n ? 'pl-[2.1rem]' : '') + '">' + artChips(s.arts) + '</div>' : '')
+    + '</div>';
+  const arrow = '<div class="grid place-items-center py-1.5 text-slate-700"><i class="fa-solid fa-chevron-down"></i></div>';
+
+  const M = MYTHTIME;
+  let html = M.before.map(s => stage(s, 'var(--gr-mark)')).join(arrow);
+
+  html += '<div class="grid place-items-center py-3">'
+    +   '<span class="text-[0.7rem] font-bold text-slate-400 bg-slate-900 border border-slate-700 rounded-full px-3 py-1">'
+    +     '<i class="fa-solid fa-code-fork mr-1.5 text-amber-500"></i>' + t(M.fork.label) + '</span>'
+    + '</div>';
+
+  const branch = (b, tone, ink) =>
+      '<div class="rounded-2xl border p-3 space-y-2" style="border-color:' + tone + '55;background:' + tone + '0f">'
+    +   '<h4 class="text-xs font-black px-1" style="color:' + ink + '">' + t(b.head) + '</h4>'
+    +   b.steps.map(s => stage(s, tone)).join('')
+    + '</div>';
+  html += '<div class="fork">'
+    + branch(M.fork.greek, 'var(--gr-mark)', 'var(--gr-ink)')
+    + branch(M.fork.roman, 'var(--ro-mark)', 'var(--ro-ink)')
+    + '</div>';
+
+  html += arrow + M.after.map(s => stage(s, 'var(--ro-mark)')).join(arrow);
+  html += '<p class="text-sm text-slate-300 leading-relaxed mt-5 bg-slate-900/50 border border-slate-800 rounded-2xl p-4">'
+    + t(M.close) + '</p>';
+  el.innerHTML = html;
+}
+
 function renderBasics() {
   const B = BASICS;
   document.getElementById('bas-oneline').innerHTML = t(B.oneLine);
@@ -1624,16 +1972,7 @@ function renderBasics() {
   document.getElementById('bas-names-note').innerHTML = t(B.namesNote);
   document.getElementById('bas-why').innerHTML = t(B.why);
 
-  document.getElementById('bas-timeline').innerHTML = B.timeline.map(e =>
-      '<li class="flex gap-4 items-start">'
-    +   '<span class="shrink-0 w-28 md:w-32 text-right text-xs font-mono text-emerald-400/90 pt-0.5">'
-    +     (LANG === 'zh' ? e.y : e.ye) + '</span>'
-    +   '<span class="shrink-0 w-2 h-2 mt-1.5 rounded-full bg-emerald-500/60"></span>'
-    +   '<span class="min-w-0">'
-    +     '<span class="block text-sm font-bold text-slate-200">' + t(e.t) + '</span>'
-    +     '<span class="block text-xs text-slate-500 leading-relaxed mt-1">' + t(e.p) + '</span>'
-    +   '</span>'
-    + '</li>').join('');
+  renderSpine();
 
   document.getElementById('bas-diffs').innerHTML = B.diffs.map(d =>
       '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
@@ -1748,6 +2087,63 @@ function renderReception() {
     + '</details>').join('');
 }
 
+/* Where each era sits across the whole span — shows at a glance that
+   antiquity and the Middle Ages are enormous and the Renaissance is a sliver. */
+function renderBand() {
+  const S = -700, E = 2000, SPAN = E - S;
+  const pct = y => ((y - S) / SPAN) * 100;
+  const tone = r => (r.e <= -30 ? 'var(--gr-mark)' : r.e <= 500 ? 'var(--ro-mark)'
+                   : r.e <= 1400 ? 'var(--mid-mark)' : 'var(--bar-mark)');
+  document.getElementById('reception-band').innerHTML = RECEPTION.map(r =>
+      '<div class="grid grid-cols-[8.5rem_1fr] md:grid-cols-[11rem_1fr] items-center gap-3">'
+    +   '<span class="text-[0.7rem] text-slate-400 truncate text-right">' + t(r.era) + '</span>'
+    +   '<span class="band"><span class="band-fill" style="left:' + pct(r.s).toFixed(2) + '%;'
+    +     'width:' + Math.max(pct(r.e) - pct(r.s), 0.6).toFixed(2) + '%;--seg:' + tone(r) + '"></span></span>'
+    + '</div>').join('');
+  document.getElementById('reception-scale').innerHTML =
+    ['700 BC','1 AD','700','1400','2000'].map(l => '<span>' + l + '</span>').join('');
+}
+
+/* Bar chart: when the 51 artworks in this atlas were actually made.
+   One series, one hue, counts direct-labelled; the empty medieval bin is
+   the point of the chart, so the bin is kept even at zero. */
+const ART_BINS = [
+  { s:-800, e:-100, l:{zh:'古希臘',        en:'Ancient Greece',    fr:'Grèce antique'} },
+  { s:-100, e:500,  l:{zh:'古羅馬',        en:'Ancient Rome',      fr:'Rome antique'} },
+  { s:500,  e:1400, l:{zh:'中世紀',        en:'Middle Ages',       fr:'Moyen Âge'} },
+  { s:1400, e:1500, l:{zh:'15 世紀',       en:'15th century',      fr:'XVᵉ siècle'} },
+  { s:1500, e:1600, l:{zh:'16 世紀',       en:'16th century',      fr:'XVIᵉ siècle'} },
+  { s:1600, e:1700, l:{zh:'17 世紀',       en:'17th century',      fr:'XVIIᵉ siècle'} },
+  { s:1700, e:1800, l:{zh:'18 世紀',       en:'18th century',      fr:'XVIIIᵉ siècle'} },
+  { s:1800, e:1900, l:{zh:'19 世紀',       en:'19th century',      fr:'XIXᵉ siècle'} },
+];
+function renderArtChart() {
+  const dated = Object.values(ARTS).filter(a => typeof a.yr === 'number');
+  const counts = ART_BINS.map(b => dated.filter(a => a.yr >= b.s && a.yr < b.e).length);
+  const max = Math.max.apply(null, counts) || 1;
+  const unit = {zh:'件', en:' works', fr:' œuvres'};
+  const chart = document.getElementById('art-chart');
+  chart.setAttribute('role', 'img');
+  chart.setAttribute('aria-label', ART_BINS.map((b, i) => t(b.l) + ': ' + counts[i] + t(unit)).join(', '));
+  chart.innerHTML = ART_BINS.map((b, i) => {
+    const n = counts[i];
+    return '<div class="bar-row" title="' + esc(t(b.l) + ' — ' + n + t(unit)) + '">'
+      + '<span class="text-[0.7rem] text-slate-400 text-right truncate">' + t(b.l) + '</span>'
+      + '<span class="bar-track bar-axis">'
+      +   (n ? '<span class="bar-fill" style="width:' + ((n / max) * 100).toFixed(1) + '%"></span>' : '')
+      + '</span>'
+      + '<span class="text-xs font-bold tabular-nums w-6 text-right ' + (n ? 'text-amber-300' : 'text-slate-700') + '">'
+      +   n + '</span>'
+      + '</div>';
+  }).join('');
+  const note = {
+    zh:'兩件事值得注意。第一，<strong class="text-white">中世紀那一格是零</strong>——不是這本圖譜漏了，而是神話題材在基督教歐洲的一千年間幾乎消失，直到文藝復興才回來。第二，高峰落在<strong class="text-white">十六世紀</strong>，因為印刷術讓奧維德的《變形記》變成畫家人手一本的工具書。（共 ' + dated.length + ' 件；卡比托利歐母狼年代仍有爭議，未列入。）',
+    en:'Two things worth noticing. First, <strong class="text-white">the medieval bar is zero</strong> — not an omission but the fact itself: mythological subjects all but vanish for a thousand Christian years and only return with the Renaissance. Second, the peak is the <strong class="text-white">sixteenth century</strong>, when printing turned Ovid’s <em>Metamorphoses</em> into a book every painter owned. (' + dated.length + ' dated works; the Capitoline Wolf is excluded, its date being disputed.)',
+    fr:'Deux points à noter. D’abord, <strong class="text-white">la barre médiévale est à zéro</strong> — non par oubli, mais parce que les sujets mythologiques disparaissent presque totalement pendant mille ans chrétiens et ne reviennent qu’à la Renaissance. Ensuite, le sommet est le <strong class="text-white">XVIᵉ siècle</strong>, quand l’imprimerie fit des <em>Métamorphoses</em> d’Ovide un livre que tout peintre possédait. (' + dated.length + ' œuvres datées ; la Louve du Capitole, de datation discutée, est exclue.)'
+  };
+  document.getElementById('art-chart-note').innerHTML = t(note);
+}
+
 function renderCompare() {
   document.getElementById('compare-body').innerHTML = COMPARE.map(c =>
       '<tr>'
@@ -1823,11 +2219,15 @@ function setLanguage(lang) {
   });
 
   renderBasics();
+  renderTheogony();
+  renderMythTime();
   renderPantheon();
   renderCycles();
   renderDecoder();
   renderGallery();
   renderReception();
+  renderBand();
+  renderArtChart();
   renderCompare();
 }
 
