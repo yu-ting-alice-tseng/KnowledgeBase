@@ -131,6 +131,36 @@
   .bar-row:hover .bar-fill { background: #f59e0b; }
   .bar-axis { border-left: 1px solid rgba(148,163,184,0.22); }
 
+  /* ── Structure: part dividers, bridges, the volume map ── */
+  .part-rule { display: flex; align-items: center; gap: 1rem; padding: .5rem 0; }
+  .part-rule::before, .part-rule::after {
+    content: ""; height: 1px; flex: 1;
+    background: linear-gradient(90deg, transparent, rgba(148,163,184,0.22), transparent);
+  }
+  .part-head { text-align: center; max-width: 34rem; }
+  .part-num {
+    display: inline-block; padding: .15rem .6rem; border-radius: 9999px;
+    font-size: .6rem; font-weight: 900; letter-spacing: .12em; margin-bottom: .4rem;
+  }
+  /* A bridge is a hand-off, not a heading: quiet, indented, one accent edge. */
+  .bridge {
+    border-left: 2px solid rgba(148,163,184,0.28);
+    padding: .1rem 0 .1rem 1rem; margin-bottom: 1.25rem;
+    font-size: .82rem; line-height: 1.75; color: #94a3b8; max-width: 52rem;
+  }
+  .bridge:empty { display: none; }
+
+  .chap { transition: opacity .25s ease, border-color .25s ease; }
+  .chap.is-dim { opacity: .3; }
+  .path-btn {
+    display: inline-flex; align-items: center; gap: .45rem; cursor: pointer;
+    padding: .45rem .85rem; border-radius: 9999px; font-size: .75rem; font-weight: 700;
+    background: rgba(148,163,184,0.08); border: 1px solid rgba(148,163,184,0.2); color: #cbd5e1;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .path-btn:hover { background: rgba(148,163,184,0.16); color: #f1f5f9; }
+  .path-btn.is-on { background: rgba(217,119,6,0.16); border-color: rgba(217,119,6,0.5); color: #fcd34d; }
+
   /* lightbox */
   #lb { position: fixed; inset: 0; z-index: 100; display: none; }
   #lb.open { display: block; }
@@ -176,18 +206,11 @@
         <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">FR</button>
       </div>
       <nav class="flex flex-wrap gap-2 text-xs">
-        <a href="#basics" data-i18n="nav.basics" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Basics</a>
-        <a href="#chronology" data-i18n="nav.chronology" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">Chronology</a>
-        <a href="#pantheon" data-i18n="nav.pantheon" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">Pantheon</a>
-        <a href="#origins" data-i18n="nav.origins" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors">Cosmogony</a>
-        <a href="#heroes" data-i18n="nav.heroes" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors">Heroes</a>
-        <a href="#troy" data-i18n="nav.troy" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors">Troy</a>
-        <a href="#rome" data-i18n="nav.rome" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-lime-500/50 hover:text-lime-300 transition-colors">Rome</a>
-        <a href="#ovid" data-i18n="nav.ovid" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Metamorphoses</a>
-        <a href="#decoder" data-i18n="nav.decoder" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">Attribute Decoder</a>
-        <a href="#gallery" data-i18n="nav.gallery" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors">Gallery</a>
-        <a href="#reception" data-i18n="nav.reception" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors">Reception</a>
-        <a href="#compare" data-i18n="nav.compare" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors">Greek vs Roman</a>
+        <a href="#map" data-i18n="nav.map" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 hover:text-slate-100 transition-colors">Map</a>
+        <a href="#why" data-i18n="nav.p1" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Part</a>
+        <a href="#chronology" data-i18n="nav.p2" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">Part</a>
+        <a href="#pantheon" data-i18n="nav.p3" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors">Part</a>
+        <a href="#decoder" data-i18n="nav.p4" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors">Part</a>
       </nav>
     </div>
   </div>
@@ -205,8 +228,79 @@
     </div>
   </section>
 
+  <!-- ORIENTATION: how to use this volume + the map + reading paths -->
+  <section id="map" class="scroll-mt-24 viz">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-slate-500/10 rounded-2xl text-slate-300 border border-slate-600/30"><i class="fa-solid fa-compass text-xl"></i></div>
+      <div>
+        <span data-i18n="map.eyebrow" class="text-xs uppercase tracking-wider text-slate-400 font-bold"></span>
+        <h2 data-i18n="map.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900">
+      <p data-i18n="map.lead" class="text-sm text-slate-400 leading-relaxed mb-5"></p>
+      <p data-i18n="map.pathq" class="text-xs font-bold text-slate-300 mb-3"></p>
+      <div id="path-picker" class="flex flex-wrap gap-2 mb-4"></div>
+      <p id="path-hint" class="text-xs text-slate-500 mb-6 min-h-[1.5rem]"></p>
+      <div id="volume-map" class="grid md:grid-cols-2 xl:grid-cols-4 gap-4"></div>
+    </div>
+  </section>
+
+  <div class="part-rule" data-part="p1"></div>
+
+  <!-- WHY: motivation, before any content -->
+  <section id="why" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-emerald"><i class="fa-solid fa-eye text-xl"></i></div>
+      <div>
+        <span data-i18n="why.eyebrow" class="text-xs uppercase tracking-wider text-emerald-400 font-bold"></span>
+        <h2 data-i18n="why.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <div id="why-scene" class="grid md:grid-cols-[1fr_16rem] gap-6 items-start"></div>
+      <div>
+        <h3 data-i18n="why.defh" class="text-base font-black text-white mb-3"></h3>
+        <p id="why-def" class="text-sm text-slate-400 leading-relaxed"></p>
+      </div>
+      <div class="border-t border-slate-800 pt-6">
+        <h3 data-i18n="why.gainh" class="text-base font-black text-white mb-4"></h3>
+        <div id="why-gains" class="grid md:grid-cols-3 gap-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREREQUISITES -->
+  <section id="prereq" class="scroll-mt-24">
+    <div class="bridge" data-bridge="prereq"></div>
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-emerald"><i class="fa-solid fa-list-check text-xl"></i></div>
+      <div>
+        <span data-i18n="pre.eyebrow" class="text-xs uppercase tracking-wider text-emerald-400 font-bold"></span>
+        <h2 data-i18n="pre.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-8">
+      <div>
+        <h3 data-i18n="pre.h.words" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="pre.p.words" class="text-xs text-slate-500 mb-4"></p>
+        <div id="pre-words" class="space-y-3"></div>
+      </div>
+      <div>
+        <h3 id="pre-scale-h" class="text-base font-black text-white mb-4"></h3>
+        <ol id="pre-scale" class="tl"></ol>
+        <p id="pre-scale-note" class="text-sm text-slate-400 leading-relaxed mt-4 bg-slate-900/40 border border-slate-800 rounded-2xl p-4"></p>
+      </div>
+      <div class="border-t border-slate-800 pt-6">
+        <h3 id="pre-fear-h" class="text-base font-black text-white mb-3"></h3>
+        <p id="pre-fear" class="text-sm text-slate-400 leading-relaxed"></p>
+      </div>
+    </div>
+  </section>
+
   <!-- BASICS (for readers with no background) -->
   <section id="basics" class="scroll-mt-24">
+    <div class="bridge" data-bridge="basics"></div>
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-emerald"><i class="fa-solid fa-graduation-cap text-xl"></i></div>
       <div>
@@ -269,8 +363,11 @@
     </div>
   </section>
 
+  <div class="part-rule" data-part="p2"></div>
+
   <!-- CHRONOLOGY & GENEALOGY (diagrams) -->
   <section id="chronology" class="scroll-mt-24 viz">
+    <div class="bridge" data-bridge="chronology"></div>
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-amber-500/10 rounded-2xl text-amber-400 border border-amber-500/20 shadow-glow-amber"><i class="fa-solid fa-diagram-project text-xl"></i></div>
       <div>
@@ -294,8 +391,11 @@
     </div>
   </section>
 
+  <div class="part-rule" data-part="p3"></div>
+
   <!-- PANTHEON -->
   <section id="pantheon" class="scroll-mt-24">
+    <div class="bridge" data-bridge="pantheon"></div>
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-amber-500/10 rounded-2xl text-amber-400 border border-amber-500/20 shadow-glow-amber"><i class="fa-solid fa-bolt text-xl"></i></div>
       <div>
@@ -310,8 +410,11 @@
   <!-- NARRATIVE CYCLES render here: origins / heroes / troy / rome / ovid -->
   <div id="cycles" class="space-y-14"></div>
 
+  <div class="part-rule" data-part="p4"></div>
+
   <!-- ATTRIBUTE DECODER -->
   <section id="decoder" class="scroll-mt-24">
+    <div class="bridge" data-bridge="decoder"></div>
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-amber-500/10 rounded-2xl text-amber-400 border border-amber-500/20 shadow-glow-amber"><i class="fa-solid fa-magnifying-glass text-xl"></i></div>
       <div>
@@ -914,6 +1017,184 @@ moreau_sphinx: {
   why:{zh:'與安格爾的版本相對照：這裡斯芬克斯用爪子攀上英雄胸口，兩人四目相接。象徵主義不再把神話當歷史場景，而當成慾望與死亡的內在心像——直通後來的佛洛伊德。',
        en:'Set this against Ingres: here the Sphinx claws its way up onto the hero’s chest and the two lock eyes. Symbolism stops treating myth as a historical scene and treats it as an inner image of desire and death — the road that leads straight to Freud.',
        fr:'À comparer avec Ingres : ici le Sphinx grimpe, griffes plantées, sur la poitrine du héros, et leurs regards se soudent. Le symbolisme cesse de voir dans le mythe une scène historique pour y lire une image intérieure du désir et de la mort — la route qui mène droit à Freud.'} },
+};
+
+/* ═════════════════════════════════════════════════════════════
+   STRUCTURE — the volume is a course in four parts, not a pile
+   of parallel reference sections. Everything below defines the
+   ramp: why bother, what you must know first, then the content,
+   then the tools.
+   ═════════════════════════════════════════════════════════════ */
+
+const PARTS = [
+  { n:1, id:'p1', tone:'emerald',
+    t:{zh:'第一部・先讀這裡', en:'Part 1 · Start here', fr:'Partie 1 · Commencez ici'},
+    p:{zh:'為什麼值得懂、需要哪些先備知識，以及全書最重要的一個觀念。約 15 分鐘。',
+       en:'Why it is worth knowing, what you need to know first, and the single most important idea in the volume. About 15 minutes.',
+       fr:'Pourquoi cela vaut la peine, ce qu’il faut savoir d’abord, et l’idée la plus importante du volume. Environ 15 minutes.'} },
+  { n:2, id:'p2', tone:'amber',
+    t:{zh:'第二部・神話的骨架', en:'Part 2 · The shape of the myths', fr:'Partie 2 · La forme des mythes'},
+    p:{zh:'誰生了誰、什麼先發生。先有骨架，後面的細節才有地方掛。約 10 分鐘。',
+       en:'Who begat whom, and what happened first. Get the skeleton and the details later have somewhere to hang. About 10 minutes.',
+       fr:'Qui engendre qui, et qu’est-ce qui vient d’abord. Avec le squelette, les détails trouvent ensuite où s’accrocher. Environ 10 minutes.'} },
+  { n:3, id:'p3', tone:'sky',
+    t:{zh:'第三部・諸神與故事', en:'Part 3 · The gods and the stories', fr:'Partie 3 · Les dieux et les récits'},
+    p:{zh:'正文。可以順著讀，也可以只挑感興趣的一章。每章約 5–8 分鐘。',
+       en:'The main body. Read straight through, or take only the chapter you care about. Five to eight minutes each.',
+       fr:'Le corps du texte. À lire d’affilée, ou par chapitre selon l’envie. Cinq à huit minutes chacun.'} },
+  { n:4, id:'p4', tone:'violet',
+    t:{zh:'第四部・帶去美術館的工具', en:'Part 4 · Tools to take to the museum', fr:'Partie 4 · Des outils pour le musée'},
+    p:{zh:'查閱用，不必從頭讀。需要時再回來翻。',
+       en:'Reference, not reading. Come back to these when you need them.',
+       fr:'À consulter, non à lire. Revenez-y au besoin.'} },
+];
+
+/* Chapter registry — drives the volume map, the reading paths and
+   the numbered heading on every section. */
+const CHAPTERS = [
+  { id:'why',        part:1, t:{zh:'為什麼值得懂神話', en:'Why myth is worth knowing', fr:'Pourquoi le mythe vaut la peine'},
+    d:{zh:'從一座雕像開始', en:'Starting from one statue', fr:'À partir d’une statue'}, min:3, paths:['new'] },
+  { id:'prereq',     part:1, t:{zh:'先修：六個詞與一把時間尺', en:'First: six words and a sense of time', fr:'D’abord : six mots et une échelle de temps'},
+    d:{zh:'清路用，不含神話內容', en:'Clearing the ground; no myth yet', fr:'Déblayer le terrain ; pas encore de mythe'}, min:5, paths:['new'] },
+  { id:'basics',     part:1, t:{zh:'希臘與羅馬的關係', en:'How Greece and Rome are related', fr:'Le lien entre la Grèce et Rome'},
+    d:{zh:'全書最重要的一節', en:'The most important section here', fr:'La section la plus importante'}, min:8, paths:['new','art'] },
+  { id:'chronology', part:2, t:{zh:'家系與年表', en:'Genealogy and timeline', fr:'Généalogie et chronologie'},
+    d:{zh:'兩張圖解', en:'Two diagrams', fr:'Deux schémas'}, min:10, paths:['new'] },
+  { id:'pantheon',   part:3, t:{zh:'諸神', en:'The pantheon', fr:'Le panthéon'},
+    d:{zh:'16 位，查閱用', en:'Sixteen figures, for reference', fr:'Seize figures, à consulter'}, min:8, paths:['new','art','ref'] },
+  { id:'origins',    part:3, t:{zh:'創世與泰坦', en:'Cosmogony and the Titans', fr:'Cosmogonie et Titans'}, d:{zh:'',en:'',fr:''}, min:6, paths:['new'] },
+  { id:'heroes',     part:3, t:{zh:'英雄傳說', en:'The heroes', fr:'Les héros'}, d:{zh:'',en:'',fr:''}, min:8, paths:['new'] },
+  { id:'troy',       part:3, t:{zh:'特洛伊', en:'Troy', fr:'Troie'}, d:{zh:'',en:'',fr:''}, min:6, paths:['new'] },
+  { id:'rome',       part:3, t:{zh:'羅馬建國', en:'The founding of Rome', fr:'La fondation de Rome'}, d:{zh:'',en:'',fr:''}, min:6, paths:[] },
+  { id:'ovid',       part:3, t:{zh:'變形記', en:'The Metamorphoses', fr:'Les Métamorphoses'},
+    d:{zh:'畫家用得最多的一本', en:'The painters’ favourite source', fr:'La source favorite des peintres'}, min:7, paths:['art'] },
+  { id:'decoder',    part:4, t:{zh:'圖像辨識指南', en:'Attribute decoder', fr:'Décodeur d’attributs'},
+    d:{zh:'看畫時最實用', en:'The most useful page in a gallery', fr:'La page la plus utile au musée'}, min:5, paths:['art','ref'] },
+  { id:'gallery',    part:4, t:{zh:'作品廊', en:'The gallery', fr:'La galerie'},
+    d:{zh:'51 件作品', en:'51 works', fr:'51 œuvres'}, min:0, paths:['art','ref'] },
+  { id:'reception',  part:4, t:{zh:'藝術史流變', en:'Reception through art history', fr:'La réception dans l’histoire de l’art'},
+    d:{zh:'', en:'', fr:''}, min:8, paths:['ref'] },
+  { id:'compare',    part:4, t:{zh:'希臘 vs 羅馬總表', en:'Greek vs Roman summary', fr:'Tableau récapitulatif'},
+    d:{zh:'複習用', en:'For revision', fr:'Pour réviser'}, min:3, paths:['ref'] },
+];
+
+const PATHS = [
+  { id:'new',  icon:'fa-seedling',
+    t:{zh:'第一次接觸神話', en:'New to mythology', fr:'Novice en mythologie'},
+    p:{zh:'照順序讀第一、二部，再挑一章故事。約 45 分鐘。', en:'Read Parts 1 and 2 in order, then pick one story chapter. About 45 minutes.', fr:'Lisez les parties 1 et 2 dans l’ordre, puis un chapitre de récit. Environ 45 minutes.'} },
+  { id:'art',  icon:'fa-palette',
+    t:{zh:'想看懂一幅畫', en:'I want to read a painting', fr:'Je veux lire un tableau'},
+    p:{zh:'先看希臘羅馬的關係，然後直接跳到圖像辨識與作品廊。約 20 分鐘。', en:'Take the Greece/Rome section, then jump straight to the decoder and the gallery. About 20 minutes.', fr:'Prenez la section Grèce/Rome, puis filez au décodeur et à la galerie. Environ 20 minutes.'} },
+  { id:'ref',  icon:'fa-magnifying-glass',
+    t:{zh:'查特定資料', en:'Looking something up', fr:'Je cherche un point précis'},
+    p:{zh:'第四部是為此設計的，配合上方搜尋列使用。', en:'Part 4 exists for this. Use it with your browser’s find-in-page.', fr:'La partie 4 est faite pour cela. Utilisez la recherche de votre navigateur.'} },
+];
+
+/* Bridge line shown at the top of each section: where you are, and
+   what you are now assumed to know. */
+const BRIDGES = {
+  prereq:{zh:'在碰神話本身之前，先把幾個詞的意思講清楚。這一節不講故事，只是清路——但少了它，後面很多句子會讀不順。',
+          en:'Before touching the myths themselves, a few words need pinning down. This section tells no stories; it clears the ground. Skip it and later sentences will not quite parse.',
+          fr:'Avant d’aborder les mythes eux-mêmes, quelques mots doivent être fixés. Cette section ne raconte rien : elle déblaie. Sans elle, bien des phrases plus loin resteront opaques.'},
+  basics:{zh:'先備知識到此為止。現在處理第一個真正的問題，也是最多人搞混的一個：為什麼同一位神有兩個名字？',
+          en:'That is the groundwork done. Now the first real question, and the one most people get muddled by: why does the same god have two names?',
+          fr:'Les préliminaires sont posés. Voici la première vraie question, celle qui embrouille le plus de monde : pourquoi un même dieu porte-t-il deux noms ?'},
+  chronology:{zh:'您已經知道希臘與羅馬的關係了。接下來看這些故事本身的骨架——誰生了誰、什麼先發生。有了骨架，第三部的細節才有地方掛。',
+          en:'You now have the Greece/Rome relationship. Next comes the skeleton of the stories themselves — who begat whom, and what happened first. With the skeleton in place, the detail in Part 3 has somewhere to hang.',
+          fr:'Vous tenez le rapport Grèce/Rome. Vient maintenant le squelette des récits eux-mêmes — qui engendre qui, et dans quel ordre. Une fois ce squelette posé, les détails de la partie 3 auront où s’accrocher.'},
+  pantheon:{zh:'骨架有了，現在認人。這一節是查閱用的，不必一次看完——先掃過一遍留個印象，之後遇到不認得的神再回來查。',
+          en:'With the skeleton in place, meet the cast. This section is for reference, not for reading end to end — skim it once for an impression and come back whenever you meet a god you cannot place.',
+          fr:'Le squelette posé, faites connaissance. Cette section se consulte, elle ne se lit pas d’un trait — parcourez-la une fois, puis revenez-y dès qu’un dieu vous échappe.'},
+  origins:{zh:'從這裡開始是正文，依神話自己的時間順序排列。五章可以順著讀，也可以只挑您感興趣的。',
+          en:'From here on is the main body, arranged in the myths’ own chronological order. Read the five chapters straight through, or take only the ones that interest you.',
+          fr:'À partir d’ici, le corps du texte, rangé selon la chronologie propre aux mythes. Lisez les cinq chapitres d’affilée, ou seulement ceux qui vous intéressent.'},
+  decoder:{zh:'故事的部分結束了。以下四節是工具，設計來讓您帶去美術館用——不必從頭讀，需要時翻開就好。',
+          en:'That is the storytelling done. The four sections below are tools, built to be taken to a museum — not to be read through, but opened when needed.',
+          fr:'Les récits s’arrêtent ici. Les quatre sections suivantes sont des outils, faits pour le musée — non à lire d’un trait, mais à ouvrir au besoin.'},
+};
+
+/* ─────────────────────────────────────────────────────────────
+   WHY — the motivation, before any content at all.
+   ───────────────────────────────────────────────────────────── */
+const WHY = {
+  scene:{zh:'假設您站在羅馬博爾蓋塞美術館的一座雕像前。一個女孩正在變成一棵樹：手指抽長成樹枝，腳趾扎進地面，皮膚已經開始變成樹皮。而一個年輕男子的手，剛剛碰到她的腰。',
+         en:'Imagine standing in front of a statue in the Galleria Borghese in Rome. A girl is turning into a tree: her fingers lengthening into branches, her toes rooting into the ground, her skin already becoming bark. A young man’s hand has just touched her waist.',
+         fr:'Imaginez-vous devant une statue de la Galerie Borghèse, à Rome. Une jeune fille se change en arbre : ses doigts s’allongent en rameaux, ses orteils s’enracinent, sa peau devient écorce. La main d’un jeune homme vient de toucher sa taille.'},
+  without:{zh:'如果不知道故事，您會看到高超的技巧——大理石竟然能被雕出樹葉的薄度。看三十秒，拍張照，走了。',
+           en:'If you do not know the story, you see superb technique — marble somehow carved as thin as a leaf. You look for thirty seconds, take a photo, move on.',
+           fr:'Si vous ignorez l’histoire, vous voyez une technique superbe — du marbre taillé aussi mince qu’une feuille. Trente secondes de regard, une photo, et vous passez.'},
+  with:{zh:'如果知道故事，您會看到別的東西。這是達芙妮：她被阿波羅追逐，寧願變成樹也不願被抓住。而貝尼尼刻意選中的，是變形進行到<strong class="text-white">一半</strong>、還來得及後悔的那半秒。您還會注意到：阿波羅的表情不是慾望，是剛剛意識到自己失去了什麼。<br><br>再往外一層，您會知道這個題材在貝尼尼之前已經被畫了一千五百年，在他之後又被畫了三百年，而每一位藝術家都在回答前一位的版本。',
+        en:'If you do know it, you see something else. This is Daphne: pursued by Apollo, she chose to become a tree rather than be caught. And Bernini deliberately picked the half-second when the change is only <strong class="text-white">half</strong> done — when it could still be regretted. You notice, too, that Apollo’s face is not desire but the dawning knowledge of what he has just lost.<br><br>One layer further out, you know this subject had already been depicted for fifteen hundred years before Bernini and would be for three hundred after him — each artist answering the last one’s version.',
+        fr:'Si vous la connaissez, vous voyez tout autre chose. C’est Daphné : poursuivie par Apollon, elle a préféré devenir arbre plutôt qu’être prise. Et Le Bernin a délibérément choisi la demi-seconde où la métamorphose n’est qu’<strong class="text-white">à moitié</strong> faite — où l’on pourrait encore la regretter. Vous remarquez aussi que le visage d’Apollon n’exprime pas le désir, mais la conscience naissante de ce qu’il vient de perdre.<br><br>Un cran plus loin, vous savez que ce sujet avait déjà été représenté pendant quinze siècles avant Le Bernin, et le serait trois siècles après — chaque artiste répondant à la version du précédent.'},
+  punch:{zh:'差別不在於「有沒有讀過書」。差別在於您看到的是<strong class="text-white">一件物品，還是一場延續兩千年的對話</strong>。',
+         en:'The difference is not about being well-read. The difference is whether you are looking at <strong class="text-white">an object, or a two-thousand-year-long conversation</strong>.',
+         fr:'La différence ne tient pas à l’érudition. Elle tient à ce que vous regardez : <strong class="text-white">un objet, ou une conversation vieille de deux mille ans</strong>.'},
+  defTitle:{zh:'那麼，「神話」到底是什麼？', en:'So what is a “myth,” exactly?', fr:'Alors, qu’est-ce qu’un « mythe » au juste ?'},
+  def:{zh:'首先要拿掉一個誤解：神話不是「古人因為不懂科學而編的假故事」。<br><br>神話是一個文明用來<strong class="text-white">解釋世界、安放恐懼、傳遞價值</strong>的敘事系統。為什麼有四季？為什麼人會死？為什麼我們該效忠這個國家？——這些問題今天由科學、宗教、法律和歷史課本分別回答，而在古代，它們由同一套故事一次回答完。<br><br>所以讀神話不是讀童話，是讀一個文明如何理解自己。',
+       en:'First, remove one misconception: myths are not “stories the ancients made up because they lacked science.”<br><br>A mythology is the narrative system a civilization uses to <strong class="text-white">explain the world, house its fears, and transmit its values</strong>. Why are there seasons? Why do we die? Why should we be loyal to this state? Today those questions are parcelled out to science, religion, law and the history textbook; in antiquity one body of stories answered all of them at once.<br><br>So reading myth is not reading fairy tales. It is reading how a civilization understood itself.',
+       fr:'Écartons d’abord un malentendu : les mythes ne sont pas « des histoires inventées faute de science ».<br><br>Une mythologie est le système de récits par lequel une civilisation <strong class="text-white">explique le monde, loge ses peurs et transmet ses valeurs</strong>. Pourquoi les saisons ? Pourquoi mourons-nous ? Pourquoi devrions-nous servir cet État ? Aujourd’hui ces questions se répartissent entre science, religion, droit et manuel d’histoire ; dans l’Antiquité, un même corpus y répondait d’un seul coup.<br><br>Lire un mythe, ce n’est donc pas lire un conte : c’est lire comment une civilisation se comprenait elle-même.'},
+  gainTitle:{zh:'讀完這本圖譜，您會得到三樣東西', en:'Three things you get from this volume', fr:'Trois choses que ce volume vous apporte'},
+  gains:[
+    {zh:'<strong class="text-white">看懂西方美術館裡大約一半的作品。</strong>從文藝復興到十九世紀，神話是宗教之外最大的題材來源。',
+     en:'<strong class="text-white">The ability to read about half of any Western museum.</strong> From the Renaissance to the nineteenth century, myth is the largest source of subjects after religion.',
+     fr:'<strong class="text-white">De quoi lire la moitié d’un musée occidental.</strong> De la Renaissance au XIXᵉ siècle, le mythe est la première source de sujets après la religion.'},
+    {zh:'<strong class="text-white">大量詞彙的來源。</strong>行星、月份、volcano、cereal、panic、echo、narcissism——這些字背後都站著一位神。',
+     en:'<strong class="text-white">The origin of a great deal of vocabulary.</strong> The planets, the months, volcano, cereal, panic, echo, narcissism — a god stands behind each of these words.',
+     fr:'<strong class="text-white">L’origine d’un vaste vocabulaire.</strong> Les planètes, les mois, volcan, céréale, panique, écho, narcissisme — derrière chacun de ces mots se tient un dieu.'},
+    {zh:'<strong class="text-white">一套仍在運作的敘事原型。</strong>伊底帕斯情結、自戀、普羅米修斯式的科技傲慢、潘朵拉的盒子——現代人談論自己時，用的還是這些故事。',
+     en:'<strong class="text-white">A set of narrative archetypes still in service.</strong> The Oedipus complex, narcissism, Promethean overreach, Pandora’s box — when moderns describe themselves, these are still the stories they use.',
+     fr:'<strong class="text-white">Des archétypes narratifs toujours en service.</strong> Complexe d’Œdipe, narcissisme, démesure prométhéenne, boîte de Pandore — pour se décrire, les modernes usent encore de ces récits.'},
+  ],
+  art:'bernini_daphne'
+};
+
+/* ─────────────────────────────────────────────────────────────
+   PREREQUISITES — vocabulary and a sense of scale, made explicit
+   instead of assumed.
+   ───────────────────────────────────────────────────────────── */
+const PREREQ = {
+  words:[
+    { w:{zh:'神話 / 傳說 / 民間故事', en:'Myth / legend / folktale', fr:'Mythe / légende / conte'},
+      p:{zh:'<strong class="text-white">神話</strong>講神與世界的起源，發生在「時間之前」。<strong class="text-white">傳說</strong>有歷史內核，發生在特定時空——特洛伊戰爭可能真的打過。<strong class="text-white">民間故事</strong>沒有特定人物與年代（「從前從前有個樵夫」）。三者在古代常混在一起，但分清楚有助於判斷一則故事該當真到什麼程度。',
+         en:'A <strong class="text-white">myth</strong> concerns gods and the origin of the world, set “before time.” A <strong class="text-white">legend</strong> has a historical kernel and a place and date — the Trojan War may well have happened. A <strong class="text-white">folktale</strong> has neither named people nor a date (“once upon a time there was a woodcutter”). Antiquity mixed all three, but keeping them apart tells you how literally to take a given story.',
+         fr:'Le <strong class="text-white">mythe</strong> concerne les dieux et l’origine du monde, « avant le temps ». La <strong class="text-white">légende</strong> a un noyau historique, un lieu et une date — la guerre de Troie a pu avoir lieu. Le <strong class="text-white">conte</strong> n’a ni personnages nommés ni date (« il était une fois un bûcheron »). L’Antiquité mêlait les trois, mais les distinguer indique jusqu’où prendre un récit au pied de la lettre.'} },
+    { w:{zh:'史詩 epic', en:'Epic', fr:'Épopée'},
+      p:{zh:'長篇韻文敘事，原本是<strong class="text-white">唱出來的</strong>，不是寫出來的。講英雄與民族命運。《伊利亞德》約一萬六千行——想像一部要唱好幾天的作品。這解釋了為什麼史詩裡有大量重複的套語：那是給表演者用的記憶輔助。',
+         en:'A long verse narrative, originally <strong class="text-white">sung</strong> rather than written, about heroes and the fate of a people. The <em>Iliad</em> runs to some 16,000 lines — a performance lasting days. That explains its many repeated formulas: they are memory aids for the performer.',
+         fr:'Long récit en vers, à l’origine <strong class="text-white">chanté</strong> et non écrit, sur les héros et le destin d’un peuple. L’<em>Iliade</em> compte quelque 16 000 vers — une exécution de plusieurs jours. D’où ses formules répétées : des aides-mémoire pour l’aède.'} },
+    { w:{zh:'城邦 polis', en:'The polis (city-state)', fr:'La polis (cité-État)'},
+      p:{zh:'古希臘<strong class="text-white">不是一個國家</strong>，而是數百個各自獨立的城市，各有自己的政府、曆法與守護神。這一點非常重要：它解釋了為什麼同一則神話會有互相矛盾的版本——不同城市說法本來就不同，而且各自都認為自己的版本才對。',
+         en:'Ancient Greece was <strong class="text-white">not a country</strong> but several hundred independent cities, each with its own government, calendar and patron deity. This matters: it is why the same myth survives in contradictory versions — different cities simply told it differently, and each thought its own version the right one.',
+         fr:'La Grèce antique n’était <strong class="text-white">pas un pays</strong> mais plusieurs centaines de cités indépendantes, chacune avec son gouvernement, son calendrier et sa divinité tutélaire. C’est capital : voilà pourquoi un même mythe subsiste en versions contradictoires — chaque cité le racontait à sa façon, et tenait la sienne pour la bonne.'} },
+    { w:{zh:'屬性物 attribute', en:'Attribute', fr:'Attribut'},
+      p:{zh:'畫面裡用來辨認身分的<strong class="text-white">道具</strong>：拿雷霆的是宙斯，拿三叉戟的是波賽頓。古典藝術不在畫上寫名字，全靠這套道具系統。學會它，等於拿到一把萬用鑰匙——本圖譜第四部有完整對照表。',
+         en:'The <strong class="text-white">prop</strong> by which a figure is identified: the one with the thunderbolt is Zeus, the one with the trident is Poseidon. Classical art does not write names on pictures; it relies entirely on this system of props. Learn it and you hold a master key — Part 4 has the full table.',
+         fr:'L’<strong class="text-white">accessoire</strong> qui identifie une figure : celui à la foudre est Zeus, celui au trident Poséidon. L’art classique n’inscrit pas les noms ; il repose entièrement sur ce système d’objets. L’apprendre, c’est tenir un passe-partout — la partie 4 en donne le tableau complet.'} },
+    { w:{zh:'贊助人 patron', en:'Patron', fr:'Commanditaire'},
+      p:{zh:'古代與近代早期的藝術品，幾乎都是<strong class="text-white">有人出錢訂製</strong>的，不是藝術家想畫才畫。所以「為什麼畫這個題材」的答案，往往不在藝術家身上，而在出錢的人身上——教宗、公爵、銀行家。這是理解神話畫的關鍵之一。',
+         en:'Almost all ancient and early-modern art was <strong class="text-white">commissioned and paid for</strong>, not made because the artist felt like it. So the answer to “why this subject?” usually lies not with the artist but with whoever paid — a pope, a duke, a banker. This is one of the keys to mythological painting.',
+         fr:'Presque tout l’art antique et moderne était <strong class="text-white">commandé et payé</strong>, non pas né du caprice de l’artiste. La réponse à « pourquoi ce sujet ? » se trouve donc rarement chez l’artiste, mais chez le payeur — un pape, un duc, un banquier. C’est l’une des clés de la peinture mythologique.'} },
+    { w:{zh:'羅馬複製品 Roman copy', en:'Roman copy', fr:'Copie romaine'},
+      p:{zh:'希臘的青銅原作幾乎<strong class="text-white">全部被熔掉</strong>做成武器和錢幣了。我們今天在美術館看到的「希臘雕像」，絕大多數是羅馬時代照著希臘原作做的大理石複製品。所以「希臘藝術」這個概念本身，就是透過羅馬人的手傳到我們眼前的。',
+         en:'Greek bronze originals were <strong class="text-white">almost all melted down</strong> for weapons and coin. The “Greek statues” we see in museums are overwhelmingly Roman-era marble copies of lost Greek originals. So even the idea of “Greek art” reaches us by way of Roman hands.',
+         fr:'Les bronzes grecs originaux ont <strong class="text-white">presque tous été fondus</strong> pour en faire armes et monnaies. Les « statues grecques » des musées sont massivement des copies romaines en marbre d’originaux perdus. L’idée même d’« art grec » nous parvient donc par des mains romaines.'} },
+  ],
+  scaleTitle:{zh:'一把時間尺（拿來對照您已經有的時間感）', en:'A scale of time, against a reference you already have', fr:'Une échelle de temps, rapportée à un repère que vous avez déjà'},
+  scale:[
+    { ago:{zh:'約 3500 年前', en:'~3,500 years ago', fr:'il y a ~3 500 ans'}, t:{zh:'宙斯、赫拉的名字出現在泥板上', en:'Zeus and Hera are written on clay tablets', fr:'Zeus et Héra apparaissent sur des tablettes'}, k:1 },
+    { ago:{zh:'約 2700 年前', en:'~2,700 years ago', fr:'il y a ~2 700 ans'}, t:{zh:'荷馬史詩寫定', en:'The Homeric epics are written down', fr:'Les épopées homériques sont fixées'}, k:1 },
+    { ago:{zh:'約 2200 年前', en:'~2,200 years ago', fr:'il y a ~2 200 ans'}, t:{zh:'羅馬征服希臘，開始接手', en:'Rome conquers Greece and takes over', fr:'Rome conquiert la Grèce et reprend le flambeau'}, k:1 },
+    { ago:{zh:'約 1500–600 年前', en:'~1,500–600 years ago', fr:'il y a ~1 500 à 600 ans'}, t:{zh:'中世紀，神話題材幾乎中斷', en:'The Middle Ages; mythological subjects nearly stop', fr:'Le Moyen Âge ; les sujets mythologiques s’interrompent presque'}, k:0 },
+    { ago:{zh:'約 600 年前', en:'~600 years ago', fr:'il y a ~600 ans'}, t:{zh:'文藝復興重新發現古典', en:'The Renaissance rediscovers antiquity', fr:'La Renaissance redécouvre l’Antiquité'}, k:1 },
+    { ago:{zh:'現在', en:'now', fr:'aujourd’hui'}, t:{zh:'您正在讀這一頁', en:'you are reading this page', fr:'vous lisez cette page'}, k:0 },
+  ],
+  scaleNote:{zh:'把這個比例感記住：<strong class="text-white">神話的年紀，是「文藝復興到現在」這整段距離的五倍以上。</strong>我們覺得達文西很古老，但對達文西來說，希臘神話比他自己古老兩千年。',
+             en:'Hold on to the proportion: <strong class="text-white">these myths are more than five times as old as the entire stretch from the Renaissance to today.</strong> We think of Leonardo as ancient — but to Leonardo, Greek myth was two thousand years older than himself.',
+             fr:'Retenez la proportion : <strong class="text-white">ces mythes sont plus de cinq fois plus vieux que tout l’intervalle qui sépare la Renaissance d’aujourd’hui.</strong> Léonard nous paraît ancien ; pour Léonard, le mythe grec avait deux mille ans de plus que lui.'},
+  fearTitle:{zh:'最後，先解除一個心理障礙', en:'Finally, one worry to put down', fr:'Enfin, une inquiétude à déposer'},
+  fear:{zh:'幾乎每個人第一次接觸希臘羅馬神話的反應都是：<strong class="text-white">「名字太多了，我記不起來。」</strong><br><br>不用記。這本圖譜是設計來<strong class="text-white">查</strong>的，不是設計來背的。第三部的諸神與第四部的對照表隨時可以翻回來。<br><br>真正需要放在心裡的，從頭到尾只有一句話——而您在下一節就會拿到它。',
+        en:'Almost everyone’s first reaction to Greek and Roman mythology is the same: <strong class="text-white">“there are too many names, I will never remember them.”</strong><br><br>You do not need to. This volume is built to be <strong class="text-white">looked things up in</strong>, not memorized. The pantheon in Part 3 and the tables in Part 4 are always there to turn back to.<br><br>There is only one sentence you actually need to carry in your head — and you will be given it in the very next section.',
+        fr:'La première réaction est presque toujours la même : <strong class="text-white">« il y a trop de noms, je ne les retiendrai jamais. »</strong><br><br>Ce n’est pas nécessaire. Ce volume est fait pour qu’on y <strong class="text-white">cherche</strong>, non pour être appris par cœur. Le panthéon de la partie 3 et les tableaux de la partie 4 restent consultables à tout moment.<br><br>Une seule phrase mérite d’être gardée en tête — et la section suivante vous la donnera.'}
 };
 
 /* ─────────────────────────────────────────────────────────────
@@ -1676,15 +1957,23 @@ const I18N = {
   zh: {
     'doc.title':'希臘與羅馬神話圖譜 | 諸神、傳說與藝術',
     'hdr.badge':'神話與藝術圖譜','hdr.title':'希臘與羅馬神話',
-    'nav.basics':'入門','nav.chronology':'年表與家系','nav.pantheon':'諸神',
+    'nav.map':'導覽','nav.p1':'一・入門','nav.p2':'二・骨架','nav.p3':'三・故事','nav.p4':'四・工具',
+    'map.eyebrow':'導覽','map.h2':'這本圖譜怎麼讀',
+    'map.lead':'這不是一本從頭讀到尾的書，而是分成四部：前兩部建立底子，第三部是正文，第四部是帶去美術館用的工具。如果您是第一次接觸希臘羅馬神話，請照順序讀完第一部再說——那 15 分鐘會讓後面所有內容變得容易得多。',
+    'map.pathq':'先告訴我您的情況，我把該讀的標出來：',
+    'why.eyebrow':'第 1 章','why.h2':'為什麼值得懂神話',
+    'why.defh':'那麼，「神話」到底是什麼？','why.gainh':'讀完這本圖譜，您會得到三樣東西',
+    'pre.eyebrow':'第 2 章・先修','pre.h2':'開始之前：六個詞與一把時間尺',
+    'pre.h.words':'六個一定要先分清楚的詞','pre.p.words':'點開任一項展開說明。這幾個詞在後面會反覆出現。',
+
     'chr.eyebrow':'圖解','chr.h2':'神話的家系與時間軸',
     'chr.h.tree':'一、神譜：四個世代，兩次政變','chr.p.tree':'希臘創世神話的形狀很單純——每一代統治者都被自己的兒子推翻，直到宙斯為止。由上往下讀。',
     'chr.h.time':'二、神話自己的時間順序','chr.p.time':'這是神話「內部」的先後：從創世一路到羅馬建國。請特別注意中間那個分岔——希臘與羅馬的關係，全在那一格。',
     'rec.band':'先看每個時期在整條時間軸上的位置與長度。您會發現古代與中世紀各佔了極長的時間，而文藝復興其實只是很窄的一段。',
-    'rec.chart.h':'這本圖譜裡的 51 件作品，是什麼時候畫的？','rec.chart.p':'依作品完成年代分組。橫條長度代表件數。','nav.origins':'創世','nav.heroes':'英雄','nav.troy':'特洛伊','nav.rome':'羅馬',
-    'nav.ovid':'變形記','nav.decoder':'圖像辨識','nav.gallery':'作品廊','nav.reception':'藝術史流變','nav.compare':'希臘 vs 羅馬',
+    'rec.chart.h':'這本圖譜裡的 51 件作品，是什麼時候畫的？','rec.chart.p':'依作品完成年代分組。橫條長度代表件數。',
+
     'intro':'希臘神話是一套解釋世界的故事系統；羅馬人接手之後，把它變成一套論證權力的語言。兩者合流之後所形成的圖像庫，成為西方藝術兩千五百年來最主要的題材來源——理解神話，等於拿到讀懂歐洲美術館半數作品的鑰匙。',
-    'intro2':'本圖譜依序處理：諸神譜系與其屬性、創世與泰坦、英雄傳說、特洛伊史詩、羅馬建國神話，以及奧維德《變形記》；每一段都連結到對應的重要藝術作品，並說明「為什麼是這件作品」。最後三節提供實用工具：辨識神祇的屬性對照表、神話在藝術史各時期的處理方式，以及希臘與羅馬的系統性比較。',
+    'intro2':'這本圖譜假設您<strong class="text-white">完全沒有背景</strong>：不需要先讀過任何東西，也不需要記住任何名字。全書分成四部，從「為什麼值得懂」開始，一步一步鋪到「怎麼看懂一幅畫」。下一節會告訴您該從哪裡進入。',
     'intro.hint':'點擊任何作品名稱或縮圖，可查看圖像與該作品與神話的關聯說明。',
     'bas.eyebrow':'零基礎入門','bas.h2':'先搞懂一件事：希臘與羅馬的關係',
     'bas.h.timeline':'一、先看時間順序','bas.p.timeline':'很多混亂都是因為不知道誰先誰後。這條時間軸只有八格，但看完就能明白後面所有事情。',
@@ -1713,15 +2002,23 @@ const I18N = {
   en: {
     'doc.title':'Greek &amp; Roman Mythology Atlas | Gods, Cycles &amp; Their Art',
     'hdr.badge':'MYTHOLOGY &amp; ART ATLAS','hdr.title':'Greek &amp; Roman Mythology',
-    'nav.basics':'Basics','nav.chronology':'Chronology','nav.pantheon':'Pantheon',
+    'nav.map':'Map','nav.p1':'1 · Start','nav.p2':'2 · Shape','nav.p3':'3 · Stories','nav.p4':'4 · Tools',
+    'map.eyebrow':'Orientation','map.h2':'How to read this volume',
+    'map.lead':'This is not a book to read cover to cover. It comes in four parts: the first two build the foundation, the third is the main body, and the fourth is a set of tools to take to a museum. If Greek and Roman mythology is new to you, read Part 1 in order first — those fifteen minutes make everything after them far easier.',
+    'map.pathq':'Tell me where you are, and I will mark what to read:',
+    'why.eyebrow':'Chapter 1','why.h2':'Why myth is worth knowing',
+    'why.defh':'So what is a “myth,” exactly?','why.gainh':'Three things you get from this volume',
+    'pre.eyebrow':'Chapter 2 · Groundwork','pre.h2':'Before we start: six words and a sense of time',
+    'pre.h.words':'Six words worth separating first','pre.p.words':'Open any one for the explanation. These words recur throughout.',
+
     'chr.eyebrow':'Diagrams','chr.h2':'The Genealogy and the Timeline of Myth',
     'chr.h.tree':'1 · The Theogony: four generations, two coups','chr.p.tree':'Greek cosmogony has a very simple shape — every ruling generation is overthrown by its own son, until Zeus. Read downward.',
     'chr.h.time':'2 · The order of events inside the myths','chr.p.time':'This is the sequence <em>within</em> the stories, from the creation of the world to the founding of Rome. Watch the fork in the middle — the whole Greek/Roman relationship is in that one step.',
     'rec.band':'First, where each period sits on the whole span, and how long it lasted. Antiquity and the Middle Ages each occupy enormous stretches; the Renaissance is a surprisingly narrow band.',
-    'rec.chart.h':'When were the 51 works in this atlas actually made?','rec.chart.p':'Grouped by date of execution. Bar length is the number of works.','nav.origins':'Cosmogony','nav.heroes':'Heroes','nav.troy':'Troy','nav.rome':'Rome',
-    'nav.ovid':'Metamorphoses','nav.decoder':'Attribute Decoder','nav.gallery':'Gallery','nav.reception':'Reception','nav.compare':'Greek vs Roman',
+    'rec.chart.h':'When were the 51 works in this atlas actually made?','rec.chart.p':'Grouped by date of execution. Bar length is the number of works.',
+
     'intro':'Greek mythology is a system of stories for explaining the world; when Rome took it over, it became a language for justifying power. The image-bank the two produced together has been the principal subject matter of Western art for twenty-five centuries — knowing the myths is effectively the key to reading half the works in any European museum.',
-    'intro2':'This atlas works through the pantheon and its attributes, cosmogony and the Titans, the heroic cycles, the Trojan epics, Rome’s foundation myths, and Ovid’s <em>Metamorphoses</em> — each section linked to the artworks that matter, with an explanation of why <em>that</em> work. Three practical sections close it: a decoder for identifying deities by their attributes, a period-by-period account of how art has handled myth, and a systematic Greek/Roman comparison.',
+    'intro2':'This atlas assumes <strong class="text-white">no background whatsoever</strong>: nothing to have read first, no names to memorize. It is built in four parts, starting from why any of this is worth knowing and building step by step toward reading an actual painting. The next section tells you where to come in.',
     'intro.hint':'Click any artwork title or thumbnail to open the image and read how it connects to the myth.',
     'bas.eyebrow':'Start from zero','bas.h2':'First, One Thing: How Greece and Rome Are Related',
     'bas.h.timeline':'1 · Get the order of events straight','bas.p.timeline':'Most of the confusion comes from not knowing what came before what. This timeline has only eight entries, and it explains everything that follows.',
@@ -1750,15 +2047,23 @@ const I18N = {
   fr: {
     'doc.title':'Atlas de la mythologie grecque &amp; romaine | Dieux, cycles &amp; leur art',
     'hdr.badge':'ATLAS MYTHOLOGIE &amp; ART','hdr.title':'Mythologie grecque &amp; romaine',
-    'nav.basics':'Bases','nav.chronology':'Chronologie','nav.pantheon':'Panthéon',
+    'nav.map':'Plan','nav.p1':'1 · Départ','nav.p2':'2 · Forme','nav.p3':'3 · Récits','nav.p4':'4 · Outils',
+    'map.eyebrow':'Orientation','map.h2':'Comment lire ce volume',
+    'map.lead':'Ce n’est pas un livre à lire d’un bout à l’autre. Il compte quatre parties : les deux premières posent les bases, la troisième est le corps du texte, la quatrième réunit des outils à emporter au musée. Si la mythologie gréco-romaine vous est nouvelle, lisez d’abord la partie 1 dans l’ordre — ces quinze minutes rendent tout le reste bien plus facile.',
+    'map.pathq':'Dites-moi où vous en êtes, je signalerai quoi lire :',
+    'why.eyebrow':'Chapitre 1','why.h2':'Pourquoi le mythe vaut la peine',
+    'why.defh':'Alors, qu’est-ce qu’un « mythe » au juste ?','why.gainh':'Trois choses que ce volume vous apporte',
+    'pre.eyebrow':'Chapitre 2 · Préalables','pre.h2':'Avant de commencer : six mots et une échelle de temps',
+    'pre.h.words':'Six mots à distinguer d’abord','pre.p.words':'Ouvrez-en un pour l’explication. Ces mots reviendront sans cesse.',
+
     'chr.eyebrow':'Schémas','chr.h2':'Généalogie et chronologie du mythe',
     'chr.h.tree':'1 · La Théogonie : quatre générations, deux coups d’État','chr.p.tree':'La cosmogonie grecque a une forme très simple — chaque génération régnante est renversée par son propre fils, jusqu’à Zeus. À lire de haut en bas.',
     'chr.h.time':'2 · L’ordre des événements à l’intérieur des mythes','chr.p.time':'Voici la succession <em>interne</em> aux récits, de la création du monde à la fondation de Rome. Observez la bifurcation centrale — tout le rapport gréco-romain tient dans cette étape.',
     'rec.band':'D’abord, la place de chaque période sur l’ensemble de la durée, et sa longueur. L’Antiquité et le Moyen Âge occupent des étendues considérables ; la Renaissance n’est qu’une bande étonnamment étroite.',
-    'rec.chart.h':'Quand les 51 œuvres de cet atlas ont-elles été réalisées ?','rec.chart.p':'Regroupées par date d’exécution. La longueur de la barre indique le nombre d’œuvres.','nav.origins':'Cosmogonie','nav.heroes':'Héros','nav.troy':'Troie','nav.rome':'Rome',
-    'nav.ovid':'Métamorphoses','nav.decoder':'Attributs','nav.gallery':'Galerie','nav.reception':'Réception','nav.compare':'Grèce vs Rome',
+    'rec.chart.h':'Quand les 51 œuvres de cet atlas ont-elles été réalisées ?','rec.chart.p':'Regroupées par date d’exécution. La longueur de la barre indique le nombre d’œuvres.',
+
     'intro':'La mythologie grecque est un système de récits pour expliquer le monde ; en la reprenant, Rome en fit une langue pour justifier le pouvoir. Le répertoire d’images né de leur fusion constitue depuis vingt-cinq siècles la principale matière de l’art occidental — connaître les mythes revient à détenir la clé de la moitié des salles d’un musée européen.',
-    'intro2':'Cet atlas parcourt le panthéon et ses attributs, la cosmogonie et les Titans, les cycles héroïques, les épopées troyennes, les mythes fondateurs de Rome et les <em>Métamorphoses</em> d’Ovide — chaque section renvoyant aux œuvres qui comptent, avec l’explication du choix de <em>cette</em> œuvre. Trois sections pratiques concluent : un décodeur des attributs, une histoire période par période du traitement du mythe, et une comparaison systématique Grèce/Rome.',
+    'intro2':'Cet atlas ne suppose <strong class="text-white">aucun prérequis</strong> : rien à avoir lu d’abord, aucun nom à retenir. Il se compose de quatre parties, de « pourquoi cela vaut la peine » jusqu’à la lecture d’un tableau. La section suivante vous indique par où entrer.',
     'intro.hint':'Cliquez sur le titre ou la vignette d’une œuvre pour ouvrir l’image et lire son rapport au mythe.',
     'bas.eyebrow':'Partir de zéro','bas.h2':'D’abord une chose : le lien entre la Grèce et Rome',
     'bas.h.timeline':'1 · Remettre les événements dans l’ordre','bas.p.timeline':'L’essentiel de la confusion vient de l’ignorance de l’ordre des choses. Cette chronologie ne compte que huit entrées, et elle éclaire tout le reste.',
@@ -1867,6 +2172,132 @@ function artChips(keys) {
 /* ─────────────────────────────────────────────────────────────
    Renderers
    ───────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   Structure renderers — part dividers, bridges, the volume map
+   ───────────────────────────────────────────────────────────── */
+const PART_TONE = {
+  emerald:['text-emerald-400','rgba(16,185,129,0.14)','rgba(16,185,129,0.35)'],
+  amber:  ['text-amber-400',  'rgba(217,119,6,0.16)', 'rgba(217,119,6,0.40)'],
+  sky:    ['text-sky-400',    'rgba(2,132,199,0.16)', 'rgba(2,132,199,0.40)'],
+  violet: ['text-violet-400', 'rgba(139,92,246,0.16)','rgba(139,92,246,0.40)'],
+};
+let activePath = null;
+
+function renderParts() {
+  document.querySelectorAll('.part-rule').forEach(el => {
+    const part = PARTS.find(p => p.id === el.dataset.part);
+    if (!part) return;
+    const c = PART_TONE[part.tone];
+    el.innerHTML = '<div class="part-head">'
+      + '<span class="part-num ' + c[0] + '" style="background:' + c[1] + ';border:1px solid ' + c[2] + '">'
+      +   'PART ' + part.n + '</span>'
+      + '<h2 class="text-lg font-black text-white">' + t(part.t) + '</h2>'
+      + '<p class="text-xs text-slate-500 mt-1 leading-relaxed">' + t(part.p) + '</p>'
+      + '</div>';
+  });
+}
+
+function renderBridges() {
+  document.querySelectorAll('[data-bridge]').forEach(el => {
+    const b = BRIDGES[el.dataset.bridge];
+    el.innerHTML = b ? t(b) : '';
+  });
+}
+
+/* The map doubles as the table of contents and as the reading-path picker. */
+function renderMap() {
+  const picker = document.getElementById('path-picker');
+  picker.innerHTML = PATHS.map(p =>
+    '<button type="button" class="path-btn' + (activePath === p.id ? ' is-on' : '') + '"'
+    + ' onclick="pickPath(\'' + p.id + '\')" aria-pressed="' + (activePath === p.id) + '">'
+    + '<i class="fa-solid ' + p.icon + '"></i>' + t(p.t) + '</button>').join('');
+  const chosen = PATHS.find(p => p.id === activePath);
+  document.getElementById('path-hint').innerHTML = chosen
+    ? '<i class="fa-solid fa-arrow-turn-down fa-rotate-90 mr-1.5 text-amber-500/70"></i>' + t(chosen.p)
+    : '';
+
+  document.getElementById('volume-map').innerHTML = PARTS.map(part => {
+    const c = PART_TONE[part.tone];
+    const chaps = CHAPTERS.filter(ch => ch.part === part.n);
+    return '<div class="rounded-2xl border p-4" style="border-color:' + c[2] + ';background:' + c[1] + '">'
+      + '<div class="mb-3">'
+      +   '<span class="part-num ' + c[0] + '" style="background:rgba(0,0,0,0.25)">PART ' + part.n + '</span>'
+      +   '<h4 class="text-sm font-black text-white">' + t(part.t) + '</h4>'
+      + '</div>'
+      + '<ol class="space-y-1.5">' + chaps.map((ch, i) => {
+          const dim = activePath && !ch.paths.includes(activePath);
+          return '<li class="chap' + (dim ? ' is-dim' : '') + '">'
+            + '<a href="#' + ch.id + '" class="block rounded-lg px-2.5 py-1.5 bg-slate-950/40 hover:bg-slate-950/80 transition-colors">'
+            +   '<span class="flex items-baseline justify-between gap-2">'
+            +     '<span class="text-xs font-bold text-slate-200 truncate">' + t(ch.t) + '</span>'
+            +     (ch.min ? '<span class="text-[0.6rem] text-slate-500 font-mono shrink-0">' + ch.min + 'm</span>' : '')
+            +   '</span>'
+            +   (t(ch.d) ? '<span class="block text-[0.65rem] text-slate-500 mt-0.5 truncate">' + t(ch.d) + '</span>' : '')
+            + '</a></li>';
+        }).join('') + '</ol>'
+      + '</div>';
+  }).join('');
+}
+function pickPath(id) { activePath = (activePath === id) ? null : id; renderMap(); }
+
+function renderWhy() {
+  const a = ARTS[WHY.art];
+  document.getElementById('why-scene').innerHTML =
+      '<div class="space-y-4">'
+    +   '<p class="text-slate-300 leading-relaxed">' + t(WHY.scene) + '</p>'
+    +   '<div class="grid sm:grid-cols-2 gap-3">'
+    +     '<div class="bg-slate-900/50 rounded-2xl border border-slate-800 p-4">'
+    +       '<span class="text-[0.65rem] uppercase tracking-wider text-slate-500 font-bold">'
+    +         (LANG === 'zh' ? '不知道故事' : LANG === 'fr' ? 'Sans l’histoire' : 'Without the story') + '</span>'
+    +       '<p class="text-xs text-slate-400 leading-relaxed mt-1.5">' + t(WHY.without) + '</p></div>'
+    +     '<div class="rounded-2xl p-4" style="background:rgba(217,119,6,0.10);border:1px solid rgba(217,119,6,0.35)">'
+    +       '<span class="text-[0.65rem] uppercase tracking-wider font-bold" style="color:var(--bar-ink,#fcd34d)">'
+    +         (LANG === 'zh' ? '知道故事' : LANG === 'fr' ? 'Avec l’histoire' : 'With the story') + '</span>'
+    +       '<p class="text-xs text-slate-300 leading-relaxed mt-1.5">' + t(WHY.with) + '</p></div>'
+    +   '</div>'
+    +   '<p class="text-sm text-slate-200 leading-relaxed bg-slate-900/50 border border-slate-800 rounded-2xl p-4">'
+    +     t(WHY.punch) + '</p>'
+    + '</div>'
+    + '<div class="cursor-pointer" onclick="openArt(\'' + WHY.art + '\')" role="button" tabindex="0"'
+    +   ' onkeydown="if(event.key===\'Enter\'){openArt(\'' + WHY.art + '\');}">'
+    +   '<div class="art-frame"><div class="ph"><i class="fa-solid fa-image"></i></div>'
+    +     '<img class="art-thumb" alt="" loading="lazy" data-wiki="' + esc(a.wiki) + '"></div>'
+    +   '<p class="text-xs font-bold text-white mt-2 leading-snug">' + t(a.t) + '</p>'
+    +   '<p class="text-[0.7rem] text-amber-300/80">' + t(a.a) + ' · ' + t(a.y) + '</p>'
+    + '</div>';
+  watchThumbs(document.getElementById('why-scene'));
+
+  document.getElementById('why-def').innerHTML = t(WHY.def);
+  document.getElementById('why-gains').innerHTML = WHY.gains.map((g, i) =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<span class="text-lg font-black text-slate-700">' + (i + 1) + '</span>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-1">' + t(g) + '</p>'
+    + '</div>').join('');
+}
+
+function renderPrereq() {
+  document.getElementById('pre-words').innerHTML = PREREQ.words.map(w =>
+      '<details class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<summary class="flex items-center justify-between gap-3 text-sm font-bold text-slate-200">'
+    +     '<span><i class="fa-solid fa-chevron-right chev text-slate-500 text-xs transition-transform mr-2"></i>'
+    +       t(w.w) + '</span></summary>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-3 pl-6">' + t(w.p) + '</p>'
+    + '</details>').join('');
+
+  document.getElementById('pre-scale-h').innerHTML = t(PREREQ.scaleTitle);
+  document.getElementById('pre-scale-note').innerHTML = t(PREREQ.scaleNote);
+  document.getElementById('pre-scale').innerHTML = PREREQ.scale.map(e =>
+      '<li class="tl-row" style="--rail:' + (e.k ? 'var(--bar-mark)' : 'var(--mid-mark)') + '">'
+    + '<span class="text-right text-[0.7rem] font-mono pt-0.5" style="color:'
+    +   (e.k ? 'var(--bar-ink)' : 'var(--mid-ink)') + '">' + t(e.ago) + '</span>'
+    + '<span class="tl-rail"><span class="tl-dot"></span></span>'
+    + '<span class="min-w-0 pb-4"><span class="text-sm text-slate-300">' + t(e.t) + '</span></span>'
+    + '</li>').join('');
+
+  document.getElementById('pre-fear-h').innerHTML = t(PREREQ.fearTitle);
+  document.getElementById('pre-fear').innerHTML = t(PREREQ.fear);
+}
+
 /* Era colours used by the spine, the fork and the reception band. */
 const ERA_MARK = { greek:'var(--gr-mark)', rome:'var(--ro-mark)', mid:'var(--mid-mark)', ren:'var(--bar-mark)' };
 const ERA_INK  = { greek:'var(--gr-ink)',  rome:'var(--ro-ink)',  mid:'var(--mid-ink)',  ren:'var(--bar-ink)' };
@@ -2031,7 +2462,8 @@ function renderCycles() {
       +   '<p class="text-sm text-slate-400 leading-relaxed">' + t(it.p) + '</p>'
       +   artChips(it.arts)
       + '</div>').join('');
-    return '<section id="' + cy.id + '" class="scroll-mt-24">'
+    const bridge = BRIDGES[cy.id] ? '<div class="bridge">' + t(BRIDGES[cy.id]) + '</div>' : '';
+    return '<section id="' + cy.id + '" class="scroll-mt-24">' + bridge
       + '<div class="flex items-center gap-3 mb-5">'
       +   '<div class="p-3 ' + c[2] + ' rounded-2xl ' + c[3] + ' border ' + c[1] + ' ' + c[4] + '"><i class="fa-solid ' + cy.icon + ' text-xl"></i></div>'
       +   '<div><span class="text-xs uppercase tracking-wider ' + c[3] + ' font-bold">' + t(cy.eyebrow) + '</span>'
@@ -2218,6 +2650,11 @@ function setLanguage(lang) {
     if (v) el.innerHTML = v;
   });
 
+  renderParts();
+  renderBridges();
+  renderMap();
+  renderWhy();
+  renderPrereq();
   renderBasics();
   renderTheogony();
   renderMythTime();
