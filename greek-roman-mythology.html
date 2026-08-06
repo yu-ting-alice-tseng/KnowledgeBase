@@ -114,6 +114,7 @@
         <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200">FR</button>
       </div>
       <nav class="flex flex-wrap gap-2 text-xs">
+        <a href="#basics" data-i18n="nav.basics" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">Basics</a>
         <a href="#pantheon" data-i18n="nav.pantheon" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors">Pantheon</a>
         <a href="#origins" data-i18n="nav.origins" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors">Cosmogony</a>
         <a href="#heroes" data-i18n="nav.heroes" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors">Heroes</a>
@@ -138,6 +139,70 @@
     <div class="mt-6 flex items-center gap-2 text-xs text-slate-500">
       <i class="fa-solid fa-hand-pointer text-amber-500/70"></i>
       <span data-i18n="intro.hint"></span>
+    </div>
+  </section>
+
+  <!-- BASICS (for readers with no background) -->
+  <section id="basics" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-emerald"><i class="fa-solid fa-graduation-cap text-xl"></i></div>
+      <div>
+        <span data-i18n="bas.eyebrow" class="text-xs uppercase tracking-wider text-emerald-400 font-bold"></span>
+        <h2 data-i18n="bas.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-8">
+
+      <div class="bg-emerald-500/[0.07] border border-emerald-500/20 rounded-2xl p-5">
+        <p id="bas-oneline" class="text-slate-300 leading-relaxed"></p>
+      </div>
+
+      <div>
+        <h3 data-i18n="bas.h.timeline" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="bas.p.timeline" class="text-xs text-slate-500 mb-4"></p>
+        <ol id="bas-timeline" class="space-y-3"></ol>
+        <p id="bas-timeline-note" class="text-sm text-slate-400 leading-relaxed mt-4 bg-slate-900/40 border border-slate-800 rounded-2xl p-4"></p>
+      </div>
+
+      <div>
+        <h3 data-i18n="bas.h.took" class="text-base font-black text-white mb-3"></h3>
+        <p id="bas-howtook" class="text-sm text-slate-400 leading-relaxed"></p>
+      </div>
+
+      <div>
+        <h3 data-i18n="bas.h.diffs" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="bas.p.diffs" class="text-xs text-slate-500 mb-4"></p>
+        <div id="bas-diffs" class="space-y-3"></div>
+      </div>
+
+      <div>
+        <h3 data-i18n="bas.h.names" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="bas.p.names" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[760px]">
+            <thead>
+              <tr class="text-left text-slate-400 border-b border-slate-800">
+                <th data-i18n="bas.nm.th0" class="py-3 px-4 font-bold"></th>
+                <th data-i18n="bas.nm.th1" class="py-3 px-4 font-bold"></th>
+                <th data-i18n="bas.nm.th2" class="py-3 px-4 font-bold"></th>
+                <th data-i18n="bas.nm.th3" class="py-3 px-4 font-bold"></th>
+              </tr>
+            </thead>
+            <tbody id="bas-names" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+        <p id="bas-names-note" class="text-sm text-slate-400 leading-relaxed mt-4 bg-slate-900/40 border border-slate-800 rounded-2xl p-4"></p>
+      </div>
+
+      <div>
+        <h3 data-i18n="bas.h.wrong" class="text-base font-black text-white mb-4"></h3>
+        <div id="bas-wrong" class="space-y-3"></div>
+      </div>
+
+      <div class="border-t border-slate-800 pt-6">
+        <h3 data-i18n="bas.h.why" class="text-base font-black text-white mb-3"></h3>
+        <p id="bas-why" class="text-sm text-slate-300 leading-relaxed"></p>
+      </div>
     </div>
   </section>
 
@@ -748,6 +813,163 @@ moreau_sphinx: {
 };
 
 /* ─────────────────────────────────────────────────────────────
+   BASICS — written for a reader with no background at all.
+   Starts from the one question every beginner has: why does
+   the same god have two names?
+   ───────────────────────────────────────────────────────────── */
+const BASICS = {
+  oneLine:{
+    zh:'最短的答案：<strong class="text-white">希臘神話是原版，羅馬神話是羅馬人接手之後的改編版。</strong>宙斯和朱庇特不是兩位神，是同一位神的希臘名字和羅馬名字。但「只是改個名字」這句話只對了一半——差別在哪裡，就是這一節要慢慢說清楚的事。',
+    en:'The shortest answer: <strong class="text-white">Greek myth is the original; Roman myth is what the Romans made of it after they took it over.</strong> Zeus and Jupiter are not two gods — they are the Greek name and the Roman name for one god. But “they just changed the names” is only half true, and the other half is what this section is for.',
+    fr:'La réponse la plus brève : <strong class="text-white">le mythe grec est l’original ; le mythe romain est ce que les Romains en ont fait après l’avoir repris.</strong> Zeus et Jupiter ne sont pas deux dieux : ce sont le nom grec et le nom romain d’un même dieu. Mais « ils ont juste changé les noms » n’est vrai qu’à moitié — et l’autre moitié est l’objet de cette section.'},
+
+  timeline:[
+    { y:'約前 1600–1100', ye:'c. 1600–1100 BC',
+      t:{zh:'邁錫尼文明', en:'Mycenaean Greece', fr:'Grèce mycénienne'},
+      p:{zh:'希臘神話最早的根。當時的泥板文書上已經出現宙斯、赫拉、波賽頓的名字——所以這些神至少有三千五百年歷史，比荷馬還早了八百年。',
+         en:'The oldest root of Greek myth. Clay tablets from this period already carry the names Zeus, Hera and Poseidon — so these gods are at least 3,500 years old, eight centuries older than Homer.',
+         fr:'La plus ancienne racine du mythe grec. Des tablettes d’argile de cette période portent déjà les noms de Zeus, Héra et Poséidon : ces dieux ont donc au moins 3 500 ans, huit siècles de plus qu’Homère.'} },
+    { y:'約前 700', ye:'c. 700 BC',
+      t:{zh:'荷馬與赫西俄德', en:'Homer and Hesiod', fr:'Homère et Hésiode'},
+      p:{zh:'口耳相傳幾百年的故事第一次被寫下來。荷馬寫戰爭與英雄（《伊利亞德》《奧德賽》），赫西俄德寫諸神的家譜（《神譜》）。從此希臘人有了一套大致固定的神話。',
+         en:'Stories passed by mouth for centuries are written down for the first time. Homer takes war and heroes (the <em>Iliad</em> and <em>Odyssey</em>), Hesiod takes the family tree of the gods (the <em>Theogony</em>). From here on the Greeks have a roughly settled mythology.',
+         fr:'Des récits transmis oralement pendant des siècles sont mis par écrit pour la première fois. Homère prend la guerre et les héros (l’<em>Iliade</em>, l’<em>Odyssée</em>), Hésiode la généalogie des dieux (la <em>Théogonie</em>). Les Grecs disposent dès lors d’une mythologie à peu près fixée.'} },
+    { y:'約前 500–400', ye:'c. 500–400 BC',
+      t:{zh:'雅典的黃金時代', en:'The Athenian golden age', fr:'L’âge d’or athénien'},
+      p:{zh:'悲劇作家把神話搬上舞台（伊底帕斯、美狄亞都在這時成為劇本），帕德嫩神廟落成。神話同時是宗教、文學和公共藝術。',
+         en:'The tragedians put myth on stage — Oedipus and Medea become plays in these years — and the Parthenon is built. Myth is simultaneously religion, literature and public art.',
+         fr:'Les tragiques portent le mythe à la scène — Œdipe et Médée deviennent des pièces en ces années — et le Parthénon s’élève. Le mythe est à la fois religion, littérature et art public.'} },
+    { y:'前 146', ye:'146 BC',
+      t:{zh:'羅馬征服希臘', en:'Rome conquers Greece', fr:'Rome conquiert la Grèce'},
+      p:{zh:'這是關鍵的轉折點。希臘成為羅馬的行省，大量希臘雕像被運回羅馬，希臘教師成為羅馬貴族子弟的家教。羅馬人在軍事上贏了，卻在文化上被希臘同化——羅馬詩人賀拉斯自己就這樣寫：「被征服的希臘，反過來征服了她粗野的征服者。」',
+         en:'The hinge. Greece becomes a Roman province, Greek statues are shipped to Rome by the boatload, and Greek tutors teach the children of the Roman elite. Rome won militarily and was culturally absorbed by the loser — a Roman poet said exactly that himself.',
+         fr:'Le tournant. La Grèce devient province romaine, les statues grecques affluent à Rome par bateaux entiers, et des précepteurs grecs enseignent aux enfants de l’élite romaine. Rome a gagné militairement et s’est fait absorber culturellement par le vaincu — un poète romain l’a écrit lui-même.'} },
+    { y:'前 29–19', ye:'29–19 BC',
+      t:{zh:'維吉爾《埃涅阿斯紀》', en:'Virgil’s Aeneid', fr:'L’Énéide de Virgile'},
+      p:{zh:'羅馬終於有了自己的國家史詩：特洛伊王子埃涅阿斯逃出焚城、遠渡義大利，成為羅馬人的祖先。這不是希臘故事的翻譯，是羅馬人用希臘材料寫的自家起源。',
+         en:'Rome finally gets a national epic of its own: the Trojan prince Aeneas escapes the burning city, sails to Italy and becomes the ancestor of the Romans. This is not a translation of a Greek story — it is Rome writing its own origin out of Greek materials.',
+         fr:'Rome se dote enfin d’une épopée nationale : le prince troyen Énée fuit la ville en flammes, gagne l’Italie et devient l’ancêtre des Romains. Ce n’est pas la traduction d’un récit grec, c’est Rome écrivant sa propre origine avec des matériaux grecs.'} },
+    { y:'後 8', ye:'AD 8',
+      t:{zh:'奧維德《變形記》', en:'Ovid’s Metamorphoses', fr:'Les Métamorphoses d’Ovide'},
+      p:{zh:'兩百五十則神話被編成一本拉丁文的故事集。它日後成為歐洲畫家的教科書——本圖譜裡超過三分之一的作品，題材都出自這本書。',
+         en:'Some 250 myths collected into one Latin storybook. It later becomes the working textbook of European painters — more than a third of the artworks in this atlas take their subject from it.',
+         fr:'Quelque 250 mythes réunis en un recueil latin. Il deviendra le manuel de travail des peintres européens — plus d’un tiers des œuvres de cet atlas y puisent leur sujet.'} },
+    { y:'約 500–1400', ye:'c. 500–1400',
+      t:{zh:'中世紀：希臘文失傳', en:'The Middle Ages: Greek is lost', fr:'Le Moyen Âge : le grec se perd'},
+      p:{zh:'西歐幾乎沒有人讀得懂希臘文了，荷馬因此中斷。但拉丁文一直是教會與學者的語言，所以維吉爾和奧維德活了下來。這一步決定了後面所有事情。',
+         en:'Almost nobody in Western Europe can read Greek any more, so Homer drops out of circulation. But Latin remains the language of the Church and of scholarship, so Virgil and Ovid survive. This single fact determines everything that follows.',
+         fr:'Presque plus personne en Europe occidentale ne lit le grec : Homère sort de la circulation. Mais le latin demeure la langue de l’Église et du savoir, et Virgile comme Ovide survivent. Ce seul fait détermine tout le reste.'} },
+    { y:'1400 之後', ye:'after 1400',
+      t:{zh:'文藝復興：重新發現古典', en:'The Renaissance rediscovers antiquity', fr:'La Renaissance redécouvre l’Antiquité'},
+      p:{zh:'歐洲人重新熱愛古典世界，但他們手上讀的主要還是拉丁文本。於是畫家畫的是希臘故事，寫在畫框上的卻是羅馬名字——這個習慣一直延續到今天的美術館標籤。',
+         en:'Europe falls in love with antiquity again — but what it actually reads is still mostly the Latin texts. So painters paint Greek stories and write Roman names on the frames, a habit that runs unbroken to the labels in museums today.',
+         fr:'L’Europe se reprend de passion pour l’Antiquité — mais ce qu’elle lit reste surtout les textes latins. Les peintres peignent donc des récits grecs et inscrivent des noms romains sur les cadres : habitude ininterrompue jusqu’aux cartels des musées d’aujourd’hui.'} },
+  ],
+  timelineNote:{
+    zh:'看完這條時間軸，一個重要的結論就出來了：<strong class="text-white">歐洲人「認識」希臘神話，絕大部分是透過羅馬人的拉丁文轉述。</strong>這就是為什麼西方藝術裡的神幾乎都用羅馬名字。',
+    en:'One important conclusion falls out of this timeline: <strong class="text-white">Europe learned Greek mythology overwhelmingly through the Romans’ Latin retelling.</strong> That is why the gods in Western art are almost always called by their Roman names.',
+    fr:'Une conclusion importante se dégage de cette chronologie : <strong class="text-white">l’Europe a appris la mythologie grecque essentiellement à travers la version latine des Romains.</strong> D’où les noms romains portés par presque tous les dieux de l’art occidental.'},
+
+  howTook:{
+    zh:'羅馬人並不是「抄襲」，也不完全是「翻譯」。在遇到希臘之前，羅馬本來就有自己的神，只是那些神很抽象：祂們是一股力量（拉丁文叫 <em>numen</em>，神威），有名字、有該怎麼拜的規矩，但幾乎<strong class="text-white">沒有故事</strong>——沒有戀愛，沒有吵架，沒有家譜。<br><br>當羅馬人大量接觸希臘文化後，他們做了一件很自然的事：把兩邊性質相近的神配對起來。「我們掌管農作的薩圖恩，就是你們的克洛諾斯」「我們的朱庇特，就是你們的宙斯」。這個做法有個專門的名稱，叫 <em class="text-white">interpretatio romana</em>（羅馬式解釋）。<br><br>如果要打個比方：<strong class="text-white">羅馬人原本只有神明的「名字」和「拜拜的規矩」，希臘人則有一整套精彩的連續劇劇情。羅馬人保留了自己的名字，借用了希臘的劇本。</strong>這就是為什麼今天我們讀到的羅馬神話，故事幾乎都是希臘的，名字卻是拉丁的。',
+    en:'The Romans were not plagiarising, and they were not exactly translating either. Before they met the Greeks they already had gods of their own — but those gods were abstract. They were powers (Latin <em>numen</em>), each with a name and a correct way to be worshipped, and almost <strong class="text-white">no stories</strong>: no love affairs, no quarrels, no family tree.<br><br>When Greek culture arrived in bulk, the Romans did something very natural: they paired up gods that resembled each other. “Our Saturn, who looks after the crops, is your Cronus.” “Our Jupiter is your Zeus.” The practice has a name of its own — <em class="text-white">interpretatio romana</em>, Roman interpretation.<br><br>An analogy: <strong class="text-white">the Romans had the names of the gods and the rules for worshipping them; the Greeks had a whole season of gripping drama. The Romans kept their own names and borrowed the Greek scripts.</strong> That is why the Roman mythology we read today has Greek plots and Latin names.',
+    fr:'Les Romains ne plagiaient pas, et ne traduisaient pas non plus tout à fait. Avant de rencontrer les Grecs, ils avaient déjà leurs propres dieux — mais abstraits. C’étaient des puissances (le <em>numen</em> latin), chacune avec un nom et une manière correcte de l’honorer, et presque <strong class="text-white">aucun récit</strong> : ni amours, ni querelles, ni généalogie.<br><br>Quand la culture grecque afflua, les Romains firent une chose très naturelle : ils apparièrent les dieux qui se ressemblaient. « Notre Saturne, qui veille sur les moissons, c’est votre Cronos. » « Notre Jupiter, c’est votre Zeus. » Cette pratique porte un nom : l’<em class="text-white">interpretatio romana</em>.<br><br>Une image : <strong class="text-white">les Romains avaient les noms des dieux et les règles du culte ; les Grecs avaient toute une saison de feuilleton passionnant. Les Romains gardèrent leurs noms et empruntèrent les scénarios grecs.</strong> D’où une mythologie romaine aux intrigues grecques et aux noms latins.'},
+
+  diffs:[
+    { t:{zh:'神的性格', en:'What the gods are like', fr:'Le caractère des dieux'},
+      g:{zh:'像放大版的人。會吃醋、會外遇、會為了面子鬧脾氣。宙斯不斷偷情，赫拉不斷報復——神有缺點，而且缺點就是故事的動力。',
+         en:'Like humans writ large. They are jealous, unfaithful, and sulk over wounded pride. Zeus is serially unfaithful, Hera serially vengeful — the gods have flaws, and the flaws are what drive the stories.',
+         fr:'Des humains en plus grand. Jaloux, infidèles, boudeurs par orgueil blessé. Zeus trompe sans cesse, Héra se venge sans cesse — les dieux ont des défauts, et ces défauts font avancer les récits.'},
+      r:{zh:'原本比較像「職務單位」。重點不是祂的個性，而是儀式有沒有做對：一個字念錯，整場祭典要重來。個性是後來從希臘借過來的。',
+         en:'Originally more like offices than personalities. What mattered was not character but whether the ritual was performed correctly — one misspoken word and the whole ceremony had to start again. The personalities were borrowed later, from Greece.',
+         fr:'À l’origine, plus des fonctions que des personnalités. L’essentiel n’était pas le caractère mais l’exactitude du rite : un mot mal prononcé, et toute la cérémonie recommençait. Les personnalités furent empruntées plus tard à la Grèce.'} },
+    { t:{zh:'神話拿來做什麼', en:'What myth is for', fr:'À quoi sert le mythe'},
+      g:{zh:'解釋這個世界。為什麼有四季？因為冥王劫走了穀物女神的女兒。為什麼有苦難？因為潘朵拉打開了甕。神話是古人版本的「為什麼」。',
+         en:'To explain the world. Why are there seasons? Because the lord of the dead carried off the grain goddess’s daughter. Why is there suffering? Because Pandora opened the jar. Myth is the ancient version of “why.”',
+         fr:'Expliquer le monde. Pourquoi les saisons ? Parce que le maître des morts a enlevé la fille de la déesse des moissons. Pourquoi la souffrance ? Parce que Pandore a ouvert la jarre. Le mythe est la version antique du « pourquoi ».'},
+      r:{zh:'證明羅馬該統治世界。埃涅阿斯是維納斯的兒子，羅馬皇帝是埃涅阿斯的後代，所以羅馬的權力來自神。神話在羅馬更接近一份出身證明。',
+         en:'To prove that Rome ought to rule. Aeneas was the son of Venus, the emperors descend from Aeneas, therefore Rome’s power comes from the gods. In Rome, myth works more like a certificate of pedigree.',
+         fr:'Prouver que Rome doit régner. Énée était fils de Vénus, les empereurs descendent d’Énée, donc le pouvoir de Rome vient des dieux. À Rome, le mythe fonctionne surtout comme un certificat de filiation.'} },
+    { t:{zh:'英雄追求什麼', en:'What the hero wants', fr:'Ce que veut le héros'},
+      g:{zh:'個人的卓越與不朽的名聲（希臘文 <em>arete</em>）。阿基里斯明知去打仗會死，還是去了，因為他要的是被永遠傳頌。結局常常是悲劇。',
+         en:'Personal excellence and undying fame (Greek <em>arete</em>). Achilles knows the war will kill him and goes anyway, because what he wants is to be sung about forever. It usually ends in tragedy.',
+         fr:'L’excellence personnelle et la gloire impérissable (le grec <em>areté</em>). Achille sait que la guerre le tuera et y va quand même, parce qu’il veut qu’on le chante à jamais. Cela finit d’ordinaire en tragédie.'},
+      r:{zh:'對神、對父親、對國家的責任（拉丁文 <em>pietas</em>）。埃涅阿斯放棄了迦太基女王的愛情，因為他有建國的任務。英雄不是最耀眼的人，是最盡責的人。',
+         en:'Duty — to the gods, to one’s father, to the state (Latin <em>pietas</em>). Aeneas gives up the love of the queen of Carthage because he has a nation to found. The hero is not the most dazzling man but the most dutiful one.',
+         fr:'Le devoir — envers les dieux, le père, l’État (le latin <em>pietas</em>). Énée renonce à l’amour de la reine de Carthage parce qu’il a une nation à fonder. Le héros n’est pas le plus éclatant mais le plus fidèle à son devoir.'} },
+    { t:{zh:'宗教的重心', en:'Where the religion’s weight falls', fr:'Où pèse la religion'},
+      g:{zh:'城邦各有守護神，神廟是城市的驕傲。祭典裡有戲劇比賽和運動會——奧林匹克運動會本來就是獻給宙斯的。',
+         en:'Each city-state has its patron deity and its temple is the city’s pride. Festivals include drama competitions and athletic games — the Olympics began as an offering to Zeus.',
+         fr:'Chaque cité a sa divinité tutélaire et son temple fait sa fierté. Les fêtes comportent concours dramatiques et jeux athlétiques — les Jeux olympiques commencèrent comme une offrande à Zeus.'},
+      r:{zh:'國家宗教。祭司是政治職位，皇帝死後可以被正式封神。家裡還要拜自己的家神（Lares、Penates）。信仰與行政幾乎是同一件事。',
+         en:'A state religion. Priesthoods are political offices, and an emperor can be formally declared a god after death. Households also worship their own gods, the Lares and Penates. Faith and administration are nearly the same activity.',
+         fr:'Une religion d’État. Les prêtrises sont des charges politiques et un empereur peut être officiellement divinisé après sa mort. Les foyers honorent en outre leurs propres dieux, Lares et Pénates. Foi et administration se confondent presque.'} },
+    { t:{zh:'留給後世藝術的', en:'What each left to later art', fr:'Ce que chacun a légué à l’art'},
+      g:{zh:'<strong class="text-white">形體。</strong>人體比例、站姿、衣褶、用道具辨認身分的規則——這一整套視覺語言是希臘人建立的。',
+         en:'<strong class="text-white">The forms.</strong> Bodily proportion, stance, drapery, and the rule that you identify a figure by its props — the Greeks built that entire visual language.',
+         fr:'<strong class="text-white">Les formes.</strong> Proportions du corps, attitudes, draperies, et la règle qui identifie une figure par ses attributs — les Grecs ont bâti tout ce langage visuel.'},
+      r:{zh:'<strong class="text-white">名字與故事。</strong>因為歐洲讀的是拉丁文，所以維納斯、朱庇特、邱比特這些名字流傳下來，奧維德的故事版本也成了畫家的標準劇本。',
+         en:'<strong class="text-white">The names and the stories.</strong> Because Europe read Latin, the names Venus, Jupiter and Cupid are the ones that survived, and Ovid’s versions became the painters’ standard script.',
+         fr:'<strong class="text-white">Les noms et les récits.</strong> L’Europe lisant le latin, ce sont les noms de Vénus, Jupiter et Cupidon qui ont subsisté, et les versions d’Ovide sont devenues le scénario de référence des peintres.'} },
+  ],
+
+  names:[
+    { gr:'Zeus 宙斯',        ro:'Jupiter 朱庇特',  one:{zh:'眾神之王，管天空與雷電', en:'King of the gods; sky and thunder', fr:'Roi des dieux ; ciel et foudre'},
+      hook:{zh:'木星叫 Jupiter', en:'The planet Jupiter', fr:'La planète Jupiter'} },
+    { gr:'Hera 赫拉',        ro:'Juno 朱諾',       one:{zh:'天后，管婚姻', en:'Queen of the gods; marriage', fr:'Reine des dieux ; mariage'},
+      hook:{zh:'六月 June 得名於她', en:'June is named after her', fr:'Juin porte son nom'} },
+    { gr:'Poseidon 波賽頓',  ro:'Neptune 涅普頓',  one:{zh:'海神', en:'God of the sea', fr:'Dieu de la mer'},
+      hook:{zh:'海王星叫 Neptune', en:'The planet Neptune', fr:'La planète Neptune'} },
+    { gr:'Demeter 狄蜜特',   ro:'Ceres 刻瑞斯',    one:{zh:'穀物與農業女神', en:'Goddess of grain and farming', fr:'Déesse des moissons'},
+      hook:{zh:'穀片 cereal 出自她', en:'“Cereal” comes from her', fr:'« Céréale » vient d’elle'} },
+    { gr:'Athena 雅典娜',    ro:'Minerva 密涅瓦',  one:{zh:'智慧與工藝女神', en:'Goddess of wisdom and craft', fr:'Déesse de la sagesse'},
+      hook:{zh:'雅典 Athens 以她命名', en:'Athens is named after her', fr:'Athènes porte son nom'} },
+    { gr:'Apollo 阿波羅',    ro:'Apollo 阿波羅',   one:{zh:'光、音樂與預言之神', en:'Light, music and prophecy', fr:'Lumière, musique, prophétie'},
+      hook:{zh:'唯一希臘羅馬同名的神；阿波羅登月計畫', en:'The only god with one name in both; the Apollo missions', fr:'Le seul dieu au nom identique ; les missions Apollo'} },
+    { gr:'Artemis 阿特蜜斯', ro:'Diana 黛安娜',    one:{zh:'狩獵與月亮女神', en:'Goddess of the hunt and the moon', fr:'Déesse de la chasse et de la lune'},
+      hook:{zh:'黛安娜是常見女子名', en:'Diana is a common given name', fr:'Diane est un prénom courant'} },
+    { gr:'Ares 阿瑞斯',      ro:'Mars 馬爾斯',     one:{zh:'戰神', en:'God of war', fr:'Dieu de la guerre'},
+      hook:{zh:'火星 Mars、三月 March', en:'The planet Mars; the month March', fr:'La planète Mars ; le mois de mars'} },
+    { gr:'Aphrodite 阿芙蘿黛蒂', ro:'Venus 維納斯', one:{zh:'愛與美的女神', en:'Goddess of love and beauty', fr:'Déesse de l’amour et de la beauté'},
+      hook:{zh:'金星叫 Venus', en:'The planet Venus', fr:'La planète Vénus'} },
+    { gr:'Hephaestus 赫菲斯托斯', ro:'Vulcan 伏爾甘', one:{zh:'火與鍛冶之神', en:'God of fire and the forge', fr:'Dieu du feu et de la forge'},
+      hook:{zh:'火山 volcano 出自他', en:'“Volcano” comes from him', fr:'« Volcan » vient de lui'} },
+    { gr:'Hermes 赫密斯',    ro:'Mercury 墨丘利',  one:{zh:'眾神的信使，管商業', en:'Messenger of the gods; commerce', fr:'Messager des dieux ; commerce'},
+      hook:{zh:'水星與水銀都叫 mercury', en:'The planet and the metal mercury', fr:'La planète et le métal mercure'} },
+    { gr:'Hades 黑帝斯',     ro:'Pluto 普魯托',    one:{zh:'冥界之王', en:'Lord of the underworld', fr:'Maître des Enfers'},
+      hook:{zh:'冥王星叫 Pluto', en:'The dwarf planet Pluto', fr:'La planète naine Pluton'} },
+    { gr:'Dionysus 狄奧尼索斯', ro:'Bacchus 巴克斯', one:{zh:'酒與戲劇之神', en:'God of wine and theatre', fr:'Dieu du vin et du théâtre'},
+      hook:{zh:'狂歡 bacchanal 出自他', en:'“Bacchanal” comes from him', fr:'« Bacchanale » vient de lui'} },
+    { gr:'Eros 厄洛斯',      ro:'Cupid 邱比特',    one:{zh:'愛神，射箭讓人相愛', en:'God of desire; shoots arrows of love', fr:'Dieu du désir ; décoche des flèches'},
+      hook:{zh:'情人節的小天使就是他', en:'The Valentine’s cherub is him', fr:'L’angelot de la Saint-Valentin, c’est lui'} },
+  ],
+  namesNote:{
+    zh:'注意最右欄：<strong class="text-white">行星、月份、英文單字裡活下來的幾乎全是羅馬名字。</strong>這正是前面那條時間軸的結果——歐洲透過拉丁文繼承了古典世界，所以羅馬名字滲進了日常語言，而希臘名字留在了學術與原典裡。',
+    en:'Look at the right-hand column: <strong class="text-white">the names that survive in planets, months and everyday English are almost all the Roman ones.</strong> That is the timeline above showing its effects — Europe inherited antiquity through Latin, so Roman names soaked into ordinary language while Greek names stayed in scholarship and the original texts.',
+    fr:'Regardez la colonne de droite : <strong class="text-white">les noms qui survivent dans les planètes, les mois et le vocabulaire courant sont presque tous romains.</strong> C’est l’effet de la chronologie ci-dessus — l’Europe a hérité de l’Antiquité par le latin, si bien que les noms romains ont imprégné la langue ordinaire tandis que les noms grecs restaient dans l’érudition et les textes originaux.'},
+
+  wrong:[
+    { t:{zh:'「羅馬神話只是把希臘神話的名字換掉而已」', en:'“Roman myth is just Greek myth with the names swapped”', fr:'« Le mythe romain, c’est le mythe grec aux noms changés »'},
+      p:{zh:'只對了一半。故事確實大量借自希臘，但羅馬有幾位<strong class="text-white">完全沒有希臘對應</strong>的神：雙面的雅努斯（一月 January 得名於他）、守護爐火的維斯塔與她的貞女祭司團、每個家庭自己的家神、管地界石的特爾米努斯。這些都是羅馬本土的，希臘找不到。',
+         en:'Half true. The stories are indeed largely borrowed, but several Roman gods have <strong class="text-white">no Greek counterpart at all</strong>: two-faced Janus (January is named after him), Vesta of the hearth with her order of virgin priestesses, each family’s own household gods, and Terminus who guards boundary stones. These are native Roman, with nothing Greek behind them.',
+         fr:'À moitié vrai. Les récits sont bien largement empruntés, mais plusieurs dieux romains n’ont <strong class="text-white">aucun équivalent grec</strong> : Janus aux deux visages (janvier porte son nom), Vesta du foyer et son collège de vestales, les dieux domestiques de chaque famille, ou Terminus, gardien des bornes. Tous sont proprement romains.'} },
+    { t:{zh:'「希臘神話有一個標準版本」', en:'“There is one standard version of Greek myth”', fr:'« Il existe une version standard du mythe grec »'},
+      p:{zh:'沒有。神話是幾百年間、幾十個城邦各說各話累積出來的，同一個故事常有互相矛盾的版本：有的說梅杜莎生來就是怪物，有的說她是被雅典娜懲罰的美女。<strong class="text-white">「哪個才是真的」這個問題本身就不成立</strong>——本圖譜採用的是流傳最廣的版本。',
+         en:'There is not. Myth accumulated over centuries across dozens of city-states, each telling it their own way, so the same story often survives in contradictory versions: in one, Medusa was born a monster; in another, she was a beautiful woman punished by Athena. <strong class="text-white">The question “which one is the real version” does not really apply</strong> — this atlas uses whichever version travelled furthest.',
+         fr:'Non. Le mythe s’est accumulé sur des siècles dans des dizaines de cités qui le racontaient chacune à leur façon : un même récit survit souvent en versions contradictoires — ici Méduse naît monstre, là c’est une belle femme punie par Athéna. <strong class="text-white">La question « quelle est la vraie version » ne se pose pas vraiment</strong> — cet atlas retient celle qui a le plus circulé.'} },
+    { t:{zh:'「這些只是故事，古人不會真的相信吧」', en:'“These are just stories — surely nobody actually believed them”', fr:'« Ce ne sont que des récits — personne n’y croyait vraiment »'},
+      p:{zh:'比想像中複雜。古希臘羅馬人確實認真祭祀、獻牲、遵守曆法，宗教是生活的一部分；但他們同時也把神話當文學來欣賞、改編、甚至嘲笑。<strong class="text-white">「儀式」被嚴肅對待，「故事」則被自由詮釋</strong>——這和後來一神教「教義必須正確」的模式很不一樣。',
+         en:'It is more complicated than it looks. Greeks and Romans did sacrifice in earnest, keep the festival calendar and treat religion as part of daily life — while at the same time enjoying, rewriting and even mocking the myths as literature. <strong class="text-white">The ritual was taken seriously; the story was open to interpretation</strong> — a very different arrangement from the later monotheistic model where doctrine must be correct.',
+         fr:'C’est plus complexe qu’il n’y paraît. Grecs et Romains sacrifiaient sérieusement, respectaient le calendrier des fêtes et vivaient la religion au quotidien — tout en savourant, réécrivant et parfois moquant les mythes comme littérature. <strong class="text-white">Le rite était pris au sérieux ; le récit restait ouvert à l’interprétation</strong> — dispositif très différent du modèle monothéiste ultérieur, où la doctrine doit être exacte.'} },
+  ],
+
+  why:{
+    zh:'最後回到看畫這件事。您站在美術館裡，標籤上寫著《維納斯的誕生》——這是<strong class="text-white">羅馬名字</strong>，因為畫家讀的是拉丁文的奧維德。但畫裡那具身體的比例、站姿與衣褶，來自<strong class="text-white">希臘雕塑</strong>（而且多半是透過羅馬人的複製品輾轉學來的）。<br><br>所以有一句話可以帶著走：<strong class="text-white">名字看羅馬，形體看希臘。</strong>把這一點放在心裡，接下來的章節就不會再混亂了——後面會依序介紹諸神長什麼樣、神話怎麼開始、英雄做了什麼，以及每一則故事被畫成了哪些作品。',
+    en:'Finally, back to looking at pictures. You stand in a museum and the label says <em>The Birth of Venus</em> — a <strong class="text-white">Roman name</strong>, because the painter was reading Ovid in Latin. But the proportions, the stance and the fall of the drapery in that body come from <strong class="text-white">Greek sculpture</strong>, mostly learned second-hand through Roman copies.<br><br>So here is one line worth carrying with you: <strong class="text-white">the names are Roman, the bodies are Greek.</strong> Keep that in mind and the rest of this atlas will stay clear — the sections that follow introduce what each god looks like, how the myths begin, what the heroes did, and which artworks each story became.',
+    fr:'Revenons enfin au fait de regarder des tableaux. Vous êtes au musée, le cartel indique <em>La Naissance de Vénus</em> — un <strong class="text-white">nom romain</strong>, parce que le peintre lisait Ovide en latin. Mais les proportions, l’attitude et la chute des draperies de ce corps viennent de la <strong class="text-white">sculpture grecque</strong>, apprise le plus souvent de seconde main, par des copies romaines.<br><br>Une phrase à emporter : <strong class="text-white">les noms sont romains, les corps sont grecs.</strong> Gardez-la en tête et la suite restera claire — les sections qui viennent présentent l’aspect de chaque dieu, le commencement des mythes, les exploits des héros, et les œuvres qu’est devenue chaque histoire.'}
+};
+
+/* ─────────────────────────────────────────────────────────────
    THE PANTHEON — Greek name, Roman name, domain,
    attributes (how you identify them in a painting), linked art
    ───────────────────────────────────────────────────────────── */
@@ -1218,11 +1440,20 @@ const I18N = {
   zh: {
     'doc.title':'希臘與羅馬神話圖譜 | 諸神、傳說與藝術',
     'hdr.badge':'神話與藝術圖譜','hdr.title':'希臘與羅馬神話',
-    'nav.pantheon':'諸神','nav.origins':'創世','nav.heroes':'英雄','nav.troy':'特洛伊','nav.rome':'羅馬',
+    'nav.basics':'入門','nav.pantheon':'諸神','nav.origins':'創世','nav.heroes':'英雄','nav.troy':'特洛伊','nav.rome':'羅馬',
     'nav.ovid':'變形記','nav.decoder':'圖像辨識','nav.gallery':'作品廊','nav.reception':'藝術史流變','nav.compare':'希臘 vs 羅馬',
     'intro':'希臘神話是一套解釋世界的故事系統；羅馬人接手之後，把它變成一套論證權力的語言。兩者合流之後所形成的圖像庫，成為西方藝術兩千五百年來最主要的題材來源——理解神話，等於拿到讀懂歐洲美術館半數作品的鑰匙。',
     'intro2':'本圖譜依序處理：諸神譜系與其屬性、創世與泰坦、英雄傳說、特洛伊史詩、羅馬建國神話，以及奧維德《變形記》；每一段都連結到對應的重要藝術作品，並說明「為什麼是這件作品」。最後三節提供實用工具：辨識神祇的屬性對照表、神話在藝術史各時期的處理方式，以及希臘與羅馬的系統性比較。',
     'intro.hint':'點擊任何作品名稱或縮圖，可查看圖像與該作品與神話的關聯說明。',
+    'bas.eyebrow':'零基礎入門','bas.h2':'先搞懂一件事：希臘與羅馬的關係',
+    'bas.h.timeline':'一、先看時間順序','bas.p.timeline':'很多混亂都是因為不知道誰先誰後。這條時間軸只有八格，但看完就能明白後面所有事情。',
+    'bas.h.took':'二、羅馬人到底怎麼「接手」的',
+    'bas.h.diffs':'三、那差別到底在哪裡','bas.p.diffs':'五個面向，左邊希臘、右邊羅馬。這是本節的核心。',
+    'bas.df.g':'希臘','bas.df.r':'羅馬',
+    'bas.h.names':'四、最常用的十四組名字對照','bas.p.names':'不必背。先看最右邊那一欄——您會發現這些名字其實早就在您的生活裡了。',
+    'bas.nm.th0':'希臘名','bas.nm.th1':'羅馬名','bas.nm.th2':'管什麼','bas.nm.th3':'您可能已經知道的線索',
+    'bas.h.wrong':'五、三個常見的誤解',
+    'bas.h.why':'六、所以，這對看藝術品有什麼用',
     'pan.eyebrow':'誰是誰','pan.h2':'奧林帕斯諸神與其屬性',
     'pan.lead':'希臘名與羅馬名並列，並附上「在畫面中如何辨認」的屬性物。屬性系統是古典藝術的基本文法：畫家不寫名字，而是靠道具讓觀者辨識身分——這套規則從古希臘瓶畫一直沿用到十九世紀學院繪畫。',
     'dec.eyebrow':'實用工具','dec.h2':'圖像辨識指南：從道具讀懂一幅神話畫',
@@ -1241,11 +1472,20 @@ const I18N = {
   en: {
     'doc.title':'Greek &amp; Roman Mythology Atlas | Gods, Cycles &amp; Their Art',
     'hdr.badge':'MYTHOLOGY &amp; ART ATLAS','hdr.title':'Greek &amp; Roman Mythology',
-    'nav.pantheon':'Pantheon','nav.origins':'Cosmogony','nav.heroes':'Heroes','nav.troy':'Troy','nav.rome':'Rome',
+    'nav.basics':'Basics','nav.pantheon':'Pantheon','nav.origins':'Cosmogony','nav.heroes':'Heroes','nav.troy':'Troy','nav.rome':'Rome',
     'nav.ovid':'Metamorphoses','nav.decoder':'Attribute Decoder','nav.gallery':'Gallery','nav.reception':'Reception','nav.compare':'Greek vs Roman',
     'intro':'Greek mythology is a system of stories for explaining the world; when Rome took it over, it became a language for justifying power. The image-bank the two produced together has been the principal subject matter of Western art for twenty-five centuries — knowing the myths is effectively the key to reading half the works in any European museum.',
     'intro2':'This atlas works through the pantheon and its attributes, cosmogony and the Titans, the heroic cycles, the Trojan epics, Rome’s foundation myths, and Ovid’s <em>Metamorphoses</em> — each section linked to the artworks that matter, with an explanation of why <em>that</em> work. Three practical sections close it: a decoder for identifying deities by their attributes, a period-by-period account of how art has handled myth, and a systematic Greek/Roman comparison.',
     'intro.hint':'Click any artwork title or thumbnail to open the image and read how it connects to the myth.',
+    'bas.eyebrow':'Start from zero','bas.h2':'First, One Thing: How Greece and Rome Are Related',
+    'bas.h.timeline':'1 · Get the order of events straight','bas.p.timeline':'Most of the confusion comes from not knowing what came before what. This timeline has only eight entries, and it explains everything that follows.',
+    'bas.h.took':'2 · How exactly did the Romans “take it over”?',
+    'bas.h.diffs':'3 · So where does the difference actually lie?','bas.p.diffs':'Five aspects, Greek on the left and Roman on the right. This is the heart of the section.',
+    'bas.df.g':'Greek','bas.df.r':'Roman',
+    'bas.h.names':'4 · The fourteen name-pairs you will actually meet','bas.p.names':'No need to memorize them. Look at the right-hand column first — you will find these names are already in your life.',
+    'bas.nm.th0':'Greek name','bas.nm.th1':'Roman name','bas.nm.th2':'In charge of','bas.nm.th3':'A clue you may already know',
+    'bas.h.wrong':'5 · Three common misconceptions',
+    'bas.h.why':'6 · What all this is good for when looking at art',
     'pan.eyebrow':'Who is who','pan.h2':'The Olympians and Their Attributes',
     'pan.lead':'Greek and Roman names side by side, with the attributes that let you identify each figure in a picture. The attribute system is the basic grammar of classical art: painters do not write names, they hand out props — a convention that runs unbroken from Greek vase painting to nineteenth-century academic salons.',
     'dec.eyebrow':'Practical tool','dec.h2':'Attribute Decoder: Reading a Mythological Painting',
@@ -1264,11 +1504,20 @@ const I18N = {
   fr: {
     'doc.title':'Atlas de la mythologie grecque &amp; romaine | Dieux, cycles &amp; leur art',
     'hdr.badge':'ATLAS MYTHOLOGIE &amp; ART','hdr.title':'Mythologie grecque &amp; romaine',
-    'nav.pantheon':'Panthéon','nav.origins':'Cosmogonie','nav.heroes':'Héros','nav.troy':'Troie','nav.rome':'Rome',
+    'nav.basics':'Bases','nav.pantheon':'Panthéon','nav.origins':'Cosmogonie','nav.heroes':'Héros','nav.troy':'Troie','nav.rome':'Rome',
     'nav.ovid':'Métamorphoses','nav.decoder':'Attributs','nav.gallery':'Galerie','nav.reception':'Réception','nav.compare':'Grèce vs Rome',
     'intro':'La mythologie grecque est un système de récits pour expliquer le monde ; en la reprenant, Rome en fit une langue pour justifier le pouvoir. Le répertoire d’images né de leur fusion constitue depuis vingt-cinq siècles la principale matière de l’art occidental — connaître les mythes revient à détenir la clé de la moitié des salles d’un musée européen.',
     'intro2':'Cet atlas parcourt le panthéon et ses attributs, la cosmogonie et les Titans, les cycles héroïques, les épopées troyennes, les mythes fondateurs de Rome et les <em>Métamorphoses</em> d’Ovide — chaque section renvoyant aux œuvres qui comptent, avec l’explication du choix de <em>cette</em> œuvre. Trois sections pratiques concluent : un décodeur des attributs, une histoire période par période du traitement du mythe, et une comparaison systématique Grèce/Rome.',
     'intro.hint':'Cliquez sur le titre ou la vignette d’une œuvre pour ouvrir l’image et lire son rapport au mythe.',
+    'bas.eyebrow':'Partir de zéro','bas.h2':'D’abord une chose : le lien entre la Grèce et Rome',
+    'bas.h.timeline':'1 · Remettre les événements dans l’ordre','bas.p.timeline':'L’essentiel de la confusion vient de l’ignorance de l’ordre des choses. Cette chronologie ne compte que huit entrées, et elle éclaire tout le reste.',
+    'bas.h.took':'2 · Comment les Romains ont-ils « repris » tout cela ?',
+    'bas.h.diffs':'3 · Où se situe vraiment la différence ?','bas.p.diffs':'Cinq aspects, le grec à gauche et le romain à droite. C’est le cœur de cette section.',
+    'bas.df.g':'Grec','bas.df.r':'Romain',
+    'bas.h.names':'4 · Les quatorze couples de noms à connaître','bas.p.names':'Inutile de les apprendre par cœur. Regardez d’abord la colonne de droite — ces noms sont déjà dans votre quotidien.',
+    'bas.nm.th0':'Nom grec','bas.nm.th1':'Nom romain','bas.nm.th2':'Domaine','bas.nm.th3':'Un indice que vous connaissez déjà',
+    'bas.h.wrong':'5 · Trois idées reçues',
+    'bas.h.why':'6 · À quoi cela sert devant une œuvre',
     'pan.eyebrow':'Qui est qui','pan.h2':'Les Olympiens et leurs attributs',
     'pan.lead':'Noms grecs et romains côte à côte, avec les attributs qui permettent d’identifier chaque figure dans un tableau. Le système des attributs est la grammaire de base de l’art classique : le peintre n’écrit pas les noms, il distribue des accessoires — convention ininterrompue de la céramique grecque aux salons académiques du XIXᵉ siècle.',
     'dec.eyebrow':'Outil pratique','dec.h2':'Décodeur d’attributs : lire un tableau mythologique',
@@ -1367,6 +1616,55 @@ function artChips(keys) {
 /* ─────────────────────────────────────────────────────────────
    Renderers
    ───────────────────────────────────────────────────────────── */
+function renderBasics() {
+  const B = BASICS;
+  document.getElementById('bas-oneline').innerHTML = t(B.oneLine);
+  document.getElementById('bas-timeline-note').innerHTML = t(B.timelineNote);
+  document.getElementById('bas-howtook').innerHTML = t(B.howTook);
+  document.getElementById('bas-names-note').innerHTML = t(B.namesNote);
+  document.getElementById('bas-why').innerHTML = t(B.why);
+
+  document.getElementById('bas-timeline').innerHTML = B.timeline.map(e =>
+      '<li class="flex gap-4 items-start">'
+    +   '<span class="shrink-0 w-28 md:w-32 text-right text-xs font-mono text-emerald-400/90 pt-0.5">'
+    +     (LANG === 'zh' ? e.y : e.ye) + '</span>'
+    +   '<span class="shrink-0 w-2 h-2 mt-1.5 rounded-full bg-emerald-500/60"></span>'
+    +   '<span class="min-w-0">'
+    +     '<span class="block text-sm font-bold text-slate-200">' + t(e.t) + '</span>'
+    +     '<span class="block text-xs text-slate-500 leading-relaxed mt-1">' + t(e.p) + '</span>'
+    +   '</span>'
+    + '</li>').join('');
+
+  document.getElementById('bas-diffs').innerHTML = B.diffs.map(d =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<h4 class="text-sm font-bold text-white mb-3">' + t(d.t) + '</h4>'
+    +   '<div class="grid md:grid-cols-2 gap-3">'
+    +     '<div class="bg-sky-500/[0.06] border border-sky-500/20 rounded-xl p-3">'
+    +       '<span class="text-[0.65rem] uppercase tracking-wider text-sky-400 font-bold">' + ui('bas.df.g') + '</span>'
+    +       '<p class="text-xs text-slate-400 leading-relaxed mt-1.5">' + t(d.g) + '</p></div>'
+    +     '<div class="bg-rose-500/[0.06] border border-rose-500/20 rounded-xl p-3">'
+    +       '<span class="text-[0.65rem] uppercase tracking-wider text-rose-400 font-bold">' + ui('bas.df.r') + '</span>'
+    +       '<p class="text-xs text-slate-400 leading-relaxed mt-1.5">' + t(d.r) + '</p></div>'
+    +   '</div>'
+    + '</div>').join('');
+
+  document.getElementById('bas-names').innerHTML = B.names.map(n =>
+      '<tr>'
+    + '<td class="py-2.5 px-4 text-sky-300 font-semibold align-top whitespace-nowrap">' + n.gr + '</td>'
+    + '<td class="py-2.5 px-4 text-rose-300 font-semibold align-top whitespace-nowrap">' + n.ro + '</td>'
+    + '<td class="py-2.5 px-4 text-slate-400 align-top">' + t(n.one) + '</td>'
+    + '<td class="py-2.5 px-4 text-amber-300/70 text-xs align-top">' + t(n.hook) + '</td>'
+    + '</tr>').join('');
+
+  document.getElementById('bas-wrong').innerHTML = B.wrong.map((w, i) =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<h4 class="text-sm font-bold text-slate-200 flex items-start gap-2">'
+    +     '<span class="shrink-0 text-rose-400 mt-0.5"><i class="fa-solid fa-xmark"></i></span>'
+    +     '<span>' + t(w.t) + '</span></h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-2.5 pl-6">' + t(w.p) + '</p>'
+    + '</div>').join('');
+}
+
 function renderPantheon() {
   const el = document.getElementById('pantheon-grid');
   el.innerHTML = GODS.map(g => {
@@ -1524,6 +1822,7 @@ function setLanguage(lang) {
     if (v) el.innerHTML = v;
   });
 
+  renderBasics();
   renderPantheon();
   renderCycles();
   renderDecoder();
