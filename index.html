@@ -594,41 +594,107 @@ body.edit-mode .glass-card:hover { transform: none !important; }
 }
 .color-opt.selected { border-color: rgba(255,255,255,0.78); transform: scale(1.18); box-shadow: 0 0 10px rgba(255,255,255,0.18); }
 
-/* ─── Book-opening transition ─── */
+/* ─── Book-opening transition ───────────────────────────────
+   An old tome raised out of a dark room: the shelf dims, a warm
+   light gathers, the modern card takes on a patina of tooled
+   leather, and the cover swings fully open onto aged parchment.
+   Only transform and opacity are animated — everything textural
+   is painted once and composited. */
 #book-fx {
   position: fixed; inset: 0; z-index: 99;
   pointer-events: none; display: none;
   overflow: hidden;          /* cover swings past the edge — never spawn scrollbars */
-  perspective: 2000px;
+  perspective: 2200px;
 }
 #book-fx.on { display: block; }
 
-.bk { position: fixed; perspective: 1800px; will-change: transform, opacity; }
+/* the room recedes */
+.bk-veil {
+  position: fixed; inset: 0; opacity: 0; will-change: opacity;
+  background:
+    radial-gradient(ellipse 46% 46% at 50% 50%, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.80) 62%, rgba(0,0,0,0.93) 100%);
+}
+/* candle-light gathering behind the book */
+.bk-halo {
+  position: fixed; left: 50%; top: 50%; width: 78vmin; height: 78vmin;
+  margin: -39vmin 0 0 -39vmin; opacity: 0; will-change: opacity, transform;
+  background: radial-gradient(circle, rgba(226,176,74,0.19) 0%, rgba(180,120,40,0.07) 42%, transparent 70%);
+  filter: blur(28px);
+}
+
+.bk { position: fixed; perspective: 2000px; will-change: transform, opacity; }
 .bk-inner { position: absolute; inset: 0; transform-style: preserve-3d; }
 
-/* the leaves revealed once the cover swings open */
+/* ── the page block: aged parchment, dimly lit ── */
 .bk-pages {
-  position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
+  position: absolute; inset: 0; border-radius: 4px 14px 14px 4px; overflow: hidden;
   background:
-    linear-gradient(100deg, #0f0c09 0%, #191410 38%, #221b13 62%, #14100b 100%);
-  border: 1px solid rgba(201,168,92,0.20);
+    /* foxing and age spots */
+    radial-gradient(ellipse 13% 8% at 74% 22%, rgba(96,62,24,0.34), transparent 68%),
+    radial-gradient(ellipse 9% 6% at 57% 70%, rgba(104,68,28,0.30), transparent 68%),
+    radial-gradient(ellipse 17% 10% at 88% 61%, rgba(88,56,20,0.30), transparent 70%),
+    radial-gradient(ellipse 11% 7% at 66% 43%, rgba(110,74,32,0.22), transparent 68%),
+    radial-gradient(ellipse 20% 13% at 34% 82%, rgba(84,54,20,0.26), transparent 72%),
+    /* candle falling on the open page — a pool, not a wash */
+    radial-gradient(ellipse 48% 40% at 65% 31%, rgba(255,226,164,0.26), transparent 72%),
+    /* the page darkens hard toward its edges */
+    radial-gradient(ellipse 88% 88% at 63% 42%, transparent 22%, rgba(30,17,5,0.78) 100%),
+    linear-gradient(101deg, #3f341f 0%, #7d6c48 15%, #9c8a60 40%, #8d7c54 68%, #5b4c30 100%);
   box-shadow:
-    inset 44px 0 60px -40px rgba(0,0,0,0.92),   /* gutter shadow near spine */
-    inset 0 0 70px rgba(0,0,0,0.55),
-    0 46px 100px rgba(0,0,0,0.72);
+    inset 52px 0 66px -38px rgba(24,14,4,0.92),   /* gutter shadow at the spine */
+    inset -10px 0 26px -14px rgba(60,40,16,0.55),
+    0 52px 110px rgba(0,0,0,0.78);
+}
+/* gilded fore-edge */
+.bk-pages::after {
+  content: ''; position: absolute; top: 3%; bottom: 3%; right: 0; width: 7px;
+  background: linear-gradient(90deg, rgba(201,168,92,0) 0%, rgba(206,172,96,0.62) 45%, rgba(112,82,32,0.92) 100%);
+}
+/* stacked page edges, so the block has thickness rather than reading as a panel */
+.bk-pages::before {
+  content: ''; position: absolute; left: 4%; right: 0; bottom: 0; height: 9px; z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(30,17,5,0.55), transparent 40%),
+    repeating-linear-gradient(180deg,
+      rgba(196,176,132,0.85) 0 1.5px, rgba(74,54,26,0.55) 1.5px 3px);
 }
 .bk-lines {
-  position: absolute; inset: 15% 11% 15% 16%;
-  opacity: 0.55;
+  position: absolute; inset: 17% 13% 20% 20%;
+  opacity: 0.34;
   background: repeating-linear-gradient(
-    180deg, transparent 0 11px, rgba(201,168,92,0.11) 11px 12px);
+    180deg, transparent 0 10px, rgba(74,50,20,0.85) 10px 11px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 84%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 84%, transparent);
+}
+/* an illuminated initial and a rule, so it reads as a manuscript at a glance */
+.bk-illum {
+  position: absolute; left: 21%; top: 15%; width: 13%; height: 13%;
+  border: 1px solid rgba(150,112,42,0.65); border-radius: 2px;
+  background: linear-gradient(150deg, rgba(190,54,44,0.42), rgba(120,32,26,0.30));
+  box-shadow: inset 0 0 0 2px rgba(214,182,104,0.40);
+}
+.bk-rule {
+  position: absolute; left: 21%; right: 15%; top: 32%; height: 1px;
+  background: linear-gradient(90deg, rgba(150,112,42,0.7), rgba(150,112,42,0.15) 70%, transparent);
 }
 .bk-glow {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 55% at 62% 40%, rgba(255,226,150,0.10), transparent 70%);
+  position: absolute; inset: 0; opacity: 0; will-change: opacity;
+  background: radial-gradient(ellipse 54% 44% at 64% 32%, rgba(255,238,196,0.22), transparent 72%);
 }
 
-/* the cover: two-sided, hinged on its left edge */
+/* a single leaf that turns after the cover, for the riffle */
+.bk-leaf {
+  position: absolute; inset: 0; border-radius: 3px 12px 12px 3px;
+  transform-origin: left center; transform-style: preserve-3d;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  will-change: transform;
+  background:
+    radial-gradient(ellipse 60% 50% at 62% 36%, rgba(255,236,186,0.22), transparent 70%),
+    linear-gradient(101deg, #7a6845 0%, #c0ad84 30%, #d3c29c 62%, #a89168 100%);
+  box-shadow: inset 40px 0 50px -34px rgba(24,14,4,0.85), 6px 0 18px rgba(0,0,0,0.35);
+}
+
+/* ── the cover: two-sided, hinged on its left edge ── */
 .bk-cover {
   position: absolute; inset: 0;
   transform-origin: left center;
@@ -640,16 +706,45 @@ body.edit-mode .glass-card:hover { transform: none !important; }
   border-radius: 18px; overflow: hidden;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
 }
+/* the patina: fades in over the clicked card so it ages as it rises */
+.bk-patina {
+  position: absolute; inset: 0; opacity: 0; will-change: opacity;
+  border-radius: 18px; overflow: hidden;
+  background:
+    radial-gradient(ellipse 30% 40% at 12% 20%, rgba(0,0,0,0.30), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 88% 84%, rgba(0,0,0,0.34), transparent 72%),
+    linear-gradient(103deg, rgba(28,18,10,0.90), rgba(58,38,20,0.72) 46%, rgba(20,13,7,0.92));
+}
+/* gilt double-rule border tooled into the leather */
+.bk-patina::before {
+  content: ''; position: absolute; inset: 7%;
+  border: 1px solid rgba(206,172,98,0.55); border-radius: 3px;
+  box-shadow: inset 0 0 0 3px rgba(0,0,0,0.30), inset 0 0 0 4px rgba(206,172,98,0.28);
+}
+/* raised bands along the spine edge */
+.bk-patina::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 13%;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.10) 60%, transparent),
+    repeating-linear-gradient(180deg,
+      transparent 0 13%, rgba(206,172,98,0.14) 13% 14.4%,
+      rgba(0,0,0,0.34) 14.4% 16%, transparent 16% 29%);
+}
 .bk-back {
   transform: rotateY(180deg);
-  background: linear-gradient(100deg, #1a1510, #241d15 55%, #16110c);
-  border: 1px solid rgba(201,168,92,0.18);
-  box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
+  background:
+    radial-gradient(ellipse 66% 56% at 46% 32%, rgba(196,148,68,0.20), transparent 72%),
+    linear-gradient(100deg, #2b2118 0%, #453422 52%, #221a11 100%);
+  box-shadow: inset 0 0 70px rgba(0,0,0,0.62);
 }
-.bk-back::after {              /* endpaper panel on the inside of the cover */
-  content: ''; position: absolute; inset: 13%;
-  border: 1px solid rgba(201,168,92,0.13); border-radius: 5px;
-  background: linear-gradient(160deg, rgba(201,168,92,0.05), transparent 60%);
+.bk-back::after {              /* marbled endpaper on the inside of the cover */
+  content: ''; position: absolute; inset: 11%;
+  border: 1px solid rgba(201,168,92,0.20); border-radius: 4px;
+  background:
+    repeating-linear-gradient(114deg,
+      rgba(186,140,64,0.22) 0 5px, rgba(58,38,16,0.26) 5px 11px, rgba(140,98,44,0.16) 11px 19px),
+    radial-gradient(ellipse 70% 60% at 40% 34%, rgba(214,176,104,0.16), transparent 70%),
+    linear-gradient(160deg, rgba(201,168,92,0.12), transparent 62%);
 }
 
 /* ─── Module viewer ─── */
@@ -1374,11 +1469,22 @@ const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 const EASE_BOOK = 'cubic-bezier(0.22,1,0.36,1)';
 let bookBusy = false;
 
+/* Motion constants. The cover opens past flat and settles, the way a
+   heavy board does; nothing uses a symmetric ease, which is what made
+   the old version feel mechanical. */
+const EASE_LIFT  = 'cubic-bezier(0.16,1,0.30,1)';   /* expo-out: fast away, long glide */
+const EASE_BOARD = 'cubic-bezier(0.34,0.02,0.16,1)'; /* weight, then a long settle */
+const OPEN_DEG   = -172;                             /* essentially flat, not stopped short */
+
 function buildBook(cardEl) {
   const r = cardEl.getBoundingClientRect();
   const layer = document.getElementById('book-fx');
   layer.innerHTML = '';
   layer.classList.add('on');
+
+  const veil = document.createElement('div'); veil.className = 'bk-veil';
+  const halo = document.createElement('div'); halo.className = 'bk-halo';
+  layer.appendChild(veil); layer.appendChild(halo);
 
   const bk = document.createElement('div');
   bk.className = 'bk';
@@ -1395,25 +1501,33 @@ function buildBook(cardEl) {
 
   bk.innerHTML =
     `<div class="bk-inner">
-       <div class="bk-pages"><div class="bk-lines"></div><div class="bk-glow"></div></div>
+       <div class="bk-pages">
+         <div class="bk-lines"></div>
+         <div class="bk-illum"></div>
+         <div class="bk-rule"></div>
+         <div class="bk-glow"></div>
+       </div>
+       <div class="bk-leaf"></div>
        <div class="bk-cover">
-         <div class="bk-face bk-front"></div>
+         <div class="bk-face bk-front"><div class="bk-patina"></div></div>
          <div class="bk-face bk-back"></div>
        </div>
      </div>`;
-  bk.querySelector('.bk-front').appendChild(clone);
+  /* the card sits under the patina, so it ages rather than vanishing */
+  bk.querySelector('.bk-front').insertBefore(clone, bk.querySelector('.bk-patina'));
   layer.appendChild(bk);
 
   const vw = innerWidth, vh = innerHeight;
   return {
-    layer, bk,
+    layer, bk, veil, halo,
     cover: bk.querySelector('.bk-cover'),
     pages: bk.querySelector('.bk-pages'),
+    leaf:  bk.querySelector('.bk-leaf'),
+    patina: bk.querySelector('.bk-patina'),
     /* lift the book to the middle of the screen, comfortably enlarged */
     scale: Math.min(vw * 0.40 / r.width, vh * 0.60 / r.height, 2.4),
     tx: vw / 2 - (r.left + r.width / 2),
-    ty: vh / 2 - (r.top + r.height / 2),
-    grow: Math.max(vw / r.width, vh / r.height) * 1.18
+    ty: vh / 2 - (r.top + r.height / 2)
   };
 }
 function clearBook() {
@@ -1422,44 +1536,84 @@ function clearBook() {
   layer.innerHTML = '';
 }
 
-function playBookOpen(cardEl) {
+function playBookOpen(cardEl, onDissolve) {
   const b = buildBook(cardEl);
-  const mid = `translate(${b.tx}px,${b.ty}px) scale(${b.scale})`;
+  /* settle into a slight three-quarter view — dead-on reads flat */
+  const mid  = `translate(${b.tx}px,${b.ty}px) scale(${b.scale}) rotateY(7deg) rotateX(-3deg)`;
+  const near = `translate(${b.tx}px,${b.ty}px) scale(${b.scale * 1.5}) rotateY(7deg) rotateX(-3deg)`;
 
-  const lift = b.bk.animate(
-    [{ transform: 'translate(0,0) scale(1)' }, { transform: mid }],
-    { duration: 560, easing: EASE_BOOK, fill: 'forwards' });
+  b.veil.animate([{ opacity: 0 }, { opacity: 1 }],
+    { duration: 460, easing: 'ease-out', fill: 'forwards' });
+  b.halo.animate([{ opacity: 0, transform: 'scale(0.72)' }, { opacity: 1, transform: 'scale(1)' }],
+    { duration: 660, delay: 50, easing: EASE_LIFT, fill: 'forwards' });
 
-  /* the cover has weight: it starts slowly, swings, then settles */
-  const flip = b.cover.animate(
-    [{ transform: 'rotateY(0deg)' }, { transform: 'rotateY(-150deg)' }],
-    { duration: 640, delay: 90, easing: 'cubic-bezier(0.45,0.05,0.3,1)', fill: 'forwards' });
+  /* One continuous lift for the whole opening: the book keeps drifting
+     while the cover swings, so there is never a frame where it sits still. */
+  const lift = b.bk.animate([
+      { transform: 'translate(0,0) scale(1) rotateY(0deg) rotateX(0deg)', offset: 0 },
+      { transform: mid, offset: 0.62 },
+      { transform: `translate(${b.tx}px,${b.ty}px) scale(${b.scale * 1.04}) rotateY(7deg) rotateX(-3deg)`, offset: 1 },
+    ], { duration: 700, easing: EASE_LIFT, fill: 'forwards' });
 
-  b.pages.animate([{ opacity: 0.12 }, { opacity: 1 }],
-    { duration: 460, delay: 240, easing: 'ease-out', fill: 'forwards' });
+  /* the modern card acquires its patina on the way up */
+  b.patina.animate([{ opacity: 0 }, { opacity: 1 }],
+    { duration: 480, delay: 30, easing: 'ease-out', fill: 'forwards' });
 
-  return Promise.all([lift.finished, flip.finished])
+  /* the cover: heavy at the start, opens past flat, settles */
+  const flip = b.cover.animate([
+      { transform: 'translateZ(2px) rotateY(0deg)', offset: 0 },
+      { transform: `translateZ(2px) rotateY(${OPEN_DEG - 5}deg)`, offset: 0.88 },
+      { transform: `translateZ(2px) rotateY(${OPEN_DEG}deg)`, offset: 1 },
+    ], { duration: 620, delay: 90, easing: EASE_BOARD, fill: 'forwards' });
+
+  b.bk.querySelector('.bk-glow').animate([{ opacity: 0 }, { opacity: 1 }],
+    { duration: 460, delay: 220, easing: 'ease-out', fill: 'forwards' });
+
+  /* one leaf follows the cover over, so the block reads as paper */
+  const leaf = b.leaf.animate([
+      { transform: 'translateZ(1px) rotateY(0deg)', opacity: 1, offset: 0 },
+      { transform: 'translateZ(1px) rotateY(-150deg)', opacity: 1, offset: 0.82 },
+      { transform: `translateZ(1px) rotateY(${OPEN_DEG}deg)`, opacity: 0, offset: 1 },
+    ], { duration: 470, delay: 280, easing: EASE_BOARD, fill: 'forwards' });
+
+  /* Hand off by drifting toward the page rather than rushing at it, and
+     let the caller raise the document underneath at the same moment —
+     otherwise the book dissolves back to the shelf and the viewer snaps
+     in afterwards, which is the seam this whole sequence exists to hide. */
+  return Promise.all([lift.finished, flip.finished, leaf.finished])
+    .then(() => { if (onDissolve) onDissolve(); })
     .then(() => b.bk.animate(
-      [{ transform: mid, opacity: 1 },
-       { transform: `translate(${b.tx}px,${b.ty}px) scale(${b.grow})`, opacity: 0 }],
-      { duration: 320, easing: 'cubic-bezier(0.6,0,0.9,0.4)', fill: 'forwards' }).finished)
+      [{ transform: mid, opacity: 1 }, { transform: near, opacity: 0 }],
+      { duration: 380, easing: 'cubic-bezier(0.32,0,0.30,1)', fill: 'forwards' }).finished)
     .catch(() => {});
 }
 
 function playBookClose(cardEl) {
   const b = buildBook(cardEl);
-  const mid = `translate(${b.tx}px,${b.ty}px) scale(${b.scale})`;
-  b.cover.style.transform = 'rotateY(-150deg)';
+  const mid  = `translate(${b.tx}px,${b.ty}px) scale(${b.scale}) rotateY(7deg) rotateX(-3deg)`;
+  const near = `translate(${b.tx}px,${b.ty}px) scale(${b.scale * 1.5}) rotateY(7deg) rotateX(-3deg)`;
+  b.cover.style.transform = `translateZ(2px) rotateY(${OPEN_DEG}deg)`;
+  b.leaf.style.opacity = '0';
+  b.patina.style.opacity = '1';
+  b.veil.style.opacity = '1';
+  b.halo.style.opacity = '1';
 
-  const settle = b.bk.animate(
-    [{ transform: `translate(${b.tx}px,${b.ty}px) scale(${b.grow})`, opacity: 0 },
-     { transform: mid, opacity: 1, offset: 0.34 },
-     { transform: 'translate(0,0) scale(1)', opacity: 1 }],
-    { duration: 620, easing: EASE_BOOK, fill: 'forwards' });
+  const settle = b.bk.animate([
+      { transform: near, opacity: 0, offset: 0 },
+      { transform: mid, opacity: 1, offset: 0.30 },
+      { transform: 'translate(0,0) scale(1) rotateY(0deg) rotateX(0deg)', opacity: 1, offset: 1 },
+    ], { duration: 600, easing: 'cubic-bezier(0.36,0,0.24,1)', fill: 'forwards' });
 
   const shut = b.cover.animate(
-    [{ transform: 'rotateY(-150deg)' }, { transform: 'rotateY(0deg)' }],
-    { duration: 480, delay: 140, easing: 'cubic-bezier(0.4,0,0.25,1)', fill: 'forwards' });
+    [{ transform: `translateZ(2px) rotateY(${OPEN_DEG}deg)` }, { transform: 'translateZ(2px) rotateY(0deg)' }],
+    { duration: 470, delay: 110, easing: 'cubic-bezier(0.42,0,0.22,1)', fill: 'forwards' });
+
+  b.patina.animate([{ opacity: 1 }, { opacity: 0 }],
+    { duration: 320, delay: 340, easing: 'ease-in', fill: 'forwards' });
+  b.veil.animate([{ opacity: 1 }, { opacity: 0 }],
+    { duration: 560, delay: 120, easing: 'ease-in', fill: 'forwards' });
+  b.halo.animate([{ opacity: 1 }, { opacity: 0 }],
+    { duration: 460, delay: 100, easing: 'ease-in', fill: 'forwards' });
 
   return Promise.all([settle.finished, shut.finished]).catch(() => {});
 }
@@ -1515,13 +1669,14 @@ function openModule(mod, cardEl) {
 
   bookBusy = true;
   viewer.classList.add('from-book');
-  const opening = playBookOpen(cardEl);
+  /* the document is raised the instant the book begins to dissolve,
+     so the two cross-fade instead of showing the shelf in between */
+  const opening = playBookOpen(cardEl, () => { viewer.style.display = 'block'; });
 
   /* 讓封面先動起來，再開始載入 iframe——否則載入的同步成本會卡住開場那一刻 */
   requestAnimationFrame(() => requestAnimationFrame(() => { frame.src = mod.file; }));
 
   opening.then(() => {
-    viewer.style.display = 'block';
     clearBook();
     bookBusy = false;
   });
