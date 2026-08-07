@@ -395,7 +395,7 @@ body {
   pointer-events: none; z-index: 4;
 }
 
-/* Diagonal refraction band — the key "liquid" feel */
+/* Diagonal refraction band: the key "liquid" feel */
 .card-glare {
   position: absolute; inset: 0;
   background: linear-gradient(
@@ -414,7 +414,7 @@ body {
 }
 .glass-card:hover .card-glare { opacity: 1.4; }
 
-/* Book spine — raised hardcover bands + gutter shadow where cover meets spine */
+/* Book spine: raised hardcover bands + gutter shadow where cover meets spine */
 .book-spine {
   position: absolute; left: 0; top: 0; bottom: 0;
   width: 9px; border-radius: 18px 0 0 18px;
@@ -598,12 +598,12 @@ body.edit-mode .glass-card:hover { transform: none !important; }
    An old tome raised out of a dark room: the shelf dims, a warm
    light gathers, the modern card takes on a patina of tooled
    leather, and the cover swings fully open onto aged parchment.
-   Only transform and opacity are animated — everything textural
+   Only transform and opacity are animated: everything textural
    is painted once and composited. */
 #book-fx {
   position: fixed; inset: 0; z-index: 99;
   pointer-events: none; display: none;
-  overflow: hidden;          /* cover swings past the edge — never spawn scrollbars */
+  overflow: hidden;          /* cover swings past the edge: never spawn scrollbars */
   perspective: 2200px;
 }
 #book-fx.on { display: block; }
@@ -635,7 +635,7 @@ body.edit-mode .glass-card:hover { transform: none !important; }
     radial-gradient(ellipse 17% 10% at 88% 61%, rgba(88,56,20,0.30), transparent 70%),
     radial-gradient(ellipse 11% 7% at 66% 43%, rgba(110,74,32,0.22), transparent 68%),
     radial-gradient(ellipse 20% 13% at 34% 82%, rgba(84,54,20,0.26), transparent 72%),
-    /* candle falling on the open page — a pool, not a wash */
+    /* candle falling on the open page: a pool, not a wash */
     radial-gradient(ellipse 48% 40% at 65% 31%, rgba(255,226,164,0.26), transparent 72%),
     /* the page darkens hard toward its edges */
     radial-gradient(ellipse 88% 88% at 63% 42%, transparent 22%, rgba(30,17,5,0.78) 100%),
@@ -886,13 +886,13 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
   <div id="collection-header">
     <span class="col-label">Collection</span>
     <div class="col-rule"></div>
-    <span class="col-count" id="col-count">— 5 volumes</span>
+    <span class="col-count" id="col-count">,  5 volumes</span>
   </div>
 
   <!-- Category filter -->
   <div id="cat-filter"></div>
 
-  <!-- Shelves (one grid per category) — note: #shelves is taken by the
+  <!-- Shelves (one grid per category): note: #shelves is taken by the
        fixed decorative shelf-line layer, so this container uses its own id -->
   <div id="shelf-stack"></div>
 
@@ -1150,7 +1150,7 @@ const DEFAULT_MODULES = [
     icon:'fa-landmark', color:'from-cyan-400 to-sky-600',
     cat:'humanities', file:'world-history-timeline.html', custom:false },
   { id:'mythology',  title:'Mythos & Fabula: Greek & Roman Myth', subtitle:'Pantheon, Cycles & Their Art',
-    description:'Trilingual atlas of Greek and Roman mythology: the pantheon and its attributes, cosmogony, heroic cycles, the Trojan epics, Rome\'s foundation myths and Ovid\'s Metamorphoses — each linked to the key artworks, with an attribute decoder and a reception history.',
+    description:'Trilingual atlas of Greek and Roman mythology: the pantheon and its attributes, cosmogony, heroic cycles, the Trojan epics, Rome\'s foundation myths and Ovid\'s Metamorphoses: each linked to the key artworks, with an attribute decoder and a reception history.',
     icon:'fa-bolt', color:'from-amber-400 to-orange-500',
     cat:'humanities', file:'greek-roman-mythology.html', custom:false },
   { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',
@@ -1166,7 +1166,7 @@ const DEFAULT_MODULES = [
     icon:'fa-scale-balanced', color:'from-lime-400 to-green-600',
     cat:'politics', file:'international-law.html', custom:false },
   { id:'lifestyle',  title:'Lifestyle & Luxury',       subtitle:'Cross-Domain Knowledge Map',
-    description:'Trilingual atlas of the lifestyle and luxury industries: cosmetics, fragrance, spirits, fashion and hospitality — ingredients, houses, terroirs and craft techniques.',
+    description:'Trilingual atlas of the lifestyle and luxury industries: cosmetics, fragrance, spirits, fashion and hospitality: ingredients, houses, terroirs and craft techniques.',
     icon:'fa-gem', color:'from-fuchsia-400 to-purple-700',
     cat:'business', file:'lifestyle-luxury-knowledge-map.html', custom:false },
   { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',
@@ -1190,7 +1190,7 @@ const DEFAULT_MODULES = [
 const REMOVED_KEY = 'knowledge_galaxy_removed_builtins';
 function loadModules() {
   // Built-in modules always come fresh from DEFAULT_MODULES (so renames/updates in code
-  // take effect immediately) — only user-uploaded custom modules are read from storage.
+  // take effect immediately): only user-uploaded custom modules are read from storage.
   // Built-ins the user explicitly deleted stay hidden via REMOVED_KEY.
   try {
     const s = localStorage.getItem(STORAGE_KEY);
@@ -1242,7 +1242,7 @@ function renderGrid() {
 
   /* update total count */
   const cnt = document.getElementById('col-count');
-  if (cnt) cnt.textContent = `— ${shown.length} ${UI[currentLang].volumes}`;
+  if (cnt) cnt.textContent = `,  ${shown.length} ${UI[currentLang].volumes}`;
 
   renderCatFilter(shown);
 
@@ -1538,7 +1538,7 @@ function clearBook() {
 
 function playBookOpen(cardEl, onDissolve) {
   const b = buildBook(cardEl);
-  /* settle into a slight three-quarter view — dead-on reads flat */
+  /* settle into a slight three-quarter view: dead-on reads flat */
   const mid  = `translate(${b.tx}px,${b.ty}px) scale(${b.scale}) rotateY(7deg) rotateX(-3deg)`;
   const near = `translate(${b.tx}px,${b.ty}px) scale(${b.scale * 1.5}) rotateY(7deg) rotateX(-3deg)`;
 
@@ -1577,7 +1577,7 @@ function playBookOpen(cardEl, onDissolve) {
     ], { duration: 470, delay: 280, easing: EASE_BOARD, fill: 'forwards' });
 
   /* Hand off by drifting toward the page rather than rushing at it, and
-     let the caller raise the document underneath at the same moment —
+     let the caller raise the document underneath at the same moment , 
      otherwise the book dissolves back to the shelf and the viewer snaps
      in afterwards, which is the seam this whole sequence exists to hide. */
   return Promise.all([lift.finished, flip.finished, leaf.finished])
@@ -1673,7 +1673,7 @@ function openModule(mod, cardEl) {
      so the two cross-fade instead of showing the shelf in between */
   const opening = playBookOpen(cardEl, () => { viewer.style.display = 'block'; });
 
-  /* 讓封面先動起來，再開始載入 iframe——否則載入的同步成本會卡住開場那一刻 */
+  /* 讓封面先動起來，再開始載入 iframe, , 否則載入的同步成本會卡住開場那一刻 */
   requestAnimationFrame(() => requestAnimationFrame(() => { frame.src = mod.file; }));
 
   opening.then(() => {
