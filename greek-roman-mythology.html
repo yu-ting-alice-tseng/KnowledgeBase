@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>希臘與羅馬神話圖譜 | 諸神、傳說與藝術</title>
+<title>希臘與羅馬神話圖譜 | 諸神、史詩與後世的藝術</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1274,10 +1274,10 @@ const PARTS = [
        en:'The main body. Read straight through, or take only the chapter you care about. Five to eight minutes each.',
        fr:'Le corps du texte. À lire d’affilée, ou par chapitre selon l’envie. Cinq à huit minutes chacun.'} },
   { n:4, id:'p4', tone:'violet',
-    t:{zh:'第四部・帶去美術館的工具', en:'Part 4 · Tools to take to the museum', fr:'Partie 4 · Des outils pour le musée'},
-    p:{zh:'查閱用，不必從頭讀。需要時再回來翻。',
-       en:'Reference, not reading. Come back to these when you need them.',
-       fr:'À consulter, non à lire. Revenez-y au besoin.'} },
+    t:{zh:'第四部・故事的來世', en:'Part 4 · The afterlives of the stories', fr:'Partie 4 · La postérité des récits'},
+    p:{zh:'這些故事後來被畫成什麼、被每個時代重新理解成什麼，以及一份希臘羅馬對照總表。查閱用，不必從頭讀。',
+       en:'What later ages made of these stories, how each period reread them, and a Greek/Roman summary table. Reference, not reading.',
+       fr:'Ce que les siècles ont fait de ces récits, comment chaque époque les a relus, et un tableau récapitulatif Grèce/Rome. À consulter, non à lire.'} },
 ];
 
 /* Chapter registry: drives the volume map, the reading paths and
@@ -1348,33 +1348,35 @@ const BRIDGES = {
    WHY: the motivation, before any content at all.
    ───────────────────────────────────────────────────────────── */
 const WHY = {
-  scene:{zh:'假設您站在羅馬博爾蓋塞美術館的一座雕像前。一個女孩正在變成一棵樹：手指抽長成樹枝，腳趾扎進地面，皮膚已經開始變成樹皮。而一個年輕男子的手，剛剛碰到她的腰。',
-         en:'Imagine standing in front of a statue in the Galleria Borghese in Rome. A girl is turning into a tree: her fingers lengthening into branches, her toes rooting into the ground, her skin already becoming bark. A young man’s hand has just touched her waist.',
-         fr:'Imaginez-vous devant une statue de la Galerie Borghèse, à Rome. Une jeune fille se change en arbre : ses doigts s’allongent en rameaux, ses orteils s’enracinent, sa peau devient écorce. La main d’un jeune homme vient de toucher sa taille.'},
-  without:{zh:'如果不知道故事，您會看到高超的技巧：大理石竟然能被雕出樹葉的薄度。看三十秒，拍張照，走了。',
-           en:'If you do not know the story, you see superb technique: marble somehow carved as thin as a leaf. You look for thirty seconds, take a photo, move on.',
-           fr:'Si vous ignorez l’histoire, vous voyez une technique superbe : du marbre taillé aussi mince qu’une feuille. Trente secondes de regard, une photo, et vous passez.'},
-  with:{zh:'如果知道故事，您會看到別的東西。這是達芙妮：她被阿波羅追逐，寧願變成樹也不願被抓住。而貝尼尼刻意選中的，是變形進行到<strong class="text-white">一半</strong>、還來得及後悔的那半秒。您還會注意到：阿波羅的表情不是慾望，是剛剛意識到自己失去了什麼。<br><br>再往外一層，您會知道這個題材在貝尼尼之前已經被畫了一千五百年，在他之後又被畫了三百年，而每一位藝術家都在回答前一位的版本。',
-        en:'If you do know it, you see something else. This is Daphne: pursued by Apollo, she chose to become a tree rather than be caught. And Bernini deliberately picked the half-second when the change is only <strong class="text-white">half</strong> done: when it could still be regretted. You notice, too, that Apollo’s face is not desire but the dawning knowledge of what he has just lost.<br><br>One layer further out, you know this subject had already been depicted for fifteen hundred years before Bernini and would be for three hundred after him: each artist answering the last one’s version.',
-        fr:'Si vous la connaissez, vous voyez tout autre chose. C’est Daphné : poursuivie par Apollon, elle a préféré devenir arbre plutôt qu’être prise. Et Le Bernin a délibérément choisi la demi-seconde où la métamorphose n’est qu’<strong class="text-white">à moitié</strong> faite : où l’on pourrait encore la regretter. Vous remarquez aussi que le visage d’Apollon n’exprime pas le désir, mais la conscience naissante de ce qu’il vient de perdre.<br><br>Un cran plus loin, vous savez que ce sujet avait déjà été représenté pendant quinze siècles avant Le Bernin, et le serait trois siècles après : chaque artiste répondant à la version du précédent.'},
-  punch:{zh:'差別不在於「有沒有讀過書」。差別在於您看到的是<strong class="text-white">一件物品，還是一場延續兩千年的對話</strong>。',
-         en:'The difference is not about being well-read. The difference is whether you are looking at <strong class="text-white">an object, or a two-thousand-year-long conversation</strong>.',
-         fr:'La différence ne tient pas à l’érudition. Elle tient à ce que vous regardez : <strong class="text-white">un objet, ou une conversation vieille de deux mille ans</strong>.'},
+  scene:{zh:'河神的女兒達芙妮發過誓不嫁人。太陽神阿波羅愛上了她，追著她跑過整片樹林。她跑到力竭，向父親求救。於是她的手指抽長成樹枝，腳趾扎進土裡，皮膚化為樹皮。阿波羅追上時，抱住的是一棵月桂樹。<br><br>他折下一段枝葉戴在頭上，說：既然妳不能做我的妻子，就做我的樹。',
+         en:'Daphne, a river god’s daughter, had sworn never to marry. Apollo fell in love with her and chased her through the woods. Run to exhaustion, she called out to her father for help, and her fingers lengthened into branches, her toes struck root, her skin closed into bark. What Apollo caught hold of was a laurel tree.<br><br>He broke off a branch and wore it, saying: if you cannot be my wife, you will be my tree.',
+         fr:'Daphné, fille d’un dieu-fleuve, avait juré de ne jamais se marier. Apollon s’en éprit et la poursuivit à travers les bois. Épuisée par la course, elle appela son père à l’aide : ses doigts s’allongèrent en rameaux, ses orteils prirent racine, sa peau se referma en écorce. Ce qu’Apollon saisit fut un laurier.<br><br>Il en rompit un rameau et s’en couronna, disant : si tu ne peux être ma femme, tu seras mon arbre.'},
+  colA:{zh:'故事本身在說什麼', en:'What the story is doing', fr:'Ce que le récit accomplit'},
+  colB:{zh:'它後來變成了什麼', en:'What became of it', fr:'Ce qu’il est devenu'},
+  without:{zh:'一則神話通常同時在做好幾件事。這一則解釋了一個現成的事實（月桂為什麼是勝利與詩歌的象徵），承認了一件不舒服的事（神也會被拒絕，追求也可能是暴力），並且給了「寧可不再是自己，也不願被佔有」這個選擇一個形狀。<br><br>希臘人不是把它當童話講的。它是用來說明世界為什麼長這樣的。',
+           en:'A myth is usually doing several things at once. This one explains a fact already in the world (why laurel means victory and poetry), admits something uncomfortable (a god can be refused, and pursuit can be violence), and gives a shape to the choice of ceasing to be yourself rather than being possessed.<br><br>The Greeks did not tell it as a fairy tale. They told it to account for why the world looks the way it does.',
+           fr:'Un mythe fait d’ordinaire plusieurs choses à la fois. Celui-ci explique un fait déjà présent dans le monde (pourquoi le laurier signifie victoire et poésie), admet une chose inconfortable (un dieu peut être éconduit, et la poursuite peut être violence), et donne forme au choix de cesser d’être soi plutôt que d’être possédée.<br><br>Les Grecs ne le racontaient pas comme un conte, mais pour rendre compte du monde tel qu’il est.'},
+  with:{zh:'這則故事被寫下來的時候就已經很老了。奧維德在西元 8 年把它編進《變形記》；一千六百年後貝尼尼把它刻成大理石，而且刻意選在變形只進行到一半的那半秒；今天的桂冠、桂冠詩人、Nobel laureate，用的還是同一根樹枝。<br><br>藝術是這則故事眾多來世裡的一個。它之所以被畫了兩千年，是因為故事本身夠強。',
+        en:'The story was already old when it was first written down. Ovid set it into the <em>Metamorphoses</em> in AD 8; sixteen centuries later Bernini carved it in marble, deliberately choosing the half-second when the change is only half done; and the laurel wreath, the poet laureate and the Nobel laureate all still draw on that same branch.<br><br>Art is one of this story’s many afterlives. It went on being painted for two thousand years because the story itself was strong enough to carry it.',
+        fr:'Le récit était déjà ancien quand on l’a mis par écrit. Ovide l’intégra aux <em>Métamorphoses</em> en 8 apr. J.-C. ; seize siècles plus tard, Le Bernin le taillait dans le marbre en choisissant la demi-seconde où la métamorphose n’est qu’à moitié faite ; et la couronne de laurier, le poète lauréat, le lauréat du Nobel puisent encore à ce rameau.<br><br>L’art est l’une des nombreuses vies posthumes de ce récit. S’il fut peint pendant deux mille ans, c’est que le récit lui-même était assez fort pour le porter.'},
+  punch:{zh:'這本圖譜要介紹的是<strong class="text-white">這些故事本身</strong>：它們從哪裡來、彼此怎麼串起來、希臘人與羅馬人各自拿它們做什麼。藝術作品會不斷出現，但它們的角色是<strong class="text-white">補充</strong>，用來說明後世如何回應這些故事，而不是反過來把故事當成看畫的說明書。',
+         en:'What this volume sets out to introduce is <strong class="text-white">the stories themselves</strong>: where they came from, how they connect, and what the Greeks and the Romans each did with them. Artworks appear throughout, but their role is <strong class="text-white">supplementary</strong>, showing how later ages answered these stories rather than turning the stories into captions for pictures.',
+         fr:'Ce volume se propose de présenter <strong class="text-white">les récits eux-mêmes</strong> : d’où ils viennent, comment ils s’enchaînent, et ce que Grecs et Romains en ont fait respectivement. Les œuvres d’art y reviennent sans cesse, mais leur rôle est <strong class="text-white">complémentaire</strong> : montrer comment les siècles ont répondu à ces récits, et non transformer les récits en cartels de tableaux.'},
   defTitle:{zh:'那麼，「神話」到底是什麼？', en:'So what is a “myth,” exactly?', fr:'Alors, qu’est-ce qu’un « mythe » au juste ?'},
   def:{zh:'首先要拿掉一個誤解：神話不是「古人因為不懂科學而編的假故事」。<br><br>神話是一個文明用來<strong class="text-white">解釋世界、安放恐懼、傳遞價值</strong>的敘事系統。為什麼有四季？為什麼人會死？為什麼我們該效忠這個國家？這些問題今天由科學、宗教、法律和歷史課本分別回答，而在古代，它們由同一套故事一次回答完。<br><br>所以讀神話不是讀童話，是讀一個文明如何理解自己。',
        en:'First, remove one misconception: myths are not “stories the ancients made up because they lacked science.”<br><br>A mythology is the narrative system a civilization uses to <strong class="text-white">explain the world, house its fears, and transmit its values</strong>. Why are there seasons? Why do we die? Why should we be loyal to this state? Today those questions are parcelled out to science, religion, law and the history textbook; in antiquity one body of stories answered all of them at once.<br><br>So reading myth is not reading fairy tales. It is reading how a civilization understood itself.',
        fr:'Écartons d’abord un malentendu : les mythes ne sont pas « des histoires inventées faute de science ».<br><br>Une mythologie est le système de récits par lequel une civilisation <strong class="text-white">explique le monde, loge ses peurs et transmet ses valeurs</strong>. Pourquoi les saisons ? Pourquoi mourons-nous ? Pourquoi devrions-nous servir cet État ? Aujourd’hui ces questions se répartissent entre science, religion, droit et manuel d’histoire ; dans l’Antiquité, un même corpus y répondait d’un seul coup.<br><br>Lire un mythe, ce n’est donc pas lire un conte : c’est lire comment une civilisation se comprenait elle-même.'},
-  gainTitle:{zh:'讀完這本圖譜，您會得到三樣東西', en:'Three things you get from this volume', fr:'Trois choses que ce volume vous apporte'},
+  gainTitle:{zh:'這些故事後來去了哪裡', en:'Where these stories ended up', fr:'Où ces récits ont abouti'},
   gains:[
-    {zh:'<strong class="text-white">看懂西方美術館裡大約一半的作品。</strong>從文藝復興到十九世紀，神話是宗教之外最大的題材來源。',
-     en:'<strong class="text-white">The ability to read about half of any Western museum.</strong> From the Renaissance to the nineteenth century, myth is the largest source of subjects after religion.',
-     fr:'<strong class="text-white">De quoi lire la moitié d’un musée occidental.</strong> De la Renaissance au XIXᵉ siècle, le mythe est la première source de sujets après la religion.'},
-    {zh:'<strong class="text-white">大量詞彙的來源。</strong>行星、月份、volcano、cereal、panic、echo、narcissism：這些字背後都站著一位神。',
-     en:'<strong class="text-white">The origin of a great deal of vocabulary.</strong> The planets, the months, volcano, cereal, panic, echo, narcissism. A god stands behind each of these words.',
-     fr:'<strong class="text-white">L’origine d’un vaste vocabulaire.</strong> Les planètes, les mois, volcan, céréale, panique, écho, narcissisme : derrière chacun de ces mots se tient un dieu.'},
-    {zh:'<strong class="text-white">一套仍在運作的敘事原型。</strong>伊底帕斯情結、自戀、普羅米修斯式的科技傲慢、潘朵拉的盒子：現代人談論自己時，用的還是這些故事。',
-     en:'<strong class="text-white">A set of narrative archetypes still in service.</strong> The Oedipus complex, narcissism, Promethean overreach, Pandora’s box: when moderns describe themselves, these are still the stories they use.',
-     fr:'<strong class="text-white">Des archétypes narratifs toujours en service.</strong> Complexe d’Œdipe, narcissisme, démesure prométhéenne, boîte de Pandore : pour se décrire, les modernes usent encore de ces récits.'},
+    {zh:'<strong class="text-white">西方文學的起點。</strong>《伊利亞德》是歐洲第一部文學作品，悲劇、史詩、小說的許多基本形狀都是從這裡長出來的。不讀神話，但丁、莎士比亞、喬伊斯都會少掉一層。',
+     en:'<strong class="text-white">The starting point of Western literature.</strong> The <em>Iliad</em> is the first work of European literature, and much of the basic shape of tragedy, epic and the novel grew out of this material. Without the myths, Dante, Shakespeare and Joyce all lose a layer.',
+     fr:'<strong class="text-white">Le point de départ de la littérature occidentale.</strong> L’<em>Iliade</em> est la première œuvre littéraire d’Europe, et une grande part des formes de la tragédie, de l’épopée et du roman a poussé sur ce terreau. Sans les mythes, Dante, Shakespeare et Joyce perdent une couche.'},
+    {zh:'<strong class="text-white">您每天在用的語彙。</strong>行星與月份的名字、volcano、cereal、panic、echo、narcissism、伊底帕斯情結、潘朵拉的盒子。現代人描述自己心裡的事情時，用的還是這些故事。',
+     en:'<strong class="text-white">The vocabulary you already use.</strong> The names of the planets and the months, volcano, cereal, panic, echo, narcissism, the Oedipus complex, Pandora’s box. When moderns describe what goes on inside them, these are still the stories they reach for.',
+     fr:'<strong class="text-white">Le vocabulaire que vous employez déjà.</strong> Les noms des planètes et des mois, volcan, céréale, panique, écho, narcissisme, complexe d’Œdipe, boîte de Pandore. Pour décrire leur vie intérieure, les modernes puisent encore à ces récits.'},
+    {zh:'<strong class="text-white">兩千年的圖像。</strong>從希臘瓶畫到畢卡索，藝術家不斷重講這些故事，而每一次重講都在回答前一個版本。本圖譜會在每一段落附上對應的作品，讓您看見同一則故事在不同時代被理解成什麼樣子。',
+     en:'<strong class="text-white">Two thousand years of images.</strong> From Greek vase painting to Picasso, artists have kept retelling these stories, and each retelling answers the last. This volume attaches the relevant works to each passage so you can watch one story being understood differently century by century.',
+     fr:'<strong class="text-white">Deux mille ans d’images.</strong> De la céramique grecque à Picasso, les artistes n’ont cessé de redire ces récits, chaque version répondant à la précédente. Ce volume rattache les œuvres à chaque passage, pour vous faire voir un même récit compris autrement de siècle en siècle.'},
   ],
   art:'bernini_daphne'
 };
@@ -1926,6 +1928,11 @@ const CYCLES = [
          en:'The Cyclops, the witch Circe who turns men into pigs, the deadly song of the Sirens, Calypso’s island, a descent to the dead, and finally Ithaca, where he returns disguised as a beggar and kills the suitors with the bow only he can string. Odysseus survives on cunning (<em>metis</em>) rather than strength, which is why he is often called the first “modern” protagonist.',
          fr:'Le Cyclope, la magicienne Circé qui change les hommes en porcs, le chant mortel des Sirènes, l’île de Calypso, une descente chez les morts : puis Ithaque, où il revient déguisé en mendiant et tue les prétendants avec l’arc que lui seul peut bander. Ulysse survit par la ruse (<em>mètis</em>) plutôt que par la force : on en fait souvent le premier protagoniste « moderne ».'},
       arts:['turner_polyphemus','waterhouse_sirens'] },
+    { t:{zh:'史詩是怎麼被做出來的', en:'How the epics were actually made', fr:'Comment les épopées ont été faites'},
+      p:{zh:'這兩部詩不是坐在桌前寫出來的，而是唱出來的。吟遊詩人（aoidos）抱著里拉琴，在宴會上一段一段地演唱，靠的不是背誦全文，而是一套現成的零件：固定的修飾語（「捷足的阿基里斯」「酒色的大海」）、固定的場景套式（武裝、獻祭、船隻下水），像積木一樣即席拼接。這也解釋了為什麼讀荷馬會覺得同樣的句子一再出現。<br><br>二十世紀初，米爾曼・帕里與艾伯特・洛德到南斯拉夫記錄仍在世的口傳歌手，證實了這套機制真的可以支撐長達數萬行的即席演唱。史詩因此不是某一個人的作品，而是一個傳統累積數百年的成果，荷馬是把它定形的那個名字。',
+         en:'Neither poem was written at a desk. They were sung. A bard (an <em>aoidos</em>) worked with a lyre in front of a banqueting hall, and he did not recite a memorised text but assembled one from ready-made parts: fixed epithets (swift-footed Achilles, the wine-dark sea) and fixed scene-patterns for arming, sacrifice or launching a ship, fitted together on the spot. That is why reading Homer feels so repetitive in places.<br><br>In the early twentieth century Milman Parry and Albert Lord went to Yugoslavia and recorded living oral singers, showing that such a technique really can sustain tens of thousands of lines improvised in performance. An epic is therefore not one person’s composition but the deposit of a tradition centuries deep, with Homer as the name attached to the moment it set.',
+         fr:'Aucun des deux poèmes n’a été écrit à une table : ils étaient chantés. L’aède (<em>aoidos</em>) officiait la lyre en main devant une salle de banquet, et ne récitait pas un texte appris mais l’assemblait à partir de pièces toutes faites : épithètes fixes (Achille aux pieds légers, la mer vineuse) et scènes types pour l’armement, le sacrifice ou la mise à l’eau d’un navire, ajustées sur le moment. D’où l’impression de répétition qu’on éprouve par endroits en lisant Homère.<br><br>Au début du XXᵉ siècle, Milman Parry et Albert Lord allèrent enregistrer en Yougoslavie des chanteurs oraux encore vivants et montrèrent qu’une telle technique peut effectivement soutenir des dizaines de milliers de vers improvisés. Une épopée n’est donc pas l’œuvre d’un seul homme mais le dépôt d’une tradition plusieurs fois séculaire, Homère étant le nom attaché au moment où elle s’est fixée.'},
+      arts:['exekias'] },
     { t:{zh:'荷馬本人的神化', en:'The deification of Homer himself', fr:'La divinisation d’Homère'},
       p:{zh:'到了十九世紀，荷馬已不只是詩人，而是整個歐洲文明的象徵性源頭。學界至今爭論「荷馬」是否為單一作者（所謂荷馬問題），但這無損於他在藝術中的地位：他被畫成受女神加冕的祖先。',
          en:'By the nineteenth century Homer was no longer merely a poet but the symbolic source of European civilization itself. Scholars still argue whether “Homer” was one author at all (the Homeric Question). Which has never dented his standing in art, where he is painted as an ancestor crowned by a goddess.',
@@ -1972,9 +1979,9 @@ const CYCLES = [
   id:'ovid', icon:'fa-feather', color:'emerald',
   eyebrow:{zh:'西方藝術最重要的一本書', en:'The Single Most Useful Book in Western Art', fr:'Le livre le plus utile de l’art occidental'},
   h2:{zh:'奧維德《變形記》與愛情神話', en:'Ovid’s Metamorphoses &amp; the Love Myths', fr:'Les Métamorphoses d’Ovide &amp; les mythes amoureux'},
-  lead:{zh:'奧維德在西元 8 年完成的《變形記》串起兩百五十則以「變形」為主軸的故事，從創世一路寫到凱撒化為星辰。它之所以主宰西方藝術，原因很實際：它是拉丁文寫的（中世紀歐洲讀得懂）、故事短而視覺性強（一幅畫就能講完）、而且每一則都提供了描繪裸體、暴力與情慾的正當理由。文藝復興以後，畫家的案頭幾乎必備此書。',
-       en:'Ovid finished the <em>Metamorphoses</em> in AD 8: some 250 stories strung on the theme of transformation, from the creation of the world to Caesar turning into a star. Its dominance over Western art has practical causes. It is in Latin (medieval Europe could read it), its episodes are short and intensely visual (one canvas tells one whole story), and each supplies a respectable reason to depict nudity, violence and desire. From the Renaissance on, a copy sat on nearly every painter’s desk.',
-       fr:'Ovide acheva les <em>Métamorphoses</em> en 8 apr. J.-C. : quelque 250 récits enfilés sur le thème de la transformation, de la création du monde à César changé en astre. Sa domination sur l’art occidental a des causes très concrètes. Le texte est en latin (l’Europe médiévale le lisait), les épisodes sont brefs et intensément visuels (une toile suffit à raconter), et chacun fournit un motif respectable pour peindre la nudité, la violence et le désir. Depuis la Renaissance, presque tout peintre en gardait un exemplaire sur sa table.'},
+  lead:{zh:'奧維德在西元 8 年完成的《變形記》是一部十五卷的拉丁文長詩，串起約兩百五十則以「變形」為主軸的故事，從創世一路寫到凱撒化為星辰。它的語調與荷馬的莊重完全不同：輕快、帶著機鋒，也帶著同情，關心的多半是慾望、失去，以及一個人如何不再是自己。正因為它把神話寫成一則則短而完整的故事，這本書後來成為歐洲流傳最廣的神話讀本，畫家的案頭也幾乎必備。',
+       en:'Ovid finished the <em>Metamorphoses</em> in AD 8: some 250 stories strung on the theme of transformation, from the creation of the world to Caesar turning into a star. Its temper is nothing like Homer’s gravity: quick, witty and unexpectedly tender, and what it returns to again and again is desire, loss, and a person ceasing to be themselves. Because it turned the myths into short, complete, self-contained tales, it became the most widely read book of mythology Europe ever had, and from the Renaissance on a copy sat on nearly every painter’s desk.',
+       fr:'Ovide acheva les <em>Métamorphoses</em> en 8 apr. J.-C. : quelque 250 récits enfilés sur le thème de la transformation, de la création du monde à César changé en astre. Le ton n’a rien de la gravité homérique : vif, spirituel, étonnamment tendre, il revient sans cesse au désir, à la perte, et au moment où quelqu’un cesse d’être soi. Parce qu’il a fait des mythes des récits brefs, complets et autonomes, ce livre est devenu le recueil de mythologie le plus lu d’Europe, et depuis la Renaissance presque tout peintre en gardait un exemplaire sur sa table.'},
   items:[
     { t:{zh:'阿波羅與達芙妮', en:'Apollo and Daphne', fr:'Apollon et Daphné'},
       p:{zh:'邱比特以金箭射中阿波羅、鉛箭射中寧芙達芙妮：一個狂戀，一個厭惡。被追至力竭的達芙妮求父親河神救她，於是化為月桂樹。阿波羅折下枝葉為冠：桂冠從此成為詩人與勝利者的標誌，而它的來源是一次未遂的強暴。',
@@ -2186,13 +2193,13 @@ const COMPARE_NOTES = [
    ───────────────────────────────────────────────────────────── */
 const I18N = {
   zh: {
-    'doc.title':'希臘與羅馬神話圖譜 | 諸神、傳說與藝術',
-    'hdr.badge':'神話與藝術圖譜','hdr.title':'希臘與羅馬神話',
+    'doc.title':'希臘與羅馬神話圖譜 | 諸神、史詩與後世的藝術',
+    'hdr.badge':'希臘羅馬神話與史詩','hdr.title':'希臘與羅馬神話',
     'nav.map':'導覽','nav.p1':'一・入門','nav.p2':'二・骨架','nav.p3':'三・故事','nav.p4':'四・工具',
     'map.eyebrow':'導覽','map.h2':'這本圖譜怎麼讀',
     'map.lead':'這不是一本從頭讀到尾的書，而是分成四部：前兩部建立底子，第三部是正文，第四部是帶去美術館用的工具。如果您是第一次接觸希臘羅馬神話，請照順序讀完第一部再說：那 15 分鐘會讓後面所有內容變得容易得多。',
     'map.pathq':'先告訴我您的情況，我把該讀的標出來：',
-    'why.eyebrow':'第 1 章','why.h2':'為什麼值得懂神話',
+    'why.eyebrow':'第 1 章','why.h2':'先讀一則故事',
     'why.defh':'那麼，「神話」到底是什麼？','why.gainh':'讀完這本圖譜，您會得到三樣東西',
     'pre.eyebrow':'第 2 章・先修','pre.h2':'開始之前：六個詞與一把時間尺',
     'pre.h.words':'六個一定要先分清楚的詞','pre.p.words':'點開任一項展開說明。這幾個詞在後面會反覆出現。',
@@ -2203,8 +2210,8 @@ const I18N = {
     'rec.band':'先看每個時期在整條時間軸上的位置與長度。您會發現古代與中世紀各佔了極長的時間，而文藝復興其實只是很窄的一段。',
     'rec.chart.h':'這本圖譜裡的 51 件作品，是什麼時候畫的？','rec.chart.p':'依作品完成年代分組。橫條長度代表件數。',
 
-    'intro':'希臘神話是一套解釋世界的故事系統；羅馬人接手之後，把它變成一套論證權力的語言。兩者合流之後所形成的圖像庫，成為西方藝術兩千五百年來最主要的題材來源：理解神話，等於拿到讀懂歐洲美術館半數作品的鑰匙。',
-    'intro2':'這本圖譜假設您<strong class="text-white">完全沒有背景</strong>：不需要先讀過任何東西，也不需要記住任何名字。全書分成四部，從「為什麼值得懂」開始，一步一步鋪到「怎麼看懂一幅畫」。下一節會告訴您該從哪裡進入。',
+    'intro':'希臘神話是一套解釋世界的故事系統：四季從何而來、人為什麼會死、英雄為什麼非死不可。羅馬人接手之後，把同一批故事改寫成一套論證統治權的語言。這本圖譜要講的是這些故事本身，以及它們在兩個文明手裡分別變成了什麼。',
+    'intro2':'這本圖譜假設您<strong class="text-white">完全沒有背景</strong>：不需要先讀過任何東西，也不需要記住任何名字。全書分成四部，從一則故事開始，一步一步鋪到諸神的譜系、史詩的內容，以及這些故事後來的去向。藝術作品會一路作陪，作為理解的補充。下一節會告訴您該從哪裡進入。',
     'intro.hint':'點擊任何作品名稱或縮圖，可查看圖像與該作品與神話的關聯說明。',
     'bas.eyebrow':'零基礎入門','bas.h2':'先搞懂一件事：希臘與羅馬的關係',
     'bas.h.timeline':'一、先看時間順序','bas.p.timeline':'很多混亂都是因為不知道誰先誰後。這條時間軸只有八格，但看完就能明白後面所有事情。',
@@ -2234,13 +2241,13 @@ const I18N = {
     'footer':'希臘與羅馬神話參考圖譜：供學習與快速查閱之用。神話文本存在大量地方版本與相互矛盾的敘述，本圖譜採用最通行的版本；藝術作品圖像由維基百科即時載入，版權歸原持有者所有。'
   },
   en: {
-    'doc.title':'Greek &amp; Roman Mythology Atlas | Gods, Cycles &amp; Their Art',
-    'hdr.badge':'MYTHOLOGY &amp; ART ATLAS','hdr.title':'Greek &amp; Roman Mythology',
+    'doc.title':'Greek &amp; Roman Mythology Atlas | Gods, Epics and Their Afterlives',
+    'hdr.badge':'GREEK &amp; ROMAN MYTH AND EPIC','hdr.title':'Greek &amp; Roman Mythology',
     'nav.map':'Map','nav.p1':'1 · Start','nav.p2':'2 · Shape','nav.p3':'3 · Stories','nav.p4':'4 · Tools',
     'map.eyebrow':'Orientation','map.h2':'How to read this volume',
     'map.lead':'This is not a book to read cover to cover. It comes in four parts: the first two build the foundation, the third is the main body, and the fourth is a set of tools to take to a museum. If Greek and Roman mythology is new to you, read Part 1 in order first: those fifteen minutes make everything after them far easier.',
     'map.pathq':'Tell me where you are, and I will mark what to read:',
-    'why.eyebrow':'Chapter 1','why.h2':'Why myth is worth knowing',
+    'why.eyebrow':'Chapter 1','why.h2':'Begin with one story',
     'why.defh':'So what is a “myth,” exactly?','why.gainh':'Three things you get from this volume',
     'pre.eyebrow':'Chapter 2 · Groundwork','pre.h2':'Before we start: six words and a sense of time',
     'pre.h.words':'Six words worth separating first','pre.p.words':'Open any one for the explanation. These words recur throughout.',
@@ -2251,8 +2258,8 @@ const I18N = {
     'rec.band':'First, where each period sits on the whole span, and how long it lasted. Antiquity and the Middle Ages each occupy enormous stretches; the Renaissance is a surprisingly narrow band.',
     'rec.chart.h':'When were the 51 works in this atlas actually made?','rec.chart.p':'Grouped by date of execution. Bar length is the number of works.',
 
-    'intro':'Greek mythology is a system of stories for explaining the world; when Rome took it over, it became a language for justifying power. The image-bank the two produced together has been the principal subject matter of Western art for twenty-five centuries: knowing the myths is effectively the key to reading half the works in any European museum.',
-    'intro2':'This atlas assumes <strong class="text-white">no background whatsoever</strong>: nothing to have read first, no names to memorize. It is built in four parts, starting from why any of this is worth knowing and building step by step toward reading an actual painting. The next section tells you where to come in.',
+    'intro':'Greek mythology is a system of stories for explaining the world: where the seasons come from, why we die, why a hero has to. When Rome took the same stories over, it rewrote them into a language for justifying rule. This volume is about those stories, and about what each of the two civilizations made of them.',
+    'intro2':'This atlas assumes <strong class="text-white">no background whatsoever</strong>: nothing to have read first, no names to memorize. It is built in four parts, starting from a single story and building step by step through the genealogy of the gods, the content of the epics, and where all of it went afterwards. Artworks travel alongside as a supplement. The next section tells you where to come in.',
     'intro.hint':'Click any artwork title or thumbnail to open the image and read how it connects to the myth.',
     'bas.eyebrow':'Start from zero','bas.h2':'First, One Thing: How Greece and Rome Are Related',
     'bas.h.timeline':'1 · Get the order of events straight','bas.p.timeline':'Most of the confusion comes from not knowing what came before what. This timeline has only eight entries, and it explains everything that follows.',
@@ -2282,13 +2289,13 @@ const I18N = {
     'footer':'A reference atlas of Greek and Roman mythology: for study and quick review. Myths survive in many local and mutually contradictory versions; the most widely transmitted version is used here. Artwork images load live from Wikipedia and remain the property of their rights holders.'
   },
   fr: {
-    'doc.title':'Atlas de la mythologie grecque &amp; romaine | Dieux, cycles &amp; leur art',
-    'hdr.badge':'ATLAS MYTHOLOGIE &amp; ART','hdr.title':'Mythologie grecque &amp; romaine',
+    'doc.title':'Atlas de la mythologie grecque &amp; romaine | Dieux, épopées et postérité',
+    'hdr.badge':'MYTHE ET ÉPOPÉE GRÉCO-ROMAINS','hdr.title':'Mythologie grecque &amp; romaine',
     'nav.map':'Plan','nav.p1':'1 · Départ','nav.p2':'2 · Forme','nav.p3':'3 · Récits','nav.p4':'4 · Outils',
     'map.eyebrow':'Orientation','map.h2':'Comment lire ce volume',
     'map.lead':'Ce n’est pas un livre à lire d’un bout à l’autre. Il compte quatre parties : les deux premières posent les bases, la troisième est le corps du texte, la quatrième réunit des outils à emporter au musée. Si la mythologie gréco-romaine vous est nouvelle, lisez d’abord la partie 1 dans l’ordre : ces quinze minutes rendent tout le reste bien plus facile.',
     'map.pathq':'Dites-moi où vous en êtes, je signalerai quoi lire :',
-    'why.eyebrow':'Chapitre 1','why.h2':'Pourquoi le mythe vaut la peine',
+    'why.eyebrow':'Chapitre 1','why.h2':'Commencer par un récit',
     'why.defh':'Alors, qu’est-ce qu’un « mythe » au juste ?','why.gainh':'Trois choses que ce volume vous apporte',
     'pre.eyebrow':'Chapitre 2 · Préalables','pre.h2':'Avant de commencer : six mots et une échelle de temps',
     'pre.h.words':'Six mots à distinguer d’abord','pre.p.words':'Ouvrez-en un pour l’explication. Ces mots reviendront sans cesse.',
@@ -2299,8 +2306,8 @@ const I18N = {
     'rec.band':'D’abord, la place de chaque période sur l’ensemble de la durée, et sa longueur. L’Antiquité et le Moyen Âge occupent des étendues considérables ; la Renaissance n’est qu’une bande étonnamment étroite.',
     'rec.chart.h':'Quand les 51 œuvres de cet atlas ont-elles été réalisées ?','rec.chart.p':'Regroupées par date d’exécution. La longueur de la barre indique le nombre d’œuvres.',
 
-    'intro':'La mythologie grecque est un système de récits pour expliquer le monde ; en la reprenant, Rome en fit une langue pour justifier le pouvoir. Le répertoire d’images né de leur fusion constitue depuis vingt-cinq siècles la principale matière de l’art occidental : connaître les mythes revient à détenir la clé de la moitié des salles d’un musée européen.',
-    'intro2':'Cet atlas ne suppose <strong class="text-white">aucun prérequis</strong> : rien à avoir lu d’abord, aucun nom à retenir. Il se compose de quatre parties, de « pourquoi cela vaut la peine » jusqu’à la lecture d’un tableau. La section suivante vous indique par où entrer.',
+    'intro':'La mythologie grecque est un système de récits pour expliquer le monde : d’où viennent les saisons, pourquoi nous mourons, pourquoi un héros doit mourir. En reprenant ces mêmes récits, Rome en a fait une langue pour justifier le pouvoir. Ce volume porte sur ces récits, et sur ce que chacune des deux civilisations en a fait.',
+    'intro2':'Cet atlas ne suppose <strong class="text-white">aucun prérequis</strong> : rien à avoir lu d’abord, aucun nom à retenir. Il se compose de quatre parties, d’un simple récit jusqu’à la généalogie des dieux, au contenu des épopées et à leur postérité. Les œuvres d’art cheminent à côté, en complément. La section suivante vous indique par où entrer.',
     'intro.hint':'Cliquez sur le titre ou la vignette d’une œuvre pour ouvrir l’image et lire son rapport au mythe.',
     'bas.eyebrow':'Partir de zéro','bas.h2':'D’abord une chose : le lien entre la Grèce et Rome',
     'bas.h.timeline':'1 · Remettre les événements dans l’ordre','bas.p.timeline':'L’essentiel de la confusion vient de l’ignorance de l’ordre des choses. Cette chronologie ne compte que huit entrées, et elle éclaire tout le reste.',
@@ -2488,11 +2495,11 @@ function renderWhy() {
     +   '<div class="grid sm:grid-cols-2 gap-3">'
     +     '<div class="bg-slate-900/50 rounded-2xl border border-slate-800 p-4">'
     +       '<span class="text-[0.65rem] uppercase tracking-wider text-slate-500 font-bold">'
-    +         (LANG === 'zh' ? '不知道故事' : LANG === 'fr' ? 'Sans l’histoire' : 'Without the story') + '</span>'
+    +         t(WHY.colA) + '</span>'
     +       '<p class="text-xs text-slate-400 leading-relaxed mt-1.5">' + t(WHY.without) + '</p></div>'
     +     '<div class="rounded-2xl p-4" style="background:rgba(217,119,6,0.10);border:1px solid rgba(217,119,6,0.35)">'
     +       '<span class="text-[0.65rem] uppercase tracking-wider font-bold" style="color:var(--bar-ink,#fcd34d)">'
-    +         (LANG === 'zh' ? '知道故事' : LANG === 'fr' ? 'Avec l’histoire' : 'With the story') + '</span>'
+    +         t(WHY.colB) + '</span>'
     +       '<p class="text-xs text-slate-300 leading-relaxed mt-1.5">' + t(WHY.with) + '</p></div>'
     +   '</div>'
     +   '<p class="text-sm text-slate-200 leading-relaxed bg-slate-900/50 border border-slate-800 rounded-2xl p-4">'
