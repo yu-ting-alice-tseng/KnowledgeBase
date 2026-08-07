@@ -161,6 +161,24 @@
   .path-btn:hover { background: rgba(148,163,184,0.16); color: #f1f5f9; }
   .path-btn.is-on { background: rgba(217,119,6,0.16); border-color: rgba(217,119,6,0.5); color: #fcd34d; }
 
+  /* Inline reference to a classical text: quiet in the line, obvious on hover */
+  .src-ref {
+    font: inherit; color: inherit; background: none; padding: 0; margin: 0;
+    border: 0; border-bottom: 1px dotted rgba(201,168,92,0.75);
+    cursor: pointer; transition: color .18s, border-color .18s, background .18s;
+    border-radius: 2px;
+  }
+  .src-ref:hover, .src-ref:focus-visible {
+    color: #fcd34d; border-bottom-color: #fcd34d;
+    background: rgba(217,119,6,0.14); outline: none;
+  }
+  .src-ref::after {
+    content: '\f02d'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+    font-size: .58em; vertical-align: super; margin-left: .18em;
+    opacity: .55; color: #c9a85c;
+  }
+  .src-ref:hover::after { opacity: 1; }
+
   /* lightbox */
   #lb { position: fixed; inset: 0; z-index: 100; display: none; }
   #lb.open { display: block; }
@@ -225,6 +243,10 @@
     <div class="mt-6 flex items-center gap-2 text-xs text-slate-500">
       <i class="fa-solid fa-hand-pointer text-amber-500/70"></i>
       <span data-i18n="intro.hint"></span>
+    </div>
+    <div class="mt-2 flex items-center gap-2 text-xs text-slate-500">
+      <i class="fa-solid fa-book-open text-amber-500/70"></i>
+      <span data-i18n="src.hint"></span>
     </div>
   </section>
 
@@ -833,7 +855,7 @@ laocoon: {
   y:'c. 27 BC–68 AD', yr:20, m:{zh:'大理石．梵蒂岡博物館', en:'Marble · Vatican Museums', fr:'Marbre · Musées du Vatican'},
   why:{zh:'祭司警告特洛伊人別收下木馬，被海蛇絞死。1506 年在羅馬出土時米開朗基羅親自到場，此後它重新定義了西方對「痛苦」的表現；萊辛更以《拉奧孔》一書用它劃分詩與畫的界線：一件雕像觸發了整個美學學科。',
        en:'The priest who warned Troy against the wooden horse, strangled by sea-serpents. Michelangelo was present at its unearthing in Rome in 1506, and it redefined how the West depicts pain; Lessing then used it in <em>Laokoon</em> to draw the border between poetry and painting: one statue that launched a whole discipline of aesthetics.',
-       fr:'Le prêtre qui mit Troie en garde contre le cheval de bois, étouffé par des serpents marins. Michel-Ange assista à sa découverte à Rome en 1506 ; l’œuvre redéfinit la représentation occidentale de la douleur, et Lessing s’en servit dans son <em>Laocoon</em> pour tracer la frontière entre poésie et peinture : une statue à l’origine de toute une esthétique.'} },
+       fr:'Le prêtre qui mit Troie en garde contre le cheval de bois, étouffé par des serpents marins. Michel-Ange assista à sa découverte à Rome en 1506 ; l’œuvre redéfinit la représentation occidentale de la douleur, et Lessing s’en servit dans son <em data-src=\'laokoon\'>Laocoon</em> pour tracer la frontière entre poésie et peinture : une statue à l’origine de toute une esthétique.'} },
 
 turner_polyphemus: {
   wiki: 'Ulysses Deriding Polyphemus',
@@ -1017,6 +1039,215 @@ moreau_sphinx: {
   why:{zh:'與安格爾的版本相對照：這裡斯芬克斯用爪子攀上英雄胸口，兩人四目相接。象徵主義不再把神話當歷史場景，而當成慾望與死亡的內在心像：直通後來的佛洛伊德。',
        en:'Set this against Ingres: here the Sphinx claws its way up onto the hero’s chest and the two lock eyes. Symbolism stops treating myth as a historical scene and treats it as an inner image of desire and death: the road that leads straight to Freud.',
        fr:'À comparer avec Ingres : ici le Sphinx grimpe, griffes plantées, sur la poitrine du héros, et leurs regards se soudent. Le symbolisme cesse de voir dans le mythe une scène historique pour y lire une image intérieure du désir et de la mort : la route qui mène droit à Freud.'} },
+};
+
+/* ═════════════════════════════════════════════════════════════
+   SOURCES: the ancient texts everything else rests on.
+   Mentions of these in the running text are turned into buttons
+   at render time, so a reader who does not know what the Iliad
+   is can find out without leaving the sentence.
+   m  = strings to match, per language
+   pl = those that appear as plain prose rather than inside <em>
+   ═════════════════════════════════════════════════════════════ */
+const SOURCES = {
+
+homer:{
+  t:{zh:'荷馬史詩', en:'The Homeric epics', fr:'Les épopées homériques'},
+  orig:'Ὅμηρος',
+  a:{zh:'傳為荷馬所作', en:'attributed to Homer', fr:'attribuées à Homère'},
+  d:{zh:'約西元前 8 世紀寫定', en:'written down c. 8th century BC', fr:'fixées par écrit vers le VIIIᵉ siècle av. J.-C.'},
+  form:{zh:'兩部長篇史詩，合計約兩萬八千行', en:'Two long epics, some 28,000 lines together', fr:'Deux longues épopées, quelque 28 000 vers au total'},
+  what:{zh:'指《伊利亞德》與《奧德賽》兩部作品。它們原本是吟遊詩人一代代口傳、當場演唱的作品，後來才被寫下來。',
+        en:'The collective name for the <em>Iliad</em> and the <em>Odyssey</em>. Both were sung by travelling poets and passed down by mouth for generations before anyone wrote them down.',
+        fr:'Nom collectif de l’<em>Iliade</em> et de l’<em>Odyssée</em>. Toutes deux furent chantées par des aèdes et transmises oralement pendant des générations avant d’être couchées par écrit.'},
+  why:{zh:'它們是現存最早的歐洲文學，也是希臘人共同的教材：古希臘的孩子背荷馬，就像後來的歐洲人讀聖經。神話中大部分英雄的性格與命運，都是在這裡定型的。',
+       en:'They are the earliest surviving European literature and served as the shared schoolbook of the Greek world: a Greek child learned Homer much as later Europeans learned scripture. Most of the heroes in myth got their character and their fate here.',
+       fr:'Ce sont les plus anciens textes littéraires européens conservés et le manuel commun du monde grec : un enfant grec apprenait Homère comme l’Europe apprendra plus tard l’Écriture. La plupart des héros du mythe y ont reçu leur caractère et leur destin.'},
+  note:{zh:'學界至今爭論「荷馬」是否真有其人，或者只是一個把口傳素材整理成形的名字，這稱為「荷馬問題」。',
+        en:'Scholars still argue whether Homer was a real person at all, or a name attached to the shaping of oral material. This is known as the Homeric Question.',
+        fr:'Les spécialistes débattent encore : Homère a-t-il existé, ou son nom recouvre-t-il la mise en forme d’une matière orale ? C’est la « question homérique ».'},
+  wiki:'Homer',
+  m:{zh:['荷馬史詩'], en:['Homeric epics'], fr:['épopées homériques']}, pl:true },
+
+iliad:{
+  t:{zh:'伊利亞德', en:'Iliad', fr:'Iliade'},
+  orig:'Ἰλιάς',
+  a:{zh:'荷馬', en:'Homer', fr:'Homère'},
+  d:{zh:'約西元前 8 世紀', en:'c. 8th century BC', fr:'VIIIᵉ siècle av. J.-C. env.'},
+  form:{zh:'24 卷，約 15,700 行', en:'24 books, about 15,700 lines', fr:'24 chants, environ 15 700 vers'},
+  what:{zh:'書名意思是「關於伊利昂（特洛伊）的詩」。它<strong class="text-white">不是</strong>整場戰爭的故事，只寫第十年裡的五十幾天：阿基里斯因為戰利品被統帥奪走而拒絕出戰，直到摯友戰死才復仇。',
+        en:'The title means “the poem about Ilion,” that is, Troy. It is <strong class="text-white">not</strong> the story of the whole war but of some fifty days in its tenth year: Achilles withdraws from the fighting after his commander takes his prize, and returns only to avenge a dead friend.',
+        fr:'Le titre signifie « le poème sur Ilion », c’est-à-dire Troie. Ce n’est <strong class="text-white">pas</strong> le récit de toute la guerre, mais d’une cinquantaine de jours de sa dixième année : Achille se retire du combat quand son chef lui prend sa part de butin, et n’y revient que pour venger un ami mort.'},
+  why:{zh:'西方文學的第一部作品。它給了藝術家阿基里斯、赫克托、海倫、普里阿摩斯這些角色，也給了「英雄明知會死仍前往」這個原型。',
+       en:'The first work of Western literature. It gave artists Achilles, Hector, Helen and Priam, and it gave them the archetype of the hero who goes knowing it will kill him.',
+       fr:'La première œuvre de la littérature occidentale. Elle a donné aux artistes Achille, Hector, Hélène et Priam, ainsi que l’archétype du héros qui part en sachant qu’il y mourra.'},
+  start:{zh:'不必從頭讀。第 1 卷（爭吵）、第 6 卷（赫克托與妻子告別）、第 24 卷（老王普里阿摩斯夜訪殺子仇人）這三卷單獨讀就非常完整。',
+         en:'You do not have to start at the beginning. Books 1 (the quarrel), 6 (Hector saying goodbye to his wife) and 24 (old Priam visiting his son’s killer at night) each stand on their own.',
+         fr:'Inutile de commencer au début. Les chants 1 (la querelle), 6 (les adieux d’Hector à sa femme) et 24 (le vieux Priam chez le meurtrier de son fils) se lisent très bien isolément.'},
+  wiki:'Iliad',
+  m:{zh:['《伊利亞德》'], en:['Iliad'], fr:['Iliade']} },
+
+odyssey:{
+  t:{zh:'奧德賽', en:'Odyssey', fr:'Odyssée'},
+  orig:'Ὀδύσσεια',
+  a:{zh:'荷馬', en:'Homer', fr:'Homère'},
+  d:{zh:'約西元前 8 世紀', en:'c. 8th century BC', fr:'VIIIᵉ siècle av. J.-C. env.'},
+  form:{zh:'24 卷，約 12,100 行', en:'24 books, about 12,100 lines', fr:'24 chants, environ 12 100 vers'},
+  what:{zh:'特洛伊陷落之後，奧德修斯花十年才回到家鄉伊薩卡。路上遇到獨眼巨人、把人變成豬的女巫瑟茜、以歌聲致命的賽壬，還下過一趟冥界。回家後他喬裝成乞丐，射殺了佔據他家的追求者。',
+        en:'After Troy falls, Odysseus takes ten years to get home to Ithaca. Along the way come the Cyclops, the witch Circe who turns men into pigs, the deadly song of the Sirens, and a descent to the dead. He returns disguised as a beggar and kills the suitors who have taken over his house.',
+        fr:'Après la chute de Troie, Ulysse met dix ans à regagner Ithaque. En chemin : le Cyclope, la magicienne Circé qui change les hommes en porcs, le chant mortel des Sirènes, une descente chez les morts. Il rentre déguisé en mendiant et tue les prétendants installés chez lui.'},
+  why:{zh:'「旅程與歸返」這個敘事形狀的原型，後世從《尤利西斯》到公路電影都還在用。奧德修斯靠的是機智而不是蠻力，因此常被視為第一個「現代」主角。',
+       en:'The archetype of the journey-and-return, a shape still in use from Joyce’s <em>Ulysses</em> to the road movie. Odysseus survives by wits rather than force, which is why he is often called the first modern protagonist.',
+       fr:'L’archétype du voyage et du retour, forme toujours en usage, de l’<em>Ulysse</em> de Joyce au road movie. Ulysse survit par la ruse plutôt que par la force : on en fait souvent le premier protagoniste moderne.'},
+  start:{zh:'第 9 到 12 卷是最有名的冒險段落（獨眼巨人、瑟茜、賽壬、冥界），可以單獨讀。',
+         en:'Books 9 to 12 hold the famous adventures (Cyclops, Circe, Sirens, the underworld) and read perfectly well on their own.',
+         fr:'Les chants 9 à 12 contiennent les aventures célèbres (Cyclope, Circé, Sirènes, Enfers) et se lisent très bien seuls.'},
+  wiki:'Odyssey',
+  m:{zh:['《奧德賽》'], en:['Odyssey'], fr:['Odyssée']} },
+
+theogony:{
+  t:{zh:'神譜', en:'Theogony', fr:'Théogonie'},
+  orig:'Θεογονία',
+  a:{zh:'赫西俄德', en:'Hesiod', fr:'Hésiode'},
+  d:{zh:'約西元前 700 年', en:'c. 700 BC', fr:'vers 700 av. J.-C.'},
+  form:{zh:'單卷詩，約 1,022 行', en:'A single poem of about 1,022 lines', fr:'Un poème unique d’environ 1 022 vers'},
+  what:{zh:'書名直譯就是「諸神的誕生」。它從混沌講起，依世代排出諸神的家譜：大地與天空、十二泰坦、克洛諾斯吞子、宙斯推翻父親，一路到奧林帕斯秩序確立。',
+        en:'The title means simply “the birth of the gods.” It starts from Chaos and lays out the divine family tree generation by generation: Earth and Sky, the twelve Titans, Cronus swallowing his children, Zeus overthrowing his father, and finally the Olympian order.',
+        fr:'Le titre signifie « la naissance des dieux ». Le poème part du Chaos et déroule la généalogie divine génération par génération : la Terre et le Ciel, les douze Titans, Cronos dévorant ses enfants, Zeus renversant son père, puis l’ordre olympien.'},
+  why:{zh:'希臘創世神話的標準版本，本圖譜第二部的家系圖就是依它畫的。哥雅的《農神吞噬其子》、魯本斯的《被縛的普羅米修斯》，題材都出自這裡。',
+       en:'The standard account of Greek cosmogony, and the source for the family tree in Part 2 of this atlas. Goya’s <em>Saturn Devouring His Son</em> and Rubens’s <em>Prometheus Bound</em> both take their subject from it.',
+       fr:'La version de référence de la cosmogonie grecque, et la source de l’arbre généalogique de la partie 2 de cet atlas. Le <em>Saturne</em> de Goya et le <em>Prométhée enchaîné</em> de Rubens y puisent leur sujet.'},
+  start:{zh:'很短，一個下午就能讀完。開頭寫繆斯女神如何把詩才賜給在山上放羊的赫西俄德，是古代文學最早的「作者自述」之一。',
+         en:'It is short enough for an afternoon. The opening, in which the Muses grant poetry to Hesiod while he is herding sheep on a mountainside, is one of the earliest author self-portraits in literature.',
+         fr:'Assez court pour une après-midi. L’ouverture, où les Muses accordent la poésie à Hésiode qui gardait ses moutons, est l’un des premiers autoportraits d’auteur de la littérature.'},
+  wiki:'Theogony',
+  m:{zh:['《神譜》'], en:['Theogony'], fr:['Théogonie']} },
+
+metamorphoses:{
+  t:{zh:'變形記', en:'Metamorphoses', fr:'Métamorphoses'},
+  orig:'Metamorphoseon libri',
+  a:{zh:'奧維德', en:'Ovid', fr:'Ovide'},
+  d:{zh:'西元 8 年完成', en:'completed AD 8', fr:'achevé en 8 apr. J.-C.'},
+  form:{zh:'15 卷，約 12,000 行拉丁文詩', en:'15 books, about 12,000 lines of Latin verse', fr:'15 livres, environ 12 000 vers latins'},
+  what:{zh:'約 250 則神話，全部用「變形」這個主題串起來：人變成樹、變成星星、變成動物、變成石頭。從創世一路寫到凱撒化為星辰。',
+        en:'Some 250 myths strung on a single theme, transformation: people turning into trees, stars, animals, stone. It runs from the creation of the world to Julius Caesar becoming a comet.',
+        fr:'Quelque 250 mythes enfilés sur un seul thème, la transformation : des humains changés en arbres, en astres, en bêtes, en pierre. Du commencement du monde à César changé en astre.'},
+  why:{zh:'如果只能讀一本，就是這本。它主宰西方藝術的原因很實際：用拉丁文寫成（中世紀歐洲讀得懂）、每則故事短而畫面感強（一幅畫就講得完）、而且提供了描繪裸體與情慾的正當理由。本圖譜五十一件作品裡，超過三分之一的題材出自它。',
+       en:'If you read only one, read this. Its grip on Western art has practical causes: it is in Latin, so medieval Europe could read it; its episodes are short and intensely visual, so one canvas tells one whole story; and each supplies a respectable reason to paint nudity and desire. More than a third of the fifty-one works in this atlas take their subject from it.',
+       fr:'Si vous n’en lisez qu’un, lisez celui-ci. Son emprise sur l’art occidental a des causes concrètes : il est en latin, donc lisible au Moyen Âge ; ses épisodes sont brefs et très visuels, si bien qu’une toile suffit à raconter ; et chacun fournit un motif respectable pour peindre la nudité et le désir. Plus d’un tiers des cinquante et une œuvres de cet atlas y puisent leur sujet.'},
+  start:{zh:'挑著讀就好。阿波羅與達芙妮（第 1 卷）、納西瑟斯與厄科（第 3 卷）、皮格馬利翁（第 10 卷）都很短，各自獨立。',
+         en:'Dip in anywhere. Apollo and Daphne (Book 1), Narcissus and Echo (Book 3) and Pygmalion (Book 10) are all short and self-contained.',
+         fr:'Piochez au hasard. Apollon et Daphné (livre 1), Narcisse et Écho (livre 3), Pygmalion (livre 10) sont brefs et autonomes.'},
+  wiki:'Metamorphoses',
+  m:{zh:['《變形記》'], en:['Metamorphoses'], fr:['Métamorphoses']} },
+
+aeneid:{
+  t:{zh:'埃涅阿斯紀', en:'Aeneid', fr:'Énéide'},
+  orig:'Aeneis',
+  a:{zh:'維吉爾', en:'Virgil', fr:'Virgile'},
+  d:{zh:'西元前 29 至 19 年', en:'29 to 19 BC', fr:'de 29 à 19 av. J.-C.'},
+  form:{zh:'12 卷，約 9,900 行', en:'12 books, about 9,900 lines', fr:'12 livres, environ 9 900 vers'},
+  what:{zh:'特洛伊王子埃涅阿斯背著父親逃出焚城，渡海西行，在迦太基與女王狄多相戀又離去，最後在義大利落腳，成為羅馬人的祖先。',
+        en:'The Trojan prince Aeneas carries his father out of the burning city, sails west, loves and leaves Queen Dido of Carthage, and finally settles in Italy as the ancestor of the Romans.',
+        fr:'Le prince troyen Énée porte son père hors de la ville en flammes, cingle vers l’ouest, aime puis quitte Didon de Carthage, et s’établit enfin en Italie comme ancêtre des Romains.'},
+  why:{zh:'羅馬的國家史詩，也是奧古斯都時代的官方敘事：羅馬不是暴發戶，而是特洛伊的合法繼承人，血緣直通維納斯。它刻意寫成荷馬的續集，前六卷對應《奧德賽》的漂流，後六卷對應《伊利亞德》的戰爭。',
+       en:'Rome’s national epic and the official narrative of the Augustan age: Rome is no upstart but Troy’s lawful heir, with a bloodline running to Venus. It was built deliberately as a sequel to Homer, its first six books answering the wanderings of the <em>Odyssey</em> and its last six the war of the <em>Iliad</em>.',
+       fr:'L’épopée nationale de Rome et le récit officiel du siècle d’Auguste : Rome n’est pas une parvenue mais l’héritière légitime de Troie, au sang remontant à Vénus. Elle fut conçue comme une suite d’Homère, ses six premiers livres répondant aux errances de l’<em>Odyssée</em>, les six derniers à la guerre de l’<em>Iliade</em>.'},
+  start:{zh:'第 2 卷（特洛伊陷落的那一夜，木馬與勞孔）與第 4 卷（狄多的愛情與自焚）是最常被單獨閱讀、也最常被畫的兩卷。',
+         en:'Book 2 (the night Troy falls, with the horse and Laocoön) and Book 4 (Dido’s love and her pyre) are the two most often read alone and most often painted.',
+         fr:'Le livre 2 (la nuit de la chute de Troie, le cheval et Laocoon) et le livre 4 (l’amour de Didon et son bûcher) sont les plus lus isolément et les plus peints.'},
+  wiki:'Aeneid',
+  m:{zh:['《埃涅阿斯紀》'], en:['Aeneid'], fr:['Énéide']} },
+
+fasti:{
+  t:{zh:'歲時記', en:'Fasti', fr:'Fastes'},
+  orig:'Fasti',
+  a:{zh:'奧維德', en:'Ovid', fr:'Ovide'},
+  d:{zh:'約西元 8 年', en:'c. AD 8', fr:'vers 8 apr. J.-C.'},
+  form:{zh:'原計畫 12 卷，僅存前 6 卷', en:'Planned in 12 books; only the first six survive', fr:'Prévu en 12 livres ; seuls les six premiers subsistent'},
+  what:{zh:'用詩的形式逐月講解羅馬的曆法：每個節慶的由來、每座神廟的故事、每位神明該怎麼拜。',
+        en:'A verse walk through the Roman calendar month by month: where each festival came from, the story behind each temple, how each god was to be worshipped.',
+        fr:'Une traversée en vers du calendrier romain, mois par mois : l’origine de chaque fête, l’histoire de chaque temple, la manière d’honorer chaque dieu.'},
+  why:{zh:'研究羅馬本土宗教最重要的文獻。雅努斯、維斯塔、家神這些沒有希臘對應的神，很多細節只能從這裡得知。',
+       en:'The single most important source for native Roman religion. Much of what we know about Janus, Vesta and the household gods, the deities with no Greek counterpart, comes from here.',
+       fr:'La source la plus importante sur la religion proprement romaine. L’essentiel de ce que l’on sait de Janus, de Vesta et des dieux domestiques, ceux qui n’ont pas d’équivalent grec, en provient.'},
+  wiki:'Fasti (poem)',
+  m:{zh:['《歲時記》'], en:['Fasti'], fr:['Fastes']} },
+
+goldenass:{
+  t:{zh:'金驢記', en:'The Golden Ass', fr:'L’Âne d’or'},
+  orig:'Metamorphoses / Asinus aureus',
+  a:{zh:'阿普列尤斯', en:'Apuleius', fr:'Apulée'},
+  d:{zh:'約西元 2 世紀', en:'2nd century AD', fr:'IIᵉ siècle apr. J.-C.'},
+  form:{zh:'散文小說，11 卷', en:'A prose novel in 11 books', fr:'Roman en prose, 11 livres'},
+  what:{zh:'一個年輕人因為亂用魔法把自己變成驢，歷經磨難後由女神伊西斯恢復人形。書中插入的〈邱比特與賽姬〉是最有名的段落。',
+        en:'A young man dabbles in magic, turns himself into a donkey, and is restored to human form by the goddess Isis after a long ordeal. The inset tale of Cupid and Psyche is its most famous passage.',
+        fr:'Un jeune homme s’essaie à la magie, se change en âne et, après bien des épreuves, retrouve forme humaine par la déesse Isis. Le conte inséré d’Amour et Psyché en est le passage le plus célèbre.'},
+  why:{zh:'唯一一部完整流傳至今的拉丁文小說。〈邱比特與賽姬〉後來成為卡諾瓦、拉斐爾等人反覆處理的題材，也是「靈魂因愛而重生」這個寓意的來源。',
+       en:'The only Latin novel to survive complete. Cupid and Psyche became a subject Canova, Raphael and many others returned to again and again, and the source of the allegory of the soul revived by love.',
+       fr:'Le seul roman latin conservé en entier. Amour et Psyché devint un sujet auquel Canova, Raphaël et bien d’autres revinrent sans cesse, et la source de l’allégorie de l’âme ranimée par l’amour.'},
+  wiki:'The Golden Ass',
+  m:{zh:['《金驢記》'], en:['Golden Ass'], fr:['Âne d’or']} },
+
+livy:{
+  t:{zh:'羅馬史', en:'History of Rome', fr:'Histoire romaine'},
+  orig:'Ab Urbe Condita',
+  a:{zh:'李維', en:'Livy', fr:'Tite-Live'},
+  d:{zh:'約西元前 27 年至西元 9 年', en:'c. 27 BC to AD 9', fr:'de 27 av. J.-C. à 9 apr. J.-C. env.'},
+  form:{zh:'原有 142 卷，存 35 卷', en:'142 books, of which 35 survive', fr:'142 livres, dont 35 subsistent'},
+  what:{zh:'從羅馬建城寫到李維自己的時代。開頭幾卷處理的是傳說而非史實：母狼哺育雙胞胎、劫掠薩賓婦女、荷拉斯兄弟決鬥、盧克蕾提亞自盡。',
+        en:'A history from the founding of the city down to Livy’s own day. The opening books deal in legend rather than record: the she-wolf and the twins, the seizure of the Sabine women, the duel of the Horatii, the suicide of Lucretia.',
+        fr:'Une histoire de la fondation de la ville jusqu’à l’époque de Tite-Live. Les premiers livres relèvent de la légende plus que de l’archive : la louve et les jumeaux, l’enlèvement des Sabines, le duel des Horaces, le suicide de Lucrèce.'},
+  why:{zh:'羅馬「德性典範」的來源。十八世紀新古典主義畫家幾乎把這些故事當成革命宣傳品重新啟用，大衛的《荷拉斯兄弟之誓》與《薩賓婦女的調停》都出自李維。',
+       en:'The source of Rome’s moral exempla. Eighteenth-century Neoclassical painters reactivated these stories as something close to revolutionary propaganda: David’s <em>Oath of the Horatii</em> and <em>Intervention of the Sabine Women</em> both come from Livy.',
+       fr:'La source des exempla moraux romains. Les peintres néoclassiques du XVIIIᵉ siècle les réactivèrent en quasi-propagande révolutionnaire : le <em>Serment des Horaces</em> et <em>Les Sabines</em> de David viennent tous deux de Tite-Live.'},
+  wiki:'Ab Urbe Condita (Livy)',
+  m:{zh:['《羅馬史》'], en:['History of Rome'], fr:['Histoire romaine']} },
+
+ovidemoralise:{
+  t:{zh:'道德化的奧維德', en:'Ovide moralisé', fr:'Ovide moralisé'},
+  orig:'Ovide moralisé',
+  a:{zh:'佚名', en:'anonymous', fr:'anonyme'},
+  d:{zh:'約 1317 至 1328 年', en:'c. 1317 to 1328', fr:'vers 1317-1328'},
+  form:{zh:'古法文韻文，約 72,000 行', en:'Old French verse, some 72,000 lines', fr:'Vers en ancien français, quelque 72 000 lignes'},
+  what:{zh:'把奧維德《變形記》整本翻譯成古法文，並在每則故事後面加上一段基督教的道德解釋：達芙妮變成月桂，被解為守貞的靈魂；被劫走的歐羅巴，被解為被基督拯救的人類。',
+        en:'A complete Old French rendering of Ovid’s <em>Metamorphoses</em>, with a Christian moral appended to each story: Daphne becoming a laurel is read as the soul preserving its chastity, the abducted Europa as humanity rescued by Christ.',
+        fr:'Une traduction complète des <em>Métamorphoses</em> en ancien français, chaque récit étant suivi d’une moralisation chrétienne : Daphné changée en laurier devient l’âme gardant sa chasteté, Europe enlevée l’humanité sauvée par le Christ.'},
+  why:{zh:'它解釋了異教神話如何熬過中世紀。只要故事被讀成基督教訓誡，它就可以被抄寫、被閱讀、被畫出來。文藝復興之所以有東西可以「復興」，靠的就是這條隱蔽的通道。',
+       en:'It explains how pagan myth survived the Middle Ages at all. So long as a story could be read as Christian instruction, it could be copied, read and illustrated. The Renaissance had something to revive because of this underground channel.',
+       fr:'Il explique comment le mythe païen a traversé le Moyen Âge. Tant qu’un récit pouvait se lire comme leçon chrétienne, on pouvait le copier, le lire et l’illustrer. Si la Renaissance a eu quelque chose à ressusciter, c’est grâce à ce canal souterrain.'},
+  wiki:'Ovide moralisé',
+  m:{zh:['《道德化的奧維德》','道德化的奧維德'], en:['Ovide moralisé'], fr:['Ovide moralisé']}, pl:true },
+
+winckelmann:{
+  t:{zh:'古代藝術史', en:'History of the Art of Antiquity', fr:'Histoire de l’art de l’Antiquité'},
+  orig:'Geschichte der Kunst des Alterthums',
+  a:{zh:'溫克爾曼', en:'Johann Joachim Winckelmann', fr:'Johann Joachim Winckelmann'},
+  d:{zh:'1764 年', en:'1764', fr:'1764'},
+  form:{zh:'德文論著', en:'A treatise in German', fr:'Traité en allemand'},
+  what:{zh:'第一部把古代藝術依風格分期、而非依藝術家生平排列的著作，因此常被視為藝術史這門學科的起點。書中稱希臘藝術的最高特質是「高貴的單純、靜穆的偉大」。',
+        en:'The first book to arrange ancient art by period and style rather than by artists’ lives, which is why it is usually called the beginning of art history as a discipline. Its formula for the highest Greek quality is “noble simplicity and quiet grandeur.”',
+        fr:'Le premier ouvrage à classer l’art antique par périodes et par styles plutôt que par vies d’artistes, ce qui en fait d’ordinaire l’acte de naissance de l’histoire de l’art. Sa formule pour la qualité grecque suprême : « noble simplicité et calme grandeur ».'},
+  why:{zh:'它幾乎單槍匹馬造就了新古典主義的品味。卡諾瓦不畫搏鬥高潮而畫戰鬥之後的平靜，用的就是這本書的標準。諷刺的是，溫克爾曼讚美的多半是羅馬複製品，他一生沒去過希臘。',
+       en:'It very nearly created Neoclassical taste single-handed. When Canova carves the calm after a fight rather than the fight, he is working to this book’s standard. The irony is that most of what Winckelmann praised were Roman copies; he never went to Greece.',
+       fr:'Il a presque créé à lui seul le goût néoclassique. Quand Canova sculpte le calme d’après le combat plutôt que le combat, il travaille selon ce livre. Ironie : la plupart des œuvres louées par Winckelmann étaient des copies romaines, et il n’alla jamais en Grèce.'},
+  wiki:'Johann Joachim Winckelmann',
+  m:{zh:['《古代藝術史》'], en:['History of Ancient Art'], fr:['Histoire de l’art antique']} },
+
+laokoon:{
+  t:{zh:'拉奧孔：論繪畫與詩的界限', en:'Laokoon: On the Limits of Painting and Poetry', fr:'Laocoon : des frontières de la peinture et de la poésie'},
+  orig:'Laokoon oder über die Grenzen der Malerei und Poesie',
+  a:{zh:'萊辛', en:'Gotthold Ephraim Lessing', fr:'Gotthold Ephraim Lessing'},
+  d:{zh:'1766 年', en:'1766', fr:'1766'},
+  form:{zh:'德文美學論著', en:'A treatise on aesthetics, in German', fr:'Traité d’esthétique en allemand'},
+  what:{zh:'從《勞孔》雕像出發問一個問題：為什麼雕像裡的祭司只是低聲呻吟，維吉爾筆下的他卻放聲慘叫？萊辛的答案是，繪畫與雕塑只能表現一個瞬間，所以必須挑選最耐看的那一刻；詩在時間中展開，可以承受極端。',
+        en:'It starts from the <em>Laocoön</em> statue and asks one question: why does the priest merely groan in the marble when he screams in Virgil? Lessing’s answer is that painting and sculpture have only a single moment, so they must choose the one that bears looking at, while poetry unfolds in time and can carry extremity.',
+        fr:'Il part du groupe du <em>Laocoon</em> et pose une question : pourquoi le prêtre ne fait-il que gémir dans le marbre alors qu’il hurle chez Virgile ? Réponse de Lessing : peinture et sculpture ne disposent que d’un instant et doivent choisir celui qui supporte le regard, tandis que la poésie se déploie dans le temps et peut porter l’extrême.'},
+  why:{zh:'第一次有人系統性地論證「不同藝術形式各有能力與限制」，這個想法後來成為現代美學的基礎。一件出土的雕像，就這樣催生了一整個學科的問題意識。',
+       en:'The first systematic argument that different art forms have different powers and limits, an idea that became a foundation of modern aesthetics. One excavated statue set the agenda for a whole discipline.',
+       fr:'Le premier plaidoyer systématique pour l’idée que chaque art a ses pouvoirs et ses limites propres, devenue un fondement de l’esthétique moderne. Une statue exhumée aura fixé le programme de toute une discipline.'},
+  wiki:'Laocoön (Lessing)',
+  m:{zh:['《拉奧孔》'], en:['Laokoon'], fr:[]} },
 };
 
 /* ═════════════════════════════════════════════════════════════
@@ -1996,6 +2227,9 @@ const I18N = {
     'cmp.eyebrow':'系統比較','cmp.h2':'希臘神話與羅馬神話的差異',
     'cmp.th0':'面向','cmp.th1':'希臘','cmp.th2':'羅馬',
     'cmp.h3':'幾個容易被簡化的重點',
+    'src.eyebrow':'典籍','src.author':'作者','src.date':'年代','src.form':'形式',
+    'src.what':'內容是什麼','src.why':'為什麼重要','src.start':'從哪裡開始讀','src.note':'補充',
+    'src.open':'點擊查看這部典籍的說明','src.hint':'內文中帶虛線的書名可以點開，會說明那是什麼書。',
     'lb.link':'在維基百科查看','lb.loading':'載入圖像中…','lb.none':'目前無法載入圖像；可點擊下方連結查看。','lb.why':'與神話的連結',
     'footer':'希臘與羅馬神話參考圖譜：供學習與快速查閱之用。神話文本存在大量地方版本與相互矛盾的敘述，本圖譜採用最通行的版本；藝術作品圖像由維基百科即時載入，版權歸原持有者所有。'
   },
@@ -2041,6 +2275,9 @@ const I18N = {
     'cmp.eyebrow':'Systematic comparison','cmp.h2':'How Greek and Roman Mythology Differ',
     'cmp.th0':'Aspect','cmp.th1':'Greek','cmp.th2':'Roman',
     'cmp.h3':'Points that are usually flattened',
+    'src.eyebrow':'Source text','src.author':'Author','src.date':'Date','src.form':'Form',
+    'src.what':'What it is','src.why':'Why it matters','src.start':'Where to start','src.note':'A note',
+    'src.open':'open a description of this text','src.hint':'Titles with a dotted underline can be opened; each explains what the text actually is.',
     'lb.link':'View on Wikipedia','lb.loading':'Loading image…','lb.none':'The image could not be loaded here; use the link below.','lb.why':'The link to the myth',
     'footer':'A reference atlas of Greek and Roman mythology: for study and quick review. Myths survive in many local and mutually contradictory versions; the most widely transmitted version is used here. Artwork images load live from Wikipedia and remain the property of their rights holders.'
   },
@@ -2086,6 +2323,9 @@ const I18N = {
     'cmp.eyebrow':'Comparaison systématique','cmp.h2':'Ce qui distingue mythologies grecque et romaine',
     'cmp.th0':'Aspect','cmp.th1':'Grec','cmp.th2':'Romain',
     'cmp.h3':'Points que l’on aplatit d’ordinaire',
+    'src.eyebrow':'Texte source','src.author':'Auteur','src.date':'Date','src.form':'Forme',
+    'src.what':'De quoi il s’agit','src.why':'Pourquoi c’est important','src.start':'Par où commencer','src.note':'Remarque',
+    'src.open':'ouvrir la notice de ce texte','src.hint':'Les titres soulignés en pointillé s’ouvrent et expliquent de quoi il retourne.',
     'lb.link':'Voir sur Wikipédia','lb.loading':'Chargement de l’image…','lb.none':'L’image n’a pu être chargée ici ; utilisez le lien ci-dessous.','lb.why':'Le lien avec le mythe',
     'footer':'Atlas de référence de la mythologie gréco-romaine : pour l’étude et la révision rapide. Les mythes subsistent en de nombreuses versions locales et contradictoires ; la version la plus répandue est retenue ici. Les images d’œuvres sont chargées en direct depuis Wikipédia et restent la propriété de leurs ayants droit.'
   }
@@ -2296,6 +2536,134 @@ function renderPrereq() {
 
   document.getElementById('pre-fear-h').innerHTML = t(PREREQ.fearTitle);
   document.getElementById('pre-fear').innerHTML = t(PREREQ.fear);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Source references: turn every mention of a classical text in
+   the running prose into a button that opens its description.
+   Works two ways: by matching the title in text nodes, and by
+   honouring an explicit data-src attribute where a title is
+   ambiguous (French "Laocoon" is both a statue and a treatise).
+   ───────────────────────────────────────────────────────────── */
+function sourceMatchers() {
+  const out = [];
+  Object.keys(SOURCES).forEach(k => {
+    (SOURCES[k].m[LANG] || []).forEach(str => out.push({ key: k, str, plain: !!SOURCES[k].pl }));
+  });
+  return out.sort((a, b) => b.str.length - a.str.length);   // longest wins
+}
+
+function srcButton(key, label) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'src-ref';
+  b.textContent = label;
+  b.title = t(SOURCES[key].t);
+  b.setAttribute('aria-label', label + '\uFF1A' + ui('src.open'));
+  b.addEventListener('click', e => { e.stopPropagation(); openSource(key); });
+  return b;
+}
+
+function annotateSources(root) {
+  if (!root) return;
+  /* explicitly marked mentions first */
+  root.querySelectorAll('[data-src]').forEach(el => {
+    const key = el.dataset.src;
+    if (!SOURCES[key] || el.querySelector('.src-ref')) return;
+    const label = el.textContent;
+    el.textContent = '';
+    el.appendChild(srcButton(key, label));
+  });
+
+  const matchers = sourceMatchers();
+  if (!matchers.length) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(n) {
+      if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      for (let p = n.parentElement; p && p !== root.parentElement; p = p.parentElement) {
+        const tag = p.tagName;
+        if (tag === 'BUTTON' || tag === 'A' || tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+        if (p.classList && p.classList.contains('src-ref')) return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  for (let n; (n = walker.nextNode()); ) nodes.push(n);
+
+  nodes.forEach(node => {
+    const inEm = node.parentElement && node.parentElement.tagName === 'EM';
+    const txt = node.nodeValue;
+    let hit = null, at = -1;
+    for (const m of matchers) {
+      /* a title in italics, or a term that runs as plain prose */
+      if (!m.plain && !inEm && !/^《/.test(m.str)) continue;
+      const i = txt.indexOf(m.str);
+      if (i !== -1 && (at === -1 || i < at)) { hit = m; at = i; }
+    }
+    if (!hit) return;
+    const frag = document.createDocumentFragment();
+    let rest = txt, offset = 0;
+    while (true) {
+      const i = rest.indexOf(hit.str);
+      if (i === -1) break;
+      if (i) frag.appendChild(document.createTextNode(rest.slice(0, i)));
+      frag.appendChild(srcButton(hit.key, hit.str));
+      rest = rest.slice(i + hit.str.length);
+      offset++;
+      if (offset > 20) break;
+    }
+    if (rest) frag.appendChild(document.createTextNode(rest));
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
+function openSource(key) {
+  const s = SOURCES[key];
+  if (!s) return;
+  const from = currentArtKey;      /* captured before the panel is overwritten */
+  ++lbToken;                       /* any in-flight artwork image is now stale */
+  const lb = document.getElementById('lb');
+  const body = document.getElementById('lb-body');
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  const row = (label, val) => val
+    ? '<div class="flex gap-3 text-xs py-1.5 border-b border-slate-800/70">'
+      + '<span class="w-20 shrink-0 text-slate-500">' + label + '</span>'
+      + '<span class="text-slate-300">' + val + '</span></div>'
+    : '';
+  const block = (label, val) => val
+    ? '<div class="mt-5"><span class="text-[0.7rem] uppercase tracking-wider text-amber-400/80 font-bold">'
+      + label + '</span><p class="text-sm text-slate-300 leading-relaxed mt-1.5">' + val + '</p></div>'
+    : '';
+
+  body.innerHTML =
+      '<div class="p-6 md:p-8">'
+    +   (from
+        ? '<button type="button" onclick="openArt(\'' + from + '\')"'
+          + ' class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 mb-4 transition-colors">'
+          + '<i class="fa-solid fa-arrow-left text-[0.65rem]"></i>' + t(ARTS[from].t) + '</button>'
+        : '')
+    +   '<span class="text-[0.7rem] uppercase tracking-wider text-amber-400 font-bold">'
+    +     '<i class="fa-solid fa-book-open mr-1.5"></i>' + ui('src.eyebrow') + '</span>'
+    +   '<h3 class="text-xl font-black text-white leading-snug mt-1">' + t(s.t) + '</h3>'
+    +   (s.orig ? '<p class="text-sm text-slate-500 italic mt-0.5">' + s.orig + '</p>' : '')
+    +   '<div class="mt-5">'
+    +     row(ui('src.author'), t(s.a))
+    +     row(ui('src.date'), t(s.d))
+    +     row(ui('src.form'), t(s.form))
+    +   '</div>'
+    +   block(ui('src.what'), t(s.what))
+    +   block(ui('src.why'), t(s.why))
+    +   block(ui('src.start'), t(s.start))
+    +   block(ui('src.note'), t(s.note))
+    +   (s.wiki
+        ? '<a class="inline-flex items-center gap-2 mt-6 text-xs text-sky-400 hover:text-sky-300 transition-colors"'
+          + ' href="' + wikiPage(s.wiki) + '" target="_blank" rel="noopener">'
+          + ui('lb.link') + ' <i class="fa-solid fa-arrow-up-right-from-square text-[0.65rem]"></i></a>'
+        : '')
+    + '</div>';
 }
 
 /* Era colours used by the spine, the fork and the reception band. */
@@ -2590,9 +2958,15 @@ function renderCompare() {
 /* ─────────────────────────────────────────────────────────────
    Lightbox
    ───────────────────────────────────────────────────────────── */
+let currentArtKey = null;
+let lbToken = 0;                 /* bumped whenever the panel's content changes,
+                                    so a slow image fetch cannot overwrite a
+                                    source card the reader has since opened */
 function openArt(key) {
   const a = ARTS[key];
   if (!a) return;
+  currentArtKey = key;
+  const token = ++lbToken;
   const lb = document.getElementById('lb');
   const body = document.getElementById('lb-body');
   lb.classList.add('open');
@@ -2613,14 +2987,17 @@ function openArt(key) {
     + '</div>';
 
   body.innerHTML = '<div class="px-6 pt-8 pb-2 text-center text-sm text-slate-500">' + ui('lb.loading') + '</div>' + caption;
+  annotateSources(body);
   resolveImg(a.wiki, 1100, src => {
-    if (!lb.classList.contains('open')) return;
+    if (!lb.classList.contains('open') || lbToken !== token) return;
     body.innerHTML = (src
       ? '<img src="' + esc(src) + '" alt="' + esc(t(a.t)) + '">'
       : '<div class="px-6 pt-8 pb-2 text-center text-sm text-slate-500">' + ui('lb.none') + '</div>') + caption;
+    annotateSources(body);
   });
 }
 function closeLb() {
+  currentArtKey = null;
   document.getElementById('lb').classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -2666,6 +3043,9 @@ function setLanguage(lang) {
   renderBand();
   renderArtChart();
   renderCompare();
+
+  /* must run last: it rewrites text nodes the renderers just produced */
+  annotateSources(document.querySelector('main'));
 }
 
 setLanguage(['zh','en','fr'].includes(localStorage.getItem('kb_lang'))
