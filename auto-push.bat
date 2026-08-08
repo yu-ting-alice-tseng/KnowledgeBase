@@ -92,6 +92,11 @@ if errorlevel 1 exit /b 1
 
 git push origin %BRANCH% > "%TEMP%\autosync_push.log" 2>&1
 if errorlevel 1 (
+    call :is_offline "%TEMP%\autosync_push.log"
+    if "!OFFLINE!"=="1" (
+        echo [%time:~0,8%] [OFFLINE] committed locally, waiting for a connection to push. Retrying in %RETRY%s.
+        exit /b 1
+    )
     echo.
     echo  --- git error ---
     type "%TEMP%\autosync_push.log"
@@ -114,6 +119,11 @@ for /f %%i in ('git rev-parse HEAD') do set "BEFORE=%%i"
 git pull --rebase origin %BRANCH% > "%TEMP%\autosync_pull.log" 2>&1
 if errorlevel 1 (
     git rebase --abort > nul 2>&1
+    call :is_offline "%TEMP%\autosync_pull.log"
+    if "!OFFLINE!"=="1" (
+        call :offline_note
+        exit /b 1
+    )
     echo.
     echo  --- git error ---
     type "%TEMP%\autosync_pull.log"
@@ -127,6 +137,26 @@ for /f %%i in ('git rev-parse HEAD') do set "AFTER=%%i"
 if not "!BEFORE!"=="!AFTER!" (
     echo [%time:~0,8%] [PULL] got new updates from GitHub
 )
+exit /b 0
+
+
+rem ---------------------------------------------------
+rem  Is this failure just a dead network?
+rem  Sets OFFLINE=1 when the log looks like DNS / connectivity
+rem  rather than a real repository problem.
+rem ---------------------------------------------------
+:is_offline
+set "OFFLINE=0"
+findstr /i /c:"Could not resolve host" /c:"Could not resolve proxy" /c:"Failed to connect" /c:"Connection timed out" /c:"Connection refused" /c:"Network is unreachable" /c:"Operation timed out" /c:"Temporary failure in name resolution" "%~1" > nul 2>&1
+if not errorlevel 1 set "OFFLINE=1"
+exit /b 0
+
+
+rem ---------------------------------------------------
+rem  Say plainly that we are only waiting for a connection
+rem ---------------------------------------------------
+:offline_note
+echo [%time:~0,8%] [OFFLINE] no connection to github.com, nothing was lost. Retrying in %RETRY%s.
 exit /b 0
 
 
