@@ -586,6 +586,18 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
 
 :focus-visible { outline: 2px solid rgba(201,168,92,0.6); outline-offset: 2px; }
 @media(prefers-reduced-motion:reduce){ .bar, #detail { transition: none !important; animation: none !important; } }
+
+/* ── 學習路徑 ── */
+.study-wrap{max-width:860px;margin:0 auto;padding:0 18px 60px;}
+.study-stage{margin-bottom:26px;padding:20px 22px;border:1px solid rgba(190,160,90,.22);
+  border-top:2px solid rgba(190,160,90,.55);border-radius:4px;background:rgba(255,250,235,.03);}
+.study-stage h3{margin:0 0 12px;font-size:15px;letter-spacing:.06em;color:#d9c18a;font-weight:600;}
+.study-stage ul{margin:0;padding-left:20px;}
+.study-stage li{margin-bottom:9px;line-height:1.85;font-size:14px;}
+.study-stage p{margin:0;line-height:1.85;font-size:14px;}
+.study-proj{background:rgba(190,160,90,.07);}
+.study-note{max-width:860px;margin:0 auto;padding:0 22px;font-size:13px;line-height:1.9;opacity:.75;
+  border-left:2px solid rgba(190,160,90,.4);}
 </style>
 </head>
 <body>
@@ -611,6 +623,7 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
     <button class="vtab" id="vtab-movements" role="tab" onclick="showView('movements')"><span class="vt-ic">✦</span><span class="vt-txt">藝術流派</span></button>
     <button class="vtab" id="vtab-artists" role="tab" onclick="showView('artists')"><span class="vt-ic">❦</span><span class="vt-txt">藝術家</span></button>
     <button class="vtab" id="vtab-museums" role="tab" onclick="showView('museums')"><span class="vt-ic">◈</span><span class="vt-txt">博物館</span></button>
+    <button class="vtab" id="vtab-study" role="tab" onclick="showView('study')"><span class="vt-ic">✎</span><span class="vt-txt">學習路徑</span></button>
   </nav>
 
   <div id="view-timeline">
@@ -641,6 +654,8 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
   <div id="view-movements" class="view-hidden"></div>
 
   <div id="view-artists" class="view-hidden"></div>
+
+  <div id="view-study" class="view-hidden"></div>
 
   <div id="view-museums" class="view-hidden">
     <section id="museums"></section>
@@ -694,6 +709,7 @@ const UI = {
     tabTimeline: '時間軸',
     tabMovements: '藝術流派',
     tabMuseums: '博物館',
+    tabStudy: '學習路徑',
     tabArtists: '藝術家',
     artistsSub: '七十位藝術家的生平與代表作——點擊作品籤章即可查看畫作圖片。',
     searchPH: '搜尋藝術家、流派或作品…',
@@ -728,6 +744,7 @@ const UI = {
     tabTimeline: 'Timeline',
     tabMovements: 'Movements',
     tabMuseums: 'Museums',
+    tabStudy: 'Study Path',
     tabArtists: 'Artists',
     artistsSub: 'Lives and masterpieces of seventy artists — click any work chip to see the picture.',
     searchPH: 'Search artists, movements or works…',
@@ -762,6 +779,7 @@ const UI = {
     tabTimeline: 'Frise',
     tabMovements: 'Mouvements',
     tabMuseums: 'Musées',
+    tabStudy: 'Parcours',
     tabArtists: 'Artistes',
     artistsSub: 'Vies et chefs-d’œuvre de soixante-dix artistes — cliquez une pastille d’œuvre pour voir l’image.',
     searchPH: 'Rechercher artistes, mouvements ou œuvres…',
@@ -2102,7 +2120,7 @@ let currentView = 'timeline';
 function showView(v) {
   if (!document.getElementById('view-' + v)) return;
   currentView = v;
-  ['timeline', 'movements', 'artists', 'museums'].forEach(k => {
+  ['timeline', 'movements', 'artists', 'museums', 'study'].forEach(k => {
     document.getElementById('view-' + k).classList.toggle('view-hidden', k !== v);
     const t = document.getElementById('vtab-' + k);
     t.classList.toggle('active', k === v);
@@ -2833,12 +2851,131 @@ function applyStatic() {
   document.querySelector('#vtab-movements .vt-txt').textContent = uiStr('tabMovements');
   document.querySelector('#vtab-artists .vt-txt').textContent   = uiStr('tabArtists');
   document.querySelector('#vtab-museums .vt-txt').textContent   = uiStr('tabMuseums');
+  document.querySelector('#vtab-study .vt-txt').textContent     = uiStr('tabStudy');
   ['zh','en','fr'].forEach(k => {
     const b = document.getElementById('lang-' + k);
     b.classList.toggle('active', k === LANG);
     b.setAttribute('aria-pressed', k === LANG ? 'true' : 'false');
   });
   document.documentElement.lang = LANG === 'zh' ? 'zh-Hant' : LANG;
+}
+
+
+/* ═══════════ 學習路徑：把看畫變成一種可以練的能力 ═══════════ */
+const ART_STUDY = {
+  zh: {
+    h: '學習路徑',
+    sub: '藝術史不是背年代，而是練出一種看的方式。以下是六個月的實作路線。',
+    stages: [
+      { h: '第 1–2 個月 · 練眼睛', items: [
+        '每週挑一件作品，只看不查資料，寫下三百字：看到什麼、怎麼安排的、它想讓妳感覺什麼。之後再去查，對照自己漏掉了什麼。',
+        '學一套描述語彙：構圖、光線、筆觸、色彩關係、視線動線。沒有詞彙，看到的東西就說不出來。',
+        '用這張時間軸建立座標：先記住十個流派的先後與地理，細節之後自然長出來。' ] },
+      { h: '第 3–4 個月 · 補脈絡', items: [
+        '每個流派問同三個問題：誰付錢、為誰而畫、當時的技術能做到什麼。贊助、觀眾與材料解釋了大部分的「為什麼長這樣」。',
+        '讀一本通史（Gombrich《藝術的故事》）加一本方法論（Berger《觀看的方式》），前者給地圖，後者教妳懷疑地圖。',
+        '認識媒材的實際差異：蛋彩、油畫、壁畫、版畫的時間與成本，決定了畫面能有多大膽。' ] },
+      { h: '第 5–6 個月 · 產出', items: [
+        '進美術館做一次「單件深看」：在一件作品前待四十分鐘，記錄想法的變化。這是所有策展與導覽工作的基本功。',
+        '寫一篇八百字的作品分析：描述、脈絡、詮釋、以及妳自己的判斷，最後一段最重要。',
+        '做一份小型策展提案：六件作品、一個論點、每件為什麼在這裡。' ] }
+    ],
+    resTitle: '實操資源',
+    res: [
+      'Gombrich《The Story of Art》— 通史入門的標準選擇',
+      'John Berger《Ways of Seeing》— 四小時可讀完，永久改變觀看方式',
+      'Google Arts &amp; Culture — 高解析度細看筆觸，免費',
+      '博物館官方線上典藏（Louvre、Met、Rijksmuseum）— 作品說明本身就是寫作範本',
+      'Khan Academy Smarthistory — 免費、有結構的影音課程',
+      '法國博物館通行證（Paris Museum Pass）與各館免費日 — 實地看原作無可替代'
+    ],
+    projTitle: '可展示的成果',
+    proj: '一份六件作品的策展提案，加上一篇八百字的作品分析。若想往藝術市場、拍賣行、文化機構或精品品牌的文化資產部門發展，這兩份文件就是最直接的敲門磚。',
+    note: '職涯出口：拍賣行（Christie’s、Sotheby’s、Artcurial）、畫廊與藝博會、博物館的公共教育與典藏、藝術顧問與藝術金融，以及精品集團的文化基金會與品牌檔案部門——最後一項在法國尤其實際。'
+  },
+  en: {
+    h: 'Study Path',
+    sub: 'Art history is not memorised dates but a trained way of looking. Here is a six-month route.',
+    stages: [
+      { h: 'Months 1-2 · Train the eye', items: [
+        'Each week take one work, look without reading anything, and write three hundred words: what is there, how it is arranged, what it wants you to feel. Then read, and see what you missed.',
+        'Learn a descriptive vocabulary: composition, light, handling, colour relations, the path the eye takes. Without words you cannot say what you saw.',
+        'Use this timeline for coordinates: fix ten movements in order and place before worrying about detail.' ] },
+      { h: 'Months 3-4 · Add the context', items: [
+        'Ask every movement the same three questions: who paid, who was it for, and what could the technology of the day actually do. Patronage, audience and materials explain most of why it looks like that.',
+        'Read one survey (Gombrich, The Story of Art) and one method book (Berger, Ways of Seeing): the first gives you the map, the second teaches you to distrust it.',
+        'Learn what the media actually cost in time and money — tempera, oil, fresco, print — because that decides how bold a picture could be.' ] },
+      { h: 'Months 5-6 · Produce', items: [
+        'Do one long look in a museum: forty minutes in front of a single work, recording how your reading changes. It is the basic craft of curating and guiding.',
+        'Write an eight-hundred-word analysis: description, context, interpretation, and your own judgement. The last part is what counts.',
+        'Build a small curatorial proposal: six works, one argument, and why each earns its place.' ] }
+    ],
+    resTitle: 'Hands-on resources',
+    res: [
+      'Gombrich, The Story of Art — the standard entry survey',
+      'John Berger, Ways of Seeing — four hours long and permanently changes how you look',
+      'Google Arts &amp; Culture — free, and high-resolution enough to study brushwork',
+      'Museum collection sites (Louvre, the Met, Rijksmuseum) — the catalogue entries are writing models',
+      'Khan Academy Smarthistory — free and structured video courses',
+      'Museum passes and free days — nothing replaces standing in front of the object'
+    ],
+    projTitle: 'What to have at the end',
+    proj: 'A six-work curatorial proposal and one eight-hundred-word analysis. For the art market, auction houses, cultural institutions, or the heritage departments of luxury groups, those two documents are the most direct way in.',
+    note: 'Where it leads: auction houses (Christie’s, Sotheby’s, Artcurial), galleries and fairs, museum education and collections, art advisory and art finance, and the cultural foundations and brand archives of luxury groups — the last of which is unusually practical in France.'
+  },
+  fr: {
+    h: 'Parcours',
+    sub: 'L’histoire de l’art n’est pas une liste de dates mais un regard qui s’entraîne. Voici un parcours de six mois.',
+    stages: [
+      { h: 'Mois 1-2 · Entraîner l’œil', items: [
+        'Chaque semaine, une œuvre : regarder sans rien lire, puis écrire trois cents mots — ce qui est là, comment c’est agencé, ce que cela veut faire ressentir. Lire ensuite, et mesurer ce qui a échappé.',
+        'Acquérir un vocabulaire descriptif : composition, lumière, touche, rapports colorés, parcours du regard. Sans mots, on ne peut dire ce qu’on voit.',
+        'Se servir de cette frise comme repère : fixer dix mouvements dans l’ordre et dans l’espace avant les détails.' ] },
+      { h: 'Mois 3-4 · Ajouter le contexte', items: [
+        'Poser à chaque mouvement les mêmes trois questions : qui payait, pour qui, et que permettait la technique de l’époque. Commande, public et matériaux expliquent l’essentiel.',
+        'Lire une synthèse (Gombrich) et un livre de méthode (Berger) : la première donne la carte, le second apprend à s’en méfier.',
+        'Comprendre le coût réel des médiums — tempera, huile, fresque, estampe — car il décide de l’audace possible.' ] },
+      { h: 'Mois 5-6 · Produire', items: [
+        'Faire un long regard au musée : quarante minutes devant une seule œuvre, en notant l’évolution de sa lecture. C’est le geste de base du commissariat et de la médiation.',
+        'Rédiger une analyse de huit cents mots : description, contexte, interprétation et jugement personnel. La dernière partie compte le plus.',
+        'Monter une petite proposition d’exposition : six œuvres, une thèse, et la justification de chacune.' ] }
+    ],
+    resTitle: 'Ressources pratiques',
+    res: [
+      'Gombrich, <i>Histoire de l’art</i> — la synthèse d’entrée de référence',
+      'John Berger, <i>Ways of Seeing</i> — quatre heures qui changent le regard durablement',
+      'Google Arts &amp; Culture — gratuit et assez précis pour étudier la touche',
+      'Sites de collections (Louvre, Met, Rijksmuseum) — les notices sont des modèles d’écriture',
+      'Khan Academy Smarthistory — cours vidéo gratuits et structurés',
+      'Paris Museum Pass et journées gratuites — rien ne remplace l’œuvre réelle'
+    ],
+    projTitle: 'Ce qu’il faut avoir à la fin',
+    proj: 'Une proposition d’exposition de six œuvres et une analyse de huit cents mots. Pour le marché de l’art, les maisons de vente, les institutions ou les départements patrimoine des groupes de luxe, ces deux documents sont l’entrée la plus directe.',
+    note: 'Débouchés : maisons de vente (Christie’s, Sotheby’s, Artcurial), galeries et foires, médiation et collections en musée, conseil et finance de l’art, et les fondations culturelles et archives de marque des groupes de luxe — ce dernier point étant particulièrement concret en France.'
+  }
+};
+
+function renderStudy() {
+  const d = ART_STUDY[LANG] || ART_STUDY.zh;
+  let html =
+    '<div id="mvx-head">'
+    + '<div class="orn"><div class="l"></div><span class="g">✦</span><div class="r"></div></div>'
+    + '<h2>' + d.h + '</h2>'
+    + '<p>' + d.sub + '</p>'
+    + '</div>'
+    + '<div class="study-wrap">';
+  d.stages.forEach(function (st) {
+    html += '<section class="study-stage"><h3>' + st.h + '</h3><ul>'
+         + st.items.map(function (i) { return '<li>' + i + '</li>'; }).join('')
+         + '</ul></section>';
+  });
+  html += '<section class="study-stage"><h3>' + d.resTitle + '</h3><ul>'
+       + d.res.map(function (r) { return '<li>' + r + '</li>'; }).join('')
+       + '</ul></section>';
+  html += '<section class="study-stage study-proj"><h3>' + d.projTitle + '</h3><p>' + d.proj + '</p></section>';
+  html += '<p class="study-note">' + d.note + '</p>';
+  html += '</div>';
+  document.getElementById('view-study').innerHTML = html;
 }
 
 function switchLang(l) {
@@ -2853,6 +2990,7 @@ function switchLang(l) {
   renderMuseums();
   renderMovementIndex();
   renderArtistIndex();
+  renderStudy();
   if (selectedId) selectMovement(selectedId, false);
   sc.scrollLeft = keepScroll;
 }
@@ -2870,6 +3008,7 @@ buildChart();
 renderMuseums();
 renderMovementIndex();
 renderArtistIndex();
+renderStudy();
 selectMovement('renaissance', false);
 /* scroll chart to renaissance area on load */
 requestAnimationFrame(() => {

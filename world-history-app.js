@@ -342,7 +342,7 @@ let currentView = 'timeline';
 function showView(v) {
   if (!document.getElementById('view-' + v)) return;
   currentView = v;
-  ['timeline', 'movements'].forEach(k => {
+  ['timeline', 'movements', 'study'].forEach(k => {
     document.getElementById('view-' + k).classList.toggle('view-hidden', k !== v);
     const t = document.getElementById('vtab-' + k);
     t.classList.toggle('active', k === v);
@@ -358,12 +358,128 @@ function applyStatic() {
   document.getElementById('footer-txt').innerHTML    = uiStr('footer');
   document.querySelector('#vtab-timeline .vt-txt').textContent  = uiStr('tabTimeline');
   document.querySelector('#vtab-movements .vt-txt').textContent = uiStr('tabMovements');
+  document.querySelector('#vtab-study .vt-txt').textContent     = uiStr('tabStudy');
   ['zh','en','fr'].forEach(k => {
     const b = document.getElementById('lang-' + k);
     b.classList.toggle('active', k === LANG);
     b.setAttribute('aria-pressed', k === LANG ? 'true' : 'false');
   });
   document.documentElement.lang = LANG === 'zh' ? 'zh-Hant' : LANG;
+}
+
+
+/* ═══════════ 學習路徑：把歷史知識變成可用的判斷 ═══════════ */
+const HISTORY_STUDY = {
+  zh: {
+    h: '學習路徑',
+    sub: '記得住年代不等於懂歷史。以下是六個月，從時間軸走到能自己論證的路線。',
+    stages: [
+      { h: '第 1–2 個月 · 先有骨架', items: [
+        '用這條時間軸把二十個時期的先後與地理記牢——沒有骨架，之後讀到的一切都會散掉。',
+        '每個時期只問三件事：誰掌權、靠什麼吃飯、和誰打交道。政治、經濟、對外關係就是歷史的三根軸。',
+        '刻意練習「同時性」：中國在唐代時，歐洲、伊斯蘭世界、美洲各在做什麼？橫向對照會打掉很多直覺誤解。' ] },
+      { h: '第 3–4 個月 · 讀出立場', items: [
+        '對同一事件找兩份立場不同的敘述，比對它們選了什麼、略過了什麼。歷史寫作的省略比陳述更能透露立場。',
+        '學會分辨一手史料與後世詮釋，並習慣追問：這份材料是誰、為誰、在什麼情況下寫的。',
+        '讀一本方法論（Carr《What Is History?》或 Bloch《史家的技藝》），理解史學本身也有歷史。' ] },
+      { h: '第 5–6 個月 · 自己論證', items: [
+        '寫一篇一千字的因果分析：一個事件、兩種解釋、妳的判斷，以及什麼證據會推翻妳。',
+        '做一份跨區域比較：同一個世紀裡兩個地區的制度差異與後果。',
+        '把它講一次給不熟這段歷史的人聽——講得清楚才算真的懂。' ] }
+    ],
+    resTitle: '實操資源',
+    res: [
+      'E.H. Carr《What Is History?》— 一百多頁，講清楚歷史為什麼不是客觀事實的堆疊',
+      'Marc Bloch《史家的技藝》— 史料批判的入門經典',
+      'Gallica（法國國家圖書館）與 Internet Archive — 免費的一手史料',
+      'Our World in Data / Maddison Project — 長時段的經濟與人口數據',
+      '在地博物館與檔案館 — 真正的一手材料在那裡，且多數免費'
+    ],
+    projTitle: '可展示的成果',
+    proj: '一篇一千字的因果分析與一份跨區域比較。歷史訓練真正賣得掉的能力是三項：處理龐雜資料、辨識敘事立場、在證據不足時仍能給出有理由的判斷——這三項在政策、風險分析與顧問業都直接適用。',
+    note: '職涯出口：檔案與博物館、出版與媒體、政策與智庫研究、企業的國家風險與地緣政治分析。若想把這條線接到職場，可參考知識庫裡的國際關係、國際法與職涯檔案三卷。'
+  },
+  en: {
+    h: 'Study Path',
+    sub: 'Remembering dates is not understanding history. Six months from this timeline to arguing for yourself.',
+    stages: [
+      { h: 'Months 1-2 · Build the skeleton', items: [
+        'Use this timeline to fix twenty periods in order and place. Without a skeleton, everything you read later falls apart.',
+        'Ask each period the same three things: who held power, what the economy ran on, and who they dealt with. Politics, economy and external relations are the three axes.',
+        'Practise simultaneity deliberately: while Tang China was at its height, what was happening in Europe, the Islamic world, the Americas? Reading across kills a lot of intuitive error.' ] },
+      { h: 'Months 3-4 · Read the position', items: [
+        'Find two accounts of the same event from opposing standpoints and compare what each selects and omits. In historical writing the omissions reveal more than the claims.',
+        'Learn to separate primary sources from later interpretation, and always ask who wrote this, for whom, under what circumstances.',
+        'Read one book on method (Carr, What Is History?, or Bloch, The Historian’s Craft) and see that history writing has a history of its own.' ] },
+      { h: 'Months 5-6 · Argue', items: [
+        'Write a thousand-word causal analysis: one event, two explanations, your judgement, and what evidence would overturn it.',
+        'Build a cross-regional comparison: two regions in the same century, their institutional differences and the consequences.',
+        'Explain it once to someone who does not know the period. Only then do you know it.' ] }
+    ],
+    resTitle: 'Hands-on resources',
+    res: [
+      'E.H. Carr, What Is History? — a hundred-odd pages on why history is not a stack of objective facts',
+      'Marc Bloch, The Historian’s Craft — the classic introduction to source criticism',
+      'Gallica (BnF) and the Internet Archive — free primary material',
+      'Our World in Data / the Maddison Project — long-run economic and demographic series',
+      'Local museums and archives — the real primary material, and mostly free'
+    ],
+    projTitle: 'What to have at the end',
+    proj: 'One thousand-word causal analysis and one cross-regional comparison. What historical training actually sells is three things: handling unruly evidence, spotting the position inside a narrative, and reaching a defensible judgement when the evidence is incomplete — all three transfer directly to policy, risk analysis and consulting.',
+    note: 'Where it leads: archives and museums, publishing and media, policy and think-tank research, and country-risk or geopolitical analysis in companies. For the working end of that, see the international relations, international law and career volumes in this library.'
+  },
+  fr: {
+    h: 'Parcours',
+    sub: 'Retenir des dates n’est pas comprendre l’histoire. Six mois pour passer de la frise à l’argumentation.',
+    stages: [
+      { h: 'Mois 1-2 · Bâtir le squelette', items: [
+        'Se servir de cette frise pour fixer vingt périodes dans l’ordre et l’espace : sans squelette, tout le reste se disperse.',
+        'Poser à chaque période les mêmes trois questions : qui détient le pouvoir, de quoi vit l’économie, avec qui traite-t-on.',
+        'Travailler la simultanéité : pendant l’apogée des Tang, que se passait-il en Europe, en terre d’islam, dans les Amériques ?' ] },
+      { h: 'Mois 3-4 · Lire les positions', items: [
+        'Confronter deux récits opposés d’un même événement et comparer ce que chacun retient et omet : les omissions en disent plus que les affirmations.',
+        'Distinguer sources primaires et interprétations postérieures, et toujours demander : qui écrit, pour qui, dans quelles circonstances ?',
+        'Lire un ouvrage de méthode (Carr ou Bloch) et découvrir que l’écriture de l’histoire a elle-même une histoire.' ] },
+      { h: 'Mois 5-6 · Argumenter', items: [
+        'Rédiger une analyse causale de mille mots : un événement, deux explications, votre jugement, et ce qui le renverserait.',
+        'Construire une comparaison inter-régionale : deux régions au même siècle, différences institutionnelles et conséquences.',
+        'L’expliquer à quelqu’un qui ignore la période : c’est alors seulement qu’on sait.' ] }
+    ],
+    resTitle: 'Ressources pratiques',
+    res: [
+      'E.H. Carr, <i>What Is History?</i> — cent pages sur pourquoi l’histoire n’est pas un empilement de faits',
+      'Marc Bloch, <i>Apologie pour l’histoire</i> — le classique de la critique des sources',
+      'Gallica (BnF) et Internet Archive — sources primaires gratuites',
+      'Our World in Data / projet Maddison — séries longues, économie et démographie',
+      'Musées et archives locales — la vraie matière première, souvent gratuite'
+    ],
+    projTitle: 'Ce qu’il faut avoir à la fin',
+    proj: 'Une analyse causale de mille mots et une comparaison inter-régionale. Ce que la formation historique vend réellement tient en trois compétences : traiter une masse de sources, repérer la position dans un récit, et juger malgré l’incomplétude — toutes trois transférables à la politique publique, au risque et au conseil.',
+    note: 'Débouchés : archives et musées, édition et médias, recherche en think tank, analyse du risque pays en entreprise. Voir les volumes relations internationales, droit international et carrière de cette bibliothèque.'
+  }
+};
+
+function renderStudy() {
+  const d = HISTORY_STUDY[LANG] || HISTORY_STUDY.zh;
+  let html =
+    '<div id="mvx-head">'
+    + '<div class="orn"><div class="l"></div><span class="g">✦</span><div class="r"></div></div>'
+    + '<h2>' + d.h + '</h2>'
+    + '<p>' + d.sub + '</p>'
+    + '</div>'
+    + '<div class="study-wrap">';
+  d.stages.forEach(function (st) {
+    html += '<section class="study-stage"><h3>' + st.h + '</h3><ul>'
+         + st.items.map(function (i) { return '<li>' + i + '</li>'; }).join('')
+         + '</ul></section>';
+  });
+  html += '<section class="study-stage"><h3>' + d.resTitle + '</h3><ul>'
+       + d.res.map(function (r) { return '<li>' + r + '</li>'; }).join('')
+       + '</ul></section>';
+  html += '<section class="study-stage study-proj"><h3>' + d.projTitle + '</h3><p>' + d.proj + '</p></section>';
+  html += '<p class="study-note">' + d.note + '</p>';
+  html += '</div>';
+  document.getElementById('view-study').innerHTML = html;
 }
 
 function switchLang(l) {
@@ -376,6 +492,7 @@ function switchLang(l) {
   buildChart();
   setFilter(regionFilter);
   renderHistoryIndex();
+  renderStudy();
   if (selectedId) selectHistory(selectedId, false);
   sc.scrollLeft = keepScroll;
 }
@@ -390,6 +507,7 @@ applyStatic();
 buildFilters();
 buildChart();
 renderHistoryIndex();
+renderStudy();
 selectHistory('renaissance_exploration', false);
 requestAnimationFrame(() => {
   const sc = document.getElementById('chart-scroll');
