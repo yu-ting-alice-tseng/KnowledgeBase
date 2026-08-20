@@ -214,6 +214,54 @@
       </div>
     </div>
   </section>
+    <!-- 第三部分：實作與學習路徑 -->
+    <section id="learning-panel" class="mt-8 gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-8">
+
+      <div class="flex items-center justify-between gap-4 flex-wrap pb-6 border-b border-slate-800/50">
+        <div class="flex items-center gap-3">
+          <div id="learning-icon-box" class="p-3 bg-pink-500/10 rounded-2xl text-pink-400 border border-pink-500/20">
+            <i class="fa-solid fa-route text-xl"></i>
+          </div>
+          <div>
+            <h3 id="label-learning" class="text-lg md:text-xl font-black text-white">實作與學習路徑</h3>
+            <p id="label-learning-hint" class="text-[11px] text-slate-500 mt-0.5">從零開始的六個月路線，終點是一份能寫進履歷的作品</p>
+          </div>
+        </div>
+        <span class="text-[10px] text-slate-500 font-mono tracking-widest bg-slate-900/60 px-3 py-1 rounded-lg border border-slate-800">
+          ROADMAP / <span id="learning-meta">COSMETICS</span>
+        </span>
+      </div>
+
+      <div id="domain-disclaimer" class="hidden rounded-2xl border border-amber-500/25 bg-amber-500/5 px-4 py-3 text-[11px] leading-relaxed text-amber-200/80"></div>
+
+      <!-- 三階段路線 -->
+      <div id="learning-stages" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- 動態生成 -->
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 實操資源 -->
+        <div class="lg:col-span-2 space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-book-open-reader text-xs"></i> <span id="label-resources">實操資源</span>
+          </h4>
+          <div id="learning-resources" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- 動態生成 -->
+          </div>
+        </div>
+        <!-- 履歷作品 -->
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-flask-vial text-xs"></i> <span id="label-project">可寫進履歷的作品</span>
+          </h4>
+          <div id="learning-project">
+            <!-- 動態生成 -->
+          </div>
+        </div>
+      </div>
+
+      <p id="learning-empty" class="hidden text-xs text-slate-500 leading-relaxed"></p>
+    </section>
 </main>
 
 <footer class="max-w-7xl mx-auto px-6 mt-16 text-center text-slate-600 text-xs">
@@ -224,6 +272,14 @@
 // ── 1. UI Translations ──────────────────────────────────────────────────────
 const uiTranslations = {
   zh: {
+    learningPath: '實作與學習路徑',
+    learningHint: '從零開始的六個月路線，終點是一份能寫進履歷的作品',
+    resourcesLabel: '實操資源',
+    projectLabel: '可寫進履歷的作品',
+    learningEmpty: '這個分支的學習路徑仍在編寫中。可先從上方的證照、工具與職缺關鍵字著手。',
+    stage1: '入門 · 第 1 個月', stage2: '打底 · 第 2–3 個月', stage3: '實戰 · 第 4–6 個月',
+    resBook: '書', resCourse: '課程', resFree: '免費資源', resPractice: '動手練習', resCommunity: '社群與情報',
+    metadataLabel: 'INTELLIGENCE',
     title: '生活風格與精品產業知識地圖',
     subtitle: '美妝、香水、奢侈品、酒類、起司跨域地圖',
     searchPlaceholder: '搜尋成分、品牌、產區、技術 (如 Retinol, Champagne, Hermès)...',
@@ -240,6 +296,14 @@ const uiTranslations = {
     loading: '載入中...', metadataLabel: 'INTELLIGENCE', branchDetail: 'BRANCH DETAIL'
   },
   en: {
+    learningPath: 'Practice & Learning Path',
+    learningHint: 'A six-month route from zero to one portfolio piece worth putting on a CV',
+    resourcesLabel: 'Hands-on Resources',
+    projectLabel: 'Portfolio Project',
+    learningEmpty: 'The learning path for this branch is still being written. Start from the certifications, tools and job-title keywords above.',
+    stage1: 'Foundations · Month 1', stage2: 'Building · Months 2-3', stage3: 'Practice · Months 4-6',
+    resBook: 'Book', resCourse: 'Course', resFree: 'Free', resPractice: 'Practice', resCommunity: 'Community',
+    metadataLabel: 'INTELLIGENCE',
     title: 'Lifestyle & Luxury Industry Knowledge Map',
     subtitle: 'Cosmetics, Fragrance, Luxury, Wine & Cheese Cross-Domain Map',
     searchPlaceholder: 'Search ingredients, brands, regions, techniques (e.g. Retinol, Champagne, Hermès)...',
@@ -256,6 +320,14 @@ const uiTranslations = {
     loading: 'Loading...', metadataLabel: 'INTELLIGENCE', branchDetail: 'BRANCH DETAIL'
   },
   fr: {
+    learningPath: 'Pratique & Parcours d\'Apprentissage',
+    learningHint: 'Un parcours de six mois, de zéro à une réalisation à mettre sur un CV',
+    resourcesLabel: 'Ressources Pratiques',
+    projectLabel: 'Réalisation pour le CV',
+    learningEmpty: 'Le parcours de cette branche est en cours de rédaction. Commencez par les certifications, outils et intitulés de poste ci-dessus.',
+    stage1: 'Bases · Mois 1', stage2: 'Consolidation · Mois 2-3', stage3: 'Pratique · Mois 4-6',
+    resBook: 'Livre', resCourse: 'Formation', resFree: 'Gratuit', resPractice: 'Exercice', resCommunity: 'Communauté',
+    metadataLabel: 'INTELLIGENCE',
     title: 'Carte des Connaissances — Lifestyle & Luxe',
     subtitle: 'Cosmétiques, Parfums, Luxe, Vins & Fromages',
     searchPlaceholder: 'Rechercher ingrédients, marques, régions (ex. Rétinol, Champagne, Hermès)...',
@@ -1213,3 +1285,1010 @@ domainDatabase.wine = {
     }
   }
 };
+
+    const domainDisclaimers = {};
+
+    const learningPaths = {
+      'cosmetics.skincare': {
+        stages: [
+          [ { zh: '學會讀 **INCI 成分表**：濃度由高至低排列，1% 以下的順序不再有意義。', en: 'Learn to read an **INCI list**: ingredients run high to low, and below 1% the order stops meaning anything.', fr: 'Apprendre à lire une **liste INCI** : ordre décroissant, sans signification sous 1 %.' },
+            { zh: '弄懂皮膚屏障的結構與功能，這是所有配方邏輯的起點。', en: 'Understand the skin barrier’s structure and function: every formulation logic starts there.', fr: 'Comprendre la barrière cutanée : tout raisonnement de formulation en découle.' } ],
+          [ { zh: '分成分類記活性物：**視黃醇、酸類、維他命C、菸鹼醯胺**，各自的濃度區間與耐受度。', en: 'Learn actives by family — **retinoids, acids, vitamin C, niacinamide** — with their usable ranges and tolerance.', fr: 'Apprendre les actifs par famille : rétinoïdes, acides, vitamine C, niacinamide, et leurs plages d’usage.' },
+            { zh: '讀原廠的原料技術文件（TDS），而不是二手的成分懶人包。', en: 'Read suppliers’ technical data sheets rather than second-hand ingredient explainers.', fr: 'Lire les fiches techniques des fournisseurs plutôt que les résumés de seconde main.' } ],
+          [ { zh: '拆解十款產品：分析其**配方架構**（載體、活性、增稠、防腐）與定價邏輯。', en: 'Deconstruct ten products: **formula architecture** (vehicle, actives, thickener, preservative) against price positioning.', fr: 'Décortiquer dix produits : architecture de formule et positionnement prix.' },
+            { zh: '寫一份成分主張的證據檢核：哪些宣稱有臨床支持，哪些只是體外實驗。', en: 'Write a claims-evidence check: which claims have clinical support and which rest on in-vitro work only.', fr: 'Rédiger un contrôle de preuves : allégations cliniques ou simplement in vitro ?' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'INCIDecoder / CosIng (EU database)', d: { zh: '歐盟官方成分資料庫與白話對照，查證用第一手。', en: 'The EU’s official ingredient database plus a plain-language cross-reference.', fr: 'La base officielle européenne et son équivalent en langage clair.' } },
+          { k: 'book', n: 'Baumann, Cosmetic Dermatology', d: { zh: '皮膚科醫師寫的配方與活性物參考書。', en: 'A dermatologist’s reference on actives and formulation.', fr: 'La référence d’une dermatologue sur les actifs et la formulation.' } },
+          { k: 'course', n: 'Formula Botanica / SCS courses', d: { zh: '化妝品配方的線上訓練，含實作配方練習。', en: 'Online formulation training with hands-on recipes.', fr: 'Formations en ligne à la formulation, avec exercices pratiques.' } },
+          { k: 'practice', n: 'A ten-product teardown file', d: { zh: '把十款產品的成分與定價並列，趨勢立刻自己浮現。', en: 'Put ten products’ ingredients and prices side by side and the patterns surface on their own.', fr: 'Aligner dix produits par composition et prix : les tendances apparaissent seules.' } }
+        ],
+        project: { n: { zh: '一份十款產品的配方與定價拆解', en: 'A teardown of ten products, formula against price', fr: 'Un décryptage de dix produits, formule et prix' },
+                   d: { zh: '面試美妝品牌時，能指著成分表說出「這個配方為什麼賣這個價」，是最直接的能力證明。', en: 'Being able to point at an INCI list and explain why that formula carries that price is the most direct proof of competence in a beauty interview.', fr: 'Expliquer pourquoi une formule justifie son prix est la preuve la plus directe en entretien.' } }
+      },
+      'cosmetics.color_cosmetics': {
+        stages: [
+          [ { zh: '學色彩理論與膚色底調（cool／warm／neutral），能判斷一個色號適合誰。', en: 'Learn colour theory and undertones, enough to say who a given shade suits.', fr: 'Apprendre la théorie des couleurs et les sous-tons pour juger à qui va une teinte.' },
+            { zh: '弄懂彩妝的三種質地系統：粉體、乳化、無水，各自的膚感從何而來。', en: 'Learn the three texture systems — powder, emulsion, anhydrous — and where each sensory profile comes from.', fr: 'Comprendre les trois systèmes de texture : poudre, émulsion, anhydre.' } ],
+          [ { zh: '研究**色號涵蓋度**：一個品牌的粉底階梯是否真的服務了深膚色。', en: 'Study **shade coverage**: does a foundation ladder actually serve deeper skin tones?', fr: 'Étudier la **couverture des teintes** : la gamme sert-elle vraiment les peaux foncées ?' },
+            { zh: '學上市節奏與限量策略，這是彩妝與保養最大的商業差異。', en: 'Learn launch cadence and limited editions: the biggest commercial difference from skincare.', fr: 'Apprendre le rythme des lancements et les éditions limitées.' } ],
+          [ { zh: '做一份**品類分析**：某個彩妝品類的價格帶、質地、色號與話題度。', en: 'Produce a **category analysis** of one makeup category: price tiers, textures, shades and share of conversation.', fr: 'Réaliser une **analyse de catégorie** : prix, textures, teintes et notoriété.' },
+            { zh: '提出一個新品概念，含目標客群、差異點與上市理由。', en: 'Propose one new product concept with target, point of difference and a reason to launch now.', fr: 'Proposer un concept produit : cible, différence et raison de lancer maintenant.' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'Brand shade-range data & reviews', d: { zh: '公開的色號資料與評測，是分析涵蓋度最好的素材。', en: 'Public shade data and reviews: the best material for coverage analysis.', fr: 'Données de teintes et avis publics : la meilleure matière d’analyse.' } },
+          { k: 'course', n: 'Makeup artistry short courses', d: { zh: '親手上妝過，才會理解質地與持妝的討論在講什麼。', en: 'Having applied product yourself is what makes texture and wear discussions legible.', fr: 'Avoir appliqué soi-même rend lisibles les débats sur texture et tenue.' } },
+          { k: 'practice', n: 'Store shelf audits', d: { zh: '走進 Sephora 記錄陳列、價格帶與主打色，一小時勝過十篇文章。', en: 'An hour recording display, price tiers and hero shades in store beats ten articles.', fr: 'Une heure de relevé en magasin vaut dix articles.' } },
+          { k: 'community', n: 'Cosmetics Business / Premium Beauty News', d: { zh: '產業媒體，上市與併購消息最快。', en: 'Trade press: fastest on launches and deals.', fr: 'Presse professionnelle : lancements et opérations en premier.' } }
+        ],
+        project: { n: { zh: '一份彩妝品類分析與新品概念', en: 'One category analysis plus a product concept', fr: 'Une analyse de catégorie et un concept produit' },
+                   d: { zh: '用真實的價格與色號資料支撐一個新品提案，這正是品牌經理面試的實作題。', en: 'A launch proposal backed by real price and shade data: exactly the exercise brand interviews set.', fr: 'Une proposition étayée par des données réelles : l’exercice type des entretiens marque.' } }
+      },
+      'cosmetics.beauty_ingredients': {
+        stages: [
+          [ { zh: '從供應端看產業：原料商（Givaudan Active Beauty、BASF、Croda）決定了配方的可能性。', en: 'See the industry from the supply side: ingredient houses set what formulas can do.', fr: 'Voir l’industrie côté amont : les fournisseurs déterminent le possible.' },
+            { zh: '弄懂天然、有機與生物技術原料的差異，以及各自的認證標準。', en: 'Learn the difference between natural, organic and biotech ingredients, and the certifications behind each.', fr: 'Distinguer naturel, bio et biotechnologie, et les certifications associées.' } ],
+          [ { zh: '讀原料商的技術資料與功效實驗設計，學會判斷數據強度。', en: 'Read supplier technical dossiers and their efficacy study designs; learn to judge how strong the data is.', fr: 'Lire les dossiers techniques et juger la robustesse des études.' },
+            { zh: '追蹤永續採購議題：棕櫚油、雲母、香莢蘭的供應鏈風險。', en: 'Follow sustainable sourcing: palm oil, mica and vanilla each carry supply-chain risk.', fr: 'Suivre l’approvisionnement durable : huile de palme, mica, vanille.' } ],
+          [ { zh: '做一份**原料趨勢報告**：某個活性物從實驗室到上架的完整路徑與成本結構。', en: 'Write an **ingredient trend report**: one active from lab to shelf, with its cost structure.', fr: 'Rédiger un **rapport de tendance ingrédient** : du laboratoire au rayon, coûts inclus.' },
+            { zh: '加上供應風險評估，這一段是採購與 ESG 團隊最需要的。', en: 'Add a supply-risk assessment: the part procurement and ESG teams actually need.', fr: 'Ajouter une évaluation du risque d’approvisionnement, ce dont les achats et l’ESG ont besoin.' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'Supplier technical dossiers (TDS)', d: { zh: '原料商官網免費索取，資訊比任何摘要都完整。', en: 'Free from suppliers and more complete than any summary.', fr: 'Gratuits chez les fournisseurs, plus complets que tout résumé.' } },
+          { k: 'free', n: 'in-cosmetics trade show content', d: { zh: '全球原料展的免費線上內容，是趨勢的第一手來源。', en: 'The global ingredient show’s free online content: trends first-hand.', fr: 'Le contenu en ligne du salon des ingrédients : les tendances de première main.' } },
+          { k: 'book', n: 'Handbook of Cosmetic Science and Technology', d: { zh: '配方與原料的技術參考書。', en: 'The technical reference on formulation and raw materials.', fr: 'La référence technique sur formulation et matières premières.' } },
+          { k: 'community', n: 'Cosmetic Valley / Lyon beauty cluster', d: { zh: '法國美妝產業聚落，實習與人脈的實際入口。', en: 'France’s beauty clusters: the practical entry point for internships and contacts.', fr: 'Les pôles beauté français : l’entrée pratique vers stages et contacts.' } }
+        ],
+        project: { n: { zh: '一份活性成分的產業路徑報告', en: 'One active ingredient, traced from lab to shelf', fr: 'Un actif suivi du laboratoire au rayon' },
+                   d: { zh: '包含功效證據、成本、供應風險與競品使用情況——這份文件在 R&D 與採購面試都通用。', en: 'Efficacy evidence, cost, supply risk and who else uses it: one document that works in both R&D and procurement interviews.', fr: 'Preuves, coût, risque et concurrence : un document valable en R&D comme aux achats.' } }
+      },
+      'cosmetics.beauty_marketing': {
+        stages: [
+          [ { zh: '弄懂美妝行銷的三個渠道邏輯：專櫃、藥妝、電商，各自的說服方式完全不同。', en: 'Learn the three channel logics — department store, pharmacy, e-commerce — each persuades differently.', fr: 'Comprendre les trois logiques de canal : parfumerie, pharmacie, e-commerce.' },
+            { zh: '拆解十則廣告的訴求結構：問題、機制、證據、情感。', en: 'Deconstruct ten campaigns: problem, mechanism, proof, emotion.', fr: 'Décortiquer dix campagnes : problème, mécanisme, preuve, émotion.' } ],
+          [ { zh: '學**功效宣稱的法規界線**：在歐盟，說得太滿會直接違法。', en: 'Learn the **legal limits on claims**: in the EU, overclaiming is not a style choice but an offence.', fr: 'Apprendre les limites légales des allégations : en UE, surpromettre est une infraction.' },
+            { zh: '研究 KOL 與 UGC 的實際轉換路徑，而不只是聲量數字。', en: 'Study how influencer and user content actually converts, not just how loud it is.', fr: 'Étudier la conversion réelle des influenceurs, pas seulement leur audience.' } ],
+          [ { zh: '做一份**上市行銷計畫**：定位、訴求、渠道組合、預算與衡量方式。', en: 'Build one **launch marketing plan**: positioning, claim, channel mix, budget and measurement.', fr: 'Bâtir un **plan de lancement** : positionnement, allégation, mix, budget, mesure.' },
+            { zh: '把成效指標寫清楚：試用轉換、回購率、單客獲取成本。', en: 'Spell out the metrics: trial conversion, repeat rate, cost per acquired customer.', fr: 'Préciser les indicateurs : essai, réachat, coût d’acquisition.' } ]
+        ],
+        resources: [
+          { k: 'book', n: 'Byron Sharp, How Brands Grow', d: { zh: '美妝集團內部最常被引用的行銷實證來源。', en: 'The evidence base most cited inside beauty groups.', fr: 'La base empirique la plus citée dans les groupes beauté.' } },
+          { k: 'free', n: 'ANSM / DGCCRF claim guidance', d: { zh: '法國主管機關對功效宣稱的規範，行銷必讀。', en: 'The French regulators’ guidance on claims: required reading for marketers.', fr: 'Les recommandations des autorités françaises sur les allégations.' } },
+          { k: 'practice', n: 'Ten-campaign teardown', d: { zh: '零成本作品集，面試展示分析力最快的方式。', en: 'A zero-cost portfolio piece and the fastest way to show analysis in interviews.', fr: 'Un portfolio gratuit et la façon la plus rapide de montrer son analyse.' } },
+          { k: 'community', n: 'Premium Beauty News / BeautyMatter', d: { zh: '產業動態與品牌策略的日常情報。', en: 'Daily intelligence on industry moves and brand strategy.', fr: 'Veille quotidienne sur les marques et la stratégie.' } }
+        ],
+        project: { n: { zh: '一份完整的新品上市行銷計畫', en: 'One complete launch marketing plan', fr: 'Un plan marketing de lancement complet' },
+                   d: { zh: '含法規可用的宣稱版本——能同時想到創意與合規的人，在美妝集團裡非常少。', en: 'With a legally usable version of the claim: people who think about creative and compliance at once are rare in beauty groups.', fr: 'Avec une allégation juridiquement utilisable : rares sont ceux qui pensent créativité et conformité ensemble.' } }
+      },
+      'cosmetics.cosmetics_regulatory': {
+        stages: [
+          [ { zh: '讀歐盟化妝品法規 1223/2009 的架構：責任人、通報、安全評估。', en: 'Read the structure of EU Regulation 1223/2009: responsible person, notification, safety assessment.', fr: 'Lire la structure du règlement 1223/2009 : personne responsable, notification, évaluation.' },
+            { zh: '弄懂 **CPNP 通報** 與產品資訊檔案（PIF）各要放什麼。', en: 'Learn what goes into the **CPNP notification** and the product information file.', fr: 'Savoir ce que contiennent la notification **CPNP** et le dossier d’information produit.' } ],
+          [ { zh: '比較歐盟、美國 FDA 與中國 NMPA 的差異，這是跨國上市的核心痛點。', en: 'Compare the EU, US FDA and China NMPA regimes: the core pain of international launches.', fr: 'Comparer UE, FDA et NMPA : la difficulté centrale des lancements internationaux.' },
+            { zh: '學安全評估報告的邏輯：暴露量、毒理資料、margin of safety。', en: 'Learn the logic of a safety assessment: exposure, toxicological data, margin of safety.', fr: 'Apprendre la logique de l’évaluation : exposition, toxicologie, marge de sécurité.' } ],
+          [ { zh: '做一份**上市合規檢核表**：一個產品要進歐盟市場需要的每一份文件。', en: 'Build a **launch compliance checklist**: every document one product needs to enter the EU market.', fr: 'Construire une **checklist de conformité** : chaque document requis pour l’UE.' },
+            { zh: '加上宣稱審查：逐條標出哪些文案需要修改與理由。', en: 'Add a claims review: mark line by line what must change and why.', fr: 'Ajouter une revue des allégations : ligne par ligne, ce qui doit changer.' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'EU Regulation 1223/2009 & CosIng', d: { zh: '法規全文與成分限用清單，官方免費。', en: 'The full regulation and the restricted-substance lists, free and official.', fr: 'Le règlement complet et les listes officielles, gratuits.' } },
+          { k: 'free', n: 'SCCS opinions', d: { zh: '歐盟消費者安全科學委員會意見，是限量標準的來源。', en: 'The EU scientific committee opinions behind every concentration limit.', fr: 'Les avis du comité scientifique européen, à l’origine des limites.' } },
+          { k: 'course', n: 'Cosmetic safety assessor training', d: { zh: '法規職位的正式資格路徑，理科背景可考慮。', en: 'The formal qualification route for regulatory roles, worth considering with a science background.', fr: 'La voie qualifiante pour les postes réglementaires.' } },
+          { k: 'practice', n: 'Build a mock PIF', d: { zh: '做一份模擬產品資訊檔案，是最直接的能力證明。', en: 'A mock product information file is the most direct proof of capability.', fr: 'Un dossier produit fictif est la preuve la plus directe.' } }
+        ],
+        project: { n: { zh: '一份歐盟上市合規檢核表', en: 'One EU launch compliance checklist', fr: 'Une checklist de conformité UE' },
+                   d: { zh: '法規是美妝業最缺人也最難外包的職能，一份完整檢核表足以開啟對話。', en: 'Regulatory is the hardest beauty function to outsource and the shortest of staff; one complete checklist opens the conversation.', fr: 'Le réglementaire manque de bras et s’externalise mal : une checklist complète ouvre la porte.' } }
+      },
+      'luxury.luxury_brand': {
+        stages: [
+          [ { zh: '弄懂精品的價值來源：稀缺、傳承、工藝、以及被嚴格管理的**品牌敘事**。', en: 'Learn where luxury value comes from: scarcity, heritage, craft, and a tightly governed **brand narrative**.', fr: 'Comprendre la valeur du luxe : rareté, héritage, savoir-faire et récit de marque maîtrisé.' },
+            { zh: '讀 LVMH、Kering、Richemont 的年報，看清各集團的品牌組合邏輯。', en: 'Read the LVMH, Kering and Richemont annual reports and see how each group’s portfolio is built.', fr: 'Lire les rapports annuels de LVMH, Kering et Richemont pour saisir la logique de portefeuille.' } ],
+          [ { zh: '學精品的定價與稀缺管理：為什麼漲價反而強化需求。', en: 'Learn luxury pricing and scarcity management: why raising prices can strengthen demand.', fr: 'Apprendre le prix et la rareté : pourquoi augmenter renforce parfois la demande.' },
+            { zh: '研究一個品牌的復興案例（Gucci、Balenciaga、Loewe），拆解創意總監與商業結果的關係。', en: 'Study one brand turnaround (Gucci, Balenciaga, Loewe) and connect the creative director to the commercial result.', fr: 'Étudier un redressement de marque et relier direction artistique et résultat commercial.' } ],
+          [ { zh: '做一份**品牌健檢**：定位、客群、產品階梯、通路控制與近三年財務表現。', en: 'Produce a **brand audit**: positioning, clientele, product ladder, distribution control and three years of financials.', fr: 'Réaliser un **audit de marque** : positionnement, clientèle, gamme, distribution, trois ans de résultats.' },
+            { zh: '提出一個具體建議，並說明它會對毛利與品牌資產各造成什麼影響。', en: 'Make one concrete recommendation and say what it does to both margin and brand equity.', fr: 'Formuler une recommandation et en évaluer l’effet sur la marge et le capital de marque.' } ]
+        ],
+        resources: [
+          { k: 'book', n: 'Kapferer & Bastien, The Luxury Strategy', d: { zh: '精品管理的標準教材，解釋為什麼精品的規則與一般行銷相反。', en: 'The standard text, and the clearest explanation of why luxury inverts ordinary marketing rules.', fr: 'Le manuel de référence : pourquoi le luxe inverse les règles du marketing.' } },
+          { k: 'free', n: 'LVMH / Kering annual reports', d: { zh: '免費且資訊量極大，面試前讀一份等於贏一半。', en: 'Free and dense; reading one before an interview is half the preparation.', fr: 'Gratuits et denses : en lire un avant l’entretien, c’est la moitié du travail.' } },
+          { k: 'free', n: 'Bain-Altagamma Luxury Study', d: { zh: '每年的產業權威報告，數字可直接引用。', en: 'The authoritative annual industry study, quotable in any interview.', fr: 'L’étude sectorielle annuelle de référence, citable en entretien.' } },
+          { k: 'community', n: 'Business of Fashion / Miss Tweed', d: { zh: '精品產業的日常情報與人事動態。', en: 'Daily intelligence on the industry and its executive moves.', fr: 'Veille quotidienne sur le secteur et ses mouvements.' } }
+        ],
+        project: { n: { zh: '一份精品品牌健檢報告', en: 'One luxury brand audit', fr: 'Un audit de marque de luxe' },
+                   d: { zh: '選一個妳認為正在失焦的品牌，用財報與門市觀察佐證，並提出一頁建議。', en: 'Pick a brand you think has lost focus, evidence it with filings and store observation, and close with a one-page recommendation.', fr: 'Choisir une marque en perte de cap, l’étayer par les comptes et le terrain, conclure en une page.' } }
+      },
+      'luxury.leather_goods': {
+        stages: [
+          [ { zh: '學皮革的基本分類：全粒面、修面、二層，以及鞣製方式如何影響觸感與壽命。', en: 'Learn leather grades — full grain, corrected, split — and how tanning shapes hand-feel and lifespan.', fr: 'Apprendre les qualités de cuir et l’effet du tannage sur le toucher et la durée.' },
+            { zh: '認識一只包的結構：裁片、車縫、上膠、封邊，每一步的工時差在哪裡。', en: 'Learn how a bag is built: cutting, stitching, gluing, edge finishing, and where the hours go.', fr: 'Comprendre la fabrication d’un sac : coupe, couture, collage, tranche, et le temps de chaque étape.' } ],
+          [ { zh: '比較手工與機縫的差異，理解 **saddle stitch** 為什麼成為工藝的象徵。', en: 'Compare hand and machine stitching, and why the **saddle stitch** became the emblem of craft.', fr: 'Comparer couture main et machine, et pourquoi le point sellier symbolise le savoir-faire.' },
+            { zh: '研究產地與工坊佈局：法國、義大利與西班牙的產業結構差異。', en: 'Study where production sits: France, Italy and Spain have very different industrial structures.', fr: 'Étudier la géographie de production : France, Italie et Espagne diffèrent structurellement.' } ],
+          [ { zh: '做一份**成本結構分析**：材料、工時、行銷與通路各佔零售價多少。', en: 'Build a **cost structure analysis**: materials, labour, marketing and distribution as shares of retail price.', fr: 'Construire une **analyse de coûts** : matières, main-d’œuvre, marketing, distribution.' },
+            { zh: '實地到門市觸摸與比較三個價位帶的產品，記錄工藝差異。', en: 'Go to stores, handle three price tiers, and record what the craft difference actually is.', fr: 'Aller en boutique, manipuler trois gammes de prix et noter les différences réelles.' } ]
+        ],
+        resources: [
+          { k: 'book', n: 'Leather craft manuals / tannery guides', d: { zh: '技術性的手工書，讀完看包的方式會不一樣。', en: 'Technical craft books; after them you look at a bag differently.', fr: 'Ouvrages techniques : on ne regarde plus un sac de la même façon.' } },
+          { k: 'free', n: 'Brand craftsmanship films & museum visits', d: { zh: '品牌自製的工藝影片與工坊博物館，免費且細節極多。', en: 'Brands’ own craft films and workshop museums: free and unusually detailed.', fr: 'Films de savoir-faire et musées d’atelier : gratuits et très détaillés.' } },
+          { k: 'practice', n: 'A short leatherwork workshop', d: { zh: '親手縫過一次，面試講工藝時的說服力完全不同。', en: 'Having stitched once yourself changes how convincingly you can talk about craft.', fr: 'Avoir cousu une fois change la crédibilité de votre discours.' } },
+          { k: 'free', n: 'Auction house condition reports', d: { zh: '拍賣行的狀況報告，是學習判斷做工與保存的免費教材。', en: 'Auction condition reports are a free education in judging construction and wear.', fr: 'Les rapports de condition des maisons de vente : une école gratuite.' } }
+        ],
+        project: { n: { zh: '一份皮件成本結構與工藝比較', en: 'One leather goods cost and craft comparison', fr: 'Une comparaison coûts et savoir-faire' },
+                   d: { zh: '三個價位帶、同一個品類，說清楚多付的錢買到了什麼、又有多少是品牌溢價。', en: 'Three price tiers of one category: what the extra money buys, and how much of it is brand premium.', fr: 'Trois gammes de prix : ce que l’on achète réellement et ce qui relève de la prime de marque.' } }
+      },
+      'luxury.watches_jewelry': {
+        stages: [
+          [ { zh: '學機芯的三種類型：石英、自動、手上鍊，以及複雜功能的層級。', en: 'Learn the three movement types — quartz, automatic, manual — and the hierarchy of complications.', fr: 'Apprendre les trois types de mouvements et la hiérarchie des complications.' },
+            { zh: '認識珠寶的 4C 與貴金屬純度標記，能看懂一張證書。', en: 'Learn the 4Cs and precious-metal hallmarks well enough to read a certificate.', fr: 'Maîtriser les 4C et les poinçons pour lire un certificat.' } ],
+          [ { zh: '弄懂二級市場：為什麼某些型號溢價、某些跌破定價。', en: 'Understand the secondary market: why some references trade above retail and others below.', fr: 'Comprendre le marché secondaire : pourquoi certaines références s’échangent au-dessus du prix public.' },
+            { zh: '學產銷結構：品牌、經銷商與授權零售商之間的利益分配。', en: 'Learn the distribution structure and how margin is split between brand, distributor and authorised retailer.', fr: 'Comprendre la répartition de la marge entre marque, distributeur et détaillant agréé.' } ],
+          [ { zh: '做一份**保值分析**：追蹤五個型號三年的一手與二手價格差距。', en: 'Build a **value-retention analysis**: five references, three years of retail versus secondary prices.', fr: 'Réaliser une **analyse de valeur** : cinq références, trois ans de prix neuf et occasion.' },
+            { zh: '寫出妳對「哪些型號被高估」的判斷與理由。', en: 'State which references you think are overvalued and why.', fr: 'Dire quelles références vous jugez surévaluées et pourquoi.' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'Chrono24 / WatchCharts price data', d: { zh: '公開的二級市場價格資料，可直接做趨勢分析。', en: 'Public secondary-market price data you can analyse directly.', fr: 'Données publiques du marché secondaire, exploitables directement.' } },
+          { k: 'course', n: 'GIA / HRD gemology courses', d: { zh: '珠寶產業的正式資格，鑑定職位的入場券。', en: 'The formal qualification in jewellery, and the entry ticket to appraisal roles.', fr: 'La qualification formelle en joaillerie, ticket d’entrée à l’expertise.' } },
+          { k: 'free', n: 'Auction catalogues (Christie’s, Phillips)', d: { zh: '免費且極專業的說明文字，是學習描述的最佳範本。', en: 'Free and highly professional descriptions: the best model for learning how to describe.', fr: 'Descriptions gratuites et très professionnelles : le meilleur modèle.' } },
+          { k: 'community', n: 'Hodinkee / Watches by SJX', d: { zh: '製錶技術與市場的深度報導。', en: 'Serious reporting on watchmaking and its market.', fr: 'Un journalisme sérieux sur l’horlogerie et son marché.' } }
+        ],
+        project: { n: { zh: '一份型號保值追蹤分析', en: 'One value-retention tracker', fr: 'Un suivi de valeur de références' },
+                   d: { zh: '五個型號、三年價格、一段判斷。這份東西同時證明產業知識與資料能力。', en: 'Five references, three years of prices, one judgement: it proves industry knowledge and data skill at once.', fr: 'Cinq références, trois ans de prix, un jugement : connaissance sectorielle et compétence data à la fois.' } }
+      },
+      'luxury.luxury_retail': {
+        stages: [
+          [ { zh: '學精品零售的客戶旅程：迎接、探索、故事、成交、售後，每一步的目的不同。', en: 'Learn the luxury client journey — welcome, discovery, story, close, aftercare — each step with a different purpose.', fr: 'Apprendre le parcours client du luxe : accueil, découverte, récit, conclusion, suivi.' },
+            { zh: '弄懂**客戶檔案（clienteling）**：為什麼記住客人的女兒叫什麼名字是工作的一部分。', en: 'Understand **clienteling**: why remembering a client’s daughter’s name is literally part of the job.', fr: 'Comprendre le clienteling : retenir le prénom de la fille d’un client fait partie du métier.' } ],
+          [ { zh: '學門市指標：客單價、轉換率、每平方公尺營收、回頭客佔比。', en: 'Learn store metrics: average transaction, conversion, sales per square metre, repeat share.', fr: 'Apprendre les indicateurs boutique : panier moyen, conversion, chiffre au m², fidélité.' },
+            { zh: '研究旅遊零售（travel retail）與大中華客群的消費動線。', en: 'Study travel retail and how Greater China clientele actually flows through it.', fr: 'Étudier le travel retail et les flux de la clientèle chinoise.' } ],
+          [ { zh: '做一次**神秘客訪查**：走訪三家精品店，記錄接待、話術與成交嘗試。', en: 'Run a **mystery-shopping study**: three boutiques, recording welcome, script and closing attempts.', fr: 'Mener une étude client mystère : trois boutiques, accueil, discours, tentative de vente.' },
+            { zh: '寫成一頁比較與建議，這是精品零售管理職缺最喜歡的作品。', en: 'Write it up as a one-page comparison and recommendation: the piece luxury retail managers most like to see.', fr: 'La restituer en une page de comparaison et de recommandation.' } ]
+        ],
+        resources: [
+          { k: 'practice', n: 'Mystery shopping in three boutiques', d: { zh: '零成本、當週可完成，且面試素材極強。', en: 'Free, doable in a week, and unusually strong interview material.', fr: 'Gratuit, faisable en une semaine, très efficace en entretien.' } },
+          { k: 'book', n: 'Kapferer, The Luxury Strategy (retail chapters)', d: { zh: '門市體驗與品牌控制的理論基礎。', en: 'The theory behind store experience and brand control.', fr: 'La théorie de l’expérience boutique et du contrôle de marque.' } },
+          { k: 'free', n: 'Group career sites (LVMH, Kering, Richemont)', d: { zh: '職缺描述本身就是最好的技能清單，照著補。', en: 'The job descriptions themselves are the best skills checklist available.', fr: 'Les offres d’emploi sont la meilleure liste de compétences.' } },
+          { k: 'community', n: 'Luxury retail alumni networks', d: { zh: '這個產業高度依賴內推，校友網路是實際入口。', en: 'This industry runs on referrals; alumni networks are the practical door.', fr: 'Ce secteur fonctionne par cooptation : les réseaux d’anciens sont la porte d’entrée.' } }
+        ],
+        project: { n: { zh: '一份三家門市的神秘客比較報告', en: 'One three-boutique mystery shopping report', fr: 'Un rapport client mystère sur trois boutiques' },
+                   d: { zh: '附上妳會怎麼改善其中最弱的一家。帶著這份東西去面試，對話會完全不同。', en: 'Include how you would fix the weakest of the three. Walking into an interview with it changes the conversation.', fr: 'Y ajouter comment corriger la plus faible : l’entretien en devient tout autre.' } }
+      },
+      'luxury.preloved_luxury': {
+        stages: [
+          [ { zh: '弄懂二手精品的三種模式：寄售、買斷、平台媒合，各自的現金流與風險不同。', en: 'Learn the three resale models — consignment, outright purchase, marketplace — and how their cash flow and risk differ.', fr: 'Comprendre les trois modèles de revente : dépôt-vente, achat ferme, place de marché.' },
+            { zh: '學真偽鑑定的基本邏輯：五金、縫線、內襯、序號與整體比例。', en: 'Learn authentication basics: hardware, stitching, lining, serials and overall proportion.', fr: 'Apprendre les bases de l’authentification : ferrures, coutures, doublure, numéros, proportions.' } ],
+          [ { zh: '研究**定價機制**：狀況分級、稀有度與季節性如何決定收購價。', en: 'Study **pricing mechanics**: condition grading, rarity and seasonality driving the buy price.', fr: 'Étudier la tarification : état, rareté et saisonnalité déterminent le prix d’achat.' },
+            { zh: '理解品牌對二手市場的態度轉變，以及循環經濟法規的推力。', en: 'Understand how brands’ stance on resale is shifting, and the circular-economy rules pushing it.', fr: 'Comprendre l’évolution des marques face à la revente et la pression réglementaire.' } ],
+          [ { zh: '做一份**市場分析**：法國二手精品平台的競爭格局與獲利模式。', en: 'Write a **market analysis** of French resale platforms: competitive landscape and unit economics.', fr: 'Rédiger une **analyse de marché** des plateformes françaises : concurrence et rentabilité.' },
+            { zh: '實際在平台上完成一次買賣，親身經歷估價、驗證與物流。', en: 'Actually complete one transaction on a platform and live through pricing, authentication and logistics.', fr: 'Réaliser une transaction complète et vivre estimation, authentification et logistique.' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'Vestiaire Collective / The RealReal data', d: { zh: '公開的成交價與趨勢報告，分析素材充足。', en: 'Public transaction data and trend reports: plenty of material.', fr: 'Données de transactions et rapports publics.' } },
+          { k: 'course', n: 'Authentication training (Entrupy, professional courses)', d: { zh: '鑑定能力是這個產業最稀缺的技能。', en: 'Authentication is the scarcest skill in this industry.', fr: 'L’authentification est la compétence la plus rare du secteur.' } },
+          { k: 'free', n: 'AGEC law & EU circular economy texts', d: { zh: '法國反浪費法與歐盟循環經濟規範，決定產業走向。', en: 'France’s anti-waste law and the EU circular rules that shape where this market goes.', fr: 'La loi AGEC et les textes européens qui façonnent ce marché.' } },
+          { k: 'practice', n: 'One real buy-and-sell cycle', d: { zh: '親身跑一次流程，理解成本結構最快。', en: 'Running the cycle yourself is the fastest way to understand the cost structure.', fr: 'Faire le cycle soi-même est le plus rapide pour comprendre les coûts.' } }
+        ],
+        project: { n: { zh: '一份二手精品市場分析', en: 'One resale market analysis', fr: 'Une analyse du marché de la seconde main' },
+                   d: { zh: '含平台比較、獲利模式與一個妳認為還沒被服務好的客群。', en: 'Platform comparison, unit economics, and one customer segment you think is still underserved.', fr: 'Comparaison des plateformes, rentabilité, et un segment encore mal servi.' } }
+      },
+      'fragrance.fragrance_notes': {
+        stages: [
+          [ { zh: '建立自己的**嗅覺記憶庫**：每天聞三種原料，寫下三個形容詞。', en: 'Build your own **olfactory memory**: smell three materials a day and write three adjectives for each.', fr: 'Construire sa mémoire olfactive : trois matières par jour, trois adjectifs chacune.' },
+            { zh: '弄懂前中後調不是時間表而是揮發性的結果。', en: 'Understand that top, heart and base are not a timetable but a consequence of volatility.', fr: 'Comprendre que tête, cœur et fond découlent de la volatilité, non d’un calendrier.' } ],
+          [ { zh: '學會盲聞辨識二十種核心原料，這是所有香水工作的基本功。', en: 'Learn to blind-identify twenty core materials: the basic craft of every fragrance job.', fr: 'Savoir identifier vingt matières à l’aveugle : la base du métier.' },
+            { zh: '練習用結構描述香水，而不是「好聞」——誰、什麼、為什麼。', en: 'Practise describing a fragrance structurally rather than as “nice”: who, what, why.', fr: 'Décrire un parfum par sa structure plutôt que par le plaisir qu’il procure.' } ],
+          [ { zh: '做一份**十款香水的結構筆記**：香調、留香、投射、使用情境與定價。', en: 'Build **structural notes on ten fragrances**: accords, longevity, projection, occasion and price.', fr: 'Constituer des **notes structurées sur dix parfums** : accords, tenue, sillage, occasion, prix.' },
+            { zh: '加入盲測：不看瓶身寫評價，會發現品牌對判斷的影響有多大。', en: 'Add a blind round: writing without seeing the bottle shows how much the brand was doing the work.', fr: 'Ajouter une phase à l’aveugle : on mesure alors le poids de la marque.' } ]
+        ],
+        resources: [
+          { k: 'book', n: 'Turin & Sanchez, Perfumes: The Guide', d: { zh: '寫作極好的評論集，示範怎麼用文字描述氣味。', en: 'Superbly written criticism, and a masterclass in putting smell into words.', fr: 'Une critique remarquablement écrite : comment mettre l’odeur en mots.' } },
+          { k: 'practice', n: 'A raw material discovery set', d: { zh: '幾十歐元的原料組，是唯一能真正練鼻子的方式。', en: 'A discovery set of raw materials costs little and is the only real way to train a nose.', fr: 'Un coffret de matières premières : la seule vraie façon d’entraîner son nez.' } },
+          { k: 'free', n: 'Fragrantica / Basenotes archives', d: { zh: '香調與評價資料庫，查證與比較很方便。', en: 'Note and review databases, handy for cross-checking and comparison.', fr: 'Bases de notes et d’avis, pratiques pour comparer.' } },
+          { k: 'community', n: 'Osmothèque (Versailles)', d: { zh: '全球唯一的香水博物館與檔案庫，可預約參觀。', en: 'The world’s only fragrance archive and conservatory; visits can be booked.', fr: 'Le seul conservatoire mondial des parfums ; visites sur réservation.' } }
+        ],
+        project: { n: { zh: '一本十款香水的結構筆記', en: 'A structured notebook on ten fragrances', fr: 'Un carnet structuré sur dix parfums' },
+                   d: { zh: '面試香水品牌時，能盲聞說出結構的人極少。這本筆記就是那個差異。', en: 'Very few candidates can describe structure blind. This notebook is that difference.', fr: 'Peu de candidats savent décrire une structure à l’aveugle : ce carnet fait la différence.' } }
+      },
+      'fragrance.fragrance_families': {
+        stages: [
+          [ { zh: '學香水分類輪（花香、東方、木質、馥奇、柑苔），能把任何一款歸位。', en: 'Learn the fragrance wheel — floral, oriental, woody, fougère, chypre — well enough to place any bottle.', fr: 'Apprendre la roue des familles pour situer n’importe quel parfum.' },
+            { zh: '每個家族挑一款經典聞過，理論才會固定下來。', en: 'Smell one canonical example per family; the theory only sets once you have.', fr: 'Sentir un classique par famille : la théorie ne se fixe qu’ainsi.' } ],
+          [ { zh: '學家族與市場的關係：哪些家族在哪些市場賣得動，為什麼。', en: 'Learn how families map to markets: which sell where, and why.', fr: 'Relier familles et marchés : lesquelles se vendent où, et pourquoi.' },
+            { zh: '研究經典改版（reformulation）：法規限制如何改變了名作的樣貌。', en: 'Study reformulations: how regulation reshaped famous compositions.', fr: 'Étudier les reformulations : comment la réglementation a transformé des classiques.' } ],
+          [ { zh: '做一份**家族地圖**：一個品牌的產品線分佈，找出它的空缺。', en: 'Build a **family map** of one brand’s portfolio and find the gap in it.', fr: 'Cartographier les familles d’une marque et repérer le vide.' },
+            { zh: '據此提出一個新品方向，說明它為什麼補得上那個空缺。', en: 'Propose a launch direction from that gap and argue why it fills it.', fr: 'Proposer une direction de lancement qui comble ce vide.' } ]
+        ],
+        resources: [
+          { k: 'book', n: 'Edwards, Fragrances of the World', d: { zh: '產業標準的分類系統，品牌內部也在用。', en: 'The industry-standard classification, used inside brands too.', fr: 'La classification de référence, utilisée aussi en interne.' } },
+          { k: 'free', n: 'IFRA standards', d: { zh: '國際香料協會的用量規範，解釋了所有改版的原因。', en: 'The IFRA usage standards that explain every reformulation.', fr: 'Les standards IFRA, à l’origine de toutes les reformulations.' } },
+          { k: 'practice', n: 'One classic per family, smelled', d: { zh: '藥妝店與百貨試香免費，成本只有時間。', en: 'Testing is free in store; the only cost is time.', fr: 'Tester est gratuit en boutique : le seul coût est le temps.' } },
+          { k: 'free', n: 'Nez / Le Mouchoir de Monsieur', d: { zh: '法國的香水專業出版，行業詞彙的最佳來源。', en: 'French fragrance publishing: the best source for the professional vocabulary.', fr: 'L’édition française du parfum : la meilleure source de vocabulaire.' } }
+        ],
+        project: { n: { zh: '一份品牌的香水家族地圖', en: 'One brand’s fragrance family map', fr: 'La cartographie des familles d’une marque' },
+                   d: { zh: '把一個品牌的產品線畫成分類圖，指出空缺並提出一個新品方向。', en: 'Chart a brand’s portfolio onto the wheel, mark the gap, and propose a launch.', fr: 'Placer la gamme sur la roue, marquer le vide, proposer un lancement.' } }
+      },
+      'fragrance.raw_materials': {
+        stages: [
+          [ { zh: '弄懂天然與合成的實際差異：成本、穩定性、法規與永續性。', en: 'Learn what actually separates naturals from synthetics: cost, stability, regulation and sustainability.', fr: 'Ce qui sépare réellement naturel et synthèse : coût, stabilité, réglementation, durabilité.' },
+            { zh: '認識萃取方式（蒸餾、溶劑、CO2、頂空），以及它們如何改變氣味。', en: 'Learn extraction methods — distillation, solvent, CO2, headspace — and how each changes the smell.', fr: 'Connaître les méthodes d’extraction et leur effet sur l’odeur.' } ],
+          [ { zh: '追一條真實的原料供應鏈（格拉斯玫瑰、馬達加斯加香草），到產地層級。', en: 'Trace one real supply chain to farm level: Grasse rose or Madagascar vanilla.', fr: 'Remonter une filière réelle jusqu’au producteur : rose de Grasse, vanille de Madagascar.' },
+            { zh: '學價格波動的成因：氣候、政治、投機與品牌囤貨。', en: 'Learn what drives price volatility: weather, politics, speculation and brand stockpiling.', fr: 'Comprendre la volatilité : climat, politique, spéculation, stocks des marques.' } ],
+          [ { zh: '做一份**原料供應風險報告**：來源、價格趨勢、替代方案與 ESG 議題。', en: 'Write a **supply-risk report** on one material: origin, price trend, substitutes and ESG issues.', fr: 'Rédiger un **rapport de risque** sur une matière : origine, prix, substituts, ESG.' },
+            { zh: '這份文件同時屬於採購、永續與產品，三個部門都用得上。', en: 'That document belongs to procurement, sustainability and product at once — three doors from one file.', fr: 'Ce document sert aux achats, à la RSE et au produit : trois portes pour un dossier.' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'Givaudan / Firmenich / IFF sustainability reports', d: { zh: '香料巨頭的公開報告，供應鏈細節寫得很清楚。', en: 'The fragrance houses’ public reports are unusually detailed on supply chains.', fr: 'Les rapports publics des maisons détaillent très bien les filières.' } },
+          { k: 'free', n: 'Grasse & Pays de Grasse heritage archives', d: { zh: '法國香水原料重鎮的產業資料，本地職涯很加分。', en: 'Material from the heartland of French perfumery: valuable for local careers.', fr: 'La documentation du berceau de la parfumerie française.' } },
+          { k: 'course', n: 'ISIPCA short programmes', d: { zh: '法國香水產業的正規學校，課程與人脈都在這裡。', en: 'The French industry’s own school: both curriculum and network sit here.', fr: 'L’école de référence : programme et réseau au même endroit.' } },
+          { k: 'practice', n: 'Price-trend tracking sheet', d: { zh: '追三種原料一年的價格，就能看懂產業的焦慮從哪來。', en: 'Track three materials for a year and you see where the industry’s anxiety comes from.', fr: 'Suivre trois matières un an révèle l’origine des inquiétudes du secteur.' } }
+        ],
+        project: { n: { zh: '一份原料供應風險報告', en: 'One raw material supply-risk report', fr: 'Un rapport de risque sur une matière première' },
+                   d: { zh: '選一種正在漲價的原料，寫清楚原因、替代方案與對配方成本的實際影響。', en: 'Pick a material whose price is climbing: causes, substitutes, and the real effect on formula cost.', fr: 'Une matière en hausse : causes, substituts et impact réel sur le coût de formule.' } }
+      },
+      'fragrance.perfumery_craft': {
+        stages: [
+          [ { zh: '學調香的基本結構：主軸、修飾、定香，以及配方為什麼要有比例紀錄。', en: 'Learn composition basics: theme, modifier, fixative, and why every trial is recorded by ratio.', fr: 'Apprendre les bases : thème, modificateur, fixateur, et la tenue rigoureuse des formules.' },
+            { zh: '從三種原料開始做**簡單和絃**，一次只改一個變數。', en: 'Start with three materials and build **simple accords**, changing one variable at a time.', fr: 'Commencer par trois matières et construire des accords simples, une variable à la fois.' } ],
+          [ { zh: '練習複製一個經典和絃（如馥奇的薰衣草—橡苔—香豆素）。', en: 'Practise reproducing one classic accord, such as the fougère lavender-oakmoss-coumarin.', fr: 'Reproduire un accord classique, par exemple l’accord fougère.' },
+            { zh: '學會做配方紀錄與評估表，這是專業與業餘的分界。', en: 'Learn to keep formula records and evaluation sheets: the line between professional and hobbyist.', fr: 'Tenir formules et fiches d’évaluation : la frontière entre pro et amateur.' } ],
+          [ { zh: '完成一支**自己的作品**：從 brief 到最終版，保留所有試驗紀錄。', en: 'Finish **one composition of your own**: from brief to final, keeping every trial on record.', fr: 'Achever une composition personnelle : du brief au final, avec tous les essais.' },
+            { zh: '寫一份 brief 回應文件，說明妳的每個選擇如何回應了需求。', en: 'Write a brief-response document explaining how each choice answers the brief.', fr: 'Rédiger une réponse au brief expliquant chaque choix.' } ]
+        ],
+        resources: [
+          { k: 'course', n: 'ISIPCA / Grasse Institute of Perfumery', d: { zh: '調香師的正規養成路徑，競爭激烈但路徑明確。', en: 'The formal route to becoming a perfumer: competitive, but the path is unambiguous.', fr: 'La voie formelle vers le métier de parfumeur : sélective mais claire.' } },
+          { k: 'book', n: 'Calkin & Jellinek, Perfumery: Practice and Principles', d: { zh: '調香技術的標準教材。', en: 'The standard technical text on composition.', fr: 'Le manuel technique de référence.' } },
+          { k: 'practice', n: 'A home formulation kit', d: { zh: '基礎原料組加天平，就能開始做真正的練習。', en: 'A basic material kit and a scale are enough to start real practice.', fr: 'Un coffret de base et une balance suffisent pour commencer.' } },
+          { k: 'community', n: 'Basenotes DIY / perfumery forums', d: { zh: '同好互評配方，是自學者唯一能拿到回饋的地方。', en: 'Peer critique of formulas: the only feedback loop a self-learner has.', fr: 'La critique par les pairs : le seul retour possible en autodidacte.' } }
+        ],
+        project: { n: { zh: '一支完整的自製香水與配方紀錄', en: 'One finished composition with its formula log', fr: 'Une composition aboutie et son journal de formule' },
+                   d: { zh: '成品好不好聞其次，重點是紀錄完整、能說明每一次修改的理由。', en: 'Whether it smells good matters less than whether the log is complete and every revision explained.', fr: 'Le résultat compte moins qu’un journal complet et des choix justifiés.' } }
+      },
+      'fragrance.fragrance_market': {
+        stages: [
+          [ { zh: '弄懂香水的商業結構：授權品牌、自有品牌與沙龍香的獲利模式差異。', en: 'Learn the business structures: licensed brands, owned brands and niche houses earn differently.', fr: 'Comprendre les modèles : marques sous licence, marques propres, niche.' },
+            { zh: '看清主要玩家：Coty、L’Oréal、Puig、Interparfums 各自握有哪些授權。', en: 'Map the players: which licences sit with Coty, L’Oréal, Puig and Interparfums.', fr: 'Cartographier les acteurs et leurs licences.' } ],
+          [ { zh: '學上市與長銷的差別：香水的真正利潤來自十年以上的長青款。', en: 'Learn launches versus longevity: the real profit sits in pillars that run for a decade or more.', fr: 'Lancements et piliers : le profit vient des classiques qui durent.' },
+            { zh: '研究沙龍香的興起與被收購潮，理解估值邏輯。', en: 'Study the rise of niche and the acquisition wave, and how those brands get valued.', fr: 'Étudier l’essor de la niche et les acquisitions, et leur valorisation.' } ],
+          [ { zh: '做一份**競爭格局報告**：某個價格帶的玩家、明星品與市佔變化。', en: 'Write a **competitive landscape report** on one price tier: players, hero products, share shifts.', fr: 'Rédiger une **analyse concurrentielle** d’un segment de prix.' },
+            { zh: '提出一個併購或授權建議，並說清楚它的財務理由。', en: 'Propose one acquisition or licensing move and set out its financial logic.', fr: 'Proposer une acquisition ou une licence et en exposer la logique financière.' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'Coty / Interparfums / Puig annual reports', d: { zh: '上市公司財報，香水產業唯一可靠的數字來源。', en: 'Listed-company filings: the only reliable numbers in this industry.', fr: 'Les comptes des sociétés cotées : les seuls chiffres fiables.' } },
+          { k: 'free', n: 'NPD / Circana beauty market data', d: { zh: '免費摘要即可掌握市佔與價格帶趨勢。', en: 'Free summaries carry enough share and price-tier trend to work with.', fr: 'Les synthèses gratuites suffisent pour les parts et les segments.' } },
+          { k: 'community', n: 'Premium Beauty News / BeautyMatter', d: { zh: '授權易主與新品上市的第一手消息。', en: 'First word on licence changes and launches.', fr: 'L’information de première main sur licences et lancements.' } },
+          { k: 'practice', n: 'Retail shelf and price audits', d: { zh: '香水的實際定價與促銷，只有到店才看得到。', en: 'Real pricing and promotion in fragrance are only visible in store.', fr: 'Les prix et promotions réels ne se voient qu’en magasin.' } }
+        ],
+        project: { n: { zh: '一份香水價格帶競爭報告', en: 'One fragrance price-tier competitive report', fr: 'Une analyse concurrentielle par segment de prix' },
+                   d: { zh: '這份報告與知識庫裡的 Coty 香水市場地圖可以互相補完，一起帶去面試。', en: 'It complements the Coty market map elsewhere in this library; take both into an interview.', fr: 'Elle complète la carte du marché Coty de cette bibliothèque : à présenter ensemble.' } }
+      },
+      'wine.wine_knowledge': {
+        stages: [
+          [ { zh: '學葡萄品種與產區的對應：先掌握十個品種與它們的經典產地。', en: 'Learn grape-to-place: start with ten varieties and their classic regions.', fr: 'Relier cépages et terroirs : commencer par dix variétés et leurs régions.' },
+            { zh: '弄懂法國 **AOC（原產地命名控制）** 的邏輯：它管的是規則，不是品質保證。', en: 'Understand the logic of the French **AOC**: it governs rules, not a promise of quality.', fr: 'Comprendre l’**AOC** : elle encadre des règles, pas une garantie de qualité.' } ],
+          [ { zh: '建立**系統化品飲**習慣：外觀、香氣、味覺、結論，每次都同一套流程。', en: 'Build a **systematic tasting** habit: appearance, nose, palate, conclusion, the same order every time.', fr: 'Adopter une **dégustation systématique** : robe, nez, bouche, conclusion.' },
+            { zh: '每週盲飲兩支，寫下判斷再對答案——這是唯一有效的訓練方式。', en: 'Taste two wines blind each week, write your call, then check: the only training that works.', fr: 'Deux vins à l’aveugle par semaine, verdict écrit puis vérifié.' } ],
+          [ { zh: '準備 **WSET Level 2 或 3**，課綱本身就是完整的學習地圖。', en: 'Prepare **WSET Level 2 or 3**: the syllabus is itself a complete study map.', fr: 'Préparer le **WSET niveau 2 ou 3** : le programme est une carte d’étude complète.' },
+            { zh: '走訪一次酒莊，從採收到裝瓶親眼看過一遍。', en: 'Visit a domaine and see the year from harvest to bottling once with your own eyes.', fr: 'Visiter un domaine et voir une fois le cycle, des vendanges à la mise.' } ]
+        ],
+        resources: [
+          { k: 'book', n: 'Robinson, The Oxford Companion to Wine', d: { zh: '葡萄酒的權威工具書，查什麼都有。', en: 'The authoritative reference; whatever you need to look up is in it.', fr: 'L’ouvrage de référence : tout s’y trouve.' } },
+          { k: 'course', n: 'WSET Level 2 / Level 3', d: { zh: '國際認可的入門與進階認證，履歷上通用。', en: 'The internationally recognised entry and intermediate certifications.', fr: 'Les certifications reconnues internationalement.' } },
+          { k: 'practice', n: 'Weekly blind tasting', d: { zh: '兩支酒、一張紙，這是最便宜也最有效的訓練。', en: 'Two bottles and one sheet of paper: the cheapest effective training there is.', fr: 'Deux bouteilles et une feuille : l’entraînement le plus efficace.' } },
+          { k: 'free', n: 'Vins de Bourgogne / Bordeaux official sites', d: { zh: '產區公會的官方教材，免費且細緻。', en: 'The regional bodies’ own teaching material: free and detailed.', fr: 'Les supports officiels des interprofessions : gratuits et précis.' } }
+        ],
+        project: { n: { zh: '一本五十支酒的品飲筆記', en: 'A tasting notebook of fifty wines', fr: 'Un carnet de dégustation de cinquante vins' },
+                   d: { zh: '含盲飲判斷與對答案的紀錄。這本筆記在酒業求職時比任何證書更能證明實力。', en: 'With blind calls and the corrections. In wine hiring it proves more than any certificate.', fr: 'Avec verdicts à l’aveugle et corrections : plus probant qu’un certificat.' } }
+      },
+      'wine.champagne_sparkling': {
+        stages: [
+          [ { zh: '弄懂**傳統法（méthode traditionnelle）**的每一步，以及它為什麼決定成本。', en: 'Learn every step of the **traditional method** and why it drives the cost.', fr: 'Maîtriser chaque étape de la méthode traditionnelle et son coût.' },
+            { zh: '認識香檳的甜度分級與 dosage 的實際作用。', en: 'Learn the sweetness scale and what dosage actually does.', fr: 'Connaître l’échelle de dosage et son rôle réel.' } ],
+          [ { zh: '比較大廠、酒商與**獨立酒農香檳（RM）**的商業模式差異。', en: 'Compare the models: grandes marques, négociants and **grower Champagne (RM)**.', fr: 'Comparer grandes marques, négociants et récoltants-manipulants.' },
+            { zh: '學其他氣泡酒（Crémant、Cava、Franciacorta、Prosecco）的定位與價差來源。', en: 'Learn where Crémant, Cava, Franciacorta and Prosecco sit and why the price gaps exist.', fr: 'Situer crémant, cava, franciacorta et prosecco et expliquer les écarts de prix.' } ],
+          [ { zh: '做一份**氣泡酒價格帶分析**：同樣工法為什麼價差三倍。', en: 'Analyse the **sparkling price ladder**: why the same method spans a threefold price range.', fr: 'Analyser l’échelle de prix : pourquoi la même méthode varie du simple au triple.' },
+            { zh: '選一場實際場合做選酒提案，含理由與預算。', en: 'Build one real occasion’s wine selection with reasoning and a budget.', fr: 'Bâtir une sélection pour une occasion réelle, avec justification et budget.' } ]
+        ],
+        resources: [
+          { k: 'book', n: 'Peter Liem, Champagne', d: { zh: '香檳產區的權威著作，村莊層級講得最清楚。', en: 'The authoritative book, and the clearest on village-level detail.', fr: 'L’ouvrage de référence, le plus précis au niveau des villages.' } },
+          { k: 'free', n: 'Comité Champagne resources', d: { zh: '香檳公會官方教材，免費且完整。', en: 'The Champagne bureau’s official material: free and complete.', fr: 'Les ressources officielles du Comité Champagne.' } },
+          { k: 'practice', n: 'Comparative tasting: Champagne vs Crémant', d: { zh: '同時開兩支對比，一次就懂價差買到了什麼。', en: 'Open both side by side once and the price gap explains itself.', fr: 'Ouvrir les deux côte à côte : l’écart de prix s’explique seul.' } },
+          { k: 'community', n: 'Grower Champagne importers & fairs', d: { zh: '酒農香檳的展會，是認識產業的實際入口。', en: 'Grower fairs are a practical way into the trade.', fr: 'Les salons de vignerons sont une porte d’entrée concrète.' } }
+        ],
+        project: { n: { zh: '一份氣泡酒選酒提案', en: 'One sparkling wine selection proposal', fr: 'Une proposition de sélection d’effervescents' },
+                   d: { zh: '為一個真實場合選六支酒，每支寫明理由、價格與替代方案。', en: 'Six bottles for a real occasion, each with reasoning, price and an alternative.', fr: 'Six bouteilles pour une occasion réelle, avec justification, prix et alternative.' } }
+      },
+      'wine.spirits_world': {
+        stages: [
+          [ { zh: '弄懂蒸餾的原理與**陳年**如何改變酒體：橡木、氧化、時間。', en: 'Learn distillation and how **ageing** changes a spirit: oak, oxidation, time.', fr: 'Comprendre la distillation et l’effet du vieillissement : bois, oxydation, temps.' },
+            { zh: '掌握六大類烈酒的原料與法規定義（威士忌、干邑、蘭姆、龍舌蘭、琴酒、伏特加）。', en: 'Learn the six categories by raw material and legal definition.', fr: 'Connaître les six familles par matière première et définition légale.' } ],
+          [ { zh: '學法國的兩大保護產區：**干邑與雅馬邑**的等級與商業結構。', en: 'Learn France’s two protected spirits: **Cognac and Armagnac**, their grades and trade structure.', fr: 'Apprendre cognac et armagnac : classifications et structure commerciale.' },
+            { zh: '研究烈酒的高端化趨勢：限量、單桶與收藏市場的興起。', en: 'Study premiumisation: limited editions, single casks and the collector market.', fr: 'Étudier la premiumisation : éditions limitées, fûts uniques, collection.' } ],
+          [ { zh: '做一份**品類分析**：某類烈酒在法國市場的價格帶、玩家與成長點。', en: 'Write a **category analysis** of one spirit in the French market: price tiers, players, growth.', fr: 'Rédiger une **analyse de catégorie** sur le marché français.' },
+            { zh: '走訪一間蒸餾廠或參加產業展（Vinexpo、Whisky Live）。', en: 'Visit a distillery or attend a trade fair such as Vinexpo or Whisky Live.', fr: 'Visiter une distillerie ou aller à Vinexpo ou Whisky Live.' } ]
+        ],
+        resources: [
+          { k: 'course', n: 'WSET Level 2 Spirits', d: { zh: '烈酒的系統性入門認證。', en: 'The systematic entry certification for spirits.', fr: 'La certification d’entrée systématique pour les spiritueux.' } },
+          { k: 'free', n: 'BNIC (Cognac) official resources', d: { zh: '干邑公會的官方資料，法規與市場數據齊全。', en: 'The Cognac bureau’s official material: regulation and market data together.', fr: 'Les ressources du BNIC : réglementation et données de marché.' } },
+          { k: 'free', n: 'Pernod Ricard / Rémy Cointreau reports', d: { zh: '法國兩大烈酒集團財報，產業結構的最佳教材。', en: 'The two French spirits groups’ filings: the best teaching material on industry structure.', fr: 'Les comptes des deux groupes français : la meilleure école de structure sectorielle.' } },
+          { k: 'practice', n: 'Comparative tastings by category', d: { zh: '同類三支對比，比讀十篇介紹更有效。', en: 'Three bottles of one category side by side beats ten articles.', fr: 'Trois bouteilles comparées valent dix articles.' } }
+        ],
+        project: { n: { zh: '一份烈酒品類的市場分析', en: 'One spirits category market analysis', fr: 'Une analyse de marché d’une catégorie de spiritueux' },
+                   d: { zh: '選一個成長中的品類，用集團財報與零售定價說明它為什麼在成長。', en: 'Pick a growing category and use group filings and retail pricing to explain why it grows.', fr: 'Une catégorie en croissance, expliquée par les comptes et les prix de détail.' } }
+      },
+      'wine.tasting_service': {
+        stages: [
+          [ { zh: '學系統化品飲的表達方式，能用一致的詞彙描述一支酒。', en: 'Learn the systematic tasting language so one wine gets described the same way twice.', fr: 'Apprendre le langage systématique pour décrire un vin de façon reproductible.' },
+            { zh: '練基本侍酒動作：開瓶、醒酒、溫度、酒杯選擇。', en: 'Practise the service basics: opening, decanting, temperature, glassware.', fr: 'Pratiquer le service : ouverture, carafage, température, verrerie.' } ],
+          [ { zh: '學**餐酒搭配**的邏輯：酸度、單寧、油脂、鹹味之間的作用。', en: 'Learn the logic of **food pairing**: how acidity, tannin, fat and salt interact.', fr: 'Apprendre l’accord mets-vins : acidité, tanins, gras et sel.' },
+            { zh: '練習酒單設計：價格帶分佈、毛利與客群的平衡。', en: 'Practise wine-list design: price spread, margin and clientele in balance.', fr: 'S’exercer à la carte des vins : gamme de prix, marge, clientèle.' } ],
+          [ { zh: '為一間真實餐廳做一份**酒單提案**，含成本與售價計算。', en: 'Build a **wine list proposal** for a real restaurant, with cost and pricing worked out.', fr: 'Réaliser une **proposition de carte** pour un vrai restaurant, coûts et prix compris.' },
+            { zh: '在真實場合服務一次（餐酒會、朋友晚宴），練習講解與節奏。', en: 'Serve at one real occasion — a tasting dinner or a friends’ meal — and practise pacing and explanation.', fr: 'Servir lors d’une vraie occasion et travailler rythme et explication.' } ]
+        ],
+        resources: [
+          { k: 'course', n: 'Court of Master Sommeliers / WSET', d: { zh: '侍酒師的兩條正規認證路線。', en: 'The two formal certification routes for sommeliers.', fr: 'Les deux voies de certification pour sommeliers.' } },
+          { k: 'book', n: 'Sommelier service manuals', d: { zh: '服務流程的標準教材，細節極多。', en: 'The standard service manuals; the detail is the point.', fr: 'Les manuels de service : le détail fait le métier.' } },
+          { k: 'practice', n: 'One real service occasion', d: { zh: '服務是身體記憶，讀再多也取代不了做一次。', en: 'Service is muscle memory; no amount of reading substitutes for doing it once.', fr: 'Le service est une mémoire du geste : il faut le faire.' } },
+          { k: 'free', n: 'Restaurant wine lists (public menus)', d: { zh: '公開酒單是研究定價與選酒策略的免費素材。', en: 'Public wine lists are free material for studying pricing and selection strategy.', fr: 'Les cartes publiques : matière gratuite sur le prix et la sélection.' } }
+        ],
+        project: { n: { zh: '一份餐廳酒單提案', en: 'One restaurant wine list proposal', fr: 'Une proposition de carte des vins' },
+                   d: { zh: '三十支酒、含成本與售價、以及每支為什麼在單上的一句話。', en: 'Thirty wines with cost, price and one line each on why it earns its place.', fr: 'Trente vins avec coût, prix et une ligne justifiant chacun.' } }
+      },
+      'wine.wine_business': {
+        stages: [
+          [ { zh: '弄懂葡萄酒的商業鏈：酒莊、酒商（négociant）、進口商、通路，每一段的加價。', en: 'Learn the trade chain — domaine, négociant, importer, retail — and the markup at each step.', fr: 'Comprendre la filière : domaine, négociant, importateur, distribution, et les marges.' },
+            { zh: '認識**波爾多期酒（en primeur）**制度與它的投資邏輯。', en: 'Learn the **en primeur** system and the investment logic behind it.', fr: 'Comprendre l’**en primeur** et sa logique d’investissement.' } ],
+          [ { zh: '學名酒的評分體系與 Liv-ex 指數如何驅動價格。', en: 'Learn how critic scores and the Liv-ex indices drive fine wine prices.', fr: 'Comprendre comment notes et indices Liv-ex font le prix.' },
+            { zh: '理解進出口的實務：關稅、酒精稅、物流與保存成本。', en: 'Understand the practicalities of trade: duty, excise, logistics and storage cost.', fr: 'Maîtriser la pratique : droits, accises, logistique, stockage.' } ],
+          [ { zh: '做一份**名酒投資分析**：五個酒款五年的價格走勢與持有成本。', en: 'Build a **fine wine investment analysis**: five wines, five years of prices, and the cost of holding.', fr: 'Réaliser une **analyse d’investissement** : cinq vins, cinq ans de prix, coût de portage.' },
+            { zh: '誠實寫出結論：扣掉保存、保險與價差後，實際報酬還剩多少。', en: 'State the honest conclusion: after storage, insurance and spread, what return actually remains.', fr: 'Conclure honnêtement : après stockage, assurance et spread, que reste-t-il ?' } ]
+        ],
+        resources: [
+          { k: 'free', n: 'Liv-ex market reports', d: { zh: '名酒交易所的公開報告，價格趨勢的第一手來源。', en: 'The fine wine exchange’s public reports: price trends first-hand.', fr: 'Les rapports publics de Liv-ex : les tendances de prix de première main.' } },
+          { k: 'course', n: 'WSET Business of Wine / Diploma', d: { zh: '從品飲走向商業的正規訓練。', en: 'The formal step from tasting into the business side.', fr: 'Le passage formel de la dégustation au commerce.' } },
+          { k: 'practice', n: 'A five-wine price tracker', d: { zh: '自己追五支酒的價格，比讀任何投資推薦都可靠。', en: 'Tracking five wines yourself is more reliable than any investment pitch.', fr: 'Suivre cinq vins soi-même vaut mieux que toute recommandation.' } },
+          { k: 'community', n: 'Vinexpo / Wine Paris trade fairs', d: { zh: '法國兩大酒業展，實習與人脈的實際入口。', en: 'France’s two big wine fairs: the practical door to internships and contacts.', fr: 'Les deux grands salons français : la porte d’entrée aux stages et contacts.' } }
+        ],
+        project: { n: { zh: '一份名酒投資分析報告', en: 'One fine wine investment analysis', fr: 'Une analyse d’investissement en grands vins' },
+                   d: { zh: '這份報告同時證明產業知識與財務分析能力，是精品與金融交界最好的作品。', en: 'It proves industry knowledge and financial analysis at once: the best portfolio piece where luxury meets finance.', fr: 'Elle prouve à la fois la connaissance sectorielle et l’analyse financière.' } }
+      },
+    };
+
+    // ── Dropdown helpers ──────────────────────────────────────────────────
+    const domainMeta = {
+      cosmetics: { icon: 'fa-pump-soap',    name: { zh: '美妝保養', en: 'Beauty & Skincare', fr: 'Beauté & Soin' },   category: 'beauty' },
+      fragrance: { icon: 'fa-spray-can-sparkles', name: { zh: '香水香氛', en: 'Fragrance', fr: 'Parfum' },           category: 'beauty' },
+      luxury:    { icon: 'fa-gem',          name: { zh: '奢侈品',   en: 'Luxury Goods',     fr: 'Luxe' },            category: 'luxury_house' },
+      wine:      { icon: 'fa-wine-glass',   name: { zh: '酒類',     en: 'Wine & Spirits',   fr: 'Vins & Spiritueux' }, category: 'gastronomy' },
+    };
+
+    const domainCategoryMeta = {
+      beauty:        { zh: '美妝與香氛', en: 'Beauty & Fragrance', fr: 'Beauté & Parfum' },
+      luxury_house:  { zh: '精品與時尚', en: 'Luxury & Fashion',   fr: 'Luxe & Mode' },
+      gastronomy:    { zh: '酒與美食',   en: 'Wine & Gastronomy',  fr: 'Vins & Gastronomie' },
+    };
+
+    function toggleDomainDropdown() {
+      const menu = document.getElementById('domain-dropdown-menu');
+      const chevron = document.getElementById('dd-chevron');
+      if (menu.classList.contains('hidden')) {
+        renderDropdownList();
+        menu.classList.remove('hidden');
+        chevron.style.transform = 'rotate(180deg)';
+      } else {
+        closeDomainDropdown();
+      }
+    }
+
+    function renderDropdownList() {
+      const list = document.getElementById('domain-dropdown-list');
+      const categoryOrder = ['beauty', 'luxury_house', 'gastronomy'];
+      list.innerHTML = categoryOrder.map(catKey => {
+        const keysInCat = Object.keys(domainMeta).filter(k => domainMeta[k].category === catKey);
+        if (!keysInCat.length) return '';
+        const header = `<div class="px-3 pt-3 pb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 select-none first:pt-1.5">${domainCategoryMeta[catKey][currentLang]}</div>`;
+        const items = keysInCat.map(key => {
+          const meta = domainMeta[key];
+          const color = domainDatabase[key].themeColor;
+          const isActive = key === currentDomainKey;
+          return `<button onclick="switchDomain('${key}');closeDomainDropdown();"
+            class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm transition-colors duration-150 ${isActive ? `bg-${color}-500/15 text-${color}-400` : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'}">
+            <i class="fa-solid ${meta.icon} w-4 text-center shrink-0 ${isActive ? `text-${color}-400` : ''}"></i>
+            <span class="font-semibold">${meta.name[currentLang]}</span>
+            ${isActive ? '<i class="fa-solid fa-check ml-auto text-xs"></i>' : ''}
+          </button>`;
+        }).join('');
+        return header + items;
+      }).join('');
+    }
+
+    function closeDomainDropdown() {
+      document.getElementById('domain-dropdown-menu').classList.add('hidden');
+      document.getElementById('dd-chevron').style.transform = '';
+    }
+
+    function updateDropdownButton() {
+      const meta = domainMeta[currentDomainKey];
+      const color = domainDatabase[currentDomainKey].themeColor;
+      document.getElementById('dd-domain-icon').className = `fa-solid ${meta.icon} text-${color}-400 text-sm w-4 text-center shrink-0`;
+      document.getElementById('dd-domain-label').className = `flex-1 text-left text-sm font-bold text-${color}-400`;
+      document.getElementById('dd-domain-label').textContent = meta.name[currentLang];
+    }
+
+    // 目前選取的領域 & 分支 ID
+    let currentDomainKey = 'cosmetics';
+    let activeBranchId = 'skincare';
+
+    // 3. 多語言切換的核心控制邏輯
+    function setLanguage(lang) {
+      if (!uiTranslations[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('kb_lang', lang);
+      
+      // 更新語言按鈕樣式
+      ['zh', 'en', 'fr'].forEach(l => {
+        const btn = document.getElementById(`lang-${l}`);
+        if (l === lang) {
+          btn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 bg-teal-500/15 text-teal-400 border border-teal-500/20";
+        } else {
+          btn.className = "px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 text-slate-400 hover:text-slate-200";
+        }
+      });
+
+      // 更新 HTML 中的靜態標籤 (流暢翻譯)
+      document.title = uiTranslations[lang].title;
+      document.getElementById('header-title').innerText = uiTranslations[lang].title;
+      document.getElementById('header-subtitle').innerText = uiTranslations[lang].subtitle;
+      document.getElementById('global-search-input').placeholder = uiTranslations[lang].searchPlaceholder;
+      
+      // 更新下拉選單按鈕文字
+      updateDropdownButton();
+
+      // 詳細解析版塊靜態標籤
+      document.getElementById('label-metadata').innerText = uiTranslations[lang].metadataLabel;
+      document.getElementById('label-core-def').innerText = uiTranslations[lang].coreDefinition;
+      document.getElementById('label-subfields').innerText = uiTranslations[lang].exploreBlocks;
+      document.getElementById('label-skills').innerText = uiTranslations[lang].essentialSkills;
+      document.getElementById('label-tools').innerText = uiTranslations[lang].industryTools;
+      document.getElementById('label-certifications').innerText = uiTranslations[lang].certifications;
+      document.getElementById('label-job-titles').innerText = uiTranslations[lang].jobTitles;
+      document.getElementById('label-job-titles-hint').innerText = uiTranslations[lang].jobTitlesHint;
+      document.getElementById('label-scenario').innerText = uiTranslations[lang].scenarioChallenge;
+      document.getElementById('label-learning').innerText = uiTranslations[lang].learningPath;
+      document.getElementById('label-learning-hint').innerText = uiTranslations[lang].learningHint;
+      document.getElementById('label-resources').innerText = uiTranslations[lang].resourcesLabel;
+      document.getElementById('label-project').innerText = uiTranslations[lang].projectLabel;
+      document.getElementById('label-instructions').innerText = uiTranslations[lang].instructions;
+      
+      // Footer 與版權
+      document.getElementById('footer-text').innerText = uiTranslations[lang].footer;
+
+      // 重新渲染動態組件與目前選取的分支
+      renderDomainMindmap(currentDomainKey);
+      selectBranch(activeBranchId);
+    }
+
+    // 4. 動態屬性語系翻譯助手 (Helper)
+    function t(obj) {
+      if (!obj) return '';
+      if (typeof obj === 'string') return obj;
+      return obj[currentLang] || obj['zh'] || '';
+    }
+
+    // 5. 初始化載入
+    window.addEventListener('load', () => {
+      // 預設為繁體中文、金融領域、企業金融分支
+      const savedLang = localStorage.getItem('kb_lang');
+      setLanguage(savedLang && ['zh','en','fr'].includes(savedLang) ? savedLang : 'zh');
+      
+      // 全局搜尋監聽
+      const searchInput = document.getElementById('global-search-input');
+      searchInput.addEventListener('input', (e) => {
+        handleGlobalSearch(e.target.value.trim());
+      });
+
+      // 監聽視窗尺寸改變，即時重繪連接線
+      window.addEventListener('resize', drawConnections);
+      
+      // 點擊外部自動關閉下拉框
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#domain-dropdown-wrap')) closeDomainDropdown();
+        if (!e.target.closest('#global-search-input') && !e.target.closest('#search-results-dropdown')) {
+          document.getElementById('search-results-dropdown').classList.add('hidden');
+        }
+      });
+    });
+
+    // 6. 切換學科領域
+    function switchDomain(domainKey) {
+      if (!domainDatabase[domainKey]) return;
+      currentDomainKey = domainKey;
+
+      // 更新下拉選單按鈕外觀
+      updateDropdownButton();
+
+      // 重繪選取領域的心智圖
+      renderDomainMindmap(domainKey);
+
+      // 預設選取該領域的第一個分支子節點
+      const firstBranchId = Object.keys(domainDatabase[domainKey].branches)[0];
+      selectBranch(firstBranchId);
+    }
+
+    // 7. 渲染心智圖 (動態重構)
+    function renderDomainMindmap(domainKey) {
+      const data = domainDatabase[domainKey];
+      
+      // 更新標題引導與指示器
+      document.getElementById('domain-indicator-text').innerText = t(data.indicatorText);
+      
+      const indicatorIcon = document.getElementById('domain-indicator-icon');
+      indicatorIcon.className = `fa-solid ${data.indicatorIcon} text-${data.themeColor}-400 animate-pulse`;
+
+      // 設置中心節點 (Hub)
+      document.getElementById('central-zh').innerText = t(data.centralNode.zh);
+      document.getElementById('central-en').innerText = t(data.centralNode.en);
+      
+      const badge = document.getElementById('central-badge');
+      badge.innerText = t(data.centralNode.badge);
+      badge.className = `absolute -bottom-2 bg-slate-900 text-[10px] text-${data.themeColor}-400 border border-${data.themeColor}-500/20 px-2.5 py-0.5 rounded-full font-bold`;
+
+      const hubGlow = document.getElementById('central-hub-glow');
+      hubGlow.className = `absolute -inset-1.5 bg-gradient-to-r from-${data.themeColor}-500 to-${data.themeColor}-700 rounded-2xl blur-lg opacity-60 group-hover:opacity-100 transition duration-500`;
+
+      // 渲染子節點
+      const grid = document.getElementById('nodes-grid');
+      grid.innerHTML = '';
+
+      const branches = Object.values(data.branches);
+      grid.className = `grid grid-cols-2 md:grid-cols-${branches.length} gap-4 lg:gap-6 w-full max-w-6xl mt-2`;
+
+      branches.forEach((branch) => {
+        const btn = document.createElement('button');
+        btn.id = `node-${branch.id}`;
+        btn.onclick = () => selectBranch(branch.id);
+        
+        btn.className = `col-span-1 text-left flex flex-col justify-between p-4 rounded-2xl bg-slate-950/40 border border-slate-900 hover:border-${data.themeColor}-500/30 transition-all duration-300 relative group cursor-pointer`;
+        
+        btn.innerHTML = `
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-${data.themeColor}-500/10 to-${data.themeColor}-500/5 border border-white/5 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <i class="fa-solid ${branch.icon} text-${data.themeColor}-400 text-sm md:text-base"></i>
+            </div>
+            <span class="text-[9px] bg-slate-900 text-${data.themeColor}-400 border border-${data.themeColor}-500/10 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">${t(branch.badge)}</span>
+          </div>
+          <div>
+            <h4 class="text-xs md:text-sm font-bold text-slate-100 group-hover:text-white">${t(branch.title)}</h4>
+            <p class="text-[9px] text-slate-500 font-semibold truncate mt-0.5 uppercase tracking-wide font-mono">${t(branch.englishTitle)}</p>
+          </div>
+          <div id="glow-bar-${branch.id}" class="absolute bottom-0 left-4 right-4 h-0.5 rounded-full transition-all duration-300 opacity-0" style="background-color: ${data.hexColor}" />
+        `;
+
+        grid.appendChild(btn);
+      });
+
+      // 繪製連接線
+      setTimeout(drawConnections, 150);
+    }
+
+    // 8. 選取特定分支子節點
+    function selectBranch(branchId) {
+      activeBranchId = branchId;
+      const data = domainDatabase[currentDomainKey];
+      const branch = data.branches[branchId];
+      if (!branch) return;
+
+      // A. 更新地圖節點的高亮狀態
+      const allNodes = document.querySelectorAll('#nodes-grid button');
+      allNodes.forEach(node => {
+        const id = node.id.replace('node-', '');
+        const glowBar = document.getElementById(`glow-bar-${id}`);
+        if (id === branchId) {
+          node.className = `col-span-1 text-left flex flex-col justify-between p-4 rounded-2xl bg-slate-900 border border-${data.themeColor}-500/60 ring-2 ring-${data.themeColor}-500/30 shadow-glow-${data.themeColor} scale-[1.03] transition-all duration-300 relative group cursor-pointer`;
+          if (glowBar) glowBar.classList.remove('opacity-0');
+        } else {
+          node.className = `col-span-1 text-left flex flex-col justify-between p-4 rounded-2xl bg-slate-950/40 border border-slate-900 hover:border-${data.themeColor}-500/30 transition-all duration-300 relative group cursor-pointer`;
+          if (glowBar) glowBar.classList.add('opacity-0');
+        }
+      });
+
+      // B. 重繪連接線
+      drawConnections();
+
+      // C. 載入詳細資訊板塊的翻譯文本
+      document.getElementById('detail-title').innerText = t(branch.title);
+      document.getElementById('detail-tag').innerText = t(branch.englishTitle);
+      document.getElementById('detail-meta').innerText = currentDomainKey.toUpperCase();
+      document.getElementById('detail-desc').innerText = t(branch.description);
+
+      // 更新 Icon 主題與配色
+      const iconBox = document.getElementById('detail-icon-box');
+      iconBox.className = `p-3.5 rounded-2xl transition-all duration-300 bg-${data.themeColor}-500/10 text-${data.themeColor}-400 border border-${data.themeColor}-500/20`;
+      
+      const iconEl = document.getElementById('detail-icon');
+      iconEl.className = `fa-solid ${branch.icon} text-2xl`;
+
+      const detailTag = document.getElementById('detail-tag');
+      detailTag.className = `text-xs uppercase tracking-wider font-bold font-sans text-${data.themeColor}-400`;
+
+      // D. 渲染子領域 (Subfields)
+      const subfieldsContainer = document.getElementById('detail-subfields');
+      subfieldsContainer.innerHTML = '';
+      branch.subfields.forEach(sub => {
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl bg-slate-900/40 border border-slate-900 hover:border-slate-800 transition-all duration-300`;
+        card.innerHTML = `
+          <h5 class="text-xs md:text-sm font-bold text-white mb-1.5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full" style="background-color: ${data.hexColor}"></span>
+            ${t(sub.name)}
+          </h5>
+          <p class="text-[11px] text-slate-400 leading-relaxed font-light">${t(sub.desc)}</p>
+        `;
+        subfieldsContainer.appendChild(card);
+      });
+
+      // E. 渲染專業技能 (Skills) 
+      const skillsContainer = document.getElementById('detail-skills');
+      skillsContainer.innerHTML = '';
+      branch.skills.forEach(skillObj => {
+        const li = document.createElement('li');
+        li.className = 'flex items-start gap-3 text-xs md:text-sm text-slate-300 font-light leading-relaxed';
+        
+        // 解析簡單 Markdown 的 ** 粗體語法
+        const skillText = t(skillObj);
+        const formattedSkill = skillText.replace(/\*\*(.*?)\*\*/g, `<strong class="text-white font-semibold">$1</strong>`);
+        
+        li.innerHTML = `
+          <span class="mt-1" style="color: ${data.hexColor}"><i class="fa-solid fa-circle-check"></i></span>
+          <div>${formattedSkill}</div>
+        `;
+        skillsContainer.appendChild(li);
+      });
+
+      // F. 渲染工具
+      const toolsContainer = document.getElementById('detail-tools');
+      toolsContainer.innerHTML = '';
+      branch.tools.forEach(tool => {
+        const tag = document.createElement('span');
+        tag.className = `px-3 py-1.5 bg-slate-900 border border-slate-850 hover:border-${data.themeColor}-500/30 rounded-xl text-xs font-semibold text-slate-300 cursor-default transition-all duration-200`;
+        tag.innerText = tool;
+        toolsContainer.appendChild(tag);
+      });
+
+      // F-2. 渲染相關證照與課程
+      const certsContainer = document.getElementById('detail-certifications');
+      certsContainer.innerHTML = '';
+      (branch.certifications || []).forEach(cert => {
+        const chip = document.createElement('span');
+        chip.className = 'px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-slate-300 flex items-center gap-1.5';
+        chip.innerHTML = `<i class="fa-solid fa-certificate text-[10px]" style="color: ${data.hexColor}"></i> ${t(cert)}`;
+        certsContainer.appendChild(chip);
+      });
+
+      // F-3. 渲染職缺搜尋關鍵字
+      const jobTitlesContainer = document.getElementById('detail-job-titles');
+      jobTitlesContainer.innerHTML = '';
+      (branch.jobTitles || []).forEach(title => {
+        const chip = document.createElement('span');
+        chip.className = 'px-3 py-1.5 bg-slate-900/80 border border-blue-500/20 rounded-lg text-xs text-slate-200 flex items-center gap-1.5 hover:border-blue-400/50 hover:bg-slate-800 transition-all duration-200 cursor-default';
+        chip.innerHTML = `<i class="fa-brands fa-linkedin text-[10px] text-blue-400"></i> ${title}`;
+        jobTitlesContainer.appendChild(chip);
+      });
+
+      // G. 渲染情境題目
+      document.getElementById('scenario-question').innerText = t(branch.scenario.question);
+      const optionsContainer = document.getElementById('scenario-options');
+      optionsContainer.innerHTML = '';
+
+      const feedbackEl = document.getElementById('scenario-feedback');
+      feedbackEl.className = 'hidden';
+
+      branch.scenario.options.forEach((opt, idx) => {
+        const optBtn = document.createElement('button');
+        optBtn.className = 'w-full text-left p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs md:text-sm text-slate-300 hover:bg-slate-900 hover:border-slate-700/80 transition-all duration-200';
+        optBtn.innerText = t(opt.text);
+        optBtn.onclick = () => submitScenario(idx, branch.scenario.options, data.themeColor);
+        optionsContainer.appendChild(optBtn);
+      });
+
+      // H. 渲染實作與學習路徑
+      renderLearningPath(branchId, data);
+    }
+
+    // 8-2. 實作與學習路徑：三階段路線、實操資源、履歷作品
+    const RESOURCE_KINDS = {
+      book:      { icon: 'fa-book',              label: 'resBook' },
+      course:    { icon: 'fa-chalkboard-user',   label: 'resCourse' },
+      free:      { icon: 'fa-circle-play',       label: 'resFree' },
+      practice:  { icon: 'fa-dumbbell',          label: 'resPractice' },
+      community: { icon: 'fa-users',             label: 'resCommunity' },
+    };
+
+    function renderLearningPath(branchId, data) {
+      const ui       = uiTranslations[currentLang];
+      const plan     = learningPaths[`${currentDomainKey}.${branchId}`];
+      const stagesEl = document.getElementById('learning-stages');
+      const resEl    = document.getElementById('learning-resources');
+      const projEl   = document.getElementById('learning-project');
+      const emptyEl  = document.getElementById('learning-empty');
+
+      document.getElementById('learning-meta').innerText = currentDomainKey.toUpperCase();
+      document.getElementById('learning-icon-box').className =
+        `p-3 rounded-2xl transition-all duration-300 bg-${data.themeColor}-500/10 text-${data.themeColor}-400 border border-${data.themeColor}-500/20`;
+
+      // 領域層級的提醒（例如投資領域的免責聲明）
+      const disc = document.getElementById('domain-disclaimer');
+      const discText = domainDisclaimers[currentDomainKey];
+      if (discText) {
+        disc.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i>${t(discText)}`;
+        disc.classList.remove('hidden');
+      } else {
+        disc.classList.add('hidden');
+      }
+
+      stagesEl.innerHTML = ''; resEl.innerHTML = ''; projEl.innerHTML = '';
+      if (!plan) {
+        emptyEl.innerText = ui.learningEmpty;
+        emptyEl.classList.remove('hidden');
+        return;
+      }
+      emptyEl.classList.add('hidden');
+
+      // 三階段
+      const stageLabels = [ui.stage1, ui.stage2, ui.stage3];
+      plan.stages.forEach((items, i) => {
+        const card = document.createElement('div');
+        card.className = 'rounded-2xl bg-slate-900/40 border border-slate-900 p-5 space-y-3';
+        card.style.borderTopColor = data.hexColor;
+        card.style.borderTopWidth = '2px';
+        card.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black text-slate-950"
+                  style="background-color: ${data.hexColor}">${i + 1}</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider" style="color: ${data.hexColor}">${stageLabels[i]}</span>
+          </div>
+          <ul class="space-y-2.5">
+            ${items.map(it => `
+              <li class="flex items-start gap-2.5 text-[12px] md:text-[13px] text-slate-300 font-light leading-relaxed">
+                <i class="fa-solid fa-angle-right mt-1 text-[10px]" style="color: ${data.hexColor}"></i>
+                <div>${t(it).replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')}</div>
+              </li>`).join('')}
+          </ul>`;
+        stagesEl.appendChild(card);
+      });
+
+      // 實操資源
+      plan.resources.forEach(r => {
+        const kind = RESOURCE_KINDS[r.k] || RESOURCE_KINDS.free;
+        const card = document.createElement('div');
+        card.className = 'rounded-2xl bg-slate-900/40 border border-slate-900 hover:border-slate-800 transition-all duration-300 p-4 space-y-1.5';
+        card.innerHTML = `
+          <div class="flex items-center gap-2">
+            <i class="fa-solid ${kind.icon} text-[11px]" style="color: ${data.hexColor}"></i>
+            <span class="text-[9px] font-bold uppercase tracking-widest text-slate-500">${ui[kind.label]}</span>
+          </div>
+          <h5 class="text-[13px] font-bold text-white leading-snug">${typeof r.n === 'string' ? r.n : t(r.n)}</h5>
+          <p class="text-[11px] text-slate-400 leading-relaxed font-light">${t(r.d)}</p>`;
+        resEl.appendChild(card);
+      });
+
+      // 履歷作品
+      projEl.className = 'rounded-2xl border p-5 space-y-2.5';
+      projEl.style.borderColor = `${data.hexColor}40`;
+      projEl.style.backgroundColor = `${data.hexColor}0d`;
+      projEl.innerHTML = `
+        <h5 class="text-sm font-black text-white leading-snug">${t(plan.project.n)}</h5>
+        <p class="text-[12px] text-slate-300 leading-relaxed font-light">${t(plan.project.d)}</p>`;
+    }
+
+    // 9. 提報情境答案與解析
+    function submitScenario(selectedIndex, options, themeColor) {
+      const feedbackEl = document.getElementById('scenario-feedback');
+      const optionButtons = document.querySelectorAll('#scenario-options button');
+      const selectedOpt = options[selectedIndex];
+
+      optionButtons.forEach((btn, idx) => {
+        btn.className = 'w-full text-left p-3.5 rounded-xl text-xs md:text-sm transition-all duration-200 ';
+        if (idx === selectedIndex) {
+          if (selectedOpt.correct) {
+            btn.classList.add('bg-emerald-950/40', 'border-emerald-500/80', 'text-emerald-300');
+          } else {
+            btn.classList.add('bg-rose-950/40', 'border-rose-500/80', 'text-rose-300');
+          }
+        } else {
+          btn.classList.add('bg-slate-900/40', 'border-slate-800/40', 'text-slate-500', 'cursor-not-allowed');
+          btn.disabled = true;
+        }
+      });
+
+      feedbackEl.className = 'block rounded-xl p-4 text-xs md:text-sm leading-relaxed transition-all duration-300 ';
+      
+      const correctLabel = uiTranslations[currentLang].answerCorrect;
+      const analysisLabel = uiTranslations[currentLang].answerAnalysis;
+      const retryLabel = uiTranslations[currentLang].retryBtn;
+
+      if (selectedOpt.correct) {
+        feedbackEl.classList.add('bg-emerald-950/30', 'border', 'border-emerald-500/30', 'text-emerald-300');
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-base mr-1.5 align-middle"></i> <strong>${correctLabel}</strong> ${t(selectedOpt.reason)}`;
+      } else {
+        feedbackEl.classList.add('bg-rose-950/30', 'border', 'border-rose-500/30', 'text-rose-300');
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-base mr-1.5 align-middle"></i> <strong>${analysisLabel}</strong> ${t(selectedOpt.reason)}`;
+        
+        const retryBtn = document.createElement('button');
+        retryBtn.className = `mt-3 block text-xs bg-slate-900 hover:bg-slate-850 border border-slate-800 px-3 py-1.5 rounded-lg text-slate-300 font-medium transition-colors`;
+        retryBtn.innerText = retryLabel;
+        retryBtn.onclick = () => { selectBranch(activeBranchId); };
+        feedbackEl.appendChild(retryBtn);
+      }
+    }
+
+    // 10. 繪製動態 SVG 連接線 (響應式完美定位)
+    function drawConnections() {
+      const canvas = document.getElementById('svg-canvas');
+      const hub = document.getElementById('central-hub');
+      const childNodes = document.querySelectorAll('#nodes-grid button');
+
+      if (!canvas || !hub || childNodes.length === 0) return;
+
+      canvas.innerHTML = '';
+
+      const canvasRect = canvas.getBoundingClientRect();
+      const hubRect = hub.getBoundingClientRect();
+
+      // 計算中心點
+      const startX = hubRect.left + hubRect.width / 2 - canvasRect.left;
+      const startY = hubRect.bottom - canvasRect.top;
+
+      childNodes.forEach(child => {
+        const childRect = child.getBoundingClientRect();
+        
+        // 計算子節點頂部起點
+        const endX = childRect.left + childRect.width / 2 - canvasRect.left;
+        const endY = childRect.top - canvasRect.top;
+
+        const childId = child.id.replace('node-', '');
+        const isSelected = (childId === activeBranchId);
+
+        // 建立貝氏曲線
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const midY = (startY + endY) / 2;
+        const d = `M ${startX} ${startY} C ${startX} ${midY}, ${endX} ${midY}, ${endX} ${endY}`;
+        
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+
+        const activeColor = domainDatabase[currentDomainKey].hexColor;
+
+        if (isSelected) {
+          path.setAttribute('stroke', activeColor);
+          path.setAttribute('stroke-width', '2.5');
+          path.setAttribute('class', 'active-connection-line opacity-100 transition-all duration-300');
+          
+          const glowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          glowPath.setAttribute('d', d);
+          glowPath.setAttribute('fill', 'none');
+          glowPath.setAttribute('stroke', activeColor);
+          glowPath.setAttribute('stroke-width', '6');
+          glowPath.setAttribute('class', 'opacity-20 blur-sm pointer-events-none');
+          canvas.appendChild(glowPath);
+        } else {
+          path.setAttribute('stroke', '#1e293b');
+          path.setAttribute('stroke-width', '1.5');
+          path.setAttribute('stroke-dasharray', '4,4');
+          path.setAttribute('class', 'opacity-40 transition-all duration-300');
+        }
+
+        canvas.appendChild(path);
+      });
+    }
+
+    // 11. 跨領域/語言智能搜尋引擎 (模糊多語言檢索)
+    function handleGlobalSearch(query) {
+      const dropdown = document.getElementById('search-results-dropdown');
+      if (!query) {
+        dropdown.classList.add('hidden');
+        dropdown.innerHTML = '';
+        return;
+      }
+
+      const q = query.toLowerCase();
+      const results = [];
+
+      // 拉丁字母的查詢用詞界比對，否則像 PEA、ROI 這種短縮寫會命中 peak、period 之類的字；
+      // 中日文沒有詞界可用，維持子字串比對。
+      const latin = /^[\x00-\x7f]+$/.test(q);
+      const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = latin ? new RegExp(q.length <= 4 ? `\\b${esc}\\b` : `\\b${esc}`) : null;
+      const matches = pool => re ? re.test(pool) : pool.includes(q);
+
+      // 橫跨三大領域、全語言庫索引
+      Object.keys(domainDatabase).forEach(domainKey => {
+        const domain = domainDatabase[domainKey];
+        Object.keys(domain.branches).forEach(branchId => {
+          const branch = domain.branches[branchId];
+          
+          // 將中文、英文、法文之資訊全數彙整，建立全語系索引
+          // all() 同時接受純字串與三語物件，因為後加的領域使用了較精簡的寫法
+          const all = v => typeof v === 'string' ? [v] : (v ? [v.zh, v.en, v.fr] : []);
+          const plan = learningPaths[`${domainKey}.${branchId}`];
+          const textPool = [
+            ...all(branch.title),
+            ...all(branch.englishTitle),
+            ...all(branch.description),
+            ...branch.subfields.flatMap(s => [...all(s.name), ...all(s.desc)]),
+            ...branch.skills.flatMap(s => all(s)),
+            ...(branch.certifications || []).flatMap(c => all(c)),
+            ...branch.tools,
+            ...(plan ? [
+              ...plan.stages.flat().flatMap(i => all(i)),
+              ...plan.resources.flatMap(r => [...all(r.n), ...all(r.d)]),
+              ...all(plan.project.n)
+            ] : [])
+          ].filter(Boolean).join(' ').toLowerCase();
+
+          if (matches(textPool)) {
+            results.push({
+              domainKey: domainKey,
+              branchId: branchId,
+              title: branch.title,
+              englishTitle: branch.englishTitle,
+              themeColor: domain.themeColor,
+              // 領域名稱一律取自 domainMeta，否則新增的領域都會顯示成「市場行銷」
+              domainName: (domainMeta[domainKey] || {}).name || { zh: domainKey, en: domainKey, fr: domainKey }
+            });
+          }
+        });
+      });
+
+      // 渲染聯想選單
+      if (results.length > 0) {
+        dropdown.classList.remove('hidden');
+        
+        const resultsLabel = uiTranslations[currentLang].searchResults;
+        const clickToJumpLabel = uiTranslations[currentLang].clickToJump;
+
+        dropdown.innerHTML = `
+          <div class="p-2 border-b border-slate-800/60 flex items-center justify-between sticky top-0 bg-slate-950 z-10">
+            <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">${resultsLabel} (${results.length})</span>
+            <span class="text-[10px] text-teal-400 font-bold">${clickToJumpLabel}</span>
+          </div>
+        `;
+
+        results.forEach(res => {
+          const row = document.createElement('button');
+          row.className = 'w-full text-left px-3.5 py-3 hover:bg-slate-900/60 flex items-center justify-between border-b border-slate-900 last:border-0 transition-colors gap-3';
+          row.onclick = () => {
+            // 自動跳轉至對應學科與分支
+            switchDomain(res.domainKey);
+            selectBranch(res.branchId);
+            
+            // 滾動導航到詳細解析卡片
+            document.getElementById('detail-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // 隱藏搜尋結果
+            dropdown.classList.add('hidden');
+            document.getElementById('global-search-input').value = '';
+          };
+
+          row.innerHTML = `
+            <div>
+              <div class="text-xs font-bold text-slate-200">${t(res.title)}</div>
+              <div class="text-[10px] text-slate-400 mt-0.5 truncate max-w-[180px]">${t(res.englishTitle)}</div>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 font-bold rounded bg-${res.themeColor}-500/10 text-${res.themeColor}-400 border border-${res.themeColor}-500/20 whitespace-nowrap">
+              ${t(res.domainName)}
+            </span>
+          `;
+          dropdown.appendChild(row);
+        });
+      } else {
+        dropdown.classList.remove('hidden');
+        dropdown.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-500">
+            ${uiTranslations[currentLang].noResults}
+          </div>
+        `;
+      }
+    }
+  </script>
+<script src="edit-mode.js" defer></script>
+
+</body>
+</html>
