@@ -1134,6 +1134,7 @@ const CATEGORIES = [
   { id:'politics',   icon:'fa-scale-balanced',   zh:'政治與法律',   en:'Politics & Law',      fr:'Politique & droit' },
   { id:'business',   icon:'fa-chart-line',       zh:'商業與產業',   en:'Business & Industry', fr:'Économie & industrie' },
   { id:'science',    icon:'fa-flask',            zh:'科學與工藝',   en:'Science & Craft',     fr:'Sciences & savoir-faire' },
+  { id:'career',     icon:'fa-compass',          zh:'職涯與規劃',   en:'Career & Planning',   fr:'Carrière & orientation' },
   { id:'tools',      icon:'fa-screwdriver-wrench', zh:'實用工具',   en:'Tools',               fr:'Outils' },
   { id:'custom',     icon:'fa-box-archive',      zh:'自訂館藏',     en:'Custom Volumes',      fr:'Volumes personnalisés' },
 ];
@@ -1181,10 +1182,14 @@ const DEFAULT_MODULES = [
     description:'Coty portfolio analysis and perfume market competition mind map.',
     icon:'fa-bottle-droplet',  color:'from-fuchsia-400 to-purple-700',
     cat:'business', file:'coty_perfume_market_mindmap.html', custom:false },
+  { id:'career-fr',  title:'Dossier: A Career in France', subtitle:'Expert-Comptable & Alternative Tracks',
+    description:'Career dossier for the French market: the regulated expert-comptable route (DCG, DSCG, DEC), an eight-week intensive study and job-hunt plan, a comparison of five professions, the DCG reading list, and short, mid and long-term roadmaps for six alternative fields with their decision points.',
+    icon:'fa-compass',         color:'from-emerald-400 to-teal-600',
+    cat:'career', file:'career-dossier-france.html', custom:false },
   { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',
     description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',
     icon:'fa-file-invoice',    color:'from-sky-400 to-blue-600',
-    cat:'tools', file:'cv_prompt_builder_v2.html', custom:false }
+    cat:'career', file:'cv_prompt_builder_v2.html', custom:false }
 ];
 
 const REMOVED_KEY = 'knowledge_galaxy_removed_builtins';

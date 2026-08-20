@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法國會計師職涯檔案 — Alice Tseng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F3EA;
+    --panel:#EFE9DA;
+    --ink:#20293A;
+    --ledger:#2E4F3D;
+    --ledger-light:#3E6B52;
+    --brass:#A5723A;
+    --rule:#CBC2A8;
+    --red-stamp:#8C3B2E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans TC','Noto Serif TC',sans-serif;
+    line-height:1.75;
+    font-weight:400;
+  }
+  ::selection{background:var(--ledger); color:var(--paper);}
+
+  /* ---------- Layout shell ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns:240px 1fr;
+    max-width:1180px;
+    margin:0 auto;
+    min-height:100vh;
+  }
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr;}
+    .tabs{position:static; flex-direction:row; overflow-x:auto; height:auto; padding:12px 8px;}
+    .tabs a{writing-mode:horizontal-tb; white-space:nowrap; padding:10px 14px;}
+  }
+
+  /* ---------- Folder-tab side nav (signature element) ---------- */
+  .tabs{
+    position:sticky; top:0; height:100vh;
+    display:flex; flex-direction:column;
+    padding:36px 0 24px 0;
+    border-right:1px solid var(--rule);
+  }
+  .tabs .brand{
+    font-family:'Fraunces',serif;
+    font-size:15px; letter-spacing:.08em;
+    color:var(--ledger); padding:0 22px 22px 22px;
+    border-bottom:1px dashed var(--rule);
+    margin-bottom:10px;
+  }
+  .tabs .brand b{display:block; font-size:20px; color:var(--ink); margin-top:4px;}
+  .tabs a{
+    writing-mode:vertical-rl; text-orientation:mixed;
+    color:var(--ink); text-decoration:none;
+    font-size:13px; letter-spacing:.12em;
+    padding:18px 10px;
+    border-bottom:1px solid var(--rule);
+    background:var(--panel);
+    margin-bottom:6px;
+    border-radius:0 6px 6px 0;
+    transition:background .15s ease, color .15s ease, padding-left .15s ease;
+  }
+  .tabs a:hover, .tabs a.active{
+    background:var(--ledger); color:var(--paper); padding-left:16px;
+  }
+  .tabs .foot{margin-top:auto; padding:14px 22px; font-size:11px; color:#8a8371;}
+
+  /* ---------- Main content ---------- */
+  main{padding:52px 56px 100px 56px;}
+  @media (max-width:860px){main{padding:28px 20px 80px 20px;}}
+
+  header.cover{
+    border-bottom:2px solid var(--ledger);
+    padding-bottom:28px; margin-bottom:44px;
+  }
+  header.cover .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; letter-spacing:.15em; color:var(--brass);
+    text-transform:uppercase;
+  }
+  header.cover h1{
+    font-family:'Fraunces',serif; font-weight:600;
+    font-size:clamp(28px,4vw,42px); margin:10px 0 14px 0; color:var(--ink);
+  }
+  header.cover .meta{
+    display:flex; flex-wrap:wrap; gap:10px 22px;
+    font-size:13.5px; color:#4b4536;
+  }
+  header.cover .meta span b{color:var(--ink);}
+
+  section{margin-bottom:64px; scroll-margin-top:24px;}
+  section > .num{
+    font-family:'JetBrains Mono',monospace; color:var(--brass);
+    font-size:13px; letter-spacing:.1em;
+  }
+  section h2{
+    font-family:'Fraunces',serif; font-weight:600;
+    font-size:clamp(22px,3vw,30px);
+    margin:4px 0 24px 0; color:var(--ledger);
+    display:flex; align-items:baseline; gap:12px;
+  }
+  section h3{
+    font-family:'Noto Serif TC',serif; font-weight:600;
+    font-size:18px; color:var(--ink); margin:30px 0 12px 0;
+    padding-bottom:6px; border-bottom:1px dashed var(--rule);
+  }
+  p{margin:0 0 14px 0;}
+  ul, ol{padding-left:22px; margin:0 0 16px 0;}
+  li{margin-bottom:6px;}
+  strong{color:var(--ledger);}
+
+  .callout{
+    background:var(--panel);
+    border-left:3px solid var(--brass);
+    padding:16px 20px;
+    border-radius:2px;
+    font-size:14.5px;
+    margin:18px 0;
+  }
+  .stamp{
+    display:inline-block;
+    border:2px solid var(--red-stamp);
+    color:var(--red-stamp);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:.1em;
+    padding:3px 10px; border-radius:3px;
+    transform:rotate(-2deg);
+    margin-bottom:14px;
+  }
+
+  /* ---------- Ledger table ---------- */
+  .ledger-wrap{overflow-x:auto; margin:18px 0 26px 0; border:1px solid var(--rule); border-radius:4px;}
+  table{
+    border-collapse:collapse; width:100%; min-width:640px;
+    font-size:13.5px; background:var(--paper);
+  }
+  th{
+    background:var(--ledger); color:var(--paper);
+    text-align:left; font-weight:500;
+    padding:10px 14px; font-size:12.5px; letter-spacing:.03em;
+  }
+  td{
+    padding:11px 14px; border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  tr:nth-child(even) td{background:var(--panel);}
+  td.figure, th.figure{font-family:'JetBrains Mono',monospace;}
+  td b{color:var(--ledger);}
+
+  /* ---------- Timeline ---------- */
+  .timeline{border-left:2px solid var(--ledger); margin-left:6px; padding-left:26px;}
+  .tl-item{position:relative; margin-bottom:26px;}
+  .tl-item::before{
+    content:""; position:absolute; left:-32px; top:4px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--brass); border:2px solid var(--paper); box-shadow:0 0 0 2px var(--ledger);
+  }
+  .tl-item .tl-date{
+    font-family:'JetBrains Mono',monospace; font-size:12px;
+    color:var(--brass); letter-spacing:.05em;
+  }
+  .tl-item h4{margin:2px 0 8px 0; font-size:16px; font-family:'Noto Serif TC',serif;}
+
+  /* ---------- Card grid (books) ---------- */
+  .card-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; margin:18px 0;}
+  .book-card{
+    background:var(--panel);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:16px 18px;
+    position:relative;
+  }
+  .book-card .ue-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; color:var(--paper); background:var(--ledger);
+    padding:2px 8px; border-radius:3px; display:inline-block; margin-bottom:8px;
+  }
+  .book-card h4{margin:0 0 8px 0; font-size:15px; font-family:'Noto Serif TC',serif; color:var(--ink);}
+  .book-card p{font-size:13px; margin:0; color:#4b4536;}
+
+  footer{
+    border-top:1px dashed var(--rule); margin-top:60px; padding-top:22px;
+    font-size:12px; color:#8a8371;
+  }
+
+  /* ---------- Nav override: 7 tabs need horizontal labels ---------- */
+  .tabs{overflow-y:auto;}
+  .tabs a{
+    writing-mode:horizontal-tb; text-orientation:mixed;
+    padding:11px 16px; font-size:13px; margin-bottom:5px;
+  }
+  .tabs a:hover, .tabs a.active{padding-left:22px;}
+  @media (max-width:860px){
+    /* the tab row must scroll inside itself, not stretch the page */
+    .shell{grid-template-columns:minmax(0,1fr);}
+    main{min-width:0;}          /* let the wide tables scroll inside .ledger-wrap */
+    .tabs{min-width:0; overflow-x:auto; overflow-y:visible; align-items:center;}
+    .tabs .brand{border-bottom:none; margin-bottom:0; padding:0 16px 0 4px; white-space:nowrap;}
+    .tabs .back{margin:0 10px 0 4px; white-space:nowrap;}
+    .tabs .foot{display:none;}
+  }
+  .tabs .back{
+    display:block; margin:0 22px 14px 22px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:.08em;
+    color:var(--brass); text-decoration:none;
+  }
+  .tabs .back:hover{color:var(--ledger);}
+
+  /* ---------- Path blocks (section 05) ---------- */
+  .path{
+    border:1px solid var(--rule); border-radius:5px;
+    background:var(--paper); margin:22px 0 30px 0; overflow:hidden;
+  }
+  .path > .ph{
+    display:flex; gap:14px; align-items:flex-start;
+    padding:16px 20px; background:var(--panel);
+    border-bottom:1px solid var(--rule);
+  }
+  .path .badge{
+    flex:0 0 auto; width:34px; height:34px; border-radius:50%;
+    background:var(--ledger); color:var(--paper);
+    font-family:'JetBrains Mono',monospace; font-size:14px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .path .ttl{font-family:'Noto Serif TC',serif; font-weight:600; font-size:17px; margin:0; color:var(--ink);}
+  .path .sub{font-size:13px; color:#6b6350; margin:3px 0 0 0;}
+  .path .pbody{padding:8px 20px 18px 20px;}
+
+  .horizon{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:16px 0 0 0;}
+  @media(max-width:760px){.horizon{grid-template-columns:1fr;}}
+  .hz{
+    background:var(--panel); border:1px solid var(--rule);
+    border-top:3px solid var(--brass); border-radius:3px; padding:12px 15px;
+  }
+  .hz .hz-h{
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:.08em; color:var(--brass); text-transform:uppercase;
+  }
+  .hz h5{margin:4px 0 8px 0; font-size:14px; font-family:'Noto Serif TC',serif; color:var(--ledger);}
+  .hz ul{padding-left:17px; margin:0; font-size:13px;}
+  .hz li{margin-bottom:5px;}
+
+  .firststep{
+    font-size:13.5px; background:rgba(46,79,61,.07);
+    border-left:3px solid var(--ledger); padding:10px 15px;
+    border-radius:2px; margin-top:14px;
+  }
+  .risk{
+    font-size:13px; color:#6f4a3f; border-left:3px solid var(--red-stamp);
+    background:rgba(140,59,46,.05); padding:9px 15px;
+    margin-top:10px; border-radius:2px;
+  }
+  .risk b{color:var(--red-stamp);}
+  .tagrow{display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 0 0;}
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    border:1px solid var(--rule); background:var(--panel);
+    color:#5c5544; padding:2px 9px; border-radius:99px;
+  }
+
+  /* ---------- Cross-links to the rest of the library ---------- */
+  .link-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin:18px 0;}
+  .link-card{
+    display:block; text-decoration:none; color:inherit;
+    background:var(--panel); border:1px solid var(--rule);
+    border-radius:4px; padding:14px 16px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .link-card:hover{border-color:var(--ledger); transform:translateY(-2px);}
+  .link-card .lc-t{font-family:'Noto Serif TC',serif; font-weight:600; font-size:14.5px; color:var(--ledger);}
+  .link-card .lc-d{font-size:12.5px; color:#4b4536; margin-top:5px; line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <nav class="tabs">
+    <div class="brand">DOSSIER<b>職涯檔案</b></div>
+    <a class="back" href="index.html" target="_top">← 返回知識書庫</a>
+    <a href="#overview">01 · 路徑總覽</a>
+    <a href="#plan">02 · 密集計畫</a>
+    <a href="#compare">03 · 職業比較</a>
+    <a href="#books">04 · DCG書單</a>
+    <a href="#alt-paths">05 · 其他領域規劃</a>
+    <a href="#foundation">06 · 共通地基與決策點</a>
+    <a href="#library">07 · 知識庫連結</a>
+    <div class="foot">建立於 2026年8月<br>emlyon · 里昂</div>
+  </nav>
+
+  <main>
+    <header class="cover">
+      <div class="eyebrow">Career Dossier · N° 2026-08</div>
+      <h1>法國會計師職涯規劃檔案</h1>
+      <div class="meta">
+        <span><b>持有人：</b>Yu-Ting (Alice) Tseng</span>
+        <span><b>現況：</b>emlyon M1已完成，年度césure中</span>
+        <span><b>目標：</b>2027年1月前實習 · 2027年9月前M2 alternance</span>
+      </div>
+    </header>
+
+    <!-- 01 -->
+    <section id="overview">
+      <span class="num">01</span>
+      <h2>Expert-Comptable 路徑總覽</h2>
+
+      <p>法國會計師（expert-comptable）是受監管的專業頭銜，正規路徑分三個階段，全程約在高中畢業後8年完成：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">BAC → BAC+3</div>
+          <h4>DCG（Diplôme de Comptabilité et de Gestion，會計管理文憑）</h4>
+          <p>13個UE（Unité d'Enseignement，教學單元），涵蓋法律、稅法、會計、財務、管理等基礎科目，授予grade de licence（相當學士學位資格），共180 ECTS（European Credit Transfer System，歐洲學分轉換系統）。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">BAC+3 → BAC+5</div>
+          <h4>DSCG（Diplôme Supérieur de Comptabilité et de Gestion，會計管理高等文憑）</h4>
+          <p>7個UE，內容更深入專精（財務、審計、管理控制、資訊系統等），授予grade de master（相當碩士學位資格），共120 ECTS。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">BAC+5 → BAC+8</div>
+          <h4>3年實習 + DEC</h4>
+          <p>簽署stage d'expertise comptable合約，期間完成mémoire並通過DEC（Diplôme d'Expertise Comptable，會計專業文憑）最終考試，之後向CROEC（Conseil Régional de l'Ordre des Experts-Comptables，地區會計師公會）登錄，正式取得expert-comptable頭銜。</p>
+        </div>
+      </div>
+
+      <h3>報考資格的關鍵細節</h3>
+      <p>要報考DSCG，需持有DCG，<strong>或</strong>已經正式授予的grade de master文憑。這裡有個重要陷阱：<strong>M1（bac+4）不算grade de master</strong>，只有完整讀完M2、正式畢業取得碩士學位後才符合資格。</p>
+      <div class="callout">
+        <span class="stamp">確認事項</span><br>
+        Alice目前只完成M1（Master 1，碩士第一年），選擇的路徑是：先完成emlyon M2（Master 2，碩士第二年）畢業（取得grade de master），屆時即可直接跳過DCG、報考DSCG，不需要重新讀3年DCG。這條捷徑本身沒有消失，只是要等M2畢業才生效。
+      </div>
+
+      <h3>薪資與DEC的關聯</h3>
+      <div class="ledger-wrap">
+        <table>
+          <tr><th>階段</th><th class="figure">年薪（brut，2026行情）</th></tr>
+          <tr><td>DCG畢業，初階collaborateur</td><td class="figure">約24,000–34,000€</td></tr>
+          <tr><td>DSCG，2–4年經驗</td><td class="figure">約30,000–48,000€</td></tr>
+          <tr><td>DEC實習生（stage期間）</td><td class="figure">約37,000–42,000€</td></tr>
+          <tr><td><b>正式登錄expert-comptable</b></td><td class="figure"><b>47,800€起，平均55,000–90,000€</b></td></tr>
+          <tr><td>合夥人（associé）</td><td class="figure">100,000–250,000€以上</td></tr>
+        </table>
+      </div>
+      <p style="font-size:13.5px; color:#4b4536;">從DSCG到DEC的跳升幅度通常達15–20%，因為DEC不只是文憑，而是<strong>法律賦予的簽字權</strong>——這是AI無法取代的護城河，代價則是全程8年的時間投入。</p>
+
+      <h3>資源總表</h3>
+      <div class="ledger-wrap">
+        <table>
+          <tr><th>用途</th><th>資源</th></tr>
+          <tr><td>官方規範／豁免名單</td><td>experts-comptables.fr（CSOEC，Conseil Supérieur de l'Ordre des Experts-Comptables，全國會計師公會）</td></tr>
+          <tr><td>地區公會（里昂）</td><td>CROEC Rhône-Alpes</td></tr>
+          <tr><td>課綱官方公告</td><td>enseignementsup-recherche.gouv.fr</td></tr>
+          <tr><td>線上／遠距補習</td><td>Comptalia · INTEC（Institut National des Techniques Économiques et Comptables，隸屬CNAM／Conservatoire National des Arts et Métiers，國立工藝學院）· ENOES · IFEC</td></tr>
+          <tr><td>教材</td><td>Dunod《Les Carrés DCG／DSCG》系列</td></tr>
+          <tr><td>論壇與文章庫</td><td>compta-online.com</td></tr>
+          <tr><td>實習生社群</td><td>ANECS（Association Nationale des Experts-Comptables Stagiaires，全國會計實習生協會，anecs.org）</td></tr>
+          <tr><td>求職平台</td><td>LinkedIn · Welcome to the Jungle · APEC（Association Pour l'Emploi des Cadres，法國幹部就業協會）</td></tr>
+        </table>
+      </div>
+      <p style="font-size:13px; color:#8a8371;">提醒：2025–2027年DCG／DSCG課綱正在改革中，行動前建議查CSOEC官網確認最新規定。</p>
+    </section>
+
+    <!-- 02 -->
+    <section id="plan">
+      <span class="num">02</span>
+      <h2>密集執行計畫</h2>
+      <p>目標：<strong>2027年1月前</strong>找到會計相關實習（césure第二段），<strong>2027年9月前</strong>簽定M2的alternance企業合約（在emlyon念M2、同時有企業合約，而非DSCG專屬alternance）。</p>
+
+      <h3>總時程地圖</h3>
+      <div class="ledger-wrap">
+        <table>
+          <tr><th>期間</th><th>主軸</th></tr>
+          <tr><td class="figure">8/20 – 10/20（8週）</td><td>密集自學會計基礎＋同步啟動求職</td></tr>
+          <tr><td class="figure">10月下旬 – 12月</td><td>面試衝刺期，目標拿到實習offer</td></tr>
+          <tr><td class="figure">1月起（實習期間）</td><td>邊實習邊準備M2 alternance申請</td></tr>
+          <tr><td class="figure">2月 – 6月（黃金期）</td><td>Alternance求職集中投遞期</td></tr>
+          <tr><td class="figure">7 – 8月</td><td>最後補位期，目標9月前簽約</td></tr>
+        </table>
+      </div>
+
+      <h3>Part A：8週密集計畫（讀書＋求職並行）</h3>
+      <div class="ledger-wrap">
+        <table>
+          <tr><th>週次</th><th>讀書重點</th><th>求職動作</th></tr>
+          <tr><td class="figure">第1週</td><td>註冊compta-online、購入UE9教材、看Compta Facile入門影片</td><td>更新LinkedIn、列出20+目標cabinet／Big4清單、確認emlyon career center文件流程</td></tr>
+          <tr><td class="figure">第2週</td><td>UE9前半（bilan、compte de résultat邏輯）</td><td>寫法文CV、擬cover letter模板</td></tr>
+          <tr><td class="figure">第3週</td><td>UE9後半＋開始UE4稅法基礎</td><td>第一波投遞：至少15封</td></tr>
+          <tr><td class="figure">第4週</td><td>UE4稅法深入＋實務案例</td><td>第二波投遞15–20封＋追蹤已讀未回</td></tr>
+          <tr><td class="figure">第5週</td><td>UE10公司法基礎（SARL、SAS差異）</td><td>準備面試問答稿＋找校友mock interview</td></tr>
+          <tr><td class="figure">第6週</td><td>UE6企業財務基礎（財務比率）</td><td>處理面試邀約／擴大搜尋範圍</td></tr>
+          <tr><td class="figure">第7週</td><td>UE11管理控制概論</td><td>持續面試與追蹤</td></tr>
+          <tr><td class="figure">第8週</td><td>複習弱點單元，鞏固基礎</td><td>收斂決策、鎖定offer，或檢討策略後延伸投遞</td></tr>
+        </table>
+      </div>
+
+      <h3>Part B：面試衝刺期（10月下旬–12月）</h3>
+      <p>若8週後仍未拿到offer，許多cabinet的1月實習職缺會在10–11月才開出，維持每週10封新申請的節奏，目標12月底前簽署convention de stage。</p>
+
+      <h3>Part C：實習期間同步準備M2 Alternance</h3>
+      <div class="callout">
+        <span class="stamp">重要提醒</span><br>
+        法國企業的alternance招募通常在<strong>1–6月</strong>就已展開，9月只是入學時間點，不是開始找的時間點。熱門職缺常在3–4月就額滿，務必在實習期間就同步投遞，不要等實習結束才開始。
+      </div>
+      <ul>
+        <li><strong>1–2月：</strong>確認方向，優先詢問實習cabinet是否願意續約為alternance雇主（成功率最高，因為對方已認識妳）</li>
+        <li><strong>2–4月（黃金期）：</strong>集中投遞，每週5–8封，特別留意emlyon校方的企業合作清單</li>
+        <li><strong>5–6月：</strong>面試與簽約衝刺，多數企業希望暑假前定案</li>
+        <li><strong>7–8月：</strong>最後補位期，鎖定招募較晚的中小企業</li>
+      </ul>
+    </section>
+
+    <!-- 03 -->
+    <section id="compare">
+      <span class="num">03</span>
+      <h2>職業路徑比較</h2>
+      <p>結合CV上已有的技能（Excel TOSA 950/1000、Python、R、SQL、Power BI、Tableau）與兩段數位行銷／廣告投放經驗，把expert-comptable路徑放進更大的選項地圖裡比較。</p>
+
+      <div class="ledger-wrap">
+        <table>
+          <tr>
+            <th>職業方向</th><th>市場需求</th><th class="figure">起薪（brut／年）</th><th class="figure">5–10年上限</th><th>受AI影響</th><th>與背景契合度</th>
+          </tr>
+          <tr>
+            <td><b>Expert-comptable</b>（DEC全程）</td>
+            <td>高，人才短缺</td>
+            <td class="figure">24K–48K</td>
+            <td class="figure">55K–90K，合夥人破100K</td>
+            <td>中：記帳例行work被取代，簽字／諮詢判斷仍需人</td>
+            <td>低：需從零補會計基礎，時間投入最大（8年）</td>
+          </tr>
+          <tr>
+            <td><b>Contrôleur de gestion</b></td>
+            <td>高，穩定成長</td>
+            <td class="figure">32K–38K</td>
+            <td class="figure">60K–80K</td>
+            <td>低–中：報表工作被取代，分析判斷仍需人</td>
+            <td>高：直接銜接DCG/DSCG，Excel/Power BI/SQL可直接派上用場</td>
+          </tr>
+          <tr>
+            <td><b>Data Analyst / Consultant</b></td>
+            <td>非常高，跨產業缺人</td>
+            <td class="figure">35K–45K</td>
+            <td class="figure">60K–85K+</td>
+            <td>中：清理／視覺化被取代，業務+數據角色更吃香</td>
+            <td>非常高：CV已有全套工具，缺的是專案經驗</td>
+          </tr>
+          <tr>
+            <td><b>管理／策略顧問</b></td>
+            <td>高，競爭激烈</td>
+            <td class="figure">37K–48K+</td>
+            <td class="figure">3–5年可達manager級</td>
+            <td>低–中：資料整理被壓縮，框架思考／說服仍是核心</td>
+            <td>中高：里昂商學院＋雙語＋外交背景加分，需準備case interview</td>
+          </tr>
+          <tr>
+            <td><b>數位行銷／AdOps／Growth</b></td>
+            <td>中，同質競爭激烈</td>
+            <td class="figure">28K–35K</td>
+            <td class="figure">成長較慢，需轉PM（Product Manager，產品經理）／策略才能突破</td>
+            <td><b>高：自動出價、AI文案已大量取代執行層</b></td>
+            <td>非常高：現職經驗直接相關，但長期抗AI能力較弱</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>幾個觀察</h3>
+      <ul>
+        <li><strong>Contrôleur de gestion是被低估的選項：</strong>與expert-comptable共用DCG/DSCG基礎課程，不必走完整DEC和3年低薪實習，數據工具本來就用得上，抗AI能力也不錯。</li>
+        <li><strong>Data Analyst是現在就能轉的路：</strong>不需要額外文憑，可作為求穩備案，同時累積實戰經驗。</li>
+        <li><strong>目前的AdOps／數位行銷路線是AI替代風險最高的：</strong>純執行層（出價、報表）快速自動化中，若要留在這領域需往策略或數據方向升級。</li>
+        <li>Expert-comptable的核心優勢不是「不會被AI取代」，而是<strong>法律賦予的簽字權</strong>——AI永遠拿不走的護城河，代價是8年時間。</li>
+      </ul>
+      <div class="callout">
+        <span class="stamp">務實組合</span><br>
+        時間投入小、又保留未來轉會計選項的路徑：先進企業做contrôle de gestion（用得上現有技能），同時準備DSCG，之後要不要繼續走DEC都還有彈性。
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section id="books">
+      <span class="num">04</span>
+      <h2>Les Carrés DCG 書單逐本介紹</h2>
+      <p>DCG共13個UE，Dunod《Les Carrés》系列每個UE對應一本。以下是各冊內容重點：</p>
+
+      <div class="card-grid">
+        <div class="book-card"><span class="ue-tag">UE1</span><h4>Fondamentaux du droit</h4><p>法律基礎：法律體系、法律主體（自然人／法人）、契約與責任的基本原理，是後面所有法律科目的地基。</p></div>
+        <div class="book-card"><span class="ue-tag">UE2</span><h4>Droit des sociétés</h4><p>公司法：企業組織型態（SARL／Société à Responsabilité Limitée有限責任公司、SAS／Société par Actions Simplifiée簡易股份公司、SA／Société Anonyme股份有限公司等）的設立、經營、股東權益、企業困難處理（清算／重整）。</p></div>
+        <div class="book-card"><span class="ue-tag">UE3</span><h4>Droit social</h4><p>勞動與社會法：勞動契約、工時、解僱程序、社會保障制度——cabinet日常處理客戶薪資社保問題會用到。</p></div>
+        <div class="book-card"><span class="ue-tag">UE4</span><h4>Droit fiscal</h4><p>稅法：企業所得稅（IS／Impôt sur les Sociétés）、個人所得稅（IR／Impôt sur le Revenu）、加值稅（TVA／Taxe sur la Valeur Ajoutée）等稅制與申報邏輯，是expert-comptable最核心的日常科目之一。</p></div>
+        <div class="book-card"><span class="ue-tag">UE5</span><h4>Économie contemporaine</h4><p>當代經濟學：總體與個體經濟概念、經濟政策，用來理解企業決策所處的總體環境。</p></div>
+        <div class="book-card"><span class="ue-tag">UE6</span><h4>Finance d'entreprise</h4><p>企業財務：財務分析、投資決策、融資方式、財務數學——與contrôleur de gestion方向直接相關。</p></div>
+        <div class="book-card"><span class="ue-tag">UE7</span><h4>Management</h4><p>組織管理：管理理論、企業策略、組織架構設計，企業如何做決策的框架。</p></div>
+        <div class="book-card"><span class="ue-tag">UE8</span><h4>Système d'information de gestion</h4><p>管理資訊系統：資料庫、資訊系統架構、數位工具在企業中的應用——這科跟妳的SQL／Python背景最契合。</p></div>
+        <div class="book-card"><span class="ue-tag">UE9</span><h4>Comptabilité</h4><p>會計學基礎：複式記帳、資產負債表、損益表的建構邏輯，是整個會計知識體系的起點。</p></div>
+        <div class="book-card"><span class="ue-tag">UE10</span><h4>Comptabilité approfondie</h4><p>進階會計：合併報表、特殊交易（併購、外幣交易等）的會計處理，比UE9更深入複雜。</p></div>
+        <div class="book-card"><span class="ue-tag">UE11</span><h4>Contrôle de gestion</h4><p>管理控制：成本會計、預算編制、績效指標分析——contrôleur de gestion職位的核心科目。</p></div>
+        <div class="book-card"><span class="ue-tag">UE12</span><h4>Anglais des affaires</h4><p>商業英文：對妳來說應是相對輕鬆的加分科目。</p></div>
+        <div class="book-card"><span class="ue-tag">UE13</span><h4>Communication professionnelle</h4><p>專業溝通：以實習報告／職場經驗報告的形式進行口試，考察書面與口頭表達能力。</p></div>
+      </div>
+
+      <div class="callout">
+        <span class="stamp">選讀建議</span><br>
+        密集計畫8週內優先讀UE9、UE4、UE10、UE6、UE11這5科（會計＋稅法＋財務＋管理控制），這是cabinet日常工作最常碰到、也是找實習面試最常被問到的科目。UE1–3、5、7、8、12、13可以之後真的進DCG課程時再系統性補齊。
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section id="alt-paths">
+      <span class="num">05</span>
+      <h2>若不走會計：其他領域的中短長期規劃</h2>
+
+      <p>第03節比較了各條路的「值不值得」，這一節回答下一個問題：<strong>如果選了其中一條，接下來三年、五年、十年具體要做什麼。</strong>所有路徑共用同一個起點——2026年8月的césure（間隔年）與2027年9月的M2 alternance（建教合作合約）——差別只在實習投遞的職缺名稱、M2的專業方向，以及要不要繼續累積DSCG學分。</p>
+
+      <div class="callout">
+        <span class="stamp">時間軸定義</span><br>
+        <strong>短期</strong>＝現在到2027年1月（césure第二段實習）｜<strong>中期</strong>＝2027–2029（M2 alternance＋第一份正職）｜<strong>長期</strong>＝2029–2034（26歲到31歲，職涯定型期）
+      </div>
+
+      <h3>六條路徑的三期地圖</h3>
+      <div class="ledger-wrap">
+        <table>
+          <tr>
+            <th>路徑</th>
+            <th>短期（–2027/01）實習目標</th>
+            <th>中期（2027–2029）</th>
+            <th>長期（2029–2034）</th>
+            <th class="figure">十年薪資帶</th>
+          </tr>
+          <tr>
+            <td><b>A｜Contrôleur de gestion</b><br><span style="font-size:12px;color:#6b6350;">管理控制</span></td>
+            <td>企業內部contrôle de gestion／FP&amp;A實習</td>
+            <td>M2 alternance在企業財務部，選考DSCG UE3、UE5當保險</td>
+            <td>Responsable du contrôle de gestion，再往DAF（財務長）</td>
+            <td class="figure">60K–90K</td>
+          </tr>
+          <tr>
+            <td><b>B｜Data / Business Analyst</b><br><span style="font-size:12px;color:#6b6350;">數據分析</span></td>
+            <td>data／BI實習，同步做三個公開作品集</td>
+            <td>alternance進data團隊，選定一個垂直領域（財務或行銷）</td>
+            <td>Analytics manager／data lead，或finance×data混血角色</td>
+            <td class="figure">60K–90K</td>
+          </tr>
+          <tr>
+            <td><b>C｜策略／管理顧問</b></td>
+            <td>Big4 advisory或法系顧問公司實習（<b>招募最早，9–11月就要投</b>）</td>
+            <td>Junior consultant → consultant，累積2–3個產業</td>
+            <td>Manager，或帶著顧問履歷跳進企業策略部門</td>
+            <td class="figure">70K–110K</td>
+          </tr>
+          <tr>
+            <td><b>D｜Growth／行銷數據</b></td>
+            <td>growth／CRM／marketing analytics實習，<b>不要再投純media buying</b></td>
+            <td>alternance走growth或product marketing，避免停在執行層</td>
+            <td>Head of growth或轉Product Manager（產品經理）</td>
+            <td class="figure">50K–75K</td>
+          </tr>
+          <tr>
+            <td><b>E｜精品／美妝產業財務</b></td>
+            <td>LVMH／Kering／L'Oréal等集團的controlling或retail performance實習</td>
+            <td>alternance在品牌財務或merchandising，建立產業身分</td>
+            <td>Brand finance manager／zone controller，中文可接亞洲市場</td>
+            <td class="figure">55K–85K</td>
+          </tr>
+          <tr>
+            <td><b>F｜ESG／永續報告</b></td>
+            <td>不建議當唯一主線；當作A或E的專精附加</td>
+            <td>在審計或財務職位內專攻CSRD永續報告</td>
+            <td>ESG reporting manager，或國際組織的財務行政職</td>
+            <td class="figure">55K–80K</td>
+          </tr>
+        </table>
+      </div>
+      <p style="font-size:13px; color:#8a8371;">薪資為2026年法國brut（稅前）年薪推估區間，巴黎約高10–15%，里昂屬中上水準。實際數字依公司規模與產業差異大，此處只作相對比較用。</p>
+
+      <!-- Path A -->
+      <div class="path">
+        <div class="ph">
+          <div class="badge">A</div>
+          <div>
+            <p class="ttl">Contrôleur de gestion｜管理控制</p>
+            <p class="sub">企業內部的財務駕駛座：不做帳，而是解釋數字為什麼長這樣，以及下一季會長什麼樣</p>
+          </div>
+        </div>
+        <div class="pbody">
+          <p style="font-size:14px;">這是與現在的會計計畫<strong>重疊度最高、放棄成本最低</strong>的替代路線。UE6（企業財務）和UE11（管理控制）本來就在八週書單裡，讀了不會浪費；而Excel、Power BI、SQL這些現有工具在這個職位是每天在用的，不是加分項而是核心技能。</p>
+          <div class="horizon">
+            <div class="hz">
+              <div class="hz-h">Short · 至2027年1月</div>
+              <h5>把實習職缺名稱換掉</h5>
+              <ul>
+                <li>投遞關鍵字改成contrôle de gestion、FP&amp;A（Financial Planning &amp; Analysis，財務規劃與分析）、analyste financier junior</li>
+                <li>目標公司從cabinet（會計事務所）換成ETI（entreprise de taille intermédiaire，中型企業）與集團財務部</li>
+                <li>做一個作品：拿一家上市公司年報，建三表連動模型＋預算差異分析（analyse des écarts），放進CV連結</li>
+                <li>UE6與UE11讀完並整理成自己的筆記，面試可直接引用</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Mid · 2027–2029</div>
+              <h5>M2走財務方向＋保留DSCG選項</h5>
+              <ul>
+                <li>emlyon M2選corporate finance或contrôle de gestion相關主修，alternance簽在企業財務部</li>
+                <li>畢業後直接junior contrôleur de gestion，起薪約35–40K</li>
+                <li>用candidat libre（自由報考）方式一年考一到兩科DSCG UE，特別是UE3（管理與控制）、UE5（資訊系統管理）——考過不會過期，未來想回會計線隨時能接</li>
+                <li>第一份正職選「業務貼身」的職位（工廠、零售門市、事業部），而不是純集團總部報表崗</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Long · 2029–2034</div>
+              <h5>從做報表的人變成被問意見的人</h5>
+              <ul>
+                <li>3–5年：contrôleur de gestion senior或business partner，負責一個事業部的損益</li>
+                <li>5–8年：responsable du contrôle de gestion，帶2–4人團隊，約60–80K</li>
+                <li>8–10年：中小企業或子公司的DAF（Directeur Administratif et Financier，行政財務總監），70–110K</li>
+                <li>橫向出口：轉private equity的投後管理、轉顧問、或回頭補DEC走事務所合夥路線</li>
+              </ul>
+            </div>
+          </div>
+          <div class="firststep"><strong>現在就能做的第一步：</strong>在LinkedIn把求職關鍵字從「comptabilité」擴成「comptabilité OR contrôle de gestion」，同一批公司通常兩種職缺都在開，投遞成本幾乎為零，但機會池會放大兩到三倍。</div>
+          <div class="risk"><b>風險：</b>純製表型的contrôle de gestion正被自動化壓縮。分水嶺在第3–5年——若那時還只會出報表、不會跟營運主管吵預算，天花板就會提早出現。</div>
+          <div class="tagrow"><span class="tag">UE6</span><span class="tag">UE11</span><span class="tag">DSCG UE3/UE5</span><span class="tag">Power BI</span><span class="tag">SAP／ERP</span></div>
+        </div>
+      </div>
+
+      <!-- Path B -->
+      <div class="path">
+        <div class="ph">
+          <div class="badge">B</div>
+          <div>
+            <p class="ttl">Data／Business Analyst｜數據分析</p>
+            <p class="sub">唯一一條不需要任何新文憑就能開始的路，缺的不是資格而是可展示的專案</p>
+          </div>
+        </div>
+        <div class="pbody">
+          <p style="font-size:14px;">CV上的Excel TOSA 950、Python、R、SQL、Power BI、Tableau已經是完整的入門工具箱。這條路的門檻不在學歷審查，而在<strong>雇主看不到妳用這些工具解決過什麼商業問題</strong>。所以短期的任務不是學新工具，是把已有的工具變成三個看得見的成果。</p>
+          <div class="horizon">
+            <div class="hz">
+              <div class="hz-h">Short · 至2027年1月</div>
+              <h5>三個作品，一個垂直定位</h5>
+              <ul>
+                <li>作品一（財務）：用公開財報做一個產業比較儀表板，Power BI或Tableau</li>
+                <li>作品二（行銷）：用過去投放經驗改寫成歸因分析案例，帶ROAS、CPA的實際改善數字</li>
+                <li>作品三（自選）：用Python抓一份公開資料集做完整分析，重點是提出一個商業建議而非畫圖</li>
+                <li>SQL練到window function與CTE程度；補考PL-300（Microsoft Power BI Data Analyst認證），一個月可準備完</li>
+                <li>投遞data analyst、business analyst、BI analyst實習</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Mid · 2027–2029</div>
+              <h5>選一個產業當定語</h5>
+              <ul>
+                <li>M2 alternance進data／BI團隊，或進商業部門做data-driven的分析職</li>
+                <li>1–2年後junior→analyst，約40–48K</li>
+                <li><strong>關鍵動作：</strong>不要當「什麼資料都能洗的人」，要當「懂零售財務的分析師」或「懂訂閱制成長的分析師」——產業知識才是護城河，工具本身會被AI追平</li>
+                <li>技能升級方向：dbt、資料建模、A／B測試設計、行銷組合模型（MMM）</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Long · 2029–2034</div>
+              <h5>往管理或往混血角色</h5>
+              <ul>
+                <li>Senior analyst → analytics manager／data lead，約65–85K</li>
+                <li>或走finance×data的混血職位（FP&amp;A analytics、revenue operations），這是目前最稀缺、最難被取代的組合</li>
+                <li>此路技能<strong>國際通用</strong>：回亞洲、去英語系國家都能直接用，這點是expert-comptable完全沒有的優勢</li>
+              </ul>
+            </div>
+          </div>
+          <div class="firststep"><strong>現在就能做的第一步：</strong>這週先完成作品二——過去的廣告投放經驗已經在手上，只需要把它重寫成「問題→分析方法→數字結果」的一頁式案例。這是零成本、當週可完成、且同時能用在會計實習面試上的資產。</div>
+          <div class="risk"><b>風險：</b>入門層競爭者最多，且AI已經吃掉大量junior的資料清理工作。純技術型analyst的起薪成長正在放緩，差異化只能靠「懂一個產業的商業邏輯」。</div>
+          <div class="tagrow"><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">PL-300</span><span class="tag">dbt</span><span class="tag">A／B testing</span></div>
+        </div>
+      </div>
+
+      <!-- Path C -->
+      <div class="path">
+        <div class="ph">
+          <div class="badge">C</div>
+          <div>
+            <p class="ttl">策略／管理顧問</p>
+            <p class="sub">用三到五年換取最快的視野累積與最強的履歷通行證，代價是工時與競爭強度</p>
+          </div>
+        </div>
+        <div class="pbody">
+          <p style="font-size:14px;">emlyon的品牌、雙語能力與國際背景在這條路上是實際的加分項。但這條路有一個<strong>比其他路都硬的時間限制</strong>：顧問業的實習與畢業生招募開得非常早，通常在入職前9到12個月，錯過梯次就要等一年。如果要認真考慮這條路，決定必須在2026年秋天做，而不是明年春天。</p>
+          <div class="horizon">
+            <div class="hz">
+              <div class="hz-h">Short · 至2027年1月</div>
+              <h5>Case面試是唯一門票</h5>
+              <ul>
+                <li>立刻開始case interview（案例面試）準備：《Case in Point》、Victor Cheng的LOMS、PrepLounge找對練夥伴，每週至少3個case</li>
+                <li>目標公司分層：Big4 advisory（EY-Parthenon、Deloitte Monitor）、法系顧問（Wavestone、Sia Partners、Eurogroup）、精品／零售專門的中型顧問</li>
+                <li>加入emlyon的顧問社團與junior-entreprise（學生顧問公司），這是法國顧問業最看重的校內經歷</li>
+                <li>強化法語商務書寫——顧問工作有大量法文書面產出，這是外籍候選人最常被刷掉的地方</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Mid · 2027–2029</div>
+              <h5>累積可講的專案</h5>
+              <ul>
+                <li>M2畢業直接junior consultant，起薪約40–48K；或用alternance當作提前卡位</li>
+                <li>2–3年升consultant，目標是累積2–3個能講清楚的產業（精品／零售／能源等）</li>
+                <li>持續觀察up-or-out節奏，法系顧問公司通常比MBB（麥肯錫、BCG、貝恩）溫和</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Long · 2029–2034</div>
+              <h5>留下或帶著履歷離開</h5>
+              <ul>
+                <li>5–6年可到manager，約65–85K，帶專案與團隊</li>
+                <li>更常見的路是「跳出去」：帶著顧問履歷進企業的策略部門、BizOps或子公司管理職，通常能跳一到兩個層級</li>
+                <li>顧問經歷幾乎能轉往任何方向——這是可逆性最高的起點</li>
+              </ul>
+            </div>
+          </div>
+          <div class="firststep"><strong>現在就能做的第一步：</strong>本週查三家目標顧問公司的實習招募時程頁面。如果它們的2027年春季梯次確實在10–11月截止，這條路就必須在接下來八週內與會計實習並行推進，不能延後決定。</div>
+          <div class="risk"><b>風險：</b>工時長、up-or-out文化、且法語商務水準是硬門檻而非加分。若case準備不足就投遞，會浪費掉寶貴的第一輪機會（多數公司12個月內不重複面試）。</div>
+          <div class="tagrow"><span class="tag">Case interview</span><span class="tag">Junior-entreprise</span><span class="tag">法語C1書面</span><span class="tag">早投遞</span></div>
+        </div>
+      </div>
+
+      <!-- Path D -->
+      <div class="path">
+        <div class="ph">
+          <div class="badge">D</div>
+          <div>
+            <p class="ttl">Growth／行銷數據｜現有經驗的升級路線</p>
+            <p class="sub">不是留在原地，而是從「執行投放」往上移動到「決定要投什麼、怎麼衡量」</p>
+          </div>
+        </div>
+        <div class="pbody">
+          <p style="font-size:14px;">兩段數位行銷與廣告投放經驗是目前<strong>最能直接變現的資產</strong>——找實習最快、面試最有話講。但第03節的判斷沒有改變：純執行層是AI替代風險最高的位置。所以這條路的規劃重點不是「要不要留在行銷」，而是<strong>如何在三年內離開執行層</strong>。</p>
+          <div class="horizon">
+            <div class="hz">
+              <div class="hz-h">Short · 至2027年1月</div>
+              <h5>把經驗數據化，換職缺類別</h5>
+              <ul>
+                <li>把過去的投放成績整理成帶數字的案例：預算規模、ROAS、CPA改善幅度、A／B測試結論</li>
+                <li>補GA4（Google Analytics 4）、歸因模型、SQL——這三項是從投放跨到分析的最短路徑</li>
+                <li>投遞職缺換成growth、CRM、marketing analytics、web analyst，<strong>避開純media buying與community management</strong></li>
+                <li>可考Google Analytics認證與Meta Blueprint，成本低但能過HR篩選</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Mid · 2027–2029</div>
+              <h5>三年內必須離開執行層</h5>
+              <ul>
+                <li>M2 alternance選growth或product marketing方向，職責要含預算分配或產品決策，而不只是操作平台</li>
+                <li>累積一個能量化的成果故事（讓某個渠道的CAC下降多少、讓某個產品線的留存提升多少）</li>
+                <li>觀察是否要轉Product Manager（產品經理）——這是行銷背景最常見也最有價值的轉出口</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Long · 2029–2034</div>
+              <h5>兩個現實的終點</h5>
+              <ul>
+                <li>Head of growth／marketing manager，約50–70K，中小企業或新創的成長負責人</li>
+                <li>或轉Product Manager，天花板更高但需要更早開始鋪路</li>
+                <li>第三個選項：進精品或美妝集團的digital &amp; CRM部門（見路徑E），法國在這個領域是全球中心</li>
+              </ul>
+            </div>
+          </div>
+          <div class="firststep"><strong>現在就能做的第一步：</strong>這條路可以完全免費地與會計實習求職並行——同一份CV只要換一個版本的標題與前三行摘要，就能同時投遞行銷分析類職缺。短期內不需要做取捨。</div>
+          <div class="risk"><b>風險：</b>五條路裡AI替代風險最高、薪資成長最慢。若2029年前還停在執行層，之後轉出的難度會顯著上升——行銷轉財務是所有路徑組合中最難的一種。</div>
+          <div class="tagrow"><span class="tag">GA4</span><span class="tag">歸因模型</span><span class="tag">SQL</span><span class="tag">CRM</span><span class="tag">PM轉職</span></div>
+        </div>
+      </div>
+
+      <!-- Path E -->
+      <div class="path">
+        <div class="ph">
+          <div class="badge">E</div>
+          <div>
+            <p class="ttl">精品／美妝產業的財務與商業分析</p>
+            <p class="sub">不是第五個職能，而是把A、B、D任一種技能放進一個法國具有結構性優勢的產業</p>
+          </div>
+        </div>
+        <div class="pbody">
+          <p style="font-size:14px;">這條路值得單獨列出，因為它同時吃到三個現有優勢：<strong>法國是全球精品與美妝產業的總部所在地</strong>（LVMH、Kering、L'Oréal、Hermès、Chanel）、中文能力在亞洲市場是實質稀缺資源、而知識庫裡已經有現成的產業知識（見第07節的精品與香水卷冊）。職能上仍是controlling或analytics，差別在於產業選擇讓履歷有了辨識度。</p>
+          <div class="horizon">
+            <div class="hz">
+              <div class="hz-h">Short · 至2027年1月</div>
+              <h5>把產業知識變成面試資產</h5>
+              <ul>
+                <li>投遞大集團的césure實習：LVMH、Kering、L'Oréal、Chanel、Richemont每年收大量stage與alternance，且明確歡迎多語背景</li>
+                <li>職缺方向：contrôle de gestion、retail performance、merchandising analytics、supply chain analyst</li>
+                <li>面試準備：能講出一個品牌的商業模式與近期財報重點，這是多數候選人做不到的差異點</li>
+                <li>里昂在地補充：化學與美妝供應鏈（Lyon的chimie／beauté產業聚落）也有企業端職缺，競爭比巴黎小</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Mid · 2027–2029</div>
+              <h5>建立產業身分</h5>
+              <ul>
+                <li>M2 alternance留在同一個產業，避免換產業重新累積</li>
+                <li>職位往品牌財務、zone controlling、或travel retail分析移動</li>
+                <li>起薪較低（約30–36K，品牌光環的代價），但三年後的產業內流動性很好</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Long · 2029–2034</div>
+              <h5>用語言優勢接亞洲</h5>
+              <ul>
+                <li>Brand finance manager或zone controller，約55–85K</li>
+                <li>中文＋法文＋英文的組合，可負責大中華或亞太市場，甚至外派——這是這條路獨有的長期選項</li>
+                <li>橫向出口：轉品牌端的策略、或回到顧問業做精品產業專門顧問</li>
+              </ul>
+            </div>
+          </div>
+          <div class="firststep"><strong>現在就能做的第一步：</strong>去LVMH與L'Oréal的校園招募頁登記人才庫（兩家都有專門的stage／alternance入口），他們的招募梯次密集，登記後會持續收到職缺通知，維護成本接近零。</div>
+          <div class="risk"><b>風險：</b>品牌光環使競爭極度激烈且壓低起薪，同樣的職能在B2B工業公司薪水更高。若三年內沒有升到管理層，容易卡在低薪但體面的位置。</div>
+          <div class="tagrow"><span class="tag">LVMH／Kering</span><span class="tag">Retail analytics</span><span class="tag">中文優勢</span><span class="tag">Travel retail</span></div>
+        </div>
+      </div>
+
+      <!-- Path F -->
+      <div class="path">
+        <div class="ph">
+          <div class="badge">F</div>
+          <div>
+            <p class="ttl">ESG／永續報告｜國際背景的變現方式</p>
+            <p class="sub">建議當作附加專精而非主線：國際關係與國際法的背景，在這裡第一次變成財務職場上的具體優勢</p>
+          </div>
+        </div>
+        <div class="pbody">
+          <p style="font-size:14px;">歐盟的CSRD（Corporate Sustainability Reporting Directive，企業永續報告指令）把永續資訊納入類似財報的強制揭露與查核框架，讓大量法國企業同時需要「懂法規、懂報表、懂國際準則」的人。這正好落在會計與國際法的交會處。<strong>但它不適合當唯一主線</strong>——職缺總量仍小、且多要求先有審計或財務基礎，所以正確的用法是：先站進路徑A或E，再把ESG當作專精標籤。</p>
+          <div class="horizon">
+            <div class="hz">
+              <div class="hz-h">Short · 至2027年1月</div>
+              <h5>低成本埋伏筆</h5>
+              <ul>
+                <li>不改變主要投遞策略，但在CV與動機信中，把國際法與國際關係背景與CSRD明確連起來</li>
+                <li>了解基本框架：CSRD、ESRS（European Sustainability Reporting Standards，歐洲永續報告準則）、雙重重大性（double matérialité）概念</li>
+                <li>面試中主動提出這個角度——多數會計背景候選人講不出來，這是立即的差異化</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Mid · 2027–2029</div>
+              <h5>在職位內部專精</h5>
+              <ul>
+                <li>在事務所或企業財務部內部，主動接ESG／reporting extra-financier（非財務報告）的專案</li>
+                <li>大型事務所（Big4）都設有永續報告查核團隊，內部轉調比外部應徵容易得多</li>
+                <li>此時的DSCG學分仍然有用，因為永續報告查核正在向會計專業靠攏</li>
+              </ul>
+            </div>
+            <div class="hz">
+              <div class="hz-h">Long · 2029–2034</div>
+              <h5>兩個出口</h5>
+              <ul>
+                <li>企業端：ESG reporting manager或永續financial controller，約55–80K</li>
+                <li>國際組織端：OECD、UN系統、歐盟機構的財務行政與報告職位——這是外交與國際關係背景真正能發揮的地方，但招募週期長、需提前佈局人脈</li>
+              </ul>
+            </div>
+          </div>
+          <div class="firststep"><strong>現在就能做的第一步：</strong>花一個下午讀完CSRD與ESRS的基本架構，然後在動機信裡加一句把國際法背景與永續報告連起來的話。這是全部規劃裡投入產出比最高的一個動作。</div>
+          <div class="risk"><b>風險：</b>職缺數量仍受政策節奏影響，歐盟近年對CSRD適用範圍有簡化調整的討論，因此不宜當作唯一賭注。當附加技能是穩健的，當主線則過於集中。</div>
+          <div class="tagrow"><span class="tag">CSRD</span><span class="tag">ESRS</span><span class="tag">國際法背景</span><span class="tag">Big4內部轉調</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section id="foundation">
+      <span class="num">06</span>
+      <h2>共通地基與決策點</h2>
+      <p>上面六條路看起來分岔，但在2027年9月之前，它們需要的準備有八成是同一批。這一節把「不管選哪條都該做的事」抽出來，並標出真正非做選擇不可的時間點——在那之前，保持選項開著比提早決定更划算。</p>
+
+      <h3>不管走哪條路都成立的五件事</h3>
+      <ol>
+        <li><strong>M2一定要念完。</strong>它同時是三件事的鑰匙：DSCG的報考資格（M1不算grade de master）、法國職場對bac+5的預設要求、以及alternance合約的載體。無論最後選哪個領域，這一步都不變。</li>
+        <li><strong>法語商務書寫練到能獨立產出。</strong>寫mail、寫note de synthèse（綜合報告）、寫會議紀要。這是六條路共同的隱形門檻，也是外籍候選人最常在最後一輪被刷掉的原因。</li>
+        <li><strong>一份可展示的量化作品集。</strong>財務模型、儀表板、分析案例各一。它在會計面試裡是加分，在數據與顧問面試裡是入場券，成本卻只需要幾個週末。</li>
+        <li><strong>把實習當成未來的雇主池。</strong>法國的alternance有很高比例來自已經認識候選人的公司。第一段實習的真正產出不是經驗欄那兩行字，而是一個願意再簽妳一次的主管。</li>
+        <li><strong>DSCG的UE可以單科累積、且不會過期。</strong>就算最後不走expert-comptable，考過的科目仍是履歷上的硬證據，也讓「回到會計線」這個選項一直保持開啟。這是所有路徑裡最便宜的保險。</li>
+      </ol>
+
+      <h3>可逆性矩陣：哪些轉換容易，哪些幾乎是單行道</h3>
+      <p>選第一份工作時，真正該問的不是「哪個起薪高」，而是<strong>「五年後從這裡能轉去哪裡」</strong>。下表是法國市場上的實際流動難度：</p>
+      <div class="ledger-wrap">
+        <table>
+          <tr><th>從 → 到</th><th>難度</th><th>說明</th></tr>
+          <tr><td>會計／審計 → 管理控制</td><td><b>容易</b></td><td>同一套語言，事務所出身在企業端很受歡迎，是法國最常見的轉職路線</td></tr>
+          <tr><td>會計／審計 → 數據分析</td><td><b>容易</b></td><td>財務領域知識＋工具能力，是稀缺組合，不需要新文憑</td></tr>
+          <tr><td>顧問 → 幾乎任何方向</td><td><b>容易</b></td><td>可逆性最高的起點，代價是前幾年的強度</td></tr>
+          <tr><td>管理控制 → 會計／DEC</td><td>中等</td><td>需要補DSCG與三年stage，時間成本高但路徑明確存在</td></tr>
+          <tr><td>數據分析 → 財務職能</td><td>中等</td><td>要補會計語言，但企業普遍歡迎，特別是FP&amp;A職位</td></tr>
+          <tr><td>行銷／AdOps → 財務或會計</td><td><b>困難</b></td><td>履歷敘事斷裂，多數需要靠一個文憑（DSCG或M2）重新開機</td></tr>
+          <tr><td>任何路徑 → 離開法國</td><td>視技能而定</td><td><b>數據、顧問、財務分析的技能全球通用；expert-comptable頭銜只在法國有效</b></td></tr>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="stamp">結論</span><br>
+        起點應該選在「轉出容易」的位置，而不是「起薪最高」的位置。以這個標準看，<strong>路徑A（管理控制）與路徑C（顧問）的可逆性最好</strong>，路徑D（純行銷執行）最差。而現在的會計方向其實也在高可逆性那一組——這是它被低估的優點。
+      </div>
+
+      <h3>四個真正的決策點</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2026年10月</div>
+          <h4>擴大投遞面，而不是換跑道</h4>
+          <p>八週計畫結束時檢查：投出的申請有沒有進到面試。若回覆率過低，動作是把職缺關鍵字從會計擴大到contrôle de gestion與data analyst（同一批公司、不同職缺），而不是放棄會計方向。這個時點只做加法。同時，若對顧問路徑有興趣，這是最後的投遞窗口。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2026年12月</div>
+          <h4>選定M2主修方向</h4>
+          <p>emlyon的M2主修報名通常在此時進行，這是第一個真正無法拖延的選擇：財務／管理控制、數據與商業分析、策略／顧問，或行銷。這一步會決定中期身分，但不會鎖死長期——M2主修不等於一輩子的職能。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2027年6月</div>
+          <h4>Alternance簽約＝中期身分定案</h4>
+          <p>簽哪家公司、什麼職位，實質上決定了2027–2029做什麼。判斷標準建議用可逆性而非薪資：這個職位兩年後能讓我轉去幾個地方？同時決定是否開始單科報考DSCG。</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2029年</div>
+          <h4>DEC的最終決策點</h4>
+          <p>此時約26–27歲，工作兩年、看過真實的業界樣貌，才是判斷「要不要投入三年stage走完DEC」的正確時機。現在不需要、也沒有足夠資訊做這個決定。重點是：<strong>2029年做這個決定完全來得及</strong>，法國有大量三十歲後才完成DEC的人。</p>
+        </div>
+      </div>
+
+      <h3>三個自問，用來收斂方向</h3>
+      <div class="ledger-wrap">
+        <table>
+          <tr><th>問題</th><th>若答案偏向左</th><th>若答案偏向右</th></tr>
+          <tr>
+            <td><b>我要的是頭銜的保護，還是移動的自由？</b></td>
+            <td>保護 → expert-comptable、審計、管理控制</td>
+            <td>自由 → 數據、顧問、成長型職能</td>
+          </tr>
+          <tr>
+            <td><b>我能接受幾年的低薪換取後面的護城河？</b></td>
+            <td>能忍3–5年 → DEC路線的報酬最高</td>
+            <td>希望3年內薪資到位 → 數據、顧問、管理控制</td>
+          </tr>
+          <tr>
+            <td><b>十年後我想在哪裡？</b></td>
+            <td>確定留在法國 → 法國專屬資格（DEC）價值最大</td>
+            <td>想保持跨國移動 → 選全球通用技能，別把賭注押在單一國家的執照</td>
+          </tr>
+        </table>
+      </div>
+      <p style="font-size:13.5px; color:#4b4536;">第三個問題往往是最關鍵、卻最少被問的一個。expert-comptable是法國法律授予的頭銜，八年的投入只在法國境內完全變現；而數據、顧問、財務分析的能力帶得走。這不代表哪個更好，只代表<strong>這個選擇的本質是「地理承諾」，而不只是「職業選擇」</strong>。</p>
+    </section>
+
+    <!-- 07 -->
+    <section id="library">
+      <span class="num">07</span>
+      <h2>與知識庫其他卷冊的連結</h2>
+      <p>這份職涯檔案不是獨立的一頁，而是知識庫裡的一卷。以下幾冊與上述路徑直接相關，規劃執行時可以互相參照：</p>
+      <div class="link-grid">
+        <a class="link-card" href="business-finance-knowledge-map.html">
+          <div class="lc-t">Business &amp; Finance 知識地圖</div>
+          <div class="lc-d">財務、會計與行銷策略的跨域整合地圖。八週密集計畫裡讀UE9、UE6、UE11時，可用它建立整體框架，再回頭讀教科書細節。</div>
+        </a>
+        <a class="link-card" href="cv_prompt_builder_v2.html">
+          <div class="lc-t">CV Prompt Builder</div>
+          <div class="lc-d">產生法文CV與動機信的工具。第02節的第2週任務（寫法文CV與cover letter模板）可直接在這裡完成，並針對不同路徑產出不同版本。</div>
+        </a>
+        <a class="link-card" href="lifestyle-luxury-knowledge-map.html">
+          <div class="lc-t">Lifestyle &amp; Luxury 知識地圖</div>
+          <div class="lc-d">精品、香水、烈酒、時尚與飯店產業的三語地圖。路徑E的產業知識基礎，面試LVMH、Kering、L'Oréal前值得整卷重讀。</div>
+        </a>
+        <a class="link-card" href="coty_perfume_market_mindmap.html">
+          <div class="lc-t">Perfume Intelligence</div>
+          <div class="lc-d">Coty的品牌組合與香水市場競爭分析。可當作路徑E面試時的產業案例素材，也是一份現成的「我做過的產業分析」證明。</div>
+        </a>
+        <a class="link-card" href="international-law.html">
+          <div class="lc-t">International Law</div>
+          <div class="lc-d">國際法的淵源、條約、人權與機構體系。路徑F（ESG／CSRD）與國際組織方向的知識底盤。</div>
+        </a>
+        <a class="link-card" href="ir-theories.html">
+          <div class="lc-t">International Relations Theory</div>
+          <div class="lc-d">國際關係理論地圖。與國際法一併構成外交背景的知識證據，在ESG與國際組織的動機信裡是可引用的實質內容。</div>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      本檔案整合先前對話中的路徑規劃、密集計畫與職業比較內容，並延伸出六條替代領域的中短長期規劃與決策時點。資料為2026年8月市場行情，薪資數字為推估區間僅供相對比較；DCG／DSCG課綱正值2025–2027改革期，CSRD適用範圍亦在調整中，行動前建議查CSOEC官網與歐盟最新公告確認。
+    </footer>
+  </main>
+</div>
+
+<script>
+  /* Inside the library the viewer supplies its own back bar, so the
+     in-page link is only needed when this dossier is opened on its own. */
+  if (window.self !== window.top) {
+    const back = document.querySelector('.tabs .back');
+    if (back) back.style.display = 'none';
+  }
+
+  const links = document.querySelectorAll('.tabs a[href^="#"]');
+  const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const match = document.querySelector(`.tabs a[href="#${e.target.id}"]`);
+        if(match) match.classList.add('active');
+      }
+    });
+  }, {rootMargin:"-40% 0px -50% 0px"});
+  sections.forEach(s=> s && obs.observe(s));
+</script>
+</body>
+</html>
