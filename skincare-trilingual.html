@@ -163,6 +163,9 @@
           <div style="font-size:18px;font-weight:800;letter-spacing:-.3px;background:linear-gradient(to right,#fff,#fce7f3,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent;" id="nav-title">美妝保養 · Skincare Actives</div>
         </div>
       </div>
+      <button id="study-btn" onclick="showStudyPath()" style="padding:7px 13px;font-size:11px;font-weight:700;border-radius:10px;border:1px solid rgba(236,72,153,0.3);cursor:pointer;background:rgba(236,72,153,0.12);color:#f0abca;font-family:inherit;transition:all .2s;margin-right:8px;white-space:nowrap;">
+        <i class="fa-solid fa-route" style="margin-right:6px;"></i><span id="study-btn-label">學習路徑</span>
+      </button>
       <div style="display:flex;gap:4px;padding:4px;background:#0f172a;border:1px solid rgba(30,41,59,1);border-radius:12px;">
         <button onclick="switchLang('zh')" id="hdr-zh" style="padding:5px 11px;font-size:11px;font-weight:700;border-radius:8px;border:1px solid rgba(236,72,153,0.2);cursor:pointer;background:rgba(236,72,153,0.15);color:#f0abca;font-family:inherit;transition:all .2s;">繁中</button>
         <button onclick="switchLang('en')" id="hdr-en" style="padding:5px 11px;font-size:11px;font-weight:700;border-radius:8px;border:1px solid transparent;cursor:pointer;background:transparent;color:#64748b;font-family:inherit;transition:all .2s;">EN</button>
@@ -702,6 +705,7 @@ function makeEl(tag, cls) {
 
 /* ── DETAIL PANEL ── */
 function showDetail(leaf, color) {
+  studyOpen = false;
   activeLeaf = leaf.id;
   document.querySelectorAll('.node-leaf').forEach(n => n.classList.remove('active'));
   const nodeEl = document.getElementById('node-' + leaf.id);
@@ -746,6 +750,7 @@ function showDetail(leaf, color) {
 }
 
 function closePanel() {
+  studyOpen = false;
   document.getElementById('detail-panel').classList.add('hidden');
   document.querySelectorAll('.node-leaf').forEach(n => n.classList.remove('active'));
   activeLeaf = null;
@@ -801,6 +806,131 @@ document.getElementById('canvas-wrap').addEventListener('touchmove', e => {
 document.getElementById('canvas-wrap').addEventListener('touchend', () => { isDragging = false; });
 
 /* ── LANGUAGE ── */
+
+/* ── STUDY & PRACTICE PATH ───────────────────────────────────────────────
+   活性成分知識要變成職業能力，缺的是實作與可展示的成果。 */
+const STUDY = {
+  zh: {
+    btn: '學習路徑',
+    tag: '實作路徑',
+    title: '從讀成分到做得出判斷',
+    sub: '六個月，把這張圖上的知識變成一份能拿給雇主看的東西',
+    stages: [
+      { h: '第 1 個月 · 讀得懂', items: [
+        '學會讀 INCI 成分表：濃度由高到低排列，1% 以下順序已無意義，別再用「排第幾」判斷含量。',
+        '弄懂皮膚屏障的結構與功能——保濕、抗老、美白的所有邏輯都從這裡長出來。',
+        '每天拆一張成分表，寫下：這是什麼劑型、活性物是誰、其餘成分在做什麼。' ] },
+      { h: '第 2–3 個月 · 分得清', items: [
+        '分家族記活性物：視黃醇類、酸類、維他命C、菸鹼醯胺，記濃度區間與耐受度而非品牌。',
+        '讀原料商的技術文件（TDS）與功效試驗設計，學會判斷「這個數據有多強」。',
+        '認識歐盟法規 1223/2009 與功效宣稱的界線：在歐洲，說得太滿是違法而不是行銷風格。' ] },
+      { h: '第 4–6 個月 · 說得出', items: [
+        '拆解十款產品：配方架構、活性濃度、定價邏輯並列成一張表。',
+        '寫一份宣稱證據檢核：哪些主張有臨床支持，哪些只有體外實驗或消費者問卷。',
+        '若想走配方或法規，開始準備正式訓練（Formula Botanica、SCS、安全評估師課程）。' ] }
+    ],
+    resTitle: '實操資源',
+    res: [
+      'CosIng（歐盟官方成分資料庫）與 INCIDecoder — 查證用一手來源，免費',
+      'SCCS 意見書 — 每一個濃度上限背後的科學依據',
+      'Baumann《Cosmetic Dermatology》— 皮膚科醫師寫的活性物參考書',
+      '原料商技術文件（Givaudan Active Beauty、BASF、Croda）— 比任何懶人包完整',
+      'in-cosmetics 展會線上內容 — 產業趨勢的第一手來源'
+    ],
+    projTitle: '可寫進履歷的作品',
+    proj: '一份十款產品的配方與定價拆解表，加上一頁宣稱證據檢核。面試美妝品牌時，能指著成分表說出「這個配方為什麼賣這個價」，比任何課程證書都有說服力。',
+    note: '這張圖談的是成分科學；真正的職缺分成三條路——配方研發、法規安全、以及產品行銷。三條路共用上面的地基，但第 4 個月之後要選一條深入。'
+  },
+  en: {
+    btn: 'Practice Path',
+    tag: 'Practice Path',
+    title: 'From reading ingredients to making judgements',
+    sub: 'Six months to turn this map into something you can show an employer',
+    stages: [
+      { h: 'Month 1 · Read it', items: [
+        'Learn to read an INCI list: high to low, and below 1% the order stops meaning anything. Stop judging content by position alone.',
+        'Understand the skin barrier. Every logic on this map — hydration, ageing, pigmentation — grows out of it.',
+        'Take apart one ingredient list a day: what vehicle is this, which are the actives, what is everything else doing?' ] },
+      { h: 'Months 2-3 · Tell them apart', items: [
+        'Learn actives by family — retinoids, acids, vitamin C, niacinamide — memorising usable ranges and tolerance rather than brands.',
+        'Read suppliers’ technical dossiers and their efficacy study designs; learn to judge how strong a claim’s evidence really is.',
+        'Learn EU Regulation 1223/2009 and the limits on claims: in Europe, overclaiming is an offence, not a style.' ] },
+      { h: 'Months 4-6 · Say something', items: [
+        'Deconstruct ten products into one table: formula architecture, active concentration, price positioning.',
+        'Write a claims-evidence check: which claims have clinical support, which rest on in-vitro work or a consumer questionnaire.',
+        'If formulation or regulatory appeals, start formal training (Formula Botanica, SCS, safety assessor courses).' ] }
+    ],
+    resTitle: 'Hands-on resources',
+    res: [
+      'CosIng (the EU ingredient database) and INCIDecoder — primary sources, free',
+      'SCCS opinions — the science behind every concentration limit',
+      'Baumann, Cosmetic Dermatology — a dermatologist’s reference on actives',
+      'Supplier technical dossiers (Givaudan Active Beauty, BASF, Croda) — more complete than any explainer',
+      'in-cosmetics online content — industry trends first-hand'
+    ],
+    projTitle: 'Portfolio project',
+    proj: 'A ten-product teardown table, formula against price, plus a one-page claims-evidence check. Being able to point at an INCI list and explain why that formula carries that price persuades more than any certificate.',
+    note: 'This map is ingredient science; the jobs split three ways — formulation, regulatory and safety, and product marketing. All three share the groundwork above, but from month four you should pick one.'
+  },
+  fr: {
+    btn: 'Parcours',
+    tag: 'Parcours pratique',
+    title: 'De la lecture des ingrédients au jugement',
+    sub: 'Six mois pour transformer cette carte en quelque chose de présentable à un employeur',
+    stages: [
+      { h: 'Mois 1 · Savoir lire', items: [
+        'Apprendre à lire une liste INCI : ordre décroissant, sans signification sous 1 %. Cesser de juger la teneur par la position seule.',
+        'Comprendre la barrière cutanée : toute la logique de cette carte en découle.',
+        'Décortiquer une liste par jour : quelle galénique, quels actifs, que fait le reste ?' ] },
+      { h: 'Mois 2-3 · Savoir distinguer', items: [
+        'Apprendre les actifs par famille — rétinoïdes, acides, vitamine C, niacinamide — en retenant les plages d’usage, pas les marques.',
+        'Lire les dossiers techniques des fournisseurs et juger la robustesse réelle des preuves.',
+        'Maîtriser le règlement 1223/2009 et les limites des allégations : en Europe, surpromettre est une infraction.' ] },
+      { h: 'Mois 4-6 · Savoir conclure', items: [
+        'Décortiquer dix produits dans un même tableau : architecture de formule, concentration, positionnement prix.',
+        'Rédiger un contrôle des preuves : allégations cliniques, in vitro ou simple questionnaire consommateur ?',
+        'Si la formulation ou le réglementaire attire, engager une formation (Formula Botanica, SCS, évaluateur sécurité).' ] }
+    ],
+    resTitle: 'Ressources pratiques',
+    res: [
+      'CosIng (base européenne) et INCIDecoder — sources primaires, gratuites',
+      'Avis du SCCS — la science derrière chaque limite de concentration',
+      'Baumann, Cosmetic Dermatology — la référence d’une dermatologue',
+      'Dossiers techniques fournisseurs (Givaudan Active Beauty, BASF, Croda)',
+      'Contenus du salon in-cosmetics — les tendances de première main'
+    ],
+    projTitle: 'Réalisation pour le CV',
+    proj: 'Un tableau de décryptage de dix produits, formule contre prix, et une page de contrôle des allégations. Expliquer pourquoi une formule justifie son prix convainc plus qu’un certificat.',
+    note: 'Cette carte traite de science des ingrédients ; les métiers se divisent en trois — formulation, réglementaire et sécurité, marketing produit. Le socle est commun, mais à partir du quatrième mois il faut choisir.'
+  }
+};
+
+function showStudyPath() {
+  activeLeaf = null;
+  document.querySelectorAll('.node-leaf').forEach(n => n.classList.remove('active'));
+  studyOpen = true;
+  const c = '#ec4899';
+  const d = STUDY[lang];
+  let html = `
+    <div class="detail-tag" style="background:${c}22;color:${c};">${d.tag}</div>
+    <div class="detail-title">${d.title}</div>
+    <div class="detail-sub">${d.sub}</div>`;
+  d.stages.forEach(st => {
+    html += `<div class="detail-section"><h4>${st.h}</h4>`;
+    st.items.forEach(i => { html += `<div class="detail-item">${i}</div>`; });
+    html += '</div>';
+  });
+  html += `<div class="detail-section"><h4>${d.resTitle}</h4>`;
+  d.res.forEach(r => { html += `<div class="detail-item">${r}</div>`; });
+  html += '</div>';
+  html += `<div class="detail-section"><h4>${d.projTitle}</h4><div class="detail-item">${d.proj}</div></div>`;
+  html += `<div class="detail-note">💡 ${d.note}</div>`;
+  document.getElementById('detail-inner').innerHTML = html;
+  document.getElementById('detail-panel').classList.remove('hidden');
+}
+
+let studyOpen = false;
+
 function switchLang(l) {
   lang = l;
   localStorage.setItem('kb_lang', l);
@@ -816,7 +946,10 @@ function switchLang(l) {
   // Re-render with current transform
   render();
 
+  document.getElementById('study-btn-label').textContent = STUDY[l].btn;
+
   // Re-open detail panel if one was active
+  if (studyOpen) { showStudyPath(); return; }
   if (activeLeaf) {
     for (const branch of BRANCHES) {
       const leaf = branch.leaves.find(lf => lf.id === activeLeaf);

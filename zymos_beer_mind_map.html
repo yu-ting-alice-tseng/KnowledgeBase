@@ -106,6 +106,11 @@
                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
             </div>
 
+            <button onclick="showStudyPath()" id="study-btn"
+                class="px-3 py-2 text-xs font-bold rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 transition-all duration-200 whitespace-nowrap">
+                <i class="fa-solid fa-route mr-1.5"></i><span data-fr="Parcours" data-en="Practice Path" data-zh="學習路徑">Parcours</span>
+            </button>
+
             <!-- Language Switcher Buttons -->
             <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1">
                 <button onclick="setLanguage('fr')" id="btn-lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 bg-amber-500/15 text-amber-400 border border-amber-500/20">
@@ -315,6 +320,18 @@
                 </div>
                 <h3 class="font-bold text-slate-200 text-lg" data-fr="Sélectionnez une catégorie" data-en="Select a Category" data-zh="選擇心智圖節點">Sélectionnez une catégorie</h3>
                 <p class="text-sm text-slate-400 mt-2 px-4" data-fr="Cliquez sur n'importe quel nœud pour explorer sa fiche technique, ses profils de goût, de fabrication ou d'histoire." data-en="Click on any mind map node to reveal its full technical details, raw profiles, brewing chemistry, or history." data-zh="點擊心智圖中的任意節點，即刻解鎖全方位的工藝步驟、科學指標、風味密碼或世界著名名廠巡禮。">Cliquez sur n'importe quel nœud pour explorer sa fiche.</p>
+            </div>
+
+            <!-- Study & Practice Path Card (initially hidden) -->
+            <div id="study-card" class="hidden flex-col gap-5 h-full">
+                <div>
+                    <span class="px-2.5 py-1 rounded text-[10px] font-black uppercase tracking-widest text-slate-950 bg-amber-500">
+                        <span data-fr="Parcours" data-en="Practice Path" data-zh="實作路徑">Parcours</span>
+                    </span>
+                    <h3 id="study-title" class="serif-title font-extrabold text-2xl text-white mt-2">De la dégustation au métier</h3>
+                    <p id="study-sub" class="text-xs text-slate-400 italic mt-1"></p>
+                </div>
+                <div id="study-body" class="flex flex-col gap-5 text-sm"></div>
             </div>
 
             <!-- Detailed Content Card (initially hidden) -->
@@ -876,6 +893,133 @@
         let activeSpectrumIndex = 0;
 
         // Language Switcher Function
+
+        /* ── STUDY & PRACTICE PATH ─────────────────────────────────────────
+           喝得懂與做得出是兩件事；這條路線把品飲知識變成可驗證的能力。 */
+        const BEER_STUDY = {
+          zh: {
+            title: '從喝得懂到做得出',
+            sub: '六個月：品飲、釀造、與一份能拿出手的紀錄',
+            stages: [
+              { h: '第 1 個月 · 建立味覺座標', items: [
+                '用同一套流程品飲：外觀、香氣、口感、尾韻、結論，每支都寫。',
+                '從四大基礎風格入手（Pilsner、Pale Ale、Stout、Wheat），先分得出差異再談偏好。',
+                '認識四種原料的作用：麥芽給糖與顏色，啤酒花給苦與香，酵母給風味，水決定骨架。' ] },
+              { h: '第 2–3 個月 · 理解釀造', items: [
+                '弄懂糖化、煮沸、發酵、熟成四個階段，各自決定了成品的哪一部分。',
+                '學會辨識常見異味（雙乙酰的奶油味、DMS 的玉米味、氧化的紙味）——這是評審的入門門檻。',
+                '參觀一次酒廠，看真實的設備與流程，比十本書更能固定觀念。' ] },
+              { h: '第 4–6 個月 · 動手與認證', items: [
+                '自己釀一批 20 公升，從配方到裝瓶完整走一遍，並記錄每一次偏差。',
+                '準備 Cicerone Certified Beer Server（線上可考）或 BJCP 品評認證。',
+                '整理一本五十支酒的品飲筆記，含盲飲判斷與對答案的紀錄。' ] }
+            ],
+            resTitle: '實操資源',
+            res: [
+              'Palmer《How to Brew》— 家釀的標準入門書，線上有免費舊版',
+              'BJCP Style Guidelines — 免費、權威的風格定義，評審的共同語言',
+              'Cicerone / BJCP 認證 — 產業唯一被廣泛承認的資格',
+              '本地家釀社團與酒廠參觀 — 這個產業靠人脈流動職缺',
+              'Brewers Association 技術資源 — 製程與品管的免費資料'
+            ],
+            projTitle: '可寫進履歷的作品',
+            proj: '一批自釀酒的完整紀錄（配方、發酵曲線、成品評估、下次要改什麼），加上一本五十支酒的盲飲筆記。酒業求職看的是妳分不分得出來、以及做不做得出來，這兩份東西剛好各證明一半。',
+            note: '職涯出口不只釀酒師：品牌與通路業務、進口商、酒吧與餐飲的酒單管理、以及大集團的品類經理，都需要同一套味覺與製程知識。'
+          },
+          en: {
+            title: 'From tasting to making',
+            sub: 'Six months: palate, process, and a record worth showing',
+            stages: [
+              { h: 'Month 1 · Build the palate', items: [
+                'Taste to one fixed sequence every time: appearance, aroma, palate, finish, conclusion, and write it down.',
+                'Start from four base styles — pilsner, pale ale, stout, wheat — and learn to tell them apart before deciding what you like.',
+                'Learn what each of the four ingredients does: malt gives sugar and colour, hops bitterness and aroma, yeast flavour, water the skeleton.' ] },
+              { h: 'Months 2-3 · Understand the process', items: [
+                'Learn the four stages — mash, boil, ferment, condition — and which part of the finished beer each one decides.',
+                'Learn to identify the common off-flavours: diacetyl’s butter, DMS’s creamed corn, oxidation’s wet paper. This is the entry bar for judging.',
+                'Visit a brewery. Seeing the real equipment fixes the concepts faster than ten books.' ] },
+              { h: 'Months 4-6 · Brew and certify', items: [
+                'Brew one 20-litre batch end to end, from recipe to bottle, logging every deviation.',
+                'Prepare Cicerone Certified Beer Server (online) or a BJCP judging exam.',
+                'Assemble a notebook of fifty beers with blind calls and the corrections.' ] }
+            ],
+            resTitle: 'Hands-on resources',
+            res: [
+              'Palmer, How to Brew — the standard homebrew text, older edition free online',
+              'BJCP Style Guidelines — free, authoritative, and the shared language of judging',
+              'Cicerone / BJCP certification — the only widely recognised credentials in the trade',
+              'Local homebrew clubs and brewery visits — this industry moves jobs through people',
+              'Brewers Association technical resources — free material on process and quality control'
+            ],
+            projTitle: 'Portfolio project',
+            proj: 'A complete log of one brew (recipe, fermentation curve, evaluation, what to change next time) plus a fifty-beer blind tasting notebook. Beer hiring asks whether you can tell them apart and whether you can make one; these two documents answer half each.',
+            note: 'The exits are not only brewing: brand and trade sales, importing, bar and restaurant list management, and category management in the big groups all run on the same palate and process knowledge.'
+          },
+          fr: {
+            title: 'De la dégustation au métier',
+            sub: 'Six mois : palais, procédé et un carnet présentable',
+            stages: [
+              { h: 'Mois 1 · Construire le palais', items: [
+                'Déguster selon une séquence fixe : robe, arômes, bouche, finale, conclusion — et l’écrire à chaque fois.',
+                'Partir de quatre styles de base (pils, pale ale, stout, blanche) et savoir les distinguer avant de savoir ce que l’on aime.',
+                'Comprendre le rôle des quatre matières : le malt donne sucre et couleur, le houblon amertume et arômes, la levure le goût, l’eau la structure.' ] },
+              { h: 'Mois 2-3 · Comprendre le procédé', items: [
+                'Maîtriser les quatre étapes — empâtage, ébullition, fermentation, garde — et ce que chacune décide dans la bière finie.',
+                'Savoir identifier les défauts courants : diacétyle (beurre), DMS (maïs), oxydation (carton). C’est le seuil d’entrée du jury.',
+                'Visiter une brasserie : voir le matériel réel ancre les concepts mieux que dix livres.' ] },
+              { h: 'Mois 4-6 · Brasser et certifier', items: [
+                'Brasser un lot de 20 litres de bout en bout, de la recette à l’embouteillage, en consignant chaque écart.',
+                'Préparer le Cicerone Certified Beer Server (en ligne) ou un examen de jury BJCP.',
+                'Constituer un carnet de cinquante bières avec verdicts à l’aveugle et corrections.' ] }
+            ],
+            resTitle: 'Ressources pratiques',
+            res: [
+              'Palmer, How to Brew — la référence du brassage amateur, ancienne édition gratuite en ligne',
+              'BJCP Style Guidelines — gratuit, faisant autorité, langage commun du jury',
+              'Certifications Cicerone / BJCP — les seules largement reconnues dans le métier',
+              'Clubs de brasseurs amateurs et visites de brasseries — le secteur recrute par le réseau',
+              'Ressources techniques de la Brewers Association — procédé et contrôle qualité, gratuits'
+            ],
+            projTitle: 'Réalisation pour le CV',
+            proj: 'Le journal complet d’un brassin (recette, courbe de fermentation, évaluation, corrections à venir) et un carnet de cinquante dégustations à l’aveugle. Le métier demande de savoir distinguer et de savoir produire : ces deux documents répondent chacun à une moitié.',
+            note: 'Les débouchés ne se limitent pas au brassage : commercial marque et réseau, importation, gestion de carte en bar et restaurant, ou category management en groupe reposent sur le même socle.'
+          }
+        };
+
+        let studyOpen = false;
+
+        function showStudyPath() {
+            studyOpen = true;
+            activeNodeId = null;
+            document.querySelectorAll('.mind-node').forEach(n => n.classList.remove('active-node'));
+            const d = BEER_STUDY[currentLang] || BEER_STUDY.zh;
+            document.getElementById('no-selection-msg').classList.add('hidden');
+            document.getElementById('details-card').classList.add('hidden');
+            document.getElementById('details-card').classList.remove('flex');
+            const card = document.getElementById('study-card');
+            card.classList.remove('hidden'); card.classList.add('flex');
+            document.getElementById('study-title').textContent = d.title;
+            document.getElementById('study-sub').textContent = d.sub;
+            let html = '';
+            d.stages.forEach(st => {
+                html += `<div class="bg-slate-950/60 rounded-2xl border border-slate-800 border-t-2 border-t-amber-500/70 p-4">
+                    <h4 class="text-xs font-black uppercase tracking-wider text-amber-400 mb-2">${st.h}</h4>
+                    <ul class="space-y-2 text-[13px] text-slate-300 leading-relaxed list-disc list-inside">
+                      ${st.items.map(i => `<li>${i}</li>`).join('')}
+                    </ul></div>`;
+            });
+            html += `<div class="bg-slate-950/60 rounded-2xl border border-slate-800 p-4">
+                <h4 class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">${d.resTitle}</h4>
+                <ul class="space-y-2 text-[13px] text-slate-300 leading-relaxed list-disc list-inside">
+                  ${d.res.map(r => `<li>${r}</li>`).join('')}
+                </ul></div>`;
+            html += `<div class="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4">
+                <h4 class="text-xs font-black uppercase tracking-wider text-amber-300 mb-2">${d.projTitle}</h4>
+                <p class="text-[13px] text-slate-200 leading-relaxed">${d.proj}</p></div>`;
+            html += `<p class="text-[12px] text-slate-400 leading-relaxed border-l-2 border-amber-500/40 pl-3">${d.note}</p>`;
+            document.getElementById('study-body').innerHTML = html;
+        }
+
         function setLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('kb_lang', lang);
@@ -912,6 +1056,8 @@
                 if (lang === 'zh' && zhText) elem.textContent = zhText;
             });
 
+            if (studyOpen) { showStudyPath(); updateSpectrumDisplay(); return; }
+
             // Update Sidebar Details if a node is currently active
             if (activeNodeId) {
                 updateSidebar(activeNodeId);
@@ -932,6 +1078,11 @@
 
         // Node Selection Handler
         function selectNode(nodeId) {
+            if (studyOpen) {
+                studyOpen = false;
+                const sc = document.getElementById('study-card');
+                sc.classList.add('hidden'); sc.classList.remove('flex');
+            }
             // Remove previous active outline styles
             document.querySelectorAll('.node-item').forEach(node => {
                 node.classList.remove('node-active');
