@@ -23,6 +23,8 @@ set "RETRY=60"
 set "PULL_EVERY=6"
 set /a "tick=0"
 set /a "PULL_SECS=%PULL_EVERY%*%INTERVAL%"
+set "NOTIFIED=0"
+set "STOP=%~dp0stop-sync.flag"
 
 title Auto-Sync [%BRANCH%] - %~dp0
 
@@ -49,6 +51,11 @@ echo ===================================================
 echo.
 
 :loop
+if exist "%STOP%" (
+    echo [%time:~0,8%] stop requested - shutting down. Run install-auto-sync.bat to start again.
+    exit /b 0
+)
+
 set "FAILED=0"
 
 call :clean_ini
@@ -68,9 +75,10 @@ if errorlevel 1 (
 )
 
 if "!FAILED!"=="1" (
-    timeout /t %RETRY% > nul
+    call :sleep %RETRY%
 ) else (
-    timeout /t %INTERVAL% > nul
+    set "NOTIFIED=0"
+    call :sleep %INTERVAL%
 )
 goto loop
 
@@ -161,6 +169,17 @@ exit /b 0
 
 
 rem ---------------------------------------------------
+rem  Wait N seconds. timeout needs a console it can read
+rem  from, which it does not have once this runs hidden at
+rem  logon, so fall back to ping rather than spinning the CPU.
+rem ---------------------------------------------------
+:sleep
+timeout /t %~1 /nobreak > nul 2>&1
+if errorlevel 1 ping -n %~1 -w 1000 127.0.0.1 > nul 2>&1
+exit /b 0
+
+
+rem ---------------------------------------------------
 rem  Remove desktop.ini that OneDrive drops inside .git
 rem  (it makes git fail with "bad object refs/desktop.ini")
 rem ---------------------------------------------------
@@ -190,4 +209,21 @@ echo  ***************************************************
 echo   [%time:~0,8%] WARNING: %~1
 echo  ***************************************************
 echo.
+rem When started by install-auto-sync.bat there is no window
+rem to read, so put the first failure of a streak on screen.
+if not "!NOTIFIED!"=="1" (
+    call :notify
+    set "NOTIFIED=1"
+)
+exit /b 0
+
+
+rem ---------------------------------------------------
+rem  Desktop notification, launched detached so a slow
+rem  balloon never holds up the sync loop. If PowerShell
+rem  is unavailable nothing happens and the log still has
+rem  the full error.
+rem ---------------------------------------------------
+:notify
+start "" /b powershell -NoProfile -WindowStyle Hidden -Command "Add-Type -AssemblyName System.Windows.Forms,System.Drawing; $n = New-Object System.Windows.Forms.NotifyIcon; $n.Icon = [System.Drawing.SystemIcons]::Warning; $n.Visible = $true; $n.ShowBalloonTip(20000, 'KnowledgeBase Auto-Sync', 'Sync failed. Your work is safe on this PC but is not on GitHub yet. Open auto-sync.log in the repository folder.', [System.Windows.Forms.ToolTipIcon]::Warning); Start-Sleep -Seconds 15; $n.Dispose()" > nul 2>&1
 exit /b 0

@@ -10,3 +10,7 @@ $RECYCLE.BIN/
 # 編輯器暫存
 *.swp
 *~
+
+# 自動同步執行時產生的檔案（不要進版本庫）
+auto-sync.log
+stop-sync.flag

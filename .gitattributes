@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Windows 腳本必須是 CRLF 換行，否則 cmd.exe 會讀錯
+*.bat text eol=crlf
+*.vbs text eol=crlf
