@@ -105,6 +105,7 @@
         <a href="#basics"  data-i18n="nav.p1"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-teal-500/50 hover:text-teal-300 transition-colors"></a>
         <a href="#inter"   data-i18n="nav.p2"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
         <a href="#adv"     data-i18n="nav.p3"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors"></a>
+        <a href="#cn"      data-i18n="nav.cn"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
         <a href="#ref"     data-i18n="nav.ref"     class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors"></a>
       </nav>
     </div>
@@ -151,6 +152,45 @@
   </section>
 
   <div id="levels" class="space-y-12"></div>
+
+  <section id="cn" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-amber-500/10 rounded-2xl text-amber-400 border border-amber-500/20 shadow-glow-amber"><i class="fa-solid fa-font text-xl"></i></div>
+      <div>
+        <span data-i18n="cn.eyebrow" class="text-xs uppercase tracking-wider text-amber-400 font-bold"></span>
+        <h2 data-i18n="cn.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-7">
+      <p data-i18n="cn.lead" class="text-slate-300 leading-relaxed"></p>
+      <div id="cn-forms" class="grid md:grid-cols-3 gap-3"></div>
+      <div>
+        <h3 data-i18n="cn.h.tbl" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="cn.p.tbl" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[680px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="cn.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="cn.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="cn.th2" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="cn.th3" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="cn-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 data-i18n="cn.h.ex" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="cn.p.ex" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[560px]">
+            <tbody id="cn-ex" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+        <p data-i18n="cn.ex.note" class="text-xs text-slate-400 leading-relaxed mt-4 bg-slate-900/40 border border-slate-800 rounded-2xl p-4"></p>
+      </div>
+    </div>
+  </section>
 
   <section id="ref" class="scroll-mt-24">
     <div class="flex items-center gap-3 mb-5">
@@ -241,6 +281,7 @@ const SHAPES = {
            + '<ellipse class="s" cx="50" cy="34" rx="16" ry="9"/>'
            + '<ellipse class="s" cx="74" cy="60" rx="16" ry="9" transform="rotate(38 74 60)"/>',
   /* worked into the back loop only: the bar under the symbol */
+  scP: () => '<path class="s" d="M50 24 V76 M24 50 H76"/>',
   blo: () => `<path class="s" d="${STEM} ${T_BAR}"/>` + bars(1)
            + '<path class="s" d="M22 92 H78"/>',
 };
@@ -502,16 +543,65 @@ const USUK = [
   { s:'dtr', us:'double treble (dtr)', uk:'triple treble (trtr)', zh:{zh:'三卷長針',en:'double treble',fr:'triple bride'} },
   { s:'sl',  us:'slip stitch (sl st)', uk:'slip stitch (ss)',     zh:{zh:'引拔針',en:'slip stitch',fr:'maille coulée'} },
 ];
-const LEGEND = ['ch','sl','sc','hdc','dc','tr','dtr','inc','dec','bob','shell','pic','blo'];
+const LEGEND = ['ch','sl','sc','scP','hdc','dc','tr','dtr','inc','dec','bob','shell','pic','blo'];
 const LEGEND_NAME = {
   ch:{zh:'鎖針',en:'chain',fr:'maille en l’air'}, sl:{zh:'引拔針',en:'slip stitch',fr:'maille coulée'},
-  sc:{zh:'短針',en:'single crochet',fr:'maille serrée'}, hdc:{zh:'中長針',en:'half double',fr:'demi-bride'},
+  sc:{zh:'短針',en:'single crochet',fr:'maille serrée'},
+  scP:{zh:'短針（另一種畫法）',en:'single crochet (variant)',fr:'maille serrée (variante)'}, hdc:{zh:'中長針',en:'half double',fr:'demi-bride'},
   dc:{zh:'長針',en:'double crochet',fr:'bride'}, tr:{zh:'長長針',en:'treble',fr:'double bride'},
   dtr:{zh:'三卷長針',en:'double treble',fr:'triple bride'}, inc:{zh:'加針',en:'increase',fr:'augmentation'},
   dec:{zh:'減針',en:'decrease',fr:'diminution'}, bob:{zh:'玉編',en:'bobble',fr:'point boule'},
   shell:{zh:'貝殼針',en:'shell',fr:'éventail'}, pic:{zh:'狗牙針',en:'picot',fr:'picot'},
   blo:{zh:'只挑後段',en:'back loop only',fr:'brin arrière'},
 };
+
+/* ═══════════════════════════════════════════════════════════
+   The letter notation used across Chinese-language patterns.
+   Chinese amigurumi patterns are mostly written in letters, not
+   drawn as symbol charts, so a reader coming from Xiaohongshu or
+   Weibo meets this system first and the symbol charts second.
+   ═══════════════════════════════════════════════════════════ */
+const CN_LETTERS = [
+  { L:'X', sym:'sc',  n:{zh:'短針', en:'single crochet', fr:'maille serrée'},
+    m:{zh:'前面加數字就是幾針，例如 6X 是六個短針。',
+       en:'A number in front is how many: 6X means six single crochet.',
+       fr:'Le chiffre devant indique la quantité : 6X vaut six mailles serrées.'} },
+  { L:'V', sym:'inc', n:{zh:'加針', en:'increase', fr:'augmentation'},
+    m:{zh:'在同一個針目裡鉤兩針短針。字母形狀就像兩針從一點分出去。',
+       en:'Two single crochet in one stitch. The letter is shaped like two stitches splitting from one point.',
+       fr:'Deux mailles serrées dans la même maille. La lettre figure deux mailles partant d’un même point.'} },
+  { L:'A', sym:'dec', n:{zh:'減針', en:'decrease', fr:'diminution'},
+    m:{zh:'把兩針短針併成一針。字母形狀就像兩針收成一個頂點。',
+       en:'Two single crochet worked together into one. The letter is shaped like two stitches closing to a point.',
+       fr:'Deux mailles serrées rabattues ensemble. La lettre figure deux mailles se refermant en pointe.'} },
+  { L:'T', sym:'hdc', n:{zh:'中長針', en:'half double crochet', fr:'demi-bride'},
+    m:{zh:'與符號圖解裡的 T 形狀一致，很好記。',
+       en:'The same T as in the symbol charts, which makes it easy to remember.',
+       fr:'Le même T que dans les diagrammes symboliques, facile à retenir.'} },
+  { L:'F', sym:'dc',  n:{zh:'長針', en:'double crochet', fr:'bride'},
+    m:{zh:'部分圖解寫作 F，也有寫 Y 或 长 的。看到不熟的字母先找圖解自己的說明。',
+       en:'Written F in most patterns, occasionally Y. When a letter is unfamiliar, look for the pattern’s own key first.',
+       fr:'Noté F le plus souvent, parfois Y. Devant une lettre inconnue, cherchez d’abord la légende du modèle.'} },
+  { L:'CH', sym:'ch', n:{zh:'鎖針（辮子針）', en:'chain', fr:'maille en l’air'},
+    m:{zh:'中文圈常稱「辮子針」，與鎖針是同一件事。',
+       en:'Chinese patterns often call this the braid stitch; it is the same chain.',
+       fr:'Les modèles chinois l’appellent souvent « maille tresse » : c’est la même chaînette.'} },
+  { L:'SL', sym:'sl', n:{zh:'引拔針', en:'slip stitch', fr:'maille coulée'},
+    m:{zh:'也有寫成 SS 或 引 的。',
+       en:'Also written SS, or the single character for “pull through”.',
+       fr:'Aussi noté SS, ou par le caractère signifiant « tirer à travers ».'} },
+];
+/* A real amigurumi ball, which is the shape every stuffed toy is built from */
+const CN_EXAMPLE = [
+  { r:'R1',  code:'6X',        n:'(6)',  note:{zh:'環狀起針，圈裡鉤 6 針短針', en:'Six single crochet into a magic ring', fr:'Six mailles serrées dans un cercle magique'} },
+  { r:'R2',  code:'6V',        n:'(12)', note:{zh:'每一針都加針', en:'Increase in every stitch', fr:'Augmentation dans chaque maille'} },
+  { r:'R3',  code:'6(X,V)',    n:'(18)', note:{zh:'括號內容重複 6 次', en:'Repeat the bracket six times', fr:'Répéter la parenthèse six fois'} },
+  { r:'R4',  code:'6(2X,V)',   n:'(24)', note:{zh:'加針之間多隔一針', en:'One more plain stitch between increases', fr:'Une maille simple de plus entre les augmentations'} },
+  { r:'R5-7',code:'24X',       n:'(24)', note:{zh:'三圈不加不減，做出球的腰身', en:'Three rounds with no shaping: the belly of the ball', fr:'Trois tours sans façonnage : le ventre de la boule'} },
+  { r:'R8',  code:'6(2X,A)',   n:'(18)', note:{zh:'開始減針，順序與加針相反', en:'Start decreasing, mirroring the increases', fr:'Début des diminutions, en miroir des augmentations'} },
+  { r:'R9',  code:'6(X,A)',    n:'(12)', note:{zh:'塞入填充棉', en:'Stuff it now', fr:'Rembourrez maintenant'} },
+  { r:'R10', code:'6A',        n:'(6)',  note:{zh:'收口，留線穿一圈拉緊', en:'Close: run the tail through the last six and pull tight', fr:'Fermez : passez le fil dans les six dernières et serrez'} },
+];
 
 /* ═══════════════════════════════════════════════════════════
    Renderers
@@ -612,6 +702,39 @@ function renderLevels() {
   }).join('');
 }
 
+function renderCN() {
+  const forms = [
+    { i:'fa-align-left', t:{zh:'純文字描述', en:'Written out in words', fr:'Décrit en toutes lettres'},
+      p:{zh:'「第三圈：一針短針，一針加針，重複六次」。最好懂，但很長。', en:'“Round 3: one single crochet, one increase, repeat six times.” Clearest, and longest.', fr:'« Tour 3 : une maille serrée, une augmentation, répéter six fois. » Le plus clair, et le plus long.'} },
+    { i:'fa-font', t:{zh:'字母記號', en:'Letter notation', fr:'Notation par lettres'},
+      p:{zh:'「6(X,V)」。中文圈玩偶圖解幾乎都用這種，本節講的就是它。', en:'“6(X,V).” Almost all Chinese-language amigurumi patterns use this, and it is what this section covers.', fr:'« 6(X,V). » La quasi-totalité des modèles d’amigurumi en chinois l’emploient : c’est l’objet de cette section.'} },
+    { i:'fa-diagram-project', t:{zh:'符號圖解', en:'Symbol chart', fr:'Diagramme symbolique'},
+      p:{zh:'畫出來的圖。日系書與歐美蕾絲圖解多用這種，也就是前面三部所教的。', en:'The drawn chart. Japanese books and European lace patterns use it, and it is what the three parts above teach.', fr:'Le diagramme dessiné. Livres japonais et dentelles européennes l’utilisent : c’est ce qu’enseignent les trois parties ci-dessus.'} },
+  ];
+  document.getElementById('cn-forms').innerHTML = forms.map(f =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<i class="fa-solid ' + f.i + ' text-amber-400 mb-2"></i>'
+    +   '<h4 class="text-sm font-bold text-white mb-1">' + t(f.t) + '</h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed">' + t(f.p) + '</p>'
+    + '</div>').join('');
+
+  document.getElementById('cn-body').innerHTML = CN_LETTERS.map(r =>
+      '<tr>'
+    + '<td class="py-2.5 px-4"><span class="inline-block font-black text-lg text-amber-300 bg-amber-500/10 border border-amber-500/25 rounded-lg px-2.5 py-0.5">' + r.L + '</span></td>'
+    + '<td class="py-2.5 px-4 text-slate-300 whitespace-nowrap">' + t(r.n) + '</td>'
+    + '<td class="py-2.5 px-4">' + symSvg(r.sym, 30) + '</td>'
+    + '<td class="py-2.5 px-4 text-slate-400">' + t(r.m) + '</td>'
+    + '</tr>').join('');
+
+  document.getElementById('cn-ex').innerHTML = CN_EXAMPLE.map(r =>
+      '<tr>'
+    + '<td class="py-2 px-3 font-mono text-xs text-slate-500 whitespace-nowrap">' + r.r + '</td>'
+    + '<td class="py-2 px-3 font-mono font-bold text-amber-300 whitespace-nowrap">' + r.code + '</td>'
+    + '<td class="py-2 px-3 font-mono text-xs text-teal-300 whitespace-nowrap">' + r.n + '</td>'
+    + '<td class="py-2 px-3 text-xs text-slate-400">' + t(r.note) + '</td>'
+    + '</tr>').join('');
+}
+
 function renderRef() {
   document.getElementById('usuk-body').innerHTML = USUK.map(r =>
       '<tr>'
@@ -653,7 +776,13 @@ const I18N = {
 zh:{
  'doc.title':'鉤針編織圖譜 | 從入門到進階',
  'hdr.badge':'鉤針編織教學','hdr.title':'鉤針編織：從入門到進階',
- 'nav.start':'工具','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.ref':'對照表',
+ 'nav.start':'工具','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.cn':'字母記號','nav.ref':'對照表',
+ 'cn.eyebrow':'另一套記號','cn.h2':'中文圈的字母記號（小紅書、微博常見）',
+ 'cn.lead':'如果您在中文的社群平台上看鉤針教學，看到的多半<strong class="text-white">不是</strong>前面那種畫出來的符號圖，而是一串字母，例如「6(X,V)」。這是另一套並行的記號系統，兩套都值得會看。中文圈的玩偶圖解幾乎全部用字母，日系書籍與歐美蕾絲則用符號圖。',
+ 'cn.h.tbl':'字母對照','cn.p.tbl':'字母的形狀本身就是助記：V 像兩針從一點分開，A 像兩針收成一點。',
+ 'cn.th0':'字母','cn.th1':'針法','cn.th2':'對應符號','cn.th3':'說明',
+ 'cn.h.ex':'實例：一顆球（所有玩偶的基本形）','cn.p.ex':'括號前面的數字代表整組重複幾次。右邊括號裡是該圈結束時的總針數，用來對帳。',
+ 'cn.ex.note':'讀法示範：<code class="text-amber-300">6(2X,A)</code> 的意思是「兩個短針、一個減針」這組動作重複六次。每圈鉤完務必數一次針數，跟括號裡的數字對得上再往下走；玩偶少算一針，十圈之後形狀就看得出歪了。',
  'intro':'鉤針是用一根有勾子的針，把線一圈一圈套進前一圈裡。它跟棒針最大的差別是：任何時候針上都只有一個活線圈，所以放下不會散、拆掉也很乾淨。這一冊按難度分成三部，從完全沒碰過開始。',
  'intro2':'每一種針法都附國際通用符號，那正是圖解上會看到的樣子。學會看符號之後，全世界的圖解都能讀，不需要懂那個國家的文字。',
  'tool.eyebrow':'開始之前','tool.h2':'需要準備什麼',
@@ -665,13 +794,19 @@ zh:{
  'ref.h.usuk':'先看這個：美式與英式術語差一格',
  'ref.p.usuk':'這是外文圖解最常見的災難。同一個符號，美式叫短針（sc），英式卻叫 double crochet。英式術語整體比美式「高一階」。開始之前先確認圖解用的是哪一套，否則整件作品的針法都會錯。',
  'ref.uk.th0':'符號','ref.uk.th1':'中文','ref.uk.th2':'美式（US）','ref.uk.th3':'英式（UK）',
- 'ref.h.legend':'符號總表','ref.p.legend':'國際通用符號，日本與多數歐洲圖解都用這一套。',
+ 'ref.h.legend':'符號總表','ref.p.legend':'國際通用符號，日本與多數歐洲圖解都用這一套。注意短針有兩種畫法，× 與 ＋ 都有人用，意思相同；看圖解之前先找它自己附的符號說明。',
  'footer':'鉤針編織入門到進階圖譜。針法符號依國際通用（JIS）標準繪製；密度與用量數字為一般參考值，實際成品仍以自己的試片為準。'
 },
 en:{
  'doc.title':'Crochet, Beginner to Advanced',
  'hdr.badge':'CROCHET TUTORIAL','hdr.title':'Crochet: Beginner to Advanced',
- 'nav.start':'Kit','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.ref':'Reference',
+ 'nav.start':'Kit','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.cn':'Letter notation','nav.ref':'Reference',
+ 'cn.eyebrow':'The other notation','cn.h2':'The letter notation used across Chinese-language patterns',
+ 'cn.lead':'If you follow crochet tutorials on Chinese social platforms, what you meet is usually <strong class="text-white">not</strong> the drawn charts above but a string of letters such as “6(X,V)”. It is a parallel system, and both are worth being able to read. Chinese-language amigurumi patterns are written almost entirely in letters, while Japanese books and European lace use symbol charts.',
+ 'cn.h.tbl':'The letters','cn.p.tbl':'The letter shapes are the mnemonic: V is two stitches splitting from one point, A is two stitches closing to one.',
+ 'cn.th0':'Letter','cn.th1':'Stitch','cn.th2':'Symbol','cn.th3':'Notes',
+ 'cn.h.ex':'Worked example: a ball, the shape every stuffed toy is built from','cn.p.ex':'The number in front of a bracket is how many times the whole group repeats. The figure on the right is the stitch count at the end of that round, to check against.',
+ 'cn.ex.note':'How to read it: <code class="text-amber-300">6(2X,A)</code> means the group “two single crochet, one decrease” repeated six times. Count your stitches at the end of every round and make the total agree with the bracket before going on. On a stuffed toy a single miscounted stitch visibly skews the shape ten rounds later.',
  'intro':'Crochet is a hooked needle pulling one loop of yarn through another, over and over. The great difference from knitting is that only one live loop is ever on the hook, so the work cannot fall off when you put it down, and it comes undone cleanly when you want it to. This volume is in three parts by difficulty, starting from never having held a hook.',
  'intro2':'Every stitch carries its international symbol, which is exactly how it appears on a chart. Once you can read the symbols you can read a pattern from anywhere in the world without knowing a word of the language.',
  'tool.eyebrow':'Before you start','tool.h2':'What you need',
@@ -683,13 +818,19 @@ en:{
  'ref.h.usuk':'Read this first: US and UK names are offset by one',
  'ref.p.usuk':'This is the commonest disaster in following a foreign pattern. The same symbol is a single crochet in US terms and a double crochet in UK terms; the whole UK set sits one step higher than the US set. Check which convention a pattern uses before you begin, or every stitch in the piece will be wrong.',
  'ref.uk.th0':'Symbol','ref.uk.th1':'Name','ref.uk.th2':'US','ref.uk.th3':'UK',
- 'ref.h.legend':'Symbol key','ref.p.legend':'The international symbol set, used by Japanese and most European charts.',
+ 'ref.h.legend':'Symbol key','ref.p.legend':'The international symbol set, used by Japanese and most European charts. Note that single crochet is drawn two ways, × and +, both meaning the same thing; check the key a pattern supplies for itself before you start.',
  'footer':'A crochet reference from first stitch to advanced technique. Symbols follow the international (JIS) convention. Gauge and yardage figures are general guidance; your own swatch always decides.'
 },
 fr:{
  'doc.title':'Le crochet, du débutant à l’avancé',
  'hdr.badge':'TUTORIEL DE CROCHET','hdr.title':'Le crochet : du débutant à l’avancé',
- 'nav.start':'Matériel','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.ref':'Références',
+ 'nav.start':'Matériel','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.cn':'Notation par lettres','nav.ref':'Références',
+ 'cn.eyebrow':'L’autre notation','cn.h2':'La notation par lettres des modèles en chinois',
+ 'cn.lead':'Si vous suivez des tutoriels de crochet sur les réseaux chinois, ce que vous rencontrez n’est généralement <strong class="text-white">pas</strong> les diagrammes dessinés ci-dessus mais une suite de lettres, du type « 6(X,V) ». C’est un système parallèle, et il vaut mieux savoir lire les deux. Les modèles d’amigurumi en chinois s’écrivent presque uniquement en lettres, tandis que les livres japonais et la dentelle européenne emploient les diagrammes.',
+ 'cn.h.tbl':'Les lettres','cn.p.tbl':'La forme des lettres sert de mémo : le V, deux mailles qui divergent d’un point ; le A, deux mailles qui se referment.',
+ 'cn.th0':'Lettre','cn.th1':'Maille','cn.th2':'Symbole','cn.th3':'Remarques',
+ 'cn.h.ex':'Exemple : une boule, la forme dont dérivent toutes les peluches','cn.p.ex':'Le chiffre devant une parenthèse indique le nombre de répétitions du groupe. Le nombre de droite est le total de mailles en fin de tour, pour vérification.',
+ 'cn.ex.note':'Lecture : <code class="text-amber-300">6(2X,A)</code> signifie que le groupe « deux mailles serrées, une diminution » se répète six fois. Comptez vos mailles à la fin de chaque tour et faites correspondre le total avant de continuer. Sur une peluche, une seule maille mal comptée déforme visiblement l’ouvrage dix tours plus loin.',
  'intro':'Le crochet consiste à passer, encore et encore, une boucle de fil dans une autre à l’aide d’une aiguille à tête recourbée. La grande différence avec le tricot : une seule boucle vive se trouve sur le crochet à la fois, si bien que l’ouvrage ne se défait pas quand on le pose, et se démonte proprement quand on le veut. Ce volume se divise en trois parties par difficulté, en partant de zéro.',
  'intro2':'Chaque maille porte son symbole international, tel qu’il figure sur un diagramme. Savoir lire les symboles permet de suivre un modèle venu de n’importe quel pays sans en connaître la langue.',
  'tool.eyebrow':'Avant de commencer','tool.h2':'Ce qu’il vous faut',
@@ -701,7 +842,7 @@ fr:{
  'ref.h.usuk':'À lire d’abord : les noms US et UK sont décalés d’un cran',
  'ref.p.usuk':'C’est la catastrophe la plus fréquente quand on suit un modèle étranger. Le même symbole est une single crochet en terminologie américaine et une double crochet en terminologie britannique : tout le système UK se situe un cran au-dessus du système US. Vérifiez la convention avant de commencer, sinon toutes les mailles de l’ouvrage seront fausses.',
  'ref.uk.th0':'Symbole','ref.uk.th1':'Nom','ref.uk.th2':'US','ref.uk.th3':'UK',
- 'ref.h.legend':'Légende des symboles','ref.p.legend':'Le jeu de symboles international, utilisé par les diagrammes japonais et la plupart des diagrammes européens.',
+ 'ref.h.legend':'Légende des symboles','ref.p.legend':'Le jeu de symboles international, utilisé par les diagrammes japonais et la plupart des diagrammes européens. La maille serrée se dessine de deux façons, × ou +, avec le même sens : vérifiez toujours la légende fournie par le modèle.',
  'footer':'Un guide de crochet, de la première maille aux techniques avancées. Les symboles suivent la convention internationale (JIS). Les indications d’échantillon et de métrage sont générales : votre propre échantillon fait foi.'
 }};
 function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
@@ -723,6 +864,7 @@ function setLanguage(lang) {
   });
   renderTools();
   renderLevels();
+  renderCN();
   renderRef();
   armReveals(document.querySelector('main'));
 }
