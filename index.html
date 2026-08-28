@@ -1170,6 +1170,10 @@ const DEFAULT_MODULES = [
     description:'Trilingual atlas of the lifestyle and luxury industries: cosmetics, fragrance, spirits, fashion and hospitality: ingredients, houses, terroirs and craft techniques.',
     icon:'fa-gem', color:'from-fuchsia-400 to-purple-700',
     cat:'business', file:'lifestyle-luxury-knowledge-map.html', custom:false },
+  { id:'crochet',   title:'Nodus: Crochet',          subtitle:'Beginner to Advanced',
+    description:'Trilingual crochet course in three levels: tools and hook sizes, the six basic stitches, shaping with increases and decreases, the magic ring, then gauge, amigurumi, filet and Tunisian. Every stitch is drawn in the international symbol set, with worked charts.',
+    icon:'fa-mitten', color:'from-pink-400 to-rose-600',
+    cat:'science', file:'crochet.html', custom:false },
   { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',
     description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.',
     icon:'fa-beer-mug-empty',  color:'from-amber-400 to-orange-500',
@@ -1461,6 +1465,8 @@ const MODULE_I18N = {
   beer:         { fn: 'setLanguage',    btn: 'btn-lang-zh' },
   skincare:     { fn: 'switchLang',     btn: 'hdr-zh' },
   perfume:      { fn: 'switchLanguage', btn: 'hdr-zh' },
+  mythology:    { fn: 'setLanguage',    btn: 'lang-zh' },
+  crochet:      { fn: 'setLanguage',    btn: 'lang-zh' },
 };
 
 const OPEN_KEY = 'kb_open_module';

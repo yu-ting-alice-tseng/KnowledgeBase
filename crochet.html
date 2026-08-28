@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鉤針編織圖譜 | 從入門到進階</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] },
+    boxShadow: {
+      'glow-rose':  '0 0 20px rgba(244,63,94,0.30)',
+      'glow-amber': '0 0 20px rgba(245,158,11,0.30)',
+      'glow-teal':  '0 0 20px rgba(45,212,191,0.30)',
+      'glow-violet':'0 0 20px rgba(167,139,250,0.30)',
+    } } } }
+</script>
+<style>
+  body {
+    background-color: #0a0708;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(244,63,94,0.07) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(245,158,11,0.06) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(45,212,191,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(90deg); }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+
+  /* ── Stitch symbols and charts ──
+     Drawn rather than photographed: the international symbol set IS the
+     notation crocheters actually read, so it is the honest illustration. */
+  .sym    { display: block; }
+  .sym .s { fill: none; stroke: #fbbf24; stroke-width: 7; stroke-linecap: round; }
+  .sym .f { fill: #fbbf24; stroke: none; }
+  .chart  { background: #120d0e; border-radius: 1rem; border: 1px solid rgba(148,163,184,0.16); }
+  .chart .s { fill: none; stroke: #e8cc84; stroke-width: 5; stroke-linecap: round; }
+  .chart .f { fill: #e8cc84; stroke: none; }
+  .chart .guide { fill: none; stroke: rgba(148,163,184,0.22); stroke-width: 2; stroke-dasharray: 5 5; }
+  .chart .lbl { fill: #94a3b8; font-size: 20px; font-family: Nunito, sans-serif; }
+
+  /* anatomy diagram */
+  .anat .yarn { fill: none; stroke: #f472b6; stroke-width: 9; stroke-linecap: round; }
+  .anat .yarn2{ fill: none; stroke: #64748b; stroke-width: 9; stroke-linecap: round; }
+  .anat .hook { fill: none; stroke: #cbd5e1; stroke-width: 7; stroke-linecap: round; }
+  .anat .call { fill: none; stroke: #2dd4bf; stroke-width: 3; stroke-dasharray: 6 5; }
+  .anat .txt  { fill: #5eead4; font-size: 22px; font-family: Nunito, sans-serif; font-weight: 700; }
+
+  .lvl-pill { display:inline-block; padding:.15rem .6rem; border-radius:9999px;
+              font-size:.6rem; font-weight:900; letter-spacing:.1em; }
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+  #lb { position: fixed; inset: 0; z-index: 100; display: none; }
+  #lb.open { display: block; }
+  #lb .veil { position:absolute; inset:0; background:rgba(4,2,3,0.9); backdrop-filter:blur(6px); }
+  #lb .panel { position:relative; max-width:820px; margin:5vh auto; max-height:90vh; overflow-y:auto;
+               background:#120d0e; border:1px solid rgba(148,163,184,0.18); border-radius:1.5rem; }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-rose-500 selection:text-white">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(244,63,94,0.13) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(245,158,11,0.11) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#0a0708]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-rose-500 via-amber-500 to-teal-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#0a0708] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-mitten text-rose-400 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-rose-400 uppercase bg-rose-500/10 rounded-full border border-rose-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav class="flex flex-wrap gap-2 text-xs">
+        <a href="#start"   data-i18n="nav.start"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors"></a>
+        <a href="#basics"  data-i18n="nav.p1"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-teal-500/50 hover:text-teal-300 transition-colors"></a>
+        <a href="#inter"   data-i18n="nav.p2"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
+        <a href="#adv"     data-i18n="nav.p3"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors"></a>
+        <a href="#ref"     data-i18n="nav.ref"     class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <section id="start" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-slate-500/10 rounded-2xl text-slate-300 border border-slate-600/30"><i class="fa-solid fa-scissors text-xl"></i></div>
+      <div>
+        <span data-i18n="tool.eyebrow" class="text-xs uppercase tracking-wider text-slate-400 font-bold"></span>
+        <h2 data-i18n="tool.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <div id="tools-grid" class="grid md:grid-cols-3 gap-4"></div>
+      <div>
+        <h3 data-i18n="tool.h.size" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="tool.p.size" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[620px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="tool.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="tool.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="tool.th2" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="tool.th3" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="size-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5">
+        <h3 data-i18n="tool.h.anat" class="text-base font-black text-white mb-3"></h3>
+        <div id="anat-hook"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="levels" class="space-y-12"></div>
+
+  <section id="ref" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-violet-500/10 rounded-2xl text-violet-400 border border-violet-500/20 shadow-glow-violet"><i class="fa-solid fa-table-list text-xl"></i></div>
+      <div>
+        <span data-i18n="ref.eyebrow" class="text-xs uppercase tracking-wider text-violet-400 font-bold"></span>
+        <h2 data-i18n="ref.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="space-y-6">
+      <div class="gradient-border bg-rose-500/[0.06] rounded-3xl p-6 border border-rose-500/25">
+        <h3 data-i18n="ref.h.usuk" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.usuk" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[640px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="ref.uk.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.uk.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.uk.th2" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.uk.th3" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="usuk-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.legend" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.legend" class="text-xs text-slate-500 mb-4"></p>
+        <div id="legend-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+
+<div id="lb" role="dialog" aria-modal="true">
+  <div class="veil" onclick="closeLb()"></div>
+  <div class="panel gradient-border">
+    <button onclick="closeLb()" aria-label="Close"
+      class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-slate-950/80 border border-slate-700 text-slate-300 hover:text-white transition-colors">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div id="lb-body"></div>
+  </div>
+</div>
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ═══════════════════════════════════════════════════════════
+   Stitch symbols, drawn in a 100x100 cell so they can be used
+   both on their own and composed into a pattern chart. These
+   follow the international (JIS) symbol set, which is what
+   Japanese and most European charts use.
+   ═══════════════════════════════════════════════════════════ */
+const T_BAR = 'M26 16 H74';            /* the top bar every post stitch carries */
+const STEM  = 'M50 16 V86';
+function bars(n) {                      /* the slashes that count the yarn-overs */
+  let d = '';
+  for (let i = 0; i < n; i++) { const y = 36 + i * 15; d += `M32 ${y + 6} L68 ${y - 2} `; }
+  return d ? `<path class="s" d="${d.trim()}"/>` : '';
+}
+const SHAPES = {
+  ch:  () => '<ellipse class="s" cx="50" cy="50" rx="30" ry="15"/>',
+  sl:  () => '<circle class="f" cx="50" cy="50" r="12"/>',
+  sc:  () => '<path class="s" d="M28 26 L72 74 M72 26 L28 74"/>',
+  hdc: () => `<path class="s" d="${STEM} ${T_BAR}"/>`,
+  dc:  () => `<path class="s" d="${STEM} ${T_BAR}"/>` + bars(1),
+  tr:  () => `<path class="s" d="${STEM} ${T_BAR}"/>` + bars(2),
+  dtr: () => `<path class="s" d="${STEM} ${T_BAR}"/>` + bars(3),
+  /* two posts growing out of one stitch below */
+  inc: () => '<path class="s" d="M50 88 L28 22 M50 88 L72 22 M10 22 H46 M54 22 H90"/>'
+           + '<path class="s" d="M20 46 L40 40 M60 40 L80 46"/>',
+  /* two posts drawn together into one loop above */
+  dec: () => '<path class="s" d="M28 88 L50 22 M72 88 L50 22 M26 22 H74"/>'
+           + '<path class="s" d="M22 52 L40 46 M60 46 L78 52"/>',
+  /* several posts sharing one base and one top: a bobble */
+  bob: () => '<path class="s" d="M50 90 L30 26 M50 90 L50 24 M50 90 L70 26 M26 22 H74"/>',
+  /* several posts fanning from one base: a shell */
+  shell:()=> '<path class="s" d="M50 92 L16 30 M50 92 L34 24 M50 92 L50 22 M50 92 L66 24 M50 92 L84 30"/>'
+           + '<path class="s" d="M12 26 H88"/>',
+  /* a picot: three chains closed into a loop */
+  pic: () => '<ellipse class="s" cx="26" cy="60" rx="16" ry="9" transform="rotate(-38 26 60)"/>'
+           + '<ellipse class="s" cx="50" cy="34" rx="16" ry="9"/>'
+           + '<ellipse class="s" cx="74" cy="60" rx="16" ry="9" transform="rotate(38 74 60)"/>',
+  /* worked into the back loop only: the bar under the symbol */
+  blo: () => `<path class="s" d="${STEM} ${T_BAR}"/>` + bars(1)
+           + '<path class="s" d="M22 92 H78"/>',
+};
+function symSvg(key, size, cls) {
+  const f = SHAPES[key]; if (!f) return '';
+  return `<svg class="sym ${cls || ''}" viewBox="0 0 100 100" width="${size}" height="${size}"`
+       + ` role="img" aria-label="${esc(key)}">${f()}</svg>`;
+}
+
+/* ── Chart composition ───────────────────────────────────────
+   A flat chart is rows worked bottom to top, alternating
+   direction; a round chart is worked outward from the centre. */
+function chartFlat(rows, cell) {
+  cell = cell || 46;
+  const w = Math.max.apply(null, rows.map(r => r.length)) * cell + cell * 1.6;
+  const h = rows.length * cell + cell * 0.9;
+  let g = '';
+  rows.forEach((row, ri) => {
+    const y = h - cell * 0.6 - (ri + 1) * cell;
+    row.forEach((k, ci) => {
+      const x = cell * 0.8 + ci * cell;
+      g += `<g transform="translate(${x},${y}) scale(${cell / 100})">${SHAPES[k] ? SHAPES[k]() : ''}</g>`;
+    });
+    /* which way the row is worked */
+    const dir = ri % 2 === 0 ? '→' : '←';
+    g += `<text class="lbl" x="${w - cell * 0.35}" y="${y + cell * 0.72}" text-anchor="end"`
+       + ` stroke="#120d0e" stroke-width="6" paint-order="stroke">${dir}${ri + 1}</text>`;
+  });
+  return `<svg class="chart w-full" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">${g}</svg>`;
+}
+function chartRound(rounds, cell) {
+  cell = cell || 44;
+  const R = rounds.length * cell * 1.15 + cell;
+  const size = R * 2 + cell;
+  const c = size / 2;
+  let g = '';
+  rounds.forEach((rd, ri) => {
+    const r = cell * 0.9 + ri * cell * 1.15;
+    g += `<circle class="guide" cx="${c}" cy="${c}" r="${r}"/>`;
+    for (let i = 0; i < rd.n; i++) {
+      const a = (i / rd.n) * Math.PI * 2 - Math.PI / 2;
+      const x = c + Math.cos(a) * r, y = c + Math.sin(a) * r;
+      const deg = (a * 180 / Math.PI) + 90;
+      g += `<g transform="translate(${x},${y}) rotate(${deg}) translate(${-cell / 2},${-cell / 2})`
+         + ` scale(${cell / 100})">${SHAPES[rd.k] ? SHAPES[rd.k]() : ''}</g>`;
+    }
+    /* offset off the 12 o'clock stitch, with a dark halo so it stays legible */
+    g += `<text class="lbl" x="${c - cell * 0.85}" y="${c - r + cell * 0.34}" text-anchor="end"`
+       + ` stroke="#120d0e" stroke-width="6" paint-order="stroke">${ri + 1}</text>`;
+  });
+  return `<svg class="chart w-full" viewBox="0 0 ${size} ${size}" preserveAspectRatio="xMidYMid meet">${g}</svg>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Tools, hook sizes
+   ═══════════════════════════════════════════════════════════ */
+const TOOLS = [
+  { i:'fa-mitten', t:{zh:'鉤針', en:'The hook', fr:'Le crochet'},
+    p:{zh:'金屬、竹製或塑膠，粗細以毫米標示。新手建議從 4.0 至 5.0 mm 開始：太細看不清針目，太粗手容易累。握把加粗的款式對長時間鉤織友善很多。',
+       en:'Metal, bamboo or plastic, sized in millimetres. Start somewhere between 4.0 and 5.0 mm: anything finer hides the stitches from you, anything much thicker tires the hand. A padded grip makes a long session far kinder.',
+       fr:'Métal, bambou ou plastique, calibré en millimètres. Commencez entre 4,0 et 5,0 mm : plus fin, les mailles deviennent illisibles ; beaucoup plus gros, la main fatigue. Un manche rembourré change tout sur la durée.'} },
+  { i:'fa-circle-notch', t:{zh:'線材', en:'The yarn', fr:'Le fil'},
+    p:{zh:'新手用淺色、平滑、中等粗細（DK 或 worsted）的棉線或壓克力線最好。深色線看不見針目，毛海與圈圈紗會讓拆線變成惡夢，這兩種都留到以後。',
+       en:'For a first project use a smooth, pale, medium-weight (DK or worsted) cotton or acrylic. Dark yarn hides your stitches, and mohair or bouclé turns any mistake into an ordeal to undo. Both can wait.',
+       fr:'Pour débuter, un fil lisse, clair, d’épaisseur moyenne (DK ou worsted) en coton ou acrylique. Un fil sombre masque les mailles, et le mohair ou le bouclé transforme la moindre erreur en cauchemar à défaire. Plus tard.'} },
+  { i:'fa-ruler', t:{zh:'其他小工具', en:'The rest', fr:'Le reste'},
+    p:{zh:'毛線縫針（藏線頭用，鈍頭大孔）、記號扣（標記每圈起點，迴紋針也行）、剪刀、捲尺。記號扣在鉤圓形時是必需品，不是奢侈品。',
+       en:'A blunt tapestry needle with a big eye for weaving in ends, stitch markers to flag the start of each round (a paperclip works), scissors and a tape measure. Once you crochet in the round, markers stop being optional.',
+       fr:'Une aiguille à laine à bout rond et grand chas pour rentrer les fils, des marqueurs pour repérer le début de chaque tour (un trombone fait l’affaire), des ciseaux, un mètre ruban. Dès que vous travaillez en rond, le marqueur devient indispensable.'} },
+];
+const SIZES = [
+  { mm:'2.0 – 2.5', us:'B-1 / C-2', yarn:{zh:'蕾絲、極細',en:'Lace, fingering',fr:'Dentelle, fingering'}, use:{zh:'蕾絲、飾品',en:'Lace, jewellery',fr:'Dentelle, bijoux'} },
+  { mm:'3.0 – 3.5', us:'D-3 / E-4', yarn:{zh:'細（sport）',en:'Sport',fr:'Sport'}, use:{zh:'嬰兒衣物、精細玩偶',en:'Baby items, fine amigurumi',fr:'Layette, amigurumi fin'} },
+  { mm:'4.0 – 5.0', us:'G-6 / H-8', yarn:{zh:'中細至中粗（DK / worsted）',en:'DK to worsted',fr:'DK à worsted'}, use:{zh:'新手首選：圍巾、方格片、玩偶',en:'Best for a first project: scarves, squares, amigurumi',fr:'Idéal pour débuter : écharpes, carrés, amigurumi'} },
+  { mm:'5.5 – 6.5', us:'I-9 / K-10½', yarn:{zh:'粗（aran / chunky）',en:'Aran to chunky',fr:'Aran à chunky'}, use:{zh:'毛毯、包包、冬帽',en:'Blankets, bags, winter hats',fr:'Couvertures, sacs, bonnets'} },
+  { mm:'8.0 以上', us:'L-11 +', yarn:{zh:'極粗',en:'Super bulky',fr:'Très épais'}, use:{zh:'地墊、快速大件',en:'Rugs, fast large pieces',fr:'Tapis, grandes pièces rapides'} },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   The three levels
+   ═══════════════════════════════════════════════════════════ */
+const LEVELS = [
+{ id:'basics', tone:'teal', icon:'fa-seedling', n:1,
+  t:{zh:'第一部・入門', en:'Part 1 · Beginner', fr:'Partie 1 · Débutant'},
+  lead:{zh:'鉤針的全部基礎，就是把一個線圈從另一個線圈裡拉出來。以下六種針法幾乎涵蓋所有作品，其中前四種就夠您完成第一件成品。每一種都附國際符號，那是圖解上會看到的樣子。',
+        en:'All of crochet is pulling one loop through another. The six stitches below cover almost everything you will ever make, and the first four are enough to finish a real object. Each carries its international symbol, which is how it appears on a chart.',
+        fr:'Tout le crochet consiste à passer une boucle dans une autre. Les six mailles ci-dessous couvrent presque tout, et les quatre premières suffisent à terminer un vrai ouvrage. Chacune porte son symbole international, tel qu’il apparaît sur un diagramme.'},
+  items:[
+    { sym:'ch', t:{zh:'鎖針（起針鎖鏈）', en:'Chain', fr:'Maille en l’air'}, abbr:'ch',
+      p:{zh:'所有作品的地基。打一個活結套上鉤針，鉤針掛線，把線拉過針上的圈，就完成一個鎖針。重複到需要的長度。',
+         en:'The foundation of everything. Slip-knot onto the hook, yarn over, draw that yarn through the loop already on the hook. That is one chain. Repeat to the length you need.',
+         fr:'La base de tout. Nœud coulant sur le crochet, jeté, puis tirez le fil à travers la boucle déjà sur le crochet. Voilà une maille en l’air. Répétez.'},
+      tip:{zh:'鎖針要鬆。九成的新手第一排太緊，導致第二排根本插不進針。如果會緊，就換大一號的針起鎖鏈。',
+           en:'Keep the chain loose. Nine beginners in ten make the first row too tight to get the hook back into. If yours is tight, work the chain with a hook one size larger.',
+           fr:'Gardez la chaînette souple. Neuf débutants sur dix la serrent trop pour pouvoir y repiquer. Si c’est votre cas, faites la chaînette avec un crochet plus gros.'} },
+    { sym:'sl', t:{zh:'引拔針', en:'Slip stitch', fr:'Maille coulée'}, abbr:'sl st',
+      p:{zh:'最矮的針。鉤針插入針目，掛線，一次拉過針目與針上的圈。它幾乎不增加高度，用來接合成圈、移動位置、或收邊。',
+         en:'The shortest stitch there is. Insert the hook, yarn over, and pull through both the stitch and the loop on your hook in one go. It adds almost no height; it joins rounds, travels sideways, and finishes edges.',
+         fr:'La maille la plus courte. Piquez, faites un jeté, puis tirez à travers la maille et la boucle du crochet d’un seul coup. Elle n’ajoute presque pas de hauteur : elle ferme les tours, déplace, et borde.'},
+      tip:{zh:'引拔針特別容易鉤太緊。接合圈時如果拉緊，整圈會縮口。',
+           en:'This is the easiest stitch to overtighten. Pull it snug when joining a round and the whole round puckers.',
+           fr:'C’est la maille qu’on serre le plus facilement. Trop tirée en fermant un tour, elle fronce tout le rang.'} },
+    { sym:'sc', t:{zh:'短針（美式 sc）', en:'Single crochet (US)', fr:'Maille serrée'}, abbr:'sc / UK dc',
+      p:{zh:'最常用的針法，織出來緊密扎實。插入針目，掛線拉出（針上兩圈），再掛線一次拉過兩圈。玩偶幾乎全部用它，因為孔隙小、不透棉。',
+         en:'The workhorse, and the densest of the basic stitches. Insert, yarn over and draw up a loop (two on the hook), yarn over and pull through both. Amigurumi is made almost entirely of it, because the fabric is tight enough to hide the stuffing.',
+         fr:'La maille de base la plus utilisée, et la plus dense. Piquez, jeté, remontez une boucle (deux sur le crochet), jeté, tirez à travers les deux. L’amigurumi en est presque entièrement fait : le tissu est assez serré pour cacher le rembourrage.'},
+      tip:{zh:'注意：這個符號在英式術語裡叫 double crochet。看到外文圖解，先確認是美式還是英式，否則整件會做錯。',
+           en:'Careful: in UK terminology this same stitch is called a double crochet. Always check which convention a pattern uses before you start, or the whole piece comes out wrong.',
+           fr:'Attention : en terminologie britannique, cette même maille s’appelle double crochet. Vérifiez toujours la convention d’un modèle avant de commencer.'} },
+    { sym:'hdc', t:{zh:'中長針', en:'Half double crochet (US)', fr:'Demi-bride'}, abbr:'hdc / UK htr',
+      p:{zh:'先掛線，再插入針目，掛線拉出（針上三圈），最後掛線一次拉過三圈。高度介於短針與長針之間，質地柔軟又不鬆散，很適合帽子與圍巾。',
+         en:'Yarn over first, then insert, draw up a loop (three on the hook), yarn over and pull through all three. Its height sits between single and double crochet, and the fabric is soft without being loose, which suits hats and scarves.',
+         fr:'Jeté d’abord, puis piquez, remontez une boucle (trois sur le crochet), jeté, tirez à travers les trois. Sa hauteur est intermédiaire et le tissu reste souple sans être lâche : parfait pour bonnets et écharpes.'},
+      tip:{zh:'三圈一次拉過需要一點手勁，拉之前先把針頭轉向自己，會順很多。',
+           en:'Pulling through three loops at once takes a little force. Turn the hook head toward you before you pull and it slides through far more easily.',
+           fr:'Passer trois boucles d’un coup demande un peu de force. Tournez la tête du crochet vers vous avant de tirer : cela glisse bien mieux.'} },
+    { sym:'dc', t:{zh:'長針', en:'Double crochet (US)', fr:'Bride'}, abbr:'dc / UK tr',
+      p:{zh:'掛線，插入針目，掛線拉出（三圈），掛線拉過兩圈，再掛線拉過剩下兩圈。長得快、有彈性、孔隙適中，毛毯與衣物的主力針法。',
+         en:'Yarn over, insert, draw up a loop (three on the hook), yarn over and through two, yarn over and through the last two. It grows fast, has give, and leaves a moderate hole. It is the mainstay of blankets and garments.',
+         fr:'Jeté, piquez, remontez une boucle (trois sur le crochet), jeté et à travers deux, jeté et à travers les deux dernières. Elle monte vite, reste souple, ajoure modérément : la maille reine des couvertures et des vêtements.'},
+      tip:{zh:'每排開頭要先鉤三個鎖針當作「立起針」，它算作第一個長針。忘記立針，邊緣就會越縮越窄。',
+           en:'Begin each row with three chains as a turning chain; it counts as the first double crochet. Forget it and your edges creep inward row by row.',
+           fr:'Commencez chaque rang par trois mailles en l’air en guise de montée ; elles comptent pour la première bride. Sans elles, les bords rétrécissent rang après rang.'} },
+    { sym:'tr', t:{zh:'長長針', en:'Treble crochet (US)', fr:'Double bride'}, abbr:'tr / UK dtr',
+      p:{zh:'掛線兩次再插入，之後每次掛線拉過兩圈，共三次。高度是長針的一倍半，主要用在蕾絲、網狀花樣，以及需要快速拉高的地方。',
+         en:'Yarn over twice before inserting, then work off two loops at a time, three times. Half again as tall as a double crochet, it belongs to lace, mesh, and anywhere you need height quickly.',
+         fr:'Deux jetés avant de piquer, puis écoulez deux boucles à la fois, trois fois. Une fois et demie la hauteur d’une bride : c’est la maille de la dentelle, du filet, et de tout ce qui doit monter vite.'},
+      tip:{zh:'掛線次數決定針的高度：0 次是短針、1 次長針、2 次長長針。記住這條規律就不必背針法。',
+           en:'The number of yarn-overs before you insert is the whole rule: none gives a single crochet, one a double, two a treble. Learn the rule and you never memorise a stitch again.',
+           fr:'Le nombre de jetés avant de piquer fait toute la règle : aucun donne une maille serrée, un une bride, deux une double bride. Retenez la règle et vous n’apprendrez plus aucune maille par cœur.'} },
+  ],
+  chart:{ kind:'flat', rows:[['ch','ch','ch','ch','ch','ch','ch','ch'],
+                             ['sc','sc','sc','sc','sc','sc','sc'],
+                             ['dc','dc','dc','dc','dc','dc','dc'],
+                             ['dc','dc','dc','dc','dc','dc','dc']],
+    t:{zh:'讀懂第一張圖解', en:'Reading your first chart', fr:'Lire son premier diagramme'},
+    p:{zh:'由下往上、依照箭頭方向讀。最底下一排橢圓是起針鎖鏈；第二排的 × 是短針；上面兩排的 T 加一橫是長針。這就是一片最基本的織片，也是您的第一個作品。',
+       en:'Read it from the bottom up, following the arrows. The row of ovals at the bottom is the foundation chain, the row of crosses above it is single crochet, and the two rows of barred T shapes are double crochet. That is a plain swatch, and it is your first project.',
+       fr:'Lisez de bas en haut, en suivant les flèches. La rangée d’ovales est la chaînette de base, les croix au-dessus sont des mailles serrées, et les deux rangées de T barrés sont des brides. Voilà un échantillon simple : votre premier ouvrage.'} } },
+{ id:'inter', tone:'amber', icon:'fa-layer-group', n:2,
+  t:{zh:'第二部・進階', en:'Part 2 · Intermediate', fr:'Partie 2 · Intermédiaire'},
+  lead:{zh:'會了基本針法之後，接下來要學的不是更多針法，而是<strong class="text-white">怎麼控制形狀</strong>：往哪裡加針、往哪裡減針、怎麼從一個點鉤成一個圓。這一部學完，您就能自己看懂大部分市售圖解。',
+        en:'Once the basic stitches are in your hands, the next thing to learn is not more stitches but <strong class="text-white">how to control shape</strong>: where to add, where to take away, and how to get from a single point to a circle. Finish this part and most published patterns become readable.',
+        fr:'Une fois les mailles de base acquises, ce qu’il faut apprendre n’est pas d’autres mailles mais <strong class="text-white">la maîtrise de la forme</strong> : où augmenter, où diminuer, comment passer d’un point à un cercle. Cette partie franchie, la plupart des modèles publiés deviennent lisibles.'},
+  items:[
+    { sym:'inc', t:{zh:'加針', en:'Increase', fr:'Augmentation'}, abbr:'inc',
+      p:{zh:'在同一個針目裡鉤兩針。符號畫成兩根柱子共用一個底點，一眼就看得出來。加針讓織片變寬，也是所有圓形與立體造型的原理。',
+         en:'Two stitches worked into the same stitch below. The symbol shows two posts sharing one base, so it reads at a glance. Increases widen the fabric, and they are the whole principle behind circles and three-dimensional shapes.',
+         fr:'Deux mailles dans la même maille du rang précédent. Le symbole montre deux montants partageant une base : cela se lit d’un coup d’œil. Les augmentations élargissent le tissu et fondent tout le travail en rond et en volume.'},
+      tip:{zh:'圓形要平整，每圈的加針數必須固定：短針圓第一圈 6 針，之後每圈加 6 針。加太少會變成碗狀，加太多會荷葉邊。',
+           en:'For a flat circle the number of increases per round must stay constant: six stitches in the first round, then six more in every round after. Too few and it cups into a bowl, too many and it ruffles.',
+           fr:'Pour un cercle plat, le nombre d’augmentations par tour doit rester constant : six mailles au premier tour, puis six de plus à chaque tour. Trop peu, il se creuse en coupelle ; trop, il godaille.'} },
+    { sym:'dec', t:{zh:'減針', en:'Decrease', fr:'Diminution'}, abbr:'dec / tog',
+      p:{zh:'把兩針併成一針：分別插入兩個針目各拉出一個線圈，最後一次拉過全部。符號是兩根柱子共用一個頂點。',
+         en:'Two stitches worked together into one: draw up a loop in each of the two stitches, then finish them off together. The symbol shows two posts sharing a single top.',
+         fr:'Deux mailles rabattues ensemble : remontez une boucle dans chacune, puis écoulez-les ensemble. Le symbole montre deux montants partageant un même sommet.'},
+      tip:{zh:'玩偶收口請用「隱形減針」：只挑兩針的前半段線圈再併，正面看不出孔洞，這是業餘與熟手最明顯的差別之一。',
+           en:'For amigurumi use the invisible decrease: pick up only the front loops of the two stitches before joining them. It leaves no visible hole, and it is one of the clearest differences between a beginner finish and a practised one.',
+           fr:'Pour l’amigurumi, utilisez la diminution invisible : ne prenez que les brins avant des deux mailles avant de les rabattre. Aucun trou visible : c’est l’un des écarts les plus nets entre une finition débutante et une main exercée.'} },
+    { sym:'sl', t:{zh:'輪狀起針（魔術環）', en:'The magic ring', fr:'Le cercle magique'}, abbr:'MR',
+      p:{zh:'把線在手指上繞一圈，在圈裡鉤出第一圈針目，然後拉緊線尾把中央的洞收死。所有從中心開始的圓形都從這裡起步。',
+         en:'Loop the yarn around your fingers, work the first round of stitches into that loop, then pull the tail to close the hole in the middle. Every circle worked from the centre starts here.',
+         fr:'Enroulez le fil autour des doigts, travaillez le premier tour dans cette boucle, puis tirez le brin pour refermer le trou central. Tout cercle travaillé depuis le centre commence ainsi.'},
+      tip:{zh:'替代做法是「鎖針成圈」，但中央會留一個小孔。玩偶用魔術環，孔洞才會完全消失。',
+           en:'The alternative is to chain a few and join into a ring, but that leaves a small hole in the middle. For amigurumi use the magic ring, so the hole closes completely.',
+           fr:'On peut aussi fermer une chaînette en anneau, mais un petit trou subsiste au centre. Pour l’amigurumi, préférez le cercle magique : le trou disparaît entièrement.'} },
+    { sym:'blo', t:{zh:'挑針位置：前段與後段', en:'Front loop and back loop', fr:'Brin avant et brin arrière'}, abbr:'FLO / BLO',
+      p:{zh:'每個針目的頂端是一個 V 字，由前後兩條線構成。平常整條挑（兩條一起），只挑後面那條叫 BLO，只挑前面那條叫 FLO。符號底下多一條橫線就代表只挑後段。',
+         en:'The top of every stitch is a V made of two strands. Normally you go under both. Working under only the back strand is BLO, only the front strand is FLO. A bar drawn beneath the symbol means back loop only.',
+         fr:'Le sommet de chaque maille forme un V de deux brins. Normalement on pique sous les deux. Sous le brin arrière seul, c’est BLO ; sous le brin avant seul, FLO. Une barre sous le symbole signale le brin arrière.'},
+      tip:{zh:'只挑後段會留下一條明顯的橫脊，那正是鉤出「羅紋」與玩偶轉折線的方法，不是失誤。',
+           en:'Working back loop only leaves a visible horizontal ridge. That ridge is exactly how ribbing and the fold lines on amigurumi are made; it is not a mistake.',
+           fr:'Ne piquer que le brin arrière laisse une nervure horizontale visible. C’est précisément ainsi qu’on obtient les côtes et les lignes de pliage des amigurumis : ce n’est pas un défaut.'} },
+    { sym:'shell', t:{zh:'貝殼針', en:'The shell', fr:'L’éventail'}, abbr:'shell',
+      p:{zh:'在同一個針目裡連續鉤五針長針，展開成扇形。它是最容易上手的花樣針，一排貝殼加一排短針就能織出漂亮的圍巾或毯邊。',
+         en:'Five double crochets worked into one stitch, fanning open. It is the easiest decorative stitch to pick up: a row of shells alternating with a row of single crochet already makes a handsome scarf or blanket edge.',
+         fr:'Cinq brides dans une même maille, ouvertes en éventail. C’est le point fantaisie le plus accessible : une rangée d’éventails alternée avec une rangée de mailles serrées suffit à faire une belle écharpe ou une bordure.'},
+      tip:{zh:'貝殼針很吃線，用量大約是平織的一倍半，買線時要多抓一些。',
+           en:'Shells eat yarn: budget roughly half again as much as a plain fabric of the same size.',
+           fr:'L’éventail consomme beaucoup : comptez environ une fois et demie la quantité d’un tissu uni de même taille.'} },
+    { sym:'bob', t:{zh:'玉編（爆米花針）', en:'Bobble and popcorn', fr:'Point boule et pop-corn'}, abbr:'bob / pc',
+      p:{zh:'在同一針目裡鉤數針未完成的長針，最後一次全部拉在一起，形成一顆凸起的球。符號是數根柱子同時共用頂點與底點。',
+         en:'Several unfinished double crochets in one stitch, closed together at the end so the bundle pops forward. The symbol shows several posts sharing both a base and a top.',
+         fr:'Plusieurs brides inachevées dans une même maille, fermées ensemble pour former une boule saillante. Le symbole montre plusieurs montants partageant base et sommet.'},
+      tip:{zh:'玉編會凸在「背面」。鉤的時候看到的是凹面，成品要翻過來才是正面，這一點常讓新手以為自己做錯了。',
+           en:'A bobble pops out on the side facing away from you as you work. What you see while crocheting is the dented side, which regularly convinces beginners they have done it wrong.',
+           fr:'La boule ressort du côté opposé à celui que vous voyez. Pendant le travail, vous voyez le creux, ce qui fait croire à bien des débutants qu’ils se sont trompés.'} },
+  ],
+  chart:{ kind:'round', rounds:[{n:6,k:'sc'},{n:12,k:'sc'},{n:18,k:'sc'},{n:24,k:'sc'}],
+    t:{zh:'平面圓形的加針規律', en:'The increase rule for a flat circle', fr:'La règle du cercle plat'},
+    p:{zh:'從中心往外讀。第一圈魔術環裡 6 針短針，第二圈每針加一次（12 針），第三圈每兩針加一次（18 針），第四圈每三針加一次（24 針）。每圈都固定加 6 針，圓形就會平。同樣的道理換成長針時改成每圈加 12 針。',
+       en:'Read outward from the centre. Six single crochets into a magic ring, then increase in every stitch (12), then in every second stitch (18), then in every third (24). Six added per round, every round, keeps it flat. Swap to double crochet and the number becomes twelve per round.',
+       fr:'Lisez du centre vers l’extérieur. Six mailles serrées dans un cercle magique, puis une augmentation dans chaque maille (12), une sur deux (18), une sur trois (24). Six ajoutées par tour, à chaque tour : le cercle reste plat. En brides, le nombre passe à douze par tour.'} } },
+{ id:'adv', tone:'rose', icon:'fa-wand-magic-sparkles', n:3,
+  t:{zh:'第三部・高階', en:'Part 3 · Advanced', fr:'Partie 3 · Avancé'},
+  lead:{zh:'到這一階段，針法已經不是限制了。真正決定成品好壞的是三件事：<strong class="text-white">密度、立體塑形、收尾</strong>。這一部處理的是這些，以及幾種需要另外學的技法家族。',
+        en:'By this stage the stitches are no longer the constraint. What separates a good finished piece from a poor one is three things: <strong class="text-white">gauge, shaping in three dimensions, and finishing</strong>. This part covers those, and a few technique families that have to be learned separately.',
+        fr:'À ce stade, les mailles ne sont plus la contrainte. Ce qui sépare un bel ouvrage d’un ouvrage raté tient à trois choses : <strong class="text-white">l’échantillon, la mise en volume et les finitions</strong>. Cette partie les traite, ainsi que quelques familles de techniques à apprendre à part.'},
+  items:[
+    { sym:'sc', t:{zh:'密度：唯一決定尺寸的東西', en:'Gauge: the only thing that decides size', fr:'L’échantillon : ce qui décide de la taille'}, abbr:'gauge',
+      p:{zh:'圖解寫「10 公分 = 14 針 × 8 排」，指的是作者的手勁。同樣的線與針，您鉤出來可能是 16 針。做衣物之前一定要先鉤一塊 15 公分見方的試片量密度；針數不對就換針號，不要改針法。',
+         en:'A pattern that says 14 stitches and 8 rows to 10 cm is describing its author’s hands, not yours. With the same yarn and hook you might get sixteen. Before any garment, work a 15 cm swatch and measure. If the count is off, change hook size; do not change the stitch.',
+         fr:'Un modèle qui annonce 14 mailles et 8 rangs pour 10 cm décrit les mains de son auteur, pas les vôtres. Avec le même fil et le même crochet, vous en ferez peut-être seize. Avant tout vêtement, faites un échantillon de 15 cm et mesurez. Si le compte diffère, changez de crochet, pas de maille.'},
+      tip:{zh:'量密度要量織片中間，不要量到邊緣。邊緣的針目永遠比中間鬆。',
+           en:'Measure across the middle of the swatch, never the edges. Edge stitches are always looser than the ones in the body.',
+           fr:'Mesurez au milieu de l’échantillon, jamais sur les bords : les mailles de rive sont toujours plus lâches.'} },
+    { sym:'dec', t:{zh:'立體塑形：玩偶的球與筒', en:'Shaping in the round: spheres and tubes', fr:'Le volume : sphères et tubes'}, abbr:'amigurumi',
+      p:{zh:'球體等於先照圓形規律加針，中段不加不減鉤幾圈，再照鏡像規律減針。筒狀則是加到需要的直徑之後就一直平鉤。玩偶的所有部位都是這兩者的變形。',
+         en:'A sphere is the flat-circle rule on the way out, several rounds of no shaping through the middle, and the mirror of the rule on the way back in. A tube is increases until you reach the diameter you want, then straight rounds. Every part of a stuffed toy is a variation on those two.',
+         fr:'Une sphère : la règle du cercle plat à l’aller, quelques tours sans façonnage au milieu, puis la règle en miroir au retour. Un tube : des augmentations jusqu’au diamètre voulu, puis des tours droits. Toutes les pièces d’une peluche dérivent de ces deux formes.'},
+      tip:{zh:'玩偶要用比線材建議小一號的針，織片才夠密。填充棉從鬆的織片裡透出來，是新手作品看起來廉價的主因。',
+           en:'Use a hook one size smaller than the yarn recommends, so the fabric is dense. Stuffing showing through a loose fabric is the single biggest reason a beginner toy looks cheap.',
+           fr:'Prenez un crochet d’une taille en dessous de ce que le fil recommande, pour un tissu bien dense. Le rembourrage qui transparaît est la première raison pour laquelle une peluche débutante fait bon marché.'} },
+    { sym:'tr', t:{zh:'方格編與蕾絲', en:'Filet crochet and lace', fr:'Crochet filet et dentelle'}, abbr:'filet',
+      p:{zh:'方格編只用長針與鎖針兩種針法：填滿的格子與留空的格子排列成圖案，像素圖一樣。它是進入蕾絲世界最容易的一扇門，因為規則極少。',
+         en:'Filet uses only two things, double crochet and chain: filled squares and open squares arranged into a picture, exactly like pixel art. It is the easiest door into lace because there are so few rules.',
+         fr:'Le filet n’utilise que deux éléments, brides et mailles en l’air : des carrés pleins et des carrés vides composant un dessin, comme du pixel art. C’est la porte d’entrée la plus simple vers la dentelle, tant les règles sont peu nombreuses.'},
+      tip:{zh:'蕾絲作品鉤完看起來皺皺的很正常，必須經過「定型」：噴濕或蒸氣後用珠針固定在墊子上陰乾，圖案才會展開。',
+           en:'Lace comes off the hook looking crumpled, and that is normal. It has to be blocked: dampen or steam it, pin it out on a mat, and let it dry. Only then does the pattern open up.',
+           fr:'La dentelle sort du crochet toute fripée, c’est normal. Il faut la bloquer : humidifiez ou vaporisez, épinglez sur un tapis, laissez sécher. Le motif ne s’ouvre qu’ensuite.'} },
+    { sym:'hdc', t:{zh:'阿富汗針（突尼西亞鉤針）', en:'Tunisian crochet', fr:'Crochet tunisien'}, abbr:'Tunisian',
+      p:{zh:'用一根加長的鉤針，去程把整排線圈都留在針上，回程再一個一個收掉。成品介於鉤織與棒針之間，密實而平整，常用來做毯子與包包。',
+         en:'Worked with a long hook: on the forward pass you keep every loop of the row on the hook, on the return pass you work them off one at a time. The fabric sits between crochet and knitting, dense and flat, and suits blankets and bags.',
+         fr:'Se travaille avec un crochet long : à l’aller, toutes les boucles du rang restent sur le crochet ; au retour, on les écoule une à une. Le tissu tient du crochet et du tricot, dense et plat : idéal pour couvertures et sacs.'},
+      tip:{zh:'阿富汗針會嚴重捲邊，這是它的本性，靠定型解決。它也非常吃線，用量比一般鉤織多三成左右。',
+           en:'Tunisian curls badly at the edges. That is inherent, and blocking is the answer. It also eats yarn, roughly thirty per cent more than ordinary crochet.',
+           fr:'Le tunisien roule fortement sur les bords : c’est inhérent, le blocage y remédie. Il consomme aussi environ trente pour cent de fil de plus que le crochet ordinaire.'} },
+    { sym:'pic', t:{zh:'收尾：藏線頭與邊緣', en:'Finishing: ends and edges', fr:'Finitions : fils et bordures'}, abbr:'finishing',
+      p:{zh:'用毛線縫針把線頭穿回織片內部，順著針目走向來回穿三次以上再剪斷。邊緣鉤一圈短針會立刻讓作品變挺；加上狗牙針則能做出蕾絲感的裝飾邊。',
+         en:'Thread each tail onto a tapestry needle and run it back through the fabric along the line of the stitches, reversing direction at least three times before you cut. A single round of single crochet around the edge instantly makes a piece look finished; add picots and you have a decorative lace edging.',
+         fr:'Enfilez chaque fil sur une aiguille à laine et faites-le cheminer dans le tissu en suivant les mailles, en changeant de sens au moins trois fois avant de couper. Un simple tour de mailles serrées sur le pourtour donne aussitôt un air fini ; ajoutez des picots et vous obtenez une bordure de dentelle.'},
+      tip:{zh:'不要打結。結會在洗滌後凸出表面，而且比穿回去的線更容易鬆脫。',
+           en:'Do not knot the ends. A knot works its way to the surface after washing, and it comes undone more readily than a tail that has been woven in.',
+           fr:'Ne faites pas de nœud. Un nœud remonte à la surface au lavage et se défait plus facilement qu’un fil rentré.'} },
+    { sym:'sl', t:{zh:'拆線與修正', en:'Undoing and fixing', fr:'Défaire et corriger'}, abbr:'frogging',
+      p:{zh:'鉤織最大的優點是拆起來乾淨：抽掉鉤針直接拉線，整排會順順地解開。發現錯誤的針目在下面幾排時，拆到那裡重鉤幾乎總是比想辦法補救快。',
+         en:'The great mercy of crochet is that it comes undone cleanly: slip the hook out and pull, and the row unravels in one smooth pass. When you find a wrong stitch several rows down, ripping back to it is almost always faster than any attempt to patch it.',
+         fr:'Le grand avantage du crochet est qu’il se défait proprement : retirez le crochet, tirez, et le rang se dénoue d’un seul trait. Quand une maille fautive se trouve plusieurs rangs plus bas, détricoter jusqu’à elle est presque toujours plus rapide que toute rustine.'},
+      tip:{zh:'拆之前先把要保留的最後一排穿一條對比色的線當「安全線」，就不會拆過頭。',
+           en:'Before ripping back, run a length of contrasting yarn through the last row you want to keep. It stops you from going too far.',
+           fr:'Avant de défaire, passez un fil de couleur contrastée dans le dernier rang à conserver : vous ne dépasserez pas.'} },
+  ],
+  chart:{ kind:'flat', rows:[['ch','ch','ch','ch','ch','ch','ch','ch','ch'],
+                             ['dc','ch','dc','ch','dc','ch','dc','ch'],
+                             ['dc','dc','dc','ch','dc','dc','dc','ch'],
+                             ['dc','ch','dc','ch','dc','dc','dc','ch']],
+    t:{zh:'方格編怎麼讀', en:'How a filet chart works', fr:'Comment se lit un diagramme de filet'},
+    p:{zh:'長針與鎖針交替就是「空格」，連續長針就是「實格」。把實格排成圖案，就能鉤出字母、花卉甚至肖像。這是最接近「畫圖」的鉤織技法。',
+       en:'A double crochet alternating with a chain makes an open square; consecutive double crochets make a filled one. Arrange the filled squares into a shape and you can crochet letters, flowers, even portraits. It is the closest crochet comes to drawing.',
+       fr:'Une bride alternée avec une maille en l’air donne un carré vide ; des brides consécutives, un carré plein. Disposez les pleins en motif et vous crochetez des lettres, des fleurs, voire des portraits. C’est ce que le crochet a de plus proche du dessin.'} } },
+];
+
+/* US and UK names are offset by one stitch, which is the classic trap */
+const USUK = [
+  { s:'sc',  us:'single crochet (sc)', uk:'double crochet (dc)',  zh:{zh:'短針',en:'single',fr:'maille serrée'} },
+  { s:'hdc', us:'half double (hdc)',   uk:'half treble (htr)',    zh:{zh:'中長針',en:'half double',fr:'demi-bride'} },
+  { s:'dc',  us:'double crochet (dc)', uk:'treble (tr)',          zh:{zh:'長針',en:'double',fr:'bride'} },
+  { s:'tr',  us:'treble (tr)',         uk:'double treble (dtr)',  zh:{zh:'長長針',en:'treble',fr:'double bride'} },
+  { s:'dtr', us:'double treble (dtr)', uk:'triple treble (trtr)', zh:{zh:'三卷長針',en:'double treble',fr:'triple bride'} },
+  { s:'sl',  us:'slip stitch (sl st)', uk:'slip stitch (ss)',     zh:{zh:'引拔針',en:'slip stitch',fr:'maille coulée'} },
+];
+const LEGEND = ['ch','sl','sc','hdc','dc','tr','dtr','inc','dec','bob','shell','pic','blo'];
+const LEGEND_NAME = {
+  ch:{zh:'鎖針',en:'chain',fr:'maille en l’air'}, sl:{zh:'引拔針',en:'slip stitch',fr:'maille coulée'},
+  sc:{zh:'短針',en:'single crochet',fr:'maille serrée'}, hdc:{zh:'中長針',en:'half double',fr:'demi-bride'},
+  dc:{zh:'長針',en:'double crochet',fr:'bride'}, tr:{zh:'長長針',en:'treble',fr:'double bride'},
+  dtr:{zh:'三卷長針',en:'double treble',fr:'triple bride'}, inc:{zh:'加針',en:'increase',fr:'augmentation'},
+  dec:{zh:'減針',en:'decrease',fr:'diminution'}, bob:{zh:'玉編',en:'bobble',fr:'point boule'},
+  shell:{zh:'貝殼針',en:'shell',fr:'éventail'}, pic:{zh:'狗牙針',en:'picot',fr:'picot'},
+  blo:{zh:'只挑後段',en:'back loop only',fr:'brin arrière'},
+};
+
+/* ═══════════════════════════════════════════════════════════
+   Renderers
+   ═══════════════════════════════════════════════════════════ */
+const TONE = {
+  teal:  ['text-teal-300','text-teal-400','bg-teal-500/10','border-teal-500/20','shadow-glow-teal','rgba(45,212,191,0.14)','rgba(45,212,191,0.4)'],
+  amber: ['text-amber-300','text-amber-400','bg-amber-500/10','border-amber-500/20','shadow-glow-amber','rgba(245,158,11,0.14)','rgba(245,158,11,0.4)'],
+  rose:  ['text-rose-300','text-rose-400','bg-rose-500/10','border-rose-500/20','shadow-glow-rose','rgba(244,63,94,0.14)','rgba(244,63,94,0.4)'],
+};
+
+/* A labelled diagram of the hook itself, since every instruction
+   below names these parts and a beginner has no idea which is which. */
+function hookAnatomy() {
+  return '<svg class="anat w-full" viewBox="0 0 760 200" preserveAspectRatio="xMidYMid meet" role="img"'
+    + ' aria-label="' + esc(t({zh:'鉤針各部位名稱',en:'The parts of a crochet hook',fr:'Les parties d’un crochet'})) + '">'
+    /* shaft and handle */
+    + '<path class="hook" d="M120 100 H430"/>'
+    + '<path class="hook" d="M430 100 H700" stroke-width="16" stroke-linecap="round" opacity="0.55"/>'
+    /* the head and throat */
+    + '<path class="hook" d="M120 100 q-42 0 -46 -26 q-2 -20 22 -22 q22 -2 24 22"/>'
+    /* the flat thumb rest */
+    + '<rect class="hook" x="470" y="86" width="90" height="28" rx="8" fill="none"/>'
+    + '<g class="call">'
+    +   '<path d="M96 58 V30"/><path d="M170 92 V44"/><path d="M300 92 V52"/>'
+    +   '<path d="M515 82 V46"/><path d="M650 92 V60"/>'
+    + '</g>'
+    + '<g class="txt" text-anchor="middle">'
+    +   '<text x="96"  y="22">' + t({zh:'針頭',en:'head',fr:'tête'}) + '</text>'
+    +   '<text x="170" y="36">' + t({zh:'針喉',en:'throat',fr:'gorge'}) + '</text>'
+    +   '<text x="300" y="44">' + t({zh:'針身',en:'shaft',fr:'tige'}) + '</text>'
+    +   '<text x="515" y="38">' + t({zh:'指托',en:'thumb rest',fr:'repose-pouce'}) + '</text>'
+    +   '<text x="650" y="52">' + t({zh:'握柄',en:'handle',fr:'manche'}) + '</text>'
+    + '</g>'
+    + '<text class="txt" x="300" y="168" text-anchor="middle" font-size="19" opacity="0.75">'
+    +   t({zh:'針身的直徑就是標示的尺寸，決定針目大小',
+          en:'The shaft diameter is the stated size, and it sets the size of every stitch',
+          fr:'Le diamètre de la tige est la taille annoncée : c’est lui qui règle la taille des mailles'})
+    + '</text></svg>';
+}
+
+function renderTools() {
+  document.getElementById('tools-grid').innerHTML = TOOLS.map(x =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5">'
+    +   '<i class="fa-solid ' + x.i + ' text-rose-400 mb-2"></i>'
+    +   '<h3 class="text-sm font-black text-white mb-2">' + t(x.t) + '</h3>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed">' + t(x.p) + '</p>'
+    + '</div>').join('');
+  document.getElementById('size-body').innerHTML = SIZES.map(r =>
+      '<tr>'
+    + '<td class="py-3 px-4 font-bold text-rose-300 whitespace-nowrap">' + r.mm + '</td>'
+    + '<td class="py-3 px-4 text-slate-400 whitespace-nowrap">' + r.us + '</td>'
+    + '<td class="py-3 px-4 text-slate-400">' + t(r.yarn) + '</td>'
+    + '<td class="py-3 px-4 text-slate-500">' + t(r.use) + '</td>'
+    + '</tr>').join('');
+  document.getElementById('anat-hook').innerHTML = hookAnatomy();
+}
+
+function renderLevels() {
+  document.getElementById('levels').innerHTML = LEVELS.map(L => {
+    const c = TONE[L.tone];
+    const items = L.items.map(it =>
+        '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5 reveal">'
+      +   '<div class="flex items-start gap-4">'
+      +     '<div class="shrink-0 rounded-xl p-2" style="background:' + c[5] + ';border:1px solid ' + c[6] + '">'
+      +       symSvg(it.sym, 46) + '</div>'
+      +     '<div class="min-w-0 flex-1">'
+      +       '<div class="flex flex-wrap items-baseline gap-2">'
+      +         '<h3 class="text-sm font-black text-white">' + t(it.t) + '</h3>'
+      +         '<code class="text-[0.65rem] px-1.5 py-0.5 rounded ' + c[2] + ' ' + c[0] + '">' + esc(it.abbr) + '</code>'
+      +       '</div>'
+      +       '<p class="text-xs text-slate-400 leading-relaxed mt-2">' + t(it.p) + '</p>'
+      +       '<div class="mt-3 rounded-xl p-3" style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.22)">'
+      +         '<span class="text-[0.62rem] uppercase tracking-wider text-amber-400 font-bold">'
+      +           '<i class="fa-solid fa-lightbulb mr-1"></i>' + ui('tipLabel') + '</span>'
+      +         '<p class="text-xs text-slate-300 leading-relaxed mt-1">' + t(it.tip) + '</p>'
+      +       '</div>'
+      +     '</div>'
+      +   '</div>'
+      + '</div>').join('');
+    const ch = L.chart;
+    const chartSvg = ch.kind === 'flat' ? chartFlat(ch.rows) : chartRound(ch.rounds);
+    return '<section id="' + L.id + '" class="scroll-mt-24">'
+      + '<div class="flex items-center gap-3 mb-5">'
+      +   '<div class="p-3 ' + c[2] + ' rounded-2xl ' + c[1] + ' border ' + c[3] + ' ' + c[4] + '">'
+      +     '<i class="fa-solid ' + L.icon + ' text-xl"></i></div>'
+      +   '<div><span class="lvl-pill ' + c[1] + '" style="background:' + c[5] + '">LEVEL ' + L.n + '</span>'
+      +   '<h2 class="text-2xl font-black text-white">' + t(L.t) + '</h2></div>'
+      + '</div>'
+      + '<div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">'
+      +   '<p class="text-slate-300 leading-relaxed">' + t(L.lead) + '</p>'
+      +   '<div class="grid md:grid-cols-2 gap-4">' + items + '</div>'
+      +   '<div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5 reveal">'
+      +     '<h3 class="text-sm font-black text-white mb-1">' + t(ch.t) + '</h3>'
+      +     '<p class="text-xs text-slate-400 leading-relaxed mb-4">' + t(ch.p) + '</p>'
+      +     '<div class="max-w-2xl mx-auto p-3">' + chartSvg + '</div>'
+      +   '</div>'
+      + '</div></section>';
+  }).join('');
+}
+
+function renderRef() {
+  document.getElementById('usuk-body').innerHTML = USUK.map(r =>
+      '<tr>'
+    + '<td class="py-2.5 px-4">' + symSvg(r.s, 30) + '</td>'
+    + '<td class="py-2.5 px-4 text-slate-300">' + t(r.zh) + '</td>'
+    + '<td class="py-2.5 px-4 text-teal-300 font-semibold">' + r.us + '</td>'
+    + '<td class="py-2.5 px-4 text-rose-300 font-semibold">' + r.uk + '</td>'
+    + '</tr>').join('');
+  document.getElementById('legend-grid').innerHTML = LEGEND.map(k =>
+      '<div class="bg-slate-900/40 rounded-xl border border-slate-800 p-3 flex items-center gap-3">'
+    +   symSvg(k, 34)
+    +   '<span class="text-xs text-slate-300 leading-tight">' + t(LEGEND_NAME[k]) + '</span>'
+    + '</div>').join('');
+}
+
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach((e, i) => { if (!e.classList.contains('in')) { e.dataset.i = i % 5; revealObserver.observe(e); } });
+}
+function closeLb(){ document.getElementById('lb').classList.remove('open'); document.body.style.overflow=''; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+/* ═══════════════════════════════════════════════════════════
+   Interface strings
+   ═══════════════════════════════════════════════════════════ */
+const I18N = {
+zh:{
+ 'doc.title':'鉤針編織圖譜 | 從入門到進階',
+ 'hdr.badge':'鉤針編織教學','hdr.title':'鉤針編織：從入門到進階',
+ 'nav.start':'工具','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.ref':'對照表',
+ 'intro':'鉤針是用一根有勾子的針，把線一圈一圈套進前一圈裡。它跟棒針最大的差別是：任何時候針上都只有一個活線圈，所以放下不會散、拆掉也很乾淨。這一冊按難度分成三部，從完全沒碰過開始。',
+ 'intro2':'每一種針法都附國際通用符號，那正是圖解上會看到的樣子。學會看符號之後，全世界的圖解都能讀，不需要懂那個國家的文字。',
+ 'tool.eyebrow':'開始之前','tool.h2':'需要準備什麼',
+ 'tool.h.size':'鉤針尺寸怎麼選','tool.p.size':'線材標籤上通常會建議針號。以下是常見的對應關係。',
+ 'tool.th0':'尺寸（mm）','tool.th1':'美規','tool.th2':'搭配線材','tool.th3':'常見用途',
+ 'tool.h.anat':'鉤針各部位的名稱',
+ 'tipLabel':'新手最常卡在這裡',
+ 'ref.eyebrow':'查閱','ref.h2':'對照表',
+ 'ref.h.usuk':'先看這個：美式與英式術語差一格',
+ 'ref.p.usuk':'這是外文圖解最常見的災難。同一個符號，美式叫短針（sc），英式卻叫 double crochet。英式術語整體比美式「高一階」。開始之前先確認圖解用的是哪一套，否則整件作品的針法都會錯。',
+ 'ref.uk.th0':'符號','ref.uk.th1':'中文','ref.uk.th2':'美式（US）','ref.uk.th3':'英式（UK）',
+ 'ref.h.legend':'符號總表','ref.p.legend':'國際通用符號，日本與多數歐洲圖解都用這一套。',
+ 'footer':'鉤針編織入門到進階圖譜。針法符號依國際通用（JIS）標準繪製；密度與用量數字為一般參考值，實際成品仍以自己的試片為準。'
+},
+en:{
+ 'doc.title':'Crochet, Beginner to Advanced',
+ 'hdr.badge':'CROCHET TUTORIAL','hdr.title':'Crochet: Beginner to Advanced',
+ 'nav.start':'Kit','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.ref':'Reference',
+ 'intro':'Crochet is a hooked needle pulling one loop of yarn through another, over and over. The great difference from knitting is that only one live loop is ever on the hook, so the work cannot fall off when you put it down, and it comes undone cleanly when you want it to. This volume is in three parts by difficulty, starting from never having held a hook.',
+ 'intro2':'Every stitch carries its international symbol, which is exactly how it appears on a chart. Once you can read the symbols you can read a pattern from anywhere in the world without knowing a word of the language.',
+ 'tool.eyebrow':'Before you start','tool.h2':'What you need',
+ 'tool.h.size':'Choosing a hook size','tool.p.size':'The yarn label usually suggests a size. These are the common pairings.',
+ 'tool.th0':'Size (mm)','tool.th1':'US','tool.th2':'Yarn weight','tool.th3':'Typical use',
+ 'tool.h.anat':'The parts of a hook',
+ 'tipLabel':'Where beginners get stuck',
+ 'ref.eyebrow':'Reference','ref.h2':'Tables',
+ 'ref.h.usuk':'Read this first: US and UK names are offset by one',
+ 'ref.p.usuk':'This is the commonest disaster in following a foreign pattern. The same symbol is a single crochet in US terms and a double crochet in UK terms; the whole UK set sits one step higher than the US set. Check which convention a pattern uses before you begin, or every stitch in the piece will be wrong.',
+ 'ref.uk.th0':'Symbol','ref.uk.th1':'Name','ref.uk.th2':'US','ref.uk.th3':'UK',
+ 'ref.h.legend':'Symbol key','ref.p.legend':'The international symbol set, used by Japanese and most European charts.',
+ 'footer':'A crochet reference from first stitch to advanced technique. Symbols follow the international (JIS) convention. Gauge and yardage figures are general guidance; your own swatch always decides.'
+},
+fr:{
+ 'doc.title':'Le crochet, du débutant à l’avancé',
+ 'hdr.badge':'TUTORIEL DE CROCHET','hdr.title':'Le crochet : du débutant à l’avancé',
+ 'nav.start':'Matériel','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.ref':'Références',
+ 'intro':'Le crochet consiste à passer, encore et encore, une boucle de fil dans une autre à l’aide d’une aiguille à tête recourbée. La grande différence avec le tricot : une seule boucle vive se trouve sur le crochet à la fois, si bien que l’ouvrage ne se défait pas quand on le pose, et se démonte proprement quand on le veut. Ce volume se divise en trois parties par difficulté, en partant de zéro.',
+ 'intro2':'Chaque maille porte son symbole international, tel qu’il figure sur un diagramme. Savoir lire les symboles permet de suivre un modèle venu de n’importe quel pays sans en connaître la langue.',
+ 'tool.eyebrow':'Avant de commencer','tool.h2':'Ce qu’il vous faut',
+ 'tool.h.size':'Choisir la taille du crochet','tool.p.size':'L’étiquette du fil indique en général une taille. Voici les correspondances courantes.',
+ 'tool.th0':'Taille (mm)','tool.th1':'US','tool.th2':'Grosseur du fil','tool.th3':'Usage courant',
+ 'tool.h.anat':'Les parties d’un crochet',
+ 'tipLabel':'Là où les débutants bloquent',
+ 'ref.eyebrow':'Références','ref.h2':'Tableaux',
+ 'ref.h.usuk':'À lire d’abord : les noms US et UK sont décalés d’un cran',
+ 'ref.p.usuk':'C’est la catastrophe la plus fréquente quand on suit un modèle étranger. Le même symbole est une single crochet en terminologie américaine et une double crochet en terminologie britannique : tout le système UK se situe un cran au-dessus du système US. Vérifiez la convention avant de commencer, sinon toutes les mailles de l’ouvrage seront fausses.',
+ 'ref.uk.th0':'Symbole','ref.uk.th1':'Nom','ref.uk.th2':'US','ref.uk.th3':'UK',
+ 'ref.h.legend':'Légende des symboles','ref.p.legend':'Le jeu de symboles international, utilisé par les diagrammes japonais et la plupart des diagrammes européens.',
+ 'footer':'Un guide de crochet, de la première maille aux techniques avancées. Les symboles suivent la convention internationale (JIS). Les indications d’échantillon et de métrage sont générales : votre propre échantillon fait foi.'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-rose-500/15 text-rose-300 border border-rose-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderTools();
+  renderLevels();
+  renderRef();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>
