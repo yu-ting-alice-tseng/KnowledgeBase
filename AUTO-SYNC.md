@@ -29,6 +29,7 @@
 | `auto-sync-run.bat` | 在背景呼叫上面那支，並把訊息寫進 `auto-sync.log` |
 | `install-auto-sync.bat` | 在「啟動」資料夾放一個小啟動器，讓它開機自動跑 |
 | `uninstall-auto-sync.bat` | 取消自動啟動，並讓正在跑的那份停下來 |
+| `check-auto-sync.bat` | 出問題時雙擊它，會列出每一項狀態 |
 
 啟動器放在這裡（可以自己去看）：
 
@@ -37,6 +38,21 @@
 ```
 
 不需要系統管理員權限，也沒有安裝任何東西到帳號以外的地方。刪掉那個檔案就等於取消。
+
+---
+
+## 找不到 auto-sync.log？
+
+這個檔案**不會從 GitHub 下載**，它在 `.gitignore` 裡，是同步真正跑起來之後才在妳自己電腦上產生的。
+所以 GitHub 網頁上永遠看不到它，別台電腦上也不會有。
+
+依序確認：
+
+1. 資料夾裡有沒有 `install-auto-sync.bat`？沒有的話代表新檔案還沒 `git pull` 下來。
+2. 有的話，雙擊過了嗎？沒跑過就不會有 log。
+3. 都做了還是沒有 → 雙擊 **`check-auto-sync.bat`**，它會直接告訴妳卡在哪一步。
+
+（順帶一提，Windows 預設隱藏副檔名，這個檔案可能顯示成 `auto-sync` 而不是 `auto-sync.log`。）
 
 ---
 

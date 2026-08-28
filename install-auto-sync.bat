@@ -78,9 +78,30 @@ if not exist "%STUB%" (
 )
 
 rem Start it now so you do not have to reboot.
+del /f /q "%~dp0auto-sync.log" > nul 2>&1
 start "" wscript.exe //nologo "%STUB%"
 
-echo   [OK] Installed.
+rem Do not just claim success: the sync writes auto-sync.log
+rem the moment it starts, so wait a few seconds and look.
+echo   Starting it and checking that it really came up...
+timeout /t 8 /nobreak > nul 2>&1
+if errorlevel 1 ping -n 8 -w 1000 127.0.0.1 > nul 2>&1
+
+if not exist "%~dp0auto-sync.log" (
+    echo.
+    echo   [PROBLEM] It was installed, but it did not start.
+    echo.
+    echo   auto-sync.log was never created, which usually means
+    echo   Windows Script Host is blocked on this PC, or an
+    echo   antivirus stopped the launcher.
+    echo.
+    echo   Run check-auto-sync.bat - it will say which one it is.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo   [OK] Installed and running.
 echo.
 echo   folder    : %CD%
 echo   launcher  : %STUB%
@@ -99,6 +120,6 @@ echo   two copies running at once will fight over the same
 echo   repository. Use auto-sync.log to see what it is doing.
 echo.
 echo   To stop it   : uninstall-auto-sync.bat
-echo   To check it  : open auto-sync.log
+echo   To check it  : check-auto-sync.bat, or open auto-sync.log
 echo.
 pause
