@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>古箏圖譜 | 從認識樂器到進階演奏</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] },
+    boxShadow: {
+      'glow-amber':  '0 0 20px rgba(217,119,6,0.30)',
+      'glow-jade':   '0 0 20px rgba(16,185,129,0.30)',
+      'glow-red':    '0 0 20px rgba(190,60,50,0.30)',
+      'glow-sky':    '0 0 20px rgba(2,132,199,0.30)',
+    } } } }
+</script>
+<style>
+  body {
+    background-color: #0b0806;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(217,119,6,0.08) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(16,185,129,0.05) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(190,60,50,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+
+  /* ── Diagrams ──
+     Drawn rather than photographed. The string map and the fingering
+     marks are what a student actually reads off a score, so they are
+     the honest illustration. */
+  .dg { background: #130e0a; border-radius: 1rem; border: 1px solid rgba(148,163,184,0.16); }
+  .dg .body   { fill: #5a4028; stroke: #8a6a3c; stroke-width: 3; }
+  .dg .top    { fill: #6b4d30; stroke: #a07a44; stroke-width: 2.5; }
+  .dg .str    { stroke: #d9c9a3; stroke-width: 2; }
+  .dg .str-g  { stroke: #34d399; stroke-width: 3; }
+  .dg .bridge { fill: #e8dcc0; stroke: #8a6a3c; stroke-width: 2; }
+  .dg .nut    { fill: #c9a85c; stroke: #7a5c20; stroke-width: 2; }
+  .dg .hole   { fill: #1a120c; stroke: #8a6a3c; stroke-width: 2; }
+  .dg .call   { fill: none; stroke: #38bdf8; stroke-width: 2.5; stroke-dasharray: 6 5; }
+  .dg .lab    { fill: #7dd3fc; font-size: 21px; font-weight: 700; font-family: Nunito, sans-serif; }
+  .dg .num    { fill: #94a3b8; font-size: 17px; font-family: Nunito, sans-serif; }
+  .dg .note   { fill: #fcd34d; font-size: 17px; font-weight: 700; font-family: Nunito, sans-serif; }
+  .dg .jp     { fill: #f1f5f9; font-size: 22px; font-weight: 800; font-family: Nunito, sans-serif; }
+  .dg .zone   { fill: rgba(148,163,184,0.06); }
+  .dg .zlab   { fill: #64748b; font-size: 16px; font-family: Nunito, sans-serif; }
+
+  /* fingering marks */
+  .fx { display: block; }
+  .fx .k { fill: none; stroke: #fcd34d; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+  .fx .kf{ fill: #fcd34d; }
+
+  .lvl-pill { display:inline-block; padding:.15rem .6rem; border-radius:9999px;
+              font-size:.6rem; font-weight:900; letter-spacing:.1em; }
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-amber-500 selection:text-black">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(217,119,6,0.14) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(16,185,129,0.09) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#0b0806]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-emerald-500 to-red-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#0b0806] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-music text-amber-400 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-amber-400 uppercase bg-amber-500/10 rounded-full border border-amber-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav class="flex flex-wrap gap-2 text-xs">
+        <a href="#instrument" data-i18n="nav.inst"  class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors"></a>
+        <a href="#strings"    data-i18n="nav.str"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors"></a>
+        <a href="#basics"     data-i18n="nav.p1"    class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
+        <a href="#inter"      data-i18n="nav.p2"    class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors"></a>
+        <a href="#adv"        data-i18n="nav.p3"    class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-red-500/50 hover:text-red-300 transition-colors"></a>
+        <a href="#ref"        data-i18n="nav.ref"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <section id="instrument" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-slate-500/10 rounded-2xl text-slate-300 border border-slate-600/30"><i class="fa-solid fa-guitar text-xl"></i></div>
+      <div>
+        <span data-i18n="inst.eyebrow" class="text-xs uppercase tracking-wider text-slate-400 font-bold"></span>
+        <h2 data-i18n="inst.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <p data-i18n="inst.lead" class="text-slate-300 leading-relaxed"></p>
+      <div id="anat"></div>
+      <div id="parts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    </div>
+  </section>
+
+  <section id="strings" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-jade"><i class="fa-solid fa-sliders text-xl"></i></div>
+      <div>
+        <span data-i18n="str.eyebrow" class="text-xs uppercase tracking-wider text-emerald-400 font-bold"></span>
+        <h2 data-i18n="str.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <p data-i18n="str.lead" class="text-slate-300 leading-relaxed"></p>
+      <div id="stringmap"></div>
+      <div id="str-notes" class="grid md:grid-cols-3 gap-3"></div>
+      <div class="rounded-2xl border border-sky-500/25 bg-sky-500/[0.06] p-5">
+        <h3 data-i18n="str.h.press" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="str.p.press" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="press-dia"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="levels" class="space-y-12"></div>
+
+  <section id="ref" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-violet-500/10 rounded-2xl text-violet-400 border border-violet-500/20"><i class="fa-solid fa-table-list text-xl"></i></div>
+      <div>
+        <span data-i18n="ref.eyebrow" class="text-xs uppercase tracking-wider text-violet-400 font-bold"></span>
+        <h2 data-i18n="ref.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="space-y-6">
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.fx" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.fx" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[720px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="ref.fx.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.fx.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.fx.th2" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.fx.th3" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="fx-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.jp" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.jp" class="text-xs text-slate-500 mb-4"></p>
+        <div id="jp-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.school" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.school" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[680px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="ref.sc.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.sc.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.sc.th2" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="school-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+/* ═══════════════════════════════════════════════════════════
+   The 21 strings of a standard modern guzheng.
+   Tuned to the D pentatonic scale, D E F# A B, which is
+   1 2 3 5 6 in numbered notation. Lowest string is 21 (D in
+   the great octave), highest is 1 (d3). Strings 3, 8, 13 and
+   18 are dyed, and they all carry the same degree, 5, an
+   octave apart, which is how a player finds their place.
+   ═══════════════════════════════════════════════════════════ */
+const STRINGS = (function () {
+  const cycle = [ {jp:'1', semis:0}, {jp:'2', semis:2}, {jp:'3', semis:4},
+                  {jp:'5', semis:7}, {jp:'6', semis:9} ];
+  const names = ['D','E','F♯','A','B'];
+  const out = [];
+  /* built from the low end upward, then numbered downward */
+  const octaves = [
+    { oct:'D',  dots:-2, zone:'z1' },   /* 大字組    */
+    { oct:'d',  dots:-1, zone:'z2' },   /* 小字組    */
+    { oct:'d1', dots: 0, zone:'z3' },   /* 小字一組  */
+    { oct:'d2', dots: 1, zone:'z4' },   /* 小字二組  */
+  ];
+  const sup = { 'D':'', 'd':'', 'd1':'1', 'd2':'2' };
+  const low = { 'D':true, 'd':false, 'd1':false, 'd2':false };
+  octaves.forEach(o => {
+    for (let i = 0; i < 5; i++) {
+      const nm = low[o.oct] ? names[i] : names[i].toLowerCase().replace('f♯','f♯');
+      out.push({ note: (low[o.oct] ? names[i] : names[i].toLowerCase()) + sup[o.oct],
+                 jp: cycle[i].jp, dots: o.dots, zone: o.zone });
+    }
+  });
+  out.push({ note:'d3', jp:'1', dots:2, zone:'z5' });
+  /* number them: 21 at the bottom of the pile, 1 at the top */
+  return out.map((s, i) => {
+    const num = out.length - i;
+    return Object.assign({ n: num, green: [3,8,13,18].indexOf(num) !== -1 }, s);
+  });
+})();
+
+const ZONES = {
+  z1:{zh:'倍低音區', en:'lowest register', fr:'registre le plus grave'},
+  z2:{zh:'低音區',   en:'low register',    fr:'registre grave'},
+  z3:{zh:'中音區',   en:'middle register', fr:'registre médium'},
+  z4:{zh:'高音區',   en:'high register',   fr:'registre aigu'},
+  z5:{zh:'倍高音',   en:'top',             fr:'suraigu'},
+};
+
+/* A number in jianpu, with the dots that place it in an octave */
+function jpMark(jp, dots, x, y, cls) {
+  let g = `<text class="${cls || 'jp'}" x="${x}" y="${y}" text-anchor="middle">${jp}</text>`;
+  const r = 3.2;
+  if (dots > 0) for (let i = 0; i < dots; i++)
+    g += `<circle cx="${x}" cy="${y - 26 - i * 9}" r="${r}" fill="#f1f5f9"/>`;
+  if (dots < 0) for (let i = 0; i < -dots; i++)
+    g += `<circle cx="${x}" cy="${y + 10 + i * 9}" r="${r}" fill="#f1f5f9"/>`;
+  return g;
+}
+
+/* ── The string map: the single most useful reference here ── */
+function stringMap() {
+  const n = STRINGS.length, cw = 47, padL = 74, padR = 26;
+  const W = padL + n * cw + padR, H = 330;
+  const yTop = 92, yBot = 236;
+  const ordered = STRINGS.slice().sort((a, b) => b.n - a.n);   /* low pitch on the left */
+  let g = '';
+  /* register bands behind the strings */
+  let i = 0;
+  while (i < ordered.length) {
+    let j = i; while (j < ordered.length && ordered[j].zone === ordered[i].zone) j++;
+    const x0 = padL + i * cw - cw * 0.45, w = (j - i) * cw;
+    g += `<rect class="zone" x="${x0}" y="${yTop - 34}" width="${w}" height="${yBot - yTop + 74}" rx="8"/>`;
+    g += `<text class="zlab" x="${x0 + w / 2}" y="${yTop - 44}" text-anchor="middle">${t(ZONES[ordered[i].zone])}</text>`;
+    i = j;
+  }
+  ordered.forEach((s, k) => {
+    const x = padL + k * cw;
+    g += `<line class="${s.green ? 'str-g' : 'str'}" x1="${x}" y1="${yTop}" x2="${x}" y2="${yBot}"/>`;
+    g += `<text class="note" x="${x}" y="${yTop - 12}" text-anchor="middle"`
+       + `${s.green ? ' fill="#34d399"' : ''}>${s.note}</text>`;
+    g += jpMark(s.jp, s.dots, x, (yTop + yBot) / 2 + 8);
+    g += `<text class="num" x="${x}" y="${yBot + 26}" text-anchor="middle"`
+       + `${s.green ? ' fill="#34d399"' : ''}>${s.n}</text>`;
+  });
+  g += `<text class="zlab" x="${padL - 16}" y="${yTop - 12}" text-anchor="end">${t({zh:'音名',en:'pitch',fr:'note'})}</text>`;
+  g += `<text class="zlab" x="${padL - 16}" y="${(yTop + yBot) / 2 + 8}" text-anchor="end">${t({zh:'簡譜',en:'jianpu',fr:'chiffré'})}</text>`;
+  g += `<text class="zlab" x="${padL - 16}" y="${yBot + 26}" text-anchor="end">${t({zh:'弦序',en:'string',fr:'corde'})}</text>`;
+  g += `<text class="zlab" x="${padL}" y="${H - 14}" text-anchor="start">${t({zh:'← 低音（遠離身體）',en:'← low (far side)',fr:'← grave (côté opposé)'})}</text>`;
+  g += `<text class="zlab" x="${W - padR}" y="${H - 14}" text-anchor="end">${t({zh:'高音（靠近身體）→',en:'high (near side) →',fr:'aigu (côté joueur) →'})}</text>`;
+  return `<svg class="dg w-full" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img"`
+       + ` aria-label="${esc(t({zh:'古箏二十一弦音位圖',en:'The 21 strings of a guzheng',fr:'Les 21 cordes du guzheng'}))}">${g}</svg>`;
+}
+
+/* ── Top view of the instrument, with the parts every lesson names ── */
+function anatomy() {
+  const L = 118, R = 826, T = 74, B = 246;
+  let g = '';
+  g += `<path class="body" d="M56 ${T - 16} H880 q26 0 26 26 V${B + 6} q0 26 -26 26 H56 q-22 0 -22 -22 V${T + 6} q0 -22 22 -22 Z"/>`;
+  g += `<rect class="top" x="72" y="${T - 4}" width="796" height="${B - T + 8}" rx="10"/>`;
+  /* sound holes */
+  g += `<ellipse class="hole" cx="200" cy="${(T + B) / 2}" rx="34" ry="13"/>`;
+  g += `<ellipse class="hole" cx="700" cy="${(T + B) / 2}" rx="30" ry="12"/>`;
+  /* the two fixed nuts */
+  g += `<rect class="nut" x="${L - 7}" y="${T - 10}" width="13" height="${B - T + 20}" rx="4"/>`;
+  g += `<rect class="nut" x="${R - 6}" y="${T - 10}" width="13" height="${B - T + 20}" rx="4"/>`;
+  /* strings and the movable bridges under them, set in the usual curve */
+  for (let i = 0; i < 21; i++) {
+    const y = T + i * ((B - T) / 20);
+    const green = [3, 8, 13, 18].indexOf(21 - i) !== -1;
+    g += `<line class="${green ? 'str-g' : 'str'}" x1="${L}" y1="${y}" x2="${R}" y2="${y}"/>`;
+    const bx = 300 + Math.pow(i / 20, 0.75) * 250;
+    g += `<path class="bridge" d="M${bx} ${y + 9} L${bx + 7} ${y - 9} L${bx + 14} ${y + 9} Z"/>`;
+  }
+  const call = (x1, y1, x2, y2, tx, ty, label, anchor) =>
+      `<path class="call" d="M${x1} ${y1} L${x2} ${y2}"/>`
+    + `<text class="lab" x="${tx}" y="${ty}" text-anchor="${anchor || 'middle'}">${label}</text>`;
+  g += call(R, T - 12, R + 40, 36, R + 44, 30, t({zh:'前岳山',en:'front nut',fr:'chevalet avant'}), 'start');
+  g += call(L, T - 12, L - 40, 36, L - 44, 30, t({zh:'後岳山',en:'back nut',fr:'chevalet arrière'}), 'end');
+  g += call(430, 168, 430, 300, 430, 320, t({zh:'箏碼（雁柱），可移動',en:'movable bridges',fr:'chevalets mobiles'}));
+  g += call(200, 150, 150, 300, 150, 320, t({zh:'出音孔（實際開在底板）',en:'sound hole (actually on the underside)',fr:'ouïe (en réalité sous la caisse)'}));
+  g += call(760, 190, 800, 300, 800, 320, t({zh:'彈弦區（右手）',en:'plucking side (right hand)',fr:'côté pincé (main droite)'}));
+  g += call(230, 96, 250, 30, 250, 24, t({zh:'按弦區（左手）',en:'pressing side (left hand)',fr:'côté pressé (main gauche)'}));
+  return `<svg class="dg w-full" viewBox="0 0 960 350" preserveAspectRatio="xMidYMid meet" role="img"`
+       + ` aria-label="${esc(t({zh:'古箏結構圖',en:'The parts of a guzheng',fr:'Les parties du guzheng'}))}">${g}</svg>`;
+}
+
+/* ── Where 4 and 7 come from: there are no strings for them ── */
+function pressDiagram() {
+  const rows = [
+    { open:'3', openN:'F♯', got:'4', gotN:'G',  d:{zh:'按下三弦，升半音得到 4',   en:'press the 3 string a semitone to get 4', fr:'pressez la corde 3 d’un demi-ton pour obtenir 4'} },
+    { open:'6', openN:'B',  got:'7', gotN:'C♯', d:{zh:'按下六弦，升半音得到 7',   en:'press the 6 string a semitone to get 7', fr:'pressez la corde 6 d’un demi-ton pour obtenir 7'} },
+  ];
+  let g = '';
+  rows.forEach((r, i) => {
+    const y = 62 + i * 96;
+    g += `<line class="str" x1="120" y1="${y}" x2="820" y2="${y}" stroke-width="3"/>`;
+    g += `<path class="bridge" d="M470 ${y + 12} L479 ${y - 14} L488 ${y + 12} Z"/>`;
+    g += `<text class="note" x="104" y="${y + 6}" text-anchor="end">${r.openN}</text>`;
+    g += jpMark(r.open, 0, 560, y - 14);
+    /* the press, left of the bridge */
+    g += `<path class="call" d="M330 ${y - 34} V${y - 8}"/>`;
+    g += `<circle cx="330" cy="${y}" r="9" fill="#38bdf8" opacity="0.85"/>`;
+    g += `<text class="lab" x="330" y="${y - 42}" text-anchor="middle">${t({zh:'左手按此處',en:'press here',fr:'presser ici'})}</text>`;
+    g += `<path class="call" d="M600 ${y - 10} h60"/>`;
+    g += `<text class="note" x="672" y="${y - 4}" fill="#34d399">${r.got} = ${r.gotN}</text>`;
+    g += `<text class="zlab" x="120" y="${y + 30}">${t(r.d)}</text>`;
+  });
+  g += `<text class="zlab" x="479" y="252" text-anchor="middle">${t({zh:'箏碼：右邊彈弦，左邊按弦',en:'the bridge: pluck to its right, press to its left',fr:'le chevalet : on pince à droite, on presse à gauche'})}</text>`;
+  return `<svg class="dg w-full" viewBox="0 0 900 268" preserveAspectRatio="xMidYMid meet" role="img"`
+       + ` aria-label="${esc(t({zh:'按弦取得 4 與 7 的原理',en:'How pressing produces 4 and 7',fr:'Comment la pression produit 4 et 7'}))}">${g}</svg>`;
+}
+
+/* ── The fingering marks that appear over the notes in a score ── */
+const FX_SHAPES = {
+  tuo:  () => '<path class="k" d="M28 22 V74 H76"/>',                       /* 托 */
+  pi:   () => '<path class="k" d="M24 26 H72 V78"/>',                        /* 劈 */
+  tiao: () => '<path class="k" d="M24 78 L76 22"/>',                         /* 挑 */
+  mo:   () => '<path class="k" d="M24 22 L76 78"/>',                         /* 抹 */
+  gou:  () => '<path class="k" d="M22 66 q28 -46 56 0"/>',                   /* 勾 */
+  ti:   () => '<path class="k" d="M22 34 q28 46 56 0"/>',                    /* 剔 */
+  yao:  () => '<path class="k" d="M26 30 q16 -12 24 0 q10 12 24 0 M26 50 q16 -12 24 0 q10 12 24 0 M26 70 q16 -12 24 0 q10 12 24 0"/>',
+  gua:  () => '<path class="k" d="M22 24 L74 74 M74 74 L56 72 M74 74 L72 56"/>',
+  up:   () => '<path class="k" d="M76 74 L26 24 M26 24 L44 26 M26 24 L28 42"/>',
+  down: () => '<path class="k" d="M24 24 L74 74 M74 74 L56 72 M74 74 L72 56"/>',
+  cuo:  () => '<path class="k" d="M30 24 V76 M30 24 H62 M30 76 H62"/>',
+  chan: () => '<path class="k" d="M20 50 q12 -20 24 0 q12 20 24 0 q12 -20 20 0"/>',
+};
+function fxSvg(k, size) {
+  const f = FX_SHAPES[k]; if (!f) return '';
+  return `<svg class="fx" viewBox="0 0 100 100" width="${size}" height="${size}" role="img" aria-hidden="true">${f()}</svg>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Parts, fingerings, levels, schools
+   ═══════════════════════════════════════════════════════════ */
+const PARTS = [
+  { t:{zh:'面板', en:'Soundboard', fr:'Table d’harmonie'},
+    p:{zh:'桐木製，微微拱起。琴的音色主要由它決定，也因此不要在面板上放重物或用力壓。',
+       en:'Paulownia, very slightly arched. It is what decides the tone, which is why nothing heavy should ever rest on it.',
+       fr:'En paulownia, légèrement bombée. C’est elle qui décide du timbre : n’y posez jamais rien de lourd.'} },
+  { t:{zh:'前岳山與後岳山', en:'Front and back nuts', fr:'Chevalets fixes'},
+    p:{zh:'兩端固定的木條，弦的振動段就在兩者之間。前岳山靠近演奏者，是右手撥弦那一側。',
+       en:'The fixed rails at each end; the sounding length of every string runs between them. The front nut is the player’s side, where the right hand plucks.',
+       fr:'Les barrettes fixes des deux extrémités : la longueur vibrante court entre elles. Le chevalet avant est du côté du joueur, là où la main droite pince.'} },
+  { t:{zh:'箏碼（雁柱）', en:'Movable bridges', fr:'Chevalets mobiles'},
+    p:{zh:'每根弦一個，可以左右移動。移動它就改變音高，調音與轉調都靠它。它只是立在面板上，沒有固定，碰倒了要重新調。',
+       en:'One under each string, and free to slide. Moving one changes that string’s pitch, so tuning and changing key both happen here. They only stand on the board, held by string tension, so knocking one over means retuning.',
+       fr:'Un sous chaque corde, libre de coulisser. Le déplacer change la hauteur : accord et changement de tonalité passent par là. Ils sont simplement posés, tenus par la tension : en renverser un oblige à réaccorder.'} },
+  { t:{zh:'弦', en:'Strings', fr:'Cordes'},
+    p:{zh:'現代箏多為鋼絲外纏尼龍。低音弦粗、張力鬆，高音弦細、張力緊。斷弦通常斷在高音區。',
+       en:'Modern strings are steel wound with nylon. The low ones are thick and slack, the high ones thin and tight, which is why a break almost always happens up at the treble end.',
+       fr:'Les cordes modernes sont en acier gainé de nylon. Les graves sont épaisses et détendues, les aiguës fines et tendues : c’est là que les ruptures surviennent presque toujours.'} },
+  { t:{zh:'義甲', en:'Finger picks', fr:'Onglets'},
+    p:{zh:'玳瑁或賽璐珞製，用膠布纏在指尖。戴的角度會直接影響音色，太平會刮弦，太立會打滑。',
+       en:'Picks of tortoiseshell or celluloid, taped to the fingertips. The angle you tape them at goes straight into the tone: too flat and they scrape, too upright and they slip.',
+       fr:'Onglets en écaille ou en celluloïd, fixés au ruban adhésif. Leur angle passe directement dans le son : trop à plat ils raclent, trop droits ils glissent.'} },
+  { t:{zh:'琴架', en:'The stand', fr:'Le support'},
+    p:{zh:'高度要讓前臂自然水平。琴架太低會聳肩，太高會壓手腕，長期都會造成疼痛。',
+       en:'Set so the forearm sits level. Too low and you hunch your shoulders, too high and you break the wrist; either one hurts over time.',
+       fr:'Réglé pour que l’avant-bras reste horizontal. Trop bas, on remonte les épaules ; trop haut, on casse le poignet : les deux finissent par faire mal.'} },
+];
+
+const FINGERINGS = [
+  { k:'tuo',  cn:'托', py:'tuō',  hand:'R', n:{zh:'拇指向外撥',   en:'thumb, outward',        fr:'pouce, vers l’extérieur'} },
+  { k:'pi',   cn:'劈', py:'pī',   hand:'R', n:{zh:'拇指向內撥',   en:'thumb, inward',         fr:'pouce, vers l’intérieur'} },
+  { k:'mo',   cn:'抹', py:'mǒ',   hand:'R', n:{zh:'食指向內撥',   en:'index, inward',         fr:'index, vers l’intérieur'} },
+  { k:'tiao', cn:'挑', py:'tiāo', hand:'R', n:{zh:'食指向外撥',   en:'index, outward',        fr:'index, vers l’extérieur'} },
+  { k:'gou',  cn:'勾', py:'gōu',  hand:'R', n:{zh:'中指向內撥',   en:'middle, inward',        fr:'majeur, vers l’intérieur'} },
+  { k:'ti',   cn:'剔', py:'tī',   hand:'R', n:{zh:'中指向外撥',   en:'middle, outward',       fr:'majeur, vers l’extérieur'} },
+  { k:'cuo',  cn:'撮', py:'cuō',  hand:'R', n:{zh:'兩指同時，成和音', en:'two fingers at once, a double stop', fr:'deux doigts à la fois, un accord'} },
+  { k:'yao',  cn:'搖指', py:'yáo', hand:'R', n:{zh:'同一弦快速來回，成長音', en:'rapid back and forth on one string, a sustained tone', fr:'va-et-vient rapide sur une corde, un son tenu'} },
+  { k:'gua',  cn:'刮奏', py:'guā', hand:'R', n:{zh:'順著弦刮過，五聲琶音', en:'sweep across the strings, a pentatonic run', fr:'balayage des cordes, un trait pentatonique'} },
+  { k:'up',   cn:'上滑音', py:'shàng', hand:'L', n:{zh:'先彈後按，音往上滑', en:'pluck first, then press: the pitch slides up', fr:'pincer puis presser : la hauteur monte'} },
+  { k:'down', cn:'下滑音', py:'xià', hand:'L', n:{zh:'先按後放，音往下滑', en:'press first, then release: the pitch slides down', fr:'presser puis relâcher : la hauteur descend'} },
+  { k:'chan', cn:'顫音', py:'chàn', hand:'L', n:{zh:'左手上下輕壓，音有波動', en:'light rocking pressure, giving the tone a wave', fr:'pression oscillante légère, le son ondule'} },
+];
+
+const SCHOOLS = [
+  { n:{zh:'山東箏', en:'Shandong', fr:'Shandong'}, f:{zh:'剛勁、密集的大指搖', en:'firm and driving, dense thumb tremolo', fr:'ferme et vigoureux, trémolo de pouce dense'},
+    w:{zh:'《漢宮秋月》《高山流水》（山東版）', en:'Autumn Moon over the Han Palace; High Mountains and Flowing Water (Shandong version)', fr:'Lune d’automne sur le palais des Han ; Hautes montagnes et eaux courantes (version Shandong)'} },
+  { n:{zh:'河南箏', en:'Henan', fr:'Henan'}, f:{zh:'重顫、大滑音，語氣像說話', en:'heavy vibrato and wide slides, speechlike', fr:'vibrato appuyé, glissandos larges, proche de la parole'},
+    w:{zh:'《陳杏元和番》《打雁》', en:'Chen Xingyuan Goes to the Frontier; Shooting the Wild Geese', fr:'Chen Xingyuan part à la frontière ; Le tir aux oies'} },
+  { n:{zh:'潮州箏', en:'Chaozhou', fr:'Chaozhou'}, f:{zh:'細膩的按滑，特殊的重三六調', en:'fine pressing and sliding, with its own altered scales', fr:'pressions et glissés délicats, gammes altérées propres'},
+    w:{zh:'《寒鴉戲水》《柳青娘》', en:'Jackdaws Playing in the Water; Liu Qingniang', fr:'Choucas jouant dans l’eau ; Liu Qingniang'} },
+  { n:{zh:'客家箏', en:'Hakka', fr:'Hakka'}, f:{zh:'古樸、速度從容，與潮州近親', en:'archaic and unhurried, a close cousin of Chaozhou', fr:'archaïque et sans hâte, proche cousin du Chaozhou'},
+    w:{zh:'《出水蓮》', en:'Lotus Rising from the Water', fr:'Le lotus sortant de l’eau'} },
+  { n:{zh:'浙江箏', en:'Zhejiang', fr:'Zhejiang'}, f:{zh:'快速指序與長搖，現代技法的源頭', en:'fast finger sequences and long tremolo, the root of modern technique', fr:'séquences rapides et longs trémolos, racine de la technique moderne'},
+    w:{zh:'《高山流水》（浙江版）《將軍令》', en:'High Mountains and Flowing Water (Zhejiang version); The General’s Command', fr:'Hautes montagnes et eaux courantes (version Zhejiang) ; L’Ordre du général'} },
+  { n:{zh:'陝西箏', en:'Shaanxi', fr:'Shaanxi'}, f:{zh:'苦音音階，微升 4、微降 7', en:'the bitter-tone scale, with a raised 4 and lowered 7 by less than a semitone', fr:'gamme « ku yin », avec un 4 haussé et un 7 abaissé de moins d’un demi-ton'},
+    w:{zh:'《秦桑曲》《雲裳訴》', en:'Qin Mulberry Song; The Robe’s Lament', fr:'Chant des mûriers de Qin ; La Plainte de la robe'} },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   The three levels
+   ═══════════════════════════════════════════════════════════ */
+const LEVELS = [
+{ id:'basics', tone:'amber', icon:'fa-seedling', n:1,
+  t:{zh:'第一部・入門', en:'Part 1 · Beginner', fr:'Partie 1 · Débutant'},
+  lead:{zh:'古箏的入門門檻低，因為空弦本身就是五聲音階，隨手撥都好聽。但也正因為如此，壞習慣很容易在前三個月裡定型。這一部處理的是姿勢、義甲、右手四個基本指法，以及怎麼讀簡譜。',
+        en:'The guzheng is easy to start on, because the open strings are already a pentatonic scale and almost anything you pluck sounds pleasant. That is also the danger: bad habits set in during the first three months. This part covers posture, the picks, the four basic right-hand strokes, and how to read numbered notation.',
+        fr:'Le guzheng est facile d’accès : les cordes à vide forment déjà une gamme pentatonique et presque tout ce qu’on y pince sonne agréablement. C’est aussi le danger, car les mauvaises habitudes s’installent dès les trois premiers mois. Cette partie traite de la posture, des onglets, des quatre attaques de base de la main droite et de la lecture du chiffrage.'},
+  items:[
+    { fx:'tuo', t:{zh:'坐姿與手型', en:'Sitting and hand shape', fr:'Assise et forme de la main'},
+      p:{zh:'坐在琴的右段，身體正對第一個箏碼附近。手掌呈半握球狀，手腕放平不塌陷，指尖自然下垂觸弦。前臂與面板大致平行。',
+         en:'Sit toward the right section of the instrument, roughly facing the first bridges. The palm holds the shape of a loose ball, the wrist stays level rather than collapsing, and the fingertips fall naturally onto the strings. The forearm runs about parallel to the soundboard.',
+         fr:'Asseyez-vous vers la partie droite de l’instrument, à peu près face aux premiers chevalets. La paume garde la forme d’une balle souple, le poignet reste à plat sans s’affaisser, les doigts tombent naturellement sur les cordes. L’avant-bras reste à peu près parallèle à la table.'},
+      tip:{zh:'手腕塌下去是最常見也最難改的毛病。它會讓搖指永遠快不起來，而且練久了會痛。從第一天就把手腕當成一條直線。',
+           en:'A collapsed wrist is both the commonest fault and the hardest to undo. It puts a ceiling on tremolo speed forever, and it starts to hurt. Treat the wrist as a straight line from day one.',
+           fr:'Le poignet affaissé est le défaut le plus courant et le plus difficile à corriger. Il plafonne définitivement la vitesse du trémolo et finit par faire mal. Traitez le poignet comme une ligne droite dès le premier jour.'} },
+    { fx:'tuo', t:{zh:'托：拇指向外', en:'Tuo: thumb outward', fr:'Tuo : pouce vers l’extérieur'},
+      p:{zh:'最先學、也用得最多的指法。拇指戴義甲，由內往外推弦，力量從掌關節出來而不是靠指尖。撥完手指停在下一根弦上，不要彈飛出去。',
+         en:'The first stroke taught and the most used. With the pick on the thumb, push the string outward, the power coming from the knuckle rather than the fingertip. Let the finger come to rest on the next string instead of flying off.',
+         fr:'La première attaque enseignée et la plus employée. L’onglet au pouce, poussez la corde vers l’extérieur, la force venant de l’articulation et non du bout du doigt. Laissez le doigt se poser sur la corde suivante plutôt que de partir dans le vide.'},
+      tip:{zh:'義甲要斜著入弦，不是垂直砸下去。垂直的話聲音會又扁又噪。',
+           en:'The pick should enter the string at a slant, not drop onto it square. Square contact gives a flat, noisy tone.',
+           fr:'L’onglet doit aborder la corde en biais, non tomber à plat. Un contact perpendiculaire donne un son plat et bruyant.'} },
+    { fx:'mo', t:{zh:'抹與挑：食指', en:'Mo and tiao: the index', fr:'Mo et tiao : l’index'},
+      p:{zh:'抹是食指向內撥，挑是向外。抹最常與托組成「勾搭」式的交替，是所有快速樂句的基礎。',
+         en:'Mo draws the index inward, tiao pushes it outward. Mo alternating with tuo is the basis of every fast passage.',
+         fr:'Mo tire l’index vers l’intérieur, tiao le pousse vers l’extérieur. L’alternance mo et tuo est la base de tout passage rapide.'},
+      tip:{zh:'新手常把抹彈成「刮」，因為指甲角度不對。先慢速確認每一聲都乾淨再加速。',
+           en:'Beginners often turn mo into a scrape because the pick angle is wrong. Get every note clean slowly before adding any speed.',
+           fr:'Les débutants transforment souvent le mo en raclement, l’angle de l’onglet étant faux. Obtenez chaque note nette lentement avant d’accélérer.'} },
+    { fx:'gou', t:{zh:'勾：中指', en:'Gou: the middle finger', fr:'Gou : le majeur'},
+      p:{zh:'中指向內撥，音色比拇指厚。低音區的旋律、以及與拇指組成八度大撮，都靠它。',
+         en:'The middle finger drawn inward, giving a fuller tone than the thumb. It carries melody in the low register and pairs with the thumb for the octave double stop.',
+         fr:'Le majeur tiré vers l’intérieur, d’un son plus plein que le pouce. Il porte la mélodie dans le grave et s’associe au pouce pour l’octave.'},
+      tip:{zh:'勾的時候無名指與小指不要翹起來，會牽動整隻手緊繃。',
+           en:'Keep the ring and little fingers down when you play gou; letting them fly up tightens the whole hand.',
+           fr:'Gardez l’annulaire et l’auriculaire baissés pendant le gou ; les laisser se relever crispe toute la main.'} },
+    { fx:'cuo', t:{zh:'大撮與小撮', en:'The double stops', fr:'Les doubles cordes'},
+      p:{zh:'兩指同時撥兩根弦。大撮是勾與托的八度（例如 1 與高音 1），小撮是抹與托的較窄音程。這是古箏最容易做出氣勢的手法。',
+         en:'Two fingers sounding two strings at once. The large one is gou with tuo across an octave, the small one is mo with tuo across a narrower interval. It is the quickest way to get weight out of the instrument.',
+         fr:'Deux doigts sonnant deux cordes ensemble. Le grand associe gou et tuo à l’octave, le petit mo et tuo sur un intervalle plus étroit. C’est le moyen le plus rapide de tirer du poids de l’instrument.'},
+      tip:{zh:'兩個音要完全同時。差一點點就會聽起來像失誤而不是和音。',
+           en:'The two notes must land together. A fraction apart and it reads as a slip rather than a chord.',
+           fr:'Les deux notes doivent tomber ensemble. Un rien de décalage s’entend comme une maladresse, non comme un accord.'} },
+    { fx:'gua', t:{zh:'簡譜怎麼讀', en:'Reading numbered notation', fr:'Lire la notation chiffrée'},
+      p:{zh:'中國樂譜用數字 1 到 7 代表音階，不是絕對音高。數字上方一點是高八度，下方一點是低八度。數字底下加橫線代表時值減半，一條線是八分音符，兩條是十六分。右上角的小記號就是指法。',
+         en:'Chinese scores use the numbers 1 to 7 for scale degrees, not absolute pitches. A dot above the number is an octave up, a dot below an octave down. Underlines halve the duration: one line is a quaver, two a semiquaver. The small marks beside a number are the fingering.',
+         fr:'Les partitions chinoises emploient les chiffres 1 à 7 pour les degrés, non pour des hauteurs absolues. Un point au-dessus monte d’une octave, en dessous descend d’une octave. Les lignes sous le chiffre divisent la durée : une ligne pour la croche, deux pour la double. Les petits signes à côté du chiffre indiquent le doigté.'},
+      tip:{zh:'調號寫在開頭，例如「1 = D」就是 D 調，也就是標準定弦。看到「1 = G」就得移碼轉調，不是換個指法而已。',
+           en:'The key sits at the top: “1 = D” means D, which is the standard tuning. “1 = G” means the bridges have to be moved, not merely the fingering changed.',
+           fr:'La tonalité est en tête : « 1 = D » désigne le ré, l’accord standard. « 1 = G » impose de déplacer les chevalets, et pas seulement de changer de doigté.'} },
+  ] },
+
+{ id:'inter', tone:'sky', icon:'fa-hand-sparkles', n:2,
+  t:{zh:'第二部・進階', en:'Part 2 · Intermediate', fr:'Partie 2 · Intermédiaire'},
+  lead:{zh:'右手決定音符，<strong class="text-white">左手決定這是不是古箏</strong>。同樣一串音，沒有左手就是撥弦樂器的音階練習，加上按滑顫就成了中國音樂。這一部全部是左手，以及右手的搖指。',
+        en:'The right hand decides the notes; <strong class="text-white">the left hand decides whether it sounds like a guzheng at all</strong>. The same run of pitches without the left hand is a scale exercise on a plucked instrument. With pressing, sliding and vibrato it becomes Chinese music. This part is the left hand, plus tremolo in the right.',
+        fr:'La main droite décide des notes ; <strong class="text-white">la main gauche décide si cela sonne comme un guzheng</strong>. La même suite de hauteurs sans main gauche n’est qu’un exercice de gamme sur un instrument pincé. Avec les pressions, glissés et vibratos, elle devient musique chinoise. Cette partie porte sur la main gauche, et sur le trémolo à droite.'},
+  items:[
+    { fx:'up', t:{zh:'按音：4 和 7 從哪裡來', en:'Pressing: where 4 and 7 come from', fr:'La pression : d’où viennent 4 et 7'},
+      p:{zh:'古箏定弦只有 1 2 3 5 6，沒有 4 和 7 的弦。這兩個音是左手在箏碼左側把弦按下、拉高張力得到的：按 3 得 4，按 6 得 7。這不是技巧，是必備的基本功。',
+         en:'The tuning gives only 1 2 3 5 6. There is no string for 4 or 7. Those two notes are made by the left hand pressing the string down on the far side of the bridge, raising its tension: press 3 to get 4, press 6 to get 7. This is not an ornament, it is basic equipment.',
+         fr:'L’accord ne donne que 1 2 3 5 6 : aucune corde pour le 4 ni le 7. Ces deux notes s’obtiennent en pressant la corde de l’autre côté du chevalet pour en augmenter la tension : presser 3 donne 4, presser 6 donne 7. Ce n’est pas un ornement, c’est un fondamental.'},
+      tip:{zh:'按的深度決定音準，而且每根弦、每台琴都不一樣。唯一的辦法是用耳朵反覆對，不能靠手感記位置。',
+           en:'How far you press decides the pitch, and it differs by string and by instrument. The only way is to check it by ear, over and over. Muscle memory for the position will not transfer.',
+           fr:'La profondeur de pression décide de la justesse, et elle varie selon la corde et l’instrument. Seule l’oreille peut la régler, encore et encore : la mémoire du geste ne se transpose pas.'} },
+    { fx:'up', t:{zh:'上滑音與下滑音', en:'Slides up and down', fr:'Glissés ascendant et descendant'},
+      p:{zh:'兩者的差別在順序。上滑音是<strong class="text-white">先彈後按</strong>，聽起來音從本位往上走；下滑音是<strong class="text-white">先按後放</strong>，右手彈的時候弦已經被按住，放開後音往下掉。',
+         en:'The difference is the order. A slide up is <strong class="text-white">pluck first, then press</strong>, so the tone climbs from where it started. A slide down is <strong class="text-white">press first, then release</strong>: the string is already pressed when the right hand plucks, and letting go drops the pitch.',
+         fr:'La différence tient à l’ordre. Le glissé ascendant, c’est <strong class="text-white">pincer puis presser</strong> : le son monte depuis sa hauteur de départ. Le glissé descendant, c’est <strong class="text-white">presser puis relâcher</strong> : la corde est déjà pressée quand la main droite pince, et le relâchement fait tomber la hauteur.'},
+      tip:{zh:'下滑音最容易被忽略，因為譜上看起來只是一個音。漏掉它，河南與潮州的曲子會完全失去味道。',
+           en:'The downward slide is the one most often skipped, because on the page it looks like a single note. Leave it out and the Henan and Chaozhou repertoire loses its accent entirely.',
+           fr:'Le glissé descendant est le plus souvent omis, car sur la page il ressemble à une simple note. Sans lui, le répertoire du Henan et du Chaozhou perd tout son accent.'} },
+    { fx:'chan', t:{zh:'顫音與揉弦', en:'Vibrato', fr:'Vibrato'},
+      p:{zh:'左手在弦上輕輕上下按放，讓音產生波動。幅度小而密的是顫音，幅度大而慢的接近揉弦，兩者在不同流派裡輕重差很多。',
+         en:'The left hand rocks lightly on the string so the tone waves. Small and fast is a shimmer, wide and slow approaches a true vibrato, and the schools differ sharply in how heavily they use each.',
+         fr:'La main gauche oscille légèrement sur la corde pour faire onduler le son. Petit et rapide, c’est un miroitement ; large et lent, cela approche le vrai vibrato. Les écoles en usent très différemment.'},
+      tip:{zh:'顫音不是裝飾，是語氣。河南箏的重顫幾乎是另一種音高，用浙江的輕顫去彈河南曲子會顯得很平。',
+           en:'Vibrato is not decoration, it is inflection. The heavy Henan shake is almost a different pitch, and playing Henan repertoire with a light Zhejiang shimmer sounds flat.',
+           fr:'Le vibrato n’est pas un ornement mais une inflexion. Le tremblement appuyé du Henan est presque une autre hauteur ; jouer ce répertoire avec le miroitement léger du Zhejiang sonne plat.'} },
+    { fx:'yao', t:{zh:'搖指', en:'Tremolo', fr:'Trémolo'},
+      p:{zh:'拇指在同一根弦上極快來回，把點狀的撥弦變成連續的長音。古箏沒有弓，所有的長音都靠它。',
+         en:'The thumb travels back and forth on one string very fast, turning a plucked point into a sustained line. The guzheng has no bow, so every long note is made this way.',
+         fr:'Le pouce va et vient très vite sur une même corde, transformant un point pincé en ligne tenue. Le guzheng n’a pas d’archet : toutes les notes longues se font ainsi.'},
+      tip:{zh:'搖指要練的是<strong class="text-white">放鬆</strong>，不是速度。手腕僵硬時速度會卡在一個上限，而且撐不過八拍。先求勻，再求久，最後才求快。',
+           en:'What tremolo trains is <strong class="text-white">release</strong>, not speed. A stiff wrist hits a ceiling and cannot hold eight beats. Aim first for evenness, then for endurance, and only then for speed.',
+           fr:'Le trémolo entraîne le <strong class="text-white">relâchement</strong>, pas la vitesse. Un poignet raide plafonne et ne tient pas huit temps. Cherchez d’abord l’égalité, puis l’endurance, la vitesse en dernier.'} },
+    { fx:'gua', t:{zh:'刮奏與花指', en:'Glissando', fr:'Glissando'},
+      p:{zh:'順著弦一路刮過去。因為定弦是五聲音階，怎麼刮都不會有不和諧的音，這是古箏最具識別度的聲音。花指是短促的裝飾性刮奏，通常掛在一個主音前面。',
+         en:'Sweep along the strings. Because the tuning is pentatonic, no sweep can produce a wrong note, which is why this is the instrument’s signature sound. Huazhi is the brief ornamental version, usually tucked in front of a main note.',
+         fr:'Un balayage le long des cordes. L’accord étant pentatonique, aucun balayage ne peut produire de fausse note : c’est la signature sonore de l’instrument. Le huazhi en est la version brève et ornementale, placée juste avant une note principale.'},
+      tip:{zh:'刮奏的終點要準確落在目標音上，不能刮過頭再退回來。新手往往只顧著刮得響，忘了它其實是有目的地的。',
+           en:'A sweep has to land exactly on its target note, not overshoot and come back. Beginners concentrate on making it loud and forget it has a destination.',
+           fr:'Le balayage doit s’arrêter exactement sur sa note cible, sans la dépasser puis revenir. Les débutants s’attachent au volume et oublient qu’il a une destination.'} },
+  ] },
+
+{ id:'adv', tone:'red', icon:'fa-fire', n:3,
+  t:{zh:'第三部・高階', en:'Part 3 · Advanced', fr:'Partie 3 · Avancé'},
+  lead:{zh:'高階的難處不在單一技巧，而在<strong class="text-white">兩隻手要同時做不同的事</strong>，以及在演奏中途改變樂器本身的調。這一部也介紹流派，因為到了這個階段，「彈對音」已經不夠，得知道自己在彈誰的語言。',
+        en:'What is hard at this level is not any single technique but <strong class="text-white">making the two hands do different things at once</strong>, and changing the instrument’s own tuning in the middle of a piece. This part also introduces the regional schools, because by now playing the right notes is not enough: you need to know whose language you are speaking.',
+        fr:'La difficulté, à ce stade, n’est aucune technique isolée mais <strong class="text-white">faire faire deux choses différentes aux deux mains</strong>, et changer l’accord de l’instrument en pleine pièce. Cette partie présente aussi les écoles régionales : jouer les bonnes notes ne suffit plus, il faut savoir dans quelle langue on parle.'},
+  items:[
+    { fx:'tiao', t:{zh:'快速指序', en:'Fast finger sequences', fr:'Séquences rapides'},
+      p:{zh:'浙江派發展出的固定指法組合，例如「勾托抹托」四音一組循環。把音階拆成固定的手指模式，速度就不再靠反應，而靠肌肉記憶。',
+         en:'Fixed finger patterns developed by the Zhejiang school, such as the four-note cycle gou tuo mo tuo. Once a scale is broken into a fixed pattern, speed stops depending on reaction and starts depending on muscle memory.',
+         fr:'Des motifs de doigts fixes développés par l’école du Zhejiang, tel le cycle de quatre notes gou tuo mo tuo. Une fois la gamme découpée en motif fixe, la vitesse ne dépend plus du réflexe mais de la mémoire musculaire.'},
+      tip:{zh:'練指序要用節拍器，而且要慢到「不可能出錯」的速度起步。快速指序最怕的是把錯誤練熟。',
+           en:'Practise these with a metronome, starting slow enough that a mistake is impossible. The real danger with fast patterns is making an error fluent.',
+           fr:'Travaillez-les au métronome, en partant assez lentement pour que l’erreur soit impossible. Le vrai danger des motifs rapides est de rendre une faute fluide.'} },
+    { fx:'cuo', t:{zh:'雙手配合', en:'The two hands together', fr:'Les deux mains ensemble'},
+      p:{zh:'傳統箏曲的左手負責按滑，現代曲目則讓左手也彈旋律或伴奏音型。難處在於左手同時要記住「按弦的位置感」與「撥弦的動作」，兩者用的是完全不同的肌肉習慣。',
+         en:'In traditional repertoire the left hand presses and slides; in modern writing it also plays melody or accompaniment figures. The difficulty is that the left hand must then hold both a sense of pressing position and a plucking action, which are quite different physical habits.',
+         fr:'Dans le répertoire traditionnel, la main gauche presse et glisse ; dans l’écriture moderne, elle joue aussi mélodie ou accompagnement. La difficulté : elle doit alors tenir à la fois le sens de la pression et le geste du pincement, deux habitudes physiques très différentes.'},
+      tip:{zh:'分手練到滾瓜爛熟再合，而且合的時候速度要降到單手的一半以下。急著合手是進度停滯最常見的原因。',
+           en:'Get each hand thoroughly secure alone, then put them together at less than half the speed either could manage. Rushing to combine them is the commonest reason progress stalls.',
+           fr:'Assurez chaque main séparément, puis réunissez-les à moins de la moitié de la vitesse dont chacune est capable. Vouloir les réunir trop tôt est la première cause de stagnation.'} },
+    { fx:'down', t:{zh:'移碼轉調', en:'Changing key by moving bridges', fr:'Changer de tonalité en déplaçant les chevalets'},
+      p:{zh:'古箏沒有半音階，換調就得移動箏碼、重新定弦。從 D 調轉 G 調要移動所有的 3（升 F）變成 4（G）那一組弦。有些現代曲目要求在演奏中途移碼，那是另一個層次的挑戰。',
+         en:'There is no chromatic scale on a guzheng, so changing key means moving bridges and retuning. Going from D to G means shifting the whole group of strings that were 3 (F♯) so they become 4 (G). Some modern pieces call for moving a bridge mid-performance, which is a challenge of another order.',
+         fr:'Le guzheng n’a pas de gamme chromatique : changer de tonalité oblige à déplacer les chevalets et à réaccorder. Passer de ré à sol suppose de décaler tout le groupe de cordes qui faisaient 3 (fa♯) pour qu’elles fassent 4 (sol). Certaines pièces modernes exigent de déplacer un chevalet en cours de jeu, ce qui relève d’un autre ordre de difficulté.'},
+      tip:{zh:'移碼之後整台琴的張力會改變，其他弦也會跑音。轉調不是移幾個碼就好，要重新全面檢查。',
+           en:'Moving bridges changes the tension across the whole instrument, so other strings drift too. Changing key is not a matter of shifting a few bridges; the whole tuning needs rechecking.',
+           fr:'Déplacer des chevalets modifie la tension de tout l’instrument : les autres cordes se désaccordent aussi. Changer de tonalité ne consiste pas à bouger quelques chevalets, il faut revérifier tout l’accord.'} },
+    { fx:'yao', t:{zh:'長搖與音樂性', en:'Long tremolo and musical line', fr:'Trémolo long et ligne musicale'},
+      p:{zh:'到了這裡，搖指不再是「能不能搖得久」，而是要在一個長音裡做出漸強漸弱、音色變化與呼吸。技術層面已經解決，剩下的是音樂。',
+         en:'By this point tremolo is no longer about whether you can sustain it, but about shaping a long note with dynamics, changing colour and breath. The technical problem is solved; what remains is music.',
+         fr:'À ce stade, le trémolo ne consiste plus à tenir, mais à modeler une note longue par les nuances, le changement de couleur et la respiration. Le problème technique est résolu ; reste la musique.'},
+      tip:{zh:'錄下自己的長搖再聽一次。幾乎所有人都會發現自己的搖指是平的，而在演奏當下完全感覺不到。',
+           en:'Record your own long tremolo and listen back. Almost everyone finds it is flat, and almost nobody can hear that while playing.',
+           fr:'Enregistrez votre trémolo long et réécoutez-le. Presque tout le monde le découvre plat, et presque personne ne s’en rend compte en jouant.'} },
+  ] },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Renderers and interface strings
+   ═══════════════════════════════════════════════════════════ */
+const TONE = {
+  amber:['text-amber-300','text-amber-400','bg-amber-500/10','border-amber-500/20','shadow-glow-amber','rgba(217,119,6,0.14)','rgba(217,119,6,0.42)'],
+  sky:  ['text-sky-300','text-sky-400','bg-sky-500/10','border-sky-500/20','shadow-glow-sky','rgba(2,132,199,0.14)','rgba(2,132,199,0.42)'],
+  red:  ['text-red-300','text-red-400','bg-red-500/10','border-red-500/20','shadow-glow-red','rgba(190,60,50,0.16)','rgba(190,60,50,0.45)'],
+};
+function renderInstrument() {
+  document.getElementById('anat').innerHTML = anatomy();
+  document.getElementById('parts-grid').innerHTML = PARTS.map(x =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<h3 class="text-sm font-black text-white mb-1.5">' + t(x.t) + '</h3>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed">' + t(x.p) + '</p>'
+    + '</div>').join('');
+}
+function renderStrings() {
+  document.getElementById('stringmap').innerHTML = stringMap();
+  document.getElementById('press-dia').innerHTML = pressDiagram();
+  const notes = [
+    { t:{zh:'為什麼只有五個音', en:'Why only five notes', fr:'Pourquoi cinq notes'},
+      p:{zh:'空弦是 1 2 3 5 6，沒有 4 和 7。所以任意刮弦都不會刺耳，也所以 4 和 7 必須靠左手按出來。',
+         en:'The open strings give 1 2 3 5 6, with no 4 and no 7. That is why any sweep sounds consonant, and why 4 and 7 have to be pressed out by the left hand.',
+         fr:'Les cordes à vide donnent 1 2 3 5 6, sans 4 ni 7. D’où la consonance de tout balayage, et la nécessité d’obtenir 4 et 7 par la main gauche.'} },
+    { t:{zh:'綠弦是路標', en:'The dyed strings are landmarks', fr:'Les cordes teintes sont des repères'},
+      p:{zh:'第 3、8、13、18 弦通常染色。它們都是同一個音（5），相隔八度，用來讓眼睛不用數就找得到位置。',
+         en:'Strings 3, 8, 13 and 18 are usually dyed. They all carry the same degree, 5, an octave apart, so the eye can find its place without counting.',
+         fr:'Les cordes 3, 8, 13 et 18 sont généralement teintes. Elles portent toutes le même degré, 5, à l’octave, pour que l’œil se repère sans compter.'} },
+    { t:{zh:'弦序與音高相反', en:'Numbering runs against pitch', fr:'La numérotation va à rebours'},
+      p:{zh:'第 1 弦是最高音、最靠近身體；第 21 弦是最低音、最遠。讀譜時要記得這個方向是反的。',
+         en:'String 1 is the highest and nearest to you; string 21 is the lowest and furthest away. The numbering runs opposite to pitch, which takes a while to stop tripping over.',
+         fr:'La corde 1 est la plus aiguë et la plus proche de vous ; la 21 la plus grave et la plus éloignée. La numérotation va à l’inverse de la hauteur, ce qui déroute un temps.'} },
+  ];
+  document.getElementById('str-notes').innerHTML = notes.map(x =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<h4 class="text-sm font-bold text-emerald-300 mb-1.5">' + t(x.t) + '</h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed">' + t(x.p) + '</p>'
+    + '</div>').join('');
+}
+function renderLevels() {
+  document.getElementById('levels').innerHTML = LEVELS.map(L => {
+    const c = TONE[L.tone];
+    const items = L.items.map(it =>
+        '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5 reveal">'
+      +   '<div class="flex items-start gap-4">'
+      +     '<div class="shrink-0 rounded-xl p-2" style="background:' + c[5] + ';border:1px solid ' + c[6] + '">'
+      +       fxSvg(it.fx, 42) + '</div>'
+      +     '<div class="min-w-0 flex-1">'
+      +       '<h3 class="text-sm font-black text-white">' + t(it.t) + '</h3>'
+      +       '<p class="text-xs text-slate-400 leading-relaxed mt-2">' + t(it.p) + '</p>'
+      +       '<div class="mt-3 rounded-xl p-3" style="background:rgba(217,119,6,0.07);border:1px solid rgba(217,119,6,0.22)">'
+      +         '<span class="text-[0.62rem] uppercase tracking-wider text-amber-400 font-bold">'
+      +           '<i class="fa-solid fa-lightbulb mr-1"></i>' + ui('tipLabel') + '</span>'
+      +         '<p class="text-xs text-slate-300 leading-relaxed mt-1">' + t(it.tip) + '</p>'
+      +       '</div>'
+      +     '</div></div></div>').join('');
+    return '<section id="' + L.id + '" class="scroll-mt-24">'
+      + '<div class="flex items-center gap-3 mb-5">'
+      +   '<div class="p-3 ' + c[2] + ' rounded-2xl ' + c[1] + ' border ' + c[3] + ' ' + c[4] + '">'
+      +     '<i class="fa-solid ' + L.icon + ' text-xl"></i></div>'
+      +   '<div><span class="lvl-pill ' + c[1] + '" style="background:' + c[5] + '">LEVEL ' + L.n + '</span>'
+      +   '<h2 class="text-2xl font-black text-white">' + t(L.t) + '</h2></div>'
+      + '</div>'
+      + '<div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">'
+      +   '<p class="text-slate-300 leading-relaxed">' + t(L.lead) + '</p>'
+      +   '<div class="grid md:grid-cols-2 gap-4">' + items + '</div>'
+      + '</div></section>';
+  }).join('');
+}
+function renderRef() {
+  document.getElementById('fx-body').innerHTML = FINGERINGS.map(f =>
+      '<tr>'
+    + '<td class="py-2.5 px-4">' + fxSvg(f.k, 32) + '</td>'
+    + '<td class="py-2.5 px-4 font-bold text-white whitespace-nowrap">' + f.cn
+    +   ' <span class="text-slate-500 font-normal text-xs">' + f.py + '</span></td>'
+    + '<td class="py-2.5 px-4 whitespace-nowrap"><span class="text-[0.65rem] px-1.5 py-0.5 rounded '
+    +   (f.hand === 'R' ? 'bg-amber-500/15 text-amber-300' : 'bg-sky-500/15 text-sky-300') + '">'
+    +   ui(f.hand === 'R' ? 'hand.r' : 'hand.l') + '</span></td>'
+    + '<td class="py-2.5 px-4 text-slate-400">' + t(f.n) + '</td>'
+    + '</tr>').join('');
+  const jp = [
+    { s:'1 2 3 5 6', d:{zh:'音階級數，不是絕對音高。開頭的「1 = D」才決定實際的調。', en:'Scale degrees, not absolute pitches. The “1 = D” at the head is what fixes the actual key.', fr:'Des degrés, non des hauteurs absolues. Le « 1 = D » en tête fixe la tonalité réelle.'} },
+    { s:'1̇  /  1̣', d:{zh:'數字上方一點高八度，下方一點低八度，兩點就是兩個八度。', en:'A dot above raises an octave, a dot below lowers one, two dots means two octaves.', fr:'Un point au-dessus monte d’une octave, en dessous descend d’une octave, deux points valent deux octaves.'} },
+    { s:'1 -', d:{zh:'橫線延長時值，一條線多一拍。', en:'A dash extends the note by one beat each.', fr:'Un tiret prolonge la note d’un temps chacun.'} },
+    { s:'1̲  /  1̳', d:{zh:'底下的橫線把時值減半：一條是八分，兩條是十六分。', en:'Underlines halve the value: one is a quaver, two a semiquaver.', fr:'Les lignes sous le chiffre divisent la valeur : une pour la croche, deux pour la double.'} },
+    { s:'0', d:{zh:'休止符。', en:'A rest.', fr:'Un silence.'} },
+    { s:'#4  b7', d:{zh:'臨時升降記號。在古箏上這代表左手按弦的深度要調整。', en:'Accidentals. On a guzheng these tell the left hand how far to press.', fr:'Altérations. Au guzheng, elles indiquent à la main gauche la profondeur de pression.'} },
+  ];
+  document.getElementById('jp-grid').innerHTML = jp.map(x =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<div class="text-lg font-black text-amber-300 mb-1.5">' + esc(x.s) + '</div>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed">' + t(x.d) + '</p>'
+    + '</div>').join('');
+  document.getElementById('school-body').innerHTML = SCHOOLS.map(s =>
+      '<tr>'
+    + '<td class="py-3 px-4 font-bold text-red-300 whitespace-nowrap">' + t(s.n) + '</td>'
+    + '<td class="py-3 px-4 text-slate-300">' + t(s.f) + '</td>'
+    + '<td class="py-3 px-4 text-slate-500">' + t(s.w) + '</td>'
+    + '</tr>').join('');
+}
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach((e, i) => { if (!e.classList.contains('in')) { e.dataset.i = i % 5; revealObserver.observe(e); } });
+}
+
+const I18N = {
+zh:{
+ 'doc.title':'古箏圖譜 | 從認識樂器到進階演奏',
+ 'hdr.badge':'古箏教學','hdr.title':'古箏：從認識樂器到進階',
+ 'nav.inst':'樂器','nav.str':'定弦','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.ref':'對照表',
+ 'intro':'古箏是一種有二十一根弦、每根弦下面墊著一個可移動琴碼的彈撥樂器。它的特別之處在於：右手負責彈出音符，左手在琴碼另一側按弦改變音高。少了左手，它只是一件音階好聽的樂器；有了左手，才是中國音樂。',
+ 'intro2':'這一冊分成三部，從完全沒碰過樂器開始。所有圖示都是畫出來的：樂器結構、二十一弦音位、指法符號，這些正是學習者在譜面與課堂上真正會看到的東西。',
+ 'inst.eyebrow':'先認識樂器','inst.h2':'古箏的各個部位',
+ 'inst.lead':'先看懂這張圖，後面所有說明裡的「岳山」「箏碼」「按弦區」才有意義。圖為俯視，演奏者坐在右側。',
+ 'str.eyebrow':'最重要的一張圖','str.h2':'二十一弦音位圖（D 調標準定弦）',
+ 'str.lead':'這是整本圖譜最該花時間的一頁。標準定弦是 D 調五聲音階，由低到高重複 1 2 3 5 6，共四個八度再加一個音。',
+ 'str.h.press':'那麼 4 和 7 呢？','str.p.press':'古箏沒有 4 和 7 的弦。這兩個音全靠左手在箏碼左側把弦按下去，把張力拉高得到。這是古箏最根本的一件事，也是初學者最早遇到的門檻。',
+ 'tipLabel':'學習者最常卡在這裡',
+ 'hand.r':'右手','hand.l':'左手',
+ 'ref.eyebrow':'查閱','ref.h2':'對照表',
+ 'ref.fx.th0':'符號','ref.fx.th1':'名稱','ref.fx.th2':'左右手','ref.fx.th3':'動作',
+ 'ref.sc.th0':'流派','ref.sc.th1':'特徵','ref.sc.th2':'代表曲目',
+ 'ref.h.fx':'指法符號總表','ref.p.fx':'這些記號會標在簡譜的數字旁邊。符號本身多半是動作方向的象形。',
+ 'ref.h.jp':'簡譜記號','ref.p.jp':'中國樂譜使用數字記譜。以下是最常遇到的幾種記號。',
+ 'ref.h.school':'流派','ref.p.school':'同一首《高山流水》，山東與浙江的版本是兩首不同的曲子。流派差異主要在左手的用法。',
+ 'footer':'古箏入門到進階圖譜。定弦、音位與指法符號依現行通行標準整理；各流派用法與教學術語存在差異，實際仍以您的老師與所用教材為準。'
+},
+en:{
+ 'doc.title':'The Guzheng, Beginner to Advanced',
+ 'hdr.badge':'GUZHENG TUTORIAL','hdr.title':'The Guzheng: Beginner to Advanced',
+ 'nav.inst':'Instrument','nav.str':'Tuning','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.ref':'Reference',
+ 'intro':'The guzheng is a plucked zither with twenty-one strings, each resting on its own movable bridge. What makes it particular is the division of labour: the right hand sounds the notes, while the left hand presses the string on the far side of the bridge to bend the pitch. Without the left hand it is an instrument with a pleasant scale. With it, the music becomes Chinese.',
+ 'intro2':'This volume is in three parts, starting from never having touched the instrument. Every illustration is drawn: the anatomy, the twenty-one string map, the fingering marks. These are exactly what a student meets on the page and in a lesson.',
+ 'inst.eyebrow':'Start with the instrument','inst.h2':'The parts of a guzheng',
+ 'inst.lead':'Read this diagram first, and the nuts, the bridges and the pressing side will mean something in everything that follows. The view is from above, with the player seated at the right.',
+ 'str.eyebrow':'The one diagram that matters most','str.h2':'The 21 strings, in standard D tuning',
+ 'str.lead':'This is the page worth spending time on. Standard tuning is the D pentatonic scale, repeating 1 2 3 5 6 from low to high across four octaves and one more note.',
+ 'str.h.press':'So where are 4 and 7?','str.p.press':'There is no string for 4 or for 7. Both are produced entirely by the left hand pressing the string down on the far side of the bridge to raise its tension. This is the most fundamental fact about the instrument, and the first real threshold a beginner meets.',
+ 'tipLabel':'Where students get stuck',
+ 'hand.r':'right','hand.l':'left',
+ 'ref.eyebrow':'Reference','ref.h2':'Tables',
+ 'ref.fx.th0':'Mark','ref.fx.th1':'Name','ref.fx.th2':'Hand','ref.fx.th3':'Action',
+ 'ref.sc.th0':'School','ref.sc.th1':'Character','ref.sc.th2':'Representative pieces',
+ 'ref.h.fx':'Fingering marks','ref.p.fx':'These appear beside the numbers in a score. Most of the marks are pictures of the direction the finger travels.',
+ 'ref.h.jp':'Numbered notation','ref.p.jp':'Chinese scores are written in numbers. These are the marks you will meet most often.',
+ 'ref.h.school':'The regional schools','ref.p.school':'The Shandong and Zhejiang versions of High Mountains and Flowing Water are two different pieces. What separates the schools is mostly the use of the left hand.',
+ 'footer':'A guzheng reference from first contact to advanced technique. Tuning, string layout and fingering marks follow current common practice; schools and teaching vocabulary vary, and your teacher and your own method book take precedence.'
+},
+fr:{
+ 'doc.title':'Le guzheng, du débutant à l’avancé',
+ 'hdr.badge':'TUTORIEL DE GUZHENG','hdr.title':'Le guzheng : du débutant à l’avancé',
+ 'nav.inst':'Instrument','nav.str':'Accord','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.ref':'Références',
+ 'intro':'Le guzheng est une cithare sur table à vingt et une cordes, chacune posée sur son propre chevalet mobile. Sa particularité tient au partage des rôles : la main droite produit les notes, tandis que la main gauche presse la corde de l’autre côté du chevalet pour en infléchir la hauteur. Sans la main gauche, c’est un instrument à la gamme agréable. Avec elle, la musique devient chinoise.',
+ 'intro2':'Ce volume compte trois parties, en partant de zéro. Toutes les illustrations sont dessinées : l’anatomie, la carte des vingt et une cordes, les signes de doigté. C’est exactement ce qu’un élève rencontre sur la partition et en cours.',
+ 'inst.eyebrow':'D’abord l’instrument','inst.h2':'Les parties du guzheng',
+ 'inst.lead':'Lisez d’abord ce schéma : les chevalets fixes, les chevalets mobiles et le côté de la pression prendront alors un sens dans tout ce qui suit. Vue de dessus, le joueur assis à droite.',
+ 'str.eyebrow':'Le schéma le plus important','str.h2':'Les 21 cordes, accord standard en ré',
+ 'str.lead':'Voici la page sur laquelle il vaut la peine de s’attarder. L’accord standard est la gamme pentatonique de ré, répétant 1 2 3 5 6 du grave à l’aigu sur quatre octaves et une note de plus.',
+ 'str.h.press':'Alors, où sont le 4 et le 7 ?','str.p.press':'Aucune corde ne donne le 4 ni le 7. Ces deux notes s’obtiennent entièrement par la main gauche, qui presse la corde de l’autre côté du chevalet pour en augmenter la tension. C’est le fait le plus fondamental de l’instrument, et le premier vrai seuil pour un débutant.',
+ 'tipLabel':'Là où les élèves bloquent',
+ 'hand.r':'droite','hand.l':'gauche',
+ 'ref.eyebrow':'Références','ref.h2':'Tableaux',
+ 'ref.fx.th0':'Signe','ref.fx.th1':'Nom','ref.fx.th2':'Main','ref.fx.th3':'Geste',
+ 'ref.sc.th0':'École','ref.sc.th1':'Caractère','ref.sc.th2':'Pièces représentatives',
+ 'ref.h.fx':'Signes de doigté','ref.p.fx':'Ils figurent à côté des chiffres sur la partition. La plupart sont l’image de la direction que prend le doigt.',
+ 'ref.h.jp':'La notation chiffrée','ref.p.jp':'Les partitions chinoises s’écrivent en chiffres. Voici les signes les plus fréquents.',
+ 'ref.h.school':'Les écoles régionales','ref.p.school':'Les versions du Shandong et du Zhejiang de Hautes montagnes et eaux courantes sont deux pièces différentes. Ce qui sépare les écoles tient surtout à l’usage de la main gauche.',
+ 'footer':'Un guide du guzheng, du premier contact aux techniques avancées. Accord, disposition des cordes et signes de doigté suivent l’usage courant ; les écoles et le vocabulaire pédagogique varient, et votre professeur comme votre méthode font autorité.'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-amber-500/15 text-amber-300 border border-amber-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderInstrument();
+  renderStrings();
+  renderLevels();
+  renderRef();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>
