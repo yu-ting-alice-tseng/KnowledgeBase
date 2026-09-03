@@ -106,6 +106,7 @@
         <a href="#basics"     data-i18n="nav.p1"    class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
         <a href="#inter"      data-i18n="nav.p2"    class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors"></a>
         <a href="#adv"        data-i18n="nav.p3"    class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-red-500/50 hover:text-red-300 transition-colors"></a>
+        <a href="#rep"        data-i18n="nav.rep"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors"></a>
         <a href="#ref"        data-i18n="nav.ref"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors"></a>
       </nav>
     </div>
@@ -155,6 +156,21 @@
   </section>
 
   <div id="levels" class="space-y-12"></div>
+
+  <section id="rep" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20 shadow-glow-jade"><i class="fa-solid fa-record-vinyl text-xl"></i></div>
+      <div>
+        <span data-i18n="rep.eyebrow" class="text-xs uppercase tracking-wider text-emerald-400 font-bold"></span>
+        <h2 data-i18n="rep.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
+      <p data-i18n="rep.lead" class="text-slate-300 leading-relaxed"></p>
+      <div id="rep-filter" class="flex flex-wrap gap-2"></div>
+      <div id="rep-grid" class="grid md:grid-cols-2 gap-4"></div>
+    </div>
+  </section>
 
   <section id="ref" class="scroll-mt-24">
     <div class="flex items-center gap-3 mb-5">
@@ -574,6 +590,109 @@ const LEVELS = [
 ];
 
 /* ═══════════════════════════════════════════════════════════
+   Well-known repertoire, tagged by the level at which it
+   normally becomes playable, and by the technique each piece
+   is the standard vehicle for.
+   ═══════════════════════════════════════════════════════════ */
+const REPERTOIRE = [
+  { lv:1, t:{zh:'瀏陽河', en:'Liuyang River', fr:'La rivière Liuyang'},
+    src:{zh:'湖南民歌，張燕改編', en:'Hunan folk song, arranged by Zhang Yan', fr:'Chant du Hunan, arrangé par Zhang Yan'}, y:'1970s',
+    sch:{zh:'民歌改編', en:'folk arrangement', fr:'arrangement folklorique'},
+    tech:{zh:'托抹勾、基本刮奏', en:'basic strokes and sweeps', fr:'attaques de base et balayages'},
+    p:{zh:'旋律家喻戶曉，音域集中在中音區，是最常被當成第一首完整曲子的作品。它不難，但很考驗左手的顫音有沒有味道。',
+       en:'A melody everyone knows, sitting mostly in the middle register, and the piece most often given as a student’s first complete performance. It is not hard, but it exposes whether the left-hand vibrato has any character yet.',
+       fr:'Une mélodie que tout le monde connaît, tenant surtout dans le médium, et le morceau le plus souvent donné comme premier vrai programme. Pas difficile, mais il révèle si le vibrato de la main gauche a du caractère.'} },
+  { lv:1, t:{zh:'茉莉芬芳', en:'Jasmine Fragrance', fr:'Parfum de jasmin'},
+    src:{zh:'何占豪，取材江蘇民歌《茉莉花》', en:'He Zhanhao, on the Jiangsu folk song Jasmine Flower', fr:'He Zhanhao, d’après la chanson du Jiangsu Fleur de jasmin'}, y:'1988',
+    sch:{zh:'現代創作', en:'modern composition', fr:'composition moderne'},
+    tech:{zh:'搖指入門、長線條', en:'a first tremolo, long phrasing', fr:'premier trémolo, phrasé long'},
+    p:{zh:'旋律本身是那首全世界都聽過的《茉莉花》。它常被用來練第一段長搖，因為速度慢、樂句長，藏不住搖指不勻。',
+       en:'The tune is the Jasmine Flower everyone has heard. It is a common vehicle for a first long tremolo, because the tempo is slow and the phrases long, so any unevenness shows.',
+       fr:'La mélodie est ce Fleur de jasmin que tout le monde a entendu. On s’en sert souvent pour un premier trémolo long : le tempo est lent et les phrases longues, l’irrégularité ne se cache pas.'} },
+  { lv:2, t:{zh:'漁舟唱晚', en:'Fishing Boat Singing at Dusk', fr:'Barque de pêche chantant au crépuscule'},
+    src:{zh:'傳為婁樹華 1930 年代據古曲《歸去來》改編；另有金灼南據山東箏曲改編一說',
+         en:'Usually credited to Lou Shuhua in the 1930s, after the old piece Returning Home; a competing account credits Jin Zhuonan, working from Shandong material',
+         fr:'Généralement attribué à Lou Shuhua dans les années 1930, d’après la pièce ancienne Le Retour ; une autre thèse l’attribue à Jin Zhuonan, d’après un matériau du Shandong'}, y:'1930s',
+    sch:{zh:'山東／近代', en:'Shandong, modern era', fr:'Shandong, époque moderne'},
+    tech:{zh:'花指、慢板轉快板', en:'ornamental sweeps, slow into fast', fr:'balayages ornementaux, lent puis vif'},
+    p:{zh:'古箏最有名的一首。前段寫夕陽下的江面，後段用越來越密的花指與加速模擬船隻歸航。中國中央電視台的天氣預報自 1984 年起長期使用它的片段作為配樂，所以幾乎每個華人都聽過旋律卻不知道曲名。',
+       en:'The most famous piece on the instrument. The first half paints a river at sunset; the second accelerates through ever denser ornamental sweeps to suggest the boats coming home. Chinese state television has used an excerpt as the weather-forecast music since 1984, which is why almost everyone recognises the tune without knowing its title.',
+       fr:'La pièce la plus célèbre de l’instrument. La première moitié peint un fleuve au couchant ; la seconde accélère par des balayages de plus en plus serrés pour évoquer le retour des barques. La télévision d’État chinoise en utilise un extrait comme musique du bulletin météo depuis 1984 : d’où une mélodie que presque tous reconnaissent sans en connaître le titre.'} },
+  { lv:2, t:{zh:'高山流水', en:'High Mountains and Flowing Water', fr:'Hautes montagnes et eaux courantes'},
+    src:{zh:'各流派各有版本，山東、浙江、河南三者互不相同', en:'Each school has its own; the Shandong, Zhejiang and Henan versions are unrelated pieces', fr:'Chaque école a la sienne ; les versions du Shandong, du Zhejiang et du Henan sont des pièces distinctes'}, y:'trad.',
+    sch:{zh:'山東／浙江／河南', en:'Shandong, Zhejiang, Henan', fr:'Shandong, Zhejiang, Henan'},
+    tech:{zh:'刮奏描寫、音色控制', en:'sweeps as description, tone control', fr:'balayages descriptifs, contrôle du timbre'},
+    p:{zh:'曲名出自伯牙與鍾子期的知音故事。要注意的是：這是一個<strong class="text-white">曲名</strong>而不是一首曲子，跟老師學的時候一定要問清楚是哪個版本，否則買錯譜。',
+       en:'The title comes from the story of Bo Ya and Zhong Ziqi, the friend who understood his music. Be careful: this is a <strong class="text-white">title</strong> rather than a piece. Ask your teacher which version, or you will buy the wrong score.',
+       fr:'Le titre vient de l’histoire de Bo Ya et de Zhong Ziqi, l’ami qui comprenait sa musique. Attention : c’est un <strong class="text-white">titre</strong>, non une pièce. Demandez à votre professeur quelle version, sinon vous achèterez la mauvaise partition.'} },
+  { lv:2, t:{zh:'寒鴉戲水', en:'Jackdaws Playing in the Water', fr:'Choucas jouant dans l’eau'},
+    src:{zh:'潮州箏曲，重三六調', en:'Chaozhou repertoire, in the zhongsanliu mode', fr:'Répertoire du Chaozhou, mode zhongsanliu'}, y:'trad.',
+    sch:{zh:'潮州', en:'Chaozhou', fr:'Chaozhou'},
+    tech:{zh:'細膩按滑、特殊音階', en:'fine pressing and sliding, an altered scale', fr:'pressions et glissés fins, gamme altérée'},
+    p:{zh:'潮州箏的代表作。它用的「重三六」把 3 和 6 兩個音按高，聽起來既不是大調也不是小調，是流派音階最好的入門。左手按不準，這首就完全不成立。',
+       en:'The signature Chaozhou piece. Its zhongsanliu mode presses the 3 and the 6 upward, giving a scale that is neither major nor minor, and it is the best introduction to a school’s own tuning. If the left hand is not accurate, the piece simply does not exist.',
+       fr:'La pièce emblématique du Chaozhou. Son mode zhongsanliu hausse le 3 et le 6, donnant une gamme ni majeure ni mineure : la meilleure introduction à l’échelle propre d’une école. Si la main gauche n’est pas juste, la pièce n’existe pas.'} },
+  { lv:2, t:{zh:'出水蓮', en:'Lotus Rising from the Water', fr:'Le lotus sortant de l’eau'},
+    src:{zh:'客家（廣東漢樂）箏曲', en:'Hakka repertoire, from the Han music of Guangdong', fr:'Répertoire hakka, musique han du Guangdong'}, y:'trad.',
+    sch:{zh:'客家', en:'Hakka', fr:'Hakka'},
+    tech:{zh:'留白與呼吸', en:'restraint and breath', fr:'retenue et respiration'},
+    p:{zh:'很短，很慢，技術上幾乎沒有難點，卻是最難彈好的曲子之一。它考的全是音色與句子之間的留白。學生常覺得「沒東西可彈」，那正是它的難處。',
+       en:'Short, slow, and technically almost undemanding, yet one of the hardest to play well. Everything in it is tone and the silence between phrases. Students often feel there is nothing to play, and that is precisely the difficulty.',
+       fr:'Court, lent, techniquement presque sans exigence, et pourtant l’un des plus difficiles à bien jouer. Tout y est timbre et silence entre les phrases. Les élèves ont souvent le sentiment qu’il n’y a rien à jouer : c’est exactement là la difficulté.'} },
+  { lv:2, t:{zh:'漢宮秋月', en:'Autumn Moon over the Han Palace', fr:'Lune d’automne sur le palais des Han'},
+    src:{zh:'山東箏曲', en:'Shandong repertoire', fr:'Répertoire du Shandong'}, y:'trad.',
+    sch:{zh:'山東', en:'Shandong', fr:'Shandong'},
+    tech:{zh:'重顫音、慢板控制', en:'heavy vibrato, slow-tempo control', fr:'vibrato appuyé, maîtrise du tempo lent'},
+    p:{zh:'寫宮女望月的哀怨。山東箏的重顫在這首裡用得最徹底，顫得不夠就變成一首平淡的慢曲。',
+       en:'A palace woman looking at the moon. The heavy Shandong vibrato is used here more thoroughly than anywhere, and without enough of it the piece flattens into a bland slow number.',
+       fr:'Une femme du palais regardant la lune. Le vibrato appuyé du Shandong y est employé plus qu’ailleurs ; sans lui, la pièce s’aplatit en une lente fadeur.'} },
+  { lv:3, t:{zh:'戰台風', en:'Fighting the Typhoon', fr:'Combattre le typhon'},
+    src:{zh:'王昌元作曲，1964 年創作、1965 年首演於上海，取材聶耳《碼頭工人歌》',
+         en:'Wang Changyuan, written in 1964 and premiered in Shanghai in 1965, drawing on Nie Er’s Dockworkers’ Song',
+         fr:'Wang Changyuan, écrite en 1964 et créée à Shanghai en 1965, d’après le Chant des dockers de Nie Er'}, y:'1964',
+    sch:{zh:'浙江／現代', en:'Zhejiang, modern', fr:'Zhejiang, moderne'},
+    tech:{zh:'掃搖、密集掃弦、雙手輪奏', en:'sweep-tremolo, dense strumming, alternating hands', fr:'trémolo balayé, grattage dense, mains alternées'},
+    p:{zh:'現代古箏技法的分水嶺。它描寫上海碼頭工人在颱風中搶救貨物，用前所未見的密度與音量把古箏從「文雅」推向「劇烈」。今天聽起來仍然是最難的常演曲目之一。',
+       en:'The watershed of modern guzheng technique. It depicts Shanghai dockworkers saving cargo through a typhoon, and it pushed the instrument from elegance into violence with a density and volume nobody had written before. It remains one of the hardest pieces in regular performance.',
+       fr:'La ligne de partage de la technique moderne. Elle dépeint des dockers de Shanghai sauvant leur cargaison dans un typhon, et a fait passer l’instrument de l’élégance à la violence, avec une densité et un volume inédits. Elle reste l’une des pièces les plus difficiles du répertoire courant.'} },
+  { lv:3, t:{zh:'秦桑曲', en:'Qin Mulberry Song', fr:'Chant des mûriers de Qin'},
+    src:{zh:'周延甲作曲，曲名出自李白〈春思〉「燕草如碧絲，秦桑低綠枝」',
+         en:'Zhou Yanjia; the title comes from Li Bai’s Spring Thoughts',
+         fr:'Zhou Yanjia ; le titre vient de Pensées de printemps de Li Bai'}, y:'1979',
+    sch:{zh:'陝西', en:'Shaanxi', fr:'Shaanxi'},
+    tech:{zh:'苦音音階：微升 4、微降 7', en:'the bitter-tone scale: 4 raised and 7 lowered by less than a semitone', fr:'gamme ku yin : 4 haussé et 7 abaissé de moins d’un demi-ton'},
+    p:{zh:'陝西箏派的代表作，也是最能說明「按弦深度就是音準」的曲子。它的 4 和 7 都不是十二平均律上的音，而是介於之間，只能靠耳朵。彈得像 D 大調就完全錯了。',
+       en:'The signature Shaanxi piece, and the clearest demonstration that pressing depth is pitch. Its 4 and its 7 are not equal-tempered notes at all but sit between, and only the ear can place them. Played as if in plain D major it is simply wrong.',
+       fr:'La pièce emblématique du Shaanxi, et la démonstration la plus nette que la profondeur de pression est la justesse. Son 4 et son 7 ne sont pas des notes du tempérament égal mais se situent entre : seule l’oreille peut les placer. Jouée comme du ré majeur ordinaire, elle est fausse.'} },
+  { lv:3, t:{zh:'香山射鼓', en:'Drums on Xiangshan', fr:'Tambours sur le Xiangshan'},
+    src:{zh:'曲雲作曲，取材西安鼓樂', en:'Qu Yun, drawing on the Xi’an drum-music tradition', fr:'Qu Yun, d’après la tradition des tambours de Xi’an'}, y:'1980',
+    sch:{zh:'陝西', en:'Shaanxi', fr:'Shaanxi'},
+    tech:{zh:'模擬鼓聲、大幅度按音', en:'imitating drums, wide pressing', fr:'imitation des tambours, pressions amples'},
+    p:{zh:'寫終南山廟會的鼓樂。它讓古箏去模仿打擊樂，用拍弦、扫弦與極重的按音製造鼓的質感，是古箏「音色實驗」方向的代表。',
+       en:'A temple fair on Mount Zhongnan. It sets the guzheng to imitate percussion, using slapped strings, strumming and very heavy pressing to get the grain of a drum, and it stands for the instrument’s experimental line in timbre.',
+       fr:'Une fête de temple sur le mont Zhongnan. Elle fait imiter la percussion au guzheng, par cordes frappées, grattages et pressions très appuyées pour obtenir le grain du tambour : elle représente la voie expérimentale du timbre.'} },
+  { lv:3, t:{zh:'臨安遺恨', en:'The Lingering Regret of Lin’an', fr:'Le Regret persistant de Lin’an'},
+    src:{zh:'何占豪作曲，箏與樂隊協奏曲，寫岳飛', en:'He Zhanhao; a concerto for zheng and orchestra, on the general Yue Fei', fr:'He Zhanhao ; concerto pour zheng et orchestre, sur le général Yue Fei'}, y:'1992',
+    sch:{zh:'現代協奏曲', en:'modern concerto', fr:'concerto moderne'},
+    tech:{zh:'大段搖指、與樂隊的呼吸', en:'extended tremolo, breathing with an ensemble', fr:'trémolos étendus, respirer avec un ensemble'},
+    p:{zh:'現代箏協奏曲中最常演的一首。它把長搖推到極限，用來承載岳飛獄中的獨白；也因為有樂隊，它是少數必須學會「聽別人」的箏曲。',
+       en:'The most frequently performed of the modern zheng concertos. It pushes long tremolo to its limit to carry Yue Fei’s soliloquy in prison, and because there is an orchestra it is one of the few zheng pieces that force you to learn to listen to other people.',
+       fr:'Le plus souvent joué des concertos modernes pour zheng. Il pousse le trémolo long à sa limite pour porter le monologue de Yue Fei en prison ; et comme il y a un orchestre, c’est l’une des rares pièces qui obligent à écouter les autres.'} },
+  { lv:3, t:{zh:'雲慶', en:'Yun Qing', fr:'Yun Qing'},
+    src:{zh:'浙江箏曲，源自江南絲竹', en:'Zhejiang repertoire, out of the Jiangnan sizhu tradition', fr:'Répertoire du Zhejiang, issu du sizhu du Jiangnan'}, y:'trad.',
+    sch:{zh:'浙江', en:'Zhejiang', fr:'Zhejiang'},
+    tech:{zh:'快速指序、勻速', en:'fast finger sequences, evenness', fr:'séquences rapides, égalité'},
+    p:{zh:'浙江派快速指序的標準教材。它不靠力量也不靠情緒，全靠每一個音等長、等強。錄下來聽最能檢驗基本功。',
+       en:'The standard study for Zhejiang finger sequences. It runs on neither force nor emotion but on every note being the same length and the same weight. Recording yourself playing it is the sharpest test of fundamentals there is.',
+       fr:'L’étude de référence pour les séquences du Zhejiang. Elle ne repose ni sur la force ni sur l’émotion, mais sur l’égalité de durée et de poids de chaque note. S’enregistrer en la jouant est le test le plus net des fondamentaux.'} },
+];
+const REP_LV = {
+  1:{ t:{zh:'入門可彈', en:'playable at beginner level', fr:'jouable dès le début'}, c:'amber' },
+  2:{ t:{zh:'進階',     en:'intermediate',               fr:'intermédiaire'},       c:'sky' },
+  3:{ t:{zh:'高階',     en:'advanced',                   fr:'avancé'},              c:'red' },
+};
+
+/* ═══════════════════════════════════════════════════════════
    Renderers and interface strings
    ═══════════════════════════════════════════════════════════ */
 const TONE = {
@@ -642,6 +761,45 @@ function renderLevels() {
       + '</div></section>';
   }).join('');
 }
+let repLv = 0;                       /* 0 shows everything */
+const REP_TONE = { amber:['text-amber-300','rgba(217,119,6,0.14)','rgba(217,119,6,0.42)'],
+                   sky:['text-sky-300','rgba(2,132,199,0.14)','rgba(2,132,199,0.42)'],
+                   red:['text-red-300','rgba(190,60,50,0.16)','rgba(190,60,50,0.45)'] };
+function pickRepLv(n) { repLv = (repLv === n) ? 0 : n; renderRep(false); }
+/* animate on first paint only: a filter click is a deliberate action and
+   should show its result at once, not fade it in from nothing */
+function renderRep(animate) {
+  const btn = (n, label) => {
+    const on = repLv === n;
+    return '<button type="button" onclick="pickRepLv(' + n + ')" aria-pressed="' + on + '"'
+      + ' class="px-3 py-1.5 rounded-full text-xs font-bold border transition-colors '
+      + (on ? 'bg-emerald-500/20 text-emerald-200 border-emerald-500/50'
+            : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:text-slate-200') + '">'
+      + label + '</button>';
+  };
+  document.getElementById('rep-filter').innerHTML =
+      btn(1, t(REP_LV[1].t)) + btn(2, t(REP_LV[2].t)) + btn(3, t(REP_LV[3].t));
+
+  const shown = REPERTOIRE.filter(r => !repLv || r.lv === repLv);
+  document.getElementById('rep-grid').innerHTML = shown.map(r => {
+    const c = REP_TONE[REP_LV[r.lv].c];
+    return '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5'
+      + (animate === false ? '' : ' reveal') + '">'
+      + '<div class="flex flex-wrap items-baseline gap-2 mb-1">'
+      +   '<h3 class="text-base font-black text-white">' + t(r.t) + '</h3>'
+      +   '<span class="lvl-pill ' + c[0] + '" style="background:' + c[1] + ';border:1px solid ' + c[2] + '">'
+      +     t(REP_LV[r.lv].t) + '</span>'
+      + '</div>'
+      + '<p class="text-[0.7rem] text-slate-500 leading-relaxed mb-1">' + t(r.src)
+      +   (r.y ? ' · ' + r.y : '') + '</p>'
+      + '<p class="text-[0.7rem] text-emerald-300/80 mb-3">'
+      +   '<i class="fa-solid fa-hand-sparkles mr-1"></i>' + t(r.tech) + '</p>'
+      + '<p class="text-xs text-slate-400 leading-relaxed">' + t(r.p) + '</p>'
+      + '</div>';
+  }).join('');
+  if (animate !== false) armReveals(document.getElementById('rep-grid'));
+}
+
 function renderRef() {
   document.getElementById('fx-body').innerHTML = FINGERINGS.map(f =>
       '<tr>'
@@ -694,7 +852,9 @@ const I18N = {
 zh:{
  'doc.title':'古箏圖譜 | 從認識樂器到進階演奏',
  'hdr.badge':'古箏教學','hdr.title':'古箏：從認識樂器到進階',
- 'nav.inst':'樂器','nav.str':'定弦','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.ref':'對照表',
+ 'nav.inst':'樂器','nav.str':'定弦','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.rep':'名曲','nav.ref':'對照表',
+ 'rep.eyebrow':'曲目','rep.h2':'知名曲目：什麼階段可以彈什麼',
+ 'rep.lead':'古箏的曲目和技法是綁在一起的：學會搖指之後才有《茉莉芬芳》可彈，學會苦音音階之後才有《秦桑曲》。以下按難度分級，並標出每首曲子主要在練什麼。點按上方標籤可只看某一級。',
  'intro':'古箏是一種有二十一根弦、每根弦下面墊著一個可移動琴碼的彈撥樂器。它的特別之處在於：右手負責彈出音符，左手在琴碼另一側按弦改變音高。少了左手，它只是一件音階好聽的樂器；有了左手，才是中國音樂。',
  'intro2':'這一冊分成三部，從完全沒碰過樂器開始。所有圖示都是畫出來的：樂器結構、二十一弦音位、指法符號，這些正是學習者在譜面與課堂上真正會看到的東西。',
  'inst.eyebrow':'先認識樂器','inst.h2':'古箏的各個部位',
@@ -715,7 +875,9 @@ zh:{
 en:{
  'doc.title':'The Guzheng, Beginner to Advanced',
  'hdr.badge':'GUZHENG TUTORIAL','hdr.title':'The Guzheng: Beginner to Advanced',
- 'nav.inst':'Instrument','nav.str':'Tuning','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.ref':'Reference',
+ 'nav.inst':'Instrument','nav.str':'Tuning','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.rep':'Repertoire','nav.ref':'Reference',
+ 'rep.eyebrow':'Repertoire','rep.h2':'Well-known pieces, and when you can play them',
+ 'rep.lead':'On this instrument repertoire and technique are tied together: Jasmine Fragrance becomes available once you have a tremolo, Qin Mulberry Song once you have the bitter-tone scale. The pieces below are graded, with the technique each one mainly trains. Use the tags to show one level at a time.',
  'intro':'The guzheng is a plucked zither with twenty-one strings, each resting on its own movable bridge. What makes it particular is the division of labour: the right hand sounds the notes, while the left hand presses the string on the far side of the bridge to bend the pitch. Without the left hand it is an instrument with a pleasant scale. With it, the music becomes Chinese.',
  'intro2':'This volume is in three parts, starting from never having touched the instrument. Every illustration is drawn: the anatomy, the twenty-one string map, the fingering marks. These are exactly what a student meets on the page and in a lesson.',
  'inst.eyebrow':'Start with the instrument','inst.h2':'The parts of a guzheng',
@@ -736,7 +898,9 @@ en:{
 fr:{
  'doc.title':'Le guzheng, du débutant à l’avancé',
  'hdr.badge':'TUTORIEL DE GUZHENG','hdr.title':'Le guzheng : du débutant à l’avancé',
- 'nav.inst':'Instrument','nav.str':'Accord','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.ref':'Références',
+ 'nav.inst':'Instrument','nav.str':'Accord','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.rep':'Répertoire','nav.ref':'Références',
+ 'rep.eyebrow':'Répertoire','rep.h2':'Pièces célèbres, et à quel stade les aborder',
+ 'rep.lead':'Sur cet instrument, répertoire et technique vont ensemble : Parfum de jasmin devient accessible dès qu’on a un trémolo, le Chant des mûriers de Qin dès qu’on tient la gamme ku yin. Les pièces ci-dessous sont graduées, avec la technique que chacune travaille surtout. Les étiquettes permettent de n’afficher qu’un niveau.',
  'intro':'Le guzheng est une cithare sur table à vingt et une cordes, chacune posée sur son propre chevalet mobile. Sa particularité tient au partage des rôles : la main droite produit les notes, tandis que la main gauche presse la corde de l’autre côté du chevalet pour en infléchir la hauteur. Sans la main gauche, c’est un instrument à la gamme agréable. Avec elle, la musique devient chinoise.',
  'intro2':'Ce volume compte trois parties, en partant de zéro. Toutes les illustrations sont dessinées : l’anatomie, la carte des vingt et une cordes, les signes de doigté. C’est exactement ce qu’un élève rencontre sur la partition et en cours.',
  'inst.eyebrow':'D’abord l’instrument','inst.h2':'Les parties du guzheng',
@@ -774,6 +938,7 @@ function setLanguage(lang) {
   renderInstrument();
   renderStrings();
   renderLevels();
+  renderRep();
   renderRef();
   armReveals(document.querySelector('main'));
 }
