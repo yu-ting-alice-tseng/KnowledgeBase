@@ -66,6 +66,56 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
   }
+  /* ── Video demonstrations ──
+     Hands cannot be taught by a drawing: the chart shows the result,
+     a film shows the movement. Geometry is written out in full here so
+     it never depends on a utility class arriving from a CDN. */
+  .vid-strip { display:flex; align-items:center; gap:.7rem; width:100%; text-align:left;
+               margin-top:.75rem; padding:.5rem; border-radius:.85rem; cursor:pointer;
+               background:rgba(244,63,94,0.07); border:1px solid rgba(244,63,94,0.22);
+               color:inherit; font:inherit; transition:background .2s, border-color .2s; }
+  .vid-strip:hover { background:rgba(244,63,94,0.13); border-color:rgba(244,63,94,0.45); }
+  .vid-th  { display:block; position:relative; flex:0 0 auto; width:104px; height:59px;
+             border-radius:.55rem; overflow:hidden; background:#1c1416; }
+  .vid-th img { width:100%; height:100%; object-fit:cover; display:block; }
+  .vid-th i   { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+                color:#fff; font-size:.9rem; text-shadow:0 1px 7px rgba(0,0,0,.85); }
+  .vid-meta   { display:block; min-width:0; }
+  .vid-kicker { display:block; font-size:.6rem; font-weight:800; letter-spacing:.08em;
+                text-transform:uppercase; color:#fda4af; }
+  .vid-title  { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+                overflow:hidden; font-size:.72rem; line-height:1.35; color:#cbd5e1; margin-top:.15rem; }
+  .vid-miss   { display:inline-flex; align-items:center; gap:.45rem; margin-top:.75rem;
+                padding:.42rem .75rem; border-radius:.7rem; font-size:.7rem; font-weight:700;
+                color:#fda4af; background:rgba(244,63,94,0.07);
+                border:1px solid rgba(244,63,94,0.22); transition:border-color .2s; }
+  .vid-miss:hover { border-color:rgba(244,63,94,0.5); }
+
+  .vid-big { display:block; width:100%; padding:0; overflow:hidden; text-align:left; cursor:pointer;
+             border-radius:1rem; background:rgba(15,23,42,0.4); border:1px solid #1e293b;
+             color:inherit; font:inherit; transition:border-color .2s, transform .2s; }
+  .vid-big:hover { border-color:rgba(244,63,94,0.45); transform:translateY(-2px); }
+  .vid-big .th  { display:block; position:relative; width:100%; padding-top:56.25%; background:#1c1416; }
+  .vid-big .th img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .vid-big .th i   { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+                     width:46px; height:46px; line-height:46px; text-align:center; border-radius:50%;
+                     background:rgba(244,63,94,0.92); color:#fff; font-size:1rem; }
+  .vid-big .bd  { display:block; padding:.85rem 1rem 1rem; }
+  .vid-big .st  { display:block; font-size:.68rem; font-weight:800; color:#fda4af;
+                  letter-spacing:.04em; margin-bottom:.2rem; }
+  .vid-big .tt  { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+                  overflow:hidden; font-size:.78rem; line-height:1.4; color:#e2e8f0; font-weight:700; }
+  @media (prefers-reduced-motion: reduce) { .vid-big:hover { transform:none; } }
+
+  .vid-frame { position:relative; width:100%; padding-top:56.25%; background:#000;
+               border-radius:1.5rem 1.5rem 0 0; overflow:hidden; }
+  .vid-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .vid-link  { display:inline-flex; align-items:center; padding:.45rem .8rem; border-radius:.7rem;
+               font-size:.72rem; font-weight:700; color:#e2e8f0;
+               background:rgba(148,163,184,0.10); border:1px solid rgba(148,163,184,0.22);
+               transition:border-color .2s; }
+  .vid-link:hover { border-color:rgba(148,163,184,0.55); }
+
   #lb { position: fixed; inset: 0; z-index: 100; display: none; }
   #lb.open { display: block; }
   #lb .veil { position:absolute; inset:0; background:rgba(4,2,3,0.9); backdrop-filter:blur(6px); }
@@ -102,6 +152,7 @@
       </div>
       <nav class="flex flex-wrap gap-2 text-xs">
         <a href="#start"   data-i18n="nav.start"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors"></a>
+        <a href="#video"   data-i18n="nav.vid"     class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors"></a>
         <a href="#basics"  data-i18n="nav.p1"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-teal-500/50 hover:text-teal-300 transition-colors"></a>
         <a href="#inter"   data-i18n="nav.p2"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
         <a href="#adv"     data-i18n="nav.p3"      class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-rose-500/50 hover:text-rose-300 transition-colors"></a>
@@ -117,6 +168,21 @@
   <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
     <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
     <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <section id="video" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-rose-500/10 rounded-2xl text-rose-400 border border-rose-500/20 shadow-glow-rose"><i class="fa-solid fa-circle-play text-xl"></i></div>
+      <div>
+        <span data-i18n="vid.eyebrow" class="text-xs uppercase tracking-wider text-rose-400 font-bold"></span>
+        <h2 data-i18n="vid.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900">
+      <p data-i18n="vid.lead" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+      <div id="vid-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6"></div>
+      <p data-i18n="vid.note" class="text-xs text-slate-600 leading-relaxed mt-5"></p>
+    </div>
   </section>
 
   <section id="start" class="scroll-mt-24">
@@ -370,42 +436,42 @@ const LEVELS = [
         en:'All of crochet is pulling one loop through another. The six stitches below cover almost everything you will ever make, and the first four are enough to finish a real object. Each carries its international symbol, which is how it appears on a chart.',
         fr:'Tout le crochet consiste à passer une boucle dans une autre. Les six mailles ci-dessous couvrent presque tout, et les quatre premières suffisent à terminer un vrai ouvrage. Chacune porte son symbole international, tel qu’il apparaît sur un diagramme.'},
   items:[
-    { sym:'ch', t:{zh:'鎖針（起針鎖鏈）', en:'Chain', fr:'Maille en l’air'}, abbr:'ch',
+    { sym:'ch', t:{zh:'鎖針（起針鎖鏈）', en:'Chain', fr:'Maille en l’air'}, abbr:'ch', vid:'ch',
       p:{zh:'所有作品的地基。打一個活結套上鉤針，鉤針掛線，把線拉過針上的圈，就完成一個鎖針。重複到需要的長度。',
          en:'The foundation of everything. Slip-knot onto the hook, yarn over, draw that yarn through the loop already on the hook. That is one chain. Repeat to the length you need.',
          fr:'La base de tout. Nœud coulant sur le crochet, jeté, puis tirez le fil à travers la boucle déjà sur le crochet. Voilà une maille en l’air. Répétez.'},
       tip:{zh:'鎖針要鬆。九成的新手第一排太緊，導致第二排根本插不進針。如果會緊，就換大一號的針起鎖鏈。',
            en:'Keep the chain loose. Nine beginners in ten make the first row too tight to get the hook back into. If yours is tight, work the chain with a hook one size larger.',
            fr:'Gardez la chaînette souple. Neuf débutants sur dix la serrent trop pour pouvoir y repiquer. Si c’est votre cas, faites la chaînette avec un crochet plus gros.'} },
-    { sym:'sl', t:{zh:'引拔針', en:'Slip stitch', fr:'Maille coulée'}, abbr:'sl st',
+    { sym:'sl', t:{zh:'引拔針', en:'Slip stitch', fr:'Maille coulée'}, abbr:'sl st', vid:'sl',
       p:{zh:'最矮的針。鉤針插入針目，掛線，一次拉過針目與針上的圈。它幾乎不增加高度，用來接合成圈、移動位置、或收邊。',
          en:'The shortest stitch there is. Insert the hook, yarn over, and pull through both the stitch and the loop on your hook in one go. It adds almost no height; it joins rounds, travels sideways, and finishes edges.',
          fr:'La maille la plus courte. Piquez, faites un jeté, puis tirez à travers la maille et la boucle du crochet d’un seul coup. Elle n’ajoute presque pas de hauteur : elle ferme les tours, déplace, et borde.'},
       tip:{zh:'引拔針特別容易鉤太緊。接合圈時如果拉緊，整圈會縮口。',
            en:'This is the easiest stitch to overtighten. Pull it snug when joining a round and the whole round puckers.',
            fr:'C’est la maille qu’on serre le plus facilement. Trop tirée en fermant un tour, elle fronce tout le rang.'} },
-    { sym:'sc', t:{zh:'短針（美式 sc）', en:'Single crochet (US)', fr:'Maille serrée'}, abbr:'sc / UK dc',
+    { sym:'sc', t:{zh:'短針（美式 sc）', en:'Single crochet (US)', fr:'Maille serrée'}, abbr:'sc / UK dc', vid:'sc',
       p:{zh:'最常用的針法，織出來緊密扎實。插入針目，掛線拉出（針上兩圈），再掛線一次拉過兩圈。玩偶幾乎全部用它，因為孔隙小、不透棉。',
          en:'The workhorse, and the densest of the basic stitches. Insert, yarn over and draw up a loop (two on the hook), yarn over and pull through both. Amigurumi is made almost entirely of it, because the fabric is tight enough to hide the stuffing.',
          fr:'La maille de base la plus utilisée, et la plus dense. Piquez, jeté, remontez une boucle (deux sur le crochet), jeté, tirez à travers les deux. L’amigurumi en est presque entièrement fait : le tissu est assez serré pour cacher le rembourrage.'},
       tip:{zh:'注意：這個符號在英式術語裡叫 double crochet。看到外文圖解，先確認是美式還是英式，否則整件會做錯。',
            en:'Careful: in UK terminology this same stitch is called a double crochet. Always check which convention a pattern uses before you start, or the whole piece comes out wrong.',
            fr:'Attention : en terminologie britannique, cette même maille s’appelle double crochet. Vérifiez toujours la convention d’un modèle avant de commencer.'} },
-    { sym:'hdc', t:{zh:'中長針', en:'Half double crochet (US)', fr:'Demi-bride'}, abbr:'hdc / UK htr',
+    { sym:'hdc', t:{zh:'中長針', en:'Half double crochet (US)', fr:'Demi-bride'}, abbr:'hdc / UK htr', vid:'hdc',
       p:{zh:'先掛線，再插入針目，掛線拉出（針上三圈），最後掛線一次拉過三圈。高度介於短針與長針之間，質地柔軟又不鬆散，很適合帽子與圍巾。',
          en:'Yarn over first, then insert, draw up a loop (three on the hook), yarn over and pull through all three. Its height sits between single and double crochet, and the fabric is soft without being loose, which suits hats and scarves.',
          fr:'Jeté d’abord, puis piquez, remontez une boucle (trois sur le crochet), jeté, tirez à travers les trois. Sa hauteur est intermédiaire et le tissu reste souple sans être lâche : parfait pour bonnets et écharpes.'},
       tip:{zh:'三圈一次拉過需要一點手勁，拉之前先把針頭轉向自己，會順很多。',
            en:'Pulling through three loops at once takes a little force. Turn the hook head toward you before you pull and it slides through far more easily.',
            fr:'Passer trois boucles d’un coup demande un peu de force. Tournez la tête du crochet vers vous avant de tirer : cela glisse bien mieux.'} },
-    { sym:'dc', t:{zh:'長針', en:'Double crochet (US)', fr:'Bride'}, abbr:'dc / UK tr',
+    { sym:'dc', t:{zh:'長針', en:'Double crochet (US)', fr:'Bride'}, abbr:'dc / UK tr', vid:'dc',
       p:{zh:'掛線，插入針目，掛線拉出（三圈），掛線拉過兩圈，再掛線拉過剩下兩圈。長得快、有彈性、孔隙適中，毛毯與衣物的主力針法。',
          en:'Yarn over, insert, draw up a loop (three on the hook), yarn over and through two, yarn over and through the last two. It grows fast, has give, and leaves a moderate hole. It is the mainstay of blankets and garments.',
          fr:'Jeté, piquez, remontez une boucle (trois sur le crochet), jeté et à travers deux, jeté et à travers les deux dernières. Elle monte vite, reste souple, ajoure modérément : la maille reine des couvertures et des vêtements.'},
       tip:{zh:'每排開頭要先鉤三個鎖針當作「立起針」，它算作第一個長針。忘記立針，邊緣就會越縮越窄。',
            en:'Begin each row with three chains as a turning chain; it counts as the first double crochet. Forget it and your edges creep inward row by row.',
            fr:'Commencez chaque rang par trois mailles en l’air en guise de montée ; elles comptent pour la première bride. Sans elles, les bords rétrécissent rang après rang.'} },
-    { sym:'tr', t:{zh:'長長針', en:'Treble crochet (US)', fr:'Double bride'}, abbr:'tr / UK dtr',
+    { sym:'tr', t:{zh:'長長針', en:'Treble crochet (US)', fr:'Double bride'}, abbr:'tr / UK dtr', vid:'tr',
       p:{zh:'掛線兩次再插入，之後每次掛線拉過兩圈，共三次。高度是長針的一倍半，主要用在蕾絲、網狀花樣，以及需要快速拉高的地方。',
          en:'Yarn over twice before inserting, then work off two loops at a time, three times. Half again as tall as a double crochet, it belongs to lace, mesh, and anywhere you need height quickly.',
          fr:'Deux jetés avant de piquer, puis écoulez deux boucles à la fois, trois fois. Une fois et demie la hauteur d’une bride : c’est la maille de la dentelle, du filet, et de tout ce qui doit monter vite.'},
@@ -427,42 +493,42 @@ const LEVELS = [
         en:'Once the basic stitches are in your hands, the next thing to learn is not more stitches but <strong class="text-white">how to control shape</strong>: where to add, where to take away, and how to get from a single point to a circle. Finish this part and most published patterns become readable.',
         fr:'Une fois les mailles de base acquises, ce qu’il faut apprendre n’est pas d’autres mailles mais <strong class="text-white">la maîtrise de la forme</strong> : où augmenter, où diminuer, comment passer d’un point à un cercle. Cette partie franchie, la plupart des modèles publiés deviennent lisibles.'},
   items:[
-    { sym:'inc', t:{zh:'加針', en:'Increase', fr:'Augmentation'}, abbr:'inc',
+    { sym:'inc', t:{zh:'加針', en:'Increase', fr:'Augmentation'}, abbr:'inc', vid:'inc',
       p:{zh:'在同一個針目裡鉤兩針。符號畫成兩根柱子共用一個底點，一眼就看得出來。加針讓織片變寬，也是所有圓形與立體造型的原理。',
          en:'Two stitches worked into the same stitch below. The symbol shows two posts sharing one base, so it reads at a glance. Increases widen the fabric, and they are the whole principle behind circles and three-dimensional shapes.',
          fr:'Deux mailles dans la même maille du rang précédent. Le symbole montre deux montants partageant une base : cela se lit d’un coup d’œil. Les augmentations élargissent le tissu et fondent tout le travail en rond et en volume.'},
       tip:{zh:'圓形要平整，每圈的加針數必須固定：短針圓第一圈 6 針，之後每圈加 6 針。加太少會變成碗狀，加太多會荷葉邊。',
            en:'For a flat circle the number of increases per round must stay constant: six stitches in the first round, then six more in every round after. Too few and it cups into a bowl, too many and it ruffles.',
            fr:'Pour un cercle plat, le nombre d’augmentations par tour doit rester constant : six mailles au premier tour, puis six de plus à chaque tour. Trop peu, il se creuse en coupelle ; trop, il godaille.'} },
-    { sym:'dec', t:{zh:'減針', en:'Decrease', fr:'Diminution'}, abbr:'dec / tog',
+    { sym:'dec', t:{zh:'減針', en:'Decrease', fr:'Diminution'}, abbr:'dec / tog', vid:'dec',
       p:{zh:'把兩針併成一針：分別插入兩個針目各拉出一個線圈，最後一次拉過全部。符號是兩根柱子共用一個頂點。',
          en:'Two stitches worked together into one: draw up a loop in each of the two stitches, then finish them off together. The symbol shows two posts sharing a single top.',
          fr:'Deux mailles rabattues ensemble : remontez une boucle dans chacune, puis écoulez-les ensemble. Le symbole montre deux montants partageant un même sommet.'},
       tip:{zh:'玩偶收口請用「隱形減針」：只挑兩針的前半段線圈再併，正面看不出孔洞，這是業餘與熟手最明顯的差別之一。',
            en:'For amigurumi use the invisible decrease: pick up only the front loops of the two stitches before joining them. It leaves no visible hole, and it is one of the clearest differences between a beginner finish and a practised one.',
            fr:'Pour l’amigurumi, utilisez la diminution invisible : ne prenez que les brins avant des deux mailles avant de les rabattre. Aucun trou visible : c’est l’un des écarts les plus nets entre une finition débutante et une main exercée.'} },
-    { sym:'sl', t:{zh:'輪狀起針（魔術環）', en:'The magic ring', fr:'Le cercle magique'}, abbr:'MR',
+    { sym:'sl', t:{zh:'輪狀起針（魔術環）', en:'The magic ring', fr:'Le cercle magique'}, abbr:'MR', vid:'ring',
       p:{zh:'把線在手指上繞一圈，在圈裡鉤出第一圈針目，然後拉緊線尾把中央的洞收死。所有從中心開始的圓形都從這裡起步。',
          en:'Loop the yarn around your fingers, work the first round of stitches into that loop, then pull the tail to close the hole in the middle. Every circle worked from the centre starts here.',
          fr:'Enroulez le fil autour des doigts, travaillez le premier tour dans cette boucle, puis tirez le brin pour refermer le trou central. Tout cercle travaillé depuis le centre commence ainsi.'},
       tip:{zh:'替代做法是「鎖針成圈」，但中央會留一個小孔。玩偶用魔術環，孔洞才會完全消失。',
            en:'The alternative is to chain a few and join into a ring, but that leaves a small hole in the middle. For amigurumi use the magic ring, so the hole closes completely.',
            fr:'On peut aussi fermer une chaînette en anneau, mais un petit trou subsiste au centre. Pour l’amigurumi, préférez le cercle magique : le trou disparaît entièrement.'} },
-    { sym:'blo', t:{zh:'挑針位置：前段與後段', en:'Front loop and back loop', fr:'Brin avant et brin arrière'}, abbr:'FLO / BLO',
+    { sym:'blo', t:{zh:'挑針位置：前段與後段', en:'Front loop and back loop', fr:'Brin avant et brin arrière'}, abbr:'FLO / BLO', vid:'blo',
       p:{zh:'每個針目的頂端是一個 V 字，由前後兩條線構成。平常整條挑（兩條一起），只挑後面那條叫 BLO，只挑前面那條叫 FLO。符號底下多一條橫線就代表只挑後段。',
          en:'The top of every stitch is a V made of two strands. Normally you go under both. Working under only the back strand is BLO, only the front strand is FLO. A bar drawn beneath the symbol means back loop only.',
          fr:'Le sommet de chaque maille forme un V de deux brins. Normalement on pique sous les deux. Sous le brin arrière seul, c’est BLO ; sous le brin avant seul, FLO. Une barre sous le symbole signale le brin arrière.'},
       tip:{zh:'只挑後段會留下一條明顯的橫脊，那正是鉤出「羅紋」與玩偶轉折線的方法，不是失誤。',
            en:'Working back loop only leaves a visible horizontal ridge. That ridge is exactly how ribbing and the fold lines on amigurumi are made; it is not a mistake.',
            fr:'Ne piquer que le brin arrière laisse une nervure horizontale visible. C’est précisément ainsi qu’on obtient les côtes et les lignes de pliage des amigurumis : ce n’est pas un défaut.'} },
-    { sym:'shell', t:{zh:'貝殼針', en:'The shell', fr:'L’éventail'}, abbr:'shell',
+    { sym:'shell', t:{zh:'貝殼針', en:'The shell', fr:'L’éventail'}, abbr:'shell', vid:'shell',
       p:{zh:'在同一個針目裡連續鉤五針長針，展開成扇形。它是最容易上手的花樣針，一排貝殼加一排短針就能織出漂亮的圍巾或毯邊。',
          en:'Five double crochets worked into one stitch, fanning open. It is the easiest decorative stitch to pick up: a row of shells alternating with a row of single crochet already makes a handsome scarf or blanket edge.',
          fr:'Cinq brides dans une même maille, ouvertes en éventail. C’est le point fantaisie le plus accessible : une rangée d’éventails alternée avec une rangée de mailles serrées suffit à faire une belle écharpe ou une bordure.'},
       tip:{zh:'貝殼針很吃線，用量大約是平織的一倍半，買線時要多抓一些。',
            en:'Shells eat yarn: budget roughly half again as much as a plain fabric of the same size.',
            fr:'L’éventail consomme beaucoup : comptez environ une fois et demie la quantité d’un tissu uni de même taille.'} },
-    { sym:'bob', t:{zh:'玉編（爆米花針）', en:'Bobble and popcorn', fr:'Point boule et pop-corn'}, abbr:'bob / pc',
+    { sym:'bob', t:{zh:'玉編（爆米花針）', en:'Bobble and popcorn', fr:'Point boule et pop-corn'}, abbr:'bob / pc', vid:'bob',
       p:{zh:'在同一針目裡鉤數針未完成的長針，最後一次全部拉在一起，形成一顆凸起的球。符號是數根柱子同時共用頂點與底點。',
          en:'Several unfinished double crochets in one stitch, closed together at the end so the bundle pops forward. The symbol shows several posts sharing both a base and a top.',
          fr:'Plusieurs brides inachevées dans une même maille, fermées ensemble pour former une boule saillante. Le symbole montre plusieurs montants partageant base et sommet.'},
@@ -481,42 +547,42 @@ const LEVELS = [
         en:'By this stage the stitches are no longer the constraint. What separates a good finished piece from a poor one is three things: <strong class="text-white">gauge, shaping in three dimensions, and finishing</strong>. This part covers those, and a few technique families that have to be learned separately.',
         fr:'À ce stade, les mailles ne sont plus la contrainte. Ce qui sépare un bel ouvrage d’un ouvrage raté tient à trois choses : <strong class="text-white">l’échantillon, la mise en volume et les finitions</strong>. Cette partie les traite, ainsi que quelques familles de techniques à apprendre à part.'},
   items:[
-    { sym:'sc', t:{zh:'密度：唯一決定尺寸的東西', en:'Gauge: the only thing that decides size', fr:'L’échantillon : ce qui décide de la taille'}, abbr:'gauge',
+    { sym:'sc', t:{zh:'密度：唯一決定尺寸的東西', en:'Gauge: the only thing that decides size', fr:'L’échantillon : ce qui décide de la taille'}, abbr:'gauge', vid:'gauge',
       p:{zh:'圖解寫「10 公分 = 14 針 × 8 排」，指的是作者的手勁。同樣的線與針，您鉤出來可能是 16 針。做衣物之前一定要先鉤一塊 15 公分見方的試片量密度；針數不對就換針號，不要改針法。',
          en:'A pattern that says 14 stitches and 8 rows to 10 cm is describing its author’s hands, not yours. With the same yarn and hook you might get sixteen. Before any garment, work a 15 cm swatch and measure. If the count is off, change hook size; do not change the stitch.',
          fr:'Un modèle qui annonce 14 mailles et 8 rangs pour 10 cm décrit les mains de son auteur, pas les vôtres. Avec le même fil et le même crochet, vous en ferez peut-être seize. Avant tout vêtement, faites un échantillon de 15 cm et mesurez. Si le compte diffère, changez de crochet, pas de maille.'},
       tip:{zh:'量密度要量織片中間，不要量到邊緣。邊緣的針目永遠比中間鬆。',
            en:'Measure across the middle of the swatch, never the edges. Edge stitches are always looser than the ones in the body.',
            fr:'Mesurez au milieu de l’échantillon, jamais sur les bords : les mailles de rive sont toujours plus lâches.'} },
-    { sym:'dec', t:{zh:'立體塑形：玩偶的球與筒', en:'Shaping in the round: spheres and tubes', fr:'Le volume : sphères et tubes'}, abbr:'amigurumi',
+    { sym:'dec', t:{zh:'立體塑形：玩偶的球與筒', en:'Shaping in the round: spheres and tubes', fr:'Le volume : sphères et tubes'}, abbr:'amigurumi', vid:'sphere',
       p:{zh:'球體等於先照圓形規律加針，中段不加不減鉤幾圈，再照鏡像規律減針。筒狀則是加到需要的直徑之後就一直平鉤。玩偶的所有部位都是這兩者的變形。',
          en:'A sphere is the flat-circle rule on the way out, several rounds of no shaping through the middle, and the mirror of the rule on the way back in. A tube is increases until you reach the diameter you want, then straight rounds. Every part of a stuffed toy is a variation on those two.',
          fr:'Une sphère : la règle du cercle plat à l’aller, quelques tours sans façonnage au milieu, puis la règle en miroir au retour. Un tube : des augmentations jusqu’au diamètre voulu, puis des tours droits. Toutes les pièces d’une peluche dérivent de ces deux formes.'},
       tip:{zh:'玩偶要用比線材建議小一號的針，織片才夠密。填充棉從鬆的織片裡透出來，是新手作品看起來廉價的主因。',
            en:'Use a hook one size smaller than the yarn recommends, so the fabric is dense. Stuffing showing through a loose fabric is the single biggest reason a beginner toy looks cheap.',
            fr:'Prenez un crochet d’une taille en dessous de ce que le fil recommande, pour un tissu bien dense. Le rembourrage qui transparaît est la première raison pour laquelle une peluche débutante fait bon marché.'} },
-    { sym:'tr', t:{zh:'方格編與蕾絲', en:'Filet crochet and lace', fr:'Crochet filet et dentelle'}, abbr:'filet',
+    { sym:'tr', t:{zh:'方格編與蕾絲', en:'Filet crochet and lace', fr:'Crochet filet et dentelle'}, abbr:'filet', vid:'filet',
       p:{zh:'方格編只用長針與鎖針兩種針法：填滿的格子與留空的格子排列成圖案，像素圖一樣。它是進入蕾絲世界最容易的一扇門，因為規則極少。',
          en:'Filet uses only two things, double crochet and chain: filled squares and open squares arranged into a picture, exactly like pixel art. It is the easiest door into lace because there are so few rules.',
          fr:'Le filet n’utilise que deux éléments, brides et mailles en l’air : des carrés pleins et des carrés vides composant un dessin, comme du pixel art. C’est la porte d’entrée la plus simple vers la dentelle, tant les règles sont peu nombreuses.'},
       tip:{zh:'蕾絲作品鉤完看起來皺皺的很正常，必須經過「定型」：噴濕或蒸氣後用珠針固定在墊子上陰乾，圖案才會展開。',
            en:'Lace comes off the hook looking crumpled, and that is normal. It has to be blocked: dampen or steam it, pin it out on a mat, and let it dry. Only then does the pattern open up.',
            fr:'La dentelle sort du crochet toute fripée, c’est normal. Il faut la bloquer : humidifiez ou vaporisez, épinglez sur un tapis, laissez sécher. Le motif ne s’ouvre qu’ensuite.'} },
-    { sym:'hdc', t:{zh:'阿富汗針（突尼西亞鉤針）', en:'Tunisian crochet', fr:'Crochet tunisien'}, abbr:'Tunisian',
+    { sym:'hdc', t:{zh:'阿富汗針（突尼西亞鉤針）', en:'Tunisian crochet', fr:'Crochet tunisien'}, abbr:'Tunisian', vid:'tunisian',
       p:{zh:'用一根加長的鉤針，去程把整排線圈都留在針上，回程再一個一個收掉。成品介於鉤織與棒針之間，密實而平整，常用來做毯子與包包。',
          en:'Worked with a long hook: on the forward pass you keep every loop of the row on the hook, on the return pass you work them off one at a time. The fabric sits between crochet and knitting, dense and flat, and suits blankets and bags.',
          fr:'Se travaille avec un crochet long : à l’aller, toutes les boucles du rang restent sur le crochet ; au retour, on les écoule une à une. Le tissu tient du crochet et du tricot, dense et plat : idéal pour couvertures et sacs.'},
       tip:{zh:'阿富汗針會嚴重捲邊，這是它的本性，靠定型解決。它也非常吃線，用量比一般鉤織多三成左右。',
            en:'Tunisian curls badly at the edges. That is inherent, and blocking is the answer. It also eats yarn, roughly thirty per cent more than ordinary crochet.',
            fr:'Le tunisien roule fortement sur les bords : c’est inhérent, le blocage y remédie. Il consomme aussi environ trente pour cent de fil de plus que le crochet ordinaire.'} },
-    { sym:'pic', t:{zh:'收尾：藏線頭與邊緣', en:'Finishing: ends and edges', fr:'Finitions : fils et bordures'}, abbr:'finishing',
+    { sym:'pic', t:{zh:'收尾：藏線頭與邊緣', en:'Finishing: ends and edges', fr:'Finitions : fils et bordures'}, abbr:'finishing', vid:'finish',
       p:{zh:'用毛線縫針把線頭穿回織片內部，順著針目走向來回穿三次以上再剪斷。邊緣鉤一圈短針會立刻讓作品變挺；加上狗牙針則能做出蕾絲感的裝飾邊。',
          en:'Thread each tail onto a tapestry needle and run it back through the fabric along the line of the stitches, reversing direction at least three times before you cut. A single round of single crochet around the edge instantly makes a piece look finished; add picots and you have a decorative lace edging.',
          fr:'Enfilez chaque fil sur une aiguille à laine et faites-le cheminer dans le tissu en suivant les mailles, en changeant de sens au moins trois fois avant de couper. Un simple tour de mailles serrées sur le pourtour donne aussitôt un air fini ; ajoutez des picots et vous obtenez une bordure de dentelle.'},
       tip:{zh:'不要打結。結會在洗滌後凸出表面，而且比穿回去的線更容易鬆脫。',
            en:'Do not knot the ends. A knot works its way to the surface after washing, and it comes undone more readily than a tail that has been woven in.',
            fr:'Ne faites pas de nœud. Un nœud remonte à la surface au lavage et se défait plus facilement qu’un fil rentré.'} },
-    { sym:'sl', t:{zh:'拆線與修正', en:'Undoing and fixing', fr:'Défaire et corriger'}, abbr:'frogging',
+    { sym:'sl', t:{zh:'拆線與修正', en:'Undoing and fixing', fr:'Défaire et corriger'}, abbr:'frogging', vid:'frog',
       p:{zh:'鉤織最大的優點是拆起來乾淨：抽掉鉤針直接拉線，整排會順順地解開。發現錯誤的針目在下面幾排時，拆到那裡重鉤幾乎總是比想辦法補救快。',
          en:'The great mercy of crochet is that it comes undone cleanly: slip the hook out and pull, and the row unravels in one smooth pass. When you find a wrong stitch several rows down, ripping back to it is almost always faster than any attempt to patch it.',
          fr:'Le grand avantage du crochet est qu’il se défait proprement : retirez le crochet, tirez, et le rang se dénoue d’un seul trait. Quand une maille fautive se trouve plusieurs rangs plus bas, détricoter jusqu’à elle est presque toujours plus rapide que toute rustine.'},
@@ -606,6 +672,147 @@ const CN_EXAMPLE = [
 /* ═══════════════════════════════════════════════════════════
    Renderers
    ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   Video demonstrations
+
+   A symbol chart is a record of the result. It cannot show the
+   angle of the hook, the moment the yarn is caught, or how much
+   tension a hand is holding, and those are exactly what a
+   beginner is missing. So every stitch carries a film.
+
+   The films are on YouTube and are other people's work, chosen
+   for slow hands, a camera that shows the hook, and narration in
+   the reader's own language. Where no good one was found for a
+   language, the card offers a live search for that stitch
+   instead, so the reader is never sent to a dead end. If a video
+   is later taken down its thumbnail fails to load, and the card
+   turns itself into that same search.
+   ═══════════════════════════════════════════════════════════ */
+const VIDEOS = {
+  hold: { q:{zh:'鉤針 持線 手勢 新手 教學', en:'how to hold crochet hook and yarn beginner', fr:'comment tenir le crochet et le fil débutant'},
+    zh:{v:'Ffo8EFM0-ZE', t:'新手向｜零基礎鉤織入門：鉤針手勢與持線'},
+    en:{v:'CByEVGk26EE', t:'4 Ways to Hold Your Yarn When Crocheting'},
+    fr:{v:'1NXrXrWuYew', t:'Apprendre à crocheter : les bases pour débuter'} },
+  ch: { q:{zh:'鉤針 起針 鎖針 新手 教學', en:'crochet slip knot and chain stitch tutorial', fr:'tuto crochet maille en l’air débutant'},
+    zh:{v:'-ajnMZR_jFI', t:'鉤針新手 101：從０開始織織', c:'織女彤彤'},
+    en:{v:'Zzyylyls6KE', t:'How to Slip Knot and Chain, Crochet Lesson 1'},
+    fr:{v:'ofheUMiMHAA', t:'Cours au crochet : maille en l’air, maille serrée, demi-bride, bride'} },
+  sl: { q:{zh:'鉤針 引拔針 教學', en:'crochet slip stitch tutorial beginner', fr:'tuto crochet maille coulée débutant'},
+    zh:{v:'FNcmHCwtt70', t:'勾針基礎針法：起針、鎖鍊、短針、長針、環形起針、加減針、換線、收線'},
+    en:{v:'tIlYkk8SAyk', t:'Slip Stitch Crochet Tutorial for Beginners'} },
+  sc: { q:{zh:'鉤針 短針 基礎 教學', en:'how to single crochet tutorial beginner', fr:'tuto crochet maille serrée débutant'},
+    zh:{v:'vhU7dMmlfV0', t:'鉤針編織短針基礎教學：詳細新手入門示範'},
+    en:{v:'QfwMViQoYBA', t:'Learn How to Crochet: Slip Knot, Chain, Single Crochet'},
+    fr:{v:'O55XneDLTeQ', t:'Comment faire une maille serrée au crochet ?'} },
+  hdc: { q:{zh:'鉤針 中長針 教學', en:'how to half double crochet tutorial', fr:'tuto crochet demi-bride débutant'},
+    zh:{v:'1EC12TtIZq4', t:'新手向｜零基礎鈎織入門：中長針、長針、換線'},
+    en:{v:'CFKfOKZljpw', t:'Half Double Crochet, Double Crochet, and Treble Crochet'},
+    fr:{v:'8xpFkeFm5gQ', t:'Tuto crochet pour débutant total : la demi-bride'} },
+  dc: { q:{zh:'鉤針 長針 教學', en:'how to double crochet tutorial beginner', fr:'tuto crochet bride débutant'},
+    zh:{v:'1EC12TtIZq4', t:'新手向｜零基礎鈎織入門：中長針、長針、換線'},
+    en:{v:'CFKfOKZljpw', t:'Half Double Crochet, Double Crochet, and Treble Crochet'},
+    fr:{v:'5V4o_caPSbY', t:'Tuto crochet : les points principaux, de la maille serrée à la double bride'} },
+  tr: { q:{zh:'鉤針 長長針 教學', en:'how to treble crochet tutorial', fr:'tuto crochet double bride'},
+    zh:{v:'iMd-lwj3y5A', t:'鉤針新手 102：短針、中長針、長針、長長針與符號介紹', c:'織女彤彤'},
+    en:{v:'CFKfOKZljpw', t:'Half Double Crochet, Double Crochet, and Treble Crochet'},
+    fr:{v:'ofheUMiMHAA', t:'Cours au crochet : maille en l’air, maille serrée, demi-bride, bride, double bride'} },
+  inc: { q:{zh:'鉤針 加針 教學', en:'crochet increase tutorial amigurumi', fr:'tuto crochet augmentation'},
+    zh:{v:'82WF4_y1dyE', t:'鉤針新手：基礎環形起針、短針加針和減針'},
+    en:{v:'G5xU-aK1gMU', t:'How to Increase and Decrease for Crochet, Ami 101'} },
+  dec: { q:{zh:'鉤針 減針 隱形減針 教學', en:'crochet invisible decrease amigurumi tutorial', fr:'tuto crochet diminution invisible amigurumi'},
+    zh:{v:'82WF4_y1dyE', t:'鉤針新手：基礎環形起針、短針加針和減針'},
+    en:{v:'OUBbOZ1Ennk', t:'Invisible Decrease for Amigurumi', c:'June Gilbank, PlanetJune'} },
+  ring: { q:{zh:'鉤針 輪狀起針 魔術環 教學', en:'how to crochet a magic ring tutorial', fr:'tuto crochet cercle magique débutant'},
+    zh:{v:'82WF4_y1dyE', t:'鉤針新手：基礎環形起針、短針加針和減針'},
+    en:{v:'z_CS3TUADYg', t:'Easy Way to Do a Magic Ring for Crochet'},
+    fr:{v:'nRYHN6Mo8UQ', t:'Cours de crochet n° 10 : le cercle magique'} },
+  blo: { q:{zh:'鉤針 挑後段 BLO 教學', en:'crochet back loop only front loop only tutorial', fr:'tuto crochet brin avant brin arrière'},
+    en:{v:'Ouo6bI9x1Sw', t:'Back Loop Only and Front Loop Only, US Terminology'} },
+  shell: { q:{zh:'鉤針 貝殼針 教學', en:'crochet shell stitch tutorial beginner', fr:'tuto crochet point éventail débutant'} },
+  bob: { q:{zh:'鉤針 玉編 爆米花針 教學', en:'crochet bobble stitch tutorial beginner', fr:'tuto crochet point boule débutant'},
+    en:{v:'eNglcUXkZb4', t:'Bobble Stitch Crochet Tutorial, Step by Step'} },
+  gauge: { q:{zh:'鉤針 密度 試片 怎麼量', en:'crochet gauge swatch how to measure tutorial', fr:'échantillon au crochet comment mesurer'} },
+  sphere: { q:{zh:'鉤針 玩偶 球體 教學', en:'how to crochet an amigurumi ball sphere tutorial', fr:'tuto crochet boule amigurumi'},
+    en:{v:'gBtamS68EPE', t:'How to Crochet a Ball, Amigurumi for Beginners, Step by Step Slowly'},
+    fr:{v:'Gqc7-F6dGcg', t:'Tuto crochet : cercle magique et maille serrée, amigurumi'} },
+  filet: { q:{zh:'方格編 鉤針 教學', en:'filet crochet tutorial for beginners', fr:'tuto crochet filet débutant'} },
+  tunisian: { q:{zh:'阿富汗針 鉤針 教學', en:'tunisian crochet tutorial for beginners', fr:'tuto crochet tunisien débutant'} },
+  finish: { q:{zh:'鉤針 藏線頭 收尾 教學', en:'crochet fasten off and weave in ends tutorial', fr:'tuto crochet rentrer les fils finitions'},
+    zh:{v:'FNcmHCwtt70', t:'勾針基礎針法：起針、鎖鍊、短針、長針、環形起針、加減針、換線、收線'},
+    en:{v:'8tSUnkXvStY', t:'How to Fasten Off and Weave in Ends'} },
+  frog: { q:{zh:'鉤針 拆線 補救 教學', en:'how to frog crochet undo rows tutorial', fr:'défaire son ouvrage au crochet tutoriel'} },
+};
+
+/* The four films worth watching before reading anything else */
+const PRIMER = ['hold','ch','sc','ring'];
+
+function vidSearchUrl(key) {
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(t(VIDEOS[key].q));
+}
+function vidMiss(key, label) {
+  return '<a class="vid-miss" href="' + vidSearchUrl(key) + '" target="_blank" rel="noopener">'
+       + '<i class="fa-brands fa-youtube"></i><span>' + label + '</span></a>';
+}
+/* A strip under a stitch card: thumbnail, kicker, title. */
+function vidStrip(key) {
+  const g = VIDEOS[key]; if (!g) return '';
+  const e = g[LANG];
+  if (!e) return vidMiss(key, ui('vid.search'));
+  return '<button type="button" class="vid-strip" data-vk="' + esc(key) + '"'
+    + ' onclick="openVid(\'' + esc(key) + '\')">'
+    + '<span class="vid-th"><img loading="lazy" alt="" onerror="vidDead(this)"'
+    +   ' src="https://i.ytimg.com/vi/' + esc(e.v) + '/mqdefault.jpg">'
+    +   '<i class="fa-solid fa-play"></i></span>'
+    + '<span class="vid-meta"><span class="vid-kicker">' + ui('vid.watch') + '</span>'
+    +   '<span class="vid-title">' + esc(e.t) + '</span></span></button>';
+}
+/* A larger card for the opening section */
+function vidCard(key, step) {
+  const g = VIDEOS[key], e = g && g[LANG];
+  if (!e) return '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5">'
+    + '<span class="vid-kicker">' + esc(step) + '</span>' + vidMiss(key, ui('vid.search')) + '</div>';
+  return '<button type="button" class="vid-big reveal" data-vk="' + esc(key) + '"'
+    + ' onclick="openVid(\'' + esc(key) + '\')">'
+    + '<span class="th"><img loading="lazy" alt="" onerror="vidDead(this)"'
+    +   ' src="https://i.ytimg.com/vi/' + esc(e.v) + '/hqdefault.jpg">'
+    +   '<i class="fa-solid fa-play"></i></span>'
+    + '<span class="bd"><span class="st">' + esc(step) + '</span>'
+    +   '<span class="tt">' + esc(e.t) + '</span></span></button>';
+}
+/* A thumbnail that will not load means the video is gone. Swap the
+   card for a live search rather than leaving a broken player. */
+function vidDead(img) {
+  const b = img.closest('.vid-strip, .vid-big'); if (!b) return;
+  const a = document.createElement('a');
+  a.href = vidSearchUrl(b.dataset.vk); a.target = '_blank'; a.rel = 'noopener';
+  a.className = 'vid-miss';
+  a.innerHTML = '<i class="fa-brands fa-youtube"></i><span>' + ui('vid.gone') + '</span>';
+  b.replaceWith(a);
+}
+function openVid(key) {
+  const g = VIDEOS[key], e = g && g[LANG]; if (!e) return;
+  document.getElementById('lb-body').innerHTML =
+      '<div class="vid-frame"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(e.v) + '?rel=0"'
+    +   ' title="' + esc(e.t) + '" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"'
+    +   ' allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe></div>'
+    + '<div style="padding:1.25rem 1.25rem 1.5rem">'
+    +   '<h3 class="text-base font-black text-white leading-snug">' + esc(e.t) + '</h3>'
+    +   (e.c ? '<p class="text-xs text-slate-500 mt-1">' + esc(e.c) + '</p>' : '')
+    +   '<p class="text-xs text-slate-500 leading-relaxed mt-3">' + ui('vid.note') + '</p>'
+    +   '<div class="flex flex-wrap gap-2 mt-4">'
+    +     '<a class="vid-link" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v='
+    +       esc(e.v) + '"><i class="fa-brands fa-youtube" style="margin-right:.4rem"></i>' + ui('vid.open') + '</a>'
+    +     '<a class="vid-link" target="_blank" rel="noopener" href="' + vidSearchUrl(key) + '">'
+    +       '<i class="fa-solid fa-magnifying-glass" style="margin-right:.4rem"></i>' + ui('vid.more') + '</a>'
+    +   '</div></div>';
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function renderVideos() {
+  document.getElementById('vid-grid').innerHTML =
+    PRIMER.map((k, i) => vidCard(k, ui('vid.step').replace('%d', i + 1))).join('');
+}
+
 const TONE = {
   teal:  ['text-teal-300','text-teal-400','bg-teal-500/10','border-teal-500/20','shadow-glow-teal','rgba(45,212,191,0.14)','rgba(45,212,191,0.4)'],
   amber: ['text-amber-300','text-amber-400','bg-amber-500/10','border-amber-500/20','shadow-glow-amber','rgba(245,158,11,0.14)','rgba(245,158,11,0.4)'],
@@ -678,6 +885,7 @@ function renderLevels() {
       +           '<i class="fa-solid fa-lightbulb mr-1"></i>' + ui('tipLabel') + '</span>'
       +         '<p class="text-xs text-slate-300 leading-relaxed mt-1">' + t(it.tip) + '</p>'
       +       '</div>'
+      +       vidStrip(it.vid)
       +     '</div>'
       +   '</div>'
       + '</div>').join('');
@@ -766,7 +974,9 @@ function armReveals(root) {
   }
   els.forEach((e, i) => { if (!e.classList.contains('in')) { e.dataset.i = i % 5; revealObserver.observe(e); } });
 }
-function closeLb(){ document.getElementById('lb').classList.remove('open'); document.body.style.overflow=''; }
+function closeLb(){ document.getElementById('lb').classList.remove('open');
+  document.getElementById('lb-body').innerHTML = '';  /* stops the film playing */
+  document.body.style.overflow=''; }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
 /* ═══════════════════════════════════════════════════════════
@@ -776,7 +986,13 @@ const I18N = {
 zh:{
  'doc.title':'鉤針編織圖譜 | 從入門到進階',
  'hdr.badge':'鉤針編織教學','hdr.title':'鉤針編織：從入門到進階',
- 'nav.start':'工具','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.cn':'字母記號','nav.ref':'對照表',
+ 'nav.start':'工具','nav.vid':'影片','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.cn':'字母記號','nav.ref':'對照表',
+ 'vid.eyebrow':'看著做','vid.h2':'影片示範',
+ 'vid.lead':'圖解告訴您<strong class="text-white">結果長什麼樣</strong>，影片告訴您<strong class="text-white">手要怎麼動</strong>。後面這件事文字寫不清楚，所以後面每一種針法旁邊都放了一支示範影片，點開就直接在這一頁播放。先看完下面這四支，再回頭讀符號，會輕鬆很多。',
+ 'vid.note':'影片來自 YouTube，是別人拍的，不是本站製作。挑選標準是講解清楚、動作夠慢、鏡頭真的看得到鉤針，並且盡量選用跟您目前閱讀語言相同的解說。播放需要網路連線；如果哪一支被下架了，那張卡片會自動換成搜尋連結。',
+ 'vid.step':'第 %d 步','vid.watch':'示範影片',
+ 'vid.open':'在 YouTube 開啟','vid.more':'找更多示範',
+ 'vid.search':'搜尋示範影片','vid.gone':'影片已失效，改用搜尋',
  'cn.eyebrow':'另一套記號','cn.h2':'中文圈的字母記號（小紅書、微博常見）',
  'cn.lead':'如果您在中文的社群平台上看鉤針教學，看到的多半<strong class="text-white">不是</strong>前面那種畫出來的符號圖，而是一串字母，例如「6(X,V)」。這是另一套並行的記號系統，兩套都值得會看。中文圈的玩偶圖解幾乎全部用字母，日系書籍與歐美蕾絲則用符號圖。',
  'cn.h.tbl':'字母對照','cn.p.tbl':'字母的形狀本身就是助記：V 像兩針從一點分開，A 像兩針收成一點。',
@@ -800,7 +1016,13 @@ zh:{
 en:{
  'doc.title':'Crochet, Beginner to Advanced',
  'hdr.badge':'CROCHET TUTORIAL','hdr.title':'Crochet: Beginner to Advanced',
- 'nav.start':'Kit','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.cn':'Letter notation','nav.ref':'Reference',
+ 'nav.start':'Kit','nav.vid':'Video','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.cn':'Letter notation','nav.ref':'Reference',
+ 'vid.eyebrow':'Watch and copy','vid.h2':'Video demonstrations',
+ 'vid.lead':'A chart tells you <strong class="text-white">what the result should look like</strong>. A film tells you <strong class="text-white">what your hands actually do</strong>. Words are bad at the second, so every stitch below carries a demonstration that plays here on the page. Watch these four first and the symbols will read far more easily afterwards.',
+ 'vid.note':'The films are hosted on YouTube and were made by other crocheters, not by us. They were chosen for clear narration, slow hands, and a camera angle that really shows the hook, in the language you are reading wherever one was available. Playback needs a connection. If one is ever taken down, its card turns itself into a search.',
+ 'vid.step':'Step %d','vid.watch':'Demonstration',
+ 'vid.open':'Open on YouTube','vid.more':'Find more',
+ 'vid.search':'Search for a demonstration','vid.gone':'Video gone, search instead',
  'cn.eyebrow':'The other notation','cn.h2':'The letter notation used across Chinese-language patterns',
  'cn.lead':'If you follow crochet tutorials on Chinese social platforms, what you meet is usually <strong class="text-white">not</strong> the drawn charts above but a string of letters such as “6(X,V)”. It is a parallel system, and both are worth being able to read. Chinese-language amigurumi patterns are written almost entirely in letters, while Japanese books and European lace use symbol charts.',
  'cn.h.tbl':'The letters','cn.p.tbl':'The letter shapes are the mnemonic: V is two stitches splitting from one point, A is two stitches closing to one.',
@@ -824,7 +1046,13 @@ en:{
 fr:{
  'doc.title':'Le crochet, du débutant à l’avancé',
  'hdr.badge':'TUTORIEL DE CROCHET','hdr.title':'Le crochet : du débutant à l’avancé',
- 'nav.start':'Matériel','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.cn':'Notation par lettres','nav.ref':'Références',
+ 'nav.start':'Matériel','nav.vid':'Vidéo','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.cn':'Notation par lettres','nav.ref':'Références',
+ 'vid.eyebrow':'Regarder et refaire','vid.h2':'Démonstrations en vidéo',
+ 'vid.lead':'Un diagramme montre <strong class="text-white">à quoi doit ressembler le résultat</strong>. Un film montre <strong class="text-white">ce que font réellement les mains</strong>. Les mots rendent mal la seconde chose, donc chaque maille ci-dessous porte une démonstration qui se lit directement sur la page. Regardez ces quatre-là en premier : les symboles se liront ensuite bien plus facilement.',
+ 'vid.note':'Les films sont hébergés sur YouTube et ont été réalisés par d’autres crocheteuses et crocheteurs, pas par nous. Ils ont été retenus pour la clarté des explications, la lenteur des gestes et un cadrage qui montre vraiment le crochet, dans la langue que vous lisez chaque fois que c’était possible. La lecture demande une connexion. Si l’un d’eux disparaît, sa carte se transforme d’elle-même en recherche.',
+ 'vid.step':'Étape %d','vid.watch':'Démonstration',
+ 'vid.open':'Ouvrir sur YouTube','vid.more':'En trouver d’autres',
+ 'vid.search':'Chercher une démonstration','vid.gone':'Vidéo indisponible, lancer une recherche',
  'cn.eyebrow':'L’autre notation','cn.h2':'La notation par lettres des modèles en chinois',
  'cn.lead':'Si vous suivez des tutoriels de crochet sur les réseaux chinois, ce que vous rencontrez n’est généralement <strong class="text-white">pas</strong> les diagrammes dessinés ci-dessus mais une suite de lettres, du type « 6(X,V) ». C’est un système parallèle, et il vaut mieux savoir lire les deux. Les modèles d’amigurumi en chinois s’écrivent presque uniquement en lettres, tandis que les livres japonais et la dentelle européenne emploient les diagrammes.',
  'cn.h.tbl':'Les lettres','cn.p.tbl':'La forme des lettres sert de mémo : le V, deux mailles qui divergent d’un point ; le A, deux mailles qui se referment.',
@@ -863,6 +1091,7 @@ function setLanguage(lang) {
     const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
   });
   renderTools();
+  renderVideos();
   renderLevels();
   renderCN();
   renderRef();
