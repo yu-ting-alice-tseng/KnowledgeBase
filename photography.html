@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>攝影圖譜 | 相機、曝光與修圖</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] },
+    boxShadow: {
+      'glow-cyan':   '0 0 20px rgba(34,211,238,0.30)',
+      'glow-amber':  '0 0 20px rgba(245,158,11,0.30)',
+      'glow-sky':    '0 0 20px rgba(2,132,199,0.30)',
+      'glow-red':    '0 0 20px rgba(239,68,68,0.30)',
+      'glow-violet': '0 0 20px rgba(167,139,250,0.30)',
+    } } } }
+</script>
+<style>
+  body {
+    background-color: #07090b;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(34,211,238,0.07) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(245,158,11,0.05) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(167,139,250,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+
+  /* ── Diagrams ──
+     Drawn rather than photographed. Every scale here is computed from
+     the optics (stops, field of view, sensor size), so the picture is
+     the number, not an impression of it. */
+  .dg { display: block; width: 100%; height: auto;
+        background: #0b0f13; border-radius: 1rem; border: 1px solid rgba(148,163,184,0.16); }
+  .dg .body  { fill: #1e293b; stroke: #475569; stroke-width: 3; }
+  .dg .barrel{ fill: #172030; stroke: #475569; stroke-width: 3; }
+  .dg .glass { fill: rgba(103,232,249,0.16); stroke: #67e8f9; stroke-width: 2.5; }
+  .dg .blade { stroke: #fbbf24; stroke-width: 6; stroke-linecap: round; }
+  .dg .sensor{ fill: #a78bfa; }
+  .dg .shut  { stroke: #f87171; stroke-width: 4; }
+  .dg .ray   { stroke: rgba(253,230,138,0.55); stroke-width: 1.6; fill: none; }
+  .dg .call  { fill: none; stroke: #38bdf8; stroke-width: 2; stroke-dasharray: 5 5; }
+  .dg .lab   { fill: #7dd3fc; font-size: 19px; font-weight: 700; font-family: Nunito, 'Noto Serif TC', sans-serif; }
+  .dg .sub   { fill: #94a3b8; font-size: 15px; font-family: Nunito, 'Noto Serif TC', sans-serif; }
+  .dg .val   { fill: #f1f5f9; font-size: 17px; font-weight: 800; font-family: Nunito, sans-serif; }
+  .dg .grid  { stroke: rgba(148,163,184,0.18); stroke-width: 1.5; fill: none; }
+  .dg .axis  { stroke: rgba(148,163,184,0.45); stroke-width: 2; fill: none; }
+
+  .lvl-pill { display:inline-block; padding:.15rem .6rem; border-radius:9999px;
+              font-size:.6rem; font-weight:900; letter-spacing:.1em; }
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-cyan-400 selection:text-black">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(34,211,238,0.12) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(245,158,11,0.08) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#07090b]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-amber-400 to-violet-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#07090b] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-camera text-cyan-300 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-cyan-300 uppercase bg-cyan-500/10 rounded-full border border-cyan-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav class="flex flex-wrap gap-2 text-xs">
+        <a href="#camera"   data-i18n="nav.cam"  class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition-colors"></a>
+        <a href="#exposure" data-i18n="nav.exp"  class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition-colors"></a>
+        <a href="#basics"   data-i18n="nav.p1"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
+        <a href="#inter"    data-i18n="nav.p2"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors"></a>
+        <a href="#adv"      data-i18n="nav.p3"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-red-500/50 hover:text-red-300 transition-colors"></a>
+        <a href="#edit"     data-i18n="nav.edit" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors"></a>
+        <a href="#ref"      data-i18n="nav.ref"  class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors"></a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <section id="camera" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-cyan-500/10 rounded-2xl text-cyan-300 border border-cyan-500/20 shadow-glow-cyan"><i class="fa-solid fa-camera-retro text-xl"></i></div>
+      <div>
+        <span data-i18n="cam.eyebrow" class="text-xs uppercase tracking-wider text-cyan-400 font-bold"></span>
+        <h2 data-i18n="cam.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <p data-i18n="cam.lead" class="text-slate-300 leading-relaxed"></p>
+      <div id="anat"></div>
+      <div id="parts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      <div class="rounded-2xl border border-violet-500/25 bg-violet-500/[0.06] p-5">
+        <h3 data-i18n="cam.h.sensor" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="cam.p.sensor" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="sensor-dia"></div>
+      </div>
+      <div id="types-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+    </div>
+  </section>
+
+  <section id="exposure" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-cyan-500/10 rounded-2xl text-cyan-300 border border-cyan-500/20 shadow-glow-cyan"><i class="fa-solid fa-sun text-xl"></i></div>
+      <div>
+        <span data-i18n="exp.eyebrow" class="text-xs uppercase tracking-wider text-cyan-400 font-bold"></span>
+        <h2 data-i18n="exp.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <p data-i18n="exp.lead" class="text-slate-300 leading-relaxed"></p>
+      <div id="scales"></div>
+      <div id="exp-notes" class="grid md:grid-cols-3 gap-3"></div>
+      <div class="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-5">
+        <h3 data-i18n="exp.h.ap" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="exp.p.ap" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="aperture-dia"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="levels" class="space-y-12"></div>
+
+  <section id="edit" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-violet-500/10 rounded-2xl text-violet-300 border border-violet-500/20 shadow-glow-violet"><i class="fa-solid fa-sliders text-xl"></i></div>
+      <div>
+        <span class="lvl-pill text-violet-300" style="background:rgba(167,139,250,0.14)">LEVEL 4</span>
+        <h2 data-i18n="edit.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <p data-i18n="edit.lead" class="text-slate-300 leading-relaxed"></p>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="edit.h.hist" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="edit.p.hist" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="hist-dia"></div>
+      </div>
+      <div>
+        <h3 data-i18n="edit.h.flow" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="edit.p.flow" class="text-sm text-slate-400 leading-relaxed mb-4"></p>
+        <ol id="flow" class="grid md:grid-cols-2 gap-3"></ol>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="edit.h.curve" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="edit.p.curve" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="curve-dia"></div>
+      </div>
+      <div>
+        <h3 data-i18n="edit.h.local" class="text-base font-black text-white mb-4"></h3>
+        <div id="local-grid" class="grid md:grid-cols-2 gap-4"></div>
+      </div>
+      <div class="rounded-2xl border border-red-500/25 bg-red-500/[0.06] p-5">
+        <h3 data-i18n="edit.h.over" class="text-base font-black text-white mb-3"></h3>
+        <ul id="over-list" class="grid md:grid-cols-2 gap-x-6 gap-y-2 text-sm text-slate-300"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="ref" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-400 border border-emerald-500/20"><i class="fa-solid fa-table-list text-xl"></i></div>
+      <div>
+        <span data-i18n="ref.eyebrow" class="text-xs uppercase tracking-wider text-emerald-400 font-bold"></span>
+        <h2 data-i18n="ref.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="space-y-6">
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.eq" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.eq" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[640px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="ref.eq.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.eq.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.eq.th2" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.eq.th3" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="eq-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.fl" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.fl" class="text-xs text-slate-500 mb-4"></p>
+        <div id="fov-dia" class="mb-5"></div>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[680px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="ref.fl.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.fl.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.fl.th2" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.fl.th3" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="fl-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.scene" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.scene" class="text-xs text-slate-500 mb-4"></p>
+        <div class="table-scroll overflow-x-auto">
+          <table class="w-full text-sm min-w-[820px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="ref.sc.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.sc.th1" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.sc.th2" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.sc.th3" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="ref.sc.th4" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="scene-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.wb" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.wb" class="text-xs text-slate-500 mb-4"></p>
+        <div id="wb-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+      <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 border border-slate-900">
+        <h3 data-i18n="ref.h.rule" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="ref.p.rule" class="text-xs text-slate-500 mb-4"></p>
+        <div id="rule-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function f1(x){ return (Math.round(x * 10) / 10).toString(); }
+
+/* ═══════════════════════════════════════════════════════════
+   Camera anatomy: a mirrorless body and lens in cross-section.
+   Light enters at the left, passes the glass and the aperture,
+   waits behind the shutter, and lands on the sensor.
+   ═══════════════════════════════════════════════════════════ */
+const PARTS = [
+  { k:'lens', t:{zh:'鏡頭與鏡片組', en:'Lens and its elements', fr:'L’objectif et ses lentilles'},
+    p:{zh:'一組玻璃鏡片把光線聚焦到感光元件上。焦距（例如 50mm）決定視角，鏡片品質決定銳利度與色散。對畫質的影響常常比機身還大。',
+       en:'A group of glass elements that brings light to a focus on the sensor. The focal length (50mm, say) fixes the angle of view; the quality of the glass decides sharpness and colour fringing. It often matters more to image quality than the body does.',
+       fr:'Un groupe de lentilles qui fait converger la lumière sur le capteur. La focale (50 mm par exemple) fixe l’angle de champ ; la qualité du verre décide du piqué et des franges colorées. Elle compte souvent plus que le boîtier pour la qualité d’image.'} },
+  { k:'ap', t:{zh:'光圈葉片', en:'Aperture blades', fr:'Les lamelles du diaphragme'},
+    p:{zh:'位於鏡頭內，一圈可以開合的金屬葉片。開大進光多、景深淺；縮小進光少、景深深。以 f 值表示，數字越小開口越大。',
+       en:'A ring of metal blades inside the lens that opens and closes. Wide open lets in more light and gives shallow depth of field; stopped down gives less light and more depth. It is written as an f-number, and the smaller the number, the bigger the hole.',
+       fr:'Une couronne de lamelles métalliques, dans l’objectif, qui s’ouvre et se ferme. Grand ouvert : plus de lumière, profondeur de champ réduite ; fermé : moins de lumière, plus de profondeur. On l’écrit en nombre f, et plus le nombre est petit, plus l’ouverture est grande.'} },
+  { k:'mount', t:{zh:'卡口', en:'Lens mount', fr:'La monture'},
+    p:{zh:'鏡頭與機身接合的位置。各品牌卡口不通用（Sony E、Canon RF、Nikon Z、Fujifilm X 等），買鏡頭前先確認卡口，轉接環能解決一部分但會犧牲對焦速度或功能。',
+       en:'Where lens and body lock together. Mounts are brand-specific (Sony E, Canon RF, Nikon Z, Fujifilm X and so on), so check the mount before buying glass. Adapters solve some cases, usually at the cost of focusing speed or features.',
+       fr:'Là où objectif et boîtier se verrouillent. Les montures sont propres à chaque marque (Sony E, Canon RF, Nikon Z, Fujifilm X…), vérifiez-la avant d’acheter un objectif. Les bagues d’adaptation dépannent, souvent au prix de la vitesse d’autofocus ou de certaines fonctions.'} },
+  { k:'shut', t:{zh:'快門', en:'Shutter', fr:'L’obturateur'},
+    p:{zh:'在感光元件前面的簾幕，決定光線照射多久。很多無反相機另有電子快門，完全無聲，但拍快速移動物體或在部分燈光下會出現變形與條紋。',
+       en:'A curtain in front of the sensor that decides how long light falls on it. Many mirrorless bodies also offer an electronic shutter, which is silent but can bend fast-moving subjects and band under some artificial lights.',
+       fr:'Un rideau devant le capteur qui décide combien de temps la lumière l’atteint. Beaucoup d’hybrides proposent aussi un obturateur électronique, silencieux, mais qui peut déformer les sujets rapides et produire des bandes sous certains éclairages.'} },
+  { k:'sensor', t:{zh:'感光元件', en:'Sensor', fr:'Le capteur'},
+    p:{zh:'把光轉成數位訊號的晶片，相當於底片。尺寸越大，同樣條件下雜訊越少、越容易拍出淺景深。這是機身最昂貴也最關鍵的部分。',
+       en:'The chip that turns light into a digital signal, the equivalent of film. A larger sensor gives less noise under the same conditions and makes shallow depth of field easier. It is the most expensive and most decisive part of the body.',
+       fr:'La puce qui convertit la lumière en signal numérique, l’équivalent du film. Plus il est grand, moins il y a de bruit à conditions égales et plus le flou d’arrière-plan est facile. C’est la pièce la plus chère et la plus déterminante du boîtier.'} },
+  { k:'evf', t:{zh:'觀景窗與螢幕', en:'Viewfinder and screen', fr:'Viseur et écran'},
+    p:{zh:'無反相機的電子觀景窗（EVF）會直接顯示曝光結果，所見即所得。單眼相機（DSLR）則是透過反光鏡與五稜鏡看到光學影像，看不到曝光預覽。',
+       en:'A mirrorless electronic viewfinder (EVF) shows the exposure as it will be recorded. A DSLR shows an optical image through its mirror and prism, which is lag-free but gives no exposure preview.',
+       fr:'Le viseur électronique (EVF) d’un hybride montre l’exposition telle qu’elle sera enregistrée. Un reflex montre une image optique via son miroir et son prisme, sans latence mais sans aperçu de l’exposition.'} },
+];
+
+function anatomy() {
+  const lab = k => t(PARTS.find(p => p.k === k).t);
+  const rays = [150, 175, 200, 225, 250].map(y =>
+    '<path class="ray" d="M20 ' + y + ' L170 ' + y + ' L300 ' + (200 + (y - 200) * 0.45) + ' L612 200"/>').join('');
+  return '<svg class="dg" viewBox="0 0 900 380" role="img" aria-label="' + esc(t({zh:'相機剖面圖', en:'Camera cross-section', fr:'Coupe d’un appareil photo'})) + '">'
+    /* body, viewfinder hump, grip */
+    + '<rect class="body" x="390" y="110" width="270" height="200" rx="18"/>'
+    + '<path class="body" d="M470 110 L490 62 L590 62 L610 110 Z"/>'
+    + '<rect class="body" x="660" y="130" width="46" height="180" rx="16"/>'
+    /* lens barrel and mount */
+    + '<rect class="barrel" x="140" y="120" width="245" height="160" rx="14"/>'
+    + '<rect x="380" y="128" width="16" height="144" fill="#94a3b8"/>'
+    + rays
+    /* glass elements */
+    + '<ellipse class="glass" cx="170" cy="200" rx="16" ry="72"/>'
+    + '<ellipse class="glass" cx="235" cy="200" rx="11" ry="60"/>'
+    + '<ellipse class="glass" cx="345" cy="200" rx="10" ry="52"/>'
+    /* aperture blades leave a gap in the middle */
+    + '<line class="blade" x1="295" y1="126" x2="295" y2="172"/>'
+    + '<line class="blade" x1="295" y1="228" x2="295" y2="274"/>'
+    /* shutter and sensor */
+    + '<line class="shut" x1="596" y1="140" x2="596" y2="260"/>'
+    + '<rect class="sensor" x="608" y="146" width="10" height="108" rx="2"/>'
+    /* EVF eyepiece */
+    + '<rect x="560" y="76" width="44" height="22" rx="4" fill="#0b0f13" stroke="#64748b" stroke-width="2"/>'
+    /* callouts */
+    + '<path class="call" d="M170 128 L170 44"/><text class="lab" x="170" y="34" text-anchor="middle">' + esc(lab('lens')) + '</text>'
+    + '<path class="call" d="M295 280 L295 344"/><text class="lab" x="295" y="368" text-anchor="middle">' + esc(lab('ap')) + '</text>'
+    + '<path class="call" d="M388 272 L440 344"/><text class="lab" x="450" y="368" text-anchor="middle">' + esc(lab('mount')) + '</text>'
+    + '<path class="call" d="M596 262 L596 344"/><text class="lab" x="600" y="368" text-anchor="middle">' + esc(lab('shut')) + '</text>'
+    + '<path class="call" d="M618 200 L760 200"/><text class="lab" x="770" y="206">' + esc(lab('sensor')) + '</text>'
+    + '<path class="call" d="M582 76 L582 40 L640 40"/><text class="lab" x="648" y="46">EVF</text>'
+    + '<text class="sub" x="22" y="134">' + esc(t({zh:'光線', en:'light', fr:'lumière'})) + ' →</text>'
+    + '</svg>';
+}
+
+/* Sensor formats, drawn to the same scale (mm). The crop factor is
+   computed from the diagonal against full frame's 43.27 mm. */
+const SENSORS = [
+  { n:{zh:'全片幅', en:'Full frame', fr:'Plein format'},  w:36,   h:24,  c:'#a78bfa' },
+  { n:'APS-C',                                             w:23.5, h:15.6,c:'#22d3ee' },
+  { n:'Micro 4/3',                                         w:17.3, h:13,  c:'#fbbf24' },
+  { n:'1″',                                                w:13.2, h:8.8, c:'#34d399' },
+  { n:{zh:'手機主鏡頭（約 1/1.3″）', en:'Phone main camera (≈1/1.3″)', fr:'Module principal de smartphone (≈1/1,3″)'}, w:9.6, h:7.2, c:'#f87171' },
+];
+const FF_DIAG = Math.hypot(36, 24);
+function sensorDiagram() {
+  const S = 9, x0 = 40, y0 = 30, H = 24 * S + 140;
+  const rects = SENSORS.map(s =>
+    '<rect x="' + x0 + '" y="' + (y0 + (24 - s.h) * S) + '" width="' + (s.w * S) + '" height="' + (s.h * S)
+    + '" fill="none" stroke="' + s.c + '" stroke-width="3"/>').join('');
+  const keys = SENSORS.map((s, i) => {
+    const crop = FF_DIAG / Math.hypot(s.w, s.h);
+    const y = y0 + 22 + i * 44;
+    return '<rect x="400" y="' + (y - 14) + '" width="18" height="18" rx="3" fill="' + s.c + '"/>'
+      + '<text class="val" x="430" y="' + y + '">' + esc(t(s.n)) + '</text>'
+      + '<text class="sub" x="430" y="' + (y + 20) + '">' + s.w + ' × ' + s.h + ' mm · '
+      + esc(t({zh:'等效係數', en:'crop', fr:'coefficient'})) + ' ×' + f1(crop) + '</text>';
+  }).join('');
+  return '<svg class="dg" viewBox="0 0 900 ' + H + '" role="img" aria-label="' + esc(t({zh:'感光元件尺寸比較', en:'Sensor sizes compared', fr:'Tailles de capteur comparées'})) + '">'
+    + rects + keys
+    + '<text class="sub" x="' + x0 + '" y="' + (y0 + 24 * S + 40) + '">'
+    + esc(t({zh:'以相同比例繪製，左下角對齊。', en:'Drawn to one scale, aligned at the lower-left corner.', fr:'Dessinés à la même échelle, alignés sur le coin inférieur gauche.'}))
+    + '</text></svg>';
+}
+
+const TYPES = [
+  { i:'fa-mobile-screen', t:{zh:'手機', en:'Phone', fr:'Smartphone'},
+    p:{zh:'感光元件最小，靠運算攝影（多張合成、AI 降噪）補足。日光下幾乎無敵，弱光、動態與真正的光學淺景深是極限。',
+       en:'The smallest sensor, made up for by computational photography (multi-frame stacking, AI noise reduction). Nearly unbeatable in daylight; its limits are low light, motion and true optical background blur.',
+       fr:'Le plus petit capteur, compensé par la photographie computationnelle (empilement d’images, débruitage par IA). Presque imbattable de jour ; ses limites sont la basse lumière, le mouvement et le vrai flou optique.'} },
+  { i:'fa-camera', t:{zh:'類單眼／隨身機', en:'Compact', fr:'Compact'},
+    p:{zh:'1 吋左右的元件加上固定鏡頭，體積小，手感與操控比手機完整。適合旅行與想學手動又不想換鏡頭的人。',
+       en:'Around a 1-inch sensor and a fixed lens. Small, but with real dials and handling. Good for travel, and for learning manual control without a bag of lenses.',
+       fr:'Un capteur d’environ 1 pouce et un objectif fixe. Petit, mais avec de vraies molettes. Idéal en voyage, et pour apprendre le manuel sans sac d’objectifs.'} },
+  { i:'fa-camera-retro', t:{zh:'無反光鏡相機', en:'Mirrorless', fr:'Hybride'},
+    p:{zh:'目前的主流。可換鏡頭、電子觀景窗所見即所得、對焦追蹤強。新手入門與專業工作都以這類為主。',
+       en:'Today’s mainstream. Interchangeable lenses, an electronic viewfinder that shows the real exposure, strong subject tracking. The default for both beginners and professionals.',
+       fr:'Le standard actuel. Objectifs interchangeables, viseur électronique montrant l’exposition réelle, suivi du sujet performant. Le choix par défaut, du débutant au professionnel.'} },
+  { i:'fa-camera', t:{zh:'數位單眼（DSLR）', en:'DSLR', fr:'Reflex'},
+    p:{zh:'有反光鏡與光學觀景窗，電池續航長。各品牌已停止開發新機，但二手鏡頭便宜，仍是預算有限時的好選擇。',
+       en:'Mirror and optical viewfinder, long battery life. The makers have stopped developing new models, but used lenses are cheap, which keeps it a sensible budget route.',
+       fr:'Miroir et viseur optique, grande autonomie. Les marques ne développent plus de nouveaux modèles, mais les objectifs d’occasion sont bon marché, ce qui en fait une voie raisonnable à petit budget.'} },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Exposure. One "stop" is a doubling or halving of light, and
+   each of the three controls is laid out in whole stops, with
+   the brighter end on the left.
+   ═══════════════════════════════════════════════════════════ */
+const SCALES = [
+  { k:{zh:'光圈', en:'Aperture', fr:'Ouverture'}, c:'#fbbf24',
+    v:['f/1.4','f/2','f/2.8','f/4','f/5.6','f/8','f/11','f/16','f/22'],
+    l:{zh:'景深淺、背景模糊', en:'shallow focus, blurred background', fr:'peu de profondeur, fond flou'},
+    r:{zh:'景深深、前後都清楚', en:'deep focus, front to back sharp', fr:'grande profondeur, tout est net'} },
+  { k:{zh:'快門', en:'Shutter', fr:'Vitesse'}, c:'#f87171',
+    v:['1/15','1/30','1/60','1/125','1/250','1/500','1/1000','1/2000','1/4000'],
+    l:{zh:'動態模糊、容易手震', en:'motion blur, camera shake', fr:'flou de bougé'},
+    r:{zh:'凍結動作', en:'frozen motion', fr:'mouvement figé'} },
+  { k:'ISO', c:'#a78bfa',
+    v:['25600','12800','6400','3200','1600','800','400','200','100'],
+    l:{zh:'雜訊多、細節少', en:'more noise, less detail', fr:'plus de bruit, moins de détail'},
+    r:{zh:'乾淨、動態範圍大', en:'clean, widest dynamic range', fr:'propre, dynamique maximale'} },
+];
+function scalesDiagram() {
+  const x0 = 170, dx = 82, rowH = 120, H = SCALES.length * rowH + 70;
+  let s = '<svg class="dg" viewBox="0 0 900 ' + H + '" role="img" aria-label="' + esc(t({zh:'曝光三要素刻度', en:'The three exposure scales', fr:'Les trois échelles d’exposition'})) + '">';
+  s += '<defs><linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#1e293b"/></linearGradient></defs>';
+  s += '<rect x="' + x0 + '" y="22" width="' + (dx * 8) + '" height="10" rx="5" fill="url(#lg)"/>';
+  s += '<text class="sub" x="' + x0 + '" y="54">← ' + esc(t({zh:'更亮', en:'brighter', fr:'plus clair'})) + '</text>';
+  s += '<text class="sub" x="' + (x0 + dx * 8) + '" y="54" text-anchor="end">' + esc(t({zh:'更暗', en:'darker', fr:'plus sombre'})) + ' →</text>';
+  SCALES.forEach((r, i) => {
+    const y = 100 + i * rowH;
+    s += '<text class="lab" x="24" y="' + (y + 6) + '" style="fill:' + r.c + '">' + esc(t(r.k)) + '</text>';
+    s += '<line x1="' + x0 + '" y1="' + y + '" x2="' + (x0 + dx * 8) + '" y2="' + y + '" stroke="' + r.c + '" stroke-opacity=".4" stroke-width="3"/>';
+    r.v.forEach((v, j) => {
+      const x = x0 + j * dx;
+      s += '<circle cx="' + x + '" cy="' + y + '" r="6" fill="' + r.c + '"/>';
+      s += '<text class="val" x="' + x + '" y="' + (y - 16) + '" text-anchor="middle" style="font-size:15px">' + v + '</text>';
+    });
+    s += '<text class="sub" x="' + x0 + '" y="' + (y + 34) + '">' + esc(t(r.l)) + '</text>';
+    s += '<text class="sub" x="' + (x0 + dx * 8) + '" y="' + (y + 34) + '" text-anchor="end">' + esc(t(r.r)) + '</text>';
+  });
+  s += '<text class="sub" x="24" y="' + (H - 18) + '">' + esc(t({
+    zh:'每一格都是一級（1 stop）：進光量差一倍。三條刻度可以互相抵換。',
+    en:'Each step is one stop: twice or half the light. The three scales trade against each other.',
+    fr:'Chaque pas vaut un diaphragme (1 IL) : deux fois plus ou moins de lumière. Les trois échelles se compensent.'})) + '</text>';
+  return s + '</svg>';
+}
+
+/* The opening's diameter is focal length ÷ N, so its area goes as 1/N².
+   Each full stop multiplies N by √2 and halves the area. */
+function apertureDiagram() {
+  const Ns = [2, 2.8, 4, 5.6, 8, 11, 16], K = 150, cy = 110;
+  let x = 30, s = '';
+  Ns.forEach(N => {
+    const r = K / N / 2 * 2.2;
+    x += Math.max(r, 14) + 16;
+    s += '<circle cx="' + x + '" cy="' + cy + '" r="' + r + '" fill="rgba(253,230,138,0.85)"/>'
+      +  '<circle cx="' + x + '" cy="' + cy + '" r="' + (r + 6) + '" fill="none" stroke="#475569" stroke-width="3"/>'
+      +  '<text class="val" x="' + x + '" y="' + (cy + 112) + '" text-anchor="middle">f/' + N + '</text>';
+    x += Math.max(r, 14) + 16;
+  });
+  const sc = 900 / Math.max(900, x + 20);
+  return '<svg class="dg" viewBox="0 0 900 260" role="img" aria-label="' + esc(t({zh:'光圈大小比較', en:'Aperture sizes compared', fr:'Ouvertures comparées'})) + '">'
+    + '<g transform="scale(' + sc + ')">' + s + '</g>'
+    + '<text class="sub" x="30" y="248">' + esc(t({
+      zh:'由左到右，每一格進光量減半。f 值是分母，所以數字越大，開口越小。',
+      en:'Left to right, each step lets in half the light. The f-number is a divisor, so a bigger number means a smaller opening.',
+      fr:'De gauche à droite, chaque pas laisse passer moitié moins de lumière. Le nombre f est un diviseur : plus il est grand, plus l’ouverture est petite.'})) + '</text></svg>';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Composition: the thirds grid, with the horizon on a line and
+   the subject on an intersection.
+   ═══════════════════════════════════════════════════════════ */
+function compDiagram() {
+  const X = 60, Y = 20, W = 480, H = 320;
+  return '<svg class="dg mt-4" viewBox="0 0 900 360" role="img" aria-label="' + esc(t({zh:'三分法構圖', en:'Rule of thirds', fr:'Règle des tiers'})) + '">'
+    + '<rect x="' + X + '" y="' + Y + '" width="' + W + '" height="' + H + '" fill="#0f1a24" stroke="#475569" stroke-width="3"/>'
+    + '<rect x="' + X + '" y="' + (Y + H * 2 / 3) + '" width="' + W + '" height="' + (H / 3) + '" fill="#13261d"/>'
+    + '<path d="M' + (X + 40) + ' ' + (Y + H) + ' L' + (X + W * 2 / 3) + ' ' + (Y + H * 2 / 3) + ' M' + (X + W - 10) + ' ' + (Y + H) + ' L' + (X + W * 2 / 3) + ' ' + (Y + H * 2 / 3) + '" stroke="#fbbf24" stroke-width="3" stroke-dasharray="8 6" fill="none"/>'
+    + '<path class="grid" d="M' + (X + W / 3) + ' ' + Y + ' V' + (Y + H) + ' M' + (X + W * 2 / 3) + ' ' + Y + ' V' + (Y + H)
+    + ' M' + X + ' ' + (Y + H / 3) + ' H' + (X + W) + ' M' + X + ' ' + (Y + H * 2 / 3) + ' H' + (X + W) + '" style="stroke:rgba(148,163,184,0.45)"/>'
+    + '<circle cx="' + (X + W * 2 / 3) + '" cy="' + (Y + H / 3) + '" r="26" fill="#fde68a"/>'
+    + [[1,1],[2,1],[1,2],[2,2]].map(p => '<circle cx="' + (X + W * p[0] / 3) + '" cy="' + (Y + H * p[1] / 3) + '" r="6" fill="none" stroke="#22d3ee" stroke-width="2.5"/>').join('')
+    + '<text class="lab" x="580" y="70">' + esc(t({zh:'主體放在交點', en:'Subject on an intersection', fr:'Sujet sur une intersection'})) + '</text>'
+    + '<text class="sub" x="580" y="94">' + esc(t({zh:'不放正中央，畫面才有方向', en:'off-centre gives the frame direction', fr:'décentré, le cadre prend une direction'})) + '</text>'
+    + '<text class="lab" x="580" y="160" style="fill:#86efac">' + esc(t({zh:'地平線放在三分線', en:'Horizon on a third', fr:'Horizon sur un tiers'})) + '</text>'
+    + '<text class="sub" x="580" y="184">' + esc(t({zh:'天空多或地面多，二選一', en:'choose: more sky or more ground', fr:'choisir : plus de ciel ou plus de sol'})) + '</text>'
+    + '<text class="lab" x="580" y="250" style="fill:#fbbf24">' + esc(t({zh:'引導線', en:'Leading lines', fr:'Lignes directrices'})) + '</text>'
+    + '<text class="sub" x="580" y="274">' + esc(t({zh:'道路、河流把視線帶向主體', en:'roads and rivers lead the eye in', fr:'routes et rivières guident le regard'})) + '</text>'
+    + '</svg>';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   The three levels of shooting
+   ═══════════════════════════════════════════════════════════ */
+const LEVELS = [
+{ id:'basics', tone:'amber', icon:'fa-seedling', n:1,
+  t:{zh:'第一部・入門：先拍到清楚的照片', en:'Part 1 · Beginner: getting a sharp picture', fr:'Partie 1 · Débutant : obtenir une image nette'},
+  lead:{zh:'入門階段的目標不是藝術，而是可靠：每一張都對到焦、不手震、亮度大致正確。做到這三件事，比任何器材升級都有效。這一部也帶入最基本的構圖與看光。',
+        en:'At the start the aim is reliability, not art: every frame in focus, free of shake, roughly well exposed. Getting those three right does more than any equipment upgrade. This part also introduces basic composition and how to look at light.',
+        fr:'Au début, le but est la fiabilité, pas l’art : chaque image nette, sans bougé, à peu près bien exposée. Réussir ces trois points vaut mieux que toute mise à niveau du matériel. Cette partie aborde aussi la composition de base et la lecture de la lumière.'},
+  items:[
+    { i:'fa-hand', t:{zh:'握持與站姿', en:'Holding the camera', fr:'Tenir l’appareil'},
+      p:{zh:'右手握住握把，左手掌心向上托住鏡頭底部，手肘收向身體。眼睛貼著觀景窗，相機就多了一個支點。按快門是「壓」，不是「戳」。',
+         en:'Right hand on the grip, left palm under the lens from below, elbows tucked into your sides. With your eye to the viewfinder the camera gains a third point of contact. Squeeze the shutter release; do not stab at it.',
+         fr:'Main droite sur la poignée, paume gauche sous l’objectif, coudes serrés contre le corps. L’œil au viseur ajoute un troisième point d’appui. Pressez le déclencheur, ne le frappez pas.'},
+      tip:{zh:'伸長手臂看螢幕拍，是最常見的手震來源。真的要用螢幕，就把手肘靠在身體或桌面上。',
+           en:'Shooting at arm’s length off the screen is the commonest source of shake. If you must use the screen, brace your elbows against your body or a table.',
+           fr:'Photographier bras tendus en regardant l’écran est la première cause de bougé. Si vous devez utiliser l’écran, calez les coudes contre le corps ou une table.'} },
+    { i:'fa-gauge-high', t:{zh:'模式轉盤：P、A、S、M', en:'The mode dial: P, A, S, M', fr:'Le barillet : P, A, S, M'},
+      p:{zh:'P 程式自動，相機決定光圈和快門；A（Canon 為 Av）光圈優先，你決定光圈；S（Canon 為 Tv）快門優先，你決定快門；M 全手動。入門建議直接從 A 模式開始，而不是全自動。',
+         en:'P is program: the camera picks both. A (Av on Canon) is aperture priority: you pick the aperture. S (Tv on Canon) is shutter priority: you pick the speed. M is full manual. Start in A rather than full auto.',
+         fr:'P est le programme : l’appareil choisit tout. A (Av chez Canon) est la priorité ouverture : vous choisissez le diaphragme. S (Tv chez Canon) est la priorité vitesse. M est le manuel. Commencez en A plutôt qu’en automatique intégral.'},
+      tip:{zh:'A 模式下相機會自動配快門。記得看一眼快門有沒有慢到手會震（見下方「安全快門」），太慢就把 ISO 調高。',
+           en:'In A the camera sets the shutter for you. Glance at it to make sure it has not dropped low enough to shake (see the safe shutter rule below); if it has, raise the ISO.',
+           fr:'En A, l’appareil règle la vitesse. Jetez-y un œil pour vérifier qu’elle n’est pas assez lente pour bouger (voir la règle de vitesse de sécurité) ; sinon, montez les ISO.'} },
+    { i:'fa-crosshairs', t:{zh:'對焦點：半按再全按', en:'Focus point: half-press, then press', fr:'Le collimateur : mi-course, puis à fond'},
+      p:{zh:'快門鈕半按是對焦，全按才是拍攝。把對焦點放在主體上（人像就放在眼睛），聽到嗶聲或看到綠框再按到底。現代相機大多有眼部偵測，記得打開。',
+         en:'Half-pressing the release focuses; pressing fully takes the picture. Put the focus point on the subject (on the eye, for a portrait), wait for the beep or the green box, then press through. Most modern cameras have eye detection; turn it on.',
+         fr:'Appuyer à mi-course fait la mise au point ; à fond, on déclenche. Placez le collimateur sur le sujet (sur l’œil pour un portrait), attendez le bip ou le cadre vert, puis enfoncez. La plupart des appareils récents détectent l’œil : activez-le.'},
+      tip:{zh:'照片「整張糊」是手震或主體在動；「背景清楚、人糊」是對焦點跑到背景。兩種要分開診斷。',
+           en:'If the whole frame is soft, it is shake or subject movement. If the background is sharp and the person is not, the focus point landed on the background. Diagnose them separately.',
+           fr:'Si toute l’image est floue, c’est du bougé ou un sujet en mouvement. Si le fond est net mais pas la personne, la mise au point est partie sur le fond. Deux diagnostics distincts.'} },
+    { i:'fa-table-cells', t:{zh:'三分法與引導線', en:'Thirds and leading lines', fr:'Tiers et lignes directrices'},
+      p:{zh:'把畫面用井字分成九格。主體放在交點、地平線放在橫線上，畫面立刻比置中穩定又有方向。再找一條線（道路、欄杆、河岸）把視線帶到主體。',
+         en:'Divide the frame into nine with two lines each way. Put the subject on an intersection and the horizon on a line, and the picture at once gains both balance and direction. Then find a line (a road, a railing, a riverbank) to carry the eye to the subject.',
+         fr:'Divisez le cadre en neuf par deux lignes dans chaque sens. Sujet sur une intersection, horizon sur une ligne : l’image gagne équilibre et direction. Cherchez ensuite une ligne (route, rambarde, berge) qui mène l’œil au sujet.'},
+      tip:{zh:'地平線歪了比構圖普通更顯眼。打開相機的水平儀或格線顯示，拍之前就處理，不要留給修圖。',
+           en:'A tilted horizon is more noticeable than an ordinary composition. Turn on the level or grid overlay and fix it in camera rather than leaving it to editing.',
+           fr:'Un horizon penché se voit plus qu’une composition banale. Activez le niveau ou la grille et corrigez à la prise de vue plutôt qu’au développement.'},
+      dia:'comp' },
+    { i:'fa-sun', t:{zh:'看光：方向與時間', en:'Reading light: direction and time', fr:'Lire la lumière : direction et heure'},
+      p:{zh:'順光平而無立體感，側光最能表現質感與輪廓，逆光會有髮絲光與光暈但臉容易暗。日出後與日落前的「黃金時刻」光線低、柔、暖；中午頂光最難處理。',
+         en:'Front light is flat, side light shows texture and shape best, back light gives rim light and flare but darkens faces. The golden hour after sunrise and before sunset is low, soft and warm; midday overhead light is the hardest.',
+         fr:'La lumière de face aplatit, la lumière latérale révèle le mieux texture et volume, le contre-jour donne un liseré et du flare mais assombrit les visages. L’heure dorée, après le lever et avant le coucher, est basse, douce et chaude ; le zénith de midi est le plus difficile.'},
+      tip:{zh:'中午拍人，把人移到陰影裡。陰影中的光是均勻的，比在太陽底下瞇眼好看得多。',
+           en:'At midday, move people into open shade. The light there is even, and far more flattering than squinting into the sun.',
+           fr:'À midi, placez les gens à l’ombre. La lumière y est homogène, et bien plus flatteuse que des yeux plissés au soleil.'} },
+    { i:'fa-images', t:{zh:'多拍、刪得狠', en:'Shoot more, delete harder', fr:'Déclenchez plus, triez plus durement'},
+      p:{zh:'同一個場景換位置、換高度、換焦距各拍幾張。蹲低或站高常常比換鏡頭更有效。回家後只留最好的，練的是判斷力。',
+         en:'For the same scene, shoot a few frames from another spot, another height, another focal length. Crouching or climbing often does more than a new lens. At home keep only the best; the training is in the judging.',
+         fr:'Pour une même scène, déclenchez depuis un autre point, une autre hauteur, une autre focale. S’accroupir ou monter fait souvent plus qu’un nouvel objectif. Au retour, ne gardez que les meilleures : c’est le jugement qu’on entraîne.'},
+      tip:{zh:'人眼的高度是最無聊的高度，因為大家每天都這樣看世界。',
+           en:'Eye level is the dullest height there is, because it is how everyone sees the world every day.',
+           fr:'La hauteur des yeux est la plus banale qui soit, puisque c’est ainsi que tout le monde voit le monde chaque jour.'} },
+  ] },
+{ id:'inter', tone:'sky', icon:'fa-camera', n:2,
+  t:{zh:'第二部・進階：讓曝光聽你的', en:'Part 2 · Intermediate: making exposure obey you', fr:'Partie 2 · Intermédiaire : maîtriser l’exposition'},
+  lead:{zh:'進階的關鍵是理解三要素各自的「副作用」。光圈管景深、快門管動態、ISO 管雜訊。選設定其實是在選你要哪種副作用，亮度只是附帶結果。',
+        en:'The key at this level is understanding each control’s side effect. Aperture governs depth of field, shutter governs motion, ISO governs noise. Choosing settings is really choosing which side effect you want; the brightness follows from that.',
+        fr:'La clé de ce niveau est de comprendre l’effet secondaire de chaque réglage. L’ouverture gouverne la profondeur de champ, la vitesse le mouvement, les ISO le bruit. Choisir ses réglages, c’est choisir l’effet voulu ; la luminosité en découle.'},
+  items:[
+    { i:'fa-circle-half-stroke', t:{zh:'景深的四個變數', en:'The four levers of depth of field', fr:'Les quatre leviers de la profondeur de champ'},
+      p:{zh:'背景模不模糊，不只看光圈。光圈越大、焦距越長、離主體越近、主體離背景越遠，背景就越模糊。85mm f/1.8 站近一點、讓人離牆遠一點，效果比單純開大光圈明顯得多。',
+         en:'Background blur is not only about aperture. A wider aperture, a longer focal length, a closer subject and a more distant background all add blur. An 85mm at f/1.8, standing closer, with the person well away from the wall, does far more than opening up alone.',
+         fr:'Le flou d’arrière-plan ne dépend pas que de l’ouverture. Ouverture plus grande, focale plus longue, sujet plus proche, fond plus éloigné : tout ajoute du flou. Un 85 mm à f/1,8, en s’approchant et en éloignant la personne du mur, fait bien plus qu’ouvrir seul.'},
+      tip:{zh:'f/1.4 拍團體照，常常只有第一排清楚。多人合照至少收到 f/4 以上。',
+           en:'At f/1.4 a group shot often has only the front row sharp. For several people, stop down to f/4 or more.',
+           fr:'À f/1,4, une photo de groupe n’a souvent que le premier rang net. Pour plusieurs personnes, fermez au moins à f/4.'} },
+    { i:'fa-person-running', t:{zh:'快門：凍結或拉出動態', en:'Shutter: freeze or show motion', fr:'Vitesse : figer ou montrer le mouvement'},
+      p:{zh:'走路的人約 1/250 秒、小孩跑跳 1/500、運動與飛鳥 1/1000 以上可凍結。反過來，1/15 秒跟著車子橫移（追焦）能讓背景拉成線條；三腳架加幾秒能讓流水變絲綢。',
+         en:'About 1/250 s freezes a walking person, 1/500 running children, 1/1000 or faster for sport and birds. The other way, panning with a car at 1/15 s streaks the background, and a few seconds on a tripod turns water to silk.',
+         fr:'Environ 1/250 s fige un piéton, 1/500 des enfants qui courent, 1/1000 et plus pour le sport et les oiseaux. À l’inverse, un filé à 1/15 s derrière une voiture étire le fond, et quelques secondes sur trépied rendent l’eau soyeuse.'},
+      tip:{zh:'動態模糊和手震模糊不一樣：前者只有移動的東西糊，後者是整張一起糊。',
+           en:'Motion blur and camera shake are different: in the first only the moving thing is soft, in the second the whole frame is.',
+           fr:'Flou de mouvement et flou de bougé diffèrent : dans le premier, seul ce qui bouge est flou ; dans le second, toute l’image.'} },
+    { i:'fa-grip-lines', t:{zh:'ISO：雜訊比糊掉好', en:'ISO: noise beats blur', fr:'ISO : le bruit vaut mieux que le flou'},
+      p:{zh:'ISO 放大訊號，代價是雜訊。現代機身 ISO 3200 甚至 6400 都可用，雜訊也能後製降掉；但手震或動態模糊救不回來。所以光線不足時，先確保快門，再讓 ISO 往上走。',
+         en:'ISO amplifies the signal, at the cost of noise. Modern bodies are usable at 3200 or even 6400, and noise can be reduced in editing; blur cannot be undone. So in poor light, secure the shutter speed first and let ISO rise.',
+         fr:'Les ISO amplifient le signal, au prix du bruit. Les boîtiers récents sont exploitables à 3200, voire 6400, et le bruit se réduit au développement ; le flou, non. En basse lumière, assurez d’abord la vitesse et laissez monter les ISO.'},
+      tip:{zh:'設定「自動 ISO＋最低快門限制」，讓相機在 A 模式下自己守住安全快門。',
+           en:'Set auto ISO with a minimum shutter speed, so the camera guards the safe speed for you in A mode.',
+           fr:'Réglez l’ISO auto avec une vitesse minimale : en mode A, l’appareil protège lui-même la vitesse de sécurité.'} },
+    { i:'fa-plus-minus', t:{zh:'測光與曝光補償', en:'Metering and exposure compensation', fr:'Mesure et correction d’exposition'},
+      p:{zh:'測光錶假設整個畫面平均是 18% 中灰。所以拍雪地、白牆會偏暗，拍黑衣、夜景會偏亮。用 ± 曝光補償修正：亮場景加，暗場景減。',
+         en:'The meter assumes the scene averages out to 18% grey. So snow and white walls come out too dark, black clothes and night scenes too bright. Correct with exposure compensation: plus for bright scenes, minus for dark ones.',
+         fr:'La cellule suppose que la scène fait en moyenne un gris à 18 %. La neige et les murs blancs sortent donc trop sombres, les vêtements noirs et les scènes nocturnes trop clairs. Corrigez : plus pour les scènes claires, moins pour les sombres.'},
+      tip:{zh:'雪景通常要 +1 到 +2 級才會是白色，否則就是灰色的雪。',
+           en:'Snow usually needs +1 to +2 stops to come out white; otherwise it comes out grey.',
+           fr:'La neige demande en général +1 à +2 IL pour sortir blanche ; sinon, elle est grise.'} },
+    { i:'fa-bullseye', t:{zh:'對焦模式：單次與連續', en:'Focus modes: single and continuous', fr:'Modes AF : ponctuel et continu'},
+      p:{zh:'AF-S（Canon 為 One Shot）對到焦就鎖住，適合靜物與風景；AF-C（Canon 為 AI Servo）持續追蹤，適合會動的人與動物。進一步可以把對焦改到背後的 AF-ON 鈕（背鈕對焦），讓對焦與拍攝分開。',
+         en:'AF-S (One Shot on Canon) locks once focused, for still subjects and landscapes; AF-C (AI Servo on Canon) keeps tracking, for people and animals that move. A further step is moving focus to the rear AF-ON button (back-button focus), separating focusing from taking the picture.',
+         fr:'L’AF-S (One Shot chez Canon) se verrouille une fois la mise au point faite, pour les sujets immobiles et les paysages ; l’AF-C (AI Servo chez Canon) suit en continu, pour les personnes et animaux en mouvement. Étape suivante : déporter l’AF sur le bouton AF-ON arrière, pour séparer mise au point et déclenchement.'},
+      tip:{zh:'用 AF-S 拍走過來的人，對焦鎖在一秒前的位置，人已經不在那裡了。',
+           en:'With AF-S on someone walking towards you, focus is locked where they were a second ago, and they are no longer there.',
+           fr:'En AF-S sur quelqu’un qui avance vers vous, la mise au point reste là où il était une seconde plus tôt, et il n’y est plus.'} },
+    { i:'fa-file-image', t:{zh:'RAW 與 JPEG', en:'RAW and JPEG', fr:'RAW et JPEG'},
+      p:{zh:'JPEG 是相機已經修好、壓縮過的成品；RAW 是感光元件的原始資料，保留更多亮部暗部細節，白平衡可以事後任意改。想修圖就拍 RAW，或 RAW＋JPEG 一起存。',
+         en:'A JPEG is a finished, compressed picture the camera has already processed; a RAW file is the sensor’s original data, holding far more highlight and shadow detail, with white balance freely adjustable later. If you intend to edit, shoot RAW, or RAW plus JPEG.',
+         fr:'Le JPEG est une image finie et compressée, déjà traitée par l’appareil ; le RAW est la donnée brute du capteur, avec bien plus de détail dans les hautes et basses lumières, et une balance des blancs modifiable à volonté. Si vous comptez retoucher, photographiez en RAW, ou RAW + JPEG.'},
+      tip:{zh:'RAW 打開來看起來比 JPEG 平淡、灰，這是正常的：它還沒被調過。',
+           en:'A RAW file opens looking flatter and greyer than the JPEG. That is normal: nothing has been applied to it yet.',
+           fr:'Un RAW s’ouvre plus terne et plus gris que le JPEG. C’est normal : rien n’y a encore été appliqué.'} },
+    { i:'fa-temperature-half', t:{zh:'白平衡', en:'White balance', fr:'Balance des blancs'},
+      p:{zh:'不同光源的顏色不同：鎢絲燈偏橘、陰天陰影偏藍。白平衡告訴相機「什麼是白色」。自動白平衡大多不錯，但在室內暖光或日落時會把氣氛修掉，這時改用日光或手動 K 值。',
+         en:'Light sources differ in colour: tungsten is orange, overcast shade is blue. White balance tells the camera what white is. Auto is usually fine, but it will neutralise the mood of warm interiors or sunsets; switch to daylight or a manual Kelvin value then.',
+         fr:'Les sources ont des couleurs différentes : le tungstène est orangé, l’ombre par temps couvert bleutée. La balance des blancs dit à l’appareil ce qu’est le blanc. L’auto convient souvent, mais elle efface l’ambiance d’un intérieur chaud ou d’un coucher de soleil ; passez alors en lumière du jour ou en Kelvin manuel.'},
+      tip:{zh:'K 值的方向容易搞混：設定的 K 值越高，照片越暖（越黃）。',
+           en:'The Kelvin direction trips people up: the higher the value you set, the warmer (yellower) the picture.',
+           fr:'Le sens des Kelvin déroute : plus la valeur réglée est haute, plus l’image est chaude (jaune).'} },
+  ] },
+{ id:'adv', tone:'red', icon:'fa-mountain-sun', n:3,
+  t:{zh:'第三部・高階：控制光與時間', en:'Part 3 · Advanced: controlling light and time', fr:'Partie 3 · Avancé : maîtriser la lumière et le temps'},
+  lead:{zh:'到這個階段，問題不再是「怎麼拍對」，而是「怎麼拍到相機一次拍不到的東西」：超過感光元件動態範圍的場景、比肉眼看得更久的時間、自己製造的光。',
+        en:'At this stage the question is no longer how to get it right, but how to capture what the camera cannot in a single frame: scenes beyond the sensor’s dynamic range, longer stretches of time than the eye sees, light you make yourself.',
+        fr:'À ce stade, la question n’est plus de bien faire, mais de saisir ce que l’appareil ne peut pas en une seule image : des scènes au-delà de la dynamique du capteur, des durées plus longues que l’œil n’en perçoit, une lumière que l’on crée.'},
+  items:[
+    { i:'fa-chart-area', t:{zh:'看直方圖，向右曝光', en:'Read the histogram, expose to the right', fr:'Lire l’histogramme, exposer à droite'},
+      p:{zh:'螢幕亮度會騙人，直方圖不會。拍 RAW 時，可以在亮部不爆掉的前提下讓直方圖盡量靠右（ETTR），因為暗部資料最少、雜訊最多，後製再把亮度降回來，畫質會比較乾淨。',
+         en:'The screen’s brightness lies; the histogram does not. Shooting RAW, push the histogram as far right as you can without clipping the highlights (ETTR). The shadows hold the least data and the most noise, so bringing the brightness down later gives a cleaner file.',
+         fr:'La luminosité de l’écran trompe ; l’histogramme, non. En RAW, poussez l’histogramme le plus à droite possible sans écrêter les hautes lumières (ETTR). Les ombres contiennent le moins de données et le plus de bruit : redescendre ensuite donne un fichier plus propre.'},
+      tip:{zh:'亮部一旦爆掉（純白）就沒有資料了，任何軟體都救不回。暗部還能拉，亮部不行。',
+           en:'Once a highlight clips to pure white there is no data left, and no software will bring it back. Shadows can be lifted; blown highlights cannot.',
+           fr:'Une haute lumière brûlée en blanc pur n’a plus aucune donnée, aucun logiciel ne la récupère. Les ombres se remontent ; les blancs brûlés, non.'} },
+    { i:'fa-layer-group', t:{zh:'包圍曝光與 HDR', en:'Bracketing and HDR', fr:'Bracketing et HDR'},
+      p:{zh:'室內窗景或日落逆光，亮暗差距超過感光元件能記錄的範圍。拍 3 到 5 張、每張差 1 到 2 級，後製合成 HDR。用三腳架，或至少用高速連拍。',
+         en:'A window from inside, or a sunset into the light, spans more range than the sensor can record. Shoot three to five frames one or two stops apart and merge them to HDR later. Use a tripod, or at least a fast burst.',
+         fr:'Une fenêtre vue de l’intérieur, un coucher de soleil à contre-jour dépassent la dynamique du capteur. Prenez trois à cinq vues espacées d’un ou deux IL, à fusionner en HDR. Sur trépied, ou au moins en rafale rapide.'},
+      tip:{zh:'HDR 的目標是看起來「像肉眼看到的」，不是看起來「像 HDR」。光暈與灰糊的天空就是做過頭了。',
+           en:'The aim of HDR is to look like what the eye saw, not to look like HDR. Halos and a muddy grey sky mean it has been overdone.',
+           fr:'Le but du HDR est de ressembler à ce que l’œil a vu, pas de ressembler à du HDR. Halos et ciel gris boueux trahissent l’excès.'} },
+    { i:'fa-water', t:{zh:'長曝光與 ND 減光鏡', en:'Long exposure and ND filters', fr:'Pose longue et filtres ND'},
+      p:{zh:'白天要拍好幾秒的流水或雲，光太多，需要 ND 減光鏡。ND8 減 3 級、ND64 減 6 級、ND1000 減 10 級。先算好不加鏡的正常快門，再依級數乘上去：1/30 秒加 10 級約等於 30 秒。',
+         en:'To expose water or cloud for several seconds by day there is too much light, so you need an ND filter. ND8 cuts 3 stops, ND64 cuts 6, ND1000 cuts 10. Meter without the filter, then multiply by the stops: 1/30 s plus 10 stops is about 30 s.',
+         fr:'Pour poser plusieurs secondes sur l’eau ou les nuages en plein jour, il y a trop de lumière : il faut un filtre ND. ND8 retire 3 IL, ND64 en retire 6, ND1000 en retire 10. Mesurez sans filtre, puis multipliez : 1/30 s plus 10 IL font environ 30 s.'},
+      tip:{zh:'先對焦再裝 ND，並把對焦切到手動。裝上深色 ND 之後，自動對焦常常就找不到了。',
+           en:'Focus before fitting the ND, then switch to manual focus. Behind a dark ND the autofocus often cannot find anything.',
+           fr:'Faites la mise au point avant de visser le ND, puis passez en manuel. Derrière un ND dense, l’autofocus ne trouve souvent plus rien.'} },
+    { i:'fa-arrows-to-dot', t:{zh:'超焦距與景深合成', en:'Hyperfocal distance and focus stacking', fr:'Hyperfocale et empilement de mise au point'},
+      p:{zh:'風景要前景到遠方都清楚，可以對焦在超焦距：全片幅 24mm f/8 約 2.4 公尺，此時約 1.2 公尺到無限遠都可接受地清楚。前景極近或拍微距時，改拍多張不同對焦距離再合成。',
+         en:'For a landscape sharp from foreground to horizon, focus at the hyperfocal distance: about 2.4 m for 24mm at f/8 on full frame, giving acceptable sharpness from about 1.2 m to infinity. With a very close foreground, or in macro, shoot several frames at different focus distances and stack them.',
+         fr:'Pour un paysage net du premier plan à l’horizon, faites la mise au point à l’hyperfocale : environ 2,4 m pour un 24 mm à f/8 en plein format, soit une netteté acceptable d’environ 1,2 m à l’infini. Avec un premier plan très proche, ou en macro, prenez plusieurs vues à des distances différentes et empilez-les.'},
+      tip:{zh:'把光圈縮到 f/22 不是解法。小光圈會產生繞射，整張都變軟。多數鏡頭在 f/5.6 到 f/11 之間最銳利。',
+           en:'Stopping down to f/22 is not the answer. Small apertures cause diffraction and soften the whole frame. Most lenses are sharpest between f/5.6 and f/11.',
+           fr:'Fermer à f/22 n’est pas la solution. Les petites ouvertures provoquent de la diffraction et adoucissent toute l’image. La plupart des objectifs sont au plus net entre f/5,6 et f/11.'} },
+    { i:'fa-bolt', t:{zh:'閃光燈與離機閃', en:'Flash, on and off the camera', fr:'Le flash, sur et hors de l’appareil'},
+      p:{zh:'機頂直打的閃光又平又硬。把燈頭轉向天花板或牆面反射，或把閃光燈放到機身外側 45 度、加柔光罩，效果立刻像棚拍。光的衰減遵循平方反比：距離加倍，亮度剩四分之一，也就是少 2 級。',
+         en:'Direct on-camera flash is flat and harsh. Bounce it off a ceiling or wall, or take it off the camera to 45 degrees with a softbox, and it begins to look like studio light. Light falls off with the inverse square of distance: double the distance and you get a quarter of the light, two stops less.',
+         fr:'Le flash direct sur l’appareil est plat et dur. Faites-le rebondir sur un plafond ou un mur, ou sortez-le à 45 degrés avec une boîte à lumière, et l’on se rapproche du studio. La lumière décroît selon l’inverse du carré de la distance : à distance double, un quart de la lumière, soit deux IL de moins.'},
+      tip:{zh:'快門控制環境光，閃光燈功率控制主體亮度。想讓背景暗一點，調快門；想讓人亮一點，調閃燈。',
+           en:'The shutter controls the ambient light, the flash power controls the subject. Want a darker background? Change the shutter. A brighter person? Change the flash.',
+           fr:'La vitesse règle la lumière ambiante, la puissance du flash règle le sujet. Fond plus sombre ? Changez la vitesse. Personne plus claire ? Changez le flash.'} },
+    { i:'fa-star', t:{zh:'星空與夜景', en:'Stars and night', fr:'Étoiles et nuit'},
+      p:{zh:'三腳架、廣角大光圈（例如 20mm f/1.8）、ISO 3200 左右、手動對焦到星點最小。快門太長星星會拉成短線：傳統的「500 法則」是 500 ÷（焦距 × 等效係數）秒，高畫素機身建議用更保守的 300 甚至 200 計算。',
+         en:'Tripod, a wide fast lens (20mm f/1.8, say), ISO around 3200, manual focus until the stars are smallest. Too long an exposure turns stars into short trails: the old “500 rule” gives 500 ÷ (focal length × crop factor) seconds, and for high-resolution bodies use 300 or even 200 to be safe.',
+         fr:'Trépied, grand-angle lumineux (20 mm f/1,8 par exemple), ISO vers 3200, mise au point manuelle jusqu’à ce que les étoiles soient les plus petites. Une pose trop longue les étire en traînées : l’ancienne « règle des 500 » donne 500 ÷ (focale × coefficient) secondes ; pour les capteurs très définis, prenez 300, voire 200.'},
+      tip:{zh:'對焦環轉到「∞」記號不一定是真的無限遠。用螢幕放大到最亮的星，手動轉到最小點才準。',
+           en:'Turning the ring to the ∞ mark is not always true infinity. Magnify the brightest star on the screen and turn by hand until it is a point.',
+           fr:'Le repère ∞ n’est pas toujours le véritable infini. Grossissez l’étoile la plus brillante à l’écran et tournez à la main jusqu’à obtenir un point.'} },
+  ] },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Retouching
+   ═══════════════════════════════════════════════════════════ */
+
+/* Three histograms built from smooth distributions. x runs from pure
+   black (left) to pure white (right); a spike at either wall is clipping. */
+function histPath(fn, X, Y, W, H) {
+  const n = 120; let pts = [], max = 0;
+  for (let i = 0; i <= n; i++) { const v = fn(i / n); pts.push(v); if (v > max) max = v; }
+  let d = 'M' + X + ' ' + (Y + H);
+  pts.forEach((v, i) => { d += ' L' + f1(X + W * i / n) + ' ' + f1(Y + H - H * 0.92 * v / max); });
+  return d + ' L' + (X + W) + ' ' + (Y + H) + ' Z';
+}
+const gauss = (x, m, s) => Math.exp(-((x - m) * (x - m)) / (2 * s * s));
+const HISTS = [
+  { t:{zh:'曝光不足', en:'Underexposed', fr:'Sous-exposé'}, clipL:true,
+    fn:x => gauss(x, 0.05, 0.1) * 1.4 + gauss(x, 0.28, 0.12) * 0.8,
+    n:{zh:'堆在左牆，暗部全黑', en:'piled on the left wall, shadows crushed', fr:'tassé à gauche, ombres bouchées'} },
+  { t:{zh:'正常', en:'Well exposed', fr:'Bien exposé'},
+    fn:x => gauss(x, 0.35, 0.13) + gauss(x, 0.68, 0.14) * 0.85,
+    n:{zh:'兩端都沒有碰牆', en:'touches neither wall', fr:'ne touche aucun bord'} },
+  { t:{zh:'亮部爆掉', en:'Clipped highlights', fr:'Hautes lumières brûlées'}, clipR:true,
+    fn:x => gauss(x, 0.72, 0.13) * 0.8 + gauss(x, 0.97, 0.08) * 1.4,
+    n:{zh:'撞上右牆，白色沒有細節', en:'hits the right wall, whites hold no detail', fr:'bute à droite, blancs sans détail'} },
+];
+function histDiagram() {
+  const W = 250, H = 150, gap = 40, X0 = 25, Y = 40;
+  let s = '<svg class="dg" viewBox="0 0 900 290" role="img" aria-label="' + esc(t({zh:'三種直方圖', en:'Three histograms', fr:'Trois histogrammes'})) + '">';
+  HISTS.forEach((h, i) => {
+    const X = X0 + i * (W + gap);
+    s += '<text class="lab" x="' + X + '" y="' + (Y - 12) + '">' + esc(t(h.t)) + '</text>';
+    s += '<rect x="' + X + '" y="' + Y + '" width="' + W + '" height="' + H + '" fill="#0f151c" stroke="#334155" stroke-width="1.5"/>';
+    s += '<path d="' + histPath(h.fn, X, Y, W, H) + '" fill="rgba(226,232,240,0.55)" stroke="#e2e8f0" stroke-width="1.5"/>';
+    if (h.clipL) s += '<rect x="' + X + '" y="' + Y + '" width="5" height="' + H + '" fill="#38bdf8"/>';
+    if (h.clipR) s += '<rect x="' + (X + W - 5) + '" y="' + Y + '" width="5" height="' + H + '" fill="#f87171"/>';
+    s += '<text class="sub" x="' + X + '" y="' + (Y + H + 22) + '">' + esc(t({zh:'黑', en:'black', fr:'noir'})) + '</text>';
+    s += '<text class="sub" x="' + (X + W) + '" y="' + (Y + H + 22) + '" text-anchor="end">' + esc(t({zh:'白', en:'white', fr:'blanc'})) + '</text>';
+    s += '<text class="sub" x="' + X + '" y="' + (Y + H + 48) + '" style="fill:#cbd5e1">' + esc(t(h.n)) + '</text>';
+  });
+  return s + '</svg>';
+}
+
+/* Tone curves: input on x, output on y. Each function is monotonic,
+   so no tone ever swaps places with its neighbour. */
+const CURVES = [
+  { t:{zh:'原始（直線）', en:'Untouched (straight)', fr:'Neutre (droite)'}, fn:x => x,
+    n:{zh:'輸入等於輸出', en:'input equals output', fr:'entrée = sortie'} },
+  { t:{zh:'S 曲線：加對比', en:'S-curve: more contrast', fr:'Courbe en S : + de contraste'}, fn:x => x - 0.08 * Math.sin(2 * Math.PI * x),
+    n:{zh:'暗的更暗、亮的更亮', en:'darks darker, lights lighter', fr:'sombres plus sombres, clairs plus clairs'} },
+  { t:{zh:'抬黑：霧面感', en:'Lifted blacks: matte look', fr:'Noirs relevés : effet mat'}, fn:x => x + 0.14 * Math.pow(1 - x, 3),
+    n:{zh:'最黑的點變成深灰', en:'the deepest black turns dark grey', fr:'le noir devient gris foncé'} },
+];
+function curveDiagram() {
+  const S = 190, gap = 110, X0 = 40, Y = 50;
+  let s = '<svg class="dg" viewBox="0 0 900 330" role="img" aria-label="' + esc(t({zh:'色調曲線', en:'Tone curves', fr:'Courbes de tonalité'})) + '">';
+  CURVES.forEach((c, i) => {
+    const X = X0 + i * (S + gap);
+    s += '<text class="lab" x="' + X + '" y="' + (Y - 16) + '">' + esc(t(c.t)) + '</text>';
+    s += '<rect x="' + X + '" y="' + Y + '" width="' + S + '" height="' + S + '" fill="#0f151c" stroke="#334155" stroke-width="1.5"/>';
+    let g = '';
+    for (let k = 1; k < 4; k++) g += 'M' + (X + S * k / 4) + ' ' + Y + ' V' + (Y + S) + ' M' + X + ' ' + (Y + S * k / 4) + ' H' + (X + S) + ' ';
+    s += '<path class="grid" d="' + g + '"/>';
+    s += '<path d="M' + X + ' ' + (Y + S) + ' L' + (X + S) + ' ' + Y + '" stroke="rgba(148,163,184,0.35)" stroke-width="1.5" stroke-dasharray="4 4"/>';
+    let d = '';
+    for (let j = 0; j <= 60; j++) { const x = j / 60; d += (j ? ' L' : 'M') + f1(X + S * x) + ' ' + f1(Y + S - S * c.fn(x)); }
+    s += '<path d="' + d + '" fill="none" stroke="#c4b5fd" stroke-width="4" stroke-linecap="round"/>';
+    s += '<text class="sub" x="' + X + '" y="' + (Y + S + 26) + '">' + esc(t({zh:'輸入 →', en:'input →', fr:'entrée →'})) + '</text>';
+    s += '<text class="sub" x="' + X + '" y="' + (Y + S + 52) + '" style="fill:#cbd5e1">' + esc(t(c.n)) + '</text>';
+  });
+  return s + '</svg>';
+}
+
+const FLOW = [
+  { t:{zh:'挑片', en:'Cull', fr:'Trier'},
+    p:{zh:'先用星等或旗標選出要修的照片。修一張好照片，比救十張普通照片划算。', en:'Pick the frames worth editing with stars or flags first. Finishing one good picture beats rescuing ten ordinary ones.', fr:'Sélectionnez d’abord les images à traiter, par étoiles ou drapeaux. Finir une bonne image vaut mieux que sauver dix images moyennes.'} },
+  { t:{zh:'鏡頭校正與裁切、拉正', en:'Lens corrections, crop, straighten', fr:'Corrections d’objectif, recadrage, redressement'},
+    p:{zh:'打開鏡頭描述檔，移除暗角與變形。先決定構圖，後面的調整才看得準。', en:'Turn on the lens profile to remove vignetting and distortion. Settle the composition first, so later adjustments are judged on the final frame.', fr:'Activez le profil d’objectif pour supprimer vignetage et distorsion. Fixez le cadrage d’abord, pour juger la suite sur l’image finale.'} },
+  { t:{zh:'白平衡', en:'White balance', fr:'Balance des blancs'},
+    p:{zh:'用滴管點一個應該是中性灰或白的地方，再依氣氛微調。色溫錯了，後面所有顏色都會跟著錯。', en:'Click the dropper on something that should be neutral grey or white, then nudge for mood. If this is wrong, every colour after it is wrong too.', fr:'Cliquez la pipette sur une zone qui devrait être gris neutre ou blanche, puis ajustez selon l’ambiance. Si elle est fausse, toutes les couleurs suivantes le seront.'} },
+  { t:{zh:'曝光、亮部、陰影', en:'Exposure, highlights, shadows', fr:'Exposition, hautes lumières, ombres'},
+    p:{zh:'先用曝光調整整體亮度，再降亮部救回天空、拉陰影打開暗部。', en:'Set overall brightness with exposure, then pull highlights down to recover the sky and lift shadows to open the darks.', fr:'Réglez la luminosité générale par l’exposition, puis baissez les hautes lumières pour récupérer le ciel et relevez les ombres.'} },
+  { t:{zh:'白色與黑色色階', en:'Whites and blacks', fr:'Blancs et noirs'},
+    p:{zh:'設定畫面最亮與最暗的點。按住 Alt／Option 拖曳滑桿，會顯示哪裡開始爆掉或死黑。', en:'Set the brightest and darkest points. Hold Alt/Option while dragging to see exactly where clipping begins.', fr:'Fixez les points le plus clair et le plus sombre. Maintenez Alt/Option en glissant pour voir où commence l’écrêtage.'} },
+  { t:{zh:'對比與色調曲線', en:'Contrast and tone curve', fr:'Contraste et courbe'},
+    p:{zh:'用曲線精細控制各個亮度區段的對比，這是決定照片「風格」最主要的工具。', en:'Use the curve to shape contrast within each tonal range. It is the main tool for a picture’s look.', fr:'La courbe façonne le contraste de chaque plage tonale. C’est l’outil principal du rendu.'} },
+  { t:{zh:'HSL／顏色', en:'HSL and colour', fr:'TSL et couleur'},
+    p:{zh:'分別調整每種顏色的色相、飽和度、明度。例如把天空藍壓暗、把膚色的橘色降飽和。優先用「鮮豔度」而不是「飽和度」。', en:'Adjust hue, saturation and luminance colour by colour: darken the blue of the sky, desaturate the orange of skin. Prefer vibrance to saturation.', fr:'Réglez teinte, saturation et luminance couleur par couleur : assombrir le bleu du ciel, désaturer l’orangé de la peau. Préférez la vibrance à la saturation.'} },
+  { t:{zh:'局部調整', en:'Local adjustments', fr:'Retouches locales'},
+    p:{zh:'用遮色片只處理部分區域：天空、主體、背景。現在的 AI 遮色片可以一鍵選出人物或天空。', en:'Use masks to work on parts of the frame only: sky, subject, background. Current AI masks select a person or a sky in one click.', fr:'Les masques permettent de ne traiter qu’une partie : ciel, sujet, arrière-plan. Les masques par IA actuels sélectionnent une personne ou un ciel en un clic.'} },
+  { t:{zh:'銳利化與降噪', en:'Sharpening and noise reduction', fr:'Netteté et réduction du bruit'},
+    p:{zh:'以 100% 放大檢視再調整。銳利化搭配遮色片，只加在邊緣，不要加到天空與皮膚。', en:'Judge at 100% view. Use the sharpening mask so it applies to edges, not to sky or skin.', fr:'Jugez à 100 %. Utilisez le masque de netteté pour ne l’appliquer qu’aux contours, pas au ciel ni à la peau.'} },
+  { t:{zh:'輸出', en:'Export', fr:'Exporter'},
+    p:{zh:'網路分享用 sRGB 色彩空間、JPEG 品質 80 到 90、依平台縮圖；印刷則依輸出店要求。用不同色彩空間上傳，顏色常會變灰。', en:'For the web: sRGB colour space, JPEG quality 80 to 90, resized for the platform; for print, follow the lab’s specification. Uploading in another colour space often makes colours go dull.', fr:'Pour le web : espace sRGB, JPEG qualité 80 à 90, redimensionné selon la plateforme ; pour l’impression, suivez les consignes du laboratoire. Un autre espace colorimétrique donne souvent des couleurs ternes en ligne.'} },
+];
+
+const LOCAL = [
+  { i:'fa-bandage', t:{zh:'修復與仿製', en:'Healing and cloning', fr:'Correcteur et tampon'},
+    p:{zh:'移除感光元件灰塵、電線、路人與痘痘。修復筆會融合周圍質感，仿製印章則是原樣複製，適合邊緣與直線。',
+       en:'Removes sensor dust, cables, passers-by and blemishes. The healing brush blends in the surrounding texture; the clone stamp copies exactly, which suits edges and straight lines.',
+       fr:'Supprime poussières de capteur, câbles, passants et imperfections. Le correcteur fond la texture environnante ; le tampon copie à l’identique, ce qui convient aux bords et aux lignes droites.'},
+    tip:{zh:'取樣來源要換著用，同一塊重複貼上，會出現一眼就看得出的重複紋路。',
+         en:'Vary the source point; cloning from one spot repeatedly leaves a pattern anyone can see.',
+         fr:'Variez la source ; cloner toujours depuis le même point laisse un motif répété visible.'} },
+  { i:'fa-circle-half-stroke', t:{zh:'加亮與加深（Dodge & Burn）', en:'Dodge and burn', fr:'Éclaircir et assombrir (dodge & burn)'},
+    p:{zh:'用低流量筆刷局部提亮或壓暗，引導視線、強化立體感。暗房時代就有的技巧，至今仍是修圖最核心的手法。',
+       en:'Lightening or darkening areas with a low-flow brush to lead the eye and build volume. It dates from the darkroom and is still the core of retouching.',
+       fr:'Éclaircir ou assombrir localement au pinceau à faible flux, pour guider le regard et sculpter le volume. Technique héritée de la chambre noire, toujours au cœur de la retouche.'},
+    tip:{zh:'視線會先去最亮、最清楚、對比最高的地方。把干擾物壓暗，比把主體提亮更自然。',
+         en:'The eye goes first to what is brightest, sharpest and most contrasty. Darkening distractions often looks more natural than brightening the subject.',
+         fr:'L’œil va d’abord au plus clair, au plus net, au plus contrasté. Assombrir les éléments parasites paraît souvent plus naturel qu’éclaircir le sujet.'} },
+  { i:'fa-user', t:{zh:'人像修膚：頻率分離', en:'Skin retouching: frequency separation', fr:'Retouche de peau : séparation de fréquences'},
+    p:{zh:'把影像拆成「顏色與明暗」的低頻層，和「紋理」的高頻層，分開處理：在低頻層修不均勻的膚色，在高頻層修瑕疵，毛孔紋理得以保留。',
+       en:'The image is split into a low-frequency layer of colour and tone and a high-frequency layer of texture, and each is worked separately: even out the skin tone on one, remove blemishes on the other, and the pores survive.',
+       fr:'L’image est séparée en une couche basse fréquence (couleur et tonalité) et une couche haute fréquence (texture), traitées à part : unifier le teint sur l’une, retirer les imperfections sur l’autre, et le grain de peau survit.'},
+    tip:{zh:'皮膚沒有毛孔就像塑膠。修完縮小到正常大小檢查，看起來「沒修過」才是修得好。',
+         en:'Skin without pores looks like plastic. Check at normal size when done: the best retouching looks as if there was none.',
+         fr:'Une peau sans pores a l’air de plastique. Vérifiez à taille normale : la meilleure retouche est celle qui ne se voit pas.'} },
+  { i:'fa-palette', t:{zh:'調色與預設檔', en:'Colour grading and presets', fr:'Étalonnage et préréglages'},
+    p:{zh:'用「色彩分級」分別給暗部、中間調、亮部加上不同色調，例如暗部偏青、亮部偏暖。預設檔可以當起點，但每張照片的光不同，一定要再微調。',
+       en:'Colour grading tints shadows, midtones and highlights separately, for example teal shadows and warm highlights. Presets are a fine starting point, but every picture’s light differs, so always adjust after applying one.',
+       fr:'L’étalonnage teinte séparément ombres, tons moyens et hautes lumières, par exemple des ombres bleu-vert et des hautes lumières chaudes. Les préréglages sont un bon point de départ, mais la lumière de chaque image diffère : ajustez toujours ensuite.'},
+    tip:{zh:'修一整組照片時，先修好一張代表作，再把設定同步到其他張，整組色調才會一致。',
+         en:'For a set, finish one representative frame and sync its settings to the rest, so the series holds together.',
+         fr:'Pour une série, finissez une image représentative puis synchronisez ses réglages sur les autres, afin que l’ensemble reste cohérent.'} },
+];
+
+const OVER = [
+  {zh:'天空與建築邊緣出現白色光暈：清晰度或陰影拉太多。', en:'White halos along skylines: too much clarity or shadow lift.', fr:'Halos blancs le long des lignes d’horizon : trop de clarté ou d’ombres relevées.'},
+  {zh:'膚色偏橘或偏紅：飽和度太高，改用鮮豔度或單獨降橘色。', en:'Orange or red skin: too much saturation; use vibrance, or lower orange alone.', fr:'Peau orangée ou rouge : trop de saturation ; utilisez la vibrance, ou baissez l’orange seul.'},
+  {zh:'整張灰灰的：陰影與亮部都拉到極限，失去了對比。', en:'Everything looks grey: shadows and highlights both pushed to the limit, and contrast gone.', fr:'Tout paraît gris : ombres et hautes lumières poussées au maximum, le contraste a disparu.'},
+  {zh:'天空出現色階斷層：在 JPEG 上做了太大幅度的調整。', en:'Banding in the sky: heavy adjustments made on a JPEG.', fr:'Cassures de dégradé dans le ciel : ajustements lourds sur un JPEG.'},
+  {zh:'雜訊變成顆粒狀斑塊：銳利化沒有加遮色片，連暗部雜訊一起銳利化。', en:'Noise turns blotchy: sharpening without a mask has sharpened the noise in the shadows too.', fr:'Le bruit devient granuleux : la netteté sans masque a accentué aussi le bruit des ombres.'},
+  {zh:'修完隔天再看一次。剛修完的眼睛已經習慣了，通常會覺得還不夠。', en:'Look again the next day. Eyes adapt while editing and always want a little more.', fr:'Revoyez le lendemain. L’œil s’habitue pendant la retouche et en veut toujours un peu plus.'},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Reference
+   ═══════════════════════════════════════════════════════════ */
+/* Equivalent exposures: aperture closes one stop as the shutter
+   opens one stop, so every row records the same amount of light. */
+const EQ = [
+  { a:'f/2.8', s:'1/1000', iso:'100', n:{zh:'背景最模糊，動作完全凍結', en:'most background blur, motion fully frozen', fr:'fond le plus flou, mouvement figé'} },
+  { a:'f/4',   s:'1/500',  iso:'100', n:{zh:'', en:'', fr:''} },
+  { a:'f/5.6', s:'1/250',  iso:'100', n:{zh:'街拍常用的平衡點', en:'a common street-photography balance', fr:'un équilibre courant en photo de rue'} },
+  { a:'f/8',   s:'1/125',  iso:'100', n:{zh:'多數鏡頭最銳利的區間', en:'where most lenses are sharpest', fr:'là où la plupart des objectifs sont au plus net'} },
+  { a:'f/11',  s:'1/60',   iso:'100', n:{zh:'', en:'', fr:''} },
+  { a:'f/16',  s:'1/30',   iso:'100', n:{zh:'景深最深，但需注意手震與繞射', en:'deepest focus, but watch for shake and diffraction', fr:'profondeur maximale, gare au bougé et à la diffraction'} },
+];
+
+/* Horizontal angle of view on a 36 mm-wide full-frame sensor:
+   2·atan(18 / f). */
+const LENSES = [
+  { f:14,  u:{zh:'超廣角：室內、建築、星空', en:'Ultra-wide: interiors, architecture, night sky', fr:'Ultra grand-angle : intérieurs, architecture, ciel nocturne'} },
+  { f:24,  u:{zh:'廣角：風景、旅行、環境人像', en:'Wide: landscape, travel, environmental portraits', fr:'Grand-angle : paysage, voyage, portrait en situation'} },
+  { f:35,  u:{zh:'街拍、紀實、日常', en:'Street, documentary, everyday', fr:'Rue, reportage, quotidien'} },
+  { f:50,  u:{zh:'標準：接近人眼專注時的視野', en:'Normal: close to the eye’s attentive field', fr:'Normale : proche du champ attentif de l’œil'} },
+  { f:85,  u:{zh:'人像：臉部比例自然、背景好虛化', en:'Portrait: natural facial proportions, easy background blur', fr:'Portrait : proportions naturelles, fond facile à flouter'} },
+  { f:200, u:{zh:'望遠：運動、壓縮空間感、遠處主體', en:'Telephoto: sport, compressed perspective, distant subjects', fr:'Téléobjectif : sport, perspective écrasée, sujets lointains'} },
+];
+const fov = f => 2 * Math.atan(18 / f) * 180 / Math.PI;
+function fovDiagram() {
+  const ox = 450, oy = 380, R = 330;
+  const side = ['L','R','L','R','L','R'];
+  let s = '<svg class="dg" viewBox="0 0 900 410" role="img" aria-label="' + esc(t({zh:'各焦距水平視角', en:'Horizontal angle of view by focal length', fr:'Angle de champ horizontal par focale'})) + '">';
+  LENSES.forEach((L, i) => {
+    const h = fov(L.f) / 2 * Math.PI / 180;
+    const xl = ox - R * Math.sin(h), xr = ox + R * Math.sin(h), y = oy - R * Math.cos(h);
+    const op = 0.10 + i * 0.03;
+    s += '<path d="M' + ox + ' ' + oy + ' L' + f1(xl) + ' ' + f1(y) + ' A' + R + ' ' + R + ' 0 0 1 ' + f1(xr) + ' ' + f1(y) + ' Z" fill="rgba(34,211,238,' + op + ')" stroke="#22d3ee" stroke-opacity=".6" stroke-width="1.5"/>';
+    const right = side[i] === 'R';
+    const lx = right ? xr + 8 : xl - 8;
+    s += '<text class="val" x="' + f1(lx) + '" y="' + f1(y - 8) + '" text-anchor="' + (right ? 'start' : 'end') + '" style="font-size:15px">'
+      + L.f + 'mm · ' + Math.round(fov(L.f)) + '°</text>';
+  });
+  s += '<circle cx="' + ox + '" cy="' + oy + '" r="7" fill="#f1f5f9"/>';
+  s += '<text class="sub" x="24" y="398">' + esc(t({zh:'全片幅水平視角，以相同半徑繪製。', en:'Full-frame horizontal angle of view, drawn to one radius.', fr:'Angle de champ horizontal en plein format, même rayon.'})) + '</text>';
+  return s + '</svg>';
+}
+
+const SCENES = [
+  { s:{zh:'人像', en:'Portrait', fr:'Portrait'}, m:'A', a:'f/1.8–2.8', sh:'≥ 1/250', n:{zh:'對焦在眼睛，85mm 左右，讓人遠離背景', en:'focus on the eye, around 85mm, subject well away from the background', fr:'mise au point sur l’œil, vers 85 mm, sujet loin du fond'} },
+  { s:{zh:'風景', en:'Landscape', fr:'Paysage'}, m:'A / M', a:'f/8–11', sh:{zh:'視光線', en:'as the light allows', fr:'selon la lumière'}, n:{zh:'ISO 最低、三腳架、對焦在超焦距', en:'lowest ISO, tripod, focus at the hyperfocal distance', fr:'ISO minimal, trépied, mise au point à l’hyperfocale'} },
+  { s:{zh:'街拍', en:'Street', fr:'Rue'}, m:'A / S', a:'f/5.6–8', sh:'≥ 1/250', n:{zh:'自動 ISO、可預先手動對焦在 3 公尺', en:'auto ISO; you can pre-focus manually at 3 m', fr:'ISO auto ; on peut prérégler la mise au point à 3 m'} },
+  { s:{zh:'運動、孩子、寵物', en:'Sport, children, pets', fr:'Sport, enfants, animaux'}, m:'S / M', a:{zh:'盡量大', en:'as wide as possible', fr:'le plus ouvert possible'}, sh:'1/1000+', n:{zh:'AF-C 追蹤、高速連拍、自動 ISO', en:'AF-C tracking, high-speed burst, auto ISO', fr:'AF-C, rafale rapide, ISO auto'} },
+  { s:{zh:'城市夜景', en:'City at night', fr:'Ville de nuit'}, m:'M', a:'f/8', sh:'2–15 s', n:{zh:'三腳架、ISO 100、兩秒自拍避免按快門的震動', en:'tripod, ISO 100, 2-second timer to avoid shake from pressing the button', fr:'trépied, ISO 100, retardateur 2 s pour éviter le bougé du déclenchement'} },
+  { s:{zh:'星空', en:'Night sky', fr:'Ciel étoilé'}, m:'M', a:'f/1.8–2.8', sh:'10–20 s', n:{zh:'ISO 3200 左右、手動對焦、遠離光害', en:'ISO around 3200, manual focus, away from light pollution', fr:'ISO vers 3200, mise au point manuelle, loin de la pollution lumineuse'} },
+  { s:{zh:'室內美食', en:'Food indoors', fr:'Plats en intérieur'}, m:'A', a:'f/2.8–4', sh:'≥ 1/60', n:{zh:'靠窗側光、手動白平衡、從 45 度或正上方拍', en:'side light from a window, manual white balance, shoot at 45 degrees or from directly above', fr:'lumière latérale d’une fenêtre, balance manuelle, à 45 degrés ou à la verticale'} },
+];
+
+const WB = [
+  { k:'≈ 1900 K', c:'#ff8a1f', t:{zh:'燭光', en:'Candlelight', fr:'Bougie'} },
+  { k:'2700–3200 K', c:'#ffb35c', t:{zh:'鎢絲燈、暖色 LED', en:'Tungsten, warm LED', fr:'Tungstène, LED chaude'} },
+  { k:'≈ 3500 K', c:'#ffcf8a', t:{zh:'日出、日落', en:'Sunrise, sunset', fr:'Lever, coucher du soleil'} },
+  { k:'≈ 5500 K', c:'#fff4e6', t:{zh:'正午日光、閃光燈', en:'Midday sun, flash', fr:'Soleil de midi, flash'} },
+  { k:'≈ 6500 K', c:'#dfe9ff', t:{zh:'陰天', en:'Overcast', fr:'Ciel couvert'} },
+  { k:'≈ 7500 K', c:'#c6d8ff', t:{zh:'晴天的陰影處', en:'Open shade on a sunny day', fr:'Ombre par temps ensoleillé'} },
+];
+
+const RULES = [
+  { h:{zh:'安全快門', en:'Safe handheld speed', fr:'Vitesse de sécurité'},
+    p:{zh:'手持時快門不要慢於 1 ÷（焦距 × 等效係數）秒。APS-C 用 50mm 約需 1/80 秒。防手震可再放寬 3 到 5 級，但只對手震有效，對移動的主體無效。',
+       en:'Handheld, keep the shutter no slower than 1 ÷ (focal length × crop factor) seconds: about 1/80 s for a 50mm on APS-C. Stabilisation buys three to five stops more, but only against shake, not against a moving subject.',
+       fr:'À main levée, pas plus lent que 1 ÷ (focale × coefficient) seconde : environ 1/80 s pour un 50 mm en APS-C. La stabilisation offre trois à cinq IL de plus, mais seulement contre le bougé, pas contre un sujet en mouvement.'} },
+  { h:{zh:'晴天 16 法則', en:'Sunny 16', fr:'La règle du f/16 au soleil'},
+    p:{zh:'晴天順光時，光圈 f/16、快門 1 ÷ ISO 秒就是正確曝光。例如 ISO 100 用 1/100 秒（或最接近的 1/125）。測光錶壞了或想檢查時很好用。',
+       en:'In bright, front-lit sun, f/16 at 1 ÷ ISO seconds is a correct exposure: at ISO 100, 1/100 s (or the nearest, 1/125). Handy when the meter fails or as a sanity check.',
+       fr:'En plein soleil, lumière de face, f/16 à 1 ÷ ISO seconde donne une exposition correcte : à ISO 100, 1/100 s (ou la plus proche, 1/125). Utile si la cellule fait défaut, ou pour vérifier.'} },
+  { h:{zh:'一級＝兩倍', en:'One stop = double', fr:'Un IL = le double'},
+    p:{zh:'快門與 ISO 每一級是乘以 2；光圈每一級是乘以 √2（約 1.4），因為進光量看的是開口面積。所以 f/2.8 到 f/4 是一級，f/2.8 到 f/5.6 是兩級。',
+       en:'Each stop doubles the shutter time or the ISO; for aperture each stop multiplies the f-number by √2 (about 1.4), because what counts is the area of the opening. So f/2.8 to f/4 is one stop, f/2.8 to f/5.6 two.',
+       fr:'Chaque IL double le temps de pose ou les ISO ; pour l’ouverture, chaque IL multiplie le nombre f par √2 (environ 1,4), puisque c’est la surface de l’ouverture qui compte. De f/2,8 à f/4, un IL ; de f/2,8 à f/5,6, deux.'} },
+  { h:{zh:'平方反比', en:'Inverse square law', fr:'Loi de l’inverse du carré'},
+    p:{zh:'光源到主體的距離加倍，亮度變為四分之一（少 2 級）。燈越靠近主體，亮暗衰減越快、光越柔；越遠則越均勻。',
+       en:'Double the distance from light to subject and the light falls to a quarter, two stops less. A close light falls off quickly and is softer; a distant one is more even.',
+       fr:'À distance double entre source et sujet, la lumière tombe au quart, soit deux IL de moins. Une source proche décroît vite et adoucit ; une source lointaine éclaire plus uniformément.'} },
+  { h:{zh:'等效焦距', en:'Equivalent focal length', fr:'Focale équivalente'},
+    p:{zh:'焦距乘上等效係數，就是在全片幅上相同的視角。APS-C 的 35mm 約等於全片幅 52mm，Micro 4/3 的 25mm 等於 50mm。焦距本身並沒有改變。',
+       en:'Multiply by the crop factor to get the full-frame lens with the same angle of view. A 35mm on APS-C behaves like about 52mm, a 25mm on Micro Four Thirds like 50mm. The focal length itself has not changed.',
+       fr:'Multipliez par le coefficient pour obtenir l’objectif plein format au même angle de champ. Un 35 mm en APS-C équivaut à environ 52 mm, un 25 mm en Micro 4/3 à 50 mm. La focale elle-même ne change pas.'} },
+  { h:{zh:'備份 3-2-1', en:'The 3-2-1 backup', fr:'La sauvegarde 3-2-1'},
+    p:{zh:'三份拷貝、兩種不同媒介、一份放在異地（例如雲端）。記憶卡不是備份，電腦硬碟也遲早會壞。',
+       en:'Three copies, on two different kinds of media, one of them off site (the cloud, for instance). A memory card is not a backup, and every computer drive fails eventually.',
+       fr:'Trois copies, sur deux supports différents, dont une hors site (le cloud, par exemple). Une carte mémoire n’est pas une sauvegarde, et tout disque finit par lâcher.'} },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Rendering
+   ═══════════════════════════════════════════════════════════ */
+const TONE = {
+  amber:['text-amber-300','text-amber-400','bg-amber-500/10','border-amber-500/20','shadow-glow-amber','rgba(245,158,11,0.14)','rgba(245,158,11,0.42)'],
+  sky:  ['text-sky-300','text-sky-400','bg-sky-500/10','border-sky-500/20','shadow-glow-sky','rgba(2,132,199,0.14)','rgba(2,132,199,0.42)'],
+  red:  ['text-red-300','text-red-400','bg-red-500/10','border-red-500/20','shadow-glow-red','rgba(239,68,68,0.14)','rgba(239,68,68,0.42)'],
+};
+function card(h, p, hcls) {
+  return '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<h3 class="text-sm font-black ' + (hcls || 'text-white') + ' mb-1.5">' + h + '</h3>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed">' + p + '</p>'
+    + '</div>';
+}
+function tipBox(txt) {
+  return '<div class="mt-3 rounded-xl p-3" style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.22)">'
+    +   '<span class="text-[0.62rem] uppercase tracking-wider text-amber-400 font-bold">'
+    +     '<i class="fa-solid fa-lightbulb mr-1"></i>' + ui('tipLabel') + '</span>'
+    +   '<p class="text-xs text-slate-300 leading-relaxed mt-1">' + txt + '</p>'
+    + '</div>';
+}
+function renderCamera() {
+  document.getElementById('anat').innerHTML = anatomy();
+  document.getElementById('parts-grid').innerHTML = PARTS.map(x => card(t(x.t), t(x.p))).join('');
+  document.getElementById('sensor-dia').innerHTML = sensorDiagram();
+  document.getElementById('types-grid').innerHTML = TYPES.map(x =>
+    card('<i class="fa-solid ' + x.i + ' text-cyan-300 mr-1.5"></i>' + t(x.t), t(x.p))).join('');
+}
+function renderExposure() {
+  document.getElementById('scales').innerHTML = scalesDiagram();
+  document.getElementById('aperture-dia').innerHTML = apertureDiagram();
+  const notes = [
+    { t:{zh:'亮度只有一個答案，組合有很多個', en:'One brightness, many combinations', fr:'Une luminosité, beaucoup de combinaisons'},
+      p:{zh:'光圈開大一級、快門快一級，亮度不變。所以「正確曝光」從來不是一組固定設定，而是你在三種副作用之間做的選擇。',
+         en:'Open the aperture one stop and shorten the shutter one stop, and the brightness is unchanged. So a correct exposure is never one fixed setting; it is a choice between three side effects.',
+         fr:'Ouvrez d’un IL et accélérez d’un IL : la luminosité ne change pas. Une exposition correcte n’est donc jamais un réglage unique, c’est un choix entre trois effets secondaires.'} },
+    { t:{zh:'先決定最重要的那個', en:'Decide the one that matters first', fr:'Fixer d’abord ce qui compte'},
+      p:{zh:'要背景模糊，先定光圈；要凍結動作，先定快門。ISO 通常是最後才動、用來補足亮度的那個。',
+         en:'Want background blur? Set the aperture first. Want to freeze action? Set the shutter first. ISO is usually the last to move, making up whatever brightness is left.',
+         fr:'Un fond flou ? Fixez d’abord l’ouverture. Figer l’action ? D’abord la vitesse. Les ISO bougent en dernier, pour compléter la luminosité.'} },
+    { t:{zh:'f 值的數列看起來很怪', en:'The f-numbers look odd', fr:'Les nombres f semblent étranges'},
+      p:{zh:'1.4、2、2.8、4、5.6、8 每一個都是前一個乘以 √2。開口直徑是焦距 ÷ f 值，面積與直徑平方成正比，所以 √2 倍就是面積減半。',
+         en:'1.4, 2, 2.8, 4, 5.6, 8: each is the one before times √2. The opening’s diameter is the focal length ÷ the f-number and its area goes with the diameter squared, so √2 halves the area.',
+         fr:'1,4 ; 2 ; 2,8 ; 4 ; 5,6 ; 8 : chacun vaut le précédent × √2. Le diamètre de l’ouverture est la focale ÷ le nombre f, et la surface varie comme le carré du diamètre : × √2 divise la surface par deux.'} },
+  ];
+  document.getElementById('exp-notes').innerHTML = notes.map(x => card(t(x.t), t(x.p), 'text-cyan-300')).join('');
+}
+function renderLevels() {
+  document.getElementById('levels').innerHTML = LEVELS.map(L => {
+    const c = TONE[L.tone];
+    const items = L.items.map(it =>
+        '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5 reveal' + (it.dia ? ' md:col-span-2' : '') + '">'
+      +   '<div class="flex items-start gap-4">'
+      +     '<div class="shrink-0 rounded-xl w-11 h-11 flex items-center justify-center ' + c[0] + '" style="background:' + c[5] + ';border:1px solid ' + c[6] + '">'
+      +       '<i class="fa-solid ' + it.i + ' text-lg"></i></div>'
+      +     '<div class="min-w-0 flex-1">'
+      +       '<h3 class="text-sm font-black text-white">' + t(it.t) + '</h3>'
+      +       '<p class="text-xs text-slate-400 leading-relaxed mt-2">' + t(it.p) + '</p>'
+      +       tipBox(t(it.tip))
+      +     '</div></div>'
+      +   (it.dia === 'comp' ? compDiagram() : '')
+      + '</div>').join('');
+    return '<section id="' + L.id + '" class="scroll-mt-24">'
+      + '<div class="flex items-center gap-3 mb-5">'
+      +   '<div class="p-3 ' + c[2] + ' rounded-2xl ' + c[1] + ' border ' + c[3] + ' ' + c[4] + '">'
+      +     '<i class="fa-solid ' + L.icon + ' text-xl"></i></div>'
+      +   '<div><span class="lvl-pill ' + c[1] + '" style="background:' + c[5] + '">LEVEL ' + L.n + '</span>'
+      +   '<h2 class="text-2xl font-black text-white">' + t(L.t) + '</h2></div>'
+      + '</div>'
+      + '<div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">'
+      +   '<p class="text-slate-300 leading-relaxed">' + t(L.lead) + '</p>'
+      +   '<div class="grid md:grid-cols-2 gap-4">' + items + '</div>'
+      + '</div></section>';
+  }).join('');
+}
+function renderEdit() {
+  document.getElementById('hist-dia').innerHTML = histDiagram();
+  document.getElementById('curve-dia').innerHTML = curveDiagram();
+  document.getElementById('flow').innerHTML = FLOW.map((x, i) =>
+      '<li class="flex gap-3 bg-slate-900/40 rounded-2xl border border-slate-800 p-4 reveal">'
+    +   '<span class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-violet-200" style="background:rgba(167,139,250,0.18);border:1px solid rgba(167,139,250,0.4)">' + (i + 1) + '</span>'
+    +   '<div><h4 class="text-sm font-black text-white">' + t(x.t) + '</h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-1">' + t(x.p) + '</p></div>'
+    + '</li>').join('');
+  document.getElementById('local-grid').innerHTML = LOCAL.map(x =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5 reveal">'
+    +   '<h4 class="text-sm font-black text-white"><i class="fa-solid ' + x.i + ' text-violet-300 mr-1.5"></i>' + t(x.t) + '</h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-2">' + t(x.p) + '</p>'
+    +   tipBox(t(x.tip))
+    + '</div>').join('');
+  document.getElementById('over-list').innerHTML = OVER.map(x =>
+    '<li class="flex gap-2"><i class="fa-solid fa-triangle-exclamation text-red-400 mt-1 text-xs"></i><span>' + t(x) + '</span></li>').join('');
+}
+function renderRef() {
+  document.getElementById('eq-body').innerHTML = EQ.map(r =>
+      '<tr>'
+    + '<td class="py-2.5 px-4 font-bold text-amber-300 whitespace-nowrap">' + r.a + '</td>'
+    + '<td class="py-2.5 px-4 font-bold text-red-300 whitespace-nowrap">' + r.s + '</td>'
+    + '<td class="py-2.5 px-4 font-bold text-violet-300 whitespace-nowrap">' + r.iso + '</td>'
+    + '<td class="py-2.5 px-4 text-slate-400">' + t(r.n) + '</td>'
+    + '</tr>').join('');
+  document.getElementById('fov-dia').innerHTML = fovDiagram();
+  document.getElementById('fl-body').innerHTML = LENSES.map(L =>
+      '<tr>'
+    + '<td class="py-2.5 px-4 font-bold text-white whitespace-nowrap">' + L.f + 'mm</td>'
+    + '<td class="py-2.5 px-4 text-cyan-300 whitespace-nowrap">' + f1(fov(L.f)) + '°</td>'
+    + '<td class="py-2.5 px-4 text-slate-400 whitespace-nowrap">≈ ' + Math.round(L.f / 1.5) + 'mm</td>'
+    + '<td class="py-2.5 px-4 text-slate-300">' + t(L.u) + '</td>'
+    + '</tr>').join('');
+  document.getElementById('scene-body').innerHTML = SCENES.map(r =>
+      '<tr>'
+    + '<td class="py-2.5 px-4 font-bold text-white whitespace-nowrap">' + t(r.s) + '</td>'
+    + '<td class="py-2.5 px-4 text-cyan-300 whitespace-nowrap">' + r.m + '</td>'
+    + '<td class="py-2.5 px-4 text-amber-300 whitespace-nowrap">' + t(r.a) + '</td>'
+    + '<td class="py-2.5 px-4 text-red-300 whitespace-nowrap">' + t(r.sh) + '</td>'
+    + '<td class="py-2.5 px-4 text-slate-400">' + t(r.n) + '</td>'
+    + '</tr>').join('');
+  document.getElementById('wb-grid').innerHTML = WB.map(w =>
+      '<div class="flex items-center gap-3 bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<span class="shrink-0 w-10 h-10 rounded-full" style="background:' + w.c + ';box-shadow:0 0 18px ' + w.c + '55"></span>'
+    +   '<div><div class="text-sm font-black text-white">' + w.k + '</div>'
+    +   '<div class="text-xs text-slate-400">' + t(w.t) + '</div></div>'
+    + '</div>').join('');
+  document.getElementById('rule-grid').innerHTML = RULES.map(r => card(t(r.h), t(r.p), 'text-emerald-300')).join('');
+}
+
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach((e, i) => { if (!e.classList.contains('in')) { e.dataset.i = i % 5; revealObserver.observe(e); } });
+}
+
+const I18N = {
+zh:{
+ 'doc.title':'攝影圖譜 | 相機、曝光與修圖',
+ 'hdr.badge':'攝影教學','hdr.title':'攝影：相機、曝光與修圖',
+ 'nav.cam':'相機','nav.exp':'曝光','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.edit':'修圖','nav.ref':'對照表',
+ 'intro':'一張照片是三件事的結果：相機怎麼收光、你怎麼控制光、拍完之後怎麼處理光。器材決定上限，但絕大多數照片離上限都還很遠；真正拉開差距的是曝光的判斷、對光的觀察，以及克制的後製。',
+ 'intro2':'這一冊先拆解相機與曝光原理，再分三部從「拍清楚」走到「控制光與時間」，最後一部專講修圖流程。所有圖示都是依光學數值計算繪製：光圈面積、感光元件尺寸、視角都按真實比例。',
+ 'cam.eyebrow':'先認識工具','cam.h2':'相機的構造',
+ 'cam.lead':'所有相機，從手機到中片幅，都是同一個原理：鏡頭把光聚焦，光圈控制開口大小，快門控制時間，感光元件記錄結果。看懂這張剖面圖，後面的設定都只是在調整這四個零件。',
+ 'cam.h.sensor':'感光元件尺寸','cam.p.sensor':'元件越大，收到的總光量越多，雜訊越少、背景越容易模糊。「等效係數」是全片幅對角線除以該元件的對角線，用來換算視角。',
+ 'exp.eyebrow':'最重要的一張圖','exp.h2':'曝光三要素與「級」',
+ 'exp.lead':'照片亮度由三個設定共同決定：光圈（開口多大）、快門（開多久）、ISO（訊號放大多少）。三者都以「級」為單位，每一級就是光量加倍或減半，所以可以互相抵換。真正要選的是副作用。',
+ 'exp.h.ap':'光圈：數字越小，開口越大','exp.p.ap':'以下以相同焦距畫出各光圈的開口大小。f 值是「焦距 ÷ 開口直徑」，所以 f/2 的開口是 f/4 的兩倍寬、四倍面積，相差兩級。',
+ 'edit.h2':'第四部・修圖：從 RAW 到成品',
+ 'edit.lead':'修圖不是把照片變成另一張照片，而是把相機記錄到、但還沒呈現出來的東西拿出來。以下流程以 Lightroom、Capture One、Darktable 等 RAW 軟體通用的順序整理，局部修飾則在 Photoshop 一類的圖層軟體中進行。',
+ 'edit.h.hist':'先學會看直方圖','edit.p.hist':'直方圖是照片中每個亮度有多少像素的統計。左邊是黑、右邊是白。沒有「正確的形狀」，只有一個原則：重要的細節不要撞牆。',
+ 'edit.h.flow':'整體調整的順序','edit.p.flow':'順序很重要：前面的步驟會改變後面每一步的判斷。由大到小、由整體到局部。',
+ 'edit.h.curve':'色調曲線：照片風格的來源','edit.p.curve':'橫軸是原本的亮度，縱軸是調整後的亮度。曲線往上彎就變亮、往下彎就變暗；斜率變陡，那一段的對比就增加。',
+ 'edit.h.local':'局部修飾','edit.h.over':'修過頭的徵兆',
+ 'tipLabel':'最常犯的錯',
+ 'ref.eyebrow':'查閱','ref.h2':'對照表',
+ 'ref.h.eq':'等效曝光','ref.p.eq':'以下每一列的進光量完全相同，差別只在副作用。光圈每收一級，快門就慢一級。',
+ 'ref.eq.th0':'光圈','ref.eq.th1':'快門（秒）','ref.eq.th2':'ISO','ref.eq.th3':'畫面效果',
+ 'ref.h.fl':'焦距與視角','ref.p.fl':'視角依全片幅 36mm 寬度計算。APS-C 欄是在 APS-C（×1.5）機身上要達到相同視角所需的焦距。',
+ 'ref.fl.th0':'焦距（全片幅）','ref.fl.th1':'水平視角','ref.fl.th2':'APS-C 對應','ref.fl.th3':'常見用途',
+ 'ref.h.scene':'各場景的起手設定','ref.p.scene':'只是出發點，不是答案。先用這組拍一張，看直方圖與畫面再修正。',
+ 'ref.sc.th0':'場景','ref.sc.th1':'模式','ref.sc.th2':'光圈','ref.sc.th3':'快門','ref.sc.th4':'要點',
+ 'ref.h.wb':'光源色溫','ref.p.wb':'大約數值。實際光源差異很大，尤其 LED 與螢光燈常常還帶有偏綠或偏洋紅。',
+ 'ref.h.rule':'實用法則','ref.p.rule':'在現場就能心算的幾條規則。',
+ 'footer':'攝影入門到修圖圖譜。光圈、視角、感光元件尺寸等數值依光學公式計算；各品牌的按鍵名稱與軟體介面不盡相同，請以您的相機手冊與所用軟體為準。'
+},
+en:{
+ 'doc.title':'Photography: Camera, Exposure & Retouching',
+ 'hdr.badge':'PHOTOGRAPHY TUTORIAL','hdr.title':'Photography: Camera, Exposure & Retouching',
+ 'nav.cam':'Camera','nav.exp':'Exposure','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.edit':'Retouching','nav.ref':'Reference',
+ 'intro':'A photograph is the result of three things: how the camera gathers light, how you control it, and how you treat it afterwards. Equipment sets the ceiling, but most pictures are nowhere near it. What separates them is judgement of exposure, attention to light, and restraint in editing.',
+ 'intro2':'This volume first takes apart the camera and the principle of exposure, then goes in three parts from getting a sharp picture to controlling light and time, and ends with a part on retouching. Every diagram is computed from the optics: aperture area, sensor size and angle of view are all drawn to true proportion.',
+ 'cam.eyebrow':'Know the tool first','cam.h2':'How a camera is built',
+ 'cam.lead':'Every camera, from a phone to medium format, works the same way: the lens focuses the light, the aperture sets the size of the opening, the shutter sets the time, the sensor records the result. Read this cross-section and every setting that follows is simply an adjustment to one of these four parts.',
+ 'cam.h.sensor':'Sensor size','cam.p.sensor':'A larger sensor collects more light in total, giving less noise and easier background blur. The crop factor is full frame’s diagonal divided by the sensor’s own, and is used to convert angles of view.',
+ 'exp.eyebrow':'The one diagram that matters most','exp.h2':'The three controls, and the stop',
+ 'exp.lead':'Brightness is set jointly by three controls: aperture (how wide the opening), shutter (how long it stays open) and ISO (how much the signal is amplified). All three move in stops, each a doubling or halving of light, so they trade against one another. What you are really choosing is the side effect.',
+ 'exp.h.ap':'Aperture: a smaller number, a bigger hole','exp.p.ap':'The openings below are drawn for one focal length. The f-number is focal length ÷ opening diameter, so f/2 is twice as wide as f/4 and four times the area: two stops apart.',
+ 'edit.h2':'Part 4 · Retouching: from RAW to finished picture',
+ 'edit.lead':'Retouching does not turn a photograph into a different one. It brings out what the camera recorded but has not yet shown. The workflow below follows the order common to RAW editors such as Lightroom, Capture One and Darktable; local work is done in a layer editor such as Photoshop.',
+ 'edit.h.hist':'Learn to read the histogram first','edit.p.hist':'The histogram counts how many pixels sit at each brightness, black on the left, white on the right. There is no correct shape, only one principle: important detail must not hit a wall.',
+ 'edit.h.flow':'The order of global adjustments','edit.p.flow':'Order matters: each step changes how you judge every step after it. Work from large to small, from the whole to the part.',
+ 'edit.h.curve':'The tone curve: where a look comes from','edit.p.curve':'The horizontal axis is the original brightness, the vertical axis the adjusted one. Bend the curve up to brighten, down to darken; wherever it gets steeper, contrast in that range increases.',
+ 'edit.h.local':'Local work','edit.h.over':'Signs of overediting',
+ 'tipLabel':'The usual mistake',
+ 'ref.eyebrow':'Reference','ref.h2':'Tables',
+ 'ref.h.eq':'Equivalent exposures','ref.p.eq':'Every row lets in exactly the same amount of light; only the side effects differ. Each stop the aperture closes, the shutter opens one stop longer.',
+ 'ref.eq.th0':'Aperture','ref.eq.th1':'Shutter (s)','ref.eq.th2':'ISO','ref.eq.th3':'Effect on the picture',
+ 'ref.h.fl':'Focal length and angle of view','ref.p.fl':'Angles are computed for a 36 mm-wide full-frame sensor. The APS-C column gives the focal length that produces the same angle on an APS-C (×1.5) body.',
+ 'ref.fl.th0':'Focal length (full frame)','ref.fl.th1':'Horizontal angle','ref.fl.th2':'APS-C equivalent','ref.fl.th3':'Typical use',
+ 'ref.h.scene':'Starting settings by scene','ref.p.scene':'A starting point, not an answer. Take one frame with these, look at the histogram and the picture, then correct.',
+ 'ref.sc.th0':'Scene','ref.sc.th1':'Mode','ref.sc.th2':'Aperture','ref.sc.th3':'Shutter','ref.sc.th4':'Notes',
+ 'ref.h.wb':'Colour temperature of light sources','ref.p.wb':'Approximate values. Real sources vary widely, and LED and fluorescent light often add a green or magenta cast as well.',
+ 'ref.h.rule':'Rules of thumb','ref.p.rule':'A few rules you can work out in your head on location.',
+ 'footer':'A photography reference from first shots to retouching. Aperture, angle of view and sensor figures are computed from optical formulas; button names and software layouts differ between brands, and your camera manual and your own software take precedence.'
+},
+fr:{
+ 'doc.title':'Photographie : appareil, exposition et retouche',
+ 'hdr.badge':'TUTORIEL DE PHOTOGRAPHIE','hdr.title':'Photographie : appareil, exposition et retouche',
+ 'nav.cam':'Appareil','nav.exp':'Exposition','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.edit':'Retouche','nav.ref':'Références',
+ 'intro':'Une photographie résulte de trois choses : la manière dont l’appareil recueille la lumière, celle dont vous la maîtrisez, et ce que vous en faites ensuite. Le matériel fixe le plafond, mais la plupart des images en sont très loin. Ce qui les distingue, c’est le jugement de l’exposition, l’attention à la lumière et la retenue au développement.',
+ 'intro2':'Ce volume démonte d’abord l’appareil et le principe de l’exposition, puis va en trois parties de l’image nette à la maîtrise de la lumière et du temps, et se termine par une partie sur la retouche. Chaque schéma est calculé à partir de l’optique : surface d’ouverture, taille de capteur et angle de champ sont dessinés à l’échelle réelle.',
+ 'cam.eyebrow':'D’abord l’outil','cam.h2':'L’anatomie d’un appareil photo',
+ 'cam.lead':'Tout appareil, du smartphone au moyen format, fonctionne de la même manière : l’objectif fait converger la lumière, le diaphragme règle la taille de l’ouverture, l’obturateur la durée, le capteur enregistre le résultat. Lisez cette coupe, et chaque réglage qui suit n’est qu’une action sur l’une de ces quatre pièces.',
+ 'cam.h.sensor':'La taille du capteur','cam.p.sensor':'Un capteur plus grand reçoit plus de lumière au total : moins de bruit, flou d’arrière-plan plus facile. Le coefficient de recadrage est la diagonale du plein format divisée par celle du capteur ; il sert à convertir les angles de champ.',
+ 'exp.eyebrow':'Le schéma le plus important','exp.h2':'Les trois réglages, et l’IL',
+ 'exp.lead':'La luminosité dépend conjointement de trois réglages : l’ouverture (la taille du trou), la vitesse (la durée) et les ISO (l’amplification du signal). Tous trois se comptent en IL, chacun doublant ou divisant la lumière par deux, et se compensent donc. Ce que l’on choisit vraiment, c’est l’effet secondaire.',
+ 'exp.h.ap':'L’ouverture : petit nombre, grand trou','exp.p.ap':'Les ouvertures ci-dessous sont dessinées pour une même focale. Le nombre f vaut focale ÷ diamètre de l’ouverture : f/2 est deux fois plus large que f/4 et quatre fois plus grand en surface, soit deux IL d’écart.',
+ 'edit.h2':'Partie 4 · Retouche : du RAW à l’image finie',
+ 'edit.lead':'Retoucher ne transforme pas une photographie en une autre. Cela révèle ce que l’appareil a enregistré sans encore le montrer. Le flux ci-dessous suit l’ordre commun aux dérawtiseurs comme Lightroom, Capture One ou Darktable ; le travail local se fait dans un éditeur à calques comme Photoshop.',
+ 'edit.h.hist':'Apprendre d’abord à lire l’histogramme','edit.p.hist':'L’histogramme compte les pixels à chaque niveau de luminosité, le noir à gauche, le blanc à droite. Il n’y a pas de bonne forme, seulement un principe : le détail important ne doit pas toucher les bords.',
+ 'edit.h.flow':'L’ordre des réglages globaux','edit.p.flow':'L’ordre compte : chaque étape change le jugement de toutes les suivantes. Du général au particulier, de l’ensemble au détail.',
+ 'edit.h.curve':'La courbe de tonalité : d’où vient le rendu','edit.p.curve':'L’axe horizontal est la luminosité d’origine, l’axe vertical la luminosité corrigée. Courber vers le haut éclaircit, vers le bas assombrit ; là où la pente s’accentue, le contraste de cette plage augmente.',
+ 'edit.h.local':'Le travail local','edit.h.over':'Les signes d’une retouche excessive',
+ 'tipLabel':'L’erreur habituelle',
+ 'ref.eyebrow':'Références','ref.h2':'Tableaux',
+ 'ref.h.eq':'Expositions équivalentes','ref.p.eq':'Chaque ligne laisse passer exactement la même quantité de lumière ; seuls les effets secondaires diffèrent. Chaque IL de fermeture est compensé par une vitesse plus lente d’un IL.',
+ 'ref.eq.th0':'Ouverture','ref.eq.th1':'Vitesse (s)','ref.eq.th2':'ISO','ref.eq.th3':'Effet sur l’image',
+ 'ref.h.fl':'Focale et angle de champ','ref.p.fl':'Angles calculés pour un capteur plein format de 36 mm de large. La colonne APS-C donne la focale qui produit le même angle sur un boîtier APS-C (×1,5).',
+ 'ref.fl.th0':'Focale (plein format)','ref.fl.th1':'Angle horizontal','ref.fl.th2':'Équivalent APS-C','ref.fl.th3':'Usage courant',
+ 'ref.h.scene':'Réglages de départ par situation','ref.p.scene':'Un point de départ, pas une réponse. Faites une image avec ces réglages, regardez l’histogramme et l’image, puis corrigez.',
+ 'ref.sc.th0':'Situation','ref.sc.th1':'Mode','ref.sc.th2':'Ouverture','ref.sc.th3':'Vitesse','ref.sc.th4':'Points clés',
+ 'ref.h.wb':'Température de couleur des sources','ref.p.wb':'Valeurs approximatives. Les sources réelles varient beaucoup, et les LED comme les tubes fluorescents ajoutent souvent une dominante verte ou magenta.',
+ 'ref.h.rule':'Règles pratiques','ref.p.rule':'Quelques règles à calculer de tête sur le terrain.',
+ 'footer':'Un guide de la photographie, des premières images à la retouche. Les valeurs d’ouverture, d’angle de champ et de capteur sont calculées par les formules optiques ; les noms des boutons et l’interface des logiciels varient selon les marques, et le manuel de votre appareil comme votre logiciel font autorité.'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-cyan-500/15 text-cyan-300 border border-cyan-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderCamera();
+  renderExposure();
+  renderLevels();
+  renderEdit();
+  renderRef();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>
