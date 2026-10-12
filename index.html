@@ -1180,6 +1180,10 @@ const DEFAULT_MODULES = [
     description:{ zh:'三語鉤針課程，分三個程度：工具與鉤針尺寸、六種基本針法、加減針塑形、魔術環，再到密度、玩偶、方眼編與阿富汗編。每種針法都以國際符號繪製，並附織圖。', en:'Trilingual crochet course in three levels: tools and hook sizes, the six basic stitches, shaping with increases and decreases, the magic ring, then gauge, amigurumi, filet and Tunisian. Every stitch is drawn in the international symbol set, with worked charts.', fr:'Cours de crochet trilingue en trois niveaux : outils et tailles de crochet, les six points de base, les augmentations et diminutions, le cercle magique, puis l\'échantillon, l\'amigurumi, le filet et le crochet tunisien. Chaque point est dessiné avec les symboles internationaux, avec des diagrammes.' },
     icon:'fa-mitten', color:'from-pink-400 to-rose-600',
     cat:'science', file:'crochet.html', custom:false },
+  { id:'photo',     title:{ zh:'攝影', en:'Lumen: Photography', fr:'Lumen : la photographie' },  subtitle:{ zh:'相機、曝光與修圖', en:'Camera, Exposure & Retouching', fr:'Appareil, exposition & retouche' },
+    description:{ zh:'三語攝影課程：相機構造、以「級」為單位的曝光三要素，再分三部從拍清楚走到控制光與時間，第四部講從 RAW 到輸出的修圖流程。每張圖都依光學數值計算繪製，包括感光元件尺寸、光圈面積與視角。', en:'Trilingual photography course: how a camera is built, the three exposure controls in stops, then three levels from getting a sharp picture to controlling light and time, and a fourth on retouching from RAW to export. Every diagram is computed from the optics, including sensor sizes, aperture areas and angles of view.', fr:'Cours de photographie trilingue : l\'anatomie de l\'appareil, les trois réglages d\'exposition en IL, puis trois niveaux de l\'image nette à la maîtrise de la lumière et du temps, et un quatrième sur la retouche du RAW à l\'export. Chaque schéma est calculé à partir de l\'optique : tailles de capteur, surfaces d\'ouverture et angles de champ.' },
+    icon:'fa-camera', color:'from-cyan-400 to-sky-600',
+    cat:'science', file:'photography.html', custom:false },
   { id:'beer',       title:{ zh:'啤酒大師課', en:'Zymos: Beer Masterclass', fr:'Zymos : masterclass bière' }, subtitle:{ zh:'釀造科學與風格', en:'Brewing Science & Styles', fr:'Science du brassage & styles' },
     description:{ zh:'深入發酵科學、歷史酒廠傳承與風味特徵。', en:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.', fr:'Plongée dans la science de la fermentation, les lignées historiques des brasseries et les profils aromatiques.' },
     icon:'fa-beer-mug-empty',  color:'from-amber-400 to-orange-500',
@@ -1473,6 +1477,7 @@ const MODULE_I18N = {
   mythology:    { fn: 'setLanguage',    btn: 'lang-zh' },
   crochet:      { fn: 'setLanguage',    btn: 'lang-zh' },
   guzheng:      { fn: 'setLanguage',    btn: 'lang-zh' },
+  photo:        { fn: 'setLanguage',    btn: 'lang-zh' },
 };
 
 const OPEN_KEY = 'kb_open_module';
