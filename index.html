@@ -1139,63 +1139,65 @@ const CATEGORIES = [
   { id:'custom',     icon:'fa-box-archive',      zh:'自訂館藏',     en:'Custom Volumes',      fr:'Volumes personnalisés' },
 ];
 const catLabel = c => c[currentLang] || c.en;
+// Built-in modules carry { zh, en, fr }; uploaded ones are plain strings.
+const loc = v => (v && typeof v === 'object') ? (v[currentLang] || v.en || '') : (v || '');
 const catById  = id => CATEGORIES.find(c => c.id === id) || CATEGORIES[CATEGORIES.length-1];
 
 const DEFAULT_MODULES = [
-  { id:'art',        title:'Ars Mundi: Art History',  subtitle:'Timeline & Regional Atlas',
-    description:'Trilingual atlas of world art: timeline, movements, 70 artist biographies, artwork lightbox and museum guide across four cultural regions.',
+  { id:'art',        title:{ zh:'世界藝術史', en:'Ars Mundi: Art History', fr:'Ars Mundi : histoire de l\'art' },  subtitle:{ zh:'年表與區域圖譜', en:'Timeline & Regional Atlas', fr:'Chronologie & atlas régional' },
+    description:{ zh:'三語世界藝術圖譜：年表、藝術流派、70 位藝術家傳記、作品燈箱與博物館指南，涵蓋四大文化區域。', en:'Trilingual atlas of world art: timeline, movements, 70 artist biographies, artwork lightbox and museum guide across four cultural regions.', fr:'Atlas trilingue de l\'art mondial : chronologie, mouvements, 70 biographies d\'artistes, visionneuse d\'œuvres et guide des musées, sur quatre régions culturelles.' },
     icon:'fa-palette', color:'from-violet-400 to-indigo-600',
     cat:'humanities', file:'art-history-timeline.html', custom:false },
-  { id:'worldhistory', title:'Chronos Mundi: World History', subtitle:'Timeline & Civilizations Atlas',
-    description:'Trilingual interactive timeline of world history: 20 civilizations and eras, key events, historical significance and legacy across four cultural regions.',
+  { id:'worldhistory', title:{ zh:'世界歷史', en:'Chronos Mundi: World History', fr:'Chronos Mundi : histoire du monde' }, subtitle:{ zh:'年表與文明圖譜', en:'Timeline & Civilizations Atlas', fr:'Chronologie & atlas des civilisations' },
+    description:{ zh:'三語互動世界史年表：20 個文明與時代、關鍵事件、歷史意義與影響，涵蓋四大文化區域。', en:'Trilingual interactive timeline of world history: 20 civilizations and eras, key events, historical significance and legacy across four cultural regions.', fr:'Chronologie interactive et trilingue de l\'histoire mondiale : 20 civilisations et époques, événements clés, portée historique et héritage, sur quatre régions culturelles.' },
     icon:'fa-landmark', color:'from-cyan-400 to-sky-600',
     cat:'humanities', file:'world-history-timeline.html', custom:false },
-  { id:'mythology',  title:'Mythos & Fabula: Greek & Roman Myth', subtitle:'Gods, Epics & Their Afterlives',
-    description:'Trilingual introduction to Greek and Roman myth and epic: the pantheon, cosmogony, the heroic cycles, Homer and Virgil, Rome\'s foundation myths and Ovid\'s Metamorphoses. Artworks accompany each passage as a supplement, showing how later ages retold the stories.',
+  { id:'mythology',  title:{ zh:'希臘羅馬神話', en:'Mythos & Fabula: Greek & Roman Myth', fr:'Mythos & Fabula : mythes grecs et romains' }, subtitle:{ zh:'眾神、史詩與後世流傳', en:'Gods, Epics & Their Afterlives', fr:'Dieux, épopées & postérité' },
+    description:{ zh:'三語希臘羅馬神話與史詩入門：眾神譜系、創世神話、英雄傳說、荷馬與維吉爾、羅馬建城神話與奧維德《變形記》。每段都附上藝術作品作為補充，呈現後世如何重述這些故事。', en:'Trilingual introduction to Greek and Roman myth and epic: the pantheon, cosmogony, the heroic cycles, Homer and Virgil, Rome\'s foundation myths and Ovid\'s Metamorphoses. Artworks accompany each passage as a supplement, showing how later ages retold the stories.', fr:'Introduction trilingue aux mythes et épopées grecs et romains : le panthéon, la cosmogonie, les cycles héroïques, Homère et Virgile, les mythes de fondation de Rome et les Métamorphoses d\'Ovide. Des œuvres d\'art accompagnent chaque passage pour montrer comment les époques suivantes ont raconté ces histoires.' },
     icon:'fa-bolt', color:'from-amber-400 to-orange-500',
     cat:'humanities', file:'greek-roman-mythology.html', custom:false },
-  { id:'finance',    title:'Business & Finance',      subtitle:'Cross-Domain Knowledge Map',
-    description:'Trilingual map of twelve business domains, from finance, accounting and marketing to consulting, supply chain, tech, FMCG, AI, SaaS and investing. Every branch carries its subfields, skills, tools and certifications, an interactive scenario, and a six-month practice path with resources and a portfolio project.',
+  { id:'finance',    title:{ zh:'商業與金融', en:'Business & Finance', fr:'Business & finance' },      subtitle:{ zh:'跨領域知識地圖', en:'Cross-Domain Knowledge Map', fr:'Carte des savoirs transversale' },
+    description:{ zh:'三語知識地圖，涵蓋十二個商業領域：金融、會計、行銷，到顧問、供應鏈、科技、快消、AI、SaaS 與投資。每個分支都有子領域、技能、工具與證照、互動情境題，以及附資源與作品集專案的六個月實作路徑。', en:'Trilingual map of twelve business domains, from finance, accounting and marketing to consulting, supply chain, tech, FMCG, AI, SaaS and investing. Every branch carries its subfields, skills, tools and certifications, an interactive scenario, and a six-month practice path with resources and a portfolio project.', fr:'Carte trilingue de douze domaines du business, de la finance, la comptabilité et le marketing au conseil, à la supply chain, la tech, la grande consommation, l\'IA, le SaaS et l\'investissement. Chaque branche réunit ses sous-domaines, compétences, outils et certifications, un scénario interactif et un parcours pratique de six mois avec ressources et projet de portfolio.' },
     icon:'fa-building-columns', color:'from-emerald-400 to-teal-600',
     cat:'business', file:'business-finance-knowledge-map.html', custom:false },
-  { id:'ir-theory',  title:'International Relations Theory', subtitle:'Paradigms, Scholars & Studies',
-    description:'Reference atlas of Realism, Liberalism, Constructivism, Critical/Marxist theory, English School and Feminist IR, with key scholars, studies, and a side-by-side comparison.',
+  { id:'ir-theory',  title:{ zh:'國際關係理論', en:'International Relations Theory', fr:'Théories des relations internationales' }, subtitle:{ zh:'典範、學者與研究', en:'Paradigms, Scholars & Studies', fr:'Paradigmes, auteurs & études' },
+    description:{ zh:'國際關係理論參考圖譜：現實主義、自由主義、建構主義、批判／馬克思主義、英國學派與女性主義，附重要學者、經典研究與並列比較。', en:'Reference atlas of Realism, Liberalism, Constructivism, Critical/Marxist theory, English School and Feminist IR, with key scholars, studies, and a side-by-side comparison.', fr:'Atlas de référence du réalisme, du libéralisme, du constructivisme, des théories critiques et marxistes, de l\'École anglaise et du féminisme en RI, avec les auteurs clés, les études et une comparaison côte à côte.' },
     icon:'fa-globe', color:'from-sky-400 to-blue-600',
     cat:'politics', file:'ir-theories.html', custom:false },
-  { id:'intl-law',   title:'International Law',        subtitle:'Sources, Regimes & Institutions',
-    description:'Reference atlas of public international law: sources & jus cogens, treaties & state responsibility, human rights, humanitarian & criminal law, law of the sea, and key institutions.',
+  { id:'intl-law',   title:{ zh:'國際法', en:'International Law', fr:'Droit international' },        subtitle:{ zh:'法源、法律體制與國際機構', en:'Sources, Regimes & Institutions', fr:'Sources, régimes & institutions' },
+    description:{ zh:'國際公法參考圖譜：法源與強行法、條約與國家責任、人權、人道法與國際刑法、海洋法，以及重要國際機構。', en:'Reference atlas of public international law: sources & jus cogens, treaties & state responsibility, human rights, humanitarian & criminal law, law of the sea, and key institutions.', fr:'Atlas de référence du droit international public : sources et jus cogens, traités et responsabilité de l\'État, droits de l\'homme, droit humanitaire et pénal, droit de la mer et grandes institutions.' },
     icon:'fa-scale-balanced', color:'from-lime-400 to-green-600',
     cat:'politics', file:'international-law.html', custom:false },
-  { id:'lifestyle',  title:'Lifestyle & Luxury',       subtitle:'Cross-Domain Knowledge Map',
-    description:'Trilingual atlas of the lifestyle and luxury industries: cosmetics, fragrance, spirits, fashion and hospitality: ingredients, houses, terroirs and craft techniques.',
+  { id:'lifestyle',  title:{ zh:'生活風格與精品', en:'Lifestyle & Luxury', fr:'Art de vivre & luxe' },       subtitle:{ zh:'跨領域知識地圖', en:'Cross-Domain Knowledge Map', fr:'Carte des savoirs transversale' },
+    description:{ zh:'三語生活風格與精品產業圖譜：美妝、香水、酒類、時尚與款待業，涵蓋成分、品牌世家、風土與工藝技術。', en:'Trilingual atlas of the lifestyle and luxury industries: cosmetics, fragrance, spirits, fashion and hospitality: ingredients, houses, terroirs and craft techniques.', fr:'Atlas trilingue des industries de l\'art de vivre et du luxe : cosmétique, parfum, spiritueux, mode et hospitalité, avec les ingrédients, les maisons, les terroirs et les savoir-faire.' },
     icon:'fa-gem', color:'from-fuchsia-400 to-purple-700',
     cat:'business', file:'lifestyle-luxury-knowledge-map.html', custom:false },
-  { id:'guzheng',   title:'Zheng: The Guzheng',     subtitle:'Instrument, Tuning & Technique',
-    description:'Trilingual guzheng course in three levels: the parts of the instrument, the 21-string map in standard D tuning, the basic right-hand strokes, then the left-hand pressing that produces 4 and 7, tremolo, glissando and the regional schools. Every diagram is drawn, including the string map and the fingering marks.',
+  { id:'guzheng',   title:{ zh:'古箏', en:'Zheng: The Guzheng', fr:'Zheng : le guzheng' },     subtitle:{ zh:'樂器、定弦與技法', en:'Instrument, Tuning & Technique', fr:'Instrument, accord & technique' },
+    description:{ zh:'三語古箏課程，分三個程度：樂器構造、D 調標準定弦的 21 弦位置圖、右手基本指法，再到按出 4 與 7 的左手按音、搖指、刮奏與各地流派。每張圖都是手繪的，包括弦位圖與指法記號。', en:'Trilingual guzheng course in three levels: the parts of the instrument, the 21-string map in standard D tuning, the basic right-hand strokes, then the left-hand pressing that produces 4 and 7, tremolo, glissando and the regional schools. Every diagram is drawn, including the string map and the fingering marks.', fr:'Cours de guzheng trilingue en trois niveaux : les parties de l\'instrument, la carte des 21 cordes en accord de ré standard, les attaques de base de la main droite, puis les pressions de la main gauche qui produisent le 4 et le 7, le trémolo, le glissando et les écoles régionales. Chaque schéma est dessiné, y compris la carte des cordes et les signes de doigté.' },
     icon:'fa-music', color:'from-amber-400 to-orange-500',
     cat:'humanities', file:'guzheng.html', custom:false },
-  { id:'crochet',   title:'Nodus: Crochet',          subtitle:'Beginner to Advanced',
-    description:'Trilingual crochet course in three levels: tools and hook sizes, the six basic stitches, shaping with increases and decreases, the magic ring, then gauge, amigurumi, filet and Tunisian. Every stitch is drawn in the international symbol set, with worked charts.',
+  { id:'crochet',   title:{ zh:'鉤針編織', en:'Nodus: Crochet', fr:'Nodus : le crochet' },          subtitle:{ zh:'從入門到進階', en:'Beginner to Advanced', fr:'Du débutant à l\'avancé' },
+    description:{ zh:'三語鉤針課程，分三個程度：工具與鉤針尺寸、六種基本針法、加減針塑形、魔術環，再到密度、玩偶、方眼編與阿富汗編。每種針法都以國際符號繪製，並附織圖。', en:'Trilingual crochet course in three levels: tools and hook sizes, the six basic stitches, shaping with increases and decreases, the magic ring, then gauge, amigurumi, filet and Tunisian. Every stitch is drawn in the international symbol set, with worked charts.', fr:'Cours de crochet trilingue en trois niveaux : outils et tailles de crochet, les six points de base, les augmentations et diminutions, le cercle magique, puis l\'échantillon, l\'amigurumi, le filet et le crochet tunisien. Chaque point est dessiné avec les symboles internationaux, avec des diagrammes.' },
     icon:'fa-mitten', color:'from-pink-400 to-rose-600',
     cat:'science', file:'crochet.html', custom:false },
-  { id:'beer',       title:'Zymos: Beer Masterclass', subtitle:'Brewing Science & Styles',
-    description:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.',
+  { id:'beer',       title:{ zh:'啤酒大師課', en:'Zymos: Beer Masterclass', fr:'Zymos : masterclass bière' }, subtitle:{ zh:'釀造科學與風格', en:'Brewing Science & Styles', fr:'Science du brassage & styles' },
+    description:{ zh:'深入發酵科學、歷史酒廠傳承與風味特徵。', en:'A deep dive into fermentation science, historical brewery lineages, and flavor profiles.', fr:'Plongée dans la science de la fermentation, les lignées historiques des brasseries et les profils aromatiques.' },
     icon:'fa-beer-mug-empty',  color:'from-amber-400 to-orange-500',
     cat:'science', file:'zymos_beer_mind_map.html', custom:false },
-  { id:'skincare',   title:'Skincare Actives',        subtitle:'Science & Market Trends',
-    description:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.',
+  { id:'skincare',   title:{ zh:'保養活性成分', en:'Skincare Actives', fr:'Actifs cosmétiques' },        subtitle:{ zh:'科學與市場趨勢', en:'Science & Market Trends', fr:'Science & tendances du marché' },
+    description:{ zh:'三語互動心智圖：活性成分、配方邏輯與法規。', en:'Trilingual interactive mind map of active ingredients, formulation logic, and regulations.', fr:'Carte mentale interactive et trilingue des actifs, de la logique de formulation et de la réglementation.' },
     icon:'fa-sparkles',        color:'from-pink-400 to-rose-600',
     cat:'science', file:'skincare-trilingual.html', custom:false },
-  { id:'perfume',    title:'Perfume Intelligence',    subtitle:'Market Analysis & Brands',
-    description:'Coty portfolio analysis and perfume market competition mind map.',
+  { id:'perfume',    title:{ zh:'香水市場情報', en:'Perfume Intelligence', fr:'Intelligence parfum' },    subtitle:{ zh:'市場分析與品牌', en:'Market Analysis & Brands', fr:'Analyse de marché & marques' },
+    description:{ zh:'Coty 品牌組合分析與香水市場競爭心智圖。', en:'Coty portfolio analysis and perfume market competition mind map.', fr:'Analyse du portefeuille de Coty et carte mentale de la concurrence sur le marché du parfum.' },
     icon:'fa-bottle-droplet',  color:'from-fuchsia-400 to-purple-700',
     cat:'business', file:'coty_perfume_market_mindmap.html', custom:false },
-  { id:'career-fr',  title:'Dossier: A Career in France', subtitle:'Expert-Comptable & Alternative Tracks',
-    description:'Career dossier for the French market: the regulated expert-comptable route (DCG, DSCG, DEC), an eight-week intensive study and job-hunt plan, a comparison of five professions, the DCG reading list, and short, mid and long-term roadmaps for six alternative fields with their decision points.',
+  { id:'career-fr',  title:{ zh:'法國職涯檔案', en:'Dossier: A Career in France', fr:'Dossier : faire carrière en France' }, subtitle:{ zh:'會計師與其他職涯路線', en:'Expert-Comptable & Alternative Tracks', fr:'Expert-comptable & voies alternatives' },
+    description:{ zh:'法國市場職涯檔案：受規範的 expert-comptable 路線（DCG、DSCG、DEC）、八週密集讀書與求職計畫、五種職業比較、DCG 書單，以及六個替代領域的短、中、長期路線圖與決策點。', en:'Career dossier for the French market: the regulated expert-comptable route (DCG, DSCG, DEC), an eight-week intensive study and job-hunt plan, a comparison of five professions, the DCG reading list, and short, mid and long-term roadmaps for six alternative fields with their decision points.', fr:'Dossier carrière pour le marché français : la voie réglementée de l\'expert-comptable (DCG, DSCG, DEC), un plan intensif de huit semaines d\'études et de recherche d\'emploi, une comparaison de cinq métiers, la bibliographie du DCG, et des feuilles de route à court, moyen et long terme pour six domaines alternatifs avec leurs points de décision.' },
     icon:'fa-compass',         color:'from-emerald-400 to-teal-600',
     cat:'career', file:'career-dossier-france.html', custom:false },
-  { id:'cv-builder', title:'CV Prompt Builder',       subtitle:'Career Engineering Tool',
-    description:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.',
+  { id:'cv-builder', title:{ zh:'履歷提示詞產生器', en:'CV Prompt Builder', fr:'Générateur de prompts CV' },       subtitle:{ zh:'職涯工程工具', en:'Career Engineering Tool', fr:'Outil d\'ingénierie de carrière' },
+    description:{ zh:'以 AI 驅動的進階提示詞產生器，用來打磨履歷與求職信。', en:'Advanced AI-driven prompt builder for perfecting CVs and Cover Letters.', fr:'Générateur de prompts avancé, piloté par l\'IA, pour perfectionner CV et lettres de motivation.' },
     icon:'fa-file-invoice',    color:'from-sky-400 to-blue-600',
     cat:'career', file:'cv_prompt_builder_v2.html', custom:false }
 ];
@@ -1235,9 +1237,8 @@ if (activeCat !== 'all' && !CATEGORIES.some(c => c.id === activeCat)) activeCat 
 function matchesSearch(m) {
   const q = searchQuery.toLowerCase();
   return !q ||
-    m.title.toLowerCase().includes(q) ||
-    (m.subtitle||'').toLowerCase().includes(q) ||
-    (m.description||'').toLowerCase().includes(q);
+    [m.title, m.subtitle, m.description].some(v =>
+      (v && typeof v === 'object' ? Object.values(v).join(' ') : (v || '')).toLowerCase().includes(q));
 }
 /* A volume keeps its numeral wherever it is shelved, filtered or searched. */
 function romanOf(mod) {
@@ -1329,7 +1330,7 @@ function buildCard(mod, animIdx) {
       card.onclick = () => openModule(mod, card);
       card.setAttribute('tabindex','0');
       card.setAttribute('role','button');
-      card.setAttribute('aria-label','Open '+mod.title);
+      card.setAttribute('aria-label','Open '+loc(mod.title));
       card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod, card); } };
     }
 
@@ -1350,10 +1351,10 @@ function buildCard(mod, animIdx) {
             <div class="open-arr"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
           </div>
         </div>
-        <h3 class="card-title">${mod.title}</h3>
-        <p class="card-tag">${mod.subtitle}</p>
+        <h3 class="card-title">${loc(mod.title)}</h3>
+        <p class="card-tag">${loc(mod.subtitle)}</p>
         <div class="ruled-sep"></div>
-        <p class="card-desc">${mod.description}</p>
+        <p class="card-desc">${loc(mod.description)}</p>
         <div class="status-pill">
           <div class="pulse-dot"
                style="background:${mod.custom?'#60a5fa':'#a07838'};
