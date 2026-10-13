@@ -95,6 +95,7 @@
         <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
       </div>
       <nav class="flex flex-wrap gap-2 text-xs">
+        <a href="#basics0"  data-i18n="nav.basic" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors"></a>
         <a href="#camera"   data-i18n="nav.cam"  class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition-colors"></a>
         <a href="#exposure" data-i18n="nav.exp"  class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition-colors"></a>
         <a href="#basics"   data-i18n="nav.p1"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
@@ -116,6 +117,27 @@
     <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
   </section>
 
+  <section id="path" class="scroll-mt-24">
+    <h2 data-i18n="path.h2" class="text-lg font-black text-white mb-1"></h2>
+    <p data-i18n="path.lead" class="text-sm text-slate-400 mb-4"></p>
+    <ol id="roadmap" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3"></ol>
+  </section>
+
+  <section id="basics0" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-emerald-500/10 rounded-2xl text-emerald-300 border border-emerald-500/20"><i class="fa-solid fa-lightbulb text-xl"></i></div>
+      <div>
+        <span data-i18n="basic.eyebrow" class="text-xs uppercase tracking-wider text-emerald-300 font-bold"></span>
+        <h2 data-i18n="basic.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <p data-i18n="basic.lead" class="text-slate-300 leading-relaxed"></p>
+      <div id="flow-dia"></div>
+      <div id="basic-grid" class="grid md:grid-cols-2 gap-4"></div>
+    </div>
+  </section>
+
   <section id="camera" class="scroll-mt-24">
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-cyan-500/10 rounded-2xl text-cyan-300 border border-cyan-500/20 shadow-glow-cyan"><i class="fa-solid fa-camera-retro text-xl"></i></div>
@@ -134,6 +156,44 @@
         <div id="sensor-dia"></div>
       </div>
       <div id="types-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+      <div class="rounded-2xl border border-cyan-500/25 bg-cyan-500/[0.05] p-5">
+        <h3 data-i18n="cam.h.ctrl" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="cam.p.ctrl" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="ctrl-dia"></div>
+        <div id="ctrl-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4"></div>
+      </div>
+      <div>
+        <h3 data-i18n="cam.h.lens" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="cam.p.lens" class="text-sm text-slate-400 leading-relaxed mb-4"></p>
+        <div id="lens-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="cam.h.mark" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="cam.p.mark" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="mark-dia"></div>
+        <div class="table-scroll overflow-x-auto mt-4">
+          <table class="w-full text-sm min-w-[640px]">
+            <thead><tr class="text-left text-slate-400 border-b border-slate-800">
+              <th data-i18n="cam.mk.th0" class="py-3 px-4 font-bold"></th>
+              <th data-i18n="cam.mk.th1" class="py-3 px-4 font-bold"></th>
+            </tr></thead>
+            <tbody id="mark-body" class="divide-y divide-slate-800/60"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 data-i18n="cam.h.setup" class="text-base font-black text-white mb-1"></h3>
+        <p data-i18n="cam.p.setup" class="text-sm text-slate-400 leading-relaxed mb-4"></p>
+        <ol id="setup-list" class="grid md:grid-cols-2 gap-3"></ol>
+      </div>
+      <div>
+        <h3 data-i18n="cam.h.gear" class="text-base font-black text-white mb-4"></h3>
+        <div id="gear-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+      <div class="rounded-2xl border border-amber-500/25 bg-amber-500/[0.05] p-5">
+        <h3 data-i18n="cam.h.choose" class="text-base font-black text-white mb-4"></h3>
+        <div id="choose-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
     </div>
   </section>
 
@@ -205,7 +265,7 @@
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-violet-500/10 rounded-2xl text-violet-300 border border-violet-500/20 shadow-glow-violet"><i class="fa-solid fa-sliders text-xl"></i></div>
       <div>
-        <span class="lvl-pill text-violet-300" style="background:rgba(167,139,250,0.14)">LEVEL 4</span>
+        <span data-i18n="edit.eyebrow" class="text-xs uppercase tracking-wider text-violet-300 font-bold"></span>
         <h2 data-i18n="edit.h2" class="text-2xl font-black text-white"></h2>
       </div>
     </div>
@@ -550,7 +610,7 @@ function compDiagram() {
    ═══════════════════════════════════════════════════════════ */
 const LEVELS = [
 { id:'basics', tone:'amber', icon:'fa-seedling', n:1,
-  t:{zh:'第一部・入門：先拍到清楚的照片', en:'Part 1 · Beginner: getting a sharp picture', fr:'Partie 1 · Débutant : obtenir une image nette'},
+  t:{zh:'入門實拍：先拍到清楚的照片', en:'Beginner shooting: getting a sharp picture', fr:'Débuter : obtenir une image nette'},
   lead:{zh:'入門階段的目標不是藝術，而是可靠：每一張都對到焦、不手震、亮度大致正確。做到這三件事，比任何器材升級都有效。這一部也帶入最基本的構圖與看光。',
         en:'At the start the aim is reliability, not art: every frame in focus, free of shake, roughly well exposed. Getting those three right does more than any equipment upgrade. This part also introduces basic composition and how to look at light.',
         fr:'Au début, le but est la fiabilité, pas l’art : chaque image nette, sans bougé, à peu près bien exposée. Réussir ces trois points vaut mieux que toute mise à niveau du matériel. Cette partie aborde aussi la composition de base et la lecture de la lumière.'},
@@ -600,7 +660,7 @@ const LEVELS = [
            fr:'La hauteur des yeux est la plus banale qui soit, puisque c’est ainsi que tout le monde voit le monde chaque jour.'} },
   ] },
 { id:'inter', tone:'sky', icon:'fa-camera', n:2,
-  t:{zh:'第二部・進階：讓曝光聽你的', en:'Part 2 · Intermediate: making exposure obey you', fr:'Partie 2 · Intermédiaire : maîtriser l’exposition'},
+  t:{zh:'進階控制：讓曝光聽你的', en:'Intermediate: making exposure obey you', fr:'Intermédiaire : maîtriser l’exposition'},
   lead:{zh:'進階的關鍵是理解三要素各自的「副作用」。光圈管景深、快門管動態、ISO 管雜訊。選設定其實是在選你要哪種副作用，亮度只是附帶結果。',
         en:'The key at this level is understanding each control’s side effect. Aperture governs depth of field, shutter governs motion, ISO governs noise. Choosing settings is really choosing which side effect you want; the brightness follows from that.',
         fr:'La clé de ce niveau est de comprendre l’effet secondaire de chaque réglage. L’ouverture gouverne la profondeur de champ, la vitesse le mouvement, les ISO le bruit. Choisir ses réglages, c’est choisir l’effet voulu ; la luminosité en découle.'},
@@ -656,7 +716,7 @@ const LEVELS = [
            fr:'Le sens des Kelvin déroute : plus la valeur réglée est haute, plus l’image est chaude (jaune).'} },
   ] },
 { id:'adv', tone:'red', icon:'fa-mountain-sun', n:3,
-  t:{zh:'第三部・高階：控制光與時間', en:'Part 3 · Advanced: controlling light and time', fr:'Partie 3 · Avancé : maîtriser la lumière et le temps'},
+  t:{zh:'高階技巧：控制光與時間', en:'Advanced: controlling light and time', fr:'Avancé : maîtriser la lumière et le temps'},
   lead:{zh:'到這個階段，問題不再是「怎麼拍對」，而是「怎麼拍到相機一次拍不到的東西」：超過感光元件動態範圍的場景、比肉眼看得更久的時間、自己製造的光。',
         en:'At this stage the question is no longer how to get it right, but how to capture what the camera cannot in a single frame: scenes beyond the sensor’s dynamic range, longer stretches of time than the eye sees, light you make yourself.',
         fr:'À ce stade, la question n’est plus de bien faire, mais de saisir ce que l’appareil ne peut pas en une seule image : des scènes au-delà de la dynamique du capteur, des durées plus longues que l’œil n’en perçoit, une lumière que l’on crée.'},
@@ -997,7 +1057,7 @@ function renderLevels() {
       + '<div class="flex items-center gap-3 mb-5">'
       +   '<div class="p-3 ' + c[2] + ' rounded-2xl ' + c[1] + ' border ' + c[3] + ' ' + c[4] + '">'
       +     '<i class="fa-solid ' + L.icon + ' text-xl"></i></div>'
-      +   '<div><span class="lvl-pill ' + c[1] + '" style="background:' + c[5] + '">LEVEL ' + L.n + '</span>'
+      +   '<div><span class="text-xs uppercase tracking-wider font-bold ' + c[1] + '">' + ui('chapFmt').replace('{n}', L.n + 3) + '</span>'
       +   '<h2 class="text-2xl font-black text-white">' + t(L.t) + '</h2></div>'
       + '</div>'
       + '<div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">'
@@ -1616,6 +1676,288 @@ function renderColor() {
     + '</li>').join('');
 }
 
+/* ═══════════════════════════════════════════════════════════
+   The learning path. The volume is read in this order: each
+   chapter uses only what the chapters before it have explained.
+   ═══════════════════════════════════════════════════════════ */
+const ROADMAP = [
+  { h:'#basics0', c:'#34d399', t:{zh:'基礎概念', en:'The basic ideas', fr:'Les notions de base'},
+    p:{zh:'照片怎麼產生、曝光、光圈、快門、ISO、對焦是什麼，用白話和比喻說明。', en:'How a picture is made; what exposure, aperture, shutter, ISO and focus are, in plain words and analogies.', fr:'Comment naît une image ; ce que sont exposition, ouverture, vitesse, ISO et mise au point, en mots simples.'} },
+  { h:'#camera', c:'#22d3ee', t:{zh:'認識相機', en:'Know your camera', fr:'Connaître son appareil'},
+    p:{zh:'構造、感光元件、按鍵轉盤、鏡頭種類與型號、新機設定、配件、怎麼選相機。', en:'Anatomy, sensors, buttons and dials, lens types and names, first setup, accessories, choosing a camera.', fr:'Anatomie, capteurs, boutons et molettes, objectifs et leurs noms, premiers réglages, accessoires, choisir un boîtier.'} },
+  { h:'#exposure', c:'#22d3ee', t:{zh:'曝光原理', en:'How exposure works', fr:'Le principe de l’exposition'},
+    p:{zh:'三要素的刻度與「級」，以及它們如何互相抵換。', en:'The three controls in stops, and how they trade against each other.', fr:'Les trois réglages en IL, et comment ils se compensent.'} },
+  { h:'#basics', c:'#fbbf24', t:{zh:'入門實拍', en:'Beginner shooting', fr:'Débuter'},
+    p:{zh:'握持、模式、對焦、構圖、看光：先穩定拍出清楚的照片。', en:'Holding, modes, focus, composition, light: reliably sharp pictures first.', fr:'Tenue, modes, mise au point, composition, lumière : d’abord des images nettes.'} },
+  { h:'#inter', c:'#38bdf8', t:{zh:'進階控制', en:'Intermediate control', fr:'Maîtrise intermédiaire'},
+    p:{zh:'景深、動態、測光、對焦模式、RAW、白平衡。', en:'Depth of field, motion, metering, AF modes, RAW, white balance.', fr:'Profondeur de champ, mouvement, mesure, modes AF, RAW, balance des blancs.'} },
+  { h:'#adv', c:'#f87171', t:{zh:'高階技巧', en:'Advanced technique', fr:'Techniques avancées'},
+    p:{zh:'直方圖、HDR、長曝光、超焦距、閃燈、星空。', en:'Histogram, HDR, long exposure, hyperfocal, flash, night sky.', fr:'Histogramme, HDR, pose longue, hyperfocale, flash, ciel nocturne.'} },
+  { h:'#color', c:'#f472b6', t:{zh:'色彩', en:'Colour', fr:'La couleur'},
+    p:{zh:'RGB、色環、色溫、色彩空間、位元深度與色彩管理。', en:'RGB, the colour wheel, temperature, colour spaces, bit depth, colour management.', fr:'RVB, cercle chromatique, température, espaces, profondeur de bits, gestion des couleurs.'} },
+  { h:'#edit', c:'#a78bfa', t:{zh:'修圖', en:'Retouching', fr:'La retouche'},
+    p:{zh:'直方圖、調整順序、曲線、局部修飾，以及怎麼避免修過頭。', en:'Histogram, order of adjustments, curves, local work, and how not to overdo it.', fr:'Histogramme, ordre des réglages, courbes, retouches locales, et comment ne pas en faire trop.'} },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Chapter 1: the basic ideas, before any number appears.
+   Each card gives the idea in a sentence, an everyday analogy,
+   and a link to the full entry in the glossary.
+   ═══════════════════════════════════════════════════════════ */
+function flowDiagram() {
+  const box = (x, w, icon, a, b, col) =>
+      '<rect x="' + x + '" y="40" width="' + w + '" height="110" rx="14" fill="#0f151c" stroke="' + col + '" stroke-width="2.5"/>'
+    + '<g transform="translate(' + (x + w / 2) + ' 78)" fill="none" stroke="' + col + '" stroke-width="3" stroke-linecap="round">' + icon + '</g>'
+    + '<text class="lab" x="' + (x + w / 2) + '" y="122" text-anchor="middle" style="font-size:16px">' + esc(a) + '</text>'
+    + '<text class="sub" x="' + (x + w / 2) + '" y="176" text-anchor="middle" style="font-size:13px">' + esc(b) + '</text>';
+  const arr = x => '<path d="M' + x + ' 95 h22" stroke="#64748b" stroke-width="3" marker-end="url(#fa)"/>';
+  const W = 140, G = 34;
+  const steps = [
+    ['<circle r="9"/><path d="M0 -18v4M0 14v4M-18 0h4M14 0h4M-13 -13l3 3M10 10l3 3M-13 13l3 -3M10 -10l3 -3"/>', t({zh:'光源', en:'Light', fr:'Lumière'}), t({zh:'太陽、燈', en:'sun, lamps', fr:'soleil, lampes'}), '#fbbf24'],
+    ['<circle cy="-9" r="7"/><path d="M-13 17 q13 -22 26 0"/>', t({zh:'被攝物', en:'Subject', fr:'Sujet'}), t({zh:'反射一部分光', en:'reflects some light', fr:'renvoie une partie'}), '#f472b6'],
+    ['<ellipse rx="7" ry="18"/><path d="M-22 -10 L22 0 M-22 10 L22 0"/>', t({zh:'鏡頭', en:'Lens', fr:'Objectif'}), t({zh:'把光聚成影像', en:'focuses an image', fr:'forme une image'}), '#67e8f9'],
+    ['<rect x="-16" y="-14" width="32" height="28" rx="2"/><path d="M-5 -14v28M6 -14v28M-16 -4h32M-16 5h32"/>', t({zh:'感光元件', en:'Sensor', fr:'Capteur'}), t({zh:'光變成數字', en:'light into numbers', fr:'lumière en nombres'}), '#a78bfa'],
+    ['<path d="M-12 -17h16l8 8v26h-24z M4 -17v8h8"/><path d="M-7 8l5 -6l4 4l3 -3l4 5"/>', t({zh:'照片檔案', en:'Image file', fr:'Fichier image'}), t({zh:'RAW 或 JPEG', en:'RAW or JPEG', fr:'RAW ou JPEG'}), '#34d399'],
+  ];
+  let s = '<svg class="dg" viewBox="0 0 900 200" role="img" aria-label="' + esc(t({zh:'照片的產生過程', en:'How a picture is made', fr:'Comment naît une image'})) + '">'
+    + '<defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs>';
+  steps.forEach((st, i) => {
+    const x = 24 + i * (W + G);
+    s += box(x, W, st[0], st[1], st[2], st[3]);
+    if (i < steps.length - 1) s += arr(x + W + 6);
+  });
+  return s + '</svg>';
+}
+
+const BASICS = [
+  { i:'fa-sun', term:'exposure', t:{zh:'曝光：照片的亮與暗', en:'Exposure: how light or dark', fr:'L’exposition : clair ou sombre'},
+    p:{zh:'曝光就是感光元件總共收到多少光。收得太少照片太暗，收得太多亮部變成一片死白。相機上有三個設定一起決定它：光圈、快門、ISO。', en:'Exposure is how much light the sensor collects in total. Too little and the picture is dark; too much and the bright parts turn to blank white. Three settings decide it together: aperture, shutter and ISO.', fr:'L’exposition est la quantité totale de lumière reçue par le capteur. Trop peu, l’image est sombre ; trop, les parties claires deviennent un blanc vide. Trois réglages la décident ensemble : ouverture, vitesse et ISO.'},
+    a:{zh:'像用水桶接雨水：光圈是桶口多寬，快門是放在雨中多久，ISO 是事後把水位讀數放大幾倍。桶子滿出來，就是「過曝」。', en:'Like catching rain in a bucket: the aperture is how wide the mouth is, the shutter how long it stays out, ISO how much you magnify the reading afterwards. When it overflows, that is overexposure.', fr:'Comme recueillir la pluie dans un seau : l’ouverture est la largeur du seau, la vitesse le temps passé dehors, les ISO l’amplification de la lecture. Quand il déborde, c’est la surexposition.'} },
+  { i:'fa-circle-dot', term:'aperture', t:{zh:'光圈：開口有多大', en:'Aperture: how big the opening', fr:'L’ouverture : la taille du trou'},
+    p:{zh:'鏡頭裡有一個可以開大縮小的圓孔。開大，光多、背景模糊；縮小，光少、前後都清楚。用 f/2、f/8 這樣的數字表示，數字越小，開口越大。', en:'Inside the lens is a round hole that opens and closes. Open: more light, blurred background. Closed down: less light, everything sharp. It is written as f/2, f/8 and so on, and the smaller the number, the bigger the hole.', fr:'Dans l’objectif se trouve un trou rond qui s’ouvre et se ferme. Ouvert : plus de lumière, fond flou. Fermé : moins de lumière, tout est net. On l’écrit f/2, f/8…, et plus le nombre est petit, plus le trou est grand.'},
+    a:{zh:'就像眼睛的瞳孔：暗處放大、亮處縮小。', en:'Like the pupil of your eye: wide in the dark, small in bright light.', fr:'Comme la pupille : grande dans le noir, petite en pleine lumière.'} },
+  { i:'fa-stopwatch', term:'shutter', t:{zh:'快門：開多久', en:'Shutter: how long it stays open', fr:'La vitesse : combien de temps'},
+    p:{zh:'快門決定光線照到感光元件的時間，例如 1/500 秒或 2 秒。時間短可以凍結動作；時間長，會動的東西就會拉出模糊的軌跡，手拿相機也容易晃。', en:'The shutter decides how long light falls on the sensor: 1/500 s, or 2 s. A short time freezes action; a long time turns anything moving into a blurred trail, and a hand-held camera shakes more easily.', fr:'La vitesse décide combien de temps la lumière atteint le capteur : 1/500 s ou 2 s. Court, l’action est figée ; long, tout ce qui bouge laisse une traînée floue et l’appareil tenu à la main bouge plus facilement.'},
+    a:{zh:'像眨眼：眨得快只看到一瞬間，張眼久一點就看到整段動作。', en:'Like blinking: a quick blink catches an instant, a longer look takes in the whole movement.', fr:'Comme un clignement : rapide, on saisit un instant ; plus long, on voit tout le mouvement.'} },
+  { i:'fa-volume-high', term:'iso', t:{zh:'ISO：訊號放大多少', en:'ISO: how much the signal is amplified', fr:'ISO : l’amplification du signal'},
+    p:{zh:'光不夠時，可以把 ISO 調高，讓照片變亮。代價是畫面會出現顆粒狀的雜訊。白天用 100 到 400，室內或夜晚常需要 1600 以上。', en:'When light is short you can raise the ISO to brighten the picture. The cost is grainy noise. Daylight usually means 100 to 400; indoors or at night 1600 and above is common.', fr:'Quand la lumière manque, on monte les ISO pour éclaircir l’image. Le prix est un bruit granuleux. De jour, 100 à 400 ; en intérieur ou de nuit, 1600 et plus est courant.'},
+    a:{zh:'像收音機音量：轉大聲聽得清楚，但沙沙聲也跟著變大。', en:'Like a radio’s volume: turn it up to hear better, and the hiss gets louder too.', fr:'Comme le volume d’une radio : plus fort, on entend mieux, mais le souffle aussi.'} },
+  { i:'fa-crosshairs', term:'dof', t:{zh:'對焦與景深：哪裡清楚', en:'Focus and depth of field: what is sharp', fr:'Mise au point et profondeur de champ'},
+    p:{zh:'相機一次只能精準對焦在一個距離上。對焦點前後「看起來還算清楚」的範圍叫景深：景深淺，只有主體清楚、背景模糊；景深深，從近到遠都清楚。', en:'A camera can focus exactly at only one distance at a time. The range in front of and behind it that still looks sharp is the depth of field: shallow means only the subject is sharp; deep means near to far is sharp.', fr:'L’appareil ne fait la mise au point exacte qu’à une distance à la fois. La zone devant et derrière qui paraît encore nette est la profondeur de champ : faible, seul le sujet est net ; grande, tout est net de près à loin.'},
+    a:{zh:'像用手指在眼前比一下：看手指時遠處模糊，看遠處時手指模糊。', en:'Hold up a finger: look at it and the distance blurs; look at the distance and the finger blurs.', fr:'Levez un doigt : regardez-le, le lointain devient flou ; regardez au loin, le doigt devient flou.'} },
+  { i:'fa-magnifying-glass-plus', term:'focal', t:{zh:'焦距：看得多廣或多近', en:'Focal length: how wide or how close', fr:'La focale : large ou serré'},
+    p:{zh:'鏡頭上的 24mm、50mm、200mm 就是焦距。數字小看得廣（廣角），數字大把遠處拉近（望遠）。可以改變焦距的叫變焦鏡，固定的叫定焦鏡。', en:'The 24mm, 50mm, 200mm on a lens is its focal length. A small number sees wide (wide-angle), a large number brings the distance close (telephoto). A lens that can change it is a zoom; one that cannot is a prime.', fr:'Les 24 mm, 50 mm, 200 mm d’un objectif sont sa focale. Petit nombre : on voit large (grand-angle) ; grand nombre : on rapproche le lointain (téléobjectif). Variable, c’est un zoom ; fixe, une focale fixe.'},
+    a:{zh:'像手機上用兩指放大縮小，只是鏡頭是用光學真的放大，不會損失畫質。', en:'Like pinch-zooming on a phone, except the lens magnifies optically and loses no quality.', fr:'Comme pincer pour zoomer sur un téléphone, sauf que l’objectif grossit optiquement, sans perte.'} },
+  { i:'fa-table-cells', term:'ppi', t:{zh:'像素與解析度', en:'Pixels and resolution', fr:'Pixels et résolution'},
+    p:{zh:'照片是由一格一格的小方塊組成的，每一格叫像素。2400 萬像素約是 6000 × 4000 格。像素多可以裁切、印大張，但照片好不好看，取決於光線、對焦和構圖，不是像素數。', en:'A photograph is made of tiny squares, each a pixel. 24 megapixels is about 6000 × 4000 of them. More pixels allow cropping and larger prints, but whether a picture is good depends on light, focus and composition, not the pixel count.', fr:'Une photo est faite de petits carrés, les pixels. 24 mégapixels font environ 6000 × 4000. Plus de pixels permettent de recadrer et d’imprimer grand, mais la qualité d’une image tient à la lumière, la netteté et la composition, pas au nombre de pixels.'},
+    a:{zh:'像馬賽克磁磚拼畫：磁磚越多越細緻，但拼得好不好看是另一回事。', en:'Like a tile mosaic: more tiles give finer detail, but whether it is beautiful is another matter.', fr:'Comme une mosaïque : plus de tesselles donnent plus de finesse, mais la beauté est une autre affaire.'} },
+  { i:'fa-temperature-half', term:'wb', t:{zh:'色彩與白平衡', en:'Colour and white balance', fr:'Couleur et balance des blancs'},
+    p:{zh:'不同的光本身就帶顏色：燈泡偏橘、陰天偏藍。眼睛會自動適應，相機不會，所以要告訴相機「什麼是白色」，這就是白平衡。設錯了，白牆會變成黃色或藍色。', en:'Light itself has colour: bulbs are orange, overcast days blue. Your eyes adjust automatically; the camera does not, so you tell it what white is. That is white balance. Get it wrong and a white wall turns yellow or blue.', fr:'La lumière a sa couleur : les ampoules sont orangées, les jours couverts bleutés. L’œil s’adapte, l’appareil non ; on lui dit donc ce qu’est le blanc : c’est la balance des blancs. Fausse, un mur blanc devient jaune ou bleu.'},
+    a:{zh:'像戴了有色太陽眼鏡一陣子，眼睛會習慣；但拍下來的照片不會跟著習慣。', en:'Like wearing tinted sunglasses for a while: your eyes get used to it, but a photograph does not.', fr:'Comme porter des lunettes teintées un moment : l’œil s’habitue, la photo non.'} },
+  { i:'fa-file-image', term:'raw', t:{zh:'RAW 與 JPEG', en:'RAW and JPEG', fr:'RAW et JPEG'},
+    p:{zh:'JPEG 是相機已經調好、壓縮好的成品，可以直接分享。RAW 是感光元件的原始資料，保留更多細節，但要經過修圖軟體處理才能用。想學修圖就拍 RAW。', en:'A JPEG is a finished, compressed picture the camera has already adjusted, ready to share. A RAW file is the sensor’s original data, holding more detail, but it must go through editing software before use. If you want to learn retouching, shoot RAW.', fr:'Le JPEG est une image finie et compressée, déjà réglée par l’appareil, prête à partager. Le RAW est la donnée brute du capteur, plus riche, mais il faut le passer dans un logiciel. Pour apprendre la retouche, photographiez en RAW.'},
+    a:{zh:'RAW 像還沒沖洗的底片，JPEG 像照相館已經沖好的相片。', en:'RAW is the undeveloped negative; JPEG is the print the lab has already made.', fr:'Le RAW est le négatif non développé ; le JPEG, le tirage déjà fait par le laboratoire.'} },
+  { i:'fa-sliders', term:'nondest', t:{zh:'修圖是什麼', en:'What retouching is', fr:'Ce qu’est la retouche'},
+    p:{zh:'修圖是把相機記錄到、但還沒呈現出來的東西拿出來：調亮度、顏色、對比，去掉雜物。好的修圖讓照片更接近你在現場看到和感受到的樣子，而不是變成另一張照片。', en:'Retouching brings out what the camera recorded but has not yet shown: brightness, colour, contrast, removing clutter. Good retouching brings the picture closer to what you saw and felt there, rather than turning it into another picture.', fr:'Retoucher, c’est faire apparaître ce que l’appareil a enregistré sans encore le montrer : luminosité, couleur, contraste, éléments parasites. Une bonne retouche rapproche l’image de ce que vous avez vu et ressenti, sans en faire une autre image.'},
+    a:{zh:'像暗房沖洗：同一張底片，沖洗的人決定它最後的樣子。', en:'Like the darkroom: from the same negative, the printer decides how it finally looks.', fr:'Comme la chambre noire : d’un même négatif, le tireur décide du rendu final.'} },
+];
+function goTerm(id) {
+  const x = TERMS.find(k => k.id === id); if (!x) return;
+  termTab = x.c; termQ = '';
+  const q = document.getElementById('term-q'); if (q) q.value = '';
+  renderTerms();
+  const el = document.getElementById('term-' + id);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            el.style.borderColor = 'rgba(56,189,248,0.6)'; setTimeout(() => el.style.borderColor = '', 1600); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Chapter 2 additions: controls, lenses, setup, gear, buying.
+   The control layout is a generic mirrorless body; brands move
+   buttons around, but every body has these functions.
+   ═══════════════════════════════════════════════════════════ */
+const CONTROLS = [
+  { n:1,  t:{zh:'模式轉盤', en:'Mode dial', fr:'Barillet des modes'}, p:{zh:'切換 Auto、P、A、S、M 與自訂模式（C1、C2）。', en:'Switches between Auto, P, A, S, M and custom modes (C1, C2).', fr:'Passe d’Auto à P, A, S, M et aux modes personnalisés (C1, C2).'} },
+  { n:2,  t:{zh:'快門鈕', en:'Shutter release', fr:'Déclencheur'}, p:{zh:'半按對焦與測光，全按拍攝。', en:'Half-press to focus and meter, press fully to shoot.', fr:'À mi-course : mise au point et mesure ; à fond : déclenchement.'} },
+  { n:3,  t:{zh:'前轉盤', en:'Front dial', fr:'Molette avant'}, p:{zh:'食指操作，多半用來調光圈。', en:'Turned by the index finger, usually for aperture.', fr:'Sous l’index, souvent pour l’ouverture.'} },
+  { n:4,  t:{zh:'後轉盤', en:'Rear dial', fr:'Molette arrière'}, p:{zh:'拇指操作，多半用來調快門。', en:'Turned by the thumb, usually for shutter speed.', fr:'Sous le pouce, souvent pour la vitesse.'} },
+  { n:5,  t:{zh:'曝光補償', en:'Exposure compensation', fr:'Correction d’exposition'}, p:{zh:'在 P、A、S 模式下讓照片整體變亮或變暗。', en:'Brightens or darkens the picture in P, A and S modes.', fr:'Éclaircit ou assombrit l’image en P, A et S.'} },
+  { n:6,  t:{zh:'熱靴', en:'Hot shoe', fr:'Griffe flash'}, p:{zh:'安裝外接閃光燈、麥克風或無線引閃器。', en:'Takes an external flash, a microphone or a wireless trigger.', fr:'Accueille un flash, un micro ou un déclencheur sans fil.'} },
+  { n:7,  t:{zh:'電子觀景窗', en:'Electronic viewfinder', fr:'Viseur électronique'}, p:{zh:'眼睛靠近時自動切換顯示；旁邊的小輪是屈光度調整。', en:'Switches on as your eye approaches; the small wheel beside it is the dioptre adjustment.', fr:'S’allume à l’approche de l’œil ; la petite molette à côté règle la dioptrie.'} },
+  { n:8,  t:{zh:'觸控螢幕', en:'Touch screen', fr:'Écran tactile'}, p:{zh:'可以點螢幕對焦；翻轉螢幕方便低角度與自拍。', en:'Tap to focus; a tilting screen helps with low angles and selfies.', fr:'Touchez pour faire la mise au point ; l’écran orientable aide en position basse.'} },
+  { n:9,  t:{zh:'AF-ON 鈕', en:'AF-ON button', fr:'Bouton AF-ON'}, p:{zh:'用拇指對焦（背鈕對焦），讓對焦與拍攝分開。', en:'Focus with the thumb (back-button focus), separating focusing from shooting.', fr:'Mise au point au pouce (bouton arrière), séparée du déclenchement.'} },
+  { n:10, t:{zh:'搖桿', en:'Joystick', fr:'Joystick'}, p:{zh:'快速移動對焦點，比用方向鍵快得多。', en:'Moves the focus point quickly, much faster than the arrow keys.', fr:'Déplace vite le collimateur, bien plus que les flèches.'} },
+  { n:11, t:{zh:'Q／Fn 快捷選單', en:'Q / Fn quick menu', fr:'Menu rapide Q / Fn'}, p:{zh:'一次顯示最常用的設定，不必進入主選單。', en:'Shows the most used settings at once, without entering the main menu.', fr:'Affiche d’un coup les réglages fréquents, sans passer par le menu.'} },
+  { n:12, t:{zh:'控制環與 OK 鍵', en:'Control wheel and OK', fr:'Molette de contrôle et OK'}, p:{zh:'在選單中移動與確認；常可自訂為 ISO 或白平衡。', en:'Navigates and confirms in menus; often assignable to ISO or white balance.', fr:'Navigue et valide dans les menus ; souvent assignable aux ISO ou à la balance.'} },
+  { n:13, t:{zh:'MENU 與播放鍵', en:'MENU and playback', fr:'MENU et lecture'}, p:{zh:'進入完整選單；播放鍵檢視照片，可放大確認對焦。', en:'Opens the full menu; playback shows your pictures, zoomable to check focus.', fr:'Ouvre le menu complet ; la lecture affiche les images, agrandissables pour vérifier la netteté.'} },
+];
+function controlsDiagram() {
+  const badge = (x, y, n) => '<circle cx="' + x + '" cy="' + y + '" r="13" fill="#0891b2" stroke="#cffafe" stroke-width="2"/>'
+    + '<text x="' + x + '" y="' + (y + 5) + '" text-anchor="middle" style="font:800 13px Nunito,sans-serif;fill:#fff">' + n + '</text>';
+  let s = '<svg class="dg" viewBox="0 0 900 340" role="img" aria-label="' + esc(t({zh:'相機按鍵位置', en:'Camera controls', fr:'Commandes de l’appareil'})) + '">';
+  /* top view: back edge at the top, lens pointing down */
+  s += '<text class="lab" x="30" y="32">' + esc(t({zh:'俯視（上方）', en:'Top view', fr:'Vue de dessus'})) + '</text>'
+    +  '<rect class="body" x="40" y="110" width="360" height="90" rx="16"/>'
+    +  '<rect class="body" x="320" y="110" width="80" height="130" rx="22"/>'
+    +  '<rect class="barrel" x="160" y="200" width="120" height="100" rx="10"/>'
+    +  '<rect class="body" x="185" y="80" width="70" height="32" rx="6"/>'
+    +  '<rect x="198" y="122" width="44" height="14" rx="3" fill="#64748b"/>'
+    +  '<circle cx="110" cy="155" r="30" fill="#334155" stroke="#94a3b8" stroke-width="2.5"/>'
+    +  '<text x="110" y="148" text-anchor="middle" style="font:800 12px Nunito,sans-serif;fill:#e2e8f0">M  A</text>'
+    +  '<text x="110" y="168" text-anchor="middle" style="font:800 12px Nunito,sans-serif;fill:#e2e8f0">S  P</text>'
+    +  '<circle cx="290" cy="150" r="20" fill="#334155" stroke="#94a3b8" stroke-width="2.5"/>'
+    +  '<text x="290" y="155" text-anchor="middle" style="font:800 12px Nunito,sans-serif;fill:#e2e8f0">±</text>'
+    +  '<circle cx="362" cy="165" r="13" fill="#cbd5e1"/>'
+    +  '<ellipse cx="362" cy="214" rx="26" ry="8" fill="#475569" stroke="#94a3b8" stroke-width="2"/>'
+    +  '<ellipse cx="350" cy="113" rx="26" ry="7" fill="#475569" stroke="#94a3b8" stroke-width="2"/>'
+    +  badge(66, 120, 1) + badge(388, 150, 2) + badge(395, 225, 3) + badge(380, 98, 4) + badge(290, 118, 5) + badge(220, 152, 6) + badge(268, 72, 7)
+    +  '<text class="sub" x="220" y="325" text-anchor="middle" style="font-size:13px">↓ ' + esc(t({zh:'鏡頭朝前', en:'lens points forward', fr:'objectif vers l’avant'})) + '</text>';
+  /* back view */
+  s += '<text class="lab" x="470" y="32">' + esc(t({zh:'背面', en:'Back', fr:'Dos'})) + '</text>'
+    +  '<rect class="body" x="470" y="80" width="400" height="220" rx="18"/>'
+    +  '<rect class="body" x="500" y="48" width="96" height="40" rx="8"/>'
+    +  '<rect x="520" y="56" width="56" height="24" rx="5" fill="#0b0f13" stroke="#64748b" stroke-width="2"/>'
+    +  '<rect x="492" y="112" width="250" height="168" rx="8" fill="#0b1220" stroke="#64748b" stroke-width="2.5"/>'
+    +  '<path d="M520 250 L580 190 L620 225 L660 180 L715 250 Z" fill="rgba(56,189,248,0.18)"/>'
+    +  '<rect x="770" y="96" width="34" height="22" rx="6" fill="#475569"/><text x="787" y="112" text-anchor="middle" style="font:800 9px Nunito,sans-serif;fill:#e2e8f0">AF-ON</text>'
+    +  '<ellipse cx="848" cy="82" rx="22" ry="6" fill="#475569" stroke="#94a3b8" stroke-width="2"/>'
+    +  '<circle cx="787" cy="150" r="10" fill="#94a3b8"/>'
+    +  '<rect x="826" y="138" width="28" height="22" rx="6" fill="#475569"/><text x="840" y="153" text-anchor="middle" style="font:800 11px Nunito,sans-serif;fill:#e2e8f0">Q</text>'
+    +  '<circle cx="810" cy="222" r="34" fill="#334155" stroke="#94a3b8" stroke-width="2.5"/><circle cx="810" cy="222" r="12" fill="#64748b"/>'
+    +  '<rect x="620" y="56" width="44" height="18" rx="5" fill="#475569"/><text x="642" y="69" text-anchor="middle" style="font:800 9px Nunito,sans-serif;fill:#e2e8f0">MENU</text>'
+    +  '<rect x="676" y="56" width="30" height="18" rx="5" fill="#475569"/><text x="691" y="69" text-anchor="middle" style="font:800 10px Nunito,sans-serif;fill:#e2e8f0">▶</text>'
+    +  badge(548, 36, 7) + badge(728, 128, 8) + badge(770, 80, 9) + badge(848, 58, 4) + badge(764, 160, 10) + badge(860, 178, 11) + badge(766, 248, 12) + badge(716, 50, 13);
+  return s + '</svg>';
+}
+
+const LENS_TYPES = [
+  { i:'fa-box-open', t:{zh:'套機鏡', en:'Kit zoom', fr:'Zoom du kit'},
+    p:{zh:'例如 18–55mm 或 24–105mm，隨機身附贈。涵蓋廣角到中望遠，夠用來學習所有基礎；缺點是光圈小，暗處與淺景深較弱。', en:'An 18–55mm or 24–105mm sold with the body. It spans wide to short tele, enough to learn every basic; its weakness is a small aperture, so low light and shallow focus are harder.', fr:'Un 18–55 mm ou 24–105 mm vendu avec le boîtier. Du grand-angle au petit téléobjectif, de quoi tout apprendre ; sa faiblesse est une petite ouverture, moins à l’aise en basse lumière et pour le flou.'} },
+  { i:'fa-circle', t:{zh:'定焦鏡', en:'Prime', fr:'Focale fixe'},
+    p:{zh:'焦距固定，不能變焦，但光圈大（f/1.4 到 f/1.8）、輕、銳利。50mm f/1.8 通常是第一顆最划算的升級（APS-C 可選 35mm）。', en:'Fixed focal length, no zoom, but a wide aperture (f/1.4 to f/1.8), light and sharp. A 50mm f/1.8 is usually the best-value first upgrade (35mm on APS-C).', fr:'Focale fixe, sans zoom, mais grande ouverture (f/1,4 à f/1,8), légère et piquée. Un 50 mm f/1,8 est souvent la meilleure première mise à niveau (35 mm en APS-C).'} },
+  { i:'fa-expand', t:{zh:'超廣角變焦', en:'Ultra-wide zoom', fr:'Zoom ultra grand-angle'},
+    p:{zh:'約 12–24mm（全片幅），適合風景、建築、室內。靠近前景時透視誇張，要注意邊緣變形。', en:'Around 12–24mm on full frame, for landscape, architecture and interiors. Close foregrounds look exaggerated; watch the edges.', fr:'Environ 12–24 mm en plein format, pour le paysage, l’architecture et l’intérieur. Les premiers plans proches sont exagérés ; surveillez les bords.'} },
+  { i:'fa-arrows-left-right', t:{zh:'標準變焦', en:'Standard zoom', fr:'Zoom standard'},
+    p:{zh:'24–70mm f/2.8 是專業攝影師最常用的「萬用鏡」，旅行、活動、人像都能應付。', en:'The 24–70mm f/2.8 is the professional’s workhorse, covering travel, events and portraits.', fr:'Le 24–70 mm f/2,8 est l’outil à tout faire des professionnels : voyage, événements, portrait.'} },
+  { i:'fa-binoculars', t:{zh:'望遠變焦', en:'Telephoto zoom', fr:'Zoom téléobjectif'},
+    p:{zh:'70–200mm、100–400mm 等，適合運動、野生動物、舞台與壓縮感的人像。重，需要較快的快門。', en:'70–200mm, 100–400mm and so on, for sport, wildlife, stage and compressed portraits. Heavy, and they need faster shutter speeds.', fr:'70–200 mm, 100–400 mm…, pour le sport, la faune, la scène et le portrait écrasé. Lourds, ils exigent des vitesses rapides.'} },
+  { i:'fa-bug', t:{zh:'微距鏡', en:'Macro', fr:'Macro'},
+    p:{zh:'能以 1:1 放大率拍攝，也就是被攝物在感光元件上和實物一樣大。拍花、昆蟲、商品細節；景深極淺。', en:'Shoots at 1:1, meaning the subject is as large on the sensor as in life. For flowers, insects, product detail; depth of field is extremely thin.', fr:'Photographie au rapport 1:1 : le sujet est aussi grand sur le capteur qu’en réalité. Fleurs, insectes, détails de produits ; profondeur de champ infime.'} },
+];
+
+/* Reading a lens name. The example uses one real naming scheme;
+   every maker encodes the same facts in the same order. */
+const MARK_PARTS = [
+  { s:'RF',      c:'#22d3ee', t:{zh:'卡口／系統', en:'Mount / system', fr:'Monture / système'} },
+  { s:'24-70mm', c:'#fbbf24', t:{zh:'焦距範圍（變焦）', en:'Focal range (zoom)', fr:'Plage de focales (zoom)'} },
+  { s:'F2.8',    c:'#f472b6', t:{zh:'最大光圈', en:'Maximum aperture', fr:'Ouverture maximale'} },
+  { s:'L',       c:'#f87171', t:{zh:'高階系列', en:'Pro series', fr:'Série pro'} },
+  { s:'IS',      c:'#a78bfa', t:{zh:'防手震', en:'Stabilised', fr:'Stabilisé'} },
+  { s:'USM',     c:'#34d399', t:{zh:'對焦馬達', en:'Focus motor', fr:'Moteur AF'} },
+];
+function markDiagram() {
+  const fs = 40, cw = 24.5, gap = 22;
+  let x = 110, s = '<svg class="dg" viewBox="0 0 900 220" role="img" aria-label="' + esc(t({zh:'鏡頭型號解讀', en:'Reading a lens name', fr:'Lire le nom d’un objectif'})) + '">';
+  MARK_PARTS.forEach((m, i) => {
+    const w = m.s.length * cw;
+    s += '<text x="' + (x + w / 2) + '" y="80" text-anchor="middle" style="font:900 ' + fs + 'px Nunito,sans-serif;fill:' + m.c + '">' + m.s + '</text>'
+      +  '<path d="M' + x + ' 96 v8 h' + w + ' v-8" fill="none" stroke="' + m.c + '" stroke-width="2.5"/>'
+      +  '<line x1="' + (x + w / 2) + '" y1="104" x2="' + (x + w / 2) + '" y2="' + (124 + (i % 2) * 40) + '" stroke="' + m.c + '" stroke-width="2"/>'
+      +  '<text class="sub" x="' + (x + w / 2) + '" y="' + (142 + (i % 2) * 40) + '" text-anchor="middle" style="font-size:14px;fill:' + m.c + '">' + esc(t(m.t)) + '</text>';
+    x += w + gap;
+  });
+  return s + '</svg>';
+}
+const MARK_CODES = [
+  { k:'F2.8 / F4–5.6', d:{zh:'只有一個數字是「恆定光圈」，變焦時最大光圈不變；兩個數字表示拉到望遠端時最大光圈會變小。', en:'One number is a constant aperture that holds through the zoom; two numbers mean the maximum aperture shrinks as you zoom to the long end.', fr:'Un seul nombre : ouverture constante sur tout le zoom ; deux nombres : l’ouverture maximale diminue vers la focale longue.'} },
+  { k:'Canon: RF · RF-S · L · IS · STM / USM', d:{zh:'RF 全片幅無反、RF-S 為 APS-C；L 高階；IS 防手震；STM、USM 為對焦馬達。', en:'RF full-frame mirrorless, RF-S for APS-C; L professional; IS stabilised; STM and USM are focus motors.', fr:'RF plein format hybride, RF-S pour l’APS-C ; L pro ; IS stabilisé ; STM et USM sont des moteurs AF.'} },
+  { k:'Sony: FE · E · GM / G · OSS', d:{zh:'FE 全片幅、E 為 APS-C；GM（G Master）與 G 為高階；OSS 防手震。', en:'FE full frame, E for APS-C; GM (G Master) and G are premium lines; OSS stabilised.', fr:'FE plein format, E pour l’APS-C ; GM (G Master) et G sont haut de gamme ; OSS stabilisé.'} },
+  { k:'Nikon: Z · DX · S-Line · VR', d:{zh:'Z 為無反卡口，DX 為 APS-C 鏡頭；S-Line 高階；VR 防手震。', en:'Z is the mirrorless mount, DX marks APS-C lenses; S-Line premium; VR stabilised.', fr:'Z est la monture hybride, DX l’APS-C ; S-Line haut de gamme ; VR stabilisé.'} },
+  { k:'Fujifilm: XF / XC · R · LM · WR · OIS', d:{zh:'XF 高階、XC 入門；R 有光圈環；LM 線性馬達；WR 防滴防塵；OIS 防手震。', en:'XF premium, XC entry level; R has an aperture ring; LM linear motor; WR weather resistant; OIS stabilised.', fr:'XF haut de gamme, XC entrée ; R bague de diaphragme ; LM moteur linéaire ; WR tropicalisé ; OIS stabilisé.'} },
+  { k:'Sigma / Tamron: DG DN · Art · Di III · VXD', d:{zh:'副廠鏡頭：DG DN、Di III 表示為無反設計；Art 為 Sigma 高畫質系列；VXD 為 Tamron 線性馬達。', en:'Third-party lenses: DG DN and Di III mark mirrorless designs; Art is Sigma’s image-quality line; VXD is Tamron’s linear motor.', fr:'Objectifs tiers : DG DN et Di III désignent les modèles hybrides ; Art est la gamme qualité de Sigma ; VXD le moteur linéaire de Tamron.'} },
+  { k:'Ø 67mm', d:{zh:'鏡頭前緣的濾鏡口徑，買濾鏡要對應這個數字。', en:'The filter thread diameter at the front; filters must match it.', fr:'Le diamètre du filetage à l’avant ; les filtres doivent y correspondre.'} },
+];
+
+const SETUP = [
+  { t:{zh:'在相機裡格式化記憶卡', en:'Format the card in the camera', fr:'Formater la carte dans l’appareil'}, p:{zh:'用相機本身格式化，比在電腦上格式化穩定。每次清空卡片都這樣做。', en:'Formatting in the camera is more reliable than on a computer. Do it every time you clear the card.', fr:'Le formatage dans l’appareil est plus fiable que sur ordinateur. Faites-le à chaque vidage.'} },
+  { t:{zh:'設定日期、時間與時區', en:'Set date, time and time zone', fr:'Régler date, heure et fuseau'}, p:{zh:'之後整理照片、對齊手機與相機的照片全靠它。', en:'Sorting pictures later, and matching phone and camera shots, depends on it.', fr:'Le tri des images et la concordance téléphone-appareil en dépendent.'} },
+  { t:{zh:'畫質設為 RAW＋JPEG', en:'Set quality to RAW + JPEG', fr:'Qualité en RAW + JPEG'}, p:{zh:'JPEG 方便立刻分享，RAW 留給修圖。熟悉後可以只留 RAW。', en:'JPEG to share at once, RAW for editing. Later you can keep RAW alone.', fr:'Le JPEG pour partager tout de suite, le RAW pour retoucher. Plus tard, le RAW seul suffit.'} },
+  { t:{zh:'對焦：AF-C＋追蹤＋眼部偵測', en:'Focus: AF-C, tracking, eye detection', fr:'AF : AF-C, suivi, détection de l’œil'}, p:{zh:'現代相機的追蹤很強，這組設定靜態與動態都好用。', en:'Modern tracking is strong; this set works for still and moving subjects alike.', fr:'Le suivi moderne est performant ; ce réglage convient aux sujets fixes comme mobiles.'} },
+  { t:{zh:'自動 ISO＋最低快門', en:'Auto ISO with a minimum shutter', fr:'ISO auto avec vitesse minimale'}, p:{zh:'例如上限 6400、最低 1/125 秒，讓相機守住不手震的快門。', en:'For example capped at 6400 with a 1/125 s minimum, so the camera guards against shake.', fr:'Par exemple plafond 6400 et minimum 1/125 s : l’appareil protège du bougé.'} },
+  { t:{zh:'打開格線、水平儀與直方圖', en:'Turn on grid, level and histogram', fr:'Activer grille, niveau et histogramme'}, p:{zh:'構圖、拉正水平、判斷曝光，三個最實用的顯示。', en:'For composition, straight horizons and judging exposure: the three most useful overlays.', fr:'Pour composer, redresser l’horizon et juger l’exposition : les trois affichages les plus utiles.'} },
+  { t:{zh:'寫入版權資訊', en:'Write copyright information', fr:'Inscrire le copyright'}, p:{zh:'把姓名寫進相機，每張照片的 EXIF 都會帶著作者資訊。', en:'Enter your name and every file carries it in its EXIF data.', fr:'Saisissez votre nom : chaque fichier le portera dans ses EXIF.'} },
+  { t:{zh:'把常用功能設到自訂鈕', en:'Put favourite functions on custom buttons', fr:'Assigner les fonctions favorites'}, p:{zh:'ISO、白平衡、對焦模式放在不用進選單就能改的位置。', en:'ISO, white balance and AF mode where you can change them without the menu.', fr:'ISO, balance et mode AF accessibles sans passer par le menu.'} },
+];
+
+const GEAR = [
+  { i:'fa-sd-card', t:{zh:'記憶卡', en:'Memory cards', fr:'Cartes mémoire'},
+    p:{zh:'拍照選 UHS-I U3／V30 以上即可；連拍與 4K 影片要看相機要求的 V60、V90 或 CFexpress。買正貨，準備兩張輪替。', en:'For stills, UHS-I U3/V30 or better is enough; fast bursts and 4K video need the V60, V90 or CFexpress your camera specifies. Buy genuine, and keep two to rotate.', fr:'Pour la photo, UHS-I U3/V30 ou mieux suffit ; rafales et vidéo 4K exigent la V60, V90 ou CFexpress indiquée par l’appareil. Achetez authentique, et gardez-en deux.'} },
+  { i:'fa-battery-full', t:{zh:'備用電池', en:'Spare batteries', fr:'Batteries de rechange'},
+    p:{zh:'無反相機耗電快，至少一顆備用。寒冷時電池掉得更快，放在口袋保溫。', en:'Mirrorless bodies drain fast; carry at least one spare. Cold drains them faster still, so keep spares in a pocket.', fr:'Les hybrides consomment vite ; ayez-en au moins une de plus. Le froid les vide encore plus vite : gardez-les en poche.'} },
+  { i:'fa-person-hiking', t:{zh:'三腳架', en:'Tripod', fr:'Trépied'},
+    p:{zh:'夜景、長曝光、包圍曝光必備。注意承重要大於機身加最重的鏡頭；球型雲台最快上手。', en:'Essential for night, long exposure and bracketing. Its load rating must exceed body plus heaviest lens; a ball head is quickest to learn.', fr:'Indispensable pour la nuit, la pose longue et le bracketing. Sa charge doit dépasser boîtier et objectif le plus lourd ; la rotule ball est la plus simple.'} },
+  { i:'fa-circle-half-stroke', t:{zh:'濾鏡：CPL 與 ND', en:'Filters: CPL and ND', fr:'Filtres : polarisant et ND'},
+    p:{zh:'環形偏光鏡（CPL）能消除水面與玻璃反光、讓藍天更藍，在與太陽成 90 度的方向效果最強。ND 減光鏡用於白天長曝光。這兩種效果都無法完全靠後製做出來。', en:'A circular polariser (CPL) cuts reflections on water and glass and deepens blue sky, strongest at 90 degrees to the sun. ND filters allow long exposures by day. Neither effect can be fully faked in editing.', fr:'Le polarisant circulaire (CPL) supprime les reflets sur l’eau et le verre et fonce le ciel, au maximum à 90 degrés du soleil. Les ND permettent la pose longue de jour. Aucun des deux effets ne se recrée vraiment en retouche.'} },
+  { i:'fa-wind', t:{zh:'清潔工具', en:'Cleaning kit', fr:'Nécessaire de nettoyage'},
+    p:{zh:'吹球、拭鏡筆、超細纖維布。先吹再擦；不要用嘴吹，口水會噴到鏡片上。', en:'Blower, lens pen, microfibre cloth. Blow before wiping; never blow with your mouth, you will spray saliva on the glass.', fr:'Poire soufflante, stylo de nettoyage, microfibre. Soufflez avant d’essuyer ; jamais avec la bouche, la salive finit sur le verre.'} },
+  { i:'fa-droplet-slash', t:{zh:'防潮箱', en:'Dry cabinet', fr:'Armoire déshumidificatrice'},
+    p:{zh:'在潮濕的氣候（例如台灣），鏡頭放在一般櫃子裡可能長霉，而霉斑幾乎修不好。防潮箱濕度維持在約 40% 到 50%。', en:'In humid climates (Taiwan, for one) lenses kept in an ordinary cupboard can grow fungus, which is nearly impossible to repair. Keep a dry cabinet at about 40 to 50% humidity.', fr:'En climat humide (à Taïwan, par exemple), un objectif rangé dans un placard peut moisir, et la moisissure se répare très mal. Gardez une armoire sèche vers 40 à 50 % d’humidité.'} },
+];
+
+const CHOOSE = [
+  { t:{zh:'先想拍什麼', en:'Start from what you shoot', fr:'Partir de ce qu’on photographie'}, p:{zh:'旅行要輕、運動要對焦快、人像要大光圈鏡、影片要看規格與散熱。用途決定一切。', en:'Travel wants light, sport wants fast AF, portraits want a fast lens, video wants specs and heat handling. The use decides everything.', fr:'Le voyage veut de la légèreté, le sport un AF rapide, le portrait un objectif lumineux, la vidéo des spécifications et une bonne dissipation. L’usage décide de tout.'} },
+  { t:{zh:'預算多給鏡頭', en:'Spend on lenses', fr:'Investir dans les objectifs'}, p:{zh:'機身幾年就換，好鏡頭可以用十年以上。入門機身配一顆好定焦，常勝過高階機身配套機鏡。', en:'Bodies are replaced every few years; a good lens lasts a decade or more. An entry body with a good prime often beats a top body with a kit zoom.', fr:'Un boîtier se change tous les quelques ans ; un bon objectif dure dix ans et plus. Un boîtier d’entrée avec une bonne focale fixe bat souvent un haut de gamme avec le zoom du kit.'} },
+  { t:{zh:'選的是整個系統', en:'You are choosing a system', fr:'On choisit un système'}, p:{zh:'買了機身就綁定卡口，之後的鏡頭都要配合。先看那個卡口有沒有你需要、買得起的鏡頭，包含副廠。', en:'A body ties you to its mount and every future lens. Check that the mount has the lenses you need at prices you can pay, third-party ones included.', fr:'Un boîtier vous lie à sa monture et à tous les futurs objectifs. Vérifiez qu’elle propose ceux dont vous avez besoin à votre prix, tiers compris.'} },
+  { t:{zh:'片幅的取捨', en:'Sensor size is a trade-off', fr:'La taille du capteur est un compromis'}, p:{zh:'全片幅弱光好、景深淺，但機身與鏡頭都大、都貴；APS-C 與 M4/3 輕巧便宜，望遠更有利。沒有絕對的好壞。', en:'Full frame is better in low light and for shallow focus, but bodies and lenses are larger and dearer; APS-C and M4/3 are lighter and cheaper, and favour telephoto. Neither is simply better.', fr:'Le plein format excelle en basse lumière et pour le flou, mais boîtiers et objectifs sont plus gros et plus chers ; l’APS-C et le M4/3 sont plus légers, moins chers, et avantagent le téléobjectif. Aucun n’est simplement meilleur.'} },
+  { t:{zh:'一定要實際握過', en:'Hold it before you buy', fr:'Prendre en main avant d’acheter'}, p:{zh:'握把大小、按鍵位置、觀景窗清不清楚，規格表看不出來，但決定你會不會常帶它出門。', en:'Grip size, button layout, how clear the viewfinder is: no spec sheet shows them, yet they decide whether you take it out.', fr:'Taille de la poignée, disposition des boutons, clarté du viseur : aucune fiche ne les montre, et pourtant ils décident si on l’emporte.'} },
+  { t:{zh:'二手很划算', en:'Used is good value', fr:'L’occasion est rentable'}, p:{zh:'相機與鏡頭保值、耐用，二手市場成熟。檢查快門次數、鏡片有無霉斑與刮傷，可在店家試拍。', en:'Cameras and lenses hold value and last; the used market is mature. Check the shutter count and look for fungus or scratches in the glass, and test-shoot in the shop.', fr:'Boîtiers et objectifs gardent leur valeur et durent ; le marché de l’occasion est mûr. Vérifiez le nombre de déclenchements, cherchez moisissures et rayures, et faites un essai en boutique.'} },
+];
+
+function renderBasics() {
+  document.getElementById('roadmap').innerHTML = ROADMAP.map((r, i) =>
+      '<li><a href="' + r.h + '" class="block h-full bg-slate-900/40 rounded-2xl border border-slate-800 p-4 hover:border-slate-600 transition-colors">'
+    +   '<span class="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-black text-slate-900 mb-2" style="background:' + r.c + '">' + (i + 1) + '</span>'
+    +   '<h3 class="text-sm font-black text-white">' + t(r.t) + '</h3>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-1">' + t(r.p) + '</p>'
+    + '</a></li>').join('');
+  document.getElementById('flow-dia').innerHTML = flowDiagram();
+  document.getElementById('basic-grid').innerHTML = BASICS.map(b =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5 reveal">'
+    +   '<h3 class="text-sm font-black text-white"><i class="fa-solid ' + b.i + ' text-emerald-300 mr-2"></i>' + t(b.t) + '</h3>'
+    +   '<p class="text-xs text-slate-300 leading-relaxed mt-2">' + t(b.p) + '</p>'
+    +   '<div class="mt-3 rounded-xl p-3" style="background:rgba(52,211,153,0.07);border:1px solid rgba(52,211,153,0.22)">'
+    +     '<span class="text-[0.62rem] uppercase tracking-wider text-emerald-300 font-bold"><i class="fa-solid fa-comment-dots mr-1"></i>' + ui('basic.anal') + '</span>'
+    +     '<p class="text-xs text-slate-300 leading-relaxed mt-1">' + t(b.a) + '</p>'
+    +   '</div>'
+    +   '<button onclick="goTerm(\'' + b.term + '\')" class="mt-3 text-xs font-bold text-sky-300 hover:text-sky-200">'
+    +     ui('basic.more') + ' <i class="fa-solid fa-arrow-right ml-1"></i></button>'
+    + '</div>').join('');
+}
+function renderCameraMore() {
+  document.getElementById('ctrl-dia').innerHTML = controlsDiagram();
+  document.getElementById('ctrl-grid').innerHTML = CONTROLS.map(c =>
+      '<div class="flex gap-3 bg-slate-900/40 rounded-xl border border-slate-800 p-3">'
+    +   '<span class="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[0.7rem] font-black text-white" style="background:#0891b2">' + c.n + '</span>'
+    +   '<div><h4 class="text-xs font-black text-white">' + t(c.t) + '</h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-0.5">' + t(c.p) + '</p></div>'
+    + '</div>').join('');
+  document.getElementById('lens-grid').innerHTML = LENS_TYPES.map(x =>
+    card('<i class="fa-solid ' + x.i + ' text-cyan-300 mr-1.5"></i>' + t(x.t), t(x.p))).join('');
+  document.getElementById('mark-dia').innerHTML = markDiagram();
+  document.getElementById('mark-body').innerHTML = MARK_CODES.map(m =>
+      '<tr><td class="py-2.5 px-4 font-bold text-cyan-200 whitespace-nowrap">' + esc(m.k) + '</td>'
+    + '<td class="py-2.5 px-4 text-slate-300">' + t(m.d) + '</td></tr>').join('');
+  document.getElementById('setup-list').innerHTML = SETUP.map((x, i) =>
+      '<li class="flex gap-3 bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<span class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-cyan-100" style="background:rgba(34,211,238,0.18);border:1px solid rgba(34,211,238,0.4)">' + (i + 1) + '</span>'
+    +   '<div><h4 class="text-sm font-black text-white">' + t(x.t) + '</h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-1">' + t(x.p) + '</p></div>'
+    + '</li>').join('');
+  document.getElementById('gear-grid').innerHTML = GEAR.map(x =>
+    card('<i class="fa-solid ' + x.i + ' text-cyan-300 mr-1.5"></i>' + t(x.t), t(x.p))).join('');
+  document.getElementById('choose-grid').innerHTML = CHOOSE.map(x => card(t(x.t), t(x.p), 'text-amber-300')).join('');
+}
+
 let revealObserver = null;
 function armReveals(root) {
   const els = root.querySelectorAll('.reveal');
@@ -1637,24 +1979,24 @@ const I18N = {
 zh:{
  'doc.title':'攝影圖譜 | 相機、曝光與修圖',
  'hdr.badge':'攝影教學','hdr.title':'攝影：相機、曝光與修圖',
- 'nav.cam':'相機','nav.exp':'曝光','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.edit':'修圖','nav.ref':'對照表',
+ 'nav.cam':'2 相機','nav.exp':'3 曝光','nav.p1':'4 入門','nav.p2':'5 進階','nav.p3':'6 高階','nav.edit':'8 修圖','nav.ref':'對照表',
  'intro':'一張照片是三件事的結果：相機怎麼收光、你怎麼控制光、拍完之後怎麼處理光。器材決定上限，但絕大多數照片離上限都還很遠；真正拉開差距的是曝光的判斷、對光的觀察，以及克制的後製。',
- 'intro2':'這一冊先拆解相機與曝光原理，再分三部從「拍清楚」走到「控制光與時間」，接著說明色彩原理與修圖流程。每個專業名詞的意思與原理，都整理在後面的「名詞與原理」，可以搜尋。所有圖示都是依光學與色彩數值計算繪製。',
- 'cam.eyebrow':'先認識工具','cam.h2':'相機的構造',
+ 'intro2':'這一冊照學習順序排列，每一章只用到前面已經解釋過的概念：先用白話講基礎觀念，再認識相機與鏡頭，接著是曝光原理、三個階段的實拍技巧，最後是色彩與修圖。遇到不懂的名詞，可以查最後的「名詞與原理」。',
+ 'cam.eyebrow':'第 2 章・認識相機','cam.h2':'相機的構造',
  'cam.lead':'所有相機，從手機到中片幅，都是同一個原理：鏡頭把光聚焦，光圈控制開口大小，快門控制時間，感光元件記錄結果。看懂這張剖面圖，後面的設定都只是在調整這四個零件。',
  'cam.h.sensor':'感光元件尺寸','cam.p.sensor':'元件越大，收到的總光量越多，雜訊越少、背景越容易模糊。「等效係數」是全片幅對角線除以該元件的對角線，用來換算視角。',
- 'exp.eyebrow':'最重要的一張圖','exp.h2':'曝光三要素與「級」',
+ 'exp.eyebrow':'第 3 章・曝光原理','exp.h2':'曝光三要素與「級」',
  'exp.lead':'照片亮度由三個設定共同決定：光圈（開口多大）、快門（開多久）、ISO（訊號放大多少）。三者都以「級」為單位，每一級就是光量加倍或減半，所以可以互相抵換。真正要選的是副作用。',
  'exp.h.ap':'光圈：數字越小，開口越大','exp.p.ap':'以下以相同焦距畫出各光圈的開口大小。f 值是「焦距 ÷ 開口直徑」，所以 f/2 的開口是 f/4 的兩倍寬、四倍面積，相差兩級。',
- 'edit.h2':'第四部・修圖：從 RAW 到成品',
+ 'edit.h2':'修圖：從 RAW 到成品',
  'edit.lead':'修圖不是把照片變成另一張照片，而是把相機記錄到、但還沒呈現出來的東西拿出來。以下流程以 Lightroom、Capture One、Darktable 等 RAW 軟體通用的順序整理，局部修飾則在 Photoshop 一類的圖層軟體中進行。',
  'edit.h.hist':'先學會看直方圖','edit.p.hist':'直方圖是照片中每個亮度有多少像素的統計。左邊是黑、右邊是白。沒有「正確的形狀」，只有一個原則：重要的細節不要撞牆。',
  'edit.h.flow':'整體調整的順序','edit.p.flow':'順序很重要：前面的步驟會改變後面每一步的判斷。由大到小、由整體到局部。',
  'edit.h.curve':'色調曲線：照片風格的來源','edit.p.curve':'橫軸是原本的亮度，縱軸是調整後的亮度。曲線往上彎就變亮、往下彎就變暗；斜率變陡，那一段的對比就增加。',
  'edit.h.local':'局部修飾','edit.h.over':'修過頭的徵兆',
- 'nav.col':'色彩',
+ 'nav.col':'7 色彩',
  'nav.terms':'名詞',
- 'col.eyebrow':'色彩原理',
+ 'col.eyebrow':'第 7 章・色彩',
  'col.h2':'色彩：從光到檔案',
  'col.lead':'顏色不是物體本身的屬性，而是光、眼睛與裝置三者互動的結果。理解這條鏈，才知道為什麼同一張照片在手機、電腦與印刷品上看起來不一樣，以及修圖時每個色彩滑桿到底在動什麼。',
  'col.h.rgb':'加色與減色：螢幕和印刷為什麼不同',
@@ -1668,7 +2010,7 @@ zh:{
  'col.h.bit':'位元深度：漸層需要足夠的階數',
  'col.p.bit':'同一條由黑到白的漸層，分別只用 8、32、256 階表示。階數不夠就會出現一條條的斷層，大幅調整 8 位元檔案時天空最容易出現這種情況。',
  'col.h.flow':'色彩管理的四個步驟',
- 'terms.eyebrow':'查詞',
+ 'terms.eyebrow':'附錄 A・查詞',
  'terms.h2':'名詞與原理',
  'terms.lead':'每個名詞都分成三部分：<b class="text-sky-300">意思</b>（它是什麼）、<b class="text-violet-300">原理</b>（為什麼會這樣）、<b class="text-amber-300">實際上</b>（拍照或修圖時代表什麼）。可以切換類別，或直接搜尋，中、英、法文都能搜。',
  'terms.ph':'搜尋名詞，例如：景深、gamut',
@@ -1676,8 +2018,30 @@ zh:{
  'term.m':'意思',
  'term.p':'原理',
  'term.e':'實際上',
+ 'nav.basic':'1 基礎',
+ 'chapFmt':'第 {n} 章',
+ 'path.h2':'學習路線',
+ 'path.lead':'由上到下、由左到右閱讀。點任一張卡片可直接跳到該章。',
+ 'basic.eyebrow':'第 1 章・從零開始',
+ 'basic.h2':'基礎概念：先懂這十件事',
+ 'basic.lead':'這一章沒有公式和數字表，只用白話和生活中的比喻，說明攝影最核心的十個觀念。後面每一章都建立在這些觀念上；每張卡片下方都可以跳到「名詞與原理」看更完整的解釋。',
+ 'basic.anal':'生活中的比喻',
+ 'basic.more':'看完整解釋',
+ 'cam.h.ctrl':'按鍵與轉盤：每個鈕在做什麼',
+ 'cam.p.ctrl':'以一般無反相機為例。各品牌位置不同，但功能大同小異；對照圖上的編號看下方說明。',
+ 'cam.h.lens':'鏡頭的種類',
+ 'cam.p.lens':'鏡頭對畫面的影響常比機身更大。先了解幾種基本類型，再決定下一顆買什麼。',
+ 'cam.h.mark':'看懂鏡頭型號',
+ 'cam.p.mark':'鏡頭名稱是一串縮寫，但每家都在說同樣的事：卡口、焦距、光圈、等級、防手震與馬達。以下以 Canon 的寫法為例，表格列出各品牌常見的縮寫。',
+ 'cam.mk.th0':'標示',
+ 'cam.mk.th1':'意思',
+ 'cam.h.setup':'拿到相機，先做這幾項設定',
+ 'cam.p.setup':'出廠設定是為了「誰都能拍」，不是為了拍好。花十分鐘改完這些，後面的學習會順很多。',
+ 'cam.h.gear':'配件與保養',
+ 'cam.h.choose':'怎麼選相機',
+ 'edit.eyebrow':'第 8 章',
  'tipLabel':'最常犯的錯',
- 'ref.eyebrow':'查閱','ref.h2':'對照表',
+ 'ref.eyebrow':'附錄 B・查閱','ref.h2':'對照表',
  'ref.h.eq':'等效曝光','ref.p.eq':'以下每一列的進光量完全相同，差別只在副作用。光圈每收一級，快門就慢一級。',
  'ref.eq.th0':'光圈','ref.eq.th1':'快門（秒）','ref.eq.th2':'ISO','ref.eq.th3':'畫面效果',
  'ref.h.fl':'焦距與視角','ref.p.fl':'視角依全片幅 36mm 寬度計算。APS-C 欄是在 APS-C（×1.5）機身上要達到相同視角所需的焦距。',
@@ -1691,24 +2055,24 @@ zh:{
 en:{
  'doc.title':'Photography: Camera, Exposure & Retouching',
  'hdr.badge':'PHOTOGRAPHY TUTORIAL','hdr.title':'Photography: Camera, Exposure & Retouching',
- 'nav.cam':'Camera','nav.exp':'Exposure','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.edit':'Retouching','nav.ref':'Reference',
+ 'nav.cam':'2 Camera','nav.exp':'3 Exposure','nav.p1':'4 Beginner','nav.p2':'5 Intermediate','nav.p3':'6 Advanced','nav.edit':'8 Retouching','nav.ref':'Reference',
  'intro':'A photograph is the result of three things: how the camera gathers light, how you control it, and how you treat it afterwards. Equipment sets the ceiling, but most pictures are nowhere near it. What separates them is judgement of exposure, attention to light, and restraint in editing.',
- 'intro2':'This volume first takes apart the camera and the principle of exposure, then goes in three parts from getting a sharp picture to controlling light and time, then explains colour and the retouching workflow. The meaning and principle of every technical term are collected, searchable, under Terms and principles. Every diagram is computed from the optics and colour science.',
- 'cam.eyebrow':'Know the tool first','cam.h2':'How a camera is built',
+ 'intro2':'This volume is arranged in learning order, and each chapter uses only ideas already explained: first the basic concepts in plain words, then the camera and its lenses, then how exposure works and shooting technique in three stages, and finally colour and retouching. Any unfamiliar term can be looked up in Terms and principles at the end.',
+ 'cam.eyebrow':'Chapter 2 · Know your camera','cam.h2':'How a camera is built',
  'cam.lead':'Every camera, from a phone to medium format, works the same way: the lens focuses the light, the aperture sets the size of the opening, the shutter sets the time, the sensor records the result. Read this cross-section and every setting that follows is simply an adjustment to one of these four parts.',
  'cam.h.sensor':'Sensor size','cam.p.sensor':'A larger sensor collects more light in total, giving less noise and easier background blur. The crop factor is full frame’s diagonal divided by the sensor’s own, and is used to convert angles of view.',
- 'exp.eyebrow':'The one diagram that matters most','exp.h2':'The three controls, and the stop',
+ 'exp.eyebrow':'Chapter 3 · How exposure works','exp.h2':'The three controls, and the stop',
  'exp.lead':'Brightness is set jointly by three controls: aperture (how wide the opening), shutter (how long it stays open) and ISO (how much the signal is amplified). All three move in stops, each a doubling or halving of light, so they trade against one another. What you are really choosing is the side effect.',
  'exp.h.ap':'Aperture: a smaller number, a bigger hole','exp.p.ap':'The openings below are drawn for one focal length. The f-number is focal length ÷ opening diameter, so f/2 is twice as wide as f/4 and four times the area: two stops apart.',
- 'edit.h2':'Part 4 · Retouching: from RAW to finished picture',
+ 'edit.h2':'Retouching: from RAW to finished picture',
  'edit.lead':'Retouching does not turn a photograph into a different one. It brings out what the camera recorded but has not yet shown. The workflow below follows the order common to RAW editors such as Lightroom, Capture One and Darktable; local work is done in a layer editor such as Photoshop.',
  'edit.h.hist':'Learn to read the histogram first','edit.p.hist':'The histogram counts how many pixels sit at each brightness, black on the left, white on the right. There is no correct shape, only one principle: important detail must not hit a wall.',
  'edit.h.flow':'The order of global adjustments','edit.p.flow':'Order matters: each step changes how you judge every step after it. Work from large to small, from the whole to the part.',
  'edit.h.curve':'The tone curve: where a look comes from','edit.p.curve':'The horizontal axis is the original brightness, the vertical axis the adjusted one. Bend the curve up to brighten, down to darken; wherever it gets steeper, contrast in that range increases.',
  'edit.h.local':'Local work','edit.h.over':'Signs of overediting',
- 'nav.col':'Colour',
+ 'nav.col':'7 Colour',
  'nav.terms':'Glossary',
- 'col.eyebrow':'How colour works',
+ 'col.eyebrow':'Chapter 7 · Colour',
  'col.h2':'Colour: from light to file',
  'col.lead':'Colour is not a property of objects but the outcome of light, the eye and a device acting together. Follow that chain and it becomes clear why one picture looks different on a phone, a computer and a print, and what each colour slider in an editor is actually moving.',
  'col.h.rgb':'Additive and subtractive: why screen and print differ',
@@ -1722,7 +2086,7 @@ en:{
  'col.h.bit':'Bit depth: a gradient needs enough steps',
  'col.p.bit':'The same ramp from black to white, shown with only 8, 32 and 256 levels. Too few levels show as bands, and skies in heavily edited 8-bit files are where it happens most.',
  'col.h.flow':'Colour management in four steps',
- 'terms.eyebrow':'Look it up',
+ 'terms.eyebrow':'Appendix A · Look it up',
  'terms.h2':'Terms and principles',
  'terms.lead':'Every term is explained in three parts: <b class="text-sky-300">meaning</b> (what it is), <b class="text-violet-300">principle</b> (why it behaves that way) and <b class="text-amber-300">in practice</b> (what it means when shooting or editing). Switch category or search directly, in Chinese, English or French.',
  'terms.ph':'Search terms, e.g. depth of field, gamut',
@@ -1730,8 +2094,30 @@ en:{
  'term.m':'MEANING',
  'term.p':'PRINCIPLE',
  'term.e':'IN PRACTICE',
+ 'nav.basic':'1 Basics',
+ 'chapFmt':'Chapter {n}',
+ 'path.h2':'Learning path',
+ 'path.lead':'Read top to bottom, left to right. Click any card to jump to that chapter.',
+ 'basic.eyebrow':'Chapter 1 · From zero',
+ 'basic.h2':'The basic ideas: ten things to understand first',
+ 'basic.lead':'No formulas or tables here: just plain words and everyday analogies for the ten ideas at the heart of photography. Every later chapter builds on them, and each card links to the fuller explanation in Terms and principles.',
+ 'basic.anal':'An everyday analogy',
+ 'basic.more':'Full explanation',
+ 'cam.h.ctrl':'Buttons and dials: what each one does',
+ 'cam.p.ctrl':'A typical mirrorless body. Brands place them differently, but the functions are much the same; match the numbers on the drawing to the notes below.',
+ 'cam.h.lens':'Types of lens',
+ 'cam.p.lens':'The lens often matters more to the picture than the body. Know the basic types before deciding what to buy next.',
+ 'cam.h.mark':'Reading a lens name',
+ 'cam.p.mark':'A lens name is a string of abbreviations, but every maker states the same facts: mount, focal length, aperture, grade, stabilisation and motor. The example follows Canon’s scheme; the table lists common codes from each brand.',
+ 'cam.mk.th0':'Marking',
+ 'cam.mk.th1':'Meaning',
+ 'cam.h.setup':'First settings on a new camera',
+ 'cam.p.setup':'Factory settings are made so anyone can take a picture, not so the picture is good. Ten minutes changing these makes everything after go more smoothly.',
+ 'cam.h.gear':'Accessories and care',
+ 'cam.h.choose':'Choosing a camera',
+ 'edit.eyebrow':'Chapter 8',
  'tipLabel':'The usual mistake',
- 'ref.eyebrow':'Reference','ref.h2':'Tables',
+ 'ref.eyebrow':'Appendix B · Reference','ref.h2':'Tables',
  'ref.h.eq':'Equivalent exposures','ref.p.eq':'Every row lets in exactly the same amount of light; only the side effects differ. Each stop the aperture closes, the shutter opens one stop longer.',
  'ref.eq.th0':'Aperture','ref.eq.th1':'Shutter (s)','ref.eq.th2':'ISO','ref.eq.th3':'Effect on the picture',
  'ref.h.fl':'Focal length and angle of view','ref.p.fl':'Angles are computed for a 36 mm-wide full-frame sensor. The APS-C column gives the focal length that produces the same angle on an APS-C (×1.5) body.',
@@ -1745,24 +2131,24 @@ en:{
 fr:{
  'doc.title':'Photographie : appareil, exposition et retouche',
  'hdr.badge':'TUTORIEL DE PHOTOGRAPHIE','hdr.title':'Photographie : appareil, exposition et retouche',
- 'nav.cam':'Appareil','nav.exp':'Exposition','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.edit':'Retouche','nav.ref':'Références',
+ 'nav.cam':'2 Appareil','nav.exp':'3 Exposition','nav.p1':'4 Débutant','nav.p2':'5 Intermédiaire','nav.p3':'6 Avancé','nav.edit':'8 Retouche','nav.ref':'Références',
  'intro':'Une photographie résulte de trois choses : la manière dont l’appareil recueille la lumière, celle dont vous la maîtrisez, et ce que vous en faites ensuite. Le matériel fixe le plafond, mais la plupart des images en sont très loin. Ce qui les distingue, c’est le jugement de l’exposition, l’attention à la lumière et la retenue au développement.',
- 'intro2':'Ce volume démonte d’abord l’appareil et le principe de l’exposition, va en trois parties de l’image nette à la maîtrise de la lumière et du temps, puis explique la couleur et le flux de retouche. Le sens et le principe de chaque terme technique sont réunis, avec recherche, dans Termes et principes. Chaque schéma est calculé à partir de l’optique et de la science des couleurs.',
- 'cam.eyebrow':'D’abord l’outil','cam.h2':'L’anatomie d’un appareil photo',
+ 'intro2':'Ce volume suit l’ordre d’apprentissage, et chaque chapitre n’utilise que des notions déjà expliquées : d’abord les bases en mots simples, puis l’appareil et ses objectifs, ensuite le principe de l’exposition et la prise de vue en trois étapes, enfin la couleur et la retouche. Tout terme inconnu se retrouve dans Termes et principes, à la fin.',
+ 'cam.eyebrow':'Chapitre 2 · Connaître son appareil','cam.h2':'L’anatomie d’un appareil photo',
  'cam.lead':'Tout appareil, du smartphone au moyen format, fonctionne de la même manière : l’objectif fait converger la lumière, le diaphragme règle la taille de l’ouverture, l’obturateur la durée, le capteur enregistre le résultat. Lisez cette coupe, et chaque réglage qui suit n’est qu’une action sur l’une de ces quatre pièces.',
  'cam.h.sensor':'La taille du capteur','cam.p.sensor':'Un capteur plus grand reçoit plus de lumière au total : moins de bruit, flou d’arrière-plan plus facile. Le coefficient de recadrage est la diagonale du plein format divisée par celle du capteur ; il sert à convertir les angles de champ.',
- 'exp.eyebrow':'Le schéma le plus important','exp.h2':'Les trois réglages, et l’IL',
+ 'exp.eyebrow':'Chapitre 3 · Le principe de l’exposition','exp.h2':'Les trois réglages, et l’IL',
  'exp.lead':'La luminosité dépend conjointement de trois réglages : l’ouverture (la taille du trou), la vitesse (la durée) et les ISO (l’amplification du signal). Tous trois se comptent en IL, chacun doublant ou divisant la lumière par deux, et se compensent donc. Ce que l’on choisit vraiment, c’est l’effet secondaire.',
  'exp.h.ap':'L’ouverture : petit nombre, grand trou','exp.p.ap':'Les ouvertures ci-dessous sont dessinées pour une même focale. Le nombre f vaut focale ÷ diamètre de l’ouverture : f/2 est deux fois plus large que f/4 et quatre fois plus grand en surface, soit deux IL d’écart.',
- 'edit.h2':'Partie 4 · Retouche : du RAW à l’image finie',
+ 'edit.h2':'Retouche : du RAW à l’image finie',
  'edit.lead':'Retoucher ne transforme pas une photographie en une autre. Cela révèle ce que l’appareil a enregistré sans encore le montrer. Le flux ci-dessous suit l’ordre commun aux dérawtiseurs comme Lightroom, Capture One ou Darktable ; le travail local se fait dans un éditeur à calques comme Photoshop.',
  'edit.h.hist':'Apprendre d’abord à lire l’histogramme','edit.p.hist':'L’histogramme compte les pixels à chaque niveau de luminosité, le noir à gauche, le blanc à droite. Il n’y a pas de bonne forme, seulement un principe : le détail important ne doit pas toucher les bords.',
  'edit.h.flow':'L’ordre des réglages globaux','edit.p.flow':'L’ordre compte : chaque étape change le jugement de toutes les suivantes. Du général au particulier, de l’ensemble au détail.',
  'edit.h.curve':'La courbe de tonalité : d’où vient le rendu','edit.p.curve':'L’axe horizontal est la luminosité d’origine, l’axe vertical la luminosité corrigée. Courber vers le haut éclaircit, vers le bas assombrit ; là où la pente s’accentue, le contraste de cette plage augmente.',
  'edit.h.local':'Le travail local','edit.h.over':'Les signes d’une retouche excessive',
- 'nav.col':'Couleur',
+ 'nav.col':'7 Couleur',
  'nav.terms':'Glossaire',
- 'col.eyebrow':'Comprendre la couleur',
+ 'col.eyebrow':'Chapitre 7 · La couleur',
  'col.h2':'La couleur : de la lumière au fichier',
  'col.lead':'La couleur n’est pas une propriété des objets, mais le résultat de la lumière, de l’œil et d’un appareil qui agissent ensemble. En suivant cette chaîne, on comprend pourquoi une même image diffère sur un smartphone, un ordinateur et un tirage, et ce que déplace réellement chaque curseur de couleur.',
  'col.h.rgb':'Additive et soustractive : pourquoi écran et impression diffèrent',
@@ -1776,7 +2162,7 @@ fr:{
  'col.h.bit':'Profondeur de bits : un dégradé a besoin d’assez de niveaux',
  'col.p.bit':'Le même dégradé du noir au blanc, avec seulement 8, 32 et 256 niveaux. Trop peu de niveaux se voient en bandes, surtout dans les ciels de fichiers 8 bits fortement retouchés.',
  'col.h.flow':'La gestion des couleurs en quatre étapes',
- 'terms.eyebrow':'Chercher',
+ 'terms.eyebrow':'Annexe A · Chercher',
  'terms.h2':'Termes et principes',
  'terms.lead':'Chaque terme est expliqué en trois parties : <b class="text-sky-300">sens</b> (ce que c’est), <b class="text-violet-300">principe</b> (pourquoi il se comporte ainsi) et <b class="text-amber-300">en pratique</b> (ce que cela signifie à la prise de vue ou en retouche). Changez de catégorie ou cherchez directement, en chinois, anglais ou français.',
  'terms.ph':'Chercher, ex. profondeur de champ, gamut',
@@ -1784,8 +2170,30 @@ fr:{
  'term.m':'SENS',
  'term.p':'PRINCIPE',
  'term.e':'EN PRATIQUE',
+ 'nav.basic':'1 Bases',
+ 'chapFmt':'Chapitre {n}',
+ 'path.h2':'Parcours',
+ 'path.lead':'Lisez de haut en bas, de gauche à droite. Cliquez une carte pour aller au chapitre.',
+ 'basic.eyebrow':'Chapitre 1 · Depuis zéro',
+ 'basic.h2':'Les notions de base : dix choses à comprendre d’abord',
+ 'basic.lead':'Ni formules ni tableaux ici : des mots simples et des comparaisons quotidiennes pour les dix notions au cœur de la photographie. Tous les chapitres suivants s’appuient dessus, et chaque carte renvoie à l’explication complète dans Termes et principes.',
+ 'basic.anal':'Une comparaison',
+ 'basic.more':'Explication complète',
+ 'cam.h.ctrl':'Boutons et molettes : à quoi sert chacun',
+ 'cam.p.ctrl':'Un hybride typique. Les marques les placent différemment, mais les fonctions se ressemblent ; reportez les numéros du dessin aux notes ci-dessous.',
+ 'cam.h.lens':'Les types d’objectifs',
+ 'cam.p.lens':'L’objectif compte souvent plus que le boîtier pour l’image. Connaissez les types de base avant de choisir le prochain.',
+ 'cam.h.mark':'Lire le nom d’un objectif',
+ 'cam.p.mark':'Le nom d’un objectif est une suite d’abréviations, mais chaque marque dit la même chose : monture, focale, ouverture, gamme, stabilisation et moteur. L’exemple suit la nomenclature Canon ; le tableau donne les codes courants de chaque marque.',
+ 'cam.mk.th0':'Marquage',
+ 'cam.mk.th1':'Signification',
+ 'cam.h.setup':'Premiers réglages d’un nouvel appareil',
+ 'cam.p.setup':'Les réglages d’usine sont faits pour que tout le monde puisse déclencher, pas pour que l’image soit bonne. Dix minutes pour changer ceux-ci, et la suite devient plus simple.',
+ 'cam.h.gear':'Accessoires et entretien',
+ 'cam.h.choose':'Choisir un appareil',
+ 'edit.eyebrow':'Chapitre 8',
  'tipLabel':'L’erreur habituelle',
- 'ref.eyebrow':'Références','ref.h2':'Tableaux',
+ 'ref.eyebrow':'Annexe B · Références','ref.h2':'Tableaux',
  'ref.h.eq':'Expositions équivalentes','ref.p.eq':'Chaque ligne laisse passer exactement la même quantité de lumière ; seuls les effets secondaires diffèrent. Chaque IL de fermeture est compensé par une vitesse plus lente d’un IL.',
  'ref.eq.th0':'Ouverture','ref.eq.th1':'Vitesse (s)','ref.eq.th2':'ISO','ref.eq.th3':'Effet sur l’image',
  'ref.h.fl':'Focale et angle de champ','ref.p.fl':'Angles calculés pour un capteur plein format de 36 mm de large. La colonne APS-C donne la focale qui produit le même angle sur un boîtier APS-C (×1,5).',
@@ -1814,7 +2222,9 @@ function setLanguage(lang) {
     const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
   });
   document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = ui(el.dataset.i18nPh); });
+  renderBasics();
   renderCamera();
+  renderCameraMore();
   renderExposure();
   renderLevels();
   renderColor();
