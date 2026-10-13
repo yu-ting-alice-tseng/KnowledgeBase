@@ -100,7 +100,9 @@
         <a href="#basics"   data-i18n="nav.p1"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-amber-500/50 hover:text-amber-300 transition-colors"></a>
         <a href="#inter"    data-i18n="nav.p2"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors"></a>
         <a href="#adv"      data-i18n="nav.p3"   class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-red-500/50 hover:text-red-300 transition-colors"></a>
+        <a href="#color" data-i18n="nav.col" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-pink-500/50 hover:text-pink-300 transition-colors"></a>
         <a href="#edit"     data-i18n="nav.edit" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-violet-500/50 hover:text-violet-300 transition-colors"></a>
+        <a href="#terms" data-i18n="nav.terms" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 hover:text-sky-300 transition-colors"></a>
         <a href="#ref"      data-i18n="nav.ref"  class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors"></a>
       </nav>
     </div>
@@ -157,6 +159,48 @@
 
   <div id="levels" class="space-y-12"></div>
 
+  <section id="color" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-pink-500/10 rounded-2xl text-pink-300 border border-pink-500/20"><i class="fa-solid fa-palette text-xl"></i></div>
+      <div>
+        <span data-i18n="col.eyebrow" class="text-xs uppercase tracking-wider text-pink-300 font-bold"></span>
+        <h2 data-i18n="col.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      <p data-i18n="col.lead" class="text-slate-300 leading-relaxed"></p>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="col.h.rgb" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="col.p.rgb" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="rgb-dia"></div>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="col.h.wheel" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="col.p.wheel" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="wheel-dia"></div>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="col.h.k" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="col.p.k" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="kelvin-dia"></div>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="col.h.gamut" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="col.p.gamut" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="gamut-dia"></div>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 data-i18n="col.h.bit" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="col.p.bit" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <div id="bit-dia"></div>
+      </div>
+      <div>
+        <h3 data-i18n="col.h.flow" class="text-base font-black text-white mb-4"></h3>
+        <ol id="col-flow" class="grid md:grid-cols-2 lg:grid-cols-4 gap-3"></ol>
+      </div>
+    </div>
+  </section>
+
   <section id="edit" class="scroll-mt-24">
     <div class="flex items-center gap-3 mb-5">
       <div class="p-3 bg-violet-500/10 rounded-2xl text-violet-300 border border-violet-500/20 shadow-glow-violet"><i class="fa-solid fa-sliders text-xl"></i></div>
@@ -190,6 +234,28 @@
         <h3 data-i18n="edit.h.over" class="text-base font-black text-white mb-3"></h3>
         <ul id="over-list" class="grid md:grid-cols-2 gap-x-6 gap-y-2 text-sm text-slate-300"></ul>
       </div>
+    </div>
+  </section>
+
+  <section id="terms" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 bg-sky-500/10 rounded-2xl text-sky-300 border border-sky-500/20"><i class="fa-solid fa-book-open text-xl"></i></div>
+      <div>
+        <span data-i18n="terms.eyebrow" class="text-xs uppercase tracking-wider text-sky-300 font-bold"></span>
+        <h2 data-i18n="terms.h2" class="text-2xl font-black text-white"></h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-5">
+      <p data-i18n="terms.lead" class="text-slate-300 leading-relaxed"></p>
+      <div class="flex flex-col md:flex-row md:items-center gap-3">
+        <div id="term-tabs" class="flex flex-wrap gap-2"></div>
+        <label class="md:ml-auto flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/70 border border-slate-800 focus-within:border-sky-500/50 w-full md:w-72">
+          <i class="fa-solid fa-magnifying-glass text-slate-500 text-xs"></i>
+          <input id="term-q" type="search" data-i18n-ph="terms.ph" oninput="termQ = this.value; renderTerms()"
+                 class="bg-transparent outline-none text-sm text-slate-200 placeholder-slate-500 w-full">
+        </label>
+      </div>
+      <div id="term-grid" class="grid md:grid-cols-2 gap-4"></div>
     </div>
   </section>
 
@@ -991,6 +1057,565 @@ function renderRef() {
   document.getElementById('rule-grid').innerHTML = RULES.map(r => card(t(r.h), t(r.p), 'text-emerald-300')).join('');
 }
 
+/* ═══════════════════════════════════════════════════════════
+   Colour. Every diagram below is generated from the colour
+   science it illustrates: real blend arithmetic, real hue
+   angles, CIE 1931 coordinates, black-body approximations.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Additive light on black (screen) beside subtractive ink on white
+   (multiply). The overlaps are produced by the blend modes
+   themselves, not painted in. */
+function rgbDiagram() {
+  const c3 = (cx, cy, cols, mode) => {
+    const pos = [[0, -46], [-42, 28], [42, 28]];
+    return '<g style="isolation:isolate">' + cols.map((c, i) =>
+      '<circle cx="' + (cx + pos[i][0]) + '" cy="' + (cy + pos[i][1]) + '" r="78" fill="' + c + '" style="mix-blend-mode:' + mode + '"/>').join('') + '</g>';
+  };
+  const L = (x, y, s, fill) => '<text class="val" x="' + x + '" y="' + y + '" text-anchor="middle" style="font-size:14px;fill:' + (fill || '#0b0f13') + '">' + esc(s) + '</text>';
+  return '<svg class="dg" viewBox="0 0 900 380" role="img" aria-label="' + esc(t({zh:'加色法與減色法', en:'Additive and subtractive colour', fr:'Synthèse additive et soustractive'})) + '">'
+    + '<rect x="30" y="20" width="400" height="300" rx="14" fill="#000"/>'
+    + c3(230, 175, ['#ff0000', '#00ff00', '#0000ff'], 'screen')
+    + L(230, 110, 'R') + L(170, 228, 'G') + L(290, 228, 'B', '#fff')
+    + L(230, 190, t({zh:'白', en:'white', fr:'blanc'}))
+    + L(192, 160, t({zh:'黃', en:'yellow', fr:'jaune'})) + L(268, 160, t({zh:'洋紅', en:'magenta', fr:'magenta'})) + L(230, 245, t({zh:'青', en:'cyan', fr:'cyan'}))
+    + '<rect x="470" y="20" width="400" height="300" rx="14" fill="#fff"/>'
+    + c3(670, 175, ['#00ffff', '#ff00ff', '#ffff00'], 'multiply')
+    + L(670, 110, 'C') + L(610, 228, 'M') + L(730, 228, 'Y')
+    + L(670, 190, t({zh:'近黑', en:'near black', fr:'presque noir'}), '#fff')
+    + L(632, 160, t({zh:'藍', en:'blue', fr:'bleu'}), '#fff') + L(708, 160, t({zh:'綠', en:'green', fr:'vert'}), '#fff') + L(670, 245, t({zh:'紅', en:'red', fr:'rouge'}), '#fff')
+    + '<text class="lab" x="230" y="352" text-anchor="middle">' + esc(t({zh:'加色法：光（螢幕、相機）', en:'Additive: light (screens, cameras)', fr:'Additive : la lumière (écrans, appareils)'})) + '</text>'
+    + '<text class="lab" x="670" y="352" text-anchor="middle">' + esc(t({zh:'減色法：油墨（印刷）', en:'Subtractive: ink (print)', fr:'Soustractive : l’encre (impression)'})) + '</text>'
+    + '</svg>';
+}
+
+/* Hue wheel: angle is hue (red at the top, clockwise), distance from
+   the centre is saturation. The grey core is laid over the colours. */
+function wheelDiagram() {
+  const cx = 220, cy = 210, R = 165, N = 72;
+  const P = (a, r) => [cx + r * Math.sin(a * Math.PI / 180), cy - r * Math.cos(a * Math.PI / 180)];
+  let s = '<svg class="dg" viewBox="0 0 900 420" role="img" aria-label="' + esc(t({zh:'色環', en:'Colour wheel', fr:'Cercle chromatique'})) + '">'
+    + '<defs><radialGradient id="satg"><stop offset="0" stop-color="#808080" stop-opacity="1"/><stop offset="1" stop-color="#808080" stop-opacity="0"/></radialGradient></defs>';
+  for (let i = 0; i < N; i++) {
+    const a0 = i * 360 / N, a1 = (i + 1) * 360 / N + 0.6;
+    const p0 = P(a0, R), p1 = P(a1, R);
+    s += '<path d="M' + cx + ' ' + cy + ' L' + f1(p0[0]) + ' ' + f1(p0[1]) + ' A' + R + ' ' + R + ' 0 0 1 ' + f1(p1[0]) + ' ' + f1(p1[1]) + ' Z" fill="hsl(' + (a0 + 180 / N) + ',100%,50%)"/>';
+  }
+  s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="url(#satg)"/>';
+  [[0, '0° R'], [120, '120° G'], [240, '240° B']].forEach(([a, l]) => {
+    const p = P(a, R + 22);
+    s += '<text class="val" x="' + f1(p[0]) + '" y="' + f1(p[1] + 6) + '" text-anchor="middle" style="font-size:14px">' + l + '</text>';
+  });
+  /* complementary pair: orange (30°) against azure (210°) */
+  const o = P(30, R - 30), b = P(210, R - 30);
+  s += '<line x1="' + f1(o[0]) + '" y1="' + f1(o[1]) + '" x2="' + f1(b[0]) + '" y2="' + f1(b[1]) + '" stroke="#fff" stroke-width="3" stroke-dasharray="7 6"/>'
+    + '<circle cx="' + f1(o[0]) + '" cy="' + f1(o[1]) + '" r="11" fill="hsl(30,100%,50%)" stroke="#fff" stroke-width="3"/>'
+    + '<circle cx="' + f1(b[0]) + '" cy="' + f1(b[1]) + '" r="11" fill="hsl(210,100%,50%)" stroke="#fff" stroke-width="3"/>';
+  /* lightness strip for one hue */
+  for (let i = 0; i <= 20; i++)
+    s += '<rect x="440" y="' + (40 + i * 16) + '" width="34" height="17" fill="hsl(30,100%,' + (100 - i * 5) + '%)"/>';
+  s += '<rect x="440" y="40" width="34" height="336" fill="none" stroke="#475569" stroke-width="2"/>';
+  const rows = [
+    [t({zh:'H 色相：角度', en:'H, hue: the angle', fr:'T, teinte : l’angle'}), t({zh:'紅 0°、綠 120°、藍 240°', en:'red 0°, green 120°, blue 240°', fr:'rouge 0°, vert 120°, bleu 240°'})],
+    [t({zh:'S 飽和度：離中心多遠', en:'S, saturation: distance from the centre', fr:'S, saturation : distance au centre'}), t({zh:'中心是灰，邊緣最濃', en:'grey at the centre, purest at the rim', fr:'gris au centre, pur au bord'})],
+    [t({zh:'L 明度：左邊的色條', en:'L, luminance: the strip at left', fr:'L, luminance : la bande à gauche'}), t({zh:'同一色相，由白到黑', en:'one hue, from white to black', fr:'une teinte, du blanc au noir'})],
+    [t({zh:'虛線：互補色', en:'Dashed line: complements', fr:'Pointillés : complémentaires'}), t({zh:'相隔 180°，例如橘與青藍', en:'180° apart, such as orange and azure', fr:'à 180°, comme l’orangé et l’azur'})],
+  ];
+  rows.forEach((r, i) => {
+    s += '<text class="lab" x="510" y="' + (80 + i * 82) + '">' + esc(r[0]) + '</text>'
+      +  '<text class="sub" x="510" y="' + (104 + i * 82) + '">' + esc(r[1]) + '</text>';
+  });
+  return s + '</svg>';
+}
+
+/* Black-body colour, Tanner Helland's fit to the Planckian locus.
+   Good to a few percent between 1000 K and 40000 K, which is all a
+   picture of the scale needs. */
+function kelvinRGB(K) {
+  const T = K / 100, cl = v => Math.max(0, Math.min(255, Math.round(v)));
+  const r = T <= 66 ? 255 : 329.698727446 * Math.pow(T - 60, -0.1332047592);
+  const g = T <= 66 ? 99.4708025861 * Math.log(T) - 161.1195681661 : 288.1221695283 * Math.pow(T - 60, -0.0755148492);
+  const b = T >= 66 ? 255 : (T <= 19 ? 0 : 138.5177312231 * Math.log(T - 10) - 305.0447927307);
+  return 'rgb(' + cl(r) + ',' + cl(g) + ',' + cl(b) + ')';
+}
+function kelvinDiagram() {
+  const K0 = 1500, K1 = 10000, X = 40, W = 820, kx = K => X + W * (K - K0) / (K1 - K0);
+  let stops = '';
+  for (let K = K0; K <= K1; K += 250) stops += '<stop offset="' + f1((K - K0) / (K1 - K0) * 100) + '%" stop-color="' + kelvinRGB(K) + '"/>';
+  let s = '<svg class="dg" viewBox="0 0 900 330" role="img" aria-label="' + esc(t({zh:'色溫刻度', en:'Colour temperature scale', fr:'Échelle de température de couleur'})) + '">'
+    + '<defs><linearGradient id="kg" x1="0" x2="1">' + stops + '</linearGradient></defs>'
+    + '<rect x="' + X + '" y="40" width="' + W + '" height="46" rx="8" fill="url(#kg)"/>';
+  [[1900, {zh:'燭光', en:'candle', fr:'bougie'}], [3200, {zh:'鎢絲燈', en:'tungsten', fr:'tungstène'}],
+   [5500, {zh:'日光', en:'daylight', fr:'jour'}], [7500, {zh:'陰影', en:'shade', fr:'ombre'}]].forEach(([K, n]) => {
+    const x = kx(K);
+    s += '<line x1="' + f1(x) + '" y1="86" x2="' + f1(x) + '" y2="102" stroke="#e2e8f0" stroke-width="2"/>'
+      +  '<text class="val" x="' + f1(x) + '" y="122" text-anchor="middle" style="font-size:15px">' + K + 'K</text>'
+      +  '<text class="sub" x="' + f1(x) + '" y="142" text-anchor="middle">' + esc(t(n)) + '</text>';
+  });
+  s += '<text class="sub" x="' + X + '" y="28">← ' + esc(t({zh:'低 K：偏橘', en:'low K: orange', fr:'K bas : orangé'})) + '</text>'
+    +  '<text class="sub" x="' + (X + W) + '" y="28" text-anchor="end">' + esc(t({zh:'高 K：偏藍', en:'high K: blue', fr:'K haut : bleuté'})) + ' →</text>';
+  /* what the white-balance setting does: it applies the opposite cast */
+  const y = 190;
+  s += '<rect x="60" y="' + y + '" width="120" height="80" rx="8" fill="' + kelvinRGB(3200) + '"/>'
+    +  '<text class="sub" x="120" y="' + (y + 104) + '" text-anchor="middle">' + esc(t({zh:'鎢絲燈下的白紙', en:'white paper under tungsten', fr:'papier blanc sous tungstène'})) + '</text>'
+    +  '<path d="M200 ' + (y + 40) + ' H380" stroke="#38bdf8" stroke-width="3" marker-end="url(#ar)"/>'
+    +  '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#38bdf8"/></marker></defs>'
+    +  '<text class="lab" x="290" y="' + (y + 28) + '" text-anchor="middle">WB = 3200K</text>'
+    +  '<text class="sub" x="290" y="' + (y + 64) + '" text-anchor="middle">' + esc(t({zh:'相機加藍補償', en:'the camera adds blue', fr:'l’appareil ajoute du bleu'})) + '</text>'
+    +  '<rect x="400" y="' + y + '" width="120" height="80" rx="8" fill="#f4f4f2"/>'
+    +  '<text class="sub" x="460" y="' + (y + 104) + '" text-anchor="middle">' + esc(t({zh:'校正後：白', en:'corrected: white', fr:'corrigé : blanc'})) + '</text>'
+    +  '<text class="lab" x="570" y="' + (y + 22) + '" style="fill:#fcd34d">' + esc(t({zh:'設定值是「光源的色溫」', en:'The setting names the light', fr:'Le réglage nomme la source'})) + '</text>'
+    +  '<text class="sub" x="570" y="' + (y + 48) + '">' + esc(t({zh:'設得比實際低 → 畫面偏藍', en:'set lower than the light → bluer', fr:'plus bas que la source → plus bleu'})) + '</text>'
+    +  '<text class="sub" x="570" y="' + (y + 72) + '">' + esc(t({zh:'設得比實際高 → 畫面偏暖', en:'set higher than the light → warmer', fr:'plus haut que la source → plus chaud'})) + '</text>';
+  return s + '</svg>';
+}
+
+/* CIE 1931 xy chromaticity. The horseshoe is the spectral locus
+   (monochromatic light, nm); its straight base is the line of purples.
+   Primaries are the published values of each standard. */
+const LOCUS = [[380,.1741,.0050],[460,.1440,.0297],[470,.1241,.0578],[475,.1096,.0868],[480,.0913,.1327],[485,.0687,.2007],
+  [490,.0454,.2950],[495,.0235,.4127],[500,.0082,.5384],[505,.0039,.6548],[510,.0139,.7502],[515,.0389,.8120],[520,.0743,.8338],
+  [525,.1142,.8262],[530,.1547,.8059],[540,.2296,.7543],[550,.3016,.6923],[560,.3731,.6245],[570,.4441,.5547],[580,.5125,.4866],
+  [590,.5752,.4242],[600,.6270,.3725],[620,.6915,.3083],[650,.7260,.2740],[700,.7347,.2653]];
+const GAMUTS = [
+  { n:'ProPhoto RGB', c:'#a78bfa', d:'8 6', p:[[.7347,.2653],[.1596,.8404],[.0366,.0001]],
+    note:{zh:'最寬，含肉眼看不到的顏色', en:'widest, includes colours no eye can see', fr:'le plus large, inclut des couleurs invisibles'} },
+  { n:'Adobe RGB', c:'#fbbf24', p:[[.64,.33],[.21,.71],[.15,.06]],
+    note:{zh:'綠青較寬，常用於印刷', en:'wider greens and cyans, used for print', fr:'verts et cyans plus larges, pour l’impression'} },
+  { n:'Display P3', c:'#f472b6', p:[[.68,.32],[.265,.69],[.15,.06]],
+    note:{zh:'新款手機與螢幕', en:'recent phones and displays', fr:'smartphones et écrans récents'} },
+  { n:'sRGB', c:'#22d3ee', p:[[.64,.33],[.30,.60],[.15,.06]],
+    note:{zh:'網路標準，最小', en:'the web standard, the smallest', fr:'le standard du web, le plus petit'} },
+];
+function gamutDiagram() {
+  const X = x => 100 + x * 540, Y = y => 480 - y * 520;
+  let s = '<svg class="dg" viewBox="0 0 900 530" role="img" aria-label="' + esc(t({zh:'色域比較', en:'Gamuts compared', fr:'Gamuts comparés'})) + '">';
+  for (let v = 0; v <= 0.8001; v += 0.1) {
+    s += '<line x1="' + f1(X(v)) + '" y1="' + Y(0) + '" x2="' + f1(X(v)) + '" y2="' + Y(0.9) + '" class="grid"/>'
+      +  '<text class="sub" x="' + f1(X(v)) + '" y="' + (Y(0) + 22) + '" text-anchor="middle" style="font-size:12px">' + v.toFixed(1) + '</text>';
+    s += '<line x1="' + X(0) + '" y1="' + f1(Y(v)) + '" x2="' + X(0.8) + '" y2="' + f1(Y(v)) + '" class="grid"/>'
+      +  '<text class="sub" x="' + (X(0) - 10) + '" y="' + f1(Y(v) + 4) + '" text-anchor="end" style="font-size:12px">' + v.toFixed(1) + '</text>';
+  }
+  s += '<path d="' + LOCUS.map((p, i) => (i ? 'L' : 'M') + f1(X(p[1])) + ' ' + f1(Y(p[2]))).join(' ') + ' Z" fill="rgba(241,245,249,0.08)" stroke="#e2e8f0" stroke-width="2"/>';
+  [460, 490, 500, 520, 560, 600, 700].forEach(nm => {
+    const p = LOCUS.find(q => q[0] === nm);
+    const top = nm === 520;
+    s += '<text class="sub" x="' + f1(X(p[1]) + (top ? 0 : 10)) + '" y="' + f1(Y(p[2]) + (top ? -12 : 4)) + '" text-anchor="' + (top ? 'middle' : 'start') + '" style="font-size:12px">' + nm + 'nm</text>';
+  });
+  GAMUTS.forEach(g => {
+    s += '<path d="M' + g.p.map(q => f1(X(q[0])) + ' ' + f1(Y(q[1]))).join(' L') + ' Z" fill="none" stroke="' + g.c + '" stroke-width="3"' + (g.d ? ' stroke-dasharray="' + g.d + '"' : '') + '/>';
+  });
+  s += '<circle cx="' + f1(X(.3127)) + '" cy="' + f1(Y(.3290)) + '" r="5" fill="#fff"/>'
+    +  '<text class="sub" x="' + f1(X(.3127) + 10) + '" y="' + f1(Y(.3290) - 8) + '" style="font-size:12px">D65</text>';
+  GAMUTS.slice().reverse().forEach((g, i) => {
+    const y = 70 + i * 70;
+    s += '<line x1="580" y1="' + (y - 5) + '" x2="612" y2="' + (y - 5) + '" stroke="' + g.c + '" stroke-width="4"' + (g.d ? ' stroke-dasharray="' + g.d + '"' : '') + '/>'
+      +  '<text class="val" x="622" y="' + y + '">' + g.n + '</text>'
+      +  '<text class="sub" x="622" y="' + (y + 22) + '" style="font-size:13px">' + esc(t(g.note)) + '</text>';
+  });
+  s += '<text class="sub" x="580" y="370" style="font-size:13px">' + esc(t({zh:'馬蹄形：人眼看得到的全部顏色', en:'Horseshoe: every colour the eye can see', fr:'Fer à cheval : toutes les couleurs visibles'})) + '</text>'
+    +  '<text class="sub" x="580" y="394" style="font-size:13px">' + esc(t({zh:'三角形：各色彩空間能表示的範圍', en:'Triangles: what each space can encode', fr:'Triangles : ce que chaque espace peut coder'})) + '</text>'
+    +  '<text class="sub" x="580" y="418" style="font-size:13px">' + esc(t({zh:'D65：標準白點（約 6500K）', en:'D65: the standard white point (≈6500K)', fr:'D65 : le point blanc standard (≈6500K)'})) + '</text>'
+    +  '<text class="sub" x="580" y="450" style="font-size:12px">CIE 1931 xy</text>';
+  return s + '</svg>';
+}
+
+/* The same ramp quantised to 8, 32 and 256 levels. */
+function bitDiagram() {
+  const X = 40, W = 820;
+  let s = '<svg class="dg" viewBox="0 0 900 300" role="img" aria-label="' + esc(t({zh:'位元深度與斷層', en:'Bit depth and banding', fr:'Profondeur de bits et postérisation'})) + '">';
+  [[8, '3 bit · 8'], [32, '5 bit · 32'], [256, '8 bit · 256']].forEach(([L, lab], r) => {
+    const y = 30 + r * 88, w = W / L;
+    for (let i = 0; i < L; i++) {
+      const v = Math.round(i / (L - 1) * 255);
+      s += '<rect x="' + f1(X + i * w) + '" y="' + y + '" width="' + f1(w + 0.6) + '" height="44" shape-rendering="crispEdges" fill="rgb(' + v + ',' + v + ',' + v + ')"/>';
+    }
+    s += '<text class="val" x="' + X + '" y="' + (y + 66) + '" style="font-size:14px">' + lab + ' ' + esc(t({zh:'階', en:'levels', fr:'niveaux'})) + '</text>';
+  });
+  return s + '</svg>';
+}
+
+const COL_FLOW = [
+  { t:{zh:'校正螢幕', en:'Calibrate the screen', fr:'Étalonner l’écran'},
+    p:{zh:'沒校色的螢幕，你修的是螢幕的偏色，不是照片。', en:'On an uncalibrated screen you correct the screen’s cast, not the picture’s.', fr:'Sur un écran non étalonné, on corrige la dominante de l’écran, pas celle de l’image.'} },
+  { t:{zh:'拍 RAW', en:'Shoot RAW', fr:'Photographier en RAW'},
+    p:{zh:'保留 12 到 14 位元與完整色域，白平衡可以事後決定。', en:'Keeps 12 to 14 bits and the full gamut, and leaves white balance open.', fr:'Conserve 12 à 14 bits et tout le gamut, et laisse la balance des blancs ouverte.'} },
+  { t:{zh:'寬色域、16 位元編輯', en:'Edit wide, in 16 bits', fr:'Éditer en large gamut, 16 bits'},
+    p:{zh:'在 ProPhoto 或 Display P3、16 位元下調整，避免斷層與色彩被截斷。', en:'Work in ProPhoto or Display P3 at 16 bits, to avoid banding and clipped colour.', fr:'Travaillez en ProPhoto ou Display P3 sur 16 bits, pour éviter postérisation et couleurs écrêtées.'} },
+  { t:{zh:'輸出時轉換並嵌入', en:'Convert and embed on export', fr:'Convertir et incorporer à l’export'},
+    p:{zh:'網路用 sRGB、8 位元 JPEG，並嵌入色彩描述檔；印刷依輸出店的規格。', en:'For the web, sRGB 8-bit JPEG with the profile embedded; for print, the lab’s specification.', fr:'Pour le web, JPEG 8 bits en sRGB avec profil incorporé ; pour l’impression, la consigne du laboratoire.'} },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   Two diagrams that belong to single terms
+   ═══════════════════════════════════════════════════════════ */
+
+/* Depth of field from the thin-lens equation 1/f = 1/u + 1/v, with
+   f = 150 drawing units and the sensor 400 behind the lens, so the
+   point at u = 240 is in focus. The nearer and farther points come to
+   a focus behind and in front of the sensor, and meet it as discs
+   whose diameter is 2A·|1 − 400/v|: proportional to the aperture. */
+function dofDiagram() {
+  const LX = 330, SX = 730, F = 150;
+  const PTS = [
+    { u:210, c:'#22d3ee', n:{zh:'近點', en:'near', fr:'proche'} },
+    { u:240, c:'#f1f5f9', n:{zh:'對焦點', en:'in focus', fr:'net'} },
+    { u:280, c:'#f472b6', n:{zh:'遠點', en:'far', fr:'lointain'} },
+  ];
+  const ROWS = [{ A:80, l:'f/2' }, { A:80 * 2 / 5.6, l:'f/5.6' }];
+  const TOL = 8;
+  let s = '<svg class="dg mt-4" viewBox="0 0 900 580" role="img" aria-label="' + esc(t({zh:'景深原理', en:'How depth of field works', fr:'Le principe de la profondeur de champ'})) + '">';
+  PTS.forEach((p, i) => {
+    s += '<circle cx="' + (40 + i * 150) + '" cy="26" r="7" fill="' + p.c + '"/>'
+      +  '<text class="sub" x="' + (54 + i * 150) + '" y="31">' + esc(t(p.n)) + '</text>';
+  });
+  ROWS.forEach((row, r) => {
+    const y0 = 160 + r * 250, A = row.A;
+    s += '<text class="lab" x="24" y="' + (y0 - 92) + '">' + esc(r ? t({zh:'小光圈', en:'Small aperture', fr:'Petite ouverture'}) : t({zh:'大光圈', en:'Wide aperture', fr:'Grande ouverture'})) + ' ' + row.l + '</text>';
+    s += '<line x1="20" y1="' + y0 + '" x2="880" y2="' + y0 + '" stroke="rgba(148,163,184,0.2)" stroke-width="1"/>';
+    s += '<ellipse class="glass" cx="' + LX + '" cy="' + y0 + '" rx="12" ry="96"/>';
+    s += '<line class="blade" x1="' + (LX + 22) + '" y1="' + (y0 - 100) + '" x2="' + (LX + 22) + '" y2="' + f1(y0 - A) + '"/>'
+      +  '<line class="blade" x1="' + (LX + 22) + '" y1="' + f1(y0 + A) + '" x2="' + (LX + 22) + '" y2="' + (y0 + 100) + '"/>';
+    s += '<line x1="' + SX + '" y1="' + (y0 - 100) + '" x2="' + SX + '" y2="' + (y0 + 100) + '" stroke="#a78bfa" stroke-width="6"/>';
+    PTS.forEach((p, k) => {
+      const v = 1 / (1 / F - 1 / p.u), ox = LX - p.u;
+      const half = A * Math.abs(1 - (SX - LX) / v);
+      [-1, 1].forEach(sg => {
+        const ly = y0 + sg * A, sy = y0 + sg * A * (1 - (SX - LX) / v);
+        s += '<path d="M' + ox + ' ' + y0 + ' L' + LX + ' ' + f1(ly) + ' L' + SX + ' ' + f1(sy) + '" fill="none" stroke="' + p.c + '" stroke-opacity=".75" stroke-width="1.8"/>';
+      });
+      s += '<circle cx="' + ox + '" cy="' + y0 + '" r="5" fill="' + p.c + '"/>';
+      const dx = 778 + k * 44;
+      s += '<circle cx="' + dx + '" cy="' + y0 + '" r="' + TOL + '" fill="none" stroke="#94a3b8" stroke-dasharray="3 3"/>'
+        +  '<circle cx="' + dx + '" cy="' + y0 + '" r="' + f1(Math.max(half, 2)) + '" fill="' + p.c + '" fill-opacity=".55" stroke="' + p.c + '" stroke-width="1.5"/>';
+    });
+    s += '<text class="sub" x="822" y="' + (y0 + 58) + '" text-anchor="middle" style="font-size:13px">'
+      + esc(t({zh:'感光元件上的光斑', en:'discs on the sensor', fr:'taches sur le capteur'})) + '</text>';
+    s += '<text class="sub" x="822" y="' + (y0 + 78) + '" text-anchor="middle" style="font-size:13px;fill:' + (r ? '#86efac' : '#fca5a5') + '">'
+      + esc(r ? t({zh:'都在虛線內：看起來清楚', en:'inside the dashes: sharp', fr:'dans les pointillés : net'}) : t({zh:'超出虛線：看起來模糊', en:'outside the dashes: blurred', fr:'hors des pointillés : flou'})) + '</text>';
+  });
+  s += '<text class="sub" x="' + SX + '" y="' + (160 - 108) + '" text-anchor="middle" style="fill:#c4b5fd">' + esc(t({zh:'感光元件', en:'sensor', fr:'capteur'})) + '</text>';
+  s += '<text class="sub" x="' + (LX + 10) + '" y="' + (160 - 108) + '" text-anchor="middle" style="fill:#67e8f9">' + esc(t({zh:'鏡頭與光圈', en:'lens and aperture', fr:'objectif et diaphragme'})) + '</text>';
+  s += '<text class="sub" x="24" y="544">' + esc(t({zh:'虛線圓＝可接受的模糊圈。', en:'Dashed circle = the acceptable circle of confusion.', fr:'Cercle en pointillés = le cercle de confusion admissible.'})) + '</text>'
+    +  '<text class="sub" x="24" y="566">' + esc(t({
+    zh:'光圈越小，光錐越窄，前後的點在感光元件上的光斑越小。',
+    en:'A smaller aperture narrows the cone, so points in front and behind make smaller discs.',
+    fr:'Une ouverture plus petite resserre le cône : les points avant et arrière font des taches plus petites.'})) + '</text>';
+  return s + '</svg>';
+}
+
+/* Unsharp mask on a soft edge: sharpened = original + amount ×
+   (original − blurred). The overshoot either side of the edge is the
+   entire effect; no detail is created. */
+function sharpDiagram() {
+  const sig = (x, w) => 1 / (1 + Math.exp(-(x - 0.5) / w));
+  const orig = x => 0.25 + 0.5 * sig(x, 0.025);
+  const blur = x => 0.25 + 0.5 * sig(x, 0.08);
+  const sharp = x => Math.max(0, Math.min(1, orig(x) + 0.9 * (orig(x) - blur(x))));
+  const X = 40, W = 820, n = 160;
+  let s = '<svg class="dg mt-4" viewBox="0 0 900 400" role="img" aria-label="' + esc(t({zh:'銳利化原理', en:'How sharpening works', fr:'Le principe de l’accentuation'})) + '">';
+  [[orig, t({zh:'原圖', en:'original', fr:'original'})], [sharp, t({zh:'銳利化後', en:'sharpened', fr:'accentué'})]].forEach(([fn, lab], r) => {
+    const y = 26 + r * 56;
+    for (let i = 0; i < n; i++) {
+      const v = Math.round(fn((i + 0.5) / n) * 255);
+      s += '<rect x="' + f1(X + W * i / n) + '" y="' + y + '" width="' + f1(W / n + 0.6) + '" height="36" shape-rendering="crispEdges" fill="rgb(' + v + ',' + v + ',' + v + ')"/>';
+    }
+    s += '<text class="val" x="' + (X + 8) + '" y="' + (y + 24) + '" style="font-size:14px;fill:#e2e8f0;paint-order:stroke;stroke:#0b0f13;stroke-width:4px">' + esc(lab) + '</text>';
+  });
+  const GY = 150, GH = 200, path = fn => {
+    let d = '';
+    for (let i = 0; i <= n; i++) { const x = i / n; d += (i ? ' L' : 'M') + f1(X + W * x) + ' ' + f1(GY + GH - GH * fn(x)); }
+    return d;
+  };
+  s += '<rect x="' + X + '" y="' + GY + '" width="' + W + '" height="' + GH + '" fill="#0f151c" stroke="#334155"/>';
+  s += '<path d="' + path(blur) + '" fill="none" stroke="#64748b" stroke-width="3" stroke-dasharray="7 6"/>';
+  s += '<path d="' + path(orig) + '" fill="none" stroke="#e2e8f0" stroke-width="3"/>';
+  s += '<path d="' + path(sharp) + '" fill="none" stroke="#c4b5fd" stroke-width="4"/>';
+  const lg = [['#64748b', t({zh:'模糊版本', en:'blurred copy', fr:'copie floutée'})], ['#e2e8f0', t({zh:'原圖亮度', en:'original brightness', fr:'luminosité d’origine'})], ['#c4b5fd', t({zh:'原圖＋（原圖－模糊）', en:'original + (original − blurred)', fr:'original + (original − flou)'})]];
+  lg.forEach((l, i) => {
+    s += '<line x1="' + (X + 14) + '" y1="' + (GY + 22 + i * 22) + '" x2="' + (X + 40) + '" y2="' + (GY + 22 + i * 22) + '" stroke="' + l[0] + '" stroke-width="4"/>'
+      +  '<text class="sub" x="' + (X + 48) + '" y="' + (GY + 27 + i * 22) + '" style="font-size:13px">' + esc(l[1]) + '</text>';
+  });
+  s += '<text class="sub" x="' + X + '" y="' + (GY + GH + 30) + '" style="font-size:13px">' + esc(t({
+    zh:'邊緣兩側被推得更暗、更亮（過衝），看起來就更銳利。推太多就是白邊光暈。',
+    en:'Each side of the edge is pushed darker or lighter (overshoot), which reads as sharpness. Too much is a white halo.',
+    fr:'Chaque côté du contour est poussé plus sombre ou plus clair : c’est la netteté perçue. Trop, c’est un halo blanc.'})) + '</text>';
+  return s + '</svg>';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Terms and principles. Each entry answers three questions:
+   m  what it is, p  why it behaves that way, e  what it means
+   when you are shooting or editing.
+   ═══════════════════════════════════════════════════════════ */
+const TERM_CATS = [
+  { id:'opt',  i:'fa-camera',  t:{zh:'光學與曝光', en:'Optics & exposure', fr:'Optique & exposition'} },
+  { id:'col',  i:'fa-palette', t:{zh:'色彩', en:'Colour', fr:'Couleur'} },
+  { id:'edit', i:'fa-sliders', t:{zh:'修圖', en:'Retouching', fr:'Retouche'} },
+];
+const TERMS = [
+/* ── Optics and exposure ── */
+{ c:'opt', id:'aperture', k:{zh:'光圈', en:'Aperture', fr:'Ouverture (diaphragme)'},
+  m:{zh:'鏡頭裡讓光通過的開口，大小可以調整。', en:'The opening in the lens that light passes through, adjustable in size.', fr:'L’ouverture de l’objectif par laquelle passe la lumière, de taille réglable.'},
+  p:{zh:'由一組金屬葉片圍成，葉片往內收，開口就變小。進光量與開口的「面積」成正比，所以直徑縮小一半，光量只剩四分之一。', en:'A ring of metal blades forms it; as the blades close in, the hole shrinks. The light admitted goes with the area of the hole, so halving the diameter leaves a quarter of the light.', fr:'Une couronne de lamelles métalliques la forme ; en se refermant, elles réduisent le trou. La lumière admise suit la surface du trou : diviser le diamètre par deux laisse un quart de la lumière.'},
+  e:{zh:'同時決定亮度與景深。大光圈（小 f 值）進光多、背景模糊；小光圈進光少、前後都清楚。', en:'It sets both brightness and depth of field. Wide (small f-number): more light, blurred background. Narrow: less light, front to back sharp.', fr:'Elle fixe à la fois la luminosité et la profondeur de champ. Grande (petit nombre f) : plus de lumière, fond flou. Petite : moins de lumière, tout est net.'} },
+{ c:'opt', id:'fnum', k:{zh:'光圈值（f 值）', en:'f-number', fr:'Nombre f'},
+  m:{zh:'標示光圈大小的數字，寫成 f/2.8、f/8。', en:'The number that states aperture size, written f/2.8, f/8.', fr:'Le nombre qui exprime l’ouverture, écrit f/2,8, f/8.'},
+  p:{zh:'f 值＝焦距 ÷ 開口直徑。用比例而不用直徑，是為了讓不同鏡頭在同一 f 值下亮度相同：50mm f/2 的開口是 25mm，100mm f/2 的開口是 50mm，影像被放大兩倍但開口也大兩倍，到達感光元件的亮度一樣。', en:'f-number = focal length ÷ opening diameter. A ratio rather than a diameter, so every lens gives the same brightness at the same f-number: a 50mm at f/2 opens 25mm, a 100mm at f/2 opens 50mm; the image is twice as magnified but the hole is twice as wide, and the sensor sees the same brightness.', fr:'Nombre f = focale ÷ diamètre de l’ouverture. Un rapport plutôt qu’un diamètre, pour que tout objectif donne la même luminosité au même nombre f : un 50 mm à f/2 ouvre 25 mm, un 100 mm à f/2 ouvre 50 mm ; l’image est deux fois plus grande mais le trou aussi, et le capteur reçoit la même luminosité.'},
+  e:{zh:'數字越大開口越小。1.4、2、2.8、4、5.6、8、11、16 每格相差 √2 倍，也就是一級。', en:'The bigger the number, the smaller the hole. 1.4, 2, 2.8, 4, 5.6, 8, 11, 16 differ by √2 each, one stop apart.', fr:'Plus le nombre est grand, plus le trou est petit. 1,4 ; 2 ; 2,8 ; 4 ; 5,6 ; 8 ; 11 ; 16 diffèrent de √2, soit un IL.'} },
+{ c:'opt', id:'stop', k:{zh:'級（stop）與 EV', en:'Stop and EV', fr:'IL (diaphragme) et EV'},
+  m:{zh:'曝光的計量單位：一級＝光量加倍或減半。', en:'The unit of exposure: one stop doubles or halves the light.', fr:'L’unité d’exposition : un IL double ou divise la lumière par deux.'},
+  p:{zh:'人眼對亮度的感受接近對數，光量加倍看起來才像「亮了一格」，所以用倍數而非加減來計量。EV 把光圈與快門合成一個數：EV＝log₂（N² ÷ t），EV 相同的組合曝光量相同。', en:'The eye perceives brightness roughly logarithmically: doubling the light is what looks like one step brighter, so exposure is counted in factors of two. EV folds aperture and shutter into one number, EV = log₂(N² ÷ t); combinations with the same EV give the same exposure.', fr:'L’œil perçoit la luminosité de façon à peu près logarithmique : c’est le doublement qui paraît « un cran plus clair ». On compte donc par facteurs deux. L’EV réunit ouverture et vitesse : EV = log₂(N² ÷ t) ; même EV, même exposition.'},
+  e:{zh:'曝光補償 +1 EV 就是亮一倍。相機多半以 1/3 級為一格調整。', en:'+1 EV of compensation is twice as bright. Cameras usually step in thirds of a stop.', fr:'+1 EV de correction donne deux fois plus clair. Les appareils avancent en général par tiers d’IL.'} },
+{ c:'opt', id:'shutter', k:{zh:'快門速度', en:'Shutter speed', fr:'Vitesse d’obturation'},
+  m:{zh:'感光元件接收光線的時間長度，例如 1/250 秒。', en:'How long the sensor receives light, 1/250 s for instance.', fr:'La durée pendant laquelle le capteur reçoit la lumière, par exemple 1/250 s.'},
+  p:{zh:'機械快門有前後兩片簾幕：前簾打開開始曝光，後簾跟上結束曝光。速度很快時，兩簾同時移動，只露出一條縫掃過感光元件。閃光燈只亮一瞬間，照不到整個畫面，所以有「閃燈同步速度」上限，多在 1/200 到 1/250 秒。', en:'A mechanical shutter has two curtains: the first opens to start the exposure, the second follows to end it. At high speeds both travel together, exposing the sensor through a moving slit. A flash lasts an instant and would light only part of that slit, hence the flash sync limit, usually 1/200 to 1/250 s.', fr:'Un obturateur mécanique a deux rideaux : le premier s’ouvre pour commencer la pose, le second le suit pour la finir. Aux vitesses élevées, ils défilent ensemble et exposent le capteur par une fente mobile. Un flash ne dure qu’un instant et n’éclairerait qu’une partie de la fente, d’où la vitesse de synchronisation, souvent 1/200 à 1/250 s.'},
+  e:{zh:'決定動作被凍結還是拉出模糊；時間加倍＝一級。', en:'It decides whether motion freezes or blurs; doubling the time is one stop.', fr:'Elle décide si le mouvement est figé ou flou ; doubler la durée vaut un IL.'} },
+{ c:'opt', id:'iso', k:{zh:'ISO 感光度', en:'ISO', fr:'Sensibilité ISO'},
+  m:{zh:'相機把感光元件訊號放大的程度。', en:'How much the camera amplifies the sensor’s signal.', fr:'L’amplification que l’appareil applique au signal du capteur.'},
+  p:{zh:'ISO 不會讓感光元件更敏感，它只是在讀出後放大訊號。雜訊主要來自「收到的光太少」：光子到達本來就有隨機起伏，光越少，起伏占的比例越大。高 ISO 照片雜訊多，是因為你在光少的條件下拍，ISO 只是把它變亮到能看。', en:'ISO does not make the sensor more sensitive; it amplifies the signal after it is read. Noise comes mainly from too little light: photons arrive with random fluctuation, and the less light, the larger that fluctuation in proportion. High-ISO pictures are noisy because they were taken in little light; ISO only brightens them enough to see.', fr:'Les ISO ne rendent pas le capteur plus sensible ; ils amplifient le signal après lecture. Le bruit vient surtout du manque de lumière : les photons arrivent avec une fluctuation aléatoire, d’autant plus importante en proportion que la lumière est faible. Une image à ISO élevés est bruitée parce qu’elle a été prise avec peu de lumière ; les ISO ne font que l’éclaircir.'},
+  e:{zh:'能用低 ISO 就用低 ISO；但為了守住快門，提高 ISO 比拍糊好。', en:'Use the lowest ISO you can, but raising ISO beats a blurred picture.', fr:'Gardez les ISO aussi bas que possible, mais les monter vaut mieux qu’une image floue.'} },
+{ c:'opt', id:'exposure', k:{zh:'曝光', en:'Exposure', fr:'Exposition'},
+  m:{zh:'感光元件總共收到多少光。', en:'The total amount of light the sensor receives.', fr:'La quantité totale de lumière reçue par le capteur.'},
+  p:{zh:'曝光量＝照度 × 時間，由光圈（照度）和快門（時間）決定；ISO 改變的是亮度的呈現，而非真正收進的光。「正確曝光」是讓重要的亮部和暗部都落在感光元件能記錄的範圍內。', en:'Exposure = illuminance × time, set by the aperture (illuminance) and the shutter (time). ISO changes how bright it is rendered, not how much light was collected. A correct exposure puts the important highlights and shadows inside what the sensor can record.', fr:'Exposition = éclairement × durée, fixés par l’ouverture et la vitesse. Les ISO changent le rendu de la luminosité, pas la lumière recueillie. Une exposition correcte place les hautes et basses lumières importantes dans ce que le capteur peut enregistrer.'},
+  e:{zh:'用直方圖判斷，不要只相信螢幕亮度。', en:'Judge it by the histogram, not the brightness of the screen.', fr:'Jugez-la à l’histogramme, pas à la luminosité de l’écran.'} },
+{ c:'opt', id:'dof', dia:'dof', k:{zh:'景深', en:'Depth of field', fr:'Profondeur de champ'},
+  m:{zh:'畫面中「看起來清楚」的前後距離範圍。', en:'The range of distances, front to back, that looks sharp.', fr:'La plage de distances, d’avant en arrière, qui paraît nette.'},
+  p:{zh:'鏡頭其實只能精準對焦在一個平面上。這個平面前後的點，到了感光元件上不是一個點，而是一個小圓盤，叫「模糊圈」。只要圓盤小到眼睛分辨不出（全片幅常以 0.03mm 為基準），我們就覺得它清楚。光圈越小，光錐越窄，圓盤越小，景深就越深（見下圖）。', en:'A lens focuses exactly on only one plane. A point in front of or behind it reaches the sensor not as a point but as a small disc, the circle of confusion. While that disc is too small for the eye to resolve (0.03 mm is the usual full-frame figure) it looks sharp. A smaller aperture narrows the cone of light, shrinks the disc, and deepens the depth of field (see the diagram).', fr:'Un objectif ne fait la mise au point exacte que sur un plan. Un point devant ou derrière arrive au capteur non comme un point mais comme un petit disque, le cercle de confusion. Tant que ce disque est trop petit pour l’œil (0,03 mm est la valeur usuelle en plein format), il paraît net. Une ouverture plus petite resserre le cône, réduit le disque et augmente la profondeur de champ (voir le schéma).'},
+  e:{zh:'由光圈、焦距、拍攝距離與感光元件尺寸共同決定。中等距離時，清楚範圍大約前面三分之一、後面三分之二；微距時前後各半，而且非常淺。', en:'Aperture, focal length, distance and sensor size set it together. At moderate distances about a third lies in front of the focus point and two thirds behind; in macro it splits evenly and is very thin.', fr:'Ouverture, focale, distance et taille du capteur la fixent ensemble. À distance moyenne, environ un tiers est devant le point net et deux tiers derrière ; en macro, moitié-moitié, et très mince.'} },
+{ c:'opt', id:'focal', k:{zh:'焦距', en:'Focal length', fr:'Focale'},
+  m:{zh:'鏡頭的放大能力，以 mm 表示。', en:'A lens’s power of magnification, in millimetres.', fr:'Le pouvoir de grossissement d’un objectif, en millimètres.'},
+  p:{zh:'光學上是對焦在無限遠時，鏡頭光學中心到感光元件的距離。距離越長，影像被放得越大，同一塊感光元件裝得下的視野就越窄。', en:'Optically, the distance from the lens’s optical centre to the sensor when focused at infinity. The longer it is, the larger the image is projected, and the less of the scene fits on the same sensor.', fr:'Optiquement, la distance entre le centre optique et le capteur quand l’objectif est réglé sur l’infini. Plus elle est longue, plus l’image projetée est grande, et moins la scène tient sur le même capteur.'},
+  e:{zh:'焦距決定視角與放大率；14mm 看得廣，200mm 看得遠。', en:'It sets the angle of view and the magnification: 14mm sees wide, 200mm sees far.', fr:'Elle fixe l’angle de champ et le grossissement : 14 mm voit large, 200 mm voit loin.'} },
+{ c:'opt', id:'aov', k:{zh:'視角', en:'Angle of view', fr:'Angle de champ'},
+  m:{zh:'鏡頭能涵蓋的範圍有多寬，以角度表示。', en:'How wide a field the lens covers, as an angle.', fr:'La largeur du champ couvert, exprimée en angle.'},
+  p:{zh:'由焦距和感光元件尺寸決定：水平視角＝2 × arctan（元件寬度 ÷ 2 ÷ 焦距）。元件越小，同一焦距的視角越窄。', en:'Set by focal length and sensor size: horizontal angle = 2 × arctan(sensor width ÷ 2 ÷ focal length). A smaller sensor gives a narrower angle at the same focal length.', fr:'Fixé par la focale et la taille du capteur : angle horizontal = 2 × arctan(largeur ÷ 2 ÷ focale). Un capteur plus petit donne un angle plus étroit à focale égale.'},
+  e:{zh:'見對照表中的扇形圖。', en:'See the fan diagram in the reference tables.', fr:'Voir l’éventail dans les tableaux de référence.'} },
+{ c:'opt', id:'crop', k:{zh:'等效係數', en:'Crop factor', fr:'Coefficient de recadrage'},
+  m:{zh:'較小感光元件相對全片幅的縮小比例。', en:'How much smaller a sensor is than full frame.', fr:'Le rapport de réduction d’un capteur par rapport au plein format.'},
+  p:{zh:'以對角線相除得到，APS-C 約 1.5。小元件只截取鏡頭成像的中央部分，等於把全片幅照片裁切後放大。', en:'The ratio of the diagonals, about 1.5 for APS-C. A smaller sensor takes only the centre of the lens’s image, as if a full-frame picture were cropped and enlarged.', fr:'Le rapport des diagonales, environ 1,5 en APS-C. Un petit capteur ne prend que le centre de l’image projetée, comme un plein format recadré puis agrandi.'},
+  e:{zh:'用來換算等效焦距與景深，焦距本身不變。', en:'Used to convert equivalent focal length and depth of field; the focal length itself is unchanged.', fr:'Sert à convertir focale équivalente et profondeur de champ ; la focale elle-même ne change pas.'} },
+{ c:'opt', id:'persp', k:{zh:'透視與壓縮感', en:'Perspective and compression', fr:'Perspective et écrasement'},
+  m:{zh:'遠近物體在畫面中的大小比例。望遠讓背景顯得「貼近」主體，叫壓縮感。', en:'The relative size of near and far things. A telephoto makes the background look pressed up against the subject: compression.', fr:'La taille relative des objets proches et lointains. Le téléobjectif semble coller l’arrière-plan au sujet : c’est l’écrasement.'},
+  p:{zh:'透視只由「相機位置」決定，與焦距無關。望遠有壓縮感，是因為要框住同樣大小的主體你得站很遠；從遠處看，主體到背景的距離比例變小了。用廣角站在同一點拍、再裁中央，透視完全相同。', en:'Perspective depends only on where the camera stands, not on focal length. Telephotos compress because framing the same subject means standing far back, and from there subject and background are proportionally closer. A wide lens from the same spot, cropped, gives identical perspective.', fr:'La perspective ne dépend que de la position de l’appareil, pas de la focale. Le téléobjectif écrase parce que cadrer le même sujet oblige à reculer, et de loin sujet et fond sont proportionnellement plus proches. Un grand-angle au même endroit, recadré, donne la même perspective.'},
+  e:{zh:'想改變前後景的大小關係要移動腳步，不只是轉變焦環。', en:'To change how foreground and background relate, move your feet, not just the zoom ring.', fr:'Pour changer le rapport entre premier plan et fond, déplacez-vous, ne tournez pas seulement la bague de zoom.'} },
+{ c:'opt', id:'dr', k:{zh:'動態範圍', en:'Dynamic range', fr:'Plage dynamique'},
+  m:{zh:'同一張照片能同時保留細節的最亮到最暗範圍，以「級」表示。', en:'The span from brightest to darkest that one frame can hold with detail, in stops.', fr:'L’écart entre le plus clair et le plus sombre qu’une image peut garder avec du détail, en IL.'},
+  p:{zh:'上限是每個像素能裝下的電荷量，裝滿就是死白；下限是讀取雜訊，太暗的訊號會被淹沒。現代機身在基礎 ISO 約 12 到 14 級；ISO 每高一級，動態範圍約少一級。', en:'The top is how much charge a pixel can hold before it is full, which is pure white; the bottom is read noise, which drowns signals that are too faint. Modern bodies give about 12 to 14 stops at base ISO, losing about one for each stop of ISO.', fr:'Le haut est la charge maximale d’un photosite, saturé c’est le blanc pur ; le bas est le bruit de lecture qui noie les signaux trop faibles. Les boîtiers récents offrent 12 à 14 IL à ISO de base, et en perdent environ un par IL d’ISO.'},
+  e:{zh:'場景超過動態範圍時，靠包圍曝光、漸層減光鏡或補光。', en:'When a scene exceeds it, use bracketing, a graduated ND filter, or added light.', fr:'Si la scène la dépasse : bracketing, filtre dégradé ou éclairage d’appoint.'} },
+{ c:'opt', id:'noise', k:{zh:'雜訊', en:'Noise', fr:'Bruit'},
+  m:{zh:'照片中不規則的顆粒或彩色斑點。', en:'Irregular grain or coloured speckles in a picture.', fr:'Le grain irrégulier ou les taches colorées d’une image.'},
+  p:{zh:'主要來源有二：光子本身的隨機起伏（散粒雜訊，光越少越明顯），以及電路讀取時加入的讀取雜訊。看起來分成亮度雜訊（像底片顆粒）與色彩雜訊（紅綠斑點）。', en:'Two main sources: the random arrival of photons (shot noise, worse the less light there is) and read noise added by the electronics. It shows as luminance noise, like film grain, and colour noise, red and green blotches.', fr:'Deux sources : l’arrivée aléatoire des photons (bruit photonique, pire avec peu de lumière) et le bruit de lecture de l’électronique. Il apparaît en bruit de luminance, comme un grain de film, et en bruit chromatique, des taches rouges et vertes.'},
+  e:{zh:'曝光充足是最有效的降噪。色彩雜訊可以大幅降低，亮度雜訊降太多會讓細節像塑膠。', en:'Generous exposure is the best noise reduction. Colour noise can be removed heavily; too much luminance reduction turns detail to plastic.', fr:'Une exposition généreuse est le meilleur débruitage. Le bruit chromatique se retire largement ; trop réduire la luminance rend les détails plastiques.'} },
+{ c:'opt', id:'diff', k:{zh:'繞射', en:'Diffraction', fr:'Diffraction'},
+  m:{zh:'光圈縮得很小時，整張照片反而變軟的現象。', en:'The overall softening that sets in at very small apertures.', fr:'L’adoucissement général qui apparaît aux très petites ouvertures.'},
+  p:{zh:'光通過小孔時會向外散開，一個點會變成帶光環的小圓（艾里斑）。開口越小，圓越大；當它大過像素，細節就被抹平。', en:'Light spreads as it passes a small opening, so a point becomes a small disc with rings, the Airy disc. The smaller the opening, the bigger the disc; once it outgrows a pixel, fine detail is smeared.', fr:'La lumière s’étale en traversant une petite ouverture : un point devient un petit disque cerclé d’anneaux, la tache d’Airy. Plus l’ouverture est petite, plus elle grandit ; dès qu’elle dépasse un photosite, le détail fin s’efface.'},
+  e:{zh:'多數鏡頭在 f/5.6 到 f/11 最銳利；高畫素機身更早受影響。', en:'Most lenses peak between f/5.6 and f/11; high-resolution bodies show it sooner.', fr:'La plupart des objectifs culminent entre f/5,6 et f/11 ; les capteurs très définis la montrent plus tôt.'} },
+{ c:'opt', id:'bokeh', k:{zh:'散景', en:'Bokeh', fr:'Bokeh'},
+  m:{zh:'焦外模糊區域的「質感」，不是模糊的多寡。', en:'The quality of the out-of-focus areas, not their quantity.', fr:'La qualité des zones floues, non leur quantité.'},
+  p:{zh:'每個焦外光點都會變成光圈形狀的圓盤。葉片數量與形狀決定它圓不圓；鏡片設計決定圓盤邊緣柔和還是有亮邊，以及有沒有洋蔥紋。', en:'Every out-of-focus point becomes a disc in the shape of the aperture. Blade count and shape decide how round it is; the optical design decides whether its edge is soft or bright-rimmed, and whether it shows onion rings.', fr:'Chaque point flou devient un disque de la forme du diaphragme. Le nombre et la forme des lamelles décident de sa rondeur ; la formule optique, d’un bord doux ou cerclé et des « pelures d’oignon ».'},
+  e:{zh:'背景有點狀光源時最明顯，例如夜晚的燈、樹葉間的陽光。', en:'Most visible with point lights behind the subject: night lights, sun through leaves.', fr:'Plus visible avec des sources ponctuelles derrière le sujet : lumières de nuit, soleil dans le feuillage.'} },
+{ c:'opt', id:'meter', k:{zh:'測光與 18% 灰', en:'Metering and 18% grey', fr:'Mesure et gris à 18 %'},
+  m:{zh:'相機量測場景亮度、決定曝光的方式。', en:'How the camera measures the scene and chooses an exposure.', fr:'La manière dont l’appareil mesure la scène et choisit l’exposition.'},
+  p:{zh:'反射式測光分不出「白色物體」和「被照得很亮的灰色物體」，只好假設整個場景平均反射約 18%（中灰），這是一般場景的統計平均。模式有評價／矩陣（全畫面分區）、中央重點、點測光（只量很小一塊）。', en:'A reflected-light meter cannot tell a white object from a brightly lit grey one, so it assumes the scene averages about 18% reflectance, mid grey, which is the statistical average of ordinary scenes. Modes include evaluative or matrix (the whole frame in zones), centre-weighted, and spot (a tiny area).', fr:'Une cellule en lumière réfléchie ne distingue pas un objet blanc d’un objet gris très éclairé ; elle suppose donc que la scène réfléchit en moyenne 18 %, un gris moyen, la moyenne statistique des scènes courantes. Modes : évaluative ou matricielle (toute l’image par zones), pondérée centrale, spot (une petite zone).'},
+  e:{zh:'主體明顯比中灰亮或暗時要做曝光補償；點測光適合舞台與逆光人像。', en:'Compensate when the subject is clearly lighter or darker than mid grey; spot metering suits stages and backlit portraits.', fr:'Corrigez quand le sujet est nettement plus clair ou plus sombre que le gris moyen ; la mesure spot convient aux scènes de spectacle et aux portraits à contre-jour.'} },
+{ c:'opt', id:'aberr', k:{zh:'像差：色差、暗角、變形', en:'Aberrations: fringing, vignetting, distortion', fr:'Aberrations : franges, vignetage, distorsion'},
+  m:{zh:'鏡頭不完美造成的影像缺陷。', en:'Image faults caused by imperfect lenses.', fr:'Les défauts d’image dus à l’imperfection des objectifs.'},
+  p:{zh:'不同波長折射率不同，焦點位置略有差異，高反差邊緣就出現紫綠邊（色差）；斜射到角落的光比較少，四角變暗（暗角）；直線在邊緣彎成桶形或枕形（變形）。', en:'Different wavelengths bend by different amounts and focus at slightly different points, giving purple and green fringes on contrasty edges (chromatic aberration); less light reaches the corners at an angle (vignetting); straight lines bow into barrel or pincushion shapes near the edges (distortion).', fr:'Les longueurs d’onde se réfractent différemment et convergent en des points légèrement distincts : franges violettes et vertes sur les contours contrastés (aberration chromatique) ; moins de lumière atteint les coins en biais (vignetage) ; les droites se courbent en barillet ou en coussinet au bord (distorsion).'},
+  e:{zh:'三者都可以在修圖第一步用鏡頭描述檔修正。', en:'All three are corrected by the lens profile at the first step of editing.', fr:'Les trois se corrigent par le profil d’objectif, dès la première étape.'} },
+{ c:'opt', id:'af', k:{zh:'自動對焦：相位與反差', en:'Autofocus: phase and contrast', fr:'Autofocus : phase et contraste'},
+  m:{zh:'相機自己判斷對焦環要轉多少。', en:'The camera working out how far to turn the focus.', fr:'L’appareil qui calcule de combien tourner la mise au point.'},
+  p:{zh:'相位偵測把從鏡頭兩側進來的光分開比較，兩個影像錯開的方向與距離直接告訴相機往哪轉、轉多少，所以快。反差偵測則邊轉邊找對比最高的位置，準但要來回搜尋。現代無反把相位偵測像素做在感光元件上，兩者並用。', en:'Phase detection compares light arriving from opposite sides of the lens; the direction and size of the offset between the two images tell the camera which way to go and how far, which is why it is fast. Contrast detection turns the focus looking for maximum contrast: accurate, but it has to hunt. Modern mirrorless sensors carry phase pixels and use both.', fr:'La détection de phase compare la lumière venant des deux côtés de l’objectif ; le sens et l’ampleur du décalage entre les deux images indiquent où aller et de combien, d’où sa rapidité. La détection de contraste cherche le contraste maximal en tournant : précise, mais elle pompe. Les hybrides récents intègrent des pixels de phase au capteur et combinent les deux.'},
+  e:{zh:'低光或低反差（白牆、天空）容易失焦，找有邊緣的地方對焦。', en:'Low light and low contrast (a white wall, a sky) make it fail; focus on an edge.', fr:'Basse lumière et faible contraste (mur blanc, ciel) le mettent en échec ; visez un contour.'} },
+{ c:'opt', id:'is', k:{zh:'防手震', en:'Image stabilisation', fr:'Stabilisation'},
+  m:{zh:'抵銷手持晃動的機制。', en:'A mechanism that cancels hand-held movement.', fr:'Un mécanisme qui compense le bougé à main levée.'},
+  p:{zh:'陀螺儀量測晃動，再朝反方向移動鏡片組（鏡頭防震）或感光元件（機身防震），讓影像停在原位。', en:'Gyroscopes measure the movement, and a lens group (optical) or the sensor itself (in-body) moves the opposite way so the image stays put.', fr:'Des gyroscopes mesurent le mouvement, et un groupe de lentilles (optique) ou le capteur lui-même (dans le boîtier) se déplace en sens inverse pour que l’image reste en place.'},
+  e:{zh:'多給 3 到 5 級手持餘裕，但只對相機晃動有效，對移動的主體無效。', en:'Buys three to five stops hand-held, but only against camera shake, never against a moving subject.', fr:'Offre trois à cinq IL à main levée, mais seulement contre le bougé, jamais contre un sujet qui bouge.'} },
+
+/* ── Colour ── */
+{ c:'col', id:'tri', k:{zh:'三色視覺', en:'Trichromacy', fr:'Trichromie'},
+  m:{zh:'顏色是大腦對不同波長光線的解讀。', en:'Colour is the brain’s reading of different wavelengths of light.', fr:'La couleur est la lecture par le cerveau des différentes longueurs d’onde.'},
+  p:{zh:'視網膜有三種錐狀細胞，分別對長、中、短波長（大致紅、綠、藍）最敏感。大腦比較三者的反應強度得出顏色，所以只要用紅綠藍三種光以不同比例混合，就能讓眼睛看到大多數顏色。', en:'The retina has three kinds of cone, most sensitive to long, medium and short wavelengths, roughly red, green and blue. The brain compares their responses to arrive at a colour, which is why mixing just red, green and blue light in different proportions can show the eye most colours.', fr:'La rétine possède trois types de cônes, sensibles surtout aux grandes, moyennes et courtes longueurs d’onde, à peu près rouge, vert et bleu. Le cerveau compare leurs réponses pour former une couleur : c’est pourquoi mélanger du rouge, du vert et du bleu en proportions variables suffit à montrer la plupart des couleurs.'},
+  e:{zh:'這是所有螢幕與相機的基礎；感光元件也用紅綠藍濾鏡模仿這三種細胞。', en:'It underlies every screen and camera; the sensor’s red, green and blue filters imitate the three cones.', fr:'C’est la base de tout écran et de tout appareil ; les filtres rouge, vert et bleu du capteur imitent les trois cônes.'} },
+{ c:'col', id:'rgb', k:{zh:'加色法（RGB）', en:'Additive colour (RGB)', fr:'Synthèse additive (RVB)'},
+  m:{zh:'用光混色：紅＋綠＋藍＝白。', en:'Mixing with light: red + green + blue = white.', fr:'Mélanger avec la lumière : rouge + vert + bleu = blanc.'},
+  p:{zh:'光疊加時能量相加，越混越亮。紅＋綠＝黃、綠＋藍＝青、紅＋藍＝洋紅。每個像素存三個數字，代表三色光的強度。', en:'Overlapping light adds energy, so mixtures get brighter. Red + green = yellow, green + blue = cyan, red + blue = magenta. Each pixel stores three numbers, the strength of each light.', fr:'Les lumières superposées additionnent leur énergie : les mélanges s’éclaircissent. Rouge + vert = jaune, vert + bleu = cyan, rouge + bleu = magenta. Chaque pixel stocke trois nombres, l’intensité de chaque lumière.'},
+  e:{zh:'螢幕、相機與所有數位檔案都是 RGB。', en:'Screens, cameras and every digital file are RGB.', fr:'Écrans, appareils et fichiers numériques sont en RVB.'} },
+{ c:'col', id:'cmyk', k:{zh:'減色法（CMYK）', en:'Subtractive colour (CMYK)', fr:'Synthèse soustractive (CMJN)'},
+  m:{zh:'用油墨混色：越混越暗。', en:'Mixing with ink: mixtures get darker.', fr:'Mélanger avec l’encre : les mélanges s’assombrissent.'},
+  p:{zh:'油墨吸收部分光、反射其餘。青吸收紅、洋紅吸收綠、黃吸收藍。三者疊加理論上是黑，實際上是混濁的深棕，所以另外加黑墨（K）。', en:'Ink absorbs part of the light and reflects the rest. Cyan absorbs red, magenta absorbs green, yellow absorbs blue. Together they should make black but in practice give a muddy brown, so a black ink (K) is added.', fr:'L’encre absorbe une partie de la lumière et renvoie le reste. Le cyan absorbe le rouge, le magenta le vert, le jaune le bleu. Ensemble, ils devraient donner du noir mais donnent un brun boueux, d’où l’ajout d’une encre noire (K).'},
+  e:{zh:'印刷能呈現的顏色比螢幕少，鮮豔的藍綠色印出來常會變暗。', en:'Print shows fewer colours than a screen; vivid blues and greens often print duller.', fr:'L’impression rend moins de couleurs qu’un écran ; bleus et verts vifs sortent souvent plus ternes.'} },
+{ c:'col', id:'hsl', k:{zh:'色相、飽和度、明度（HSL）', en:'Hue, saturation, luminance (HSL)', fr:'Teinte, saturation, luminance (TSL)'},
+  m:{zh:'用比較直覺的三個維度描述顏色。', en:'Describing colour along three more intuitive dimensions.', fr:'Décrire la couleur selon trois dimensions plus intuitives.'},
+  p:{zh:'色相是色環上的角度（紅 0°、綠 120°、藍 240°）；飽和度是離灰色多遠，也就是濃淡；明度是亮暗。同一組 RGB 數字可以直接換算成 HSL。', en:'Hue is the angle on the colour wheel (red 0°, green 120°, blue 240°); saturation is the distance from grey, how intense it is; luminance is how light or dark. Any RGB triple converts directly to HSL.', fr:'La teinte est l’angle sur le cercle (rouge 0°, vert 120°, bleu 240°) ; la saturation, l’éloignement du gris, donc l’intensité ; la luminance, clair ou sombre. Tout triplet RVB se convertit en TSL.'},
+  e:{zh:'HSL 面板讓你只動某一種顏色，例如只壓暗天空的藍、只降皮膚的橘。', en:'The HSL panel lets you touch one colour only: darken the blue of the sky, calm the orange of skin.', fr:'Le panneau TSL agit sur une seule couleur : assombrir le bleu du ciel, calmer l’orangé de la peau.'} },
+{ c:'col', id:'vib', k:{zh:'飽和度與鮮豔度', en:'Saturation and vibrance', fr:'Saturation et vibrance'},
+  m:{zh:'兩者都讓顏色更濃，但作用方式不同。', en:'Both intensify colour, in different ways.', fr:'Les deux intensifient la couleur, différemment.'},
+  p:{zh:'飽和度對所有顏色等量增加，原本就很鮮豔的部分會先爆掉。鮮豔度（自然飽和度）優先加強原本偏灰的顏色，並保護膚色範圍。', en:'Saturation raises every colour equally, so the already vivid ones clip first. Vibrance raises the duller colours most and protects the skin-tone range.', fr:'La saturation augmente toutes les couleurs également, et les plus vives saturent d’abord. La vibrance renforce surtout les couleurs ternes et protège les tons chair.'},
+  e:{zh:'加強用鮮豔度；飽和度比較適合往下拉。', en:'Use vibrance to add; saturation is better for taking away.', fr:'Ajoutez avec la vibrance ; la saturation sert mieux à retirer.'} },
+{ c:'col', id:'kelvin', k:{zh:'色溫（K）', en:'Colour temperature (K)', fr:'Température de couleur (K)'},
+  m:{zh:'用溫度描述光源偏紅還是偏藍。', en:'A temperature describing whether light leans red or blue.', fr:'Une température qui dit si la lumière tire vers le rouge ou le bleu.'},
+  p:{zh:'來自黑體輻射：物體加熱到某個溫度會發出特定顏色的光，約 1900K 是燭光的橘、5500K 接近正午日光、更高則偏藍。所以數字越低越暖、越高越冷，和「高溫＝暖」的直覺相反。', en:'It comes from black-body radiation: an object heated to a given temperature glows a given colour, about 1900K for candle orange, 5500K near midday sun, bluer above. So lower numbers are warmer and higher ones cooler, the reverse of the everyday intuition.', fr:'Elle vient du rayonnement du corps noir : un objet chauffé à une température donnée émet une couleur donnée, environ 1900K pour l’orangé d’une bougie, 5500K pour le soleil de midi, plus bleu au-delà. Les petits nombres sont donc chauds et les grands froids, à l’inverse de l’intuition.'},
+  e:{zh:'見上方色彩章節的色溫刻度。', en:'See the colour-temperature scale in the colour section.', fr:'Voir l’échelle dans la section couleur.'} },
+{ c:'col', id:'tint', k:{zh:'色調偏移（綠／洋紅）', en:'Tint (green–magenta)', fr:'Teinte (vert–magenta)'},
+  m:{zh:'與色溫垂直的另一個軸，修正偏綠或偏洋紅。', en:'A second axis, at right angles to temperature, for green or magenta casts.', fr:'Un second axe, perpendiculaire à la température, pour les dominantes vertes ou magenta.'},
+  p:{zh:'色溫只描述黑體從橘到藍的變化。螢光燈、LED 的光譜不連續，常帶有黑體沒有的綠色偏移，所以需要另一個軸。', en:'Temperature only covers the black body’s orange-to-blue path. Fluorescent and LED light have gappy spectra that often add a green cast no black body has, hence the second axis.', fr:'La température ne couvre que le trajet orangé-bleu du corps noir. Les tubes fluorescents et LED, au spectre discontinu, ajoutent souvent une dominante verte qu’aucun corps noir n’a ; d’où le second axe.'},
+  e:{zh:'室內燈下皮膚發綠時，往洋紅方向推。', en:'When skin goes green under indoor light, push toward magenta.', fr:'Quand la peau verdit sous l’éclairage intérieur, poussez vers le magenta.'} },
+{ c:'col', id:'wb', k:{zh:'白平衡', en:'White balance', fr:'Balance des blancs'},
+  m:{zh:'告訴相機什麼是白色，讓中性色不偏色。', en:'Telling the camera what white is, so neutrals carry no cast.', fr:'Dire à l’appareil ce qu’est le blanc, pour que les neutres n’aient pas de dominante.'},
+  p:{zh:'人腦會自動適應光源顏色（白紙在燈下看起來仍是白的），相機不會。白平衡把紅、綠、藍三個通道各乘上不同倍數，讓中性物體的 R、G、B 相等。設定 3200K 的意思是「光源是 3200K，請補償」，相機就會加藍。', en:'The brain adapts to the colour of light (white paper still looks white under a lamp); the camera does not. White balance multiplies the red, green and blue channels by different factors so that a neutral object has equal R, G and B. Setting 3200K means “the light is 3200K, compensate”, and the camera adds blue.', fr:'Le cerveau s’adapte à la couleur de la lumière (le papier blanc reste blanc sous une lampe) ; l’appareil, non. La balance multiplie les canaux rouge, vert et bleu par des facteurs différents pour qu’un objet neutre ait R, V et B égaux. Régler 3200K signifie « la source est à 3200K, compense », et l’appareil ajoute du bleu.'},
+  e:{zh:'所以設得比實際光源高，畫面變暖；設得低，畫面變冷。RAW 可以事後任意改。', en:'So setting it above the real light warms the picture, below it cools it. In RAW it can be changed freely later.', fr:'Régler au-dessus de la source réchauffe l’image, en dessous la refroidit. En RAW, on la change librement après coup.'} },
+{ c:'col', id:'wheel', k:{zh:'色環與配色', en:'Colour wheel and harmony', fr:'Cercle chromatique et harmonies'},
+  m:{zh:'把色相排成一圈，用相對位置設計配色。', en:'Hues arranged in a circle, so that their positions can guide a palette.', fr:'Les teintes disposées en cercle, pour que leur position guide la palette.'},
+  p:{zh:'互補色在正對面（橘對青藍、黃對藍紫），並排時對比最強；類比色彼此相鄰，和諧安靜；三角配色彼此相隔 120°。電影常見的「橘青調」，是因為膚色偏橘，把陰影推向互補的青色，人物就會跳出來。', en:'Complements sit opposite (orange and azure, yellow and violet) and contrast most side by side; analogous colours sit together and feel calm; a triad is spaced 120° apart. Cinema’s orange-and-teal look exists because skin is orange: pushing shadows to its complement makes people stand out.', fr:'Les complémentaires sont opposées (orangé et azur, jaune et violet) et contrastent le plus côte à côte ; les analogues sont voisines et apaisées ; une triade est espacée de 120°. Le look orange et bleu-vert du cinéma vient de ce que la peau est orangée : pousser les ombres vers sa complémentaire détache les personnages.'},
+  e:{zh:'把畫面收斂到兩三個主色，比整體加飽和更有質感。', en:'Narrowing a frame to two or three dominant colours looks richer than adding saturation everywhere.', fr:'Réduire l’image à deux ou trois couleurs dominantes paraît plus riche que saturer partout.'} },
+{ c:'col', id:'warm', k:{zh:'冷暖色', en:'Warm and cool colours', fr:'Couleurs chaudes et froides'},
+  m:{zh:'紅橘黃是暖色，藍青是冷色。', en:'Reds, oranges and yellows are warm; blues and cyans are cool.', fr:'Rouges, orangés et jaunes sont chauds ; bleus et cyans sont froids.'},
+  p:{zh:'暖色看起來往前、有能量；冷色往後退、安靜。視線也會先被暖色與高飽和吸引。', en:'Warm colours seem to advance and carry energy; cool ones recede and quieten. The eye also goes first to warm and saturated colour.', fr:'Les couleurs chaudes semblent avancer et portent de l’énergie ; les froides reculent et apaisent. L’œil va aussi d’abord aux couleurs chaudes et saturées.'},
+  e:{zh:'主體暖、背景冷，能自然拉出空間層次。', en:'A warm subject against a cool background builds depth on its own.', fr:'Un sujet chaud sur un fond froid crée naturellement de la profondeur.'} },
+{ c:'col', id:'space', k:{zh:'色彩空間與色域', en:'Colour space and gamut', fr:'Espace colorimétrique et gamut'},
+  m:{zh:'色彩空間定義「RGB 數字代表哪個真實顏色」，它能涵蓋的範圍叫色域。', en:'A colour space defines which real colour each RGB number means; the range it covers is its gamut.', fr:'Un espace colorimétrique définit quelle couleur réelle désigne chaque valeur RVB ; l’étendue couverte est son gamut.'},
+  p:{zh:'同樣是 (255, 0, 0)，在 sRGB 和 Display P3 是不同的紅，P3 的更飽和。sRGB 是網路標準；Adobe RGB 綠青較寬；Display P3 用於新款手機與螢幕；ProPhoto RGB 最寬，甚至包含肉眼看不到的顏色，多用於編輯過程。', en:'(255, 0, 0) is a different red in sRGB and in Display P3; the P3 one is more saturated. sRGB is the web standard; Adobe RGB is wider in greens and cyans; Display P3 is used by recent phones and screens; ProPhoto RGB is widest, even including colours no eye can see, and is used while editing.', fr:'(255, 0, 0) est un rouge différent en sRGB et en Display P3, plus saturé en P3. Le sRGB est le standard du web ; l’Adobe RGB est plus large en verts et cyans ; le Display P3 équipe les smartphones et écrans récents ; le ProPhoto RGB est le plus large, avec même des couleurs invisibles, et sert pendant l’édition.'},
+  e:{zh:'編輯用寬色域，輸出到網路一律轉成 sRGB。', en:'Edit wide; always convert to sRGB for the web.', fr:'Éditez en large gamut ; convertissez toujours en sRGB pour le web.'} },
+{ c:'col', id:'icc', k:{zh:'色彩描述檔與色彩管理', en:'ICC profiles and colour management', fr:'Profils ICC et gestion des couleurs'},
+  m:{zh:'讓同一張照片在不同螢幕與印表機上看起來一致的機制。', en:'The machinery that makes one picture look the same on different screens and printers.', fr:'Le mécanisme qui fait qu’une image paraît identique sur différents écrans et imprimantes.'},
+  p:{zh:'每個裝置都有描述檔，說明它的數字對應到什麼真實顏色。軟體把照片從它的色彩空間轉換到螢幕的描述檔再顯示。沒有附描述檔的圖片，多數軟體假設它是 sRGB。', en:'Each device has a profile stating what real colour its numbers produce. Software converts the picture from its own space into the screen’s profile before showing it. Untagged images are assumed by most software to be sRGB.', fr:'Chaque appareil a un profil indiquant la couleur réelle produite par ses valeurs. Le logiciel convertit l’image de son espace vers le profil de l’écran avant l’affichage. Une image sans profil est supposée sRGB par la plupart des logiciels.'},
+  e:{zh:'輸出時勾選「嵌入色彩描述檔」；不支援色彩管理的平台會讓寬色域照片變灰。', en:'Tick “embed colour profile” on export; platforms without colour management make wide-gamut pictures look washed out.', fr:'Cochez « incorporer le profil » à l’export ; les plateformes sans gestion des couleurs rendent ternes les images en large gamut.'} },
+{ c:'col', id:'calib', k:{zh:'螢幕校色', en:'Monitor calibration', fr:'Étalonnage de l’écran'},
+  m:{zh:'量測並修正螢幕本身的偏色與亮度。', en:'Measuring and correcting the screen’s own colour cast and brightness.', fr:'Mesurer et corriger la dominante et la luminosité propres à l’écran.'},
+  p:{zh:'用校色器貼在螢幕上量測色塊，產生這台螢幕的描述檔。常見目標：白點 6500K（D65）、Gamma 2.2；要對照印刷時亮度約 100 到 120 cd/m²。', en:'A colorimeter on the screen measures test patches and builds a profile for that display. Usual targets: white point 6500K (D65), gamma 2.2, and about 100 to 120 cd/m² when matching print.', fr:'Une sonde posée sur l’écran mesure des plages et crée le profil de cet écran. Cibles courantes : point blanc 6500K (D65), gamma 2,2, et 100 à 120 cd/m² pour comparer à l’impression.'},
+  e:{zh:'照片印出來「比螢幕暗」，多半是螢幕太亮，不是印刷出錯。', en:'If prints look darker than the screen, the screen is usually too bright, not the print wrong.', fr:'Si le tirage paraît plus sombre que l’écran, c’est en général l’écran qui est trop lumineux.'} },
+{ c:'col', id:'bit', k:{zh:'位元深度與色階斷層', en:'Bit depth and banding', fr:'Profondeur de bits et postérisation'},
+  m:{zh:'每個色彩通道能分成幾階。', en:'How many steps each colour channel is divided into.', fr:'Le nombre de niveaux de chaque canal de couleur.'},
+  p:{zh:'8 位元每通道 256 階（三通道約 1670 萬色）；RAW 多為 12 或 14 位元（4096 或 16384 階）；16 位元有 65536 階。大幅拉曲線時，原本的階被拉開，間距變大，平滑的天空就出現一條一條的斷層。', en:'8 bits give 256 levels per channel (about 16.7 million colours); RAW is usually 12 or 14 bits (4096 or 16384 levels); 16 bits give 65536. A strong curve stretches the levels apart, and a smooth sky breaks into visible bands.', fr:'8 bits donnent 256 niveaux par canal (environ 16,7 millions de couleurs) ; le RAW en a 12 ou 14 (4096 ou 16384 niveaux) ; 16 bits, 65536. Une courbe forte écarte les niveaux, et un ciel lisse se découpe en bandes.'},
+  e:{zh:'拍 RAW、用 16 位元編輯，最後才輸出 8 位元 JPEG。', en:'Shoot RAW, edit in 16 bits, and only export to 8-bit JPEG at the end.', fr:'Photographiez en RAW, éditez en 16 bits, et n’exportez en JPEG 8 bits qu’à la fin.'} },
+{ c:'col', id:'gamma', k:{zh:'伽瑪與線性資料', en:'Gamma and linear data', fr:'Gamma et données linéaires'},
+  m:{zh:'檔案儲存的亮度數值，並不等於光量本身。', en:'The brightness values a file stores are not the light quantities themselves.', fr:'Les valeurs de luminosité stockées ne sont pas les quantités de lumière elles-mêmes.'},
+  p:{zh:'感光元件記錄的是線性光量，但人眼對暗部變化比亮部敏感。若直接線性儲存，大半的階數會浪費在眼睛分不出的亮部。所以 JPEG 等檔案以伽瑪曲線編碼，把更多階數留給暗部。RAW 是線性資料，所以軟體要先套一條曲線才看起來正常。', en:'The sensor records light linearly, but the eye is more sensitive to changes in the shadows than in the highlights. Stored linearly, most of the levels would be spent on highlight steps no one can see. So JPEG and similar files are gamma-encoded, giving more levels to the shadows. RAW is linear, which is why software applies a curve before it looks normal.', fr:'Le capteur enregistre la lumière linéairement, mais l’œil est plus sensible aux variations dans les ombres. En linéaire, la plupart des niveaux seraient gaspillés dans des hautes lumières indiscernables. Le JPEG est donc codé en gamma, qui réserve plus de niveaux aux ombres. Le RAW est linéaire : le logiciel lui applique une courbe avant qu’il paraisse normal.'},
+  e:{zh:'這也解釋了為何拉亮 8 位元 JPEG 的暗部特別容易出現雜訊與斷層。', en:'It also explains why lifting the shadows of an 8-bit JPEG so readily brings out noise and banding.', fr:'Cela explique aussi pourquoi remonter les ombres d’un JPEG 8 bits fait si vite apparaître bruit et postérisation.'} },
+{ c:'col', id:'grade', k:{zh:'校色與調色', en:'Colour correction and grading', fr:'Correction et étalonnage'},
+  m:{zh:'校色是把顏色修「對」，調色是修成「想要的樣子」。', en:'Correction makes colour right; grading makes it what you want.', fr:'La correction rend la couleur juste ; l’étalonnage la rend telle qu’on la veut.'},
+  p:{zh:'先修正白平衡與偏色，讓中性色真的中性、膚色自然，再在這個基礎上做風格化。順序反過來，風格會建立在錯誤的顏色上。', en:'First correct white balance and casts so neutrals are neutral and skin natural, then stylise on that base. Reverse the order and the style is built on wrong colour.', fr:'Corrigez d’abord balance et dominantes, pour des neutres neutres et une peau naturelle, puis stylisez sur cette base. Dans l’autre ordre, le style repose sur une couleur fausse.'},
+  e:{zh:'色彩分級、分割色調與 LUT 都屬於調色。', en:'Colour grading wheels, split toning and LUTs are all grading tools.', fr:'Roues d’étalonnage, virage partiel et LUT sont des outils d’étalonnage.'} },
+{ c:'col', id:'lut', k:{zh:'色彩對照表（LUT）', en:'LUT (look-up table)', fr:'LUT (table de correspondance)'},
+  m:{zh:'「輸入哪個顏色，就輸出哪個顏色」的對照表。', en:'A table saying which colour goes out for each colour that comes in.', fr:'Une table qui indique quelle couleur sort pour chaque couleur entrante.'},
+  p:{zh:'3D LUT 把整個 RGB 立方體切成格點（例如 33×33×33），每點記錄對應的輸出色，中間用內插計算。它把一整套調色固定下來，可在不同軟體間共用。', en:'A 3D LUT divides the RGB cube into a grid (33×33×33, say), records an output colour at each node and interpolates between them. It freezes a whole grade so it can be shared between programs.', fr:'Une LUT 3D découpe le cube RVB en grille (33×33×33 par exemple), enregistre une couleur de sortie à chaque nœud et interpole entre eux. Elle fige un étalonnage entier, partageable entre logiciels.'},
+  e:{zh:'套用前先把曝光與白平衡修正好，否則結果會差很多。', en:'Fix exposure and white balance before applying one, or the result will be far off.', fr:'Corrigez exposition et balance avant de l’appliquer, sinon le résultat sera loin du compte.'} },
+
+/* ── Retouching ── */
+{ c:'edit', id:'raw', k:{zh:'RAW 與去馬賽克', en:'RAW and demosaicing', fr:'RAW et dématriçage'},
+  m:{zh:'RAW 是感光元件的原始讀數，還不是一張照片。', en:'A RAW file is the sensor’s raw readings, not yet a picture.', fr:'Un RAW est la lecture brute du capteur, pas encore une image.'},
+  p:{zh:'每個像素上方只有一種顏色的濾鏡（拜耳陣列：紅、綠、綠、藍），所以每個像素只記錄一種顏色。軟體依周圍像素推算另外兩種顏色，叫去馬賽克；之後再套白平衡、伽瑪與色彩空間，才成為可看的影像。', en:'Each pixel sits under a filter of one colour (the Bayer pattern: red, green, green, blue), so each records one colour only. Software estimates the other two from neighbouring pixels, which is demosaicing; then white balance, gamma and a colour space are applied to make a viewable image.', fr:'Chaque photosite est sous un filtre d’une seule couleur (matrice de Bayer : rouge, vert, vert, bleu) et n’enregistre qu’une couleur. Le logiciel estime les deux autres à partir des voisins : c’est le dématriçage ; puis balance des blancs, gamma et espace colorimétrique donnent une image visible.'},
+  e:{zh:'不同軟體的演算法不同，同一個 RAW 的細節與顏色會略有差異。', en:'Each program uses its own algorithm, so the same RAW looks slightly different in detail and colour.', fr:'Chaque logiciel a son algorithme : le même RAW diffère légèrement en détail et en couleur.'} },
+{ c:'edit', id:'nondest', k:{zh:'非破壞性編輯', en:'Non-destructive editing', fr:'Retouche non destructive'},
+  m:{zh:'編輯時不改動原始檔案。', en:'Editing without altering the original file.', fr:'Retoucher sans modifier le fichier original.'},
+  p:{zh:'Lightroom 一類的軟體只記錄一串調整指令，顯示時即時套用；Photoshop 則用調整圖層、智慧型物件與遮色片達到同樣效果。', en:'Programs like Lightroom store only a list of instructions, applied live on display; Photoshop gets the same with adjustment layers, smart objects and masks.', fr:'Les logiciels comme Lightroom ne stockent qu’une liste d’instructions appliquées à l’affichage ; Photoshop obtient le même résultat avec calques de réglage, objets dynamiques et masques.'},
+  e:{zh:'隨時可以回頭改任何一步，也能從同一張照片做出多個版本。', en:'Any step can be revisited, and one photograph can yield several versions.', fr:'Chaque étape reste modifiable, et une photo peut donner plusieurs versions.'} },
+{ c:'edit', id:'hist', k:{zh:'直方圖', en:'Histogram', fr:'Histogramme'},
+  m:{zh:'統計每個亮度有多少像素的圖。', en:'A chart counting how many pixels sit at each brightness.', fr:'Un graphique qui compte les pixels à chaque luminosité.'},
+  p:{zh:'橫軸由純黑（0）到純白（255），縱軸是像素數。也可以分紅、綠、藍三個通道看，單一通道撞到右牆，表示那個顏色已經飽和到爆。', en:'The horizontal axis runs from pure black (0) to pure white (255), the vertical counts pixels. It can be split into red, green and blue; one channel hitting the right wall means that colour has clipped.', fr:'L’axe horizontal va du noir pur (0) au blanc pur (255), l’axe vertical compte les pixels. On peut le séparer en rouge, vert et bleu ; un canal collé à droite signale une couleur écrêtée.'},
+  e:{zh:'判斷曝光與裁切最可靠的工具，比看螢幕準。', en:'The most reliable judge of exposure and clipping, better than the screen.', fr:'Le juge le plus sûr de l’exposition et de l’écrêtage, meilleur que l’écran.'} },
+{ c:'edit', id:'clip', k:{zh:'裁切（死白、死黑）', en:'Clipping', fr:'Écrêtage'},
+  m:{zh:'亮度超出可記錄範圍，被截成純白或純黑。', en:'Brightness beyond the recordable range, cut off to pure white or pure black.', fr:'Une luminosité hors de la plage enregistrable, tronquée en blanc ou noir pur.'},
+  p:{zh:'像素已達最大值，任何更亮的細節都被記成同一個數字，資訊永久消失。RAW 的亮部常比相機螢幕顯示的多保留一點，但真正爆掉的仍救不回。', en:'The pixel has reached its maximum, so every brighter detail is recorded as the same number and the information is gone for good. RAW often holds a little more than the camera screen suggests, but truly clipped areas cannot be recovered.', fr:'Le pixel a atteint son maximum : tout détail plus clair est noté par le même nombre, l’information est perdue. Le RAW garde souvent un peu plus que ne le montre l’écran, mais une zone vraiment écrêtée est irrécupérable.'},
+  e:{zh:'按住 Alt／Option 拖曳白色或黑色滑桿，就能看到從哪裡開始裁切。', en:'Hold Alt/Option while dragging the whites or blacks slider to see where clipping starts.', fr:'Maintenez Alt/Option en glissant le curseur blancs ou noirs pour voir où commence l’écrêtage.'} },
+{ c:'edit', id:'levels', k:{zh:'色階', en:'Levels', fr:'Niveaux'},
+  m:{zh:'用黑點、白點與中間調三個控制點調整亮度分布。', en:'Adjusting tonal distribution with three controls: black point, white point, midtone.', fr:'Régler la répartition des tons avec trois commandes : point noir, point blanc, tons moyens.'},
+  p:{zh:'黑點往右移，原本那個亮度以下都變純黑；白點往左移同理；中間的灰點改變中間調亮度而不動兩端。它其實是只有三個控制點的曲線。', en:'Moving the black point right turns everything below it pure black; the white point works the same way; the grey point changes the midtones while the ends stay put. It is really a curve with three handles.', fr:'Déplacer le point noir vers la droite rend noir tout ce qui est en dessous ; même chose pour le point blanc ; le point gris modifie les tons moyens sans toucher aux extrêmes. C’est en fait une courbe à trois poignées.'},
+  e:{zh:'快速設定對比、修正灰濛濛的照片。', en:'A quick way to set contrast and fix a flat, grey picture.', fr:'Un moyen rapide de régler le contraste d’une image terne.'} },
+{ c:'edit', id:'curve', k:{zh:'色調曲線', en:'Tone curve', fr:'Courbe de tonalité'},
+  m:{zh:'把每個輸入亮度對應到輸出亮度的曲線。', en:'A curve mapping each input brightness to an output brightness.', fr:'Une courbe qui associe chaque luminosité d’entrée à une luminosité de sortie.'},
+  p:{zh:'曲線某段變陡，那一段的明暗差被拉大，對比增加；變平則對比降低。總範圍固定，所以某處加對比，另一處必然減少。也可以分通道調，例如在藍色通道把暗部往上拉，陰影就偏藍。', en:'Where the curve gets steeper, that range is stretched and gains contrast; where it flattens, contrast drops. The total range is fixed, so contrast added in one place is taken from another. It can work per channel: lifting the shadows in the blue channel turns them blue.', fr:'Là où la courbe se raidit, la plage s’étire et gagne du contraste ; là où elle s’aplatit, il baisse. La plage totale est fixe : le contraste gagné ici est pris ailleurs. On peut agir par canal : relever les ombres du canal bleu les bleuit.'},
+  e:{zh:'見修圖章節的三種曲線圖。', en:'See the three curves in the retouching part.', fr:'Voir les trois courbes dans la partie retouche.'} },
+{ c:'edit', id:'clarity', k:{zh:'對比、清晰度、紋理、去朦朧', en:'Contrast, clarity, texture, dehaze', fr:'Contraste, clarté, texture, correction de la brume'},
+  m:{zh:'四個讓照片更有力的滑桿，作用的尺度不同。', en:'Four sliders that add punch, each at a different scale.', fr:'Quatre curseurs qui donnent du peps, chacun à une échelle différente.'},
+  p:{zh:'對比作用於整張照片的明暗範圍。清晰度是「局部對比」，以較大半徑增加中間調邊緣的明暗差，讓物體更立體。紋理針對中等大小的細節，如皮膚、樹葉、布料。去朦朧會估算霧氣並扣除，同時提高對比與飽和度。', en:'Contrast works on the tonal range of the whole picture. Clarity is local contrast: at a large radius it deepens the light-dark difference along midtone edges, making forms more solid. Texture targets medium-sized detail such as skin, leaves and fabric. Dehaze estimates the haze and subtracts it, raising contrast and saturation too.', fr:'Le contraste agit sur toute la plage tonale. La clarté est un contraste local : à grand rayon, elle creuse l’écart clair-sombre le long des contours des tons moyens et donne du volume. La texture vise le détail moyen : peau, feuillage, tissu. La correction de la brume estime le voile et le retire, en augmentant contraste et saturation.'},
+  e:{zh:'人像常把紋理略降以柔膚；清晰度與去朦朧拉太多會出現光暈與髒色。', en:'Portraits often take texture down a little to soften skin; too much clarity or dehaze brings halos and dirty colour.', fr:'En portrait, on baisse souvent un peu la texture pour adoucir la peau ; trop de clarté ou de correction de brume donne halos et couleurs sales.'} },
+{ c:'edit', id:'hs', k:{zh:'亮部、陰影、白色、黑色', en:'Highlights, shadows, whites, blacks', fr:'Hautes lumières, ombres, blancs, noirs'},
+  m:{zh:'分別調整不同亮度區段的滑桿。', en:'Sliders that each work on a band of brightness.', fr:'Des curseurs qui agissent chacun sur une bande de luminosité.'},
+  p:{zh:'亮部與陰影作用於較寬的中高與中低範圍，並帶有局部適應，會參考周圍亮度，避免整片變平；白色與黑色則設定兩端的位置。', en:'Highlights and shadows cover the broad upper and lower middle, with local adaptation that looks at the surroundings to avoid flattening everything; whites and blacks set the two ends.', fr:'Hautes lumières et ombres couvrent les larges zones claires et sombres, avec une adaptation locale qui tient compte du voisinage pour ne pas tout aplatir ; blancs et noirs fixent les extrémités.'},
+  e:{zh:'先用亮部、陰影找回細節，再用白色、黑色把兩端拉到剛好不裁切。', en:'Recover detail with highlights and shadows first, then set whites and blacks just short of clipping.', fr:'Récupérez le détail avec hautes lumières et ombres, puis placez blancs et noirs juste avant l’écrêtage.'} },
+{ c:'edit', id:'sharp', dia:'sharp', k:{zh:'銳利化（USM）', en:'Sharpening (unsharp mask)', fr:'Accentuation (masque flou)'},
+  m:{zh:'讓邊緣看起來更清楚的處理。', en:'Processing that makes edges look crisper.', fr:'Un traitement qui rend les contours plus nets.'},
+  p:{zh:'把照片模糊一份，用原圖減去模糊版本得到「邊緣」，再把邊緣加回原圖。結果是邊緣暗的一側更暗、亮的一側更亮，看起來就更銳利（見下圖）。它沒有增加任何細節。「總量」是加多少，「半徑」是邊緣多寬，「細節／臨界值」決定小差異要不要處理。', en:'Blur a copy of the picture, subtract it from the original to isolate the edges, and add those edges back. The dark side of each edge gets darker and the light side lighter, which reads as sharpness (see the diagram). No detail is created. Amount is how much, radius how wide the edge, detail or threshold whether small differences are touched.', fr:'On floute une copie, on la soustrait de l’original pour isoler les contours, puis on les rajoute. Le côté sombre de chaque contour s’assombrit et le côté clair s’éclaircit, ce qui se lit comme de la netteté (voir le schéma). Aucun détail n’est créé. Gain : combien ; rayon : largeur du contour ; détail ou seuil : traiter ou non les petites différences.'},
+  e:{zh:'半徑太大會出現白邊光暈；用遮色片只加在邊緣，不要加到天空與皮膚。', en:'Too large a radius gives white halos; mask it to edges only, keeping it off sky and skin.', fr:'Un rayon trop grand donne des halos blancs ; masquez pour ne toucher que les contours, pas le ciel ni la peau.'} },
+{ c:'edit', id:'nr', k:{zh:'降噪', en:'Noise reduction', fr:'Réduction du bruit'},
+  m:{zh:'減少雜訊的處理。', en:'Processing that reduces noise.', fr:'Un traitement qui réduit le bruit.'},
+  p:{zh:'傳統降噪把相近的像素平均，雜訊少了，細節也被抹平。色彩雜訊可大幅降而不太傷細節，因為眼睛對顏色細節不敏感。新的 AI 降噪在去馬賽克階段就學會分辨雜訊與紋理，效果好得多。', en:'Classic noise reduction averages similar pixels, removing noise and detail together. Colour noise can be removed heavily with little loss, because the eye is insensitive to fine colour detail. Newer AI denoising learns to tell noise from texture at the demosaicing stage and does far better.', fr:'Le débruitage classique moyenne les pixels voisins : il retire le bruit et le détail ensemble. Le bruit chromatique se retire fortement sans grande perte, l’œil étant peu sensible au détail de couleur. Le débruitage par IA apprend à distinguer bruit et texture dès le dématriçage, avec de bien meilleurs résultats.'},
+  e:{zh:'先降噪再銳利化；降太多皮膚會像蠟。', en:'Reduce noise before sharpening; overdo it and skin turns to wax.', fr:'Débruitez avant d’accentuer ; trop, et la peau devient cireuse.'} },
+{ c:'edit', id:'mask', k:{zh:'圖層與遮色片', en:'Layers and masks', fr:'Calques et masques'},
+  m:{zh:'把調整分層疊放，再用遮色片決定每層作用在哪裡。', en:'Stacking adjustments in layers and using masks to decide where each applies.', fr:'Empiler les réglages en calques et décider par des masques où chacun agit.'},
+  p:{zh:'遮色片是一張灰階圖：白色＝顯示這層效果、黑色＝隱藏、灰色＝部分顯示，口訣是「白顯黑隱」。用柔邊筆刷或漸層畫遮色片，就能做出自然的局部調整。', en:'A mask is a greyscale image: white shows the layer’s effect, black hides it, grey shows it partly. “White reveals, black conceals.” Painting masks with soft brushes or gradients gives natural local adjustments.', fr:'Un masque est une image en niveaux de gris : le blanc montre l’effet, le noir le cache, le gris le montre en partie. « Le blanc révèle, le noir masque. » Peindre au pinceau doux ou en dégradé donne des retouches locales naturelles.'},
+  e:{zh:'所有局部修飾的基礎；AI 選取天空或人物，本質上也是自動產生遮色片。', en:'The basis of all local work; AI selection of a sky or a person simply generates a mask automatically.', fr:'La base de tout travail local ; la sélection d’un ciel ou d’une personne par IA ne fait que générer un masque.'} },
+{ c:'edit', id:'blend', k:{zh:'混合模式', en:'Blend modes', fr:'Modes de fusion'},
+  m:{zh:'決定上層像素如何與下層合成的規則。', en:'The rule for how an upper layer combines with the one below.', fr:'La règle qui dit comment un calque se combine avec celui du dessous.'},
+  p:{zh:'色彩增值（Multiply）把兩層數值相乘，只會變暗；濾色（Screen）反過來，只會變亮；柔光與覆蓋以 50% 灰為中性，比灰亮的地方變亮、比灰暗的地方變暗。', en:'Multiply multiplies the two layers and can only darken; Screen is its inverse and can only lighten; Soft Light and Overlay treat 50% grey as neutral, lightening where the layer is lighter than grey and darkening where it is darker.', fr:'Produit multiplie les deux calques et ne peut qu’assombrir ; Superposition (Screen) en est l’inverse et ne peut qu’éclaircir ; Lumière douce et Incrustation prennent le gris 50 % comme neutre, éclaircissant au-dessus et assombrissant en dessous.'},
+  e:{zh:'加亮加深常用「柔光」圖層填 50% 灰再用黑白筆刷畫；「明度」模式可以只改亮度不動顏色。', en:'Dodge and burn is often a Soft Light layer filled with 50% grey, painted in black and white; Luminosity mode changes brightness without touching colour.', fr:'Le dodge & burn se fait souvent sur un calque Lumière douce rempli de gris 50 %, peint en noir et blanc ; le mode Luminosité change la luminosité sans toucher à la couleur.'} },
+{ c:'edit', id:'heal', k:{zh:'修復筆與仿製印章', en:'Healing brush and clone stamp', fr:'Correcteur et tampon de duplication'},
+  m:{zh:'兩種把瑕疵蓋掉的工具。', en:'Two tools for covering blemishes.', fr:'Deux outils pour masquer les défauts.'},
+  p:{zh:'仿製印章把來源區像素原封不動複製過去。修復筆只複製紋理，再依目標周圍的顏色與亮度自動融合，所以接縫較不明顯。內容感知填色更進一步，由軟體推測該補上什麼。', en:'The clone stamp copies source pixels exactly. The healing brush copies only the texture and blends it into the colour and brightness around the target, so seams show less. Content-aware fill goes further, letting the software infer what belongs there.', fr:'Le tampon copie les pixels source à l’identique. Le correcteur ne copie que la texture et la fond dans la couleur et la luminosité autour de la cible, d’où des raccords plus discrets. Le remplissage selon le contenu va plus loin : le logiciel déduit ce qui doit s’y trouver.'},
+  e:{zh:'大面積平滑區用修復，邊緣與直線附近用仿製。', en:'Heal in broad smooth areas; clone near edges and straight lines.', fr:'Corrigez dans les zones lisses ; dupliquez près des bords et des lignes droites.'} },
+{ c:'edit', id:'ppi', k:{zh:'解析度、PPI 與 DPI', en:'Resolution, PPI and DPI', fr:'Résolution, PPI et DPI'},
+  m:{zh:'照片有多少像素，以及印出時每英吋放幾個像素。', en:'How many pixels a picture has, and how many are placed per inch when printed.', fr:'Le nombre de pixels d’une image, et combien on en place par pouce à l’impression.'},
+  p:{zh:'像素數（如 6000×4000）是檔案本身的資訊量。PPI 是輸出時每英吋放多少像素，決定印出尺寸；DPI 是印表機每英吋噴幾個墨點，屬於印表機規格。檔案裡寫的 72 或 300 對網路顯示沒有任何影響。', en:'The pixel count (6000×4000, say) is the file’s actual information. PPI is how many pixels go into each inch on output, which sets print size; DPI is how many ink dots a printer lays per inch, a printer specification. The 72 or 300 written in a file makes no difference at all on the web.', fr:'Le nombre de pixels (6000×4000 par exemple) est l’information réelle du fichier. Le PPI est le nombre de pixels par pouce à la sortie, qui fixe la taille du tirage ; le DPI est le nombre de points d’encre par pouce, une caractéristique de l’imprimante. Le 72 ou 300 inscrit dans un fichier ne change rien sur le web.'},
+  e:{zh:'近看的印刷品約需 300 PPI：6000 像素寬可印約 50 公分；海報看得遠，150 PPI 就夠。', en:'Prints seen up close need about 300 PPI: 6000 pixels wide prints about 50 cm; posters seen from afar are fine at 150 PPI.', fr:'Un tirage vu de près demande environ 300 PPI : 6000 pixels de large donnent environ 50 cm ; une affiche vue de loin se contente de 150 PPI.'} },
+{ c:'edit', id:'jpeg', k:{zh:'壓縮與檔案格式', en:'Compression and file formats', fr:'Compression et formats'},
+  m:{zh:'檔案如何儲存照片。', en:'How a file stores a picture.', fr:'La manière dont un fichier stocke une image.'},
+  p:{zh:'JPEG 是有損壓縮：把影像切成 8×8 小塊，捨棄眼睛不敏感的細微變化；品質越低丟越多，會出現方塊與邊緣雜點，每次重新存檔都再損失一次。HEIF 壓縮效率更好。TIFF、PNG 是無損，檔案大。DNG 是開放的 RAW 格式。', en:'JPEG is lossy: it cuts the image into 8×8 blocks and discards fine variation the eye barely notices; lower quality discards more, bringing blocks and edge artefacts, and every re-save loses again. HEIF compresses more efficiently. TIFF and PNG are lossless and large. DNG is an open RAW format.', fr:'Le JPEG est avec pertes : il découpe l’image en blocs de 8×8 et supprime les variations fines peu visibles ; plus la qualité baisse, plus il supprime, d’où blocs et artefacts, et chaque réenregistrement perd encore. Le HEIF compresse mieux. TIFF et PNG sont sans perte et lourds. Le DNG est un format RAW ouvert.'},
+  e:{zh:'編輯中存 TIFF 或 PSD，最後才輸出 JPEG；不要反覆打開 JPEG 修改後覆蓋存檔。', en:'Keep work in progress as TIFF or PSD and export JPEG last; never repeatedly open, edit and overwrite a JPEG.', fr:'Gardez le travail en cours en TIFF ou PSD et exportez le JPEG en dernier ; ne rouvrez et n’écrasez jamais un JPEG à répétition.'} },
+{ c:'edit', id:'profile', k:{zh:'鏡頭描述檔校正', en:'Lens profile correction', fr:'Correction de profil d’objectif'},
+  m:{zh:'依鏡頭型號自動修正變形、暗角與色差。', en:'Automatic correction of distortion, vignetting and fringing for a given lens.', fr:'Correction automatique de distorsion, vignetage et franges selon l’objectif.'},
+  p:{zh:'廠商或軟體事先量測每顆鏡頭在各焦距與光圈的缺陷，修圖時反向套用。許多無反鏡頭刻意保留變形，預期由軟體修正，以換取更小的體積。', en:'The maker or software vendor measures each lens’s faults at every focal length and aperture, and the correction is applied in reverse. Many mirrorless lenses deliberately leave distortion for software to fix, in exchange for a smaller lens.', fr:'Le fabricant ou l’éditeur mesure les défauts de chaque objectif à chaque focale et ouverture, puis les corrige à l’inverse. Beaucoup d’objectifs hybrides laissent volontairement la distorsion au logiciel, en échange d’un encombrement réduit.'},
+  e:{zh:'幾乎每張照片都應該在第一步打開，建築照片尤其重要。', en:'Turn it on as the first step for almost every picture, architecture above all.', fr:'Activez-la en premier pour presque toute image, l’architecture surtout.'} },
+];
+
+let termTab = 'opt', termQ = '';
+function pickTermTab(id) { termTab = id; termQ = ''; const q = document.getElementById('term-q'); if (q) q.value = ''; renderTerms(); }
+function renderTerms() {
+  const q = termQ.trim().toLowerCase();
+  document.getElementById('term-tabs').innerHTML = TERM_CATS.map(c => {
+    const on = !q && termTab === c.id, n = TERMS.filter(x => x.c === c.id).length;
+    return '<button onclick="pickTermTab(\'' + c.id + '\')" class="px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors '
+      + (on ? 'bg-sky-500/15 text-sky-200 border-sky-500/40' : 'bg-slate-900/70 text-slate-400 border-slate-800 hover:text-slate-200') + '">'
+      + '<i class="fa-solid ' + c.i + ' mr-1.5"></i>' + t(c.t) + ' <span class="opacity-60">' + n + '</span></button>';
+  }).join('');
+  const hay = x => [x.k.zh, x.k.en, x.k.fr, t(x.m)].join(' ').toLowerCase();
+  const list = q ? TERMS.filter(x => hay(x).includes(q)) : TERMS.filter(x => x.c === termTab);
+  const others = x => ['zh','en','fr'].filter(l => l !== LANG).map(l => x.k[l]).join(' · ');
+  const row = (lab, txt, col) =>
+      '<div class="flex gap-3 mt-2.5">'
+    +   '<span class="shrink-0 text-[0.62rem] font-black tracking-wider px-2 py-0.5 rounded h-fit ' + col + '">' + lab + '</span>'
+    +   '<p class="text-xs text-slate-300 leading-relaxed">' + txt + '</p>'
+    + '</div>';
+  document.getElementById('term-grid').innerHTML = list.length ? list.map(x =>
+      '<div id="term-' + x.id + '" class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5 scroll-mt-28' + (x.dia ? ' md:col-span-2' : '') + '">'
+    +   '<div class="flex items-baseline flex-wrap gap-x-2">'
+    +     '<h3 class="text-base font-black text-white">' + t(x.k) + '</h3>'
+    +     '<span class="text-[0.7rem] text-slate-500">' + esc(others(x)) + '</span>'
+    +     (q ? '<span class="ml-auto text-[0.6rem] text-sky-300">' + t(TERM_CATS.find(c => c.id === x.c).t) + '</span>' : '')
+    +   '</div>'
+    +   row(ui('term.m'), t(x.m), 'bg-sky-500/15 text-sky-300')
+    +   row(ui('term.p'), t(x.p), 'bg-violet-500/15 text-violet-300')
+    +   row(ui('term.e'), t(x.e), 'bg-amber-500/15 text-amber-300')
+    +   (x.dia === 'dof' ? dofDiagram() : x.dia === 'sharp' ? sharpDiagram() : '')
+    + '</div>').join('')
+    : '<p class="text-sm text-slate-500">' + ui('terms.none') + '</p>';
+}
+
+function renderColor() {
+  document.getElementById('rgb-dia').innerHTML = rgbDiagram();
+  document.getElementById('wheel-dia').innerHTML = wheelDiagram();
+  document.getElementById('kelvin-dia').innerHTML = kelvinDiagram();
+  document.getElementById('gamut-dia').innerHTML = gamutDiagram();
+  document.getElementById('bit-dia').innerHTML = bitDiagram();
+  document.getElementById('col-flow').innerHTML = COL_FLOW.map((x, i) =>
+      '<li class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4">'
+    +   '<span class="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-black text-pink-200 mb-2" style="background:rgba(244,114,182,0.18);border:1px solid rgba(244,114,182,0.4)">' + (i + 1) + '</span>'
+    +   '<h4 class="text-sm font-black text-white">' + t(x.t) + '</h4>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-1">' + t(x.p) + '</p>'
+    + '</li>').join('');
+}
+
 let revealObserver = null;
 function armReveals(root) {
   const els = root.querySelectorAll('.reveal');
@@ -1014,7 +1639,7 @@ zh:{
  'hdr.badge':'攝影教學','hdr.title':'攝影：相機、曝光與修圖',
  'nav.cam':'相機','nav.exp':'曝光','nav.p1':'一・入門','nav.p2':'二・進階','nav.p3':'三・高階','nav.edit':'修圖','nav.ref':'對照表',
  'intro':'一張照片是三件事的結果：相機怎麼收光、你怎麼控制光、拍完之後怎麼處理光。器材決定上限，但絕大多數照片離上限都還很遠；真正拉開差距的是曝光的判斷、對光的觀察，以及克制的後製。',
- 'intro2':'這一冊先拆解相機與曝光原理，再分三部從「拍清楚」走到「控制光與時間」，最後一部專講修圖流程。所有圖示都是依光學數值計算繪製：光圈面積、感光元件尺寸、視角都按真實比例。',
+ 'intro2':'這一冊先拆解相機與曝光原理，再分三部從「拍清楚」走到「控制光與時間」，接著說明色彩原理與修圖流程。每個專業名詞的意思與原理，都整理在後面的「名詞與原理」，可以搜尋。所有圖示都是依光學與色彩數值計算繪製。',
  'cam.eyebrow':'先認識工具','cam.h2':'相機的構造',
  'cam.lead':'所有相機，從手機到中片幅，都是同一個原理：鏡頭把光聚焦，光圈控制開口大小，快門控制時間，感光元件記錄結果。看懂這張剖面圖，後面的設定都只是在調整這四個零件。',
  'cam.h.sensor':'感光元件尺寸','cam.p.sensor':'元件越大，收到的總光量越多，雜訊越少、背景越容易模糊。「等效係數」是全片幅對角線除以該元件的對角線，用來換算視角。',
@@ -1027,6 +1652,30 @@ zh:{
  'edit.h.flow':'整體調整的順序','edit.p.flow':'順序很重要：前面的步驟會改變後面每一步的判斷。由大到小、由整體到局部。',
  'edit.h.curve':'色調曲線：照片風格的來源','edit.p.curve':'橫軸是原本的亮度，縱軸是調整後的亮度。曲線往上彎就變亮、往下彎就變暗；斜率變陡，那一段的對比就增加。',
  'edit.h.local':'局部修飾','edit.h.over':'修過頭的徵兆',
+ 'nav.col':'色彩',
+ 'nav.terms':'名詞',
+ 'col.eyebrow':'色彩原理',
+ 'col.h2':'色彩：從光到檔案',
+ 'col.lead':'顏色不是物體本身的屬性，而是光、眼睛與裝置三者互動的結果。理解這條鏈，才知道為什麼同一張照片在手機、電腦與印刷品上看起來不一樣，以及修圖時每個色彩滑桿到底在動什麼。',
+ 'col.h.rgb':'加色與減色：螢幕和印刷為什麼不同',
+ 'col.p.rgb':'下圖兩組圓的重疊色是由瀏覽器真實的混色運算產生的，不是另外畫上去的。光越疊越亮，油墨越疊越暗，這就是螢幕用 RGB、印刷用 CMYK 的原因。',
+ 'col.h.wheel':'色環與 HSL：描述顏色的三個方向',
+ 'col.p.wheel':'修圖軟體的 HSL 面板、色彩分級色輪，全部建立在這張圖上。色相是角度，飽和度是半徑，明度是另外一個軸。',
+ 'col.h.k':'色溫與白平衡',
+ 'col.p.k':'色帶依黑體輻射近似公式計算。下半部說明最容易搞混的一點：白平衡的設定值是「你告訴相機光源是幾 K」，相機再朝反方向補償。',
+ 'col.h.gamut':'色彩空間：同一個數字，不同的顏色',
+ 'col.p.gamut':'馬蹄形是 CIE 1931 色度圖，邊緣是單一波長的純色光。各色彩空間的三角形頂點是它們規格中的紅、綠、藍原色。三角形外的顏色，那個色彩空間就無法表示。',
+ 'col.h.bit':'位元深度：漸層需要足夠的階數',
+ 'col.p.bit':'同一條由黑到白的漸層，分別只用 8、32、256 階表示。階數不夠就會出現一條條的斷層，大幅調整 8 位元檔案時天空最容易出現這種情況。',
+ 'col.h.flow':'色彩管理的四個步驟',
+ 'terms.eyebrow':'查詞',
+ 'terms.h2':'名詞與原理',
+ 'terms.lead':'每個名詞都分成三部分：<b class="text-sky-300">意思</b>（它是什麼）、<b class="text-violet-300">原理</b>（為什麼會這樣）、<b class="text-amber-300">實際上</b>（拍照或修圖時代表什麼）。可以切換類別，或直接搜尋，中、英、法文都能搜。',
+ 'terms.ph':'搜尋名詞，例如：景深、gamut',
+ 'terms.none':'找不到符合的名詞。',
+ 'term.m':'意思',
+ 'term.p':'原理',
+ 'term.e':'實際上',
  'tipLabel':'最常犯的錯',
  'ref.eyebrow':'查閱','ref.h2':'對照表',
  'ref.h.eq':'等效曝光','ref.p.eq':'以下每一列的進光量完全相同，差別只在副作用。光圈每收一級，快門就慢一級。',
@@ -1044,7 +1693,7 @@ en:{
  'hdr.badge':'PHOTOGRAPHY TUTORIAL','hdr.title':'Photography: Camera, Exposure & Retouching',
  'nav.cam':'Camera','nav.exp':'Exposure','nav.p1':'1 · Beginner','nav.p2':'2 · Intermediate','nav.p3':'3 · Advanced','nav.edit':'Retouching','nav.ref':'Reference',
  'intro':'A photograph is the result of three things: how the camera gathers light, how you control it, and how you treat it afterwards. Equipment sets the ceiling, but most pictures are nowhere near it. What separates them is judgement of exposure, attention to light, and restraint in editing.',
- 'intro2':'This volume first takes apart the camera and the principle of exposure, then goes in three parts from getting a sharp picture to controlling light and time, and ends with a part on retouching. Every diagram is computed from the optics: aperture area, sensor size and angle of view are all drawn to true proportion.',
+ 'intro2':'This volume first takes apart the camera and the principle of exposure, then goes in three parts from getting a sharp picture to controlling light and time, then explains colour and the retouching workflow. The meaning and principle of every technical term are collected, searchable, under Terms and principles. Every diagram is computed from the optics and colour science.',
  'cam.eyebrow':'Know the tool first','cam.h2':'How a camera is built',
  'cam.lead':'Every camera, from a phone to medium format, works the same way: the lens focuses the light, the aperture sets the size of the opening, the shutter sets the time, the sensor records the result. Read this cross-section and every setting that follows is simply an adjustment to one of these four parts.',
  'cam.h.sensor':'Sensor size','cam.p.sensor':'A larger sensor collects more light in total, giving less noise and easier background blur. The crop factor is full frame’s diagonal divided by the sensor’s own, and is used to convert angles of view.',
@@ -1057,6 +1706,30 @@ en:{
  'edit.h.flow':'The order of global adjustments','edit.p.flow':'Order matters: each step changes how you judge every step after it. Work from large to small, from the whole to the part.',
  'edit.h.curve':'The tone curve: where a look comes from','edit.p.curve':'The horizontal axis is the original brightness, the vertical axis the adjusted one. Bend the curve up to brighten, down to darken; wherever it gets steeper, contrast in that range increases.',
  'edit.h.local':'Local work','edit.h.over':'Signs of overediting',
+ 'nav.col':'Colour',
+ 'nav.terms':'Glossary',
+ 'col.eyebrow':'How colour works',
+ 'col.h2':'Colour: from light to file',
+ 'col.lead':'Colour is not a property of objects but the outcome of light, the eye and a device acting together. Follow that chain and it becomes clear why one picture looks different on a phone, a computer and a print, and what each colour slider in an editor is actually moving.',
+ 'col.h.rgb':'Additive and subtractive: why screen and print differ',
+ 'col.p.rgb':'The overlaps below are produced by the browser’s real blending arithmetic, not painted in. Light gets brighter as it stacks and ink gets darker, which is why screens use RGB and print uses CMYK.',
+ 'col.h.wheel':'The colour wheel and HSL: three ways to describe a colour',
+ 'col.p.wheel':'An editor’s HSL panel and colour-grading wheels are all built on this picture. Hue is the angle, saturation the radius, luminance a separate axis.',
+ 'col.h.k':'Colour temperature and white balance',
+ 'col.p.k':'The band is computed from an approximation of black-body radiation. The lower half addresses the most confusing point: the white-balance setting is you telling the camera the temperature of the light, and the camera then compensates in the opposite direction.',
+ 'col.h.gamut':'Colour spaces: one number, different colours',
+ 'col.p.gamut':'The horseshoe is the CIE 1931 chromaticity diagram, its rim the pure colours of single wavelengths. Each triangle’s corners are the red, green and blue primaries in that space’s specification. Colours outside a triangle cannot be represented in that space.',
+ 'col.h.bit':'Bit depth: a gradient needs enough steps',
+ 'col.p.bit':'The same ramp from black to white, shown with only 8, 32 and 256 levels. Too few levels show as bands, and skies in heavily edited 8-bit files are where it happens most.',
+ 'col.h.flow':'Colour management in four steps',
+ 'terms.eyebrow':'Look it up',
+ 'terms.h2':'Terms and principles',
+ 'terms.lead':'Every term is explained in three parts: <b class="text-sky-300">meaning</b> (what it is), <b class="text-violet-300">principle</b> (why it behaves that way) and <b class="text-amber-300">in practice</b> (what it means when shooting or editing). Switch category or search directly, in Chinese, English or French.',
+ 'terms.ph':'Search terms, e.g. depth of field, gamut',
+ 'terms.none':'No matching term.',
+ 'term.m':'MEANING',
+ 'term.p':'PRINCIPLE',
+ 'term.e':'IN PRACTICE',
  'tipLabel':'The usual mistake',
  'ref.eyebrow':'Reference','ref.h2':'Tables',
  'ref.h.eq':'Equivalent exposures','ref.p.eq':'Every row lets in exactly the same amount of light; only the side effects differ. Each stop the aperture closes, the shutter opens one stop longer.',
@@ -1074,7 +1747,7 @@ fr:{
  'hdr.badge':'TUTORIEL DE PHOTOGRAPHIE','hdr.title':'Photographie : appareil, exposition et retouche',
  'nav.cam':'Appareil','nav.exp':'Exposition','nav.p1':'1 · Débutant','nav.p2':'2 · Intermédiaire','nav.p3':'3 · Avancé','nav.edit':'Retouche','nav.ref':'Références',
  'intro':'Une photographie résulte de trois choses : la manière dont l’appareil recueille la lumière, celle dont vous la maîtrisez, et ce que vous en faites ensuite. Le matériel fixe le plafond, mais la plupart des images en sont très loin. Ce qui les distingue, c’est le jugement de l’exposition, l’attention à la lumière et la retenue au développement.',
- 'intro2':'Ce volume démonte d’abord l’appareil et le principe de l’exposition, puis va en trois parties de l’image nette à la maîtrise de la lumière et du temps, et se termine par une partie sur la retouche. Chaque schéma est calculé à partir de l’optique : surface d’ouverture, taille de capteur et angle de champ sont dessinés à l’échelle réelle.',
+ 'intro2':'Ce volume démonte d’abord l’appareil et le principe de l’exposition, va en trois parties de l’image nette à la maîtrise de la lumière et du temps, puis explique la couleur et le flux de retouche. Le sens et le principe de chaque terme technique sont réunis, avec recherche, dans Termes et principes. Chaque schéma est calculé à partir de l’optique et de la science des couleurs.',
  'cam.eyebrow':'D’abord l’outil','cam.h2':'L’anatomie d’un appareil photo',
  'cam.lead':'Tout appareil, du smartphone au moyen format, fonctionne de la même manière : l’objectif fait converger la lumière, le diaphragme règle la taille de l’ouverture, l’obturateur la durée, le capteur enregistre le résultat. Lisez cette coupe, et chaque réglage qui suit n’est qu’une action sur l’une de ces quatre pièces.',
  'cam.h.sensor':'La taille du capteur','cam.p.sensor':'Un capteur plus grand reçoit plus de lumière au total : moins de bruit, flou d’arrière-plan plus facile. Le coefficient de recadrage est la diagonale du plein format divisée par celle du capteur ; il sert à convertir les angles de champ.',
@@ -1087,6 +1760,30 @@ fr:{
  'edit.h.flow':'L’ordre des réglages globaux','edit.p.flow':'L’ordre compte : chaque étape change le jugement de toutes les suivantes. Du général au particulier, de l’ensemble au détail.',
  'edit.h.curve':'La courbe de tonalité : d’où vient le rendu','edit.p.curve':'L’axe horizontal est la luminosité d’origine, l’axe vertical la luminosité corrigée. Courber vers le haut éclaircit, vers le bas assombrit ; là où la pente s’accentue, le contraste de cette plage augmente.',
  'edit.h.local':'Le travail local','edit.h.over':'Les signes d’une retouche excessive',
+ 'nav.col':'Couleur',
+ 'nav.terms':'Glossaire',
+ 'col.eyebrow':'Comprendre la couleur',
+ 'col.h2':'La couleur : de la lumière au fichier',
+ 'col.lead':'La couleur n’est pas une propriété des objets, mais le résultat de la lumière, de l’œil et d’un appareil qui agissent ensemble. En suivant cette chaîne, on comprend pourquoi une même image diffère sur un smartphone, un ordinateur et un tirage, et ce que déplace réellement chaque curseur de couleur.',
+ 'col.h.rgb':'Additive et soustractive : pourquoi écran et impression diffèrent',
+ 'col.p.rgb':'Les recouvrements ci-dessous sont produits par le vrai calcul de fusion du navigateur, pas peints. La lumière s’éclaircit en s’additionnant, l’encre s’assombrit : d’où le RVB des écrans et le CMJN de l’impression.',
+ 'col.h.wheel':'Le cercle chromatique et la TSL : trois façons de décrire une couleur',
+ 'col.p.wheel':'Le panneau TSL et les roues d’étalonnage d’un logiciel reposent tous sur cette image. La teinte est l’angle, la saturation le rayon, la luminance un axe à part.',
+ 'col.h.k':'Température de couleur et balance des blancs',
+ 'col.p.k':'La bande est calculée à partir d’une approximation du rayonnement du corps noir. La moitié inférieure traite le point le plus déroutant : le réglage de balance, c’est vous qui indiquez à l’appareil la température de la source, et il compense en sens inverse.',
+ 'col.h.gamut':'Les espaces colorimétriques : un même nombre, des couleurs différentes',
+ 'col.p.gamut':'Le fer à cheval est le diagramme de chromaticité CIE 1931, son bord les couleurs pures d’une seule longueur d’onde. Les sommets de chaque triangle sont les primaires rouge, vert et bleu de la norme. Une couleur hors du triangle ne peut pas être représentée dans cet espace.',
+ 'col.h.bit':'Profondeur de bits : un dégradé a besoin d’assez de niveaux',
+ 'col.p.bit':'Le même dégradé du noir au blanc, avec seulement 8, 32 et 256 niveaux. Trop peu de niveaux se voient en bandes, surtout dans les ciels de fichiers 8 bits fortement retouchés.',
+ 'col.h.flow':'La gestion des couleurs en quatre étapes',
+ 'terms.eyebrow':'Chercher',
+ 'terms.h2':'Termes et principes',
+ 'terms.lead':'Chaque terme est expliqué en trois parties : <b class="text-sky-300">sens</b> (ce que c’est), <b class="text-violet-300">principe</b> (pourquoi il se comporte ainsi) et <b class="text-amber-300">en pratique</b> (ce que cela signifie à la prise de vue ou en retouche). Changez de catégorie ou cherchez directement, en chinois, anglais ou français.',
+ 'terms.ph':'Chercher, ex. profondeur de champ, gamut',
+ 'terms.none':'Aucun terme correspondant.',
+ 'term.m':'SENS',
+ 'term.p':'PRINCIPE',
+ 'term.e':'EN PRATIQUE',
  'tipLabel':'L’erreur habituelle',
  'ref.eyebrow':'Références','ref.h2':'Tableaux',
  'ref.h.eq':'Expositions équivalentes','ref.p.eq':'Chaque ligne laisse passer exactement la même quantité de lumière ; seuls les effets secondaires diffèrent. Chaque IL de fermeture est compensé par une vitesse plus lente d’un IL.',
@@ -1116,10 +1813,13 @@ function setLanguage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
   });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = ui(el.dataset.i18nPh); });
   renderCamera();
   renderExposure();
   renderLevels();
+  renderColor();
   renderEdit();
+  renderTerms();
   renderRef();
   armReveals(document.querySelector('main'));
 }
