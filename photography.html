@@ -190,6 +190,19 @@
         <h3 data-i18n="cam.h.gear" class="text-base font-black text-white mb-4"></h3>
         <div id="gear-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
       </div>
+      <div id="brands" class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5 scroll-mt-28">
+        <h3 data-i18n="cam.h.brand" class="text-base font-black text-white mb-2"></h3>
+        <p data-i18n="cam.p.brand" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+        <h4 data-i18n="cam.h.matrix" class="text-sm font-black text-cyan-300 mb-2"></h4>
+        <div class="table-scroll overflow-x-auto mb-6">
+          <table id="brand-matrix" class="w-full text-sm min-w-[720px]"></table>
+        </div>
+        <div id="brand-grid" class="grid md:grid-cols-2 gap-4"></div>
+        <h4 data-i18n="cam.h.lensmaker" class="text-sm font-black text-cyan-300 mt-6 mb-1"></h4>
+        <p data-i18n="cam.p.lensmaker" class="text-xs text-slate-400 leading-relaxed mb-3"></p>
+        <div id="lensmaker-grid" class="grid md:grid-cols-2 gap-3"></div>
+        <p id="phone-ties" class="text-xs text-slate-400 leading-relaxed mt-5 border-t border-slate-800 pt-4"></p>
+      </div>
       <div class="rounded-2xl border border-amber-500/25 bg-amber-500/[0.05] p-5">
         <h3 data-i18n="cam.h.choose" class="text-base font-black text-white mb-4"></h3>
         <div id="choose-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
@@ -1684,7 +1697,7 @@ const ROADMAP = [
   { h:'#basics0', c:'#34d399', t:{zh:'基礎概念', en:'The basic ideas', fr:'Les notions de base'},
     p:{zh:'照片怎麼產生、曝光、光圈、快門、ISO、對焦是什麼，用白話和比喻說明。', en:'How a picture is made; what exposure, aperture, shutter, ISO and focus are, in plain words and analogies.', fr:'Comment naît une image ; ce que sont exposition, ouverture, vitesse, ISO et mise au point, en mots simples.'} },
   { h:'#camera', c:'#22d3ee', t:{zh:'認識相機', en:'Know your camera', fr:'Connaître son appareil'},
-    p:{zh:'構造、感光元件、按鍵轉盤、鏡頭種類與型號、新機設定、配件、怎麼選相機。', en:'Anatomy, sensors, buttons and dials, lens types and names, first setup, accessories, choosing a camera.', fr:'Anatomie, capteurs, boutons et molettes, objectifs et leurs noms, premiers réglages, accessoires, choisir un boîtier.'} },
+    p:{zh:'構造、感光元件、按鍵轉盤、鏡頭種類與型號、新機設定、配件、各品牌介紹、怎麼選相機。', en:'Anatomy, sensors, buttons and dials, lens types and names, first setup, accessories, the brands, choosing a camera.', fr:'Anatomie, capteurs, boutons et molettes, objectifs et leurs noms, premiers réglages, accessoires, les marques, choisir un boîtier.'} },
   { h:'#exposure', c:'#22d3ee', t:{zh:'曝光原理', en:'How exposure works', fr:'Le principe de l’exposition'},
     p:{zh:'三要素的刻度與「級」，以及它們如何互相抵換。', en:'The three controls in stops, and how they trade against each other.', fr:'Les trois réglages en IL, et comment ils se compensent.'} },
   { h:'#basics', c:'#fbbf24', t:{zh:'入門實拍', en:'Beginner shooting', fr:'Débuter'},
@@ -1958,6 +1971,108 @@ function renderCameraMore() {
   document.getElementById('choose-grid').innerHTML = CHOOSE.map(x => card(t(x.t), t(x.p), 'text-amber-300')).join('');
 }
 
+/* ═══════════════════════════════════════════════════════════
+   Camera makers. Character and systems rather than model
+   numbers: models are replaced every two or three years, while
+   a maker's mount, formats and habits last a decade or more.
+   ═══════════════════════════════════════════════════════════ */
+const FORMATS = [
+  { k:'one', t:{zh:'1 吋／隨身機', en:'1″ / compact', fr:'1″ / compact'} },
+  { k:'m43', t:'M4/3' },
+  { k:'apsc', t:'APS-C' },
+  { k:'ff', t:{zh:'全片幅', en:'Full frame', fr:'Plein format'} },
+  { k:'mf', t:{zh:'中片幅', en:'Medium format', fr:'Moyen format'} },
+];
+const BRANDS = [
+  { n:'Canon', c:'#f87171', o:{zh:'日本・1937', en:'Japan · 1937', fr:'Japon · 1937'}, f:['one','apsc','ff'],
+    m:'RF · RF-S · (EF)', lines:'EOS R · PowerShot · Cinema EOS',
+    d:{zh:'長年在數位相機市占居首。選單直覺、上手容易，膚色討喜，自家鏡頭群最完整，從入門到新聞、體育攝影都有。影片線（Cinema EOS）在影視業界也很普遍。', en:'For many years the market leader in digital cameras. Intuitive menus and an easy start, flattering skin tones, and the most complete in-house lens range, from entry level to news and sport. Its Cinema EOS line is widespread in film and television.', fr:'Leader du marché numérique depuis de longues années. Menus intuitifs, prise en main facile, tons chair flatteurs, et la gamme d’objectifs maison la plus complète, de l’entrée de gamme au reportage et au sport. Sa ligne Cinema EOS est très répandue dans l’audiovisuel.'},
+    g:{zh:'人像、婚禮、活動、第一次買相機的人。', en:'Portraits, weddings, events, first-time buyers.', fr:'Portrait, mariage, événementiel, premier achat.'},
+    w:{zh:'RF 卡口對副廠全片幅自動對焦鏡頭開放得晚、選擇較少，鏡頭預算通常較高。', en:'The RF mount opened late and only partly to third-party full-frame autofocus lenses, so lens budgets tend to run higher.', fr:'La monture RF s’est ouverte tard et partiellement aux objectifs autofocus plein format tiers : le budget objectifs tend à être plus élevé.'} },
+  { n:'Nikon', c:'#fbbf24', o:{zh:'日本・1917', en:'Japan · 1917', fr:'Japon · 1917'}, f:['apsc','ff'],
+    m:'Z (FX · DX) · (F)', lines:'Z · Zf / Zfc',
+    d:{zh:'以光學起家的老牌廠，F 卡口從 1959 年沿用到數位單眼時代。握感與機身堅固度口碑極佳，Z 卡口口徑寬、S-Line 鏡頭畫質頂尖。Zf、Zfc 走復古外型。2024 年收購了電影攝影機品牌 RED。', en:'A house founded on optics, whose F mount ran from 1959 through the digital SLR era. Renowned for handling and toughness; the Z mount is wide and the S-Line lenses are top class. The Zf and Zfc take a retro form. In 2024 it acquired the cinema-camera maker RED.', fr:'Une maison née de l’optique, dont la monture F a couru de 1959 à l’ère du reflex numérique. Réputée pour sa prise en main et sa robustesse ; la monture Z est large et les objectifs S-Line au sommet. Les Zf et Zfc adoptent un style rétro. En 2024, elle a racheté le fabricant de caméras RED.'},
+    g:{zh:'風景、野生動物、紀實，也適合手上已有 F 卡口鏡頭的人（可轉接）。', en:'Landscape, wildlife, documentary, and anyone with F-mount lenses to adapt.', fr:'Paysage, faune, reportage, et ceux qui ont des objectifs F à adapter.'},
+    w:{zh:'APS-C 專用鏡頭相對少。', en:'Comparatively few dedicated APS-C lenses.', fr:'Relativement peu d’objectifs dédiés APS-C.'} },
+  { n:'Sony', c:'#e2e8f0', o:{zh:'日本・相機事業 2006 起', en:'Japan · cameras since 2006', fr:'Japon · appareils depuis 2006'}, f:['one','apsc','ff'],
+    m:'E · FE', lines:'α1 · α9 · α7 / α7R / α7S / α7C · α6000 · ZV · RX',
+    d:{zh:'2006 年接手 Konica Minolta 的相機部門，2013 年推出 α7，帶動全片幅無反的普及。自家也生產感光元件，供應給許多其他品牌與手機。E 卡口規格開放，副廠鏡頭選擇最多；對焦追蹤與影片功能是強項。', en:'Took over Konica Minolta’s camera division in 2006 and, with the α7 in 2013, made full-frame mirrorless mainstream. It also makes sensors, supplied to many other brands and to phones. The E mount’s open specification gives it the widest third-party lens choice; tracking AF and video are its strengths.', fr:'A repris la division photo de Konica Minolta en 2006 et, avec l’α7 en 2013, démocratisé l’hybride plein format. Elle fabrique aussi des capteurs, fournis à de nombreuses marques et aux smartphones. La monture E, ouverte, offre le plus grand choix d’objectifs tiers ; le suivi AF et la vidéo sont ses points forts.'},
+    g:{zh:'影音創作者、運動與生態、想用大量副廠鏡頭省預算的人。', en:'Video creators, sport and wildlife, and anyone saving with third-party lenses.', fr:'Vidéastes, sport et faune, et ceux qui économisent avec des objectifs tiers.'},
+    w:{zh:'早期機身選單複雜、握把偏小，新機已改善不少。', en:'Earlier bodies had complex menus and small grips; recent ones are much improved.', fr:'Les premiers boîtiers avaient des menus complexes et une petite poignée ; les récents ont beaucoup progressé.'} },
+  { n:'Fujifilm', c:'#34d399', o:{zh:'日本・1934', en:'Japan · 1934', fr:'Japon · 1934'}, f:['apsc','mf'],
+    m:'X · G (GFX)', lines:'X-T · X-H · X-S · X-E · X-Pro · X100 · GFX',
+    d:{zh:'底片大廠出身，招牌是「底片模擬」：Provia、Velvia、Classic Chrome、Acros 等色調，直出 JPEG 就很好看。機身有快門、ISO 實體轉盤，操作像底片機。刻意跳過全片幅，只做 APS-C 與中片幅 GFX。', en:'A film giant, best known for its film simulations: Provia, Velvia, Classic Chrome, Acros and others, so JPEGs look good straight from the camera. Physical shutter and ISO dials make it handle like a film camera. It deliberately skips full frame, making only APS-C and GFX medium format.', fr:'Un géant du film, connu pour ses simulations de film : Provia, Velvia, Classic Chrome, Acros…, si bien que les JPEG sont beaux dès la sortie. Les molettes de vitesse et d’ISO le font manier comme un appareil argentique. Il saute délibérément le plein format : seulement APS-C et moyen format GFX.'},
+    g:{zh:'街拍、旅行、喜歡直出不想多修圖、喜歡實體轉盤的人。', en:'Street, travel, people who prefer straight-out-of-camera colour and physical dials.', fr:'Rue, voyage, amateurs de JPEG directs et de molettes physiques.'},
+    w:{zh:'沒有全片幅；X100 等熱門機常年缺貨、溢價。', en:'No full frame; popular models such as the X100 are often scarce and marked up.', fr:'Pas de plein format ; les modèles prisés comme le X100 sont souvent introuvables et surcotés.'} },
+  { n:'Panasonic Lumix', c:'#38bdf8', o:{zh:'日本・相機事業 2001 起', en:'Japan · cameras since 2001', fr:'Japon · appareils depuis 2001'}, f:['one','m43','ff'],
+    m:'M4/3 · L', lines:'G · GH · S',
+    d:{zh:'與 Olympus 共同推出 M4/3 系統，GH 系列長期是獨立影片工作者的首選。全片幅 S 系列採用 L 卡口，與 Leica、Sigma 組成「L 卡口聯盟」，鏡頭可以互通。防手震與影片規格是強項。', en:'Co-founded the Micro Four Thirds system with Olympus, and its GH series long led among independent filmmakers. The full-frame S series uses the L mount, shared with Leica and Sigma in the L-Mount Alliance, so lenses interchange. Stabilisation and video specifications are its strengths.', fr:'Cofondateur du Micro 4/3 avec Olympus ; sa série GH fut longtemps la référence des vidéastes indépendants. La série plein format S utilise la monture L, partagée avec Leica et Sigma dans l’alliance L-Mount : les objectifs sont interchangeables. Stabilisation et vidéo sont ses atouts.'},
+    g:{zh:'以影片為主、兼拍照片的人。', en:'People who mostly shoot video and some stills.', fr:'Ceux qui font surtout de la vidéo, et un peu de photo.'},
+    w:{zh:'相位對焦較晚才加入，追焦口碑過去落後於對手。', en:'Phase-detect AF arrived late, and its tracking long trailed rivals in reputation.', fr:'L’AF à détection de phase est arrivé tard, et son suivi a longtemps eu moins bonne réputation.'} },
+  { n:'OM System', c:'#a78bfa', o:{zh:'日本・前身 Olympus', en:'Japan · formerly Olympus', fr:'Japon · ex-Olympus'}, f:['m43'],
+    m:'M4/3', lines:'OM-1 · OM-5 · TG',
+    d:{zh:'Olympus 於 2021 年把相機事業轉給 OM Digital Solutions，品牌改為 OM System。M4/3 讓機身與望遠鏡頭都很輕，防手震與防滴是業界頂尖，還有機內即時 ND、景深合成、星軌合成等運算功能。', en:'Olympus passed its camera business to OM Digital Solutions in 2021, and the brand became OM System. Micro Four Thirds keeps bodies and telephotos light; its stabilisation and weather sealing are among the best, and it offers in-camera computational modes such as live ND, focus stacking and live composite for star trails.', fr:'Olympus a cédé sa branche photo à OM Digital Solutions en 2021, et la marque est devenue OM System. Le Micro 4/3 garde boîtiers et téléobjectifs légers ; stabilisation et tropicalisation sont parmi les meilleures, avec des modes computationnels intégrés : ND en direct, empilement de mise au point, composite pour les filés d’étoiles.'},
+    g:{zh:'登山、賞鳥、微距、需要輕量長焦的人。', en:'Hiking, birding, macro, anyone wanting light long lenses.', fr:'Randonnée, ornithologie, macro, et qui veut des longues focales légères.'},
+    w:{zh:'感光元件小，高 ISO 與淺景深不如大片幅。', en:'The small sensor gives up some high-ISO quality and shallow focus.', fr:'Le petit capteur cède du terrain en hauts ISO et en flou d’arrière-plan.'} },
+  { n:'Leica', c:'#ef4444', o:{zh:'德國・Leitz 1869', en:'Germany · Leitz 1869', fr:'Allemagne · Leitz 1869'}, f:['ff'],
+    m:'M · L', lines:'M · Q · SL',
+    d:{zh:'德國威茲拉的光學品牌，1925 年的 Leica I 讓 35mm 底片普及，奠定今天「全片幅」的尺寸。M 系列是手動對焦的旁軸相機，Q 是固定鏡頭全片幅機，SL 用 L 卡口。手工質感與鏡頭描寫著名，價格也最高。也與手機品牌合作影像調校。', en:'The optical house of Wetzlar, whose Leica I of 1925 popularised 35mm film and so fixed the size we now call full frame. The M series are manual-focus rangefinders, the Q a fixed-lens full-frame camera, the SL uses the L mount. Famous for craftsmanship and lens rendering, and priced accordingly. It also tunes imaging for phone makers.', fr:'La maison optique de Wetzlar, dont le Leica I de 1925 a popularisé le film 35 mm et fixé la taille qu’on appelle aujourd’hui plein format. Les M sont des télémétriques à mise au point manuelle, le Q un plein format à objectif fixe, le SL utilise la monture L. Célèbre pour sa finition et le rendu de ses objectifs, au prix fort. Elle collabore aussi avec des fabricants de smartphones.'},
+    g:{zh:'街拍、紀實、重視操作手感與收藏價值的人。', en:'Street and documentary, and those who value feel and collectability.', fr:'Rue, reportage, et ceux qui privilégient le toucher et la valeur de collection.'},
+    w:{zh:'非常昂貴；M 系列沒有自動對焦。', en:'Very expensive; the M series has no autofocus.', fr:'Très cher ; la série M n’a pas d’autofocus.'} },
+  { n:'Hasselblad', c:'#94a3b8', o:{zh:'瑞典・1941', en:'Sweden · 1941', fr:'Suède · 1941'}, f:['mf'],
+    m:'X · V', lines:'X2D · X1D · 907X',
+    d:{zh:'中片幅代表品牌，阿波羅登月任務使用的就是它的相機。2017 年起由 DJI 控股。色彩科學（HNCS）以自然著稱，X 系列把中片幅做得接近一般無反的大小；也與手機品牌合作影像調校。', en:'The name in medium format; its cameras went to the Moon on the Apollo missions. Majority-owned by DJI since 2017. Its colour science (HNCS) is known for naturalness, and the X series packs medium format into a body near ordinary mirrorless size. It too tunes imaging for phone makers.', fr:'La référence du moyen format ; ses appareils sont allés sur la Lune avec Apollo. Contrôlé majoritairement par DJI depuis 2017. Sa science des couleurs (HNCS) est réputée naturelle, et la série X loge le moyen format dans un boîtier proche d’un hybride ordinaire. Elle collabore aussi avec des fabricants de smartphones.'},
+    g:{zh:'商業、風景、人像，需要大尺寸輸出的人。', en:'Commercial, landscape and portrait work for large output.', fr:'Commercial, paysage et portrait pour les grands tirages.'},
+    w:{zh:'價格高、對焦與連拍慢，不適合動態題材。', en:'Expensive, with slow AF and burst: not for action.', fr:'Cher, AF et rafale lents : pas pour l’action.'} },
+  { n:'Pentax · Ricoh', c:'#fb923c', o:{zh:'日本・Pentax 1919', en:'Japan · Pentax 1919', fr:'Japon · Pentax 1919'}, f:['apsc','ff'],
+    m:'K · (GR)', lines:'K-1 · K-3 · KF · GR',
+    d:{zh:'少數仍堅持做數位單眼的品牌，K 卡口從 1975 年沿用至今，老鏡頭幾乎都能裝。機身防滴、內建星空追蹤（Astrotracer）與像素偏移超解析。Ricoh GR 是 APS-C 口袋機，街拍愛好者的經典。', en:'One of few still committed to the digital SLR; the K mount has run since 1975 and takes almost every old lens. Bodies are weather sealed, with built-in star tracking (Astrotracer) and pixel-shift resolution. The Ricoh GR, an APS-C pocket camera, is a street photographer’s classic.', fr:'L’une des rares marques fidèles au reflex numérique ; la monture K court depuis 1975 et accepte presque tous les anciens objectifs. Boîtiers tropicalisés, suivi d’étoiles intégré (Astrotracer) et pixel shift. Le Ricoh GR, compact APS-C de poche, est un classique de la photo de rue.'},
+    g:{zh:'喜歡光學觀景窗、戶外與星空、街拍（GR）的人。', en:'Lovers of optical viewfinders, outdoors and stars, and street (GR).', fr:'Amateurs de visée optique, de plein air, d’étoiles, et de rue (GR).'},
+    w:{zh:'新鏡頭與新機推出慢，自動對焦追蹤落後無反。', en:'New lenses and bodies come slowly, and AF tracking lags mirrorless.', fr:'Nouveautés rares, et suivi AF en retrait des hybrides.'} },
+  { n:'Sigma', c:'#e879f9', o:{zh:'日本・1961', en:'Japan · 1961', fr:'Japon · 1961'}, f:['ff'],
+    m:'L', lines:'fp · BF',
+    d:{zh:'主要以鏡頭聞名（見下方副廠鏡頭），也做極簡設計的 L 卡口全片幅機身。早年以 Foveon 三層感光元件聞名，色彩獨特但高 ISO 弱。', en:'Best known for lenses (see third-party lenses below), it also makes minimalist L-mount full-frame bodies. Earlier it was known for the three-layer Foveon sensor: distinctive colour, weak at high ISO.', fr:'Surtout connue pour ses objectifs (voir plus bas), elle fait aussi des boîtiers plein format minimalistes en monture L. Elle fut célèbre pour le capteur Foveon à trois couches : couleurs singulières, faible en hauts ISO.'},
+    g:{zh:'喜歡極簡設計、L 卡口用戶。', en:'Fans of minimal design, L-mount users.', fr:'Amateurs de design épuré, utilisateurs de la monture L.'},
+    w:{zh:'機身是小眾產品，操作習慣與主流不同。', en:'The bodies are niche, with unconventional handling.', fr:'Boîtiers de niche, à la prise en main peu conventionnelle.'} },
+];
+const LENS_MAKERS = [
+  { n:'Sigma', d:{zh:'Art（畫質）、Contemporary（輕巧）、Sports（望遠）三條產品線，價格常是原廠一半到三分之二。', en:'Three lines: Art (image quality), Contemporary (compact), Sports (telephoto), often at a half to two thirds of the maker’s price.', fr:'Trois gammes : Art (qualité), Contemporary (compact), Sports (télé), souvent à la moitié ou aux deux tiers du prix constructeur.'} },
+  { n:'Tamron', d:{zh:'以輕巧、實用的變焦鏡為主，例如大光圈標準變焦與旅遊鏡。', en:'Mainly light, practical zooms such as fast standard zooms and travel zooms.', fr:'Surtout des zooms légers et pratiques, standards lumineux ou de voyage.'} },
+  { n:'Viltrox · TTArtisan · 7Artisans', d:{zh:'中國品牌，便宜的大光圈定焦，有自動對焦也有手動款，入門玩淺景深很划算。', en:'Chinese makers of inexpensive fast primes, autofocus or manual; good value for trying shallow focus.', fr:'Marques chinoises de focales fixes lumineuses bon marché, AF ou manuelles ; idéales pour s’essayer au flou.'} },
+  { n:'Laowa · Samyang', d:{zh:'Laowa 專做特殊鏡頭（超廣角、2 倍微距、探針鏡）；韓國 Samyang 以平價大光圈與星空鏡著名。', en:'Laowa makes unusual lenses (ultra-wides, 2× macro, probe lenses); Korea’s Samyang is known for affordable fast primes and astro lenses.', fr:'Laowa fait des objectifs singuliers (ultra grand-angles, macro 2×, objectifs sonde) ; le coréen Samyang est connu pour ses focales lumineuses abordables et ses objectifs d’astro.'} },
+];
+const PHONE_TIES = {
+  zh:'手機與相機品牌的合作：小米與 Leica、vivo 與 ZEISS、OPPO 及 OnePlus 與 Hasselblad。這些合作多半是色彩調校與鏡頭鍍膜，感光元件本身通常來自 Sony 等供應商。另外 DJI（空拍機、Osmo 口袋雲台相機）、GoPro 與 Insta360（運動與全景相機）是另一個領域的重要品牌。',
+  en:'Phone and camera partnerships: Xiaomi with Leica, vivo with ZEISS, OPPO and OnePlus with Hasselblad. Mostly these cover colour tuning and lens coatings; the sensors usually come from suppliers such as Sony. In a neighbouring field, DJI (drones, Osmo pocket gimbal cameras), GoPro and Insta360 (action and 360° cameras) are the names to know.',
+  fr:'Partenariats smartphones et marques photo : Xiaomi avec Leica, vivo avec ZEISS, OPPO et OnePlus avec Hasselblad. Ils portent surtout sur le rendu des couleurs et les traitements optiques ; les capteurs viennent en général de fournisseurs comme Sony. Dans un domaine voisin, DJI (drones, caméras Osmo à nacelle), GoPro et Insta360 (caméras d’action et 360°) sont les noms à connaître.',
+};
+function renderBrands() {
+  const yes = '<span class="inline-block w-3 h-3 rounded-full" style="background:#22d3ee"></span>';
+  const no  = '<span class="inline-block w-3 h-3 rounded-full border border-slate-700"></span>';
+  document.getElementById('brand-matrix').innerHTML =
+      '<thead><tr class="text-left text-slate-400 border-b border-slate-800"><th class="py-3 px-4 font-bold">' + ui('cam.br.th') + '</th>'
+    + FORMATS.map(f => '<th class="py-3 px-3 font-bold text-center whitespace-nowrap">' + t(f.t) + '</th>').join('')
+    + '<th class="py-3 px-4 font-bold">' + ui('cam.br.mount') + '</th></tr></thead><tbody class="divide-y divide-slate-800/60">'
+    + BRANDS.map(b => '<tr><td class="py-2.5 px-4 font-black whitespace-nowrap" style="color:' + b.c + '">' + b.n + '</td>'
+      + FORMATS.map(f => '<td class="py-2.5 px-3 text-center">' + (b.f.includes(f.k) ? yes : no) + '</td>').join('')
+      + '<td class="py-2.5 px-4 text-slate-300 whitespace-nowrap">' + b.m + '</td></tr>').join('')
+    + '</tbody>';
+  const row = (icon, col, txt) => '<p class="text-xs text-slate-300 leading-relaxed mt-2 flex gap-2"><i class="fa-solid ' + icon + ' mt-0.5" style="color:' + col + '"></i><span>' + txt + '</span></p>';
+  document.getElementById('brand-grid').innerHTML = BRANDS.map(b =>
+      '<div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-5 reveal" style="border-top:3px solid ' + b.c + '">'
+    +   '<div class="flex items-baseline justify-between gap-2 flex-wrap">'
+    +     '<h4 class="text-lg font-black" style="color:' + b.c + '">' + b.n + '</h4>'
+    +     '<span class="text-[0.7rem] text-slate-500">' + t(b.o) + '</span>'
+    +   '</div>'
+    +   '<div class="text-[0.7rem] text-slate-400 mt-1">' + ui('cam.br.mount') + ui('colon') + b.m + ' · ' + ui('cam.br.lines') + ui('colon') + b.lines + '</div>'
+    +   '<p class="text-xs text-slate-400 leading-relaxed mt-3">' + t(b.d) + '</p>'
+    +   row('fa-thumbs-up', '#34d399', '<b class="text-slate-200">' + ui('cam.br.good') + '</b> ' + t(b.g))
+    +   row('fa-triangle-exclamation', '#fbbf24', '<b class="text-slate-200">' + ui('cam.br.weak') + '</b> ' + t(b.w))
+    + '</div>').join('');
+  document.getElementById('lensmaker-grid').innerHTML = LENS_MAKERS.map(x => card(x.n, t(x.d))).join('');
+  document.getElementById('phone-ties').innerHTML = t(PHONE_TIES);
+}
+
 let revealObserver = null;
 function armReveals(root) {
   const els = root.querySelectorAll('.reveal');
@@ -2040,6 +2155,17 @@ zh:{
  'cam.h.gear':'配件與保養',
  'cam.h.choose':'怎麼選相機',
  'edit.eyebrow':'第 8 章',
+ 'colon':'：',
+ 'cam.h.brand':'相機品牌介紹',
+ 'cam.p.brand':'這裡介紹的是各品牌的系統、特色與擅長的題材，而不是具體型號：型號兩三年就換代，但一個品牌的卡口、片幅與調性會延續十年以上。老實說，今天主流品牌的畫質差距很小，選品牌其實是在選鏡頭群、操作手感和色彩偏好。',
+ 'cam.h.matrix':'各品牌提供哪些片幅',
+ 'cam.br.th':'品牌',
+ 'cam.br.mount':'卡口',
+ 'cam.br.lines':'系列',
+ 'cam.br.good':'適合：',
+ 'cam.br.weak':'要留意：',
+ 'cam.h.lensmaker':'副廠鏡頭品牌',
+ 'cam.p.lensmaker':'副廠是指相機品牌以外的公司生產、但做成各家卡口的鏡頭。畫質常常不輸原廠，價格卻低很多。購買前確認有沒有你的卡口版本。',
  'tipLabel':'最常犯的錯',
  'ref.eyebrow':'附錄 B・查閱','ref.h2':'對照表',
  'ref.h.eq':'等效曝光','ref.p.eq':'以下每一列的進光量完全相同，差別只在副作用。光圈每收一級，快門就慢一級。',
@@ -2116,6 +2242,17 @@ en:{
  'cam.h.gear':'Accessories and care',
  'cam.h.choose':'Choosing a camera',
  'edit.eyebrow':'Chapter 8',
+ 'colon':': ',
+ 'cam.h.brand':'The camera brands',
+ 'cam.p.brand':'What follows is each maker’s systems, character and strengths, not model numbers: models change every two or three years, but a brand’s mount, formats and style last a decade or more. In truth, image quality among today’s main brands differs very little; choosing a brand is really choosing a lens range, a feel in the hand and a taste in colour.',
+ 'cam.h.matrix':'Which formats each brand offers',
+ 'cam.br.th':'Brand',
+ 'cam.br.mount':'Mount',
+ 'cam.br.lines':'Series',
+ 'cam.br.good':'Suits:',
+ 'cam.br.weak':'Watch for:',
+ 'cam.h.lensmaker':'Third-party lens makers',
+ 'cam.p.lensmaker':'Third-party lenses are made by companies other than the camera maker, in versions for each mount. Their image quality often matches the original makers’ at a much lower price. Check that a version exists for your mount.',
  'tipLabel':'The usual mistake',
  'ref.eyebrow':'Appendix B · Reference','ref.h2':'Tables',
  'ref.h.eq':'Equivalent exposures','ref.p.eq':'Every row lets in exactly the same amount of light; only the side effects differ. Each stop the aperture closes, the shutter opens one stop longer.',
@@ -2192,6 +2329,17 @@ fr:{
  'cam.h.gear':'Accessoires et entretien',
  'cam.h.choose':'Choisir un appareil',
  'edit.eyebrow':'Chapitre 8',
+ 'colon':' : ',
+ 'cam.h.brand':'Les marques d’appareils',
+ 'cam.p.brand':'Voici les systèmes, le caractère et les points forts de chaque marque, pas les modèles : ceux-ci changent tous les deux ou trois ans, alors que la monture, les formats et le style d’une marque durent dix ans et plus. À vrai dire, la qualité d’image des grandes marques actuelles diffère très peu ; choisir une marque, c’est choisir une gamme d’objectifs, une prise en main et un goût pour la couleur.',
+ 'cam.h.matrix':'Les formats proposés par chaque marque',
+ 'cam.br.th':'Marque',
+ 'cam.br.mount':'Monture',
+ 'cam.br.lines':'Gammes',
+ 'cam.br.good':'Convient à :',
+ 'cam.br.weak':'À surveiller :',
+ 'cam.h.lensmaker':'Fabricants d’objectifs tiers',
+ 'cam.p.lensmaker':'Les objectifs tiers sont fabriqués par d’autres sociétés que le constructeur, en versions pour chaque monture. Leur qualité égale souvent celle des constructeurs pour un prix bien moindre. Vérifiez qu’une version existe pour votre monture.',
  'tipLabel':'L’erreur habituelle',
  'ref.eyebrow':'Annexe B · Références','ref.h2':'Tableaux',
  'ref.h.eq':'Expositions équivalentes','ref.p.eq':'Chaque ligne laisse passer exactement la même quantité de lumière ; seuls les effets secondaires diffèrent. Chaque IL de fermeture est compensé par une vitesse plus lente d’un IL.',
@@ -2225,6 +2373,7 @@ function setLanguage(lang) {
   renderBasics();
   renderCamera();
   renderCameraMore();
+  renderBrands();
   renderExposure();
   renderLevels();
   renderColor();
