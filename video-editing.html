@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影片剪輯 | 軟體、剪接技法與特效</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+<style>
+  body {
+    background-color: #08070c;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(139,92,246,0.08) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(99,102,241,0.06) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(244,63,94,0.04) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+  kbd { display:inline-block; padding:.05rem .4rem; border-radius:.35rem; font-size:.72rem; font-weight:700;
+        font-family: Nunito, sans-serif; color:#e2e8f0; background:#1e1b2e; border:1px solid #3f3a5c;
+        box-shadow: 0 1px 0 #3f3a5c; white-space: nowrap; }
+
+  /* ── Diagrams ──
+     Every diagram is drawn in SVG from the numbers it illustrates, so the
+     clip lengths in the trim figures and the ratios of the frames are exact. */
+  .dg { display:block; width:100%; height:auto; }
+  .dg text { font-family: Nunito, 'Noto Serif TC', sans-serif; }
+  .dg .lab  { fill:#c4b5fd; font-size:15px; font-weight:800; }
+  .dg .sub  { fill:#94a3b8; font-size:13px; }
+  .dg .val  { fill:#f1f5f9; font-size:13px; font-weight:800; }
+  .dg .grid { stroke: rgba(148,163,184,0.18); stroke-width:1; }
+  .dg .trk  { fill:#120f1c; stroke:#2a2540; stroke-width:1; }
+  .dia-box { background:#0e0c16; border:1px solid rgba(148,163,184,0.14); border-radius:1rem; padding:1rem; }
+
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-violet-500 selection:text-white">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(139,92,246,0.14) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(99,102,241,0.11) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#08070c]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-violet-500 via-indigo-500 to-rose-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#08070c] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-film text-violet-400 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-violet-400 uppercase bg-violet-500/10 rounded-full border border-violet-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav id="nav" class="flex flex-wrap gap-2 text-xs"></nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <div id="sections" class="space-y-12"></div>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Diagrams. Each returns an SVG string in the current language.
+   ═══════════════════════════════════════════════════════════ */
+const CLIP = { A:'#6366f1', B:'#a855f7', C:'#14b8a6', T:'#f59e0b', D:'#38bdf8', M:'#f472b6' };
+
+function clipRect(x, y, w, h, color, label, sub) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${color}" fill-opacity="0.28" stroke="${color}" stroke-width="2"/>`
+    + (label ? `<text x="${x + 8}" y="${y + h/2 + 5}" class="val">${label}</text>` : '')
+    + (sub ? `<text x="${x + w - 8}" y="${y + h/2 + 5}" class="sub" text-anchor="end">${sub}</text>` : '');
+}
+
+/* Five delivery frames at one common height, so their ratios read true. */
+function diaAspect() {
+  const H = 130, gap = 34, base = 40;
+  const R = [
+    { r:'16:9',   w:16/9,   u:{zh:'YouTube、電視', en:'YouTube, TV', fr:'YouTube, TV'} },
+    { r:'9:16',   w:9/16,   u:{zh:'Reels、TikTok、Shorts', en:'Reels, TikTok, Shorts', fr:'Reels, TikTok, Shorts'} },
+    { r:'1:1',    w:1,      u:{zh:'方形貼文', en:'Square posts', fr:'Posts carrés'} },
+    { r:'4:5',    w:4/5,    u:{zh:'IG 動態直式', en:'Instagram feed', fr:'Fil Instagram'} },
+    { r:'2.39:1', w:2.39,   u:{zh:'電影寬銀幕', en:'Cinema scope', fr:'Cinémascope'} },
+  ];
+  let x = 20, s = '';
+  R.forEach((o, i) => {
+    const w = H * o.w;
+    const col = ['#8b5cf6','#f472b6','#14b8a6','#f59e0b','#38bdf8'][i];
+    s += `<rect x="${x}" y="${base}" width="${w}" height="${H}" rx="6" fill="${col}" fill-opacity="0.16" stroke="${col}" stroke-width="2"/>`;
+    s += `<text x="${x + w/2}" y="${base + H/2 + 6}" text-anchor="middle" class="val" style="font-size:16px">${o.r}</text>`;
+    s += `<text x="${x + w/2}" y="${base + H + 24}" text-anchor="middle" class="sub">${t(o.u)}</text>`;
+    x += w + gap;
+  });
+  const title = {zh:'常見畫面比例（同高度並排）', en:'Common aspect ratios at one height', fr:'Formats courants à hauteur égale'};
+  return `<svg class="dg" viewBox="0 0 ${x} 210" role="img" aria-label="${t(title)}"><text x="20" y="24" class="lab">${t(title)}</text>${s}</svg>`;
+}
+
+/* The anatomy of a timeline: tracks, clips, playhead. */
+function diaTimeline() {
+  const L = {
+    title:{zh:'時間軸的構造', en:'Anatomy of a timeline', fr:'Anatomie d’une timeline'},
+    v2:{zh:'標題', en:'Title', fr:'Titre'}, a1:{zh:'對白', en:'Dialogue', fr:'Dialogue'}, a2:{zh:'配樂', en:'Music', fr:'Musique'},
+    ph:{zh:'播放頭', en:'Playhead', fr:'Tête de lecture'},
+    cover:{zh:'上層影像蓋過下層', en:'Upper video covers lower', fr:'La vidéo du haut masque celle du bas'},
+    mix:{zh:'所有音軌一起混音', en:'All audio tracks are mixed', fr:'Toutes les pistes audio sont mixées'},
+    tc:{zh:'時間碼', en:'Timecode', fr:'Timecode'},
+  };
+  const X0 = 90, W = 700, rows = [
+    { k:'V2', y:52 }, { k:'V1', y:96 }, { k:'A1', y:150 }, { k:'A2', y:194 } ];
+  let s = `<text x="20" y="22" class="lab">${t(L.title)}</text>`;
+  // ruler
+  for (let i = 0; i <= 10; i++) {
+    const x = X0 + i * W / 10;
+    s += `<line x1="${x}" y1="34" x2="${x}" y2="${i % 5 ? 40 : 44}" stroke="#64748b"/>`;
+    if (i % 5 === 0) s += `<text x="${x + 3}" y="44" class="sub" style="font-size:11px">00:00:${String(i*2).padStart(2,'0')}:00</text>`;
+  }
+  rows.forEach(r => {
+    s += `<rect x="20" y="${r.y}" width="62" height="36" rx="5" fill="#1a1628" stroke="#2a2540"/>`;
+    s += `<text x="51" y="${r.y + 23}" text-anchor="middle" class="val">${r.k}</text>`;
+    s += `<rect x="${X0}" y="${r.y}" width="${W}" height="36" class="trk"/>`;
+  });
+  s += clipRect(X0 + 70,  52, 260, 36, CLIP.T, t(L.v2));
+  s += clipRect(X0,        96, 230, 36, CLIP.A, 'A');
+  s += clipRect(X0 + 230,  96, 200, 36, CLIP.B, 'B');
+  s += clipRect(X0 + 430,  96, 270, 36, CLIP.C, 'C');
+  s += clipRect(X0,       150, 230, 36, CLIP.D, 'A');
+  s += clipRect(X0 + 230, 150, 200, 36, CLIP.D, 'B');
+  s += clipRect(X0 + 430, 150, 270, 36, CLIP.D, 'C');
+  s += clipRect(X0 + 20,  194, 660, 36, CLIP.M, t(L.a2));
+  s += `<line x1="${X0}" y1="141" x2="${X0 + W}" y2="141" stroke="#475569" stroke-dasharray="4 4"/>`;
+  const ph = X0 + 300;
+  s += `<line x1="${ph}" y1="30" x2="${ph}" y2="236" stroke="#f43f5e" stroke-width="2.5"/><path d="M${ph-7} 30 h14 l-7 9 z" fill="#f43f5e"/>`;
+  s += `<text x="${ph + 8}" y="256" class="sub" fill="#fda4af" style="fill:#fda4af">${t(L.ph)}</text>`;
+  s += `<text x="${X0 + W + 12}" y="96" class="sub">↑ ${t(L.cover)}</text>`;
+  s += `<text x="${X0 + W + 12}" y="196" class="sub">↓ ${t(L.mix)}</text>`;
+  return `<svg class="dg" viewBox="0 0 1060 266" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Ripple, roll, slip and slide: the same three clips before and after.
+   1 unit = 1 frame-ish; every clip length here is exact. */
+function diaTrims() {
+  const P = [
+    { k:'ripple', c:'#a78bfa',
+      n:{zh:'波紋剪輯 Ripple', en:'Ripple edit', fr:'Montage à propagation (ripple)'},
+      d:{zh:'把 A 的結尾縮短，後面所有片段一起往前移，總長變短，不留空隙。', en:'Shorten the end of A: everything after moves up, the sequence gets shorter, no gap is left.', fr:'Raccourcir la fin de A : tout ce qui suit recule, la séquence raccourcit, sans trou.'},
+      a:[[0,90,'A'],[90,210,'B'],[210,330,'C']] },
+    { k:'roll', c:'#38bdf8',
+      n:{zh:'滾動剪輯 Roll', en:'Rolling edit', fr:'Montage roulant (roll)'},
+      d:{zh:'移動 A 與 B 之間的剪接點：A 變長多少，B 就變短多少，總長不變。', en:'Move the cut between A and B: A gains exactly what B loses, total length unchanged.', fr:'Déplacer le raccord entre A et B : A gagne ce que B perd, la durée totale ne change pas.'},
+      a:[[0,150,'A'],[150,240,'B'],[240,360,'C']] },
+    { k:'slip', c:'#f59e0b',
+      n:{zh:'內滑剪輯 Slip', en:'Slip edit', fr:'Glissement interne (slip)'},
+      d:{zh:'B 的位置和長度都不動，只改變它用到素材的哪一段，像在窗框後面拉動底片。', en:'B keeps its place and length; only the part of the source it shows changes, like pulling film behind a fixed window.', fr:'B garde sa place et sa durée ; seule la portion de rush affichée change, comme un film tiré derrière une fenêtre fixe.'},
+      a:[[0,120,'A'],[120,240,'B','f14–f26'],[240,360,'C']] },
+    { k:'slide', c:'#14b8a6',
+      n:{zh:'外滑剪輯 Slide', en:'Slide edit', fr:'Glissement externe (slide)'},
+      d:{zh:'B 的內容不變，整段在 A 與 C 之間移動；A 變長、C 變短，總長不變。', en:'B keeps its content and slides between A and C; A lengthens, C shortens, total unchanged.', fr:'B garde son contenu et se déplace entre A et C ; A s’allonge, C raccourcit, durée totale inchangée.'},
+      a:[[0,150,'A'],[150,270,'B'],[270,360,'C']] },
+  ];
+  const before = [[0,120,'A'],[120,240,'B','f10–f22'],[240,360,'C']];
+  const Lb = {zh:'之前', en:'Before', fr:'Avant'}, La = {zh:'之後', en:'After', fr:'Après'};
+  const row = (y, clips) => clips.map(c => clipRect(60 + c[0], y, c[1] - c[0], 32, CLIP[c[2]], c[2], c[3] || '')).join('');
+  return `<div class="grid md:grid-cols-2 gap-4">` + P.map(p => {
+    const svg = `<svg class="dg" viewBox="0 0 440 104" role="img" aria-label="${t(p.n)}">
+      <text x="0" y="36" class="sub">${t(Lb)}</text>${row(14, before)}
+      <text x="0" y="90" class="sub">${t(La)}</text>${row(68, p.a)}
+</svg>`;
+    return `<div class="dia-box reveal"><h4 class="text-sm font-black mb-1" style="color:${p.c}">${t(p.n)}</h4>
+      <p class="text-xs text-slate-400 leading-relaxed mb-3">${t(p.d)}</p>${svg}</div>`;
+  }).join('') + `</div>`;
+}
+
+/* J-cut and L-cut: the sound crosses the picture cut. */
+function diaJL() {
+  const P = [
+    { n:{zh:'J 剪接（聲音先進）', en:'J-cut (sound leads)', fr:'Coupe en J (le son précède)'},
+      d:{zh:'先聽到下一場的聲音，畫面才切過去。時間軸上的形狀像字母 J。', en:'You hear the next scene before you see it. On the timeline the shape is a J.', fr:'On entend la scène suivante avant de la voir. Sur la timeline, la forme dessine un J.'},
+      v:[[0,200,'A'],[200,400,'B']], a:[[0,140,'A'],[140,400,'B']] },
+    { n:{zh:'L 剪接（聲音延後）', en:'L-cut (sound trails)', fr:'Coupe en L (le son se prolonge)'},
+      d:{zh:'畫面已經切到下一個鏡頭，上一個鏡頭的聲音還在繼續，常用在對話時拍聽者反應。', en:'The picture has cut away while the previous sound carries on; the classic way to show a listener reacting.', fr:'L’image a changé mais le son du plan précédent continue : la façon classique de montrer la réaction de celui qui écoute.'},
+      v:[[0,200,'A'],[200,400,'B']], a:[[0,270,'A'],[270,400,'B']] },
+  ];
+  const Lv = {zh:'畫面', en:'Picture', fr:'Image'}, La = {zh:'聲音', en:'Sound', fr:'Son'};
+  const row = (y, clips, audio) => clips.map(c => clipRect(70 + c[0], y, c[1] - c[0], 30, audio ? (c[2] === 'A' ? '#38bdf8' : '#f472b6') : CLIP[c[2]], c[2])).join('');
+  return `<div class="grid md:grid-cols-2 gap-4">` + P.map(p => `<div class="dia-box reveal">
+      <h4 class="text-sm font-black text-violet-300 mb-1">${t(p.n)}</h4>
+      <p class="text-xs text-slate-400 leading-relaxed mb-3">${t(p.d)}</p>
+      <svg class="dg" viewBox="0 0 480 100" role="img" aria-label="${t(p.n)}">
+        <text x="0" y="31" class="sub">${t(Lv)}</text>${row(12, p.v, false)}
+        <text x="0" y="79" class="sub">${t(La)}</text>${row(60, p.a, true)}
+        <line x1="270" y1="6" x2="270" y2="96" stroke="#f43f5e" stroke-dasharray="4 4"/>
+      </svg></div>`).join('') + `</div>`;
+}
+
+/* Keyframes: linear interpolation against an eased (Bezier) one, and a speed ramp. */
+function diaKeys() {
+  const L = {
+    t1:{zh:'關鍵影格：線性與緩入緩出', en:'Keyframes: linear vs eased', fr:'Images clés : linéaire ou lissé'},
+    lin:{zh:'線性：等速，起停生硬', en:'Linear: constant speed, abrupt', fr:'Linéaire : vitesse constante, à-coups'},
+    ease:{zh:'緩入緩出：慢慢加速、慢慢停', en:'Ease in/out: speeds up and settles', fr:'Lissé : accélère puis se pose'},
+    v:{zh:'數值（如縮放）', en:'Value (e.g. scale)', fr:'Valeur (ex. échelle)'}, tm:{zh:'時間', en:'Time', fr:'Temps'},
+    t2:{zh:'速度曲線（Speed ramp）', en:'Speed ramp', fr:'Rampe de vitesse'},
+    sp:{zh:'播放速度', en:'Playback speed', fr:'Vitesse'},
+  };
+  const gx = 50, gy = 58, gw = 380, gh = 150;
+  const pt = (u, v) => `${(gx + u * gw).toFixed(1)},${(gy + gh - v * gh).toFixed(1)}`;
+  let lin = '', ease = '';
+  for (let i = 0; i <= 40; i++) {
+    const u = i / 40, e = u * u * (3 - 2 * u);
+    lin += (i ? ' L' : 'M') + pt(u, 0.1 + 0.8 * u);
+    ease += (i ? ' L' : 'M') + pt(u, 0.1 + 0.8 * e);
+  }
+  const dia = (u, v, c) => { const [x, y] = pt(u, v).split(','); return `<path d="M${x} ${+y-8} l8 8 l-8 8 l-8 -8 z" fill="${c}"/>`; };
+  const k1 = `<svg class="dg" viewBox="0 0 470 280" role="img" aria-label="${t(L.t1)}">
+    <text x="0" y="20" class="lab">${t(L.t1)}</text>
+    <line x1="${gx}" y1="${gy+gh}" x2="${gx+gw}" y2="${gy+gh}" stroke="#475569"/><line x1="${gx}" y1="${gy}" x2="${gx}" y2="${gy+gh}" stroke="#475569"/>
+    <text x="${gx+gw}" y="${gy+gh+18}" class="sub" text-anchor="end">${t(L.tm)} →</text>
+    <text x="${gx-8}" y="${gy-6}" class="sub">${t(L.v)}</text>
+    <path d="${lin}" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="6 5"/>
+    <path d="${ease}" fill="none" stroke="#a78bfa" stroke-width="3"/>
+    ${dia(0, 0.1, '#f59e0b')}${dia(1, 0.9, '#f59e0b')}
+    <line x1="${gx}" y1="${gy+gh+36}" x2="${gx+22}" y2="${gy+gh+36}" stroke="#64748b" stroke-width="2.5" stroke-dasharray="6 5"/>
+    <text x="${gx+28}" y="${gy+gh+40}" class="sub">${t(L.lin)}</text>
+    <line x1="${gx}" y1="${gy+gh+56}" x2="${gx+22}" y2="${gy+gh+56}" stroke="#a78bfa" stroke-width="3"/>
+    <text x="${gx+28}" y="${gy+gh+60}" class="sub" style="fill:#c4b5fd">${t(L.ease)}</text></svg>`;
+  // speed ramp: 100% → 20% → 100%
+  const seg = [[0,1],[0.3,1],[0.42,0.2],[0.7,0.2],[0.82,1],[1,1]];
+  let sp = '';
+  seg.forEach((p, i) => { sp += (i ? ' L' : 'M') + pt(p[0], p[1] * 0.85); });
+  const k2 = `<svg class="dg" viewBox="0 0 470 236" role="img" aria-label="${t(L.t2)}">
+    <text x="0" y="20" class="lab">${t(L.t2)}</text>
+    <line x1="${gx}" y1="${gy+gh}" x2="${gx+gw}" y2="${gy+gh}" stroke="#475569"/><line x1="${gx}" y1="${gy}" x2="${gx}" y2="${gy+gh}" stroke="#475569"/>
+    <text x="${gx+gw}" y="${gy+gh+18}" class="sub" text-anchor="end">${t(L.tm)} →</text>
+    <text x="${gx-8}" y="${gy-6}" class="sub">${t(L.sp)}</text>
+    <text x="${gx-6}" y="${(gy + gh - 0.85*gh + 4).toFixed(0)}" class="sub" text-anchor="end">100%</text>
+    <text x="${gx-6}" y="${(gy + gh - 0.17*gh + 4).toFixed(0)}" class="sub" text-anchor="end">20%</text>
+    <path d="${sp}" fill="none" stroke="#f472b6" stroke-width="3" stroke-linejoin="round"/>
+    <text x="${gx + 0.56*gw}" y="${gy + gh - 0.17*gh - 10}" class="sub" text-anchor="middle" style="fill:#f9a8d4">${t({zh:'慢動作', en:'slow motion', fr:'ralenti'})}</text></svg>`;
+  return `<div class="grid md:grid-cols-2 gap-4"><div class="dia-box reveal">${k1}</div><div class="dia-box reveal">${k2}</div></div>`;
+}
+
+const DIA = { aspect: diaAspect, timeline: diaTimeline, trims: diaTrims, jl: diaJL, keys: diaKeys };
+
+/* ═══════════════════════════════════════════════════════════
+   Content. Each section is a list of blocks rendered below.
+   ═══════════════════════════════════════════════════════════ */
+const SECTIONS = [
+
+/* ── 1. Software ── */
+{ id:'soft', i:'fa-laptop-code', c:'#a78bfa',
+  nav:{zh:'軟體', en:'Software', fr:'Logiciels'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'剪輯軟體簡介', en:'The editing software', fr:'Les logiciels de montage'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'剪輯軟體的核心功能幾乎都一樣：匯入素材、放到時間軸上切開排序、加上字幕與聲音、輸出成影片。差別在於<strong class="text-white">價格方式、作業系統、調色與特效的深度，以及跟其他軟體的整合</strong>。先選一套學熟，觀念學會之後換軟體只是換快捷鍵。',
+    en:'The core of every editor is the same: import footage, cut and order it on a timeline, add titles and sound, export a film. They differ in <strong class="text-white">pricing, operating system, the depth of their colour and effects tools, and how they fit with other software</strong>. Learn one well; once the ideas are yours, switching is mostly new shortcuts.',
+    fr:'Le cœur de tout logiciel de montage est identique : importer les rushes, les couper et les ordonner sur une timeline, ajouter titres et son, exporter. Ils diffèrent par <strong class="text-white">le prix, le système d’exploitation, la profondeur des outils d’étalonnage et d’effets, et leur intégration avec d’autres logiciels</strong>. Maîtrisez-en un ; une fois les notions acquises, changer revient surtout à apprendre d’autres raccourcis.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-a', t:'Adobe Premiere Pro',
+      tag:{zh:'Win／Mac · 訂閱制', en:'Win / Mac · subscription', fr:'Win / Mac · abonnement'},
+      p:{zh:'業界最普及的剪輯軟體之一，YouTuber、廣告與新聞都常用。和 After Effects（動態圖像）、Photoshop、Audition（聲音）能直接互通。', en:'One of the most widely used editors, common in YouTube, advertising and news. Works directly with After Effects (motion graphics), Photoshop and Audition (audio).', fr:'L’un des logiciels les plus répandus, courant chez les youtubeurs, en publicité et en information. Communique directement avec After Effects (motion design), Photoshop et Audition (son).'},
+      l:[{zh:'以文字剪輯：轉逐字稿後刪字就等於剪片', en:'Text-based editing: delete words in the transcript to cut the video', fr:'Montage par le texte : supprimer des mots de la transcription coupe la vidéo'},
+         {zh:'外掛與範本生態最豐富', en:'The largest ecosystem of plug-ins and templates', fr:'Le plus vaste écosystème de plug-ins et de modèles'},
+         {zh:'適合：想進入業界、需要跟團隊交換專案', en:'For: working professionally, exchanging projects with a team', fr:'Pour : travailler en professionnel, échanger des projets en équipe'}] },
+    { i:'fa-circle-half-stroke', t:'DaVinci Resolve',
+      tag:{zh:'Win／Mac／Linux · 免費版＋Studio 買斷', en:'Win / Mac / Linux · free + paid Studio', fr:'Win / Mac / Linux · gratuit + Studio payant'},
+      p:{zh:'Blackmagic Design 出品。原本是好萊塢調色軟體，現在剪輯、特效（Fusion）、混音（Fairlight）、輸出都在同一套裡，分成七個「頁面」。免費版功能就非常完整。', en:'From Blackmagic Design. It began as Hollywood’s grading tool and now holds editing, effects (Fusion), audio (Fairlight) and delivery in one program, split into seven “pages”. The free version is remarkably complete.', fr:'Édité par Blackmagic Design. D’abord outil d’étalonnage d’Hollywood, il réunit aujourd’hui montage, effets (Fusion), son (Fairlight) et export dans un même programme, découpé en sept « pages ». La version gratuite est remarquablement complète.'},
+      l:[{zh:'調色是業界標準，節點式調色', en:'Industry-standard, node-based colour grading', fr:'Étalonnage par nœuds, standard de l’industrie'},
+         {zh:'Cut 頁面適合快速剪短片', en:'The Cut page is built for fast short edits', fr:'La page Cut est faite pour monter vite'},
+         {zh:'適合：預算有限、重視調色', en:'For: tight budgets, anyone serious about colour', fr:'Pour : petits budgets, passionnés d’étalonnage'}] },
+    { i:'fa-apple-whole', t:'Final Cut Pro',
+      tag:{zh:'僅 Mac · 一次買斷', en:'Mac only · one-time purchase', fr:'Mac uniquement · achat unique'},
+      p:{zh:'Apple 出品，在 Apple 晶片上非常流暢。特色是「磁性時間軸」：片段會自動靠攏、不會留下空隙或互相覆蓋，剪起來快，但跟傳統軌道式的邏輯不同。', en:'Apple’s editor, very fluid on Apple silicon. Its signature is the “magnetic timeline”: clips close up automatically and never leave gaps or overwrite each other. Fast to cut with, but a different logic from track-based editors.', fr:'Le logiciel d’Apple, très fluide sur les puces Apple. Sa signature est la « timeline magnétique » : les plans se resserrent seuls, sans trou ni écrasement. Rapide, mais d’une logique différente des logiciels à pistes.'},
+      l:[{zh:'用「角色」管理對白、音樂、音效', en:'“Roles” organise dialogue, music and effects', fr:'Les « rôles » organisent dialogues, musique et bruitages'},
+         {zh:'和 iPhone、Motion、Compressor 整合', en:'Integrates with iPhone, Motion and Compressor', fr:'S’intègre à l’iPhone, Motion et Compressor'},
+         {zh:'適合：Mac 使用者、個人創作者', en:'For: Mac users, solo creators', fr:'Pour : utilisateurs Mac, créateurs indépendants'}] },
+    { i:'fa-mobile-screen', t:{zh:'CapCut／剪映', en:'CapCut', fr:'CapCut'},
+      tag:{zh:'手機／電腦／網頁 · 免費＋付費功能', en:'Phone / desktop / web · free + paid features', fr:'Mobile / ordinateur / web · gratuit + options payantes'},
+      p:{zh:'字節跳動出品（中國版叫剪映）。範本、自動字幕、去背、流行特效與音樂都內建，做短影音最快。進階功能需訂閱，商用素材授權要注意。', en:'From ByteDance (called Jianying in China). Templates, automatic captions, background removal, trending effects and music are built in: the fastest route to short-form video. Advanced features need a subscription; check licences for commercial use.', fr:'Édité par ByteDance (Jianying en Chine). Modèles, sous-titres automatiques, détourage, effets à la mode et musiques intégrés : la voie la plus rapide vers la vidéo courte. Les fonctions avancées sont payantes ; vérifiez les licences pour un usage commercial.'} },
+    { i:'fa-film', t:'Avid Media Composer',
+      tag:{zh:'Win／Mac · 訂閱制', en:'Win / Mac · subscription', fr:'Win / Mac · abonnement'},
+      p:{zh:'好萊塢電影與電視劇長期使用的標準。擅長管理極大量素材和多人同時剪同一個專案，介面老派但穩定。', en:'The long-standing standard for Hollywood features and television drama. Excels at huge amounts of footage and many editors on one project; old-fashioned interface, very stable.', fr:'Le standard historique du long métrage hollywoodien et des séries. Excelle avec des volumes énormes de rushes et plusieurs monteurs sur un même projet ; interface austère mais très stable.'} },
+    { i:'fa-wand-magic-sparkles', t:'After Effects',
+      tag:{zh:'Win／Mac · 訂閱制 · 特效合成', en:'Win / Mac · subscription · compositing', fr:'Win / Mac · abonnement · compositing'},
+      p:{zh:'它不是剪輯軟體，而是做動態圖像、片頭、文字動畫、合成與追蹤的工具。常見做法是在 Premiere 剪，再把需要特效的片段送進 After Effects。', en:'Not an editor but the tool for motion graphics, title sequences, animated type, compositing and tracking. The usual pattern is to cut in Premiere and send the shots that need effects to After Effects.', fr:'Ce n’est pas un logiciel de montage mais l’outil du motion design, des génériques, de la typographie animée, du compositing et du tracking. On monte en général dans Premiere et l’on envoie les plans à truquer dans After Effects.'} },
+    { i:'fa-apple-whole', t:'iMovie',
+      tag:{zh:'Mac／iPhone／iPad · 免費', en:'Mac / iPhone / iPad · free', fr:'Mac / iPhone / iPad · gratuit'},
+      p:{zh:'最簡單的入門選擇，功能少但不會迷路。專案可以直接升級到 Final Cut Pro。', en:'The simplest place to start: few features, impossible to get lost. Projects can be moved up to Final Cut Pro.', fr:'Le point de départ le plus simple : peu de fonctions, impossible de s’y perdre. Les projets passent directement dans Final Cut Pro.'} },
+    { i:'fa-code-branch', t:'Kdenlive／Shotcut',
+      tag:{zh:'Win／Mac／Linux · 免費開源', en:'Win / Mac / Linux · free and open source', fr:'Win / Mac / Linux · libres et gratuits'},
+      p:{zh:'開源的軌道式剪輯軟體，沒有浮水印也沒有訂閱，適合想要完全免費又能用在電腦上的人。', en:'Open-source, track-based editors with no watermark and no subscription, for anyone who wants something entirely free on a computer.', fr:'Logiciels de montage à pistes, open source, sans filigrane ni abonnement, pour qui veut un outil entièrement gratuit sur ordinateur.'} },
+    { i:'fa-robot', t:{zh:'AI 輔助工具', en:'AI-assisted tools', fr:'Outils d’IA'},
+      tag:{zh:'多為雲端服務', en:'Mostly cloud services', fr:'Surtout des services en ligne'},
+      p:{zh:'自動上字幕、自動剪掉空白與口誤、AI 去背、生成畫面延伸、語音轉換等，已經大量內建在上面各套軟體裡。它們能省下重複的工，但節奏和取捨仍要靠人。', en:'Automatic captions, cutting out silences and fluffs, AI masking, generative frame extension and voice tools are now built into most of the programs above. They save repetitive work; rhythm and choices are still yours.', fr:'Sous-titres automatiques, suppression des silences et des ratés, détourage par IA, extension générative de l’image, outils vocaux : tout cela est désormais intégré à la plupart des logiciels ci-dessus. Ils épargnent les tâches répétitives ; le rythme et les choix restent les vôtres.'} },
+  ]},
+  { type:'h3', t:{zh:'怎麼選', en:'How to choose', fr:'Comment choisir'} },
+  { type:'table', head:[{zh:'你的情況', en:'Your situation', fr:'Votre situation'},{zh:'建議', en:'Suggestion', fr:'Suggestion'},{zh:'原因', en:'Why', fr:'Pourquoi'}],
+    rows:[
+    [{zh:'只用手機、做短影音', en:'Phone only, short-form video', fr:'Téléphone uniquement, vidéo courte'}, 'CapCut', {zh:'範本、字幕、音樂都內建，直接發布', en:'Templates, captions and music built in, publish directly', fr:'Modèles, sous-titres et musique intégrés, publication directe'}],
+    [{zh:'不想花錢，但想學完整剪輯', en:'No budget, but want to learn properly', fr:'Pas de budget, mais envie d’apprendre sérieusement'}, 'DaVinci Resolve', {zh:'免費版功能幾乎完整，觀念與業界相同', en:'Free version is nearly complete and works like the industry', fr:'Version gratuite presque complète, fonctionnement professionnel'}],
+    [{zh:'用 Mac，想快又穩', en:'On a Mac, want speed and stability', fr:'Sur Mac, envie de vitesse et de stabilité'}, 'Final Cut Pro', {zh:'一次買斷，在 Mac 上效能最好', en:'One-time price, best performance on a Mac', fr:'Achat unique, meilleures performances sur Mac'}],
+    [{zh:'想進廣告、媒體業', en:'Aiming at advertising or media jobs', fr:'Viser la publicité ou les médias'}, 'Premiere Pro', {zh:'徵才最常要求，和 Adobe 全家整合', en:'Most often asked for in job ads, integrated with all of Adobe', fr:'Le plus demandé dans les offres d’emploi, intégré à toute la suite Adobe'}],
+    [{zh:'想做電影、劇集', en:'Aiming at film or drama', fr:'Viser le cinéma ou la fiction'}, {zh:'Avid 或 Resolve', en:'Avid or Resolve', fr:'Avid ou Resolve'}, {zh:'長片剪輯與調色的業界標準', en:'The standards for long-form editing and grading', fr:'Les standards du long métrage et de l’étalonnage'}],
+    ]},
+]},
+
+/* ── 2. Basic concepts ── */
+{ id:'basics', i:'fa-photo-film', c:'#818cf8',
+  nav:{zh:'基本概念', en:'Basics', fr:'Notions'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'開剪之前要懂的名詞', en:'Words to know before you cut', fr:'Les mots à connaître avant de monter'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-images', t:{zh:'影格與影格率（fps）', en:'Frames and frame rate (fps)', fr:'Images et cadence (i/s)'},
+      p:{zh:'影片是一張張靜止畫面連續播放。每秒幾張就是影格率：24 是電影感，30（台灣、美國、日本的電視規格，實際為 29.97）是一般影片，25 是歐洲規格，60 更流暢。拍 60 或 120 再放進 24／30 的時間軸，就能做出慢動作。', en:'Video is a series of still pictures shown in turn. How many per second is the frame rate: 24 feels like cinema, 30 (really 29.97, the TV standard in the US, Japan and Taiwan) is everyday video, 25 is the European standard, 60 is smoother. Shoot 60 or 120 and place it in a 24 or 30 timeline to get slow motion.', fr:'Une vidéo est une suite d’images fixes. Leur nombre par seconde est la cadence : 24 donne l’aspect cinéma, 25 est la norme européenne, 30 (en réalité 29,97, norme télé aux États-Unis, au Japon et à Taïwan) est la vidéo courante, 60 est plus fluide. Tourner en 60 ou 120 puis placer dans une timeline en 24 ou 25 donne du ralenti.'} },
+    { i:'fa-expand', t:{zh:'解析度', en:'Resolution', fr:'Définition'},
+      p:{zh:'畫面的像素數。1080p 是 1920×1080，4K UHD 是 3840×2160（剛好是 1080p 的四倍面積）。用 4K 拍、在 1080p 時間軸剪，就能放大到 200% 而不失真，等於多了一顆鏡頭。', en:'The number of pixels in the frame. 1080p is 1920×1080; 4K UHD is 3840×2160, exactly four times the area. Shoot 4K and cut in a 1080p timeline and you can zoom to 200% with no loss: a second shot for free.', fr:'Le nombre de pixels de l’image. Le 1080p fait 1920×1080 ; la 4K UHD 3840×2160, soit exactement quatre fois la surface. Tourner en 4K et monter en 1080p permet de zoomer à 200 % sans perte : un second cadre gratuit.'} },
+    { i:'fa-crop-simple', t:{zh:'畫面比例', en:'Aspect ratio', fr:'Format d’image'},
+      p:{zh:'寬與高的比例，決定影片要發布在哪裡。橫式 16:9、直式 9:16 是最常見的兩種；開專案時就要決定，事後改比例等於重新構圖。', en:'The ratio of width to height, set by where the film will be shown. Landscape 16:9 and vertical 9:16 are the two you will meet most. Decide it when you create the project: changing later means reframing every shot.', fr:'Le rapport largeur/hauteur, dicté par le lieu de diffusion. Le 16:9 horizontal et le 9:16 vertical sont les plus courants. Décidez-le à la création du projet : le changer ensuite oblige à recadrer chaque plan.'} },
+    { i:'fa-box-archive', t:{zh:'封裝格式與編碼', en:'Container and codec', fr:'Conteneur et codec'},
+      p:{zh:'MP4、MOV 是「盒子」（封裝格式）；H.264、H.265（HEVC）、ProRes 是盒子裡影像的壓縮方式（編碼）。同樣是 .mp4，裡面的編碼不同，剪起來的流暢度就差很多。', en:'MP4 and MOV are the “box” (container); H.264, H.265 (HEVC) and ProRes are how the picture inside is compressed (codec). Two .mp4 files with different codecs can behave very differently on the timeline.', fr:'MP4 et MOV sont la « boîte » (conteneur) ; H.264, H.265 (HEVC) et ProRes sont la façon de compresser l’image à l’intérieur (codec). Deux .mp4 de codecs différents peuvent se comporter très différemment au montage.'} },
+    { i:'fa-gauge-high', t:{zh:'位元率', en:'Bitrate', fr:'Débit'},
+      p:{zh:'每秒用多少資料記錄畫面，單位 Mbps。位元率越高畫質越好、檔案越大。輸出時位元率太低，暗部和快速動作會出現色塊。', en:'How much data per second records the picture, in Mbps. Higher bitrate means better quality and bigger files. Export too low and dark areas and fast motion break into blocks.', fr:'La quantité de données par seconde, en Mb/s. Plus il est élevé, meilleure est l’image et plus le fichier est lourd. Trop bas à l’export, les zones sombres et les mouvements rapides se pixellisent.'} },
+    { i:'fa-feather', t:{zh:'代理檔（Proxy）', en:'Proxies', fr:'Fichiers proxy'},
+      p:{zh:'H.264／H.265 為了檔案小而壓得很緊，電腦解碼吃力，剪 4K 會卡。解法是讓軟體產生低解析度、好解碼的代理檔來剪，輸出時自動換回原檔。', en:'H.264 and H.265 are tightly compressed to stay small, so they are hard to decode and 4K stutters. The fix is to let the software make light, easy-to-decode proxies to cut with; export switches back to the originals automatically.', fr:'Le H.264 et le H.265 sont très compressés, donc lourds à décoder, et la 4K saccade. La solution : générer des proxys légers pour monter ; l’export repasse automatiquement aux originaux.'} },
+    { i:'fa-sun', t:{zh:'Log 與 LUT', en:'Log and LUTs', fr:'Log et LUT'},
+      p:{zh:'許多相機能用 Log 模式拍（S-Log3、V-Log、C-Log 等），畫面看起來灰灰的，但保留了最多亮部與暗部細節。LUT 是一張轉換表，把 Log 轉回正常的對比和顏色，再接著調色。', en:'Many cameras can record in Log (S-Log3, V-Log, C-Log and others). It looks flat and grey but keeps the most highlight and shadow detail. A LUT is a conversion table that turns Log back into normal contrast and colour before you grade.', fr:'Beaucoup d’appareils filment en Log (S-Log3, V-Log, C-Log…). L’image paraît terne et grise mais conserve le plus de détails dans les hautes et basses lumières. Une LUT est une table de conversion qui la ramène à un contraste et des couleurs normaux avant l’étalonnage.'} },
+    { i:'fa-stopwatch', t:{zh:'時間碼', en:'Timecode', fr:'Timecode'},
+      p:{zh:'影片中每一格的地址，格式是「時:分:秒:格」，例如 01:02:03:12。和別人溝通「第幾分幾秒那裡要改」時用它最精準。', en:'The address of every frame, written hours:minutes:seconds:frames, for example 01:02:03:12. The precise way to tell someone exactly where a change goes.', fr:'L’adresse de chaque image, sous la forme heures:minutes:secondes:images, par exemple 01:02:03:12. La façon précise d’indiquer où se trouve une correction.'} },
+    { i:'fa-layer-group', t:{zh:'8 位元與 10 位元', en:'8-bit and 10-bit', fr:'8 bits et 10 bits'},
+      p:{zh:'每個顏色通道有幾階：8 位元是 256 階，10 位元是 1024 階。10 位元在天空這類漸層上比較不會出現一條條的色階斷層，調色空間也大。', en:'How many steps each colour channel has: 256 in 8-bit, 1024 in 10-bit. 10-bit shows less banding in gradients such as sky and stands up to heavier grading.', fr:'Le nombre de niveaux par canal : 256 en 8 bits, 1024 en 10 bits. Le 10 bits montre moins de cassures dans les dégradés comme le ciel et supporte un étalonnage plus poussé.'} },
+  ]},
+  { type:'dia', k:'aspect' },
+]},
+
+/* ── 3. Interface ── */
+{ id:'ui', i:'fa-table-columns', c:'#38bdf8',
+  nav:{zh:'介面功能', en:'Interface', fr:'Interface'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'介面與主要功能', en:'The interface and its tools', fr:'L’interface et ses outils'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'幾乎每一套剪輯軟體都由同樣的幾個面板組成，只是名字不同。認得這幾區，打開任何軟體都能上手。',
+    en:'Almost every editor is built from the same handful of panels under different names. Recognise them and you can find your way round any program.',
+    fr:'Presque tous les logiciels se composent des mêmes panneaux sous des noms différents. Sachez les reconnaître et vous vous repérerez partout.'} },
+  { type:'dia', k:'timeline' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-folder-tree', t:{zh:'素材庫（Project／Media Pool／Browser）', en:'Media bin (Project / Media Pool / Browser)', fr:'Chutier (Projet / Media Pool / Navigateur)'},
+      p:{zh:'所有匯入的影片、聲音、圖片都在這裡，用資料夾（Bin）分類。這裡刪掉不會刪到硬碟上的原檔。', en:'Everything you import lives here, sorted into folders called bins. Deleting here never deletes the file on disk.', fr:'Tout ce que vous importez s’y trouve, rangé dans des dossiers appelés chutiers. Supprimer ici n’efface jamais le fichier sur le disque.'} },
+    { i:'fa-tv', t:{zh:'來源監看視窗', en:'Source monitor', fr:'Moniteur source'},
+      p:{zh:'預覽單一素材，用 I、O 鍵標出要用的入點與出點，再放進時間軸。', en:'Previews a single clip; mark the part you want with I and O, then send it to the timeline.', fr:'Affiche un seul rush ; marquez la partie voulue avec I et O, puis envoyez-la dans la timeline.'} },
+    { i:'fa-display', t:{zh:'節目監看視窗', en:'Program monitor', fr:'Moniteur programme'},
+      p:{zh:'顯示時間軸上播放頭所在位置的成品畫面，也是在畫面上直接拖曳縮放、位置的地方。', en:'Shows the finished picture at the playhead, and is where you drag position and scale directly on the image.', fr:'Montre l’image finale sous la tête de lecture ; on y ajuste position et échelle directement à la souris.'} },
+    { i:'fa-bars-staggered', t:{zh:'時間軸', en:'Timeline', fr:'Timeline'},
+      p:{zh:'剪輯真正發生的地方。視訊軌在上、音訊軌在下；上層的影像會蓋住下層，所以字幕和疊加畫面放在上方軌道。', en:'Where the editing actually happens. Video tracks sit above, audio below; an upper video track covers the ones beneath, which is why titles and overlays go on top.', fr:'Là où se fait le montage. Pistes vidéo en haut, audio en bas ; une piste vidéo supérieure masque celles du dessous, d’où les titres et incrustations placés en haut.'} },
+    { i:'fa-sliders', t:{zh:'屬性面板（Effect Controls／Inspector）', en:'Inspector (Effect Controls)', fr:'Inspecteur (Options d’effet)'},
+      p:{zh:'選中一個片段後，它的位置、縮放、旋轉、透明度、速度、套用的效果參數都在這裡調，也在這裡打關鍵影格。', en:'With a clip selected, its position, scale, rotation, opacity, speed and effect settings are all adjusted here, and this is where keyframes are set.', fr:'Pour le plan sélectionné : position, échelle, rotation, opacité, vitesse et paramètres d’effets, et c’est ici qu’on pose les images clés.'} },
+    { i:'fa-wand-sparkles', t:{zh:'效果庫', en:'Effects library', fr:'Bibliothèque d’effets'},
+      p:{zh:'轉場、濾鏡、文字範本、調整工具都在這裡，拖到片段上就能套用。', en:'Transitions, filters, title templates and adjustment tools; drag one onto a clip to apply it.', fr:'Transitions, filtres, modèles de titres et outils de réglage ; glissez-les sur un plan pour les appliquer.'} },
+    { i:'fa-chart-column', t:{zh:'示波器', en:'Scopes', fr:'Oscilloscopes'},
+      p:{zh:'把畫面的亮度和顏色畫成圖表，讓你不靠螢幕和眼睛判斷曝光與膚色。詳見調色章。', en:'Draw the picture’s brightness and colour as graphs, so exposure and skin tones are judged by measurement rather than by your screen. See the colour chapter.', fr:'Traduisent la luminance et la couleur en graphiques, pour juger l’exposition et les carnations par la mesure plutôt qu’à l’œil. Voir le chapitre étalonnage.'} },
+    { i:'fa-volume-high', t:{zh:'音量表與混音器', en:'Audio meters and mixer', fr:'Vumètres et mixeur'},
+      p:{zh:'顯示音量有沒有爆音，並調整每一軌的音量、聲道、效果。', en:'Show whether sound is clipping, and set each track’s level, panning and effects.', fr:'Indiquent si le son sature et règlent niveau, panoramique et effets de chaque piste.'} },
+    { i:'fa-diagram-project', t:{zh:'巢狀序列／複合片段', en:'Nests / compound clips', fr:'Imbrications / plans composés'},
+      p:{zh:'把多個片段包成一個，方便一起套效果或搬動，也讓時間軸保持整潔。', en:'Wrap several clips into one so they can take an effect or be moved together, and keep the timeline tidy.', fr:'Regrouper plusieurs plans en un seul pour leur appliquer un effet ou les déplacer ensemble, et garder la timeline lisible.'} },
+  ]},
+]},
+
+/* ── 4. Workflow ── */
+{ id:'flow', i:'fa-route', c:'#34d399',
+  nav:{zh:'流程', en:'Workflow', fr:'Méthode'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'從素材到成片的八個步驟', en:'Eight steps from footage to film', fr:'Huit étapes des rushes au film'},
+  blocks:[
+  { type:'steps', items:[
+    { t:{zh:'整理與備份素材', en:'Organise and back up', fr:'Ranger et sauvegarder'},
+      p:{zh:'先把記憶卡完整複製到硬碟（最好兩份），再依「影片／聲音／音樂／圖片」建立資料夾。檔名和資料夾一開始就整齊，後面能省下大量找素材的時間。', en:'Copy the cards in full to a drive (ideally two), then set up folders for video, sound, music and graphics. Tidy names from the start save hours of searching later.', fr:'Copiez intégralement les cartes sur un disque (idéalement deux), puis créez des dossiers vidéo, son, musique et graphismes. Des noms propres dès le départ font gagner des heures de recherche.'} },
+    { t:{zh:'看素材、挑好的段落', en:'Watch everything, pick the good takes', fr:'Tout visionner, choisir les bonnes prises'},
+      p:{zh:'全部看過一遍，用標記（M）或評分記下好的鏡頭。這一步跳過的話，後面會一直在素材裡迷路。', en:'Watch it all and mark the good moments with markers (M) or ratings. Skip this and you will be lost in your footage for the rest of the edit.', fr:'Visionnez tout et repérez les bons moments avec des marqueurs (M) ou des notes. Sautez cette étape et vous vous perdrez dans vos rushes jusqu’à la fin.'} },
+    { t:{zh:'粗剪', en:'Rough cut', fr:'Ours (premier montage)'},
+      p:{zh:'先把故事排出來，順序對、內容齊就好，不管節奏和細節。訪談類通常先剪對白，再補畫面。', en:'Lay the story out in order with everything in it; ignore rhythm and polish. With interviews, cut the words first and cover them with pictures afterwards.', fr:'Posez l’histoire dans l’ordre avec tout son contenu, sans souci du rythme ni des finitions. Pour une interview, montez d’abord la parole, puis habillez-la d’images.'} },
+    { t:{zh:'精剪', en:'Fine cut', fr:'Montage fin'},
+      p:{zh:'修剪每個剪接點的時機，刪掉多餘的停頓，調整節奏，加入 B-roll（補充畫面）與 J／L 剪接。', en:'Refine the timing of every cut, remove dead air, set the rhythm, add B-roll (cover shots) and J and L cuts.', fr:'Affinez chaque raccord, supprimez les temps morts, réglez le rythme, ajoutez les plans de coupe (B-roll) et les coupes en J et en L.'} },
+    { t:{zh:'鎖定剪輯', en:'Picture lock', fr:'Montage verrouillé'},
+      p:{zh:'確定畫面不再更動。之後的調色和混音都依這個版本做，鎖定前就調色，剪輯一改就要重做。', en:'Agree that the picture will not change. Colour and sound are built on this version; grade before locking and every edit change means redoing work.', fr:'On fige l’image. L’étalonnage et le mixage reposent sur cette version ; étalonner avant revient à refaire le travail à chaque modification.'} },
+    { t:{zh:'調色', en:'Colour', fr:'Étalonnage'},
+      p:{zh:'先校正（曝光、白平衡、各鏡頭一致），再風格化（營造氛圍）。', en:'First correct (exposure, white balance, matching shots), then grade for mood.', fr:'D’abord corriger (exposition, balance des blancs, raccords entre plans), puis donner une ambiance.'} },
+    { t:{zh:'聲音', en:'Sound', fr:'Son'},
+      p:{zh:'清理雜音、統一對白音量、加音效與配樂、讓音樂在說話時自動壓低，最後控制整體響度。', en:'Clean up noise, even out dialogue, add effects and music, duck the music under speech, and finish at the right loudness.', fr:'Nettoyer le bruit, homogénéiser les dialogues, ajouter bruitages et musique, baisser la musique sous la voix, puis caler la sonie globale.'} },
+    { t:{zh:'字幕、圖卡與輸出', en:'Titles, graphics and export', fr:'Titres, graphismes et export'},
+      p:{zh:'加片頭、字幕、說明文字，依平台規格輸出，然後從頭到尾完整看一次成品再發布。', en:'Add titles, subtitles and captions, export to the platform’s specification, and watch the finished file through once before publishing.', fr:'Ajoutez génériques, sous-titres et textes, exportez selon les spécifications de la plateforme, puis regardez le fichier final en entier avant de publier.'} },
+  ]},
+]},
+
+/* ── 5. Editing tools ── */
+{ id:'tools', i:'fa-scissors', c:'#f59e0b',
+  nav:{zh:'剪輯工具', en:'Edit tools', fr:'Outils'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'剪輯工具：剪、插、修', en:'Editing tools: cut, insert, trim', fr:'Les outils : couper, insérer, ajuster'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-arrow-pointer', t:{zh:'選取工具', en:'Selection tool', fr:'Outil de sélection'},
+      p:{zh:'移動片段，拖曳片段邊緣可以改變長度。大部分時間都用它。', en:'Moves clips; dragging a clip’s edge changes its length. You will use it most of the time.', fr:'Déplace les plans ; tirer un bord change leur durée. C’est l’outil de tous les instants.'} },
+    { i:'fa-scissors', t:{zh:'剃刀／刀片工具', en:'Razor / blade', fr:'Outil lame'},
+      p:{zh:'在片段上按一下就切成兩段。更快的做法是用快捷鍵在播放頭位置直接切。', en:'Click a clip to split it in two. Faster still: split at the playhead with a shortcut.', fr:'Un clic coupe le plan en deux. Plus rapide : couper sous la tête de lecture par raccourci.'} },
+    { i:'fa-right-to-bracket', t:{zh:'插入與覆蓋', en:'Insert and overwrite', fr:'Insertion et écrasement'},
+      p:{zh:'插入會把後面的片段推開；覆蓋會直接蓋掉原本位置上的內容。放錯一種，整條時間軸就會錯位。', en:'Insert pushes later clips along; overwrite replaces whatever is there. Use the wrong one and the whole timeline shifts out of sync.', fr:'L’insertion pousse les plans suivants ; l’écrasement remplace ce qui est en place. Se tromper décale toute la timeline.'} },
+    { i:'fa-crosshairs', t:{zh:'三點剪輯', en:'Three-point editing', fr:'Montage trois points'},
+      p:{zh:'設定三個點（素材入點、出點，與時間軸上的位置），軟體就會自動算出第四個點，把素材放到精準位置。這是專業剪輯最基本的操作方式。', en:'Set three points (source in, source out, and where it goes on the timeline) and the software works out the fourth. The foundation of professional editing.', fr:'Définissez trois points (entrée et sortie source, emplacement dans la timeline) et le logiciel calcule le quatrième. La base du montage professionnel.'} },
+    { i:'fa-eraser', t:{zh:'波紋刪除', en:'Ripple delete', fr:'Suppression avec propagation'},
+      p:{zh:'刪掉一段之後，後面的片段自動往前補上，不留空隙。剪訪談刪口誤時最常用。', en:'Delete a section and everything after closes up, leaving no gap. The everyday way to remove fluffs from an interview.', fr:'Supprimer un passage referme automatiquement le trou. La façon courante d’enlever les ratés d’une interview.'} },
+    { i:'fa-link-slash', t:{zh:'連結與解除連結', en:'Link and unlink', fr:'Lier et délier'},
+      p:{zh:'攝影機錄的影像和聲音預設綁在一起。解除連結才能單獨移動聲音，做 J／L 剪接；移動後若兩者錯位，軟體會顯示不同步的格數。', en:'Picture and camera sound are linked by default. Unlink them to move sound alone for J and L cuts; if they drift apart, the software shows how many frames out of sync they are.', fr:'L’image et le son caméra sont liés par défaut. Déliez-les pour déplacer le son seul (coupes en J et en L) ; s’ils se décalent, le logiciel affiche le nombre d’images de désynchronisation.'} },
+  ]},
+  { type:'h3', t:{zh:'四種修剪：剪接師每天都在用的手感', en:'The four trims every editor uses daily', fr:'Les quatre ajustements quotidiens du monteur'} },
+  { type:'dia', k:'trims' },
+]},
+
+/* ── 6. Cutting techniques ── */
+{ id:'cuts', i:'fa-shuffle', c:'#f472b6',
+  nav:{zh:'剪接手法', en:'Cuts', fr:'Raccords'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'剪接手法：鏡頭怎麼接', en:'How shots are joined', fr:'Comment s’enchaînent les plans'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'剪輯不只是「把不要的剪掉」，每一個剪接點都在決定觀眾的注意力與情緒。下面是最常用的接法，每一種都有它的作用。',
+    en:'Editing is not just removing what you do not want: every cut decides where the audience looks and what they feel. These are the joins you will use most, each with its own job.',
+    fr:'Monter ne consiste pas seulement à retirer le superflu : chaque raccord décide de ce que le public regarde et ressent. Voici les raccords les plus courants, chacun avec sa fonction.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-minus', t:{zh:'直接切（Hard cut）', en:'Hard cut', fr:'Coupe franche'},
+      p:{zh:'最基本、最常用的接法，一格就換到下一個鏡頭。九成以上的剪接點都應該是它。', en:'The basic join: one frame to the next shot. Well over nine cuts in ten should be this.', fr:'Le raccord de base : on passe d’une image au plan suivant. Plus de neuf coupes sur dix devraient l’être.'} },
+    { i:'fa-person-running', t:{zh:'動作剪接（Cut on action）', en:'Cut on action', fr:'Raccord dans le mouvement'},
+      p:{zh:'在動作進行到一半時切到另一個角度，例如開門的手切到門外。觀眾的眼睛跟著動作走，就不會察覺剪接。', en:'Cut to another angle in the middle of a movement, say a hand on a door to the other side of the door. The eye follows the action and never notices the cut.', fr:'Changer d’angle au milieu d’un geste, par exemple la main sur la poignée puis l’autre côté de la porte. L’œil suit le mouvement et ne voit pas la coupe.'} },
+    { i:'fa-forward-step', t:{zh:'跳接（Jump cut）', en:'Jump cut', fr:'Jump cut'},
+      p:{zh:'同一個鏡位中間剪掉一段，人物會「跳」一下。YouTube 口說影片用它來加快節奏；在劇情片裡則會刻意製造不安感。', en:'Remove a stretch from one continuous shot and the subject “jumps”. Talking-head YouTube uses it for pace; in drama it deliberately unsettles.', fr:'Retirer un passage d’un plan continu fait « sauter » le sujet. Les vidéos face caméra s’en servent pour le rythme ; en fiction, il crée un malaise voulu.'} },
+    { i:'fa-equals', t:{zh:'匹配剪接（Match cut）', en:'Match cut', fr:'Raccord par analogie'},
+      p:{zh:'用相似的形狀、動作或構圖連接兩個不同的場景，例如《2001 太空漫遊》從骨頭切到太空船。', en:'Join two different scenes through a matching shape, movement or composition, like the bone becoming a spaceship in 2001: A Space Odyssey.', fr:'Relier deux scènes par une forme, un mouvement ou une composition semblables, comme l’os devenu vaisseau spatial dans 2001, l’Odyssée de l’espace.'} },
+    { i:'fa-code-compare', t:{zh:'交叉剪接（Cross-cutting）', en:'Cross-cutting', fr:'Montage alterné'},
+      p:{zh:'在兩條同時發生的事件之間來回切換，製造張力，常見於追逐和救援場面。', en:'Cut back and forth between two events happening at once to build tension; the staple of chases and rescues.', fr:'Alterner entre deux actions simultanées pour créer la tension : la base des poursuites et des sauvetages.'} },
+    { i:'fa-images', t:{zh:'插入鏡頭／B-roll', en:'Cutaway / B-roll', fr:'Plan de coupe / B-roll'},
+      p:{zh:'在主畫面（例如訪談）上方插入相關畫面，可以補充資訊，也能把剪接點遮住，讓跳接不明顯。', en:'Cover the main shot (an interview, say) with related pictures. It adds information and hides the cuts underneath.', fr:'Recouvrir le plan principal (une interview par exemple) d’images liées. Cela informe et masque les coupes en dessous.'} },
+    { i:'fa-bolt', t:{zh:'衝擊剪接（Smash cut）', en:'Smash cut', fr:'Coupe brutale'},
+      p:{zh:'從安靜突然切到強烈的畫面或聲音（或反過來），用於驚嚇或喜劇效果。', en:'A sudden cut from calm to something loud or intense, or the reverse, for shock or comedy.', fr:'Passage soudain du calme à l’intensité, ou l’inverse, pour surprendre ou faire rire.'} },
+    { i:'fa-table-cells', t:{zh:'蒙太奇（Montage）', en:'Montage', fr:'Séquence montage'},
+      p:{zh:'用一連串短鏡頭加音樂，壓縮一段時間或傳達一種感覺，例如訓練過程、旅行回顧。', en:'A string of short shots over music to compress time or convey a feeling: a training sequence, a travel recap.', fr:'Une suite de plans courts sur une musique pour condenser le temps ou transmettre une sensation : entraînement, souvenirs de voyage.'} },
+    { i:'fa-arrows-left-right', t:{zh:'180 度規則', en:'The 180-degree rule', fr:'La règle des 180 degrés'},
+      p:{zh:'兩人對話時，攝影機要待在兩人連線的同一側。越線剪接會讓兩人看起來同時面向同一邊，觀眾會搞不清楚誰在看誰。', en:'In a two-person scene, keep the camera on one side of the line between them. Cross it and both seem to face the same way; the audience loses who is looking at whom.', fr:'Dans un dialogue, la caméra reste d’un seul côté de la ligne qui relie les deux personnages. La franchir donne l’impression qu’ils regardent dans la même direction.'} },
+  ]},
+  { type:'h3', t:{zh:'J 剪接與 L 剪接：讓聲音跨過剪接點', en:'J and L cuts: sound across the cut', fr:'Coupes en J et en L : le son traverse la coupe'} },
+  { type:'dia', k:'jl' },
+  { type:'note', p:{zh:'J 與 L 剪接是讓剪輯「聽起來」流暢的關鍵。只要畫面和聲音同時切，觀眾就會感覺到每一刀；錯開幾格，剪接點就被藏起來了。', en:'J and L cuts are what make an edit sound smooth. Cut picture and sound at the same frame and the audience feels every cut; offset them a few frames and the cut disappears.', fr:'Les coupes en J et en L rendent un montage fluide à l’oreille. Couper image et son sur la même image fait sentir chaque coupe ; les décaler de quelques images la fait disparaître.'} },
+]},
+
+/* ── 7. Transitions ── */
+{ id:'trans', i:'fa-right-left', c:'#60a5fa',
+  nav:{zh:'轉場', en:'Transitions', fr:'Transitions'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'常見轉場', en:'Common transitions', fr:'Les transitions courantes'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-circle-half-stroke', t:{zh:'交叉溶接（Cross dissolve）', en:'Cross dissolve', fr:'Fondu enchaîné'},
+      p:{zh:'前一個畫面淡出的同時下一個淡入。表示時間流逝或場景轉換，是最常用的轉場。', en:'One picture fades out as the next fades in. Signals time passing or a change of place; the most-used transition.', fr:'Une image s’efface pendant que la suivante apparaît. Signale le temps qui passe ou un changement de lieu ; la transition la plus employée.'} },
+    { i:'fa-moon', t:{zh:'淡入淡出黑（Dip to black）', en:'Dip to black', fr:'Fondu au noir'},
+      p:{zh:'淡到全黑再出來，表示一個段落結束。淡到白則常用於回憶、夢境或閃光。', en:'Fade to black and back: the end of a chapter. Dipping to white suggests memory, dream or a flash.', fr:'Passage par le noir : la fin d’un chapitre. Le fondu au blanc évoque le souvenir, le rêve ou un éclair.'} },
+    { i:'fa-arrow-right-long', t:{zh:'劃接（Wipe）', en:'Wipe', fr:'Volet'},
+      p:{zh:'下一個畫面像擦拭一樣從一側推進來。星際大戰系列的招牌，用得好有復古感，濫用就顯得廉價。', en:'The next picture sweeps across the frame from one side. A Star Wars signature: retro charm when chosen, cheap when overused.', fr:'L’image suivante balaie l’écran depuis un bord. Signature de Star Wars : charme rétro quand c’est voulu, effet bon marché quand on en abuse.'} },
+    { i:'fa-wind', t:{zh:'甩鏡轉場（Whip pan）', en:'Whip pan', fr:'Panoramique filé'},
+      p:{zh:'拍攝時快速甩動鏡頭產生動態模糊，在模糊處接上下一個同方向甩動的鏡頭，看起來像一鏡到底。', en:'Whip the camera fast enough to blur, then join it to the next shot whipping the same way. It reads as one continuous move.', fr:'Un mouvement de caméra si rapide qu’il devient flou, raccordé au plan suivant filé dans le même sens : on croit à un seul mouvement.'} },
+    { i:'fa-magnifying-glass-plus', t:{zh:'縮放轉場（Zoom transition）', en:'Zoom transition', fr:'Transition zoom'},
+      p:{zh:'用關鍵影格加動態模糊，快速放大衝進下一個畫面。旅遊和短影音很常見。', en:'Keyframed scale with motion blur punching into the next shot. Common in travel and short-form video.', fr:'Une échelle animée avec flou de mouvement qui plonge dans le plan suivant. Très courant en vidéo de voyage et en format court.'} },
+    { i:'fa-mask', t:{zh:'遮罩轉場', en:'Mask / object transition', fr:'Transition par cache'},
+      p:{zh:'利用畫面中經過鏡頭的物體（柱子、路人、手）遮住整個畫面，在被遮住的那一格換到下一個場景。', en:'Use something crossing the lens (a pillar, a passer-by, a hand) to fill the frame, and change scene on the frame where it is fully covered.', fr:'Un objet qui passe devant l’objectif (pilier, passant, main) remplit l’image ; on change de scène sur l’image où tout est caché.'} },
+    { i:'fa-face-smile', t:{zh:'變形剪接（Morph cut）', en:'Morph cut', fr:'Morph cut'},
+      p:{zh:'在訪談的跳接處用影像分析把前後畫面補成連續的，讓刪掉口誤後的人物不會跳動。背景單純、動作小時效果最好。', en:'Analyses the frames either side of a jump cut in an interview and blends them so the speaker no longer jumps. Works best with a plain background and little movement.', fr:'Analyse les images de part et d’autre d’un jump cut d’interview et les fond pour que l’intervenant ne saute plus. Efficace sur fond simple et avec peu de mouvement.'} },
+    { i:'fa-fire', t:{zh:'漏光與閃白', en:'Light leaks and flashes', fr:'Fuites de lumière et flashs'},
+      p:{zh:'疊加一段漏光或閃白素材遮住剪接點，有底片和婚禮影片的感覺。', en:'Lay a light-leak or white flash over the cut to hide it; the look of film and wedding videos.', fr:'Superposer une fuite de lumière ou un flash blanc sur la coupe pour la masquer ; l’allure de la pellicule et des vidéos de mariage.'} },
+  ]},
+  { type:'note', p:{zh:'轉場越少越好。每個轉場都在告訴觀眾「這裡有變化」，如果每一刀都加，就沒有一刀特別。預設用直接切，只在真的需要表達時間或空間轉換時才用溶接或其他效果。', en:'The fewer transitions the better. Each one tells the viewer “something changes here”; put one on every cut and none of them means anything. Default to the hard cut, and save dissolves and effects for real shifts in time or place.', fr:'Moins il y a de transitions, mieux c’est. Chacune annonce « quelque chose change ici » ; en mettre partout leur ôte tout sens. Coupez franc par défaut, et gardez fondus et effets pour les vrais changements de temps ou de lieu.'} },
+]},
+
+/* ── 8. Effects ── */
+{ id:'fx', i:'fa-wand-magic-sparkles', c:'#c084fc',
+  nav:{zh:'常見效果', en:'Effects', fr:'Effets'},
+  eyebrow:{zh:'第八章', en:'Chapter 8', fr:'Chapitre 8'},
+  h2:{zh:'常見效果與做法', en:'Common effects and how they are made', fr:'Les effets courants et leur fabrication'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'幾乎所有的動態效果都建立在<strong class="text-white">關鍵影格</strong>上：在 A 時間點設定一個數值，在 B 時間點設定另一個，軟體會補出中間的變化。學會關鍵影格與緩入緩出，大部分效果都能自己做。',
+    en:'Almost every moving effect is built on <strong class="text-white">keyframes</strong>: set one value at time A, another at time B, and the software fills in the change between. Master keyframes and easing and you can build most effects yourself.',
+    fr:'Presque tous les effets animés reposent sur les <strong class="text-white">images clés</strong> : une valeur à l’instant A, une autre à l’instant B, et le logiciel calcule l’entre-deux. Maîtrisez images clés et lissage et vous fabriquerez la plupart des effets vous-même.'} },
+  { type:'dia', k:'keys' },
+  { type:'h3', t:{zh:'速度與時間', en:'Speed and time', fr:'Vitesse et temps'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-person-walking', t:{zh:'慢動作', en:'Slow motion', fr:'Ralenti'},
+      p:{zh:'用高影格率拍、放進低影格率時間軸。120fps 放到 24fps 時間軸是 20% 速度，每一格都是真的拍到的，非常滑順。用 30fps 素材硬放慢則會卡頓，需要「光流」補幀。', en:'Shoot at a high frame rate and place it in a lower-rate timeline. 120 fps in a 24 fps timeline plays at 20%, and every frame is real, so it is silky. Slowing 30 fps footage stutters and needs optical-flow interpolation.', fr:'Tourner à haute cadence puis placer dans une timeline plus lente. Du 120 i/s dans une timeline en 24 i/s joue à 20 %, chaque image est réelle, donc parfaitement fluide. Ralentir du 30 i/s saccade et demande une interpolation par flux optique.'} },
+    { i:'fa-gauge', t:{zh:'變速（Speed ramp）', en:'Speed ramp', fr:'Rampe de vitesse'},
+      p:{zh:'在一個片段裡從正常速度漸漸變慢再加速，強調某個瞬間，例如跳躍到最高點。運動與汽車影片的招牌效果。', en:'Within one clip, ease from normal speed into slow motion and back to stress a moment, say the top of a jump. A signature of sports and car films.', fr:'Dans un même plan, passer progressivement de la vitesse normale au ralenti puis revenir, pour souligner un instant comme le sommet d’un saut. Signature des vidéos de sport et d’automobile.'} },
+    { i:'fa-forward-fast', t:{zh:'快轉與縮時', en:'Fast motion and time-lapse', fr:'Accéléré et timelapse'},
+      p:{zh:'把片段加速，或用相機每隔幾秒拍一張，把幾小時壓縮成幾秒，常用於雲、車流、日落。', en:'Speed a clip up, or shoot a frame every few seconds to fold hours into seconds; clouds, traffic and sunsets.', fr:'Accélérer un plan, ou prendre une image toutes les quelques secondes pour réduire des heures en secondes : nuages, circulation, couchers de soleil.'} },
+    { i:'fa-pause', t:{zh:'定格', en:'Freeze frame', fr:'Arrêt sur image'},
+      p:{zh:'讓畫面停在某一格，常搭配文字介紹人物或製造喜劇停頓。', en:'Hold a single frame, often with text to introduce a character or for a comic beat.', fr:'Figer une image, souvent avec un texte pour présenter un personnage ou ménager un effet comique.'} },
+    { i:'fa-backward', t:{zh:'倒轉', en:'Reverse', fr:'Inversion'},
+      p:{zh:'讓片段倒著播放，例如水倒回杯子，或做「倒帶」轉場。', en:'Play a clip backwards: water flowing back into a glass, or a rewind transition.', fr:'Lire un plan à l’envers : l’eau qui remonte dans le verre, ou une transition « rembobinage ».'} },
+  ]},
+  { type:'h3', t:{zh:'畫面運動', en:'Movement in the frame', fr:'Mouvement dans l’image'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-magnifying-glass', t:{zh:'推近放大（Punch-in）', en:'Punch-in', fr:'Recadrage serré'},
+      p:{zh:'把同一個鏡頭放大到 120% 到 150%，模擬換了一個近景。口說影片用它隱藏跳接、強調重點。', en:'Scale the same shot to 120–150% to fake a closer angle. Talking-head videos use it to hide jump cuts and stress a point.', fr:'Agrandir le même plan à 120–150 % pour simuler un plan plus serré. Les vidéos face caméra s’en servent pour masquer les jump cuts et appuyer un propos.'} },
+    { i:'fa-image', t:{zh:'Ken Burns 效果', en:'Ken Burns effect', fr:'Effet Ken Burns'},
+      p:{zh:'在靜態照片上緩慢平移與縮放，讓照片產生動感，紀錄片常用。', en:'A slow pan and zoom across a still photo to bring it to life; a documentary staple.', fr:'Un lent panoramique et zoom sur une photo fixe pour l’animer ; un classique du documentaire.'} },
+    { i:'fa-hand', t:{zh:'防手震（穩定化）', en:'Stabilisation', fr:'Stabilisation'},
+      p:{zh:'軟體分析畫面晃動並反向修正，代價是畫面會被裁切放大。晃得太厲害會出現果凍般的扭曲。', en:'The software tracks the shake and counters it, at the cost of cropping in. Too much shake turns into a jelly-like wobble.', fr:'Le logiciel analyse les tremblements et les compense, au prix d’un recadrage. Trop de secousses produisent une déformation « gélatine ».'} },
+    { i:'fa-house-crack', t:{zh:'畫面晃動', en:'Camera shake', fr:'Tremblement de caméra'},
+      p:{zh:'刻意加入晃動，模擬爆炸、撞擊或手持的臨場感。', en:'Shake added on purpose to sell an explosion, an impact or a handheld feel.', fr:'Un tremblement ajouté volontairement pour une explosion, un choc ou une impression caméra à l’épaule.'} },
+  ]},
+  { type:'h3', t:{zh:'合成與遮罩', en:'Compositing and masks', fr:'Compositing et masques'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-user-astronaut', t:{zh:'綠幕去背（Chroma key）', en:'Green screen (chroma key)', fr:'Fond vert (incrustation)'},
+      p:{zh:'把畫面中某一種顏色變透明，換上其他背景。綠幕要打光均勻、人和綠幕保持距離，避免綠色反光到身上。', en:'Make one colour transparent and put another background behind. Light the green evenly and keep the subject well away from it so green does not spill onto them.', fr:'Rendre une couleur transparente pour placer un autre décor. Éclairez le vert uniformément et éloignez le sujet pour éviter que le vert ne déborde sur lui.'} },
+    { i:'fa-object-ungroup', t:{zh:'遮罩與追蹤', en:'Masks and tracking', fr:'Masques et suivi'},
+      p:{zh:'畫一個形狀只讓效果作用在那一區，再讓遮罩跟著物體移動。用來局部調色、打馬賽克遮臉或車牌。', en:'Draw a shape so an effect applies only there, then let the mask follow the subject. Used for local colour and for blurring faces or number plates.', fr:'Dessiner une forme pour limiter l’effet à une zone, puis la faire suivre le sujet. Sert à l’étalonnage local et au floutage de visages ou de plaques.'} },
+    { i:'fa-person', t:{zh:'AI 智慧去背', en:'AI subject masking', fr:'Détourage par IA'},
+      p:{zh:'不用綠幕，軟體自動辨識人物並分離背景（如 Resolve 的 Magic Mask）。常見的「文字在人物後面」效果就是這樣做的。', en:'No green screen: the software finds the person and separates the background (Resolve’s Magic Mask, for one). The popular “text behind the subject” look is made this way.', fr:'Sans fond vert : le logiciel reconnaît la personne et isole le décor (le Magic Mask de Resolve par exemple). L’effet à la mode du « texte derrière le sujet » se fait ainsi.'} },
+    { i:'fa-clone', t:{zh:'子母畫面與分割畫面', en:'Picture-in-picture and split screen', fr:'Incrustation et écran partagé'},
+      p:{zh:'縮小一個畫面疊在另一個上面，或把畫面分成兩到四格同時播放。遊戲實況、反應影片、比較影片常用。', en:'Shrink one picture over another, or split the frame into two to four panes. Common in gaming, reaction and comparison videos.', fr:'Réduire une image sur une autre, ou diviser l’écran en deux à quatre parties. Courant dans les vidéos de jeu, de réaction et de comparaison.'} },
+    { i:'fa-user-group', t:{zh:'分身', en:'Clone effect', fr:'Effet clone'},
+      p:{zh:'腳架固定不動，同一個人在不同位置各拍一次，再用遮罩把兩段疊在一起。', en:'With the camera locked on a tripod, film the same person in two places, then mask the two takes together.', fr:'Caméra fixe sur trépied, filmer la même personne à deux endroits, puis réunir les deux prises par un masque.'} },
+  ]},
+  { type:'h3', t:{zh:'風格化效果', en:'Stylised effects', fr:'Effets stylisés'} },
+  { type:'cards', cols:4, items:[
+    { i:'fa-tv', t:{zh:'故障風（Glitch）', en:'Glitch', fr:'Glitch'},
+      p:{zh:'RGB 分離、畫面撕裂、雜訊閃爍，科技感與轉場常用。', en:'RGB split, tearing and noise flicker, for a tech feel or a transition.', fr:'Séparation RVB, déchirures et parasites, pour un aspect technologique ou une transition.'} },
+    { i:'fa-film', t:{zh:'底片顆粒', en:'Film grain', fr:'Grain argentique'},
+      p:{zh:'加入細微顆粒，讓數位畫面有底片質感，也能掩蓋色階斷層。', en:'Fine grain gives digital footage a film texture and also hides banding.', fr:'Un grain fin donne à l’image numérique une texture pellicule et masque les cassures de dégradé.'} },
+    { i:'fa-video', t:{zh:'VHS／復古', en:'VHS / retro', fr:'VHS / rétro'},
+      p:{zh:'降低解析度、加掃描線、色彩溢出、日期字樣，模仿老錄影帶。', en:'Lower the resolution, add scan lines, colour bleed and a date stamp to mimic old tape.', fr:'Baisser la définition, ajouter lignes de balayage, bavures de couleur et date incrustée pour imiter la vieille cassette.'} },
+    { i:'fa-film', t:{zh:'電影黑邊', en:'Letterbox bars', fr:'Bandes noires'},
+      p:{zh:'在 16:9 畫面上下加黑邊做成 2.39:1，馬上有電影感。最好拍攝時就預留構圖。', en:'Black bars top and bottom turn 16:9 into 2.39:1 for an instant cinema feel. Frame for it when shooting.', fr:'Des bandes noires en haut et en bas transforment le 16:9 en 2,39:1 pour un effet cinéma immédiat. Cadrez-le dès le tournage.'} },
+    { i:'fa-sun', t:{zh:'光暈與耀光', en:'Glow and flares', fr:'Halo et flares'},
+      p:{zh:'讓亮部向外擴散發光，或加入鏡頭耀光，營造夢幻或炎熱感。', en:'Let highlights bloom outward, or add lens flares, for a dreamy or sun-baked mood.', fr:'Faire rayonner les hautes lumières ou ajouter des reflets d’objectif, pour une ambiance onirique ou écrasée de soleil.'} },
+    { i:'fa-eye-slash', t:{zh:'模糊與馬賽克', en:'Blur and mosaic', fr:'Flou et mosaïque'},
+      p:{zh:'保護隱私（臉、車牌、商標），或做景深、背景虛化效果。', en:'Protect privacy (faces, plates, logos), or fake shallow depth of field.', fr:'Protéger la vie privée (visages, plaques, logos) ou simuler une faible profondeur de champ.'} },
+    { i:'fa-circle', t:{zh:'暗角', en:'Vignette', fr:'Vignettage'},
+      p:{zh:'壓暗四周，把視線集中到畫面中央。', en:'Darken the edges to draw the eye to the centre.', fr:'Assombrir les bords pour attirer l’œil vers le centre.'} },
+    { i:'fa-droplet', t:{zh:'黑白與局部彩色', en:'Black and white, colour splash', fr:'Noir et blanc, couleur partielle'},
+      p:{zh:'整段轉黑白，或只保留一種顏色（例如紅色），強調主體。', en:'Go fully monochrome, or keep a single colour such as red to single out the subject.', fr:'Passer en noir et blanc, ou ne garder qu’une couleur, le rouge par exemple, pour isoler le sujet.'} },
+  ]},
+  { type:'h3', t:{zh:'文字與字幕', en:'Text and subtitles', fr:'Texte et sous-titres'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-closed-captioning', t:{zh:'字幕', en:'Subtitles', fr:'Sous-titres'},
+      p:{zh:'大多數人滑手機時是靜音看影片，字幕幾乎是必要的。現在多數軟體都能自動辨識語音產生字幕，再人工校對。可匯出 SRT 檔另外上傳，或直接燒進畫面。', en:'Most people scroll with the sound off, so subtitles are close to essential. Most editors now transcribe speech automatically; proofread, then export an SRT file to upload or burn them into the picture.', fr:'La plupart des gens regardent sans le son sur leur téléphone : les sous-titres sont quasi indispensables. La plupart des logiciels transcrivent désormais automatiquement ; relisez, puis exportez un fichier SRT ou incrustez-les dans l’image.'} },
+    { i:'fa-id-card', t:{zh:'下標題（Lower third）', en:'Lower third', fr:'Synthé (bandeau nom)'},
+      p:{zh:'畫面下方三分之一的人名與職稱條，訪談和新聞必備。', en:'The name and title strip in the lower third of the frame, essential in interviews and news.', fr:'Le bandeau nom et fonction dans le tiers inférieur de l’image, indispensable en interview et en information.'} },
+    { i:'fa-font', t:{zh:'動態文字', en:'Kinetic typography', fr:'Typographie animée'},
+      p:{zh:'文字跟著語音或節拍一個字一個字跳出、放大、彈跳，短影音最常見。', en:'Words pop, scale and bounce in time with speech or the beat; everywhere in short-form video.', fr:'Les mots apparaissent, grossissent et rebondissent au rythme de la voix ou de la musique ; omniprésent en format court.'} },
+    { i:'fa-border-all', t:{zh:'安全框', en:'Safe areas', fr:'Zones de sécurité'},
+      p:{zh:'重要文字不要放在畫面邊緣。直式短影音的下方和右側會被按鈕、說明文字蓋住，字幕要放在中間偏上的位置。', en:'Keep important text away from the edges. On vertical platforms the bottom and right side are covered by buttons and captions, so place subtitles a little above centre.', fr:'Éloignez les textes importants des bords. Sur les formats verticaux, le bas et la droite sont couverts par les boutons et légendes : placez les sous-titres un peu au-dessus du centre.'} },
+  ]},
+]},
+
+/* ── 9. Colour ── */
+{ id:'color', i:'fa-palette', c:'#fb923c',
+  nav:{zh:'調色', en:'Colour', fr:'Étalonnage'},
+  eyebrow:{zh:'第九章', en:'Chapter 9', fr:'Chapitre 9'},
+  h2:{zh:'調色：校色與風格', en:'Colour: correction and grading', fr:'Étalonnage : correction et look'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'調色分成兩步。<strong class="text-white">校色（Color correction）</strong>是把畫面調「對」：曝光正確、白色是白的、每個鏡頭接起來一致。<strong class="text-white">風格調色（Color grading）</strong>是把畫面調「美」：營造氛圍與情緒。順序不能反過來，在不準的畫面上做風格，每一顆鏡頭都會不一樣。',
+    en:'Colour work has two steps. <strong class="text-white">Correction</strong> makes the picture right: proper exposure, white that is white, every shot matching its neighbours. <strong class="text-white">Grading</strong> makes it beautiful: mood and feeling. Never reverse them; a look laid over uncorrected shots comes out different on every one.',
+    fr:'L’étalonnage se fait en deux temps. La <strong class="text-white">correction</strong> rend l’image juste : exposition correcte, blancs blancs, plans raccords entre eux. Le <strong class="text-white">look</strong> la rend belle : ambiance et émotion. Ne jamais inverser : un look posé sur des plans non corrigés rend différemment sur chacun.'} },
+  { type:'cards', cols:4, items:[
+    { i:'fa-wave-square', t:{zh:'波形圖（Waveform）', en:'Waveform', fr:'Forme d’onde'},
+      p:{zh:'由下到上代表由黑到白，左右對應畫面的左右。用來判斷曝光：碰到頂端表示過曝、黏在底部表示死黑。', en:'Bottom to top is black to white; left to right follows the frame. Read exposure from it: touching the top is clipped, sitting on the floor is crushed black.', fr:'De bas en haut, du noir au blanc ; de gauche à droite, l’image. On y lit l’exposition : toucher le haut, c’est brûlé ; coller au bas, c’est bouché.'} },
+    { i:'fa-chart-simple', t:{zh:'RGB 分量圖（Parade）', en:'RGB parade', fr:'Parade RVB'},
+      p:{zh:'把紅綠藍三個通道並排顯示。白色或灰色物體的三條高度應該一樣，不一樣就是偏色。', en:'Shows red, green and blue side by side. On anything white or grey the three should line up; if not, there is a cast.', fr:'Affiche rouge, vert et bleu côte à côte. Sur un objet blanc ou gris, les trois doivent être alignés ; sinon il y a une dominante.'} },
+    { i:'fa-circle-dot', t:{zh:'向量圖（Vectorscope）', en:'Vectorscope', fr:'Vectorscope'},
+      p:{zh:'顯示顏色的方向與飽和度。各種膚色都會落在同一條「膚色線」附近，是檢查膚色最可靠的方法。', en:'Shows the direction and strength of colour. Every skin tone, whatever its depth, falls near one “skin-tone line”: the most reliable check for faces.', fr:'Montre la teinte et la saturation. Toutes les carnations, claires ou foncées, tombent près d’une même « ligne chair » : le contrôle le plus fiable des visages.'} },
+    { i:'fa-table', t:{zh:'LUT', en:'LUT', fr:'LUT'},
+      p:{zh:'預先做好的顏色轉換表。技術 LUT 用來把 Log 轉成正常畫面；風格 LUT 套用特定色調。LUT 應該放在校色之後，而且常需要降低強度。', en:'A ready-made colour conversion. Technical LUTs turn Log into a normal image; creative LUTs apply a look. Put creative LUTs after correction, and often at reduced strength.', fr:'Une conversion de couleur prête à l’emploi. Les LUT techniques ramènent le Log à une image normale ; les LUT créatives appliquent un look. Placez-les après la correction, souvent à intensité réduite.'} },
+  ]},
+  { type:'h3', t:{zh:'常見的風格色調', en:'Common looks', fr:'Les looks courants'} },
+  { type:'table', head:[{zh:'風格', en:'Look', fr:'Look'},{zh:'做法', en:'How', fr:'Comment'},{zh:'感覺與用途', en:'Feeling and use', fr:'Effet et usage'}],
+    rows:[
+    [{zh:'青橙色調（Teal & orange）', en:'Teal and orange', fr:'Sarcelle et orange'}, {zh:'暗部推向青藍、亮部與膚色推向橘色', en:'Push shadows toward teal, highlights and skin toward orange', fr:'Ombres vers le bleu-vert, hautes lumières et peau vers l’orange'}, {zh:'好萊塢大片，人物從背景跳出來', en:'Blockbuster; faces stand out from the background', fr:'Blockbuster ; les visages se détachent du décor'}],
+    [{zh:'底片感', en:'Film look', fr:'Aspect pellicule'}, {zh:'暗部稍微提亮（不要死黑）、亮部柔和滾降、加顆粒、略降飽和', en:'Lift the blacks slightly, roll highlights off softly, add grain, ease saturation', fr:'Relever légèrement les noirs, adoucir les hautes lumières, ajouter du grain, baisser un peu la saturation'}, {zh:'懷舊、溫暖、有質感', en:'Nostalgic, warm, tactile', fr:'Nostalgique, chaleureux, matière'}],
+    [{zh:'日系清新', en:'Light and airy', fr:'Clair et aérien'}, {zh:'整體偏亮、低對比、偏青藍或偏綠、膚色保持乾淨', en:'Bright overall, low contrast, cool or slightly green, clean skin', fr:'Clair dans l’ensemble, peu contrasté, froid ou légèrement vert, peau nette'}, {zh:'生活感、溫柔、日常 vlog', en:'Everyday, gentle; daily vlogs', fr:'Quotidien, doux ; vlogs'}],
+    [{zh:'漂白效果（Bleach bypass）', en:'Bleach bypass', fr:'Sans blanchiment'}, {zh:'高對比、低飽和、金屬感', en:'High contrast, low saturation, metallic', fr:'Contraste fort, saturation faible, aspect métallique'}, {zh:'戰爭片、驚悚片的冷硬感', en:'The hard, cold feel of war films and thrillers', fr:'La dureté froide des films de guerre et des thrillers'}],
+    [{zh:'日以作夜（Day for night）', en:'Day for night', fr:'Nuit américaine'}, {zh:'白天拍，壓暗曝光、整體偏藍、降低飽和', en:'Shot by day, then darkened, cooled and desaturated', fr:'Tourné de jour, puis assombri, refroidi et désaturé'}, {zh:'不用真的在夜間拍攝就有夜景', en:'A night scene without shooting at night', fr:'Une scène de nuit sans tourner de nuit'}],
+    [{zh:'黑白', en:'Black and white', fr:'Noir et blanc'}, {zh:'去色後用各顏色的亮度控制深淺，再加強對比', en:'Desaturate, set the grey of each colour separately, then build contrast', fr:'Désaturer, régler le gris de chaque couleur, puis renforcer le contraste'}, {zh:'經典、嚴肅、去除顏色干擾', en:'Classic, serious, free of colour distraction', fr:'Classique, grave, sans distraction colorée'}],
+    ]},
+]},
+
+/* ── 10. Audio ── */
+{ id:'audio', i:'fa-wave-square', c:'#22d3ee',
+  nav:{zh:'聲音', en:'Sound', fr:'Son'},
+  eyebrow:{zh:'第十章', en:'Chapter 10', fr:'Chapitre 10'},
+  h2:{zh:'聲音：影片的另一半', en:'Sound: the other half of the film', fr:'Le son : l’autre moitié du film'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'觀眾能容忍畫面不完美，卻很難忍受聲音差。聽不清楚、忽大忽小、有嗡嗡聲，觀眾幾秒內就會滑走。',
+    en:'Audiences forgive imperfect pictures but not bad sound. Hard to hear, jumping in level, a hum underneath: they scroll away in seconds.',
+    fr:'Le public pardonne une image imparfaite, pas un mauvais son. Inaudible, irrégulier, un bourdonnement dessous : il décroche en quelques secondes.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-sliders', t:{zh:'音量與爆音', en:'Levels and clipping', fr:'Niveaux et saturation'},
+      p:{zh:'數位音訊的上限是 0 dBFS，超過就是無法修復的爆音。對白峰值通常落在 −12 到 −6 dBFS 之間比較安全。', en:'Digital audio tops out at 0 dBFS; anything above is clipping that cannot be repaired. Dialogue peaking between −12 and −6 dBFS is a safe range.', fr:'Le numérique plafonne à 0 dBFS ; au-delà, c’est une saturation irréparable. Des crêtes de dialogue entre −12 et −6 dBFS sont une zone sûre.'} },
+    { i:'fa-volume-low', t:{zh:'自動閃避（Ducking）', en:'Ducking', fr:'Ducking'},
+      p:{zh:'有人說話時，背景音樂自動降低 10 到 20 dB，說完再回來。多數軟體可以自動偵測對白來做。', en:'When someone speaks, the music drops 10–20 dB and comes back afterwards. Most editors can detect the speech and do it for you.', fr:'Quand quelqu’un parle, la musique baisse de 10 à 20 dB puis remonte. La plupart des logiciels détectent la voix et le font automatiquement.'} },
+    { i:'fa-filter', t:{zh:'降噪', en:'Noise reduction', fr:'Réduction de bruit'},
+      p:{zh:'去除冷氣聲、風聲、電流嗡聲。降太多聲音會變得空洞像在水裡，寧可留一點底噪。', en:'Removes air-conditioning, wind and hum. Overdo it and voices go hollow and watery; better to leave a little floor noise.', fr:'Supprime climatisation, vent et ronflements. Trop forte, elle rend la voix creuse et « sous l’eau » ; mieux vaut garder un léger bruit de fond.'} },
+    { i:'fa-chart-line', t:{zh:'等化器（EQ）', en:'EQ', fr:'Égaliseur'},
+      p:{zh:'切掉 80 Hz 以下的低頻雜音，讓人聲更乾淨；2 到 5 kHz 稍微提升可以讓咬字更清楚。', en:'Cut below about 80 Hz to clean the voice of rumble; a small lift around 2–5 kHz improves intelligibility.', fr:'Couper sous 80 Hz environ pour débarrasser la voix des grondements ; une légère hausse vers 2–5 kHz améliore l’intelligibilité.'} },
+    { i:'fa-compress', t:{zh:'壓縮器', en:'Compressor', fr:'Compresseur'},
+      p:{zh:'把太大聲的部分壓下來，讓小聲和大聲的差距變小，整段對白聽起來穩定。', en:'Turns the loudest parts down so loud and quiet are closer together and dialogue sounds steady.', fr:'Atténue les passages les plus forts pour rapprocher forts et faibles : le dialogue paraît stable.'} },
+    { i:'fa-music', t:{zh:'跟著節拍剪', en:'Cutting to the beat', fr:'Couper sur le temps'},
+      p:{zh:'在音樂的節拍或重音上放剪接點，畫面會有律動感。先在音樂上用標記打出節拍，再對齊剪。', en:'Put cuts on the beats or accents of the music and the picture gains a pulse. Tap markers onto the beats first, then cut to them.', fr:'Placer les coupes sur les temps ou les accents donne du rythme à l’image. Posez d’abord des marqueurs sur les temps, puis coupez dessus.'} },
+    { i:'fa-ear-listen', t:{zh:'環境音（Room tone）', en:'Room tone', fr:'Son d’ambiance'},
+      p:{zh:'現場安靜時錄 30 秒的「空白」。刪掉口誤後把它墊在缺口，聲音才不會突然變成全無聲。', en:'Thirty seconds of the location’s silence. Lay it under gaps left by removed fluffs so the sound never drops to dead nothing.', fr:'Trente secondes du « silence » du lieu. On le place sous les trous laissés par les coupes pour que le son ne tombe jamais à zéro.'} },
+    { i:'fa-shoe-prints', t:{zh:'音效', en:'Sound effects', fr:'Bruitages'},
+      p:{zh:'腳步、開門、轉場的「咻」聲，讓畫面更真實、更有力道。短影音常用音效強調文字出現。', en:'Footsteps, doors, the whoosh on a transition make pictures feel real and punchy. Short-form uses them to accent text appearing.', fr:'Pas, portes, « whoosh » de transition rendent l’image réelle et percutante. Le format court s’en sert pour ponctuer l’apparition des textes.'} },
+    { i:'fa-scale-balanced', t:{zh:'響度（LUFS）', en:'Loudness (LUFS)', fr:'Sonie (LUFS)'},
+      p:{zh:'LUFS 是以人耳感受衡量的平均響度。各平台會把太大聲的影片自動調小，所以不必拚命做大聲，對準目標值即可。', en:'LUFS measures average loudness as the ear hears it. Platforms turn loud uploads down automatically, so there is no point mastering hot; aim for the target.', fr:'Le LUFS mesure la sonie moyenne telle que l’oreille la perçoit. Les plateformes baissent automatiquement les fichiers trop forts : inutile de pousser, visez la cible.'} },
+  ]},
+  { type:'table', head:[{zh:'用途', en:'Destination', fr:'Destination'},{zh:'整體響度目標', en:'Integrated loudness target', fr:'Sonie intégrée visée'},{zh:'說明', en:'Notes', fr:'Remarques'}],
+    rows:[
+    [{zh:'YouTube 與多數串流平台', en:'YouTube and most streaming', fr:'YouTube et la plupart des plateformes'}, '≈ −14 LUFS', {zh:'更大聲會被自動調小', en:'Louder files are turned down', fr:'Plus fort, le fichier est atténué'}],
+    [{zh:'Podcast', en:'Podcasts', fr:'Podcasts'}, '≈ −16 LUFS', {zh:'手機與耳機收聽的常見值', en:'Common target for phones and earbuds', fr:'Valeur courante pour téléphone et écouteurs'}],
+    [{zh:'歐洲電視廣播（EBU R128）', en:'European broadcast (EBU R128)', fr:'Télévision européenne (EBU R128)'}, '−23 LUFS', {zh:'電視台交片的硬性規定', en:'A strict delivery requirement', fr:'Exigence stricte de livraison'}],
+    [{zh:'美國與台灣電視（ATSC A/85 等）', en:'US broadcast (ATSC A/85)', fr:'Télévision américaine (ATSC A/85)'}, '−24 LKFS', {zh:'LKFS 與 LUFS 是同一單位', en:'LKFS and LUFS are the same unit', fr:'LKFS et LUFS sont la même unité'}],
+    [{zh:'真實峰值上限', en:'True peak ceiling', fr:'Crête vraie maximale'}, '−1 dBTP', {zh:'避免壓縮成 AAC／MP3 後爆音', en:'Prevents clipping after AAC or MP3 encoding', fr:'Évite la saturation après encodage AAC ou MP3'}],
+    ]},
+]},
+
+/* ── 11. Export ── */
+{ id:'export', i:'fa-file-export', c:'#4ade80',
+  nav:{zh:'輸出', en:'Export', fr:'Export'},
+  eyebrow:{zh:'第十一章', en:'Chapter 11', fr:'Chapitre 11'},
+  h2:{zh:'輸出設定', en:'Export settings', fr:'Réglages d’export'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'原則是：<strong class="text-white">影格率跟素材一樣、解析度跟時間軸一樣、編碼用 H.264</strong>（相容性最好）。H.265 檔案更小但較舊的裝置播放吃力。各平台的建議數值會更新，下表是常見的起點。',
+    en:'The rule of thumb: <strong class="text-white">frame rate as shot, resolution as the timeline, codec H.264</strong> for the widest compatibility. H.265 is smaller but heavier for older devices. Platforms revise their figures; the table below is a sound starting point.',
+    fr:'Règle simple : <strong class="text-white">cadence d’origine, définition de la timeline, codec H.264</strong> pour la meilleure compatibilité. Le H.265 est plus léger mais pèse sur les appareils anciens. Les plateformes révisent leurs chiffres ; le tableau ci-dessous est un bon point de départ.'} },
+  { type:'table', head:[{zh:'用途', en:'Destination', fr:'Destination'},{zh:'比例與尺寸', en:'Ratio and size', fr:'Format et taille'},{zh:'編碼', en:'Codec', fr:'Codec'},{zh:'影像位元率參考', en:'Video bitrate guide', fr:'Débit vidéo indicatif'}],
+    rows:[
+    ['YouTube 1080p', '16:9 · 1920×1080', 'H.264 · AAC 48 kHz', {zh:'約 8 Mbps（30fps）／12 Mbps（60fps）', en:'≈ 8 Mbps (30 fps) / 12 Mbps (60 fps)', fr:'≈ 8 Mb/s (30 i/s) / 12 Mb/s (60 i/s)'}],
+    ['YouTube 4K', '16:9 · 3840×2160', 'H.264 / H.265', {zh:'約 35–45 Mbps（30fps）', en:'≈ 35–45 Mbps (30 fps)', fr:'≈ 35–45 Mb/s (30 i/s)'}],
+    ['Reels · TikTok · Shorts', '9:16 · 1080×1920', 'H.264', {zh:'約 8–15 Mbps，30fps', en:'≈ 8–15 Mbps, 30 fps', fr:'≈ 8–15 Mb/s, 30 i/s'}],
+    [{zh:'IG 動態直式', en:'Instagram feed', fr:'Fil Instagram'}, '4:5 · 1080×1350', 'H.264', {zh:'約 8 Mbps', en:'≈ 8 Mbps', fr:'≈ 8 Mb/s'}],
+    [{zh:'母帶／存檔', en:'Master / archive', fr:'Master / archive'}, {zh:'同時間軸', en:'As timeline', fr:'Comme la timeline'}, 'ProRes 422 HQ / DNxHR HQ', {zh:'檔案很大，但畫質幾乎無損，可再轉成任何格式', en:'Very large but near-lossless; can be re-encoded to anything', fr:'Très lourd mais quasi sans perte ; réencodable dans tout format'}],
+    ]},
+  { type:'note', p:{zh:'輸出後一定要用手機和電腦各看一次完整成品：檢查有沒有黑格、字幕錯字、聲音爆音、結尾多出來的空白。這一步能擋下大部分尷尬的錯誤。', en:'After export, watch the whole file once on a phone and once on a computer: look for black frames, typos in subtitles, clipped sound and empty seconds at the end. This one step catches most embarrassing mistakes.', fr:'Après l’export, regardez le fichier en entier sur téléphone et sur ordinateur : images noires, coquilles dans les sous-titres, son saturé, secondes vides à la fin. Cette seule étape évite la plupart des erreurs gênantes.'} },
+]},
+
+/* ── 12. Shortcuts ── */
+{ id:'keys', i:'fa-keyboard', c:'#94a3b8',
+  nav:{zh:'快捷鍵', en:'Shortcuts', fr:'Raccourcis'},
+  eyebrow:{zh:'參考', en:'Reference', fr:'Référence'},
+  h2:{zh:'三大軟體快捷鍵對照', en:'Shortcuts across the big three', fr:'Raccourcis des trois grands logiciels'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'剪輯速度大多來自快捷鍵。<kbd>J</kbd> <kbd>K</kbd> <kbd>L</kbd> 三鍵在幾乎所有軟體都通用：L 往前播、J 往後播、K 停止，連按 L 會加速。Mac 上的 Ctrl 換成 Cmd。',
+    en:'Most editing speed comes from the keyboard. <kbd>J</kbd> <kbd>K</kbd> <kbd>L</kbd> work in almost every program: L plays forward, J backward, K stops, and tapping L again speeds up. On a Mac, Ctrl becomes Cmd.',
+    fr:'La vitesse de montage vient surtout du clavier. <kbd>J</kbd> <kbd>K</kbd> <kbd>L</kbd> fonctionnent presque partout : L lit en avant, J en arrière, K arrête, et L répété accélère. Sur Mac, Ctrl devient Cmd.'} },
+  { type:'table', kbd:true, head:[{zh:'動作', en:'Action', fr:'Action'},'Premiere Pro','DaVinci Resolve','Final Cut Pro'],
+    rows:[
+    [{zh:'播放／停止／倒播', en:'Play / stop / reverse', fr:'Lecture / arrêt / arrière'}, 'L / K / J', 'L / K / J', 'L / K / J'],
+    [{zh:'標記入點／出點', en:'Mark in / out', fr:'Point d’entrée / de sortie'}, 'I / O', 'I / O', 'I / O'],
+    [{zh:'選取工具', en:'Selection tool', fr:'Outil de sélection'}, 'V', 'A', 'A'],
+    [{zh:'剃刀工具', en:'Razor / blade tool', fr:'Outil lame'}, 'C', 'B', 'B'],
+    [{zh:'在播放頭切開', en:'Split at playhead', fr:'Couper sous la tête de lecture'}, 'Ctrl+K', 'Ctrl+B', 'Cmd+B'],
+    [{zh:'插入／覆蓋', en:'Insert / overwrite', fr:'Insérer / écraser'}, ', / .', 'F9 / F10', 'W / D'],
+    [{zh:'修剪開頭／結尾到播放頭', en:'Trim start / end to playhead', fr:'Rogner début / fin à la tête'}, 'Q / W', 'Ctrl+Shift+[ / ]', 'Option+[ / ]'],
+    [{zh:'吸附開關', en:'Toggle snapping', fr:'Magnétisme'}, 'S', 'N', 'N'],
+    [{zh:'加標記', en:'Add marker', fr:'Ajouter un marqueur'}, 'M', 'M', 'M'],
+    [{zh:'時間軸放大／縮小', en:'Zoom timeline in / out', fr:'Zoom timeline + / −'}, '= / −', 'Ctrl+= / Ctrl+−', 'Cmd+= / Cmd+−'],
+    [{zh:'輸出', en:'Export', fr:'Exporter'}, 'Ctrl+M', {zh:'Deliver 頁面', en:'Deliver page', fr:'Page Deliver'}, 'Cmd+E'],
+    ]},
+]},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   UI strings
+   ═══════════════════════════════════════════════════════════ */
+const I18N = {
+zh:{
+ 'doc.title':'影片剪輯 | 軟體、剪接技法與特效',
+ 'hdr.badge':'影片剪輯入門','hdr.title':'影片剪輯：軟體、技法與效果',
+ 'intro':'影片剪輯是把拍到的素材挑選、排序、修剪，再加上聲音、字幕、顏色與效果，組成一部能說故事的影片。剪輯師常說「影片是在剪接台上第二次被寫出來的」：同一批素材，剪法不同，觀眾的感受就完全不同。',
+ 'intro2':'這一卷依學習順序排列：先認識常見軟體與基本名詞，再學介面、流程與剪輯工具，接著是剪接手法、轉場、常見效果、調色與聲音，最後是輸出設定與快捷鍵。每張圖都依實際數值繪製，例如修剪圖中的片段長度與畫面比例。',
+ 'footer':'影片剪輯入門參考，涵蓋軟體、剪接手法、效果、調色、聲音與輸出。軟體功能、價格方案與平台建議數值會隨版本更新，請以官方說明為準；快捷鍵為各軟體預設值。'
+},
+en:{
+ 'doc.title':'Video Editing: Software, Cutting & Effects',
+ 'hdr.badge':'VIDEO EDITING PRIMER','hdr.title':'Video editing: software, technique and effects',
+ 'intro':'Video editing is choosing, ordering and trimming footage, then adding sound, text, colour and effects until it tells a story. Editors say a film is written a second time in the cutting room: the same footage cut two ways leaves an audience feeling two different things.',
+ 'intro2':'This volume follows the order you learn in: the common software and the basic vocabulary, then the interface, the workflow and the editing tools, then ways of cutting, transitions, common effects, colour and sound, and finally export settings and shortcuts. Every diagram is drawn from real values, such as the clip lengths in the trim figures and the true aspect ratios.',
+ 'footer':'An introductory reference to video editing: software, cutting, effects, colour, sound and export. Features, pricing and platform recommendations change between versions, so the official documentation takes precedence; shortcuts are each program’s defaults.'
+},
+fr:{
+ 'doc.title':'Montage vidéo : logiciels, raccords & effets',
+ 'hdr.badge':'INITIATION AU MONTAGE','hdr.title':'Le montage vidéo : logiciels, technique et effets',
+ 'intro':'Monter, c’est choisir, ordonner et ajuster des rushes, puis y ajouter son, texte, couleur et effets jusqu’à ce qu’ils racontent une histoire. Les monteurs disent qu’un film s’écrit une seconde fois en salle de montage : les mêmes images montées de deux façons font ressentir deux choses différentes.',
+ 'intro2':'Ce volume suit l’ordre d’apprentissage : les logiciels courants et le vocabulaire de base, puis l’interface, la méthode et les outils, ensuite les raccords, transitions, effets, l’étalonnage et le son, et enfin l’export et les raccourcis. Chaque schéma est tracé à partir de valeurs réelles, comme la durée des plans dans les figures d’ajustement et les vrais formats d’image.',
+ 'footer':'Une référence d’initiation au montage vidéo : logiciels, raccords, effets, étalonnage, son et export. Fonctions, tarifs et recommandations des plateformes évoluent avec les versions : la documentation officielle fait foi ; les raccourcis sont ceux par défaut.'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Rendering
+   ═══════════════════════════════════════════════════════════ */
+const COLS = { 2:'grid md:grid-cols-2 gap-4', 3:'grid md:grid-cols-2 lg:grid-cols-3 gap-4', 4:'grid sm:grid-cols-2 lg:grid-cols-4 gap-4' };
+function kbdify(s){ return s.split(' / ').map(p => `<kbd>${p}</kbd>`).join(' / '); }
+
+const BLOCK = {
+  lead: (b) => `<p class="text-slate-300 leading-relaxed max-w-4xl">${t(b.p)}</p>`,
+  h3:   (b) => `<h3 class="text-base font-black text-white pt-2">${t(b.t)}</h3>`,
+  note: (b, s) => `<p class="text-sm text-slate-300 leading-relaxed rounded-2xl p-4 border" style="background:${s.c}0f;border-color:${s.c}40"><i class="fa-solid fa-lightbulb mr-2" style="color:${s.c}"></i>${t(b.p)}</p>`,
+  dia:  (b) => { const h = DIA[b.k](); return h.startsWith('<svg') ? `<div class="dia-box reveal">${h}</div>` : h; },
+  cards:(b, s) => `<div class="${COLS[b.cols || 3]}">` + b.items.map((c, n) => `
+    <article class="reveal bg-slate-900/40 rounded-2xl border border-slate-800 p-5 hover:border-slate-600 transition-colors" data-i="${n % 6}">
+      <div class="flex items-start gap-3">
+        <div class="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center border" style="color:${s.c};background:${s.c}14;border-color:${s.c}33"><i class="fa-solid ${c.i} text-sm"></i></div>
+        <div class="min-w-0">
+          <h4 class="font-black text-white text-sm leading-snug">${t(c.t)}</h4>
+          ${c.tag ? `<p class="text-[11px] font-bold mt-1" style="color:${s.c}">${t(c.tag)}</p>` : ''}
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed mt-3">${t(c.p)}</p>
+      ${c.l ? `<ul class="mt-3 space-y-1.5">${c.l.map(x => `<li class="text-xs text-slate-300 leading-relaxed flex gap-2"><span style="color:${s.c}">▸</span><span>${t(x)}</span></li>`).join('')}</ul>` : ''}
+    </article>`).join('') + `</div>`,
+  steps:(b, s) => `<ol class="grid md:grid-cols-2 gap-4">` + b.items.map((c, n) => `
+    <li class="reveal flex gap-4 bg-slate-900/40 rounded-2xl border border-slate-800 p-5" data-i="${n % 6}">
+      <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border" style="color:${s.c};background:${s.c}14;border-color:${s.c}55">${n + 1}</div>
+      <div><h4 class="font-black text-white text-sm">${t(c.t)}</h4><p class="text-sm text-slate-400 leading-relaxed mt-1.5">${t(c.p)}</p></div>
+    </li>`).join('') + `</ol>`,
+  table:(b) => `<div class="table-scroll overflow-x-auto"><table class="w-full text-sm min-w-[640px]">
+    <thead><tr class="text-left text-slate-400 border-b border-slate-800">${b.head.map(h => `<th class="py-3 px-4 font-bold">${t(h)}</th>`).join('')}</tr></thead>
+    <tbody class="divide-y divide-slate-800/60">${b.rows.map(r => `<tr>${r.map((c, i) => `<td class="py-3 px-4 align-top ${i ? 'text-slate-300' : 'text-white font-bold'}">${b.kbd && i ? kbdify(t(c)) : t(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`,
+};
+
+function renderSections() {
+  document.getElementById('nav').innerHTML = SECTIONS.map(s =>
+    `<a href="#${s.id}" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors">${t(s.nav)}</a>`).join('');
+  document.getElementById('sections').innerHTML = SECTIONS.map(s => `
+  <section id="${s.id}" class="scroll-mt-28">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 rounded-2xl border" style="color:${s.c};background:${s.c}1a;border-color:${s.c}40;box-shadow:0 0 20px ${s.c}33"><i class="fa-solid ${s.i} text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider font-bold" style="color:${s.c}">${t(s.eyebrow)}</span>
+        <h2 class="text-2xl font-black text-white">${t(s.h2)}</h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      ${s.blocks.map(b => BLOCK[b.type](b, s)).join('')}
+    </div>
+  </section>`).join('');
+}
+
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach(e => revealObserver.observe(e));
+}
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-violet-500/15 text-violet-300 border border-violet-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderSections();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>

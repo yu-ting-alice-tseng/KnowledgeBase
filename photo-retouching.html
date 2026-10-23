@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>修圖 | 軟體、功能與常見效果</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+<style>
+  body {
+    background-color: #060a09;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(16,185,129,0.08) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(20,184,166,0.06) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(244,114,182,0.04) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+  kbd { display:inline-block; padding:.05rem .4rem; border-radius:.35rem; font-size:.72rem; font-weight:700;
+        font-family: Nunito, sans-serif; color:#e2e8f0; background:#14201d; border:1px solid #2f4a43;
+        box-shadow: 0 1px 0 #2f4a43; white-space: nowrap; }
+
+  /* ── Diagrams ──
+     Drawn in SVG; the tone curves are computed from the functions they show. */
+  .dg { display:block; width:100%; height:auto; }
+  .dg text { font-family: Nunito, 'Noto Serif TC', sans-serif; }
+  .dg .lab  { fill:#6ee7b7; font-size:15px; font-weight:800; }
+  .dg .sub  { fill:#94a3b8; font-size:13px; }
+  .dg .val  { fill:#f1f5f9; font-size:13px; font-weight:800; }
+  .dg .grid { stroke: rgba(148,163,184,0.18); stroke-width:1; }
+  .dia-box { background:#0b100f; border:1px solid rgba(148,163,184,0.14); border-radius:1rem; padding:1rem; }
+
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-emerald-500 selection:text-white">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(16,185,129,0.13) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(20,184,166,0.11) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#060a09]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-pink-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#060a09] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-wand-magic-sparkles text-emerald-400 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-emerald-400 uppercase bg-emerald-500/10 rounded-full border border-emerald-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav id="nav" class="flex flex-wrap gap-2 text-xs"></nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <div id="sections" class="space-y-12"></div>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Diagrams. Each returns an SVG string in the current language.
+   ═══════════════════════════════════════════════════════════ */
+
+/* A layer stack seen from the side: what sits on top wins. */
+function diaLayers() {
+  const L = {
+    title:{zh:'圖層堆疊：上面的蓋住下面的', en:'A layer stack: upper layers cover lower ones', fr:'Une pile de calques : le haut recouvre le bas'},
+    out:{zh:'最後看到的結果', en:'What you finally see', fr:'Le résultat visible'},
+  };
+  const layers = [
+    { c:'#f59e0b', n:{zh:'調整圖層：曲線（加遮色片，只作用在人物）', en:'Adjustment layer: Curves (masked to the subject)', fr:'Calque de réglage : Courbes (masqué sur le sujet)'} },
+    { c:'#a78bfa', n:{zh:'調整圖層：色彩平衡（整張）', en:'Adjustment layer: Colour Balance (whole image)', fr:'Calque de réglage : Balance des couleurs (toute l’image)'} },
+    { c:'#38bdf8', n:{zh:'修補圖層：在空白圖層上修瑕疵', en:'Repair layer: blemishes healed on an empty layer', fr:'Calque de retouche : corrections sur un calque vide'} },
+    { c:'#64748b', n:{zh:'背景：原始照片（不直接動它）', en:'Background: the original photo (never touched)', fr:'Arrière-plan : la photo d’origine (jamais modifiée)'} },
+  ];
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  layers.forEach((l, i) => {
+    const y = 48 + i * 52, x = 20 + i * 14;
+    s += `<path d="M${x} ${y + 30} l60 -26 h240 l-60 26 z" fill="${l.c}" fill-opacity="0.22" stroke="${l.c}" stroke-width="2"/>`;
+    s += `<text x="${x + 330}" y="${y + 21}" class="sub" style="fill:#e2e8f0">${t(l.n)}</text>`;
+  });
+  s += `<path d="M120 264 v16" stroke="#94a3b8" stroke-width="2"/><path d="M114 276 l6 8 l6 -8" fill="none" stroke="#94a3b8" stroke-width="2"/>`;
+  s += `<text x="140" y="284" class="sub">${t(L.out)}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 296" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* A mask is a greyscale image: white shows, black hides, grey is partial. */
+function diaMask() {
+  const L = {
+    title:{zh:'遮色片：白顯黑隱', en:'Masks: white reveals, black conceals', fr:'Masques : le blanc révèle, le noir cache'},
+    k0:{zh:'黑：完全隱藏效果', en:'Black: effect hidden', fr:'Noir : effet caché'},
+    k5:{zh:'50% 灰：效果一半', en:'50% grey: half the effect', fr:'Gris 50 % : moitié de l’effet'},
+    k1:{zh:'白：完全顯示效果', en:'White: effect shown', fr:'Blanc : effet visible'},
+  };
+  return `<svg class="dg" viewBox="0 0 900 130" role="img" aria-label="${t(L.title)}">
+    <defs><linearGradient id="mg" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+    <text x="0" y="22" class="lab">${t(L.title)}</text>
+    <rect x="20" y="40" width="860" height="44" rx="8" fill="url(#mg)" stroke="#334155"/>
+    <text x="20" y="108" class="sub">${t(L.k0)}</text>
+    <text x="450" y="108" class="sub" text-anchor="middle">${t(L.k5)}</text>
+    <text x="880" y="108" class="sub" text-anchor="end">${t(L.k1)}</text></svg>`;
+}
+
+/* Four tone curves, each computed from a function on [0,1]. */
+function diaCurves() {
+  const S = 150, P = 12;
+  const plot = (fns, title, desc) => {
+    let s = `<rect x="${P}" y="${P}" width="${S}" height="${S}" fill="#0b0a12" stroke="#334155"/>`;
+    for (let i = 1; i < 4; i++) {
+      const g = P + i * S / 4;
+      s += `<line x1="${g}" y1="${P}" x2="${g}" y2="${P + S}" class="grid"/><line x1="${P}" y1="${g}" x2="${P + S}" y2="${g}" class="grid"/>`;
+    }
+    s += `<line x1="${P}" y1="${P + S}" x2="${P + S}" y2="${P}" stroke="#475569" stroke-dasharray="4 4"/>`;
+    fns.forEach(([f, col]) => {
+      let d = '';
+      for (let i = 0; i <= 50; i++) {
+        const x = i / 50, y = Math.min(1, Math.max(0, f(x)));
+        d += (i ? ' L' : 'M') + (P + x * S).toFixed(1) + ' ' + (P + S - y * S).toFixed(1);
+      }
+      s += `<path d="${d}" fill="none" stroke="${col}" stroke-width="3"/>`;
+    });
+    return `<div class="dia-box reveal"><svg class="dg" viewBox="0 0 ${S + 2 * P} ${S + 2 * P}" style="max-width:220px;margin:0 auto" role="img" aria-label="${t(title)}">${s}</svg>
+      <h4 class="text-sm font-black text-emerald-300 mt-3">${t(title)}</h4><p class="text-xs text-slate-400 leading-relaxed mt-1">${t(desc)}</p></div>`;
+  };
+  const TAU = 2 * Math.PI;
+  return `<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">`
+    + plot([[x => x - 0.07 * Math.sin(TAU * x), '#e2e8f0']],
+        {zh:'S 曲線：加對比', en:'S-curve: more contrast', fr:'Courbe en S : plus de contraste'},
+        {zh:'壓暗暗部、提亮亮部，中間調變陡，畫面更立體。', en:'Darker shadows, brighter highlights, a steeper middle: more depth.', fr:'Ombres plus sombres, hautes lumières plus claires, milieu plus raide : plus de relief.'})
+    + plot([[x => 0.13 + 0.82 * (x - 0.04 * Math.sin(TAU * x)), '#e2e8f0']],
+        {zh:'霧面褪色（Matte）', en:'Matte fade', fr:'Effet mat délavé'},
+        {zh:'把最左下的點往上拉，黑色變成深灰，是底片感與復古風的關鍵。', en:'Lift the bottom-left point so black becomes dark grey: the key to film and vintage looks.', fr:'Relever le point en bas à gauche : le noir devient gris foncé. La clé des looks pellicule et rétro.'})
+    + plot([[x => x + 0.06 * Math.sin(TAU * x), '#e2e8f0']],
+        {zh:'反 S 曲線：降對比', en:'Inverse S: less contrast', fr:'S inversé : moins de contraste'},
+        {zh:'暗部提亮、亮部壓暗，畫面柔和，適合日系清新與高調人像。', en:'Lifted shadows and lowered highlights: soft, for airy and high-key portraits.', fr:'Ombres relevées, hautes lumières abaissées : doux, pour les portraits clairs et aériens.'})
+    + plot([[x => x - 0.06 * Math.sin(TAU * x), '#f87171'], [x => x + 0.06 * Math.sin(TAU * x), '#60a5fa']],
+        {zh:'青橙色調（分通道）', en:'Teal and orange (per channel)', fr:'Sarcelle et orange (par canal)'},
+        {zh:'紅色通道做 S、藍色通道做反 S：暗部偏青藍、亮部偏橘。', en:'An S on red and an inverse S on blue: teal shadows, orange highlights.', fr:'Un S sur le rouge et un S inversé sur le bleu : ombres sarcelle, hautes lumières orangées.'})
+    + `</div>`;
+}
+
+/* Frequency separation: original = low frequency (tone) + high frequency (texture). */
+function diaFreq() {
+  const L = {
+    title:{zh:'頻率分離：把顏色和質感拆開', en:'Frequency separation: colour and texture apart', fr:'Séparation de fréquences : couleur et texture séparées'},
+    o:{zh:'原圖', en:'Original', fr:'Original'},
+    lo:{zh:'低頻：顏色與明暗', en:'Low: colour and tone', fr:'Basse : couleur et tons'},
+    hi:{zh:'高頻：毛孔與紋理', en:'High: pores and texture', fr:'Haute : pores et texture'},
+    lo2:{zh:'在這層修不均的膚色', en:'Even out blotches here', fr:'Unifier le teint ici'},
+    hi2:{zh:'在這層修痘痘與雜毛', en:'Remove spots and hairs here', fr:'Retirer boutons et poils ici'},
+  };
+  const box = (x, inner, cap, cap2) => `<g transform="translate(${x},40)"><rect width="180" height="130" rx="10" fill="#0b0a12" stroke="#334155"/>${inner}
+    <text x="90" y="156" text-anchor="middle" class="val">${cap}</text><text x="90" y="176" text-anchor="middle" class="sub">${cap2 || ''}</text></g>`;
+  const blob = `<ellipse cx="90" cy="65" rx="56" ry="44" fill="#d6a184"/><ellipse cx="72" cy="58" rx="16" ry="10" fill="#c48a6c"/><ellipse cx="108" cy="78" rx="14" ry="9" fill="#e0b39a"/>`;
+  return `<svg class="dg" viewBox="0 0 760 230" role="img" aria-label="${t(L.title)}">
+    <defs>
+      <filter id="fsBlur"><feGaussianBlur stdDeviation="7"/></filter>
+      <filter id="fsTex"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 1"/></feComponentTransfer></filter>
+      <clipPath id="fsClip"><rect width="180" height="130" rx="10"/></clipPath>
+    </defs>
+    <text x="0" y="22" class="lab">${t(L.title)}</text>
+    ${box(0, `<g clip-path="url(#fsClip)">${blob}<rect width="180" height="130" filter="url(#fsTex)" opacity="0.28"/><circle cx="104" cy="52" r="4" fill="#9a4b3a"/><circle cx="66" cy="80" r="3" fill="#9a4b3a"/></g>`, t(L.o))}
+    <text x="215" y="112" text-anchor="middle" class="lab" style="font-size:28px">=</text>
+    ${box(250, `<g clip-path="url(#fsClip)"><g filter="url(#fsBlur)">${blob}</g></g>`, t(L.lo), t(L.lo2))}
+    <text x="465" y="112" text-anchor="middle" class="lab" style="font-size:28px">+</text>
+    ${box(500, `<g clip-path="url(#fsClip)"><rect width="180" height="130" fill="#808080"/><rect width="180" height="130" filter="url(#fsTex)" opacity="0.35"/><circle cx="104" cy="52" r="4" fill="#5a5a5a"/><circle cx="66" cy="80" r="3" fill="#5a5a5a"/></g>`, t(L.hi), t(L.hi2))}
+  </svg>`;
+}
+
+const DIA = { layers: diaLayers, mask: diaMask, curves: diaCurves, freq: diaFreq };
+
+/* ═══════════════════════════════════════════════════════════
+   Content. Each section is a list of blocks rendered below.
+   ═══════════════════════════════════════════════════════════ */
+const SECTIONS = [
+
+/* ── 1. Software ── */
+{ id:'soft', i:'fa-laptop-code', c:'#34d399',
+  nav:{zh:'軟體', en:'Software', fr:'Logiciels'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'修圖軟體簡介', en:'The editing software', fr:'Les logiciels de retouche'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'修圖軟體大致分成兩類。<strong class="text-white">相片管理與顯影軟體</strong>（Lightroom、Capture One）負責整批照片的曝光、顏色調整，所有修改都不破壞原檔。<strong class="text-white">像素編輯軟體</strong>（Photoshop、Affinity Photo）處理單張照片的細節：去除雜物、修膚、合成、變形。多數攝影師兩種都會用：先在前者調好全部照片，再把少數需要精修的送進後者。',
+    en:'Editing software falls into two families. <strong class="text-white">Cataloguing and RAW developers</strong> (Lightroom, Capture One) adjust exposure and colour across whole shoots, never altering the original. <strong class="text-white">Pixel editors</strong> (Photoshop, Affinity Photo) work on one picture in detail: removing objects, skin, compositing, reshaping. Most photographers use both: develop everything in the first, then send the few images that need detailed work to the second.',
+    fr:'Les logiciels se répartissent en deux familles. Les <strong class="text-white">catalogueurs et développeurs RAW</strong> (Lightroom, Capture One) règlent exposition et couleur sur des séries entières, sans jamais modifier l’original. Les <strong class="text-white">éditeurs de pixels</strong> (Photoshop, Affinity Photo) travaillent une image en détail : suppression d’éléments, peau, compositing, déformation. La plupart des photographes utilisent les deux : tout développer dans le premier, puis envoyer les quelques images à peaufiner dans le second.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-layer-group', t:'Adobe Photoshop',
+      tag:{zh:'Win／Mac／iPad／網頁 · 訂閱制', en:'Win / Mac / iPad / web · subscription', fr:'Win / Mac / iPad / web · abonnement'},
+      p:{zh:'像素編輯的業界標準。圖層、遮色片、選取、修補、液化、合成，以及 AI 生成填色、移除工具都在這裡。功能幾乎沒有上限，入門門檻也最高。', en:'The industry standard for pixel editing: layers, masks, selections, healing, Liquify, compositing, and AI Generative Fill and Remove. Almost no ceiling, and the steepest start.', fr:'La référence de l’édition de pixels : calques, masques, sélections, correction, Fluidité, compositing, ainsi que le Remplissage génératif et l’outil Supprimer. Presque sans limite, et le plus exigeant au départ.'},
+      l:[{zh:'適合：精修人像、商品、合成、設計', en:'For: detailed portraits, products, composites, design', fr:'Pour : portrait soigné, produit, compositing, graphisme'}] },
+    { i:'fa-sun', t:'Adobe Lightroom Classic／Lightroom',
+      tag:{zh:'Win／Mac／手機 · 訂閱制', en:'Win / Mac / mobile · subscription', fr:'Win / Mac / mobile · abonnement'},
+      p:{zh:'攝影師最常用的 RAW 顯影與相片管理軟體。可以批次套用設定、用預設集（Preset）統一風格，AI 遮色片能一鍵選取人物、天空。Classic 是本機目錄版，另一個是雲端同步版。', en:'Photographers’ most common RAW developer and library. Batch-apply settings, unify a look with presets, and select a person or the sky in one click with AI masks. Classic keeps a local catalogue; the other version syncs through the cloud.', fr:'Le développeur RAW et gestionnaire de photos le plus utilisé. Réglages par lots, presets pour un style homogène, masques IA qui sélectionnent sujet ou ciel en un clic. Classic garde un catalogue local ; l’autre version se synchronise dans le cloud.'},
+      l:[{zh:'適合：大量照片、婚禮、旅行、活動', en:'For: large shoots, weddings, travel, events', fr:'Pour : gros volumes, mariages, voyages, événements'}] },
+    { i:'fa-camera-retro', t:'Capture One',
+      tag:{zh:'Win／Mac／iPad · 訂閱或買斷', en:'Win / Mac / iPad · subscription or licence', fr:'Win / Mac / iPad · abonnement ou licence'},
+      p:{zh:'以色彩表現和連機拍攝（相機接電腦即時看圖）著稱，商業攝影棚與時尚攝影常用。調色工具比 Lightroom 更細。', en:'Known for its colour rendering and tethered shooting (camera to computer, live view of each frame); a studio and fashion favourite. Finer colour tools than Lightroom.', fr:'Réputé pour son rendu des couleurs et la prise de vue en connexion (appareil relié à l’ordinateur). Très utilisé en studio et en mode. Outils couleur plus fins que Lightroom.'} },
+    { i:'fa-shapes', t:'Affinity Photo',
+      tag:{zh:'Win／Mac／iPad', en:'Win / Mac / iPad', fr:'Win / Mac / iPad'},
+      p:{zh:'功能接近 Photoshop，沒有月費，是最常被推薦的替代品。現屬 Canva 旗下，價格方案近年有調整，請以官網為準。', en:'Close to Photoshop in features without a monthly fee; the alternative most often recommended. Now part of Canva, whose pricing has changed recently, so check the official site.', fr:'Proche de Photoshop en fonctions, sans abonnement mensuel ; l’alternative la plus recommandée. Appartient désormais à Canva, dont les tarifs ont récemment changé : vérifiez sur le site officiel.'} },
+    { i:'fa-code-branch', t:'GIMP／Darktable／RawTherapee',
+      tag:{zh:'Win／Mac／Linux · 免費開源', en:'Win / Mac / Linux · free and open source', fr:'Win / Mac / Linux · libres et gratuits'},
+      p:{zh:'GIMP 對應 Photoshop 的像素編輯；Darktable、RawTherapee 對應 Lightroom 的 RAW 顯影。功能完整，介面需要時間適應。', en:'GIMP covers Photoshop-style pixel editing; Darktable and RawTherapee cover Lightroom-style RAW development. Capable, though the interfaces take getting used to.', fr:'GIMP couvre l’édition de pixels façon Photoshop ; Darktable et RawTherapee le développement RAW façon Lightroom. Complets, mais leurs interfaces demandent un temps d’adaptation.'} },
+    { i:'fa-globe', t:'Photopea',
+      tag:{zh:'網頁 · 免費（含廣告）', en:'Browser · free with ads', fr:'Navigateur · gratuit avec publicité'},
+      p:{zh:'在瀏覽器裡執行、介面幾乎和 Photoshop 一樣，能開 PSD 檔。臨時要改圖又沒裝軟體時很方便。', en:'Runs in the browser with an interface very close to Photoshop’s, and opens PSD files. Handy for a quick fix on a machine with nothing installed.', fr:'Fonctionne dans le navigateur avec une interface très proche de Photoshop et ouvre les PSD. Pratique pour une retouche rapide sur une machine sans logiciel.'} },
+    { i:'fa-mobile-screen', t:'Snapseed／Lightroom Mobile',
+      tag:{zh:'手機 · 免費／部分付費', en:'Phone · free / partly paid', fr:'Mobile · gratuit / partiellement payant'},
+      p:{zh:'手機上最完整的修圖工具：曲線、局部調整、修復筆刷、透視校正都有。Lightroom Mobile 還能和電腦同步預設集。', en:'The most complete phone editors: curves, local adjustments, healing brush, perspective correction. Lightroom Mobile also syncs presets with the desktop.', fr:'Les éditeurs mobiles les plus complets : courbes, réglages locaux, correcteur, perspective. Lightroom Mobile synchronise aussi les presets avec l’ordinateur.'} },
+    { i:'fa-wand-magic-sparkles', t:{zh:'醒圖／美圖秀秀／VSCO', en:'Meitu / Xingtu / VSCO', fr:'Meitu / Xingtu / VSCO'},
+      tag:{zh:'手機 · 免費＋訂閱', en:'Phone · free + subscription', fr:'Mobile · gratuit + abonnement'},
+      p:{zh:'濾鏡與一鍵美顏為主。VSCO 以底片風濾鏡出名；醒圖、美圖秀秀在亞洲流行，擅長修臉、修身、妝容。方便快速，但容易修過頭。', en:'Built around filters and one-tap beautification. VSCO is known for film-style presets; Xingtu and Meitu, popular across Asia, specialise in face, body and make-up retouching. Fast, and easy to overdo.', fr:'Centrées sur les filtres et l’embellissement en un geste. VSCO est connu pour ses presets façon pellicule ; Xingtu et Meitu, très populaires en Asie, retouchent visage, silhouette et maquillage. Rapides, et faciles à pousser trop loin.'} },
+    { i:'fa-robot', t:{zh:'AI 工具', en:'AI tools', fr:'Outils d’IA'},
+      tag:{zh:'多已內建在上述軟體', en:'Mostly built into the above', fr:'Le plus souvent intégrés aux logiciels ci-dessus'},
+      p:{zh:'AI 降噪、一鍵選取主體、生成填色、延伸畫面、放大解析度。它們讓過去要花一小時的工作變成幾秒，但結果仍要放大檢查：AI 常在手指、文字、邊緣出錯。', en:'AI noise reduction, one-click subject selection, generative fill, canvas expansion, upscaling. They turn an hour’s work into seconds, but always zoom in to check: AI often slips on fingers, lettering and edges.', fr:'Débruitage IA, sélection du sujet en un clic, remplissage génératif, extension du cadre, agrandissement. Une heure de travail devient quelques secondes, mais vérifiez toujours à 100 % : l’IA se trompe souvent sur les doigts, les textes et les contours.'} },
+  ]},
+  { type:'h3', t:{zh:'怎麼選', en:'How to choose', fr:'Comment choisir'} },
+  { type:'table', head:[{zh:'你的情況', en:'Your situation', fr:'Votre situation'},{zh:'建議', en:'Suggestion', fr:'Suggestion'},{zh:'原因', en:'Why', fr:'Pourquoi'}],
+    rows:[
+    [{zh:'只用手機拍照', en:'Phone photos only', fr:'Photos au téléphone uniquement'}, 'Snapseed / Lightroom Mobile', {zh:'免費、有曲線與局部調整，觀念和電腦版相通', en:'Free, with curves and local tools; the ideas carry over to desktop', fr:'Gratuits, avec courbes et réglages locaux ; les notions valent sur ordinateur'}],
+    [{zh:'用相機拍 RAW、照片很多', en:'Shooting RAW, lots of pictures', fr:'Photos RAW, en grand nombre'}, 'Lightroom Classic', {zh:'管理、批次、預設集一次搞定', en:'Library, batch work and presets in one place', fr:'Catalogue, traitement par lots et presets réunis'}],
+    [{zh:'要精修人像、合成、商品圖', en:'Detailed portraits, composites, product shots', fr:'Portrait soigné, compositing, packshot'}, 'Photoshop', {zh:'圖層與修補工具最完整', en:'The most complete layers and repair tools', fr:'Les calques et outils de correction les plus complets'}],
+    [{zh:'不想訂閱', en:'No subscription', fr:'Pas d’abonnement'}, {zh:'Affinity Photo＋Darktable', en:'Affinity Photo + Darktable', fr:'Affinity Photo + Darktable'}, {zh:'分別取代 Photoshop 與 Lightroom', en:'Replace Photoshop and Lightroom respectively', fr:'Remplacent respectivement Photoshop et Lightroom'}],
+    [{zh:'完全不想花錢', en:'Zero budget', fr:'Budget nul'}, 'GIMP / Darktable / Photopea', {zh:'免費且功能足夠學完整觀念', en:'Free and enough to learn every idea here', fr:'Gratuits et suffisants pour apprendre toutes les notions'}],
+    ]},
+]},
+
+/* ── 2. Basic concepts ── */
+{ id:'basics', i:'fa-image', c:'#2dd4bf',
+  nav:{zh:'基本概念', en:'Basics', fr:'Notions'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'修圖前要懂的名詞', en:'Words to know before you edit', fr:'Les mots à connaître avant de retoucher'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-file-image', t:{zh:'RAW、JPEG、PNG、TIFF', en:'RAW, JPEG, PNG, TIFF', fr:'RAW, JPEG, PNG, TIFF'},
+      p:{zh:'RAW 是感光元件的原始資料，修圖空間最大；JPEG 已壓縮、檔案小，適合分享；PNG 無損且支援透明背景，適合去背圖與圖示；TIFF 無損、檔案大，用於印刷與存檔。手機常見的 HEIC 是比 JPEG 更省空間的格式。', en:'RAW is the sensor’s original data with the most room to edit; JPEG is compressed and small, for sharing; PNG is lossless with transparency, for cut-outs and icons; TIFF is lossless and large, for print and archive. HEIC, common on phones, is a more efficient JPEG alternative.', fr:'Le RAW est la donnée brute du capteur, avec la plus grande latitude ; le JPEG est compressé et léger, pour partager ; le PNG est sans perte avec transparence, pour les détourages et icônes ; le TIFF est sans perte et lourd, pour l’impression et l’archive. Le HEIC des téléphones est une alternative plus efficace au JPEG.'} },
+    { i:'fa-shield-halved', t:{zh:'非破壞性編輯', en:'Non-destructive editing', fr:'Retouche non destructive'},
+      p:{zh:'所有修改都能隨時回頭調整或刪除，原圖不被改動。做法是用調整圖層、遮色片、智慧型物件，而不是直接在原圖上塗改。這是修圖最重要的習慣。', en:'Every change can be revisited or removed at any time and the original is never altered. You get there with adjustment layers, masks and smart objects rather than painting on the photo itself. The single most important habit in retouching.', fr:'Chaque modification reste réversible et l’original n’est jamais altéré, grâce aux calques de réglage, masques et objets dynamiques plutôt qu’en peignant sur la photo. L’habitude la plus importante en retouche.'} },
+    { i:'fa-border-all', t:{zh:'點陣圖與向量圖', en:'Raster and vector', fr:'Matriciel et vectoriel'},
+      p:{zh:'照片是點陣圖，由像素組成，放大會模糊。向量圖（Logo、插畫）由數學路徑組成，放多大都銳利。修圖處理的是點陣圖。', en:'Photos are raster images made of pixels and blur when enlarged. Vector graphics (logos, illustrations) are mathematical paths that stay sharp at any size. Retouching works on raster.', fr:'Les photos sont des images matricielles, faites de pixels, qui deviennent floues à l’agrandissement. Les images vectorielles (logos, illustrations) sont des tracés mathématiques nets à toute taille. La retouche travaille en matriciel.'} },
+    { i:'fa-ruler-combined', t:{zh:'解析度與 PPI', en:'Resolution and PPI', fr:'Définition et PPP'},
+      p:{zh:'網路上只看像素數（例如 1080×1350），PPI 設定沒有影響。印刷才需要 PPI：一般用 300 PPI，所以 4×6 吋相片需要 1200×1800 像素，A4 需要約 2480×3508 像素。', en:'Online, only the pixel count matters (1080×1350, say) and the PPI setting does nothing. PPI matters for print, usually 300: a 4×6 inch print needs 1200×1800 pixels, A4 about 2480×3508.', fr:'En ligne, seul compte le nombre de pixels (1080×1350 par exemple) ; le réglage PPP n’a aucun effet. Il compte pour l’impression, en général 300 PPP : un tirage 10×15 cm demande environ 1200×1800 pixels, un A4 environ 2480×3508.'} },
+    { i:'fa-palette', t:{zh:'色彩空間', en:'Colour space', fr:'Espace colorimétrique'},
+      p:{zh:'sRGB 是網路與多數螢幕的標準，輸出到網路一律用它；Adobe RGB、ProPhoto RGB 範圍更廣，用於編輯與高階印刷；Display P3 是 Apple 裝置的廣色域。印刷廠通常要 CMYK。用錯色彩空間，上傳後顏色會變灰或變豔。', en:'sRGB is the standard of the web and most screens; always export to it for online use. Adobe RGB and ProPhoto RGB are wider, for editing and fine print; Display P3 is Apple’s wide gamut. Printers usually want CMYK. The wrong space makes colours go dull or garish after upload.', fr:'Le sRVB est la norme du web et de la plupart des écrans : exportez toujours en sRVB pour l’en ligne. Adobe RGB et ProPhoto RGB sont plus larges, pour l’édition et le tirage d’art ; Display P3 est le gamut étendu d’Apple. Les imprimeurs demandent souvent du CMJN. Un mauvais espace ternit ou sature les couleurs après mise en ligne.'} },
+    { i:'fa-signal', t:{zh:'8 位元與 16 位元', en:'8-bit and 16-bit', fr:'8 bits et 16 bits'},
+      p:{zh:'16 位元的每個通道有 65,536 階，大幅調整時天空等漸層不容易斷層。修 RAW 時用 16 位元工作，最後輸出 JPEG 才轉成 8 位元。', en:'16-bit has 65,536 levels per channel, so gradients such as sky survive heavy adjustments without banding. Work in 16-bit from RAW and drop to 8-bit only when exporting a JPEG.', fr:'Le 16 bits offre 65 536 niveaux par canal : les dégradés comme le ciel résistent aux fortes corrections sans cassures. Travaillez en 16 bits depuis le RAW et ne passez en 8 bits qu’à l’export JPEG.'} },
+    { i:'fa-chart-area', t:{zh:'直方圖', en:'Histogram', fr:'Histogramme'},
+      p:{zh:'把照片中每個亮度有多少像素畫成山形圖，左邊是黑、右邊是白。貼到最左或最右，表示有細節已經變成死黑或死白。詳細讀法見攝影卷的修圖章。', en:'A mountain of how many pixels sit at each brightness, black on the left, white on the right. Piled against either wall means detail lost to pure black or white. The photography volume’s retouching part explains how to read it.', fr:'Une courbe du nombre de pixels par luminosité, noir à gauche, blanc à droite. Collée à un bord, elle signale des détails perdus dans le noir ou le blanc pur. La partie retouche du volume photographie explique sa lecture.'} },
+    { i:'fa-desktop', t:{zh:'螢幕校色', en:'Monitor calibration', fr:'Calibrage de l’écran'},
+      p:{zh:'每台螢幕的顏色和亮度都不同。沒有校色的螢幕上修得剛好的照片，在別人手機上可能偏黃或太暗。認真修圖可以考慮校色器；至少把螢幕亮度調低、關掉夜覽模式。', en:'Every screen differs in colour and brightness. A photo that looks right on an uncalibrated screen may look yellow or dark on someone else’s phone. A calibrator is worth it for serious work; at minimum, lower the brightness and turn off night mode.', fr:'Chaque écran a sa couleur et sa luminosité. Une photo juste sur un écran non calibré peut paraître jaune ou sombre sur le téléphone d’un autre. Une sonde vaut l’investissement pour un travail sérieux ; à défaut, baissez la luminosité et désactivez le mode nuit.'} },
+    { i:'fa-arrows-to-dot', t:{zh:'全域與局部', en:'Global and local', fr:'Global et local'},
+      p:{zh:'全域調整作用在整張照片（曝光、白平衡）；局部調整只作用在選取的區域（只提亮臉、只壓暗天空）。先全域、後局部。', en:'Global adjustments affect the whole picture (exposure, white balance); local ones only a selected area (brighten just the face, darken just the sky). Global first, then local.', fr:'Les réglages globaux agissent sur toute l’image (exposition, balance des blancs) ; les réglages locaux sur une zone choisie (éclaircir le visage, assombrir le ciel). Le global d’abord, le local ensuite.'} },
+  ]},
+]},
+
+/* ── 3. Develop panel ── */
+{ id:'adjust', i:'fa-sliders', c:'#fbbf24',
+  nav:{zh:'基本調整', en:'Adjustments', fr:'Réglages'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'基本調整面板：每個滑桿在做什麼', en:'The develop panel: what each slider does', fr:'Le panneau de développement : le rôle de chaque curseur'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'Lightroom、Camera Raw、Capture One、Snapseed 的滑桿名稱幾乎一樣。由上往下大致就是建議的調整順序。',
+    en:'Lightroom, Camera Raw, Capture One and Snapseed share nearly the same sliders. Top to bottom is, roughly, the order to use them in.',
+    fr:'Lightroom, Camera Raw, Capture One et Snapseed partagent presque les mêmes curseurs. De haut en bas, c’est à peu près l’ordre conseillé.'} },
+  { type:'table', head:[{zh:'滑桿', en:'Slider', fr:'Curseur'},{zh:'作用', en:'What it does', fr:'Effet'},{zh:'使用提醒', en:'Watch out', fr:'Attention'}],
+    rows:[
+    [{zh:'色溫／色調', en:'Temperature / Tint', fr:'Température / Teinte'}, {zh:'色溫控制藍↔黃，色調控制綠↔洋紅，修正白平衡', en:'Temperature runs blue↔yellow, tint green↔magenta: white balance', fr:'Température bleu↔jaune, teinte vert↔magenta : balance des blancs'}, {zh:'用滴管點畫面中應該是白色或灰色的地方最快', en:'Fastest: click the dropper on something that should be white or grey', fr:'Le plus rapide : la pipette sur un élément censé être blanc ou gris'}],
+    [{zh:'曝光', en:'Exposure', fr:'Exposition'}, {zh:'整體亮度，以「級」為單位', en:'Overall brightness, in stops', fr:'Luminosité globale, en IL'}, {zh:'以主體（通常是臉）看起來正確為準', en:'Set it so the subject, usually a face, looks right', fr:'Réglez-la pour que le sujet, souvent un visage, soit juste'}],
+    [{zh:'對比', en:'Contrast', fr:'Contraste'}, {zh:'拉開亮與暗的距離', en:'Pushes lights and darks apart', fr:'Écarte clairs et sombres'}, {zh:'加太多膚色會變髒、細節會不見', en:'Too much muddies skin and loses detail', fr:'Trop salit la peau et efface les détails'}],
+    [{zh:'亮部／陰影', en:'Highlights / Shadows', fr:'Hautes lumières / Ombres'}, {zh:'分別救回過亮的天空與太暗的暗部', en:'Recover a bright sky and open up dark areas separately', fr:'Récupèrent séparément un ciel trop clair et les zones sombres'}, {zh:'兩者拉太多會變成灰平、假假的 HDR 感', en:'Overdo both and you get flat, fake-looking HDR', fr:'Trop poussés, on obtient un HDR plat et artificiel'}],
+    [{zh:'白色／黑色', en:'Whites / Blacks', fr:'Blancs / Noirs'}, {zh:'設定最亮與最暗的端點', en:'Set the brightest and darkest points', fr:'Fixent les points les plus clairs et les plus sombres'}, {zh:'按住 Alt／Option 拖曳，可看到哪裡開始死白、死黑', en:'Hold Alt / Option while dragging to see where clipping begins', fr:'Maintenez Alt / Option en glissant pour voir où commence l’écrêtage'}],
+    [{zh:'紋理', en:'Texture', fr:'Texture'}, {zh:'只影響細小紋理（皮膚、葉子）', en:'Affects only fine texture (skin, leaves)', fr:'N’agit que sur les fines textures (peau, feuillage)'}, {zh:'人像略降可柔膚，不會像磨皮那麼假', en:'A small cut softens skin far more naturally than blurring', fr:'Une légère baisse adoucit la peau bien plus naturellement qu’un flou'}],
+    [{zh:'清晰度', en:'Clarity', fr:'Clarté'}, {zh:'增加中間調的局部對比，畫面更有立體感', en:'Midtone local contrast; adds punch and depth', fr:'Contraste local des tons moyens ; donne du relief'}, {zh:'用在人像臉上會顯得粗糙老態', en:'On faces it looks harsh and ageing', fr:'Sur un visage, il durcit et vieillit'}],
+    [{zh:'去朦朧', en:'Dehaze', fr:'Correction du voile'}, {zh:'去除霧氣與空氣中的灰，風景常用；往負值則增加霧感', en:'Cuts haze and atmospheric grey, common in landscapes; negative adds mist', fr:'Supprime voile et brume, courant en paysage ; en négatif, ajoute de la brume'}, {zh:'加太多天空會出現暗角與藍色色偏', en:'Too much darkens sky corners and turns them blue', fr:'Trop assombrit et bleuit les coins du ciel'}],
+    [{zh:'自然飽和度／飽和度', en:'Vibrance / Saturation', fr:'Vibrance / Saturation'}, {zh:'自然飽和度只加強原本不鮮豔的顏色、保護膚色；飽和度則全部一起加', en:'Vibrance boosts only muted colours and protects skin; saturation boosts everything equally', fr:'La vibrance renforce les couleurs ternes en protégeant la peau ; la saturation renforce tout'}, {zh:'優先用自然飽和度', en:'Reach for vibrance first', fr:'Privilégiez la vibrance'}],
+    [{zh:'HSL／色彩混合器', en:'HSL / Colour mixer', fr:'TSL / Mélangeur de couleurs'}, {zh:'針對單一顏色調色相、飽和度、明度', en:'Adjust hue, saturation and lightness of one colour at a time', fr:'Règle teinte, saturation et luminance couleur par couleur'}, {zh:'把綠色往黃移、降飽和，是日系與底片風的常見做法', en:'Shifting greens toward yellow and desaturating them is a common film-style move', fr:'Décaler les verts vers le jaune et les désaturer : un geste typique du look pellicule'}],
+    [{zh:'顏色分級', en:'Colour grading', fr:'Étalonnage couleur'}, {zh:'分別替暗部、中間調、亮部加上色調', en:'Tint shadows, midtones and highlights separately', fr:'Teinte séparément ombres, tons moyens et hautes lumières'}, {zh:'青橙、暖色懷舊等風格都在這裡做', en:'Where teal-and-orange and warm vintage looks are made', fr:'C’est là que se font le sarcelle-orange et les looks chauds rétro'}],
+    [{zh:'銳利化／雜訊抑制', en:'Sharpening / Noise reduction', fr:'Netteté / Réduction du bruit'}, {zh:'加強邊緣清晰度；減少高 ISO 的顆粒雜訊', en:'Crisp up edges; reduce high-ISO grain', fr:'Renforce les contours ; réduit le bruit des hauts ISO'}, {zh:'放大到 100% 檢查。AI 降噪效果最好，先降噪再銳利化', en:'Check at 100%. AI denoise works best; denoise before sharpening', fr:'Vérifiez à 100 %. Le débruitage IA est le plus efficace ; débruitez avant d’accentuer'}],
+    [{zh:'鏡頭校正', en:'Lens corrections', fr:'Corrections de l’objectif'}, {zh:'修正變形、四周暗角與邊緣紫邊（色差）', en:'Fixes distortion, corner darkening and purple fringing', fr:'Corrige distorsion, vignetage et franges violettes'}, {zh:'通常一開始就勾選啟用', en:'Usually switched on first thing', fr:'À activer en général dès le début'}],
+    [{zh:'幾何／垂直校正', en:'Geometry / Upright', fr:'Géométrie / Upright'}, {zh:'把傾斜的建築拉正', en:'Straightens converging buildings', fr:'Redresse les bâtiments qui convergent'}, {zh:'會裁掉邊緣，拍攝時要多留一點空間', en:'Crops the edges; leave room when shooting', fr:'Rogne les bords ; gardez de la marge à la prise de vue'}],
+    ]},
+  { type:'h3', t:{zh:'曲線：最萬用的工具', en:'Curves: the most versatile tool', fr:'Les courbes : l’outil le plus polyvalent'} },
+  { type:'lead', p:{zh:'橫軸是原本的亮度，縱軸是調整後的亮度，虛線對角線代表「不變」。把線往上拉就變亮、往下壓就變暗；分別調紅綠藍通道就能調色。下面四種曲線是最常見的風格基礎。', en:'The horizontal axis is the original brightness, the vertical the result; the dashed diagonal means “no change”. Raise the line to brighten, lower it to darken; work on the red, green and blue channels separately to shift colour. These four curves underpin the most common looks.', fr:'L’axe horizontal est la luminosité d’origine, l’axe vertical le résultat ; la diagonale en pointillé signifie « aucun changement ». Monter la courbe éclaircit, la descendre assombrit ; agir sur les canaux rouge, vert et bleu change la couleur. Ces quatre courbes fondent les looks les plus courants.'} },
+  { type:'dia', k:'curves' },
+  { type:'h3', t:{zh:'局部調整工具', en:'Local adjustment tools', fr:'Outils de réglage local'} },
+  { type:'cards', cols:4, items:[
+    { i:'fa-paintbrush', t:{zh:'筆刷', en:'Brush', fr:'Pinceau'}, p:{zh:'自己塗出要調整的範圍，例如只提亮眼睛。', en:'Paint the area yourself, say to brighten only the eyes.', fr:'Peindre soi-même la zone, par exemple éclaircir seulement les yeux.'} },
+    { i:'fa-grip-lines', t:{zh:'線性漸層', en:'Linear gradient', fr:'Filtre gradué'}, p:{zh:'從一側漸漸過渡，最常用來壓暗天空，像漸層減光鏡。', en:'Fades in from one side; the classic way to darken a sky, like a graduated ND filter.', fr:'Un effet progressif depuis un bord ; la façon classique d’assombrir un ciel, comme un filtre ND dégradé.'} },
+    { i:'fa-circle-notch', t:{zh:'放射狀漸層', en:'Radial gradient', fr:'Filtre radial'}, p:{zh:'圓形範圍，用來提亮主體或做自訂暗角。', en:'An oval area to lift the subject or build a custom vignette.', fr:'Une zone ovale pour éclairer le sujet ou créer un vignetage sur mesure.'} },
+    { i:'fa-user-check', t:{zh:'AI 選取主體／天空', en:'AI subject / sky', fr:'Sujet / ciel par IA'}, p:{zh:'一鍵選取人物、天空、背景，甚至只選頭髮或衣服。', en:'One click selects the person, sky or background, even just hair or clothing.', fr:'Un clic sélectionne la personne, le ciel ou l’arrière-plan, voire seulement les cheveux ou les vêtements.'} },
+  ]},
+]},
+
+/* ── 4. Photoshop functions ── */
+{ id:'ps', i:'fa-layer-group', c:'#60a5fa',
+  nav:{zh:'Photoshop 功能', en:'Photoshop', fr:'Photoshop'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'Photoshop 的核心功能', en:'Photoshop’s core functions', fr:'Les fonctions clés de Photoshop'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'Photoshop 的功能多到數不完，但真正每天用的只有幾類：<strong class="text-white">圖層、遮色片、選取、修補、變形</strong>。這些觀念在 Affinity Photo、GIMP、Photopea 裡也完全相同。',
+    en:'Photoshop has countless features, but the daily ones fall into a few families: <strong class="text-white">layers, masks, selections, repair and transformation</strong>. The ideas are identical in Affinity Photo, GIMP and Photopea.',
+    fr:'Photoshop a des fonctions innombrables, mais celles du quotidien tiennent en quelques familles : <strong class="text-white">calques, masques, sélections, correction et transformation</strong>. Les notions sont identiques dans Affinity Photo, GIMP et Photopea.'} },
+  { type:'dia', k:'layers' },
+  { type:'dia', k:'mask' },
+  { type:'h3', t:{zh:'圖層與遮色片', en:'Layers and masks', fr:'Calques et masques'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-layer-group', t:{zh:'圖層', en:'Layers', fr:'Calques'},
+      p:{zh:'像一疊透明片，每張可以各自修改、調透明度、開關。修圖的第一步通常是 Ctrl+J 複製背景，或新增空白圖層再修。', en:'A stack of transparent sheets, each editable, with its own opacity and visibility. The first move is usually Ctrl+J to duplicate the background, or a new empty layer to work on.', fr:'Une pile de feuilles transparentes, modifiables, chacune avec son opacité et sa visibilité. Premier geste habituel : Ctrl+J pour dupliquer l’arrière-plan, ou un nouveau calque vide.'} },
+    { i:'fa-circle-half-stroke', t:{zh:'調整圖層', en:'Adjustment layers', fr:'Calques de réglage'},
+      p:{zh:'曲線、色階、色相／飽和度、色彩平衡、黑白、漸層對應等，以「圖層」形式套用，可以隨時修改或刪除，不會動到原圖。', en:'Curves, Levels, Hue/Saturation, Colour Balance, Black & White, Gradient Map and more, applied as layers you can change or delete at any time without touching the photo.', fr:'Courbes, Niveaux, Teinte/Saturation, Balance des couleurs, Noir et blanc, Courbe de transfert de dégradé…, appliqués sous forme de calques modifiables ou supprimables sans toucher à la photo.'} },
+    { i:'fa-mask', t:{zh:'圖層遮色片', en:'Layer masks', fr:'Masques de fusion'},
+      p:{zh:'控制圖層哪裡顯示、哪裡隱藏。用黑色筆刷擦掉不要的部分，用白色找回來；不像橡皮擦會真的刪掉像素。', en:'Decide where a layer shows and where it hides. Paint black to hide, white to bring back; unlike the eraser, nothing is actually deleted.', fr:'Décident où un calque apparaît ou non. Peindre en noir cache, en blanc restaure ; contrairement à la gomme, rien n’est supprimé.'} },
+    { i:'fa-paperclip', t:{zh:'剪裁遮色片', en:'Clipping masks', fr:'Masques d’écrêtage'},
+      p:{zh:'讓上面的圖層只作用在下面那一層的形狀裡，例如調整圖層只影響某張貼進來的圖片。', en:'Restrict a layer to the shape of the one beneath, so an adjustment affects only one pasted-in image.', fr:'Limiter un calque à la forme du calque inférieur, pour qu’un réglage n’agisse que sur une image collée.'} },
+    { i:'fa-cube', t:{zh:'智慧型物件', en:'Smart objects', fr:'Objets dynamiques'},
+      p:{zh:'把圖層包起來保護原始像素。縮小再放大不會變糊，套用的濾鏡變成「智慧型濾鏡」，可以重新調整。', en:'Wrap a layer to protect its original pixels. Scaling down and back up loses nothing, and filters become editable Smart Filters.', fr:'Encapsuler un calque pour protéger ses pixels d’origine. Réduire puis agrandir ne dégrade rien, et les filtres deviennent des filtres dynamiques modifiables.'} },
+    { i:'fa-object-group', t:{zh:'群組與命名', en:'Groups and names', fr:'Groupes et noms'},
+      p:{zh:'圖層一多就要分群組並命名，例如「修膚」「調色」「文字」。半年後再打開檔案時會感謝自己。', en:'Once layers pile up, group and name them: “skin”, “colour”, “type”. You will thank yourself when you reopen the file in six months.', fr:'Quand les calques s’accumulent, groupez-les et nommez-les : « peau », « couleur », « texte ». Vous vous en féliciterez en rouvrant le fichier six mois plus tard.'} },
+  ]},
+  { type:'h3', t:{zh:'選取工具', en:'Selection tools', fr:'Outils de sélection'} },
+  { type:'cards', cols:4, items:[
+    { i:'fa-vector-square', t:{zh:'矩形／橢圓選取', en:'Marquee', fr:'Rectangle / ellipse de sélection'}, p:{zh:'選出規則形狀。', en:'Selects regular shapes.', fr:'Sélectionne des formes régulières.'} },
+    { i:'fa-draw-polygon', t:{zh:'套索', en:'Lasso', fr:'Lasso'}, p:{zh:'手繪任意形狀，適合粗略範圍。', en:'Freehand shapes for rough areas.', fr:'Formes libres pour des zones approximatives.'} },
+    { i:'fa-wand-magic', t:{zh:'快速／物件選取', en:'Quick / Object selection', fr:'Sélection rapide / d’objet'}, p:{zh:'自動找邊緣，框一下就選出物件。', en:'Finds edges automatically; box an object to select it.', fr:'Détecte les contours ; encadrez un objet pour le sélectionner.'} },
+    { i:'fa-user', t:{zh:'選取主體', en:'Select Subject', fr:'Sélectionner le sujet'}, p:{zh:'AI 一鍵選出照片中的人物或主角。', en:'AI selects the person or main subject in one click.', fr:'L’IA sélectionne la personne ou le sujet principal en un clic.'} },
+    { i:'fa-feather', t:{zh:'選取並遮住', en:'Select and Mask', fr:'Sélectionner et masquer'}, p:{zh:'精修選取邊緣，處理頭髮、毛絮最有效。', en:'Refines edges; the answer for hair and fur.', fr:'Affine les contours ; la solution pour les cheveux et la fourrure.'} },
+    { i:'fa-eye-dropper', t:{zh:'顏色範圍', en:'Color Range', fr:'Plage de couleurs'}, p:{zh:'依顏色選取，例如選出所有藍天。', en:'Selects by colour, such as every patch of blue sky.', fr:'Sélectionne par couleur, par exemple tout le ciel bleu.'} },
+    { i:'fa-pen-nib', t:{zh:'筆型工具', en:'Pen tool', fr:'Outil Plume'}, p:{zh:'畫出貝茲曲線路徑，選出邊緣俐落的商品最精準。', en:'Draws Bézier paths; the most precise way to cut out crisp-edged products.', fr:'Trace des chemins de Bézier ; le plus précis pour détourer des produits aux bords nets.'} },
+    { i:'fa-sliders', t:{zh:'羽化', en:'Feather', fr:'Contour progressif'}, p:{zh:'讓選取邊緣柔化，調整後才不會有生硬的邊界。', en:'Softens the selection edge so adjustments blend in without a hard line.', fr:'Adoucit le bord de la sélection pour que le réglage se fonde sans démarcation.'} },
+  ]},
+  { type:'h3', t:{zh:'修補工具', en:'Repair tools', fr:'Outils de correction'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-bandage', t:{zh:'汙點修復筆刷', en:'Spot Healing Brush', fr:'Correcteur localisé'},
+      p:{zh:'點一下就自動用周圍的紋理蓋掉小瑕疵，痘痘、灰塵最快。', en:'One click covers a small flaw with surrounding texture; fastest for spots and dust.', fr:'Un clic recouvre un petit défaut avec la texture voisine ; le plus rapide pour boutons et poussières.'} },
+    { i:'fa-kit-medical', t:{zh:'修復筆刷', en:'Healing Brush', fr:'Correcteur'},
+      p:{zh:'先按 Alt 取樣一個乾淨的區域，再塗到瑕疵上，會自動融合明暗與顏色。', en:'Alt-click a clean area to sample, then paint over the flaw; light and colour blend automatically.', fr:'Alt-clic sur une zone propre pour échantillonner, puis peindre sur le défaut ; tons et couleurs se fondent seuls.'} },
+    { i:'fa-stamp', t:{zh:'仿製印章', en:'Clone Stamp', fr:'Tampon de duplication'},
+      p:{zh:'把取樣處的像素原封不動複製過來，不會融合。適合有明確邊緣或圖案的地方，例如牆角、磁磚。', en:'Copies sampled pixels exactly, without blending. For areas with clear edges or patterns: wall corners, tiles.', fr:'Copie les pixels échantillonnés à l’identique, sans fusion. Pour les zones à bords nets ou à motifs : angles de murs, carrelage.'} },
+    { i:'fa-shirt', t:{zh:'修補工具', en:'Patch tool', fr:'Outil Pièce'},
+      p:{zh:'圈出一塊區域，拖到乾淨的地方取代，適合較大的瑕疵或眼袋。', en:'Circle an area and drag it onto a clean patch to replace it; good for larger flaws or under-eye bags.', fr:'Entourer une zone et la faire glisser sur une partie propre ; utile pour les grands défauts ou les cernes.'} },
+    { i:'fa-wand-magic-sparkles', t:{zh:'內容感知填色／移除工具', en:'Content-Aware Fill / Remove', fr:'Remplissage d’après le contenu / Supprimer'},
+      p:{zh:'選取或塗過要刪除的物體（路人、電線、垃圾桶），軟體自動依周圍畫面補上。', en:'Select or brush over an object to delete (a passer-by, wires, a bin) and the software rebuilds the area from its surroundings.', fr:'Sélectionner ou peindre l’objet à supprimer (passant, fils, poubelle) : le logiciel reconstruit la zone d’après l’entourage.'} },
+    { i:'fa-robot', t:{zh:'生成填色／生成延伸', en:'Generative Fill / Expand', fr:'Remplissage / Extension génératifs'},
+      p:{zh:'用 AI 依文字描述新增或替換內容，或把畫布延伸、補出原本沒拍到的背景。若用於新聞或比賽，通常不被允許。', en:'AI adds or replaces content from a text prompt, or extends the canvas to invent background that was never shot. Usually not allowed in journalism or competitions.', fr:'L’IA ajoute ou remplace du contenu d’après une description, ou agrandit la toile en inventant un décor jamais photographié. Généralement interdit en photojournalisme et en concours.'} },
+  ]},
+  { type:'h3', t:{zh:'變形與濾鏡', en:'Transformation and filters', fr:'Transformation et filtres'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-up-right-and-down-left-from-center', t:{zh:'任意變形與彎曲', en:'Free Transform and Warp', fr:'Transformation manuelle et Déformation'},
+      p:{zh:'縮放、旋轉、透視、彎曲圖層，例如把設計稿貼到書本封面上。', en:'Scale, rotate, add perspective or bend a layer, for example to place artwork on a book cover.', fr:'Mettre à l’échelle, pivoter, mettre en perspective ou courber un calque, par exemple pour poser un visuel sur une couverture.'} },
+    { i:'fa-hand-sparkles', t:{zh:'液化', en:'Liquify', fr:'Fluidité'},
+      p:{zh:'像推黏土一樣推動像素，臉部感知液化可以直接調整眼睛、鼻子、臉型。注意背景的直線會跟著彎，是修過頭最常見的破綻。', en:'Push pixels like clay; Face-Aware Liquify adjusts eyes, nose and face shape directly. Watch straight lines behind: bent door frames are the classic giveaway.', fr:'Pousser les pixels comme de l’argile ; la Fluidité adaptée au visage règle yeux, nez et forme du visage. Surveillez les lignes droites derrière : un chambranle tordu trahit la retouche.'} },
+    { i:'fa-camera', t:{zh:'Camera Raw 濾鏡', en:'Camera Raw Filter', fr:'Filtre Camera Raw'},
+      p:{zh:'在 Photoshop 裡使用與 Lightroom 相同的所有滑桿。先轉成智慧型物件再套用，之後還能修改。', en:'Every Lightroom slider inside Photoshop. Convert to a smart object first so it stays editable.', fr:'Tous les curseurs de Lightroom dans Photoshop. Convertissez d’abord en objet dynamique pour garder la main.'} },
+    { i:'fa-droplet', t:{zh:'模糊濾鏡', en:'Blur filters', fr:'Filtres de flou'},
+      p:{zh:'高斯模糊、鏡頭模糊（模擬景深）、移軸模糊、動態模糊，用來虛化背景或做速度感。', en:'Gaussian, Lens Blur (fake depth of field), Tilt-Shift and Motion Blur, for soft backgrounds or a sense of speed.', fr:'Flou gaussien, flou de l’objectif (profondeur de champ simulée), Tilt-Shift et flou de mouvement, pour adoucir le fond ou suggérer la vitesse.'} },
+    { i:'fa-bullseye', t:{zh:'顏色快調（High Pass）銳利化', en:'High Pass sharpening', fr:'Accentuation par passe-haut'},
+      p:{zh:'複製圖層、套用顏色快調、混合模式改成柔光或覆蓋，只加強邊緣，最常用的銳利化手法之一。', en:'Duplicate the layer, apply High Pass and set it to Soft Light or Overlay: sharpening that touches only edges, one of the most used methods.', fr:'Dupliquer le calque, appliquer Passe-haut et le passer en Lumière tamisée ou Incrustation : une accentuation limitée aux contours, parmi les plus employées.'} },
+    { i:'fa-gears', t:{zh:'動作與批次處理', en:'Actions and batch processing', fr:'Scripts et traitement par lots'},
+      p:{zh:'把一連串步驟錄成「動作」，再對整個資料夾自動執行，例如統一加浮水印、縮圖。', en:'Record a series of steps as an action and run it on a whole folder: adding a watermark or resizing everything at once.', fr:'Enregistrer une série d’étapes comme script et l’appliquer à tout un dossier : filigrane ou redimensionnement d’un coup.'} },
+  ]},
+  { type:'h3', t:{zh:'混合模式', en:'Blend modes', fr:'Modes de fusion'} },
+  { type:'table', head:[{zh:'類別', en:'Group', fr:'Famille'},{zh:'代表模式', en:'Main modes', fr:'Modes principaux'},{zh:'效果', en:'Effect', fr:'Effet'},{zh:'常見用途', en:'Typical use', fr:'Usage courant'}],
+    rows:[
+    [{zh:'變暗', en:'Darken', fr:'Obscurcir'}, {zh:'色彩增值', en:'Multiply', fr:'Produit'}, {zh:'白色消失、只留下較暗的部分', en:'White disappears; only darker parts remain', fr:'Le blanc disparaît ; seules les parties sombres restent'}, {zh:'加陰影、疊紋理、壓暗', en:'Shadows, texture overlays, darkening', fr:'Ombres, textures, assombrissement'}],
+    [{zh:'變亮', en:'Lighten', fr:'Éclaircir'}, {zh:'濾色、加亮顏色', en:'Screen, Color Dodge', fr:'Superposition, Densité couleur −'}, {zh:'黑色消失、只留下較亮的部分', en:'Black disappears; only lighter parts remain', fr:'Le noir disparaît ; seules les parties claires restent'}, {zh:'光暈、火花、雙重曝光', en:'Glow, sparks, double exposure', fr:'Halo, étincelles, double exposition'}],
+    [{zh:'對比', en:'Contrast', fr:'Contraste'}, {zh:'覆蓋、柔光', en:'Overlay, Soft Light', fr:'Incrustation, Lumière tamisée'}, {zh:'50% 灰消失，亮的更亮、暗的更暗', en:'50% grey vanishes; lights get lighter, darks darker', fr:'Le gris 50 % disparaît ; les clairs s’éclaircissent, les sombres s’assombrissent'}, {zh:'加亮加深、銳利化、加對比', en:'Dodge and burn, sharpening, contrast', fr:'Dodge & burn, accentuation, contraste'}],
+    [{zh:'比較', en:'Comparative', fr:'Comparaison'}, {zh:'差異化', en:'Difference', fr:'Différence'}, {zh:'相同的地方變黑', en:'Identical areas turn black', fr:'Les zones identiques deviennent noires'}, {zh:'對齊兩張照片、檢查差異', en:'Aligning two photos, spotting changes', fr:'Aligner deux photos, repérer les écarts'}],
+    [{zh:'色彩組成', en:'Component', fr:'Composantes'}, {zh:'顏色、明度', en:'Color, Luminosity', fr:'Couleur, Luminosité'}, {zh:'只套用顏色或只套用亮度', en:'Apply only the colour, or only the brightness', fr:'N’applique que la couleur, ou que la luminosité'}, {zh:'上色、調色時不改變亮度', en:'Colouring and grading without shifting brightness', fr:'Coloriser ou étalonner sans changer la luminosité'}],
+    ]},
+]},
+
+/* ── 5. Common effects ── */
+{ id:'fx', i:'fa-wand-magic-sparkles', c:'#f472b6',
+  nav:{zh:'常見效果', en:'Effects', fr:'Effets'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'常見效果與做法', en:'Common effects and how to make them', fr:'Les effets courants et leur réalisation'},
+  blocks:[
+  { type:'h3', t:{zh:'人像', en:'Portraits', fr:'Portrait'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-face-smile', t:{zh:'修膚：頻率分離', en:'Skin: frequency separation', fr:'Peau : séparation de fréquences'},
+      p:{zh:'把照片拆成「顏色明暗」與「紋理」兩層：在低頻層修不均勻的膚色，在高頻層修痘痘，毛孔紋理得以保留，不會像磨皮一樣變成塑膠臉。', en:'Split the picture into a tone layer and a texture layer: even out blotches on the low layer, remove spots on the high one, and the pores survive instead of turning to plastic.', fr:'Séparer l’image en couche de tons et couche de texture : unifier le teint sur la basse, retirer les boutons sur la haute ; les pores restent, la peau ne devient pas plastique.'} },
+    { i:'fa-sun', t:{zh:'加亮加深（Dodge & Burn）', en:'Dodge and burn', fr:'Dodge & burn'},
+      p:{zh:'新增一個填滿 50% 灰、模式為柔光的圖層，用低流量白色筆刷提亮、黑色筆刷壓暗，修飾明暗不均、加強輪廓。是高階人像修圖的核心。', en:'Add a 50% grey layer in Soft Light; paint with a low-flow white brush to lighten and black to darken, evening out tone and sculpting form. The core of high-end portrait work.', fr:'Ajouter un calque gris 50 % en Lumière tamisée ; peindre au pinceau blanc à faible flux pour éclaircir, noir pour assombrir, afin d’unifier et de sculpter. Le cœur de la retouche portrait haut de gamme.'} },
+    { i:'fa-eye', t:{zh:'眼睛與牙齒', en:'Eyes and teeth', fr:'Yeux et dents'},
+      p:{zh:'虹膜稍微提亮、加清晰度；眼白和牙齒降低黃色飽和度，但不要完全變白，否則很不自然。', en:'Lift and add a little clarity to the irises; reduce the yellow in eye whites and teeth, but never to pure white, which looks unreal.', fr:'Éclaircir légèrement l’iris et lui donner un peu de clarté ; réduire le jaune du blanc des yeux et des dents, sans jamais aller au blanc pur, qui paraît faux.'} },
+    { i:'fa-person', t:{zh:'液化修身修臉', en:'Liquify for face and body', fr:'Fluidité visage et silhouette'},
+      p:{zh:'少量調整姿勢造成的衣服皺褶或角度變形。過度修改會改變一個人的長相，也會加深不切實際的審美標準。', en:'Small fixes to clothing folds or distortion from an angle. Heavy reshaping changes who a person is and feeds unrealistic beauty standards.', fr:'De petites corrections de plis ou de déformations dues à l’angle. Remodeler lourdement change la personne et nourrit des standards de beauté irréalistes.'} },
+  ]},
+  { type:'dia', k:'freq' },
+  { type:'h3', t:{zh:'清理與合成', en:'Clean-up and compositing', fr:'Nettoyage et compositing'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-person-walking-arrow-right', t:{zh:'移除路人與雜物', en:'Removing people and clutter', fr:'Supprimer passants et éléments parasites'},
+      p:{zh:'小東西用汙點修復筆刷，較大的用移除工具或內容感知填色。另一招：腳架固定連拍十幾張，用「中間值」堆疊，移動的人會自動消失。', en:'Small things with the Spot Healing Brush, larger ones with Remove or Content-Aware Fill. Another trick: shoot a dozen frames on a tripod and stack them in Median mode; moving people simply vanish.', fr:'Les petits éléments au correcteur localisé, les plus grands avec Supprimer ou le remplissage d’après le contenu. Autre astuce : une douzaine de vues sur trépied empilées en mode Médiane ; les passants disparaissent.'} },
+    { i:'fa-scissors', t:{zh:'去背', en:'Cutting out the background', fr:'Détourage'},
+      p:{zh:'選取主體 → 選取並遮住修頭髮 → 加上圖層遮色片 → 存成 PNG 保留透明。商品去背用筆型工具最乾淨。', en:'Select Subject → Select and Mask for the hair → add a layer mask → save as PNG to keep transparency. For products, the Pen tool gives the cleanest edge.', fr:'Sélectionner le sujet → Sélectionner et masquer pour les cheveux → masque de fusion → enregistrer en PNG pour garder la transparence. Pour un produit, la Plume donne le bord le plus net.'} },
+    { i:'fa-cloud-sun', t:{zh:'換天空', en:'Sky replacement', fr:'Remplacement du ciel'},
+      p:{zh:'Photoshop 有內建「天空取代」。重點是光線方向和色調要一致：夕陽天空配正午陰影會一眼看穿，換完要把前景也調成天空的色溫。', en:'Photoshop has a built-in Sky Replacement. What matters is matching light direction and colour: a sunset sky over noon shadows gives itself away, so warm or cool the foreground to match.', fr:'Photoshop intègre un Remplacement du ciel. L’essentiel est d’accorder direction et couleur de la lumière : un ciel couchant sur des ombres de midi se repère aussitôt, alors réchauffez ou refroidissez le premier plan.'} },
+    { i:'fa-images', t:{zh:'雙重曝光', en:'Double exposure', fr:'Double exposition'},
+      p:{zh:'人物剪影放底層，風景放上層並設為「濾色」，風景會出現在人物較暗的地方。再用遮色片控制臉部保留多少。', en:'Put a silhouetted portrait below and a landscape above in Screen mode; the landscape shows through the darker parts of the figure. Mask to control how much of the face survives.', fr:'Un portrait en silhouette dessous, un paysage dessus en mode Superposition : le paysage apparaît dans les zones sombres du personnage. Un masque dose ce qui reste du visage.'} },
+    { i:'fa-mountain-sun', t:{zh:'HDR 與包圍曝光合成', en:'HDR and exposure blending', fr:'HDR et fusion d’expositions'},
+      p:{zh:'同一個畫面拍暗、正常、亮三張，合成保留亮部與暗部細節。適合室內窗景、逆光風景。', en:'Shoot the same frame dark, normal and bright, then merge to keep detail in both highlights and shadows. For interiors with windows and backlit landscapes.', fr:'Photographier la même scène sombre, normale et claire, puis fusionner pour garder les détails des hautes et basses lumières. Pour les intérieurs avec fenêtre et les paysages à contre-jour.'} },
+    { i:'fa-panorama', t:{zh:'全景接圖與焦點堆疊', en:'Panoramas and focus stacking', fr:'Panoramas et empilement de mise au point'},
+      p:{zh:'全景：重疊約三分之一連拍，軟體自動接合。焦點堆疊：對焦在不同距離拍多張，合成整張都清楚，常用於微距與商品。', en:'Panorama: overlap shots by about a third and let the software stitch. Focus stacking: shoot at several focus distances and merge for front-to-back sharpness, common in macro and product work.', fr:'Panorama : chevaucher les vues d’environ un tiers et laisser le logiciel assembler. Empilement : plusieurs vues à des distances de mise au point différentes, fusionnées pour une netteté totale, courant en macro et en packshot.'} },
+  ]},
+  { type:'h3', t:{zh:'風格與氛圍', en:'Style and mood', fr:'Style et ambiance'} },
+  { type:'table', head:[{zh:'效果', en:'Effect', fr:'Effet'},{zh:'做法', en:'How to make it', fr:'Comment le faire'},{zh:'感覺', en:'Feeling', fr:'Effet produit'}],
+    rows:[
+    [{zh:'底片感', en:'Film look', fr:'Aspect pellicule'}, {zh:'曲線提起黑點做霧面、亮部略壓、綠色偏黃並降飽和、加顆粒', en:'Lift the black point for matte, ease highlights, shift greens yellow and desaturate, add grain', fr:'Relever le point noir pour un effet mat, adoucir les hautes lumières, verts vers le jaune et désaturés, ajouter du grain'}, {zh:'懷舊、溫暖、有故事', en:'Nostalgic, warm, storied', fr:'Nostalgique, chaleureux, narratif'}],
+    [{zh:'日系清新', en:'Japanese airy', fr:'Clair à la japonaise'}, {zh:'曝光提高、對比降低、色溫偏冷或偏青、膚色提亮、整體低飽和', en:'Raise exposure, lower contrast, cool or cyan tint, brighten skin, keep saturation low', fr:'Exposition plus haute, contraste plus bas, teinte froide ou cyan, peau éclaircie, saturation faible'}, {zh:'乾淨、透明、溫柔', en:'Clean, light, gentle', fr:'Net, lumineux, doux'}],
+    [{zh:'青橙電影感', en:'Cinematic teal and orange', fr:'Look ciné sarcelle-orange'}, {zh:'顏色分級：暗部加青藍、亮部加橘；HSL 把藍色往青移', en:'Colour grading: teal in shadows, orange in highlights; shift blues toward cyan in HSL', fr:'Étalonnage : sarcelle dans les ombres, orange dans les hautes lumières ; décaler les bleus vers le cyan en TSL'}, {zh:'戲劇化、膚色突出', en:'Dramatic, with skin standing out', fr:'Dramatique, la peau ressort'}],
+    [{zh:'暗黑情緒', en:'Dark and moody', fr:'Sombre et dramatique'}, {zh:'曝光降低、陰影壓深、降飽和、保留主體亮度、加暗角', en:'Lower exposure, deepen shadows, desaturate, keep the subject bright, add a vignette', fr:'Baisser l’exposition, creuser les ombres, désaturer, garder le sujet lumineux, ajouter un vignetage'}, {zh:'神秘、沉穩', en:'Mysterious, grave', fr:'Mystérieux, grave'}],
+    [{zh:'黑白', en:'Black and white', fr:'Noir et blanc'}, {zh:'用黑白混合器調每個顏色變成的灰階深淺，例如藍天壓暗、膚色提亮', en:'Use the B&W mixer to set how dark each colour becomes: darken blue sky, lighten skin', fr:'Régler dans le mélangeur N&B la densité de chaque couleur : ciel bleu plus sombre, peau plus claire'}, {zh:'經典、強調光影與形狀', en:'Timeless; light and form come first', fr:'Intemporel ; la lumière et la forme priment'}],
+    [{zh:'局部彩色', en:'Colour splash', fr:'Couleur partielle'}, {zh:'HSL 把其他顏色的飽和度歸零，只留一種', en:'Zero the saturation of every colour but one in HSL', fr:'Mettre à zéro la saturation de toutes les couleurs sauf une en TSL'}, {zh:'視線集中在單一元素', en:'All eyes on one element', fr:'Tous les regards sur un élément'}],
+    [{zh:'柔光（Orton 效果）', en:'Orton glow', fr:'Effet Orton'}, {zh:'複製圖層 → 高斯模糊 → 混合模式改柔光或濾色 → 降低不透明度', en:'Duplicate → Gaussian Blur → Soft Light or Screen → lower the opacity', fr:'Dupliquer → flou gaussien → Lumière tamisée ou Superposition → baisser l’opacité'}, {zh:'夢幻、童話般的光暈', en:'Dreamy, fairy-tale glow', fr:'Halo onirique, féerique'}],
+    [{zh:'移軸微縮', en:'Tilt-shift miniature', fr:'Miniature tilt-shift'}, {zh:'從高處俯拍，上下大量模糊只留中間一條清楚，再加飽和與對比', en:'From a high viewpoint, blur heavily above and below leaving a sharp band, then add saturation and contrast', fr:'Depuis un point haut, flouter fortement le haut et le bas en gardant une bande nette, puis saturer et contraster'}, {zh:'真實街景變成模型玩具', en:'A real street turns into a toy model', fr:'Une vraie rue devient une maquette'}],
+    [{zh:'暗角', en:'Vignette', fr:'Vignetage'}, {zh:'壓暗四周，或用放射狀漸層自訂形狀', en:'Darken the edges, or shape your own with a radial gradient', fr:'Assombrir les bords, ou dessiner sa forme au filtre radial'}, {zh:'視線集中到主體', en:'Draws the eye to the subject', fr:'Conduit l’œil vers le sujet'}],
+    [{zh:'長曝光模擬', en:'Simulated long exposure', fr:'Pose longue simulée'}, {zh:'腳架連拍多張，用「平均值」堆疊，水流與雲會變得柔順', en:'Shoot a burst on a tripod and stack in Mean mode; water and cloud turn silky', fr:'Rafale sur trépied empilée en mode Moyenne ; eau et nuages deviennent soyeux'}, {zh:'不用減光鏡也有絲綢般的水', en:'Silky water without an ND filter', fr:'Une eau soyeuse sans filtre ND'}],
+    ]},
+  { type:'note', p:{zh:'所有效果都先做到「覺得剛好」，再把強度降回三分之二。修圖時眼睛會逐漸習慣，總是覺得還不夠；隔天再看一次，通常會發現已經修過頭了。', en:'Take every effect to where it feels right, then dial it back to two thirds. Eyes adapt while you work and always want more; look again the next day and it is usually too much.', fr:'Poussez chaque effet jusqu’à ce qu’il semble juste, puis ramenez-le aux deux tiers. L’œil s’habitue pendant la retouche et en redemande ; revu le lendemain, c’est souvent trop.'} },
+]},
+
+/* ── 6. Workflow ── */
+{ id:'flow', i:'fa-route', c:'#a78bfa',
+  nav:{zh:'流程', en:'Workflow', fr:'Méthode'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'修圖的標準流程', en:'A standard retouching workflow', fr:'Une méthode de retouche type'},
+  blocks:[
+  { type:'steps', items:[
+    { t:{zh:'匯入與備份', en:'Import and back up', fr:'Importer et sauvegarder'}, p:{zh:'匯入時建立日期與事件命名的資料夾，同時備份到第二顆硬碟或雲端。', en:'Import into folders named by date and event, and back up to a second drive or the cloud at the same time.', fr:'Importer dans des dossiers nommés par date et événement, avec une sauvegarde simultanée sur un second disque ou dans le cloud.'} },
+    { t:{zh:'挑片', en:'Cull', fr:'Trier'}, p:{zh:'用旗標或星等快速篩選，只修值得修的。挑片越狠，作品越好。', en:'Flag or star quickly and edit only what deserves it. The harder you cull, the better the set.', fr:'Marquer ou noter rapidement et ne retoucher que ce qui le mérite. Plus le tri est sévère, meilleure est la série.'} },
+    { t:{zh:'裁切與校正', en:'Crop and correct', fr:'Recadrer et corriger'}, p:{zh:'拉正水平、裁切構圖、啟用鏡頭校正。', en:'Level the horizon, crop the composition, enable lens corrections.', fr:'Redresser l’horizon, recadrer, activer les corrections d’objectif.'} },
+    { t:{zh:'白平衡與曝光', en:'White balance and exposure', fr:'Balance des blancs et exposition'}, p:{zh:'先讓顏色正確、亮度正確，再談風格。', en:'Make colour and brightness correct before thinking about style.', fr:'Rendre couleur et luminosité justes avant de penser au style.'} },
+    { t:{zh:'色調與顏色', en:'Tone and colour', fr:'Tons et couleur'}, p:{zh:'用曲線、HSL、顏色分級建立風格，存成預設集讓整組照片一致。', en:'Build the look with curves, HSL and colour grading; save a preset so the whole set matches.', fr:'Construire le look avec courbes, TSL et étalonnage ; enregistrer un preset pour homogénéiser la série.'} },
+    { t:{zh:'局部調整', en:'Local adjustments', fr:'Réglages locaux'}, p:{zh:'用遮色片提亮主體、壓暗干擾的區域，引導視線。', en:'Use masks to lift the subject and darken distractions, guiding the eye.', fr:'Éclaircir le sujet et assombrir les distractions par masques, pour guider le regard.'} },
+    { t:{zh:'精修', en:'Detailed retouching', fr:'Retouche fine'}, p:{zh:'送進 Photoshop 修瑕疵、去雜物、修膚、合成。', en:'Send to Photoshop for blemishes, clutter, skin and compositing.', fr:'Passer dans Photoshop pour les défauts, les éléments parasites, la peau et le compositing.'} },
+    { t:{zh:'降噪、銳利化與輸出', en:'Denoise, sharpen and export', fr:'Débruiter, accentuer et exporter'}, p:{zh:'最後才降噪與銳利化，依用途輸出正確尺寸與色彩空間，並在手機上檢查一次。', en:'Denoise and sharpen last, export at the right size and colour space for the destination, and check once on a phone.', fr:'Débruiter et accentuer en dernier, exporter à la taille et dans l’espace colorimétrique voulus, puis vérifier une fois sur téléphone.'} },
+  ]},
+]},
+
+/* ── 7. Export ── */
+{ id:'export', i:'fa-file-export', c:'#4ade80',
+  nav:{zh:'輸出', en:'Export', fr:'Export'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'輸出尺寸與格式', en:'Export sizes and formats', fr:'Tailles et formats d’export'},
+  blocks:[
+  { type:'table', head:[{zh:'用途', en:'Destination', fr:'Destination'},{zh:'尺寸（像素）', en:'Size (pixels)', fr:'Taille (pixels)'},{zh:'格式與色彩空間', en:'Format and colour space', fr:'Format et espace'},{zh:'說明', en:'Notes', fr:'Remarques'}],
+    rows:[
+    [{zh:'IG 直式貼文', en:'Instagram portrait post', fr:'Post Instagram vertical'}, '1080×1350 (4:5)', 'JPEG · sRGB', {zh:'在動態中佔最大面積', en:'Takes the most room in the feed', fr:'Occupe le plus de place dans le fil'}],
+    [{zh:'IG 方形貼文', en:'Instagram square', fr:'Post Instagram carré'}, '1080×1080 (1:1)', 'JPEG · sRGB', ''],
+    [{zh:'限時動態／Reels 封面', en:'Stories / Reels cover', fr:'Stories / couverture Reels'}, '1080×1920 (9:16)', 'JPEG · sRGB', {zh:'上下各留約 250 像素給介面', en:'Leave about 250 px top and bottom for the interface', fr:'Laisser environ 250 px en haut et en bas pour l’interface'}],
+    [{zh:'網站與作品集', en:'Website and portfolio', fr:'Site et portfolio'}, {zh:'長邊 2000–2560', en:'2000–2560 on the long edge', fr:'2000–2560 sur le grand côté'}, 'JPEG 80–90% · sRGB', {zh:'兼顧畫質與載入速度', en:'Balances quality and load time', fr:'Équilibre qualité et temps de chargement'}],
+    [{zh:'去背圖、圖示', en:'Cut-outs, icons', fr:'Détourages, icônes'}, {zh:'依需求', en:'As needed', fr:'Selon l’usage'}, 'PNG · sRGB', {zh:'保留透明背景', en:'Keeps the transparent background', fr:'Conserve la transparence'}],
+    [{zh:'4×6 吋相片', en:'4×6 inch print', fr:'Tirage 10×15'}, '1200×1800', {zh:'JPEG／TIFF · 300 PPI', en:'JPEG / TIFF · 300 PPI', fr:'JPEG / TIFF · 300 PPP'}, {zh:'依沖印店要求的色彩空間', en:'Use the lab’s requested colour space', fr:'Selon l’espace demandé par le laboratoire'}],
+    [{zh:'A4 印刷', en:'A4 print', fr:'Impression A4'}, '2480×3508', {zh:'TIFF · CMYK · 300 PPI', en:'TIFF · CMYK · 300 PPI', fr:'TIFF · CMJN · 300 PPP'}, {zh:'印刷廠通常要求 CMYK 並加出血', en:'Printers usually want CMYK with bleed', fr:'Les imprimeurs veulent en général du CMJN avec fond perdu'}],
+    [{zh:'存檔母檔', en:'Master file', fr:'Fichier maître'}, {zh:'原尺寸', en:'Full size', fr:'Taille d’origine'}, {zh:'PSD／TIFF · 16 位元', en:'PSD / TIFF · 16-bit', fr:'PSD / TIFF · 16 bits'}, {zh:'保留所有圖層，日後可以重修', en:'Keep every layer so you can rework it later', fr:'Garder tous les calques pour pouvoir reprendre le travail'}],
+    ]},
+  { type:'note', p:{zh:'在新聞、紀實與攝影比賽中，通常只允許調整曝光、顏色與裁切，不可以新增或移除畫面中的內容。商業與創作攝影則較自由，但若作品經過 AI 生成或大幅合成，誠實標註是基本的專業倫理。', en:'In news, documentary and most photo competitions, only exposure, colour and cropping are usually allowed: nothing may be added to or removed from the scene. Commercial and creative work is freer, but honestly labelling AI-generated or heavily composited images is basic professional ethics.', fr:'En presse, en documentaire et dans la plupart des concours, seuls l’exposition, la couleur et le recadrage sont généralement admis : rien ne doit être ajouté ni retiré. La photo commerciale et créative est plus libre, mais signaler honnêtement une image générée par IA ou fortement composée relève de l’éthique professionnelle.'} },
+]},
+
+/* ── 8. Shortcuts ── */
+{ id:'keys', i:'fa-keyboard', c:'#94a3b8',
+  nav:{zh:'快捷鍵', en:'Shortcuts', fr:'Raccourcis'},
+  eyebrow:{zh:'參考', en:'Reference', fr:'Référence'},
+  h2:{zh:'常用快捷鍵', en:'Everyday shortcuts', fr:'Raccourcis courants'},
+  blocks:[
+  { type:'lead', p:{zh:'Mac 上的 Ctrl 換成 Cmd、Alt 換成 Option。', en:'On a Mac, Ctrl becomes Cmd and Alt becomes Option.', fr:'Sur Mac, Ctrl devient Cmd et Alt devient Option.'} },
+  { type:'table', kbd:true, head:[{zh:'Photoshop', en:'Photoshop', fr:'Photoshop'},{zh:'按鍵', en:'Key', fr:'Touche'}],
+    rows:[
+    [{zh:'移動／筆刷／仿製印章', en:'Move / Brush / Clone Stamp', fr:'Déplacement / Pinceau / Tampon'}, 'V / B / S'],
+    [{zh:'修復筆刷類／選取／裁切', en:'Healing tools / Quick selection / Crop', fr:'Correcteurs / Sélection rapide / Recadrage'}, 'J / W / C'],
+    [{zh:'筆刷變小／變大', en:'Brush smaller / larger', fr:'Pinceau plus petit / plus grand'}, '[ / ]'],
+    [{zh:'預設黑白色／交換前景背景色', en:'Default colours / swap colours', fr:'Couleurs par défaut / permuter'}, 'D / X'],
+    [{zh:'複製圖層／任意變形', en:'Duplicate layer / Free Transform', fr:'Dupliquer le calque / Transformation manuelle'}, 'Ctrl+J / Ctrl+T'],
+    [{zh:'曲線／色階', en:'Curves / Levels', fr:'Courbes / Niveaux'}, 'Ctrl+M / Ctrl+L'],
+    [{zh:'液化／Camera Raw 濾鏡', en:'Liquify / Camera Raw Filter', fr:'Fluidité / Filtre Camera Raw'}, 'Ctrl+Shift+X / Ctrl+Shift+A'],
+    [{zh:'蓋印所有可見圖層到新圖層', en:'Stamp visible to a new layer', fr:'Fusionner une copie des calques visibles'}, 'Ctrl+Alt+Shift+E'],
+    [{zh:'填滿', en:'Fill', fr:'Remplir'}, 'Shift+F5'],
+    ]},
+  { type:'table', kbd:true, head:[{zh:'Lightroom Classic', en:'Lightroom Classic', fr:'Lightroom Classic'},{zh:'按鍵', en:'Key', fr:'Touche'}],
+    rows:[
+    [{zh:'格線檢視／放大檢視／顯影模組', en:'Grid / Loupe / Develop', fr:'Grille / Loupe / Développement'}, 'G / E / D'],
+    [{zh:'裁切／汙點移除', en:'Crop / Spot removal', fr:'Recadrage / Suppression des défauts'}, 'R / Q'],
+    [{zh:'修改前後對照切換', en:'Toggle before / after', fr:'Afficher avant / après'}, '\\'],
+    [{zh:'標記選取／排除', en:'Flag pick / reject', fr:'Marquer retenue / rejetée'}, 'P / X'],
+    [{zh:'評星等', en:'Star rating', fr:'Note en étoiles'}, '1 – 5'],
+    [{zh:'拷貝／貼上設定', en:'Copy / paste settings', fr:'Copier / coller les réglages'}, 'Ctrl+Shift+C / Ctrl+Shift+V'],
+    [{zh:'輸出', en:'Export', fr:'Exporter'}, 'Ctrl+Shift+E'],
+    ]},
+  { type:'note', p:{zh:'想從拍攝端了解 RAW、直方圖與曝光，請見本館的攝影卷「修圖」章，兩卷可以互相搭配閱讀。', en:'For RAW, the histogram and exposure from the shooting side, see the retouching part of this library’s photography volume; the two read well together.', fr:'Pour le RAW, l’histogramme et l’exposition vus depuis la prise de vue, voir la partie retouche du volume photographie de cette bibliothèque ; les deux se complètent.'} },
+]},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   UI strings
+   ═══════════════════════════════════════════════════════════ */
+const I18N = {
+zh:{
+ 'doc.title':'修圖 | 軟體、功能與常見效果',
+ 'hdr.badge':'修圖入門','hdr.title':'修圖：軟體、功能與常見效果',
+ 'intro':'修圖是把照片調整成想傳達的樣子：修正曝光與顏色、清理畫面、修飾人像，或營造特定的風格與氛圍。好的修圖讓照片更接近拍攝當下的感受，而不是讓人一眼看出「修過」。',
+ 'intro2':'這一卷依學習順序排列：先認識修圖軟體與基本名詞，再學顯影面板的每個滑桿與曲線，接著是 Photoshop 的圖層、遮色片、選取、修補與混合模式，然後是人像、清理合成與風格效果的做法，最後是流程、輸出規格與快捷鍵。曲線圖都依數學函數實際計算繪製。',
+ 'footer':'修圖入門參考，涵蓋軟體、調整面板、Photoshop 功能、常見效果、流程與輸出。軟體功能與價格方案會隨版本更新，請以官方說明為準；快捷鍵為各軟體預設值，部分版本可能不同。'
+},
+en:{
+ 'doc.title':'Photo Retouching: Software, Tools & Effects',
+ 'hdr.badge':'RETOUCHING PRIMER','hdr.title':'Photo retouching: software, tools and effects',
+ 'intro':'Retouching shapes a photograph into what you meant to say: correcting exposure and colour, cleaning up the frame, refining a portrait, or building a particular style and mood. Good retouching brings a picture closer to how the moment felt, without anyone seeing at a glance that it was edited.',
+ 'intro2':'This volume follows the order you learn in: the software and the basic vocabulary, then every slider of the develop panel and the tone curve, then Photoshop’s layers, masks, selections, repair tools and blend modes, then how portrait, clean-up, compositing and style effects are made, and finally workflow, export sizes and shortcuts. The curves are computed from real functions.',
+ 'footer':'An introductory reference to photo retouching: software, adjustment panel, Photoshop functions, common effects, workflow and export. Features and pricing change between versions, so the official documentation takes precedence; shortcuts are each program’s defaults and may differ in some versions.'
+},
+fr:{
+ 'doc.title':'Retouche photo : logiciels, outils & effets',
+ 'hdr.badge':'INITIATION À LA RETOUCHE','hdr.title':'La retouche photo : logiciels, outils et effets',
+ 'intro':'Retoucher, c’est amener une photo à ce que l’on voulait dire : corriger exposition et couleur, nettoyer le cadre, affiner un portrait, ou créer un style et une ambiance. Une bonne retouche rapproche l’image de ce que l’on a ressenti, sans que l’on devine au premier regard qu’elle a été retouchée.',
+ 'intro2':'Ce volume suit l’ordre d’apprentissage : les logiciels et le vocabulaire de base, puis chaque curseur du panneau de développement et la courbe des tons, ensuite les calques, masques, sélections, outils de correction et modes de fusion de Photoshop, puis la réalisation des effets de portrait, de nettoyage, de compositing et de style, et enfin la méthode, les tailles d’export et les raccourcis. Les courbes sont calculées à partir de vraies fonctions.',
+ 'footer':'Une référence d’initiation à la retouche photo : logiciels, panneau de réglages, fonctions de Photoshop, effets courants, méthode et export. Fonctions et tarifs évoluent avec les versions : la documentation officielle fait foi ; les raccourcis sont ceux par défaut et peuvent varier selon les versions.'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Rendering
+   ═══════════════════════════════════════════════════════════ */
+const COLS = { 2:'grid md:grid-cols-2 gap-4', 3:'grid md:grid-cols-2 lg:grid-cols-3 gap-4', 4:'grid sm:grid-cols-2 lg:grid-cols-4 gap-4' };
+function kbdify(s){ return s.split(' / ').map(p => `<kbd>${p}</kbd>`).join(' / '); }
+
+const BLOCK = {
+  lead: (b) => `<p class="text-slate-300 leading-relaxed max-w-4xl">${t(b.p)}</p>`,
+  h3:   (b) => `<h3 class="text-base font-black text-white pt-2">${t(b.t)}</h3>`,
+  note: (b, s) => `<p class="text-sm text-slate-300 leading-relaxed rounded-2xl p-4 border" style="background:${s.c}0f;border-color:${s.c}40"><i class="fa-solid fa-lightbulb mr-2" style="color:${s.c}"></i>${t(b.p)}</p>`,
+  dia:  (b) => { const h = DIA[b.k](); return h.startsWith('<svg') ? `<div class="dia-box reveal">${h}</div>` : h; },
+  cards:(b, s) => `<div class="${COLS[b.cols || 3]}">` + b.items.map((c, n) => `
+    <article class="reveal bg-slate-900/40 rounded-2xl border border-slate-800 p-5 hover:border-slate-600 transition-colors" data-i="${n % 6}">
+      <div class="flex items-start gap-3">
+        <div class="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center border" style="color:${s.c};background:${s.c}14;border-color:${s.c}33"><i class="fa-solid ${c.i} text-sm"></i></div>
+        <div class="min-w-0">
+          <h4 class="font-black text-white text-sm leading-snug">${t(c.t)}</h4>
+          ${c.tag ? `<p class="text-[11px] font-bold mt-1" style="color:${s.c}">${t(c.tag)}</p>` : ''}
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed mt-3">${t(c.p)}</p>
+      ${c.l ? `<ul class="mt-3 space-y-1.5">${c.l.map(x => `<li class="text-xs text-slate-300 leading-relaxed flex gap-2"><span style="color:${s.c}">▸</span><span>${t(x)}</span></li>`).join('')}</ul>` : ''}
+    </article>`).join('') + `</div>`,
+  steps:(b, s) => `<ol class="grid md:grid-cols-2 gap-4">` + b.items.map((c, n) => `
+    <li class="reveal flex gap-4 bg-slate-900/40 rounded-2xl border border-slate-800 p-5" data-i="${n % 6}">
+      <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border" style="color:${s.c};background:${s.c}14;border-color:${s.c}55">${n + 1}</div>
+      <div><h4 class="font-black text-white text-sm">${t(c.t)}</h4><p class="text-sm text-slate-400 leading-relaxed mt-1.5">${t(c.p)}</p></div>
+    </li>`).join('') + `</ol>`,
+  table:(b) => `<div class="table-scroll overflow-x-auto"><table class="w-full text-sm min-w-[640px]">
+    <thead><tr class="text-left text-slate-400 border-b border-slate-800">${b.head.map(h => `<th class="py-3 px-4 font-bold">${t(h)}</th>`).join('')}</tr></thead>
+    <tbody class="divide-y divide-slate-800/60">${b.rows.map(r => `<tr>${r.map((c, i) => `<td class="py-3 px-4 align-top ${i ? 'text-slate-300' : 'text-white font-bold'}">${b.kbd && i ? kbdify(t(c)) : t(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`,
+};
+
+function renderSections() {
+  document.getElementById('nav').innerHTML = SECTIONS.map(s =>
+    `<a href="#${s.id}" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors">${t(s.nav)}</a>`).join('');
+  document.getElementById('sections').innerHTML = SECTIONS.map(s => `
+  <section id="${s.id}" class="scroll-mt-28">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 rounded-2xl border" style="color:${s.c};background:${s.c}1a;border-color:${s.c}40;box-shadow:0 0 20px ${s.c}33"><i class="fa-solid ${s.i} text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider font-bold" style="color:${s.c}">${t(s.eyebrow)}</span>
+        <h2 class="text-2xl font-black text-white">${t(s.h2)}</h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      ${s.blocks.map(b => BLOCK[b.type](b, s)).join('')}
+    </div>
+  </section>`).join('');
+}
+
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach(e => revealObserver.observe(e));
+}
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-emerald-500/15 text-emerald-300 border border-emerald-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderSections();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>
