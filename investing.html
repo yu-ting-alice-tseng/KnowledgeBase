@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投資理財 | 觀念、工具與資產配置</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+<style>
+  body {
+    background-color: #0a0806;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(245,158,11,0.08) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(234,179,8,0.06) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(163,230,53,0.04) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+  kbd { display:inline-block; padding:.05rem .4rem; border-radius:.35rem; font-size:.72rem; font-weight:700;
+        font-family: Nunito, sans-serif; color:#e2e8f0; background:#201a10; border:1px solid #4a3d22;
+        box-shadow: 0 1px 0 #4a3d22; white-space: nowrap; }
+
+  /* ── Diagrams ──
+     Drawn in SVG; every curve is computed from the formula it shows. */
+  .dg { display:block; width:100%; height:auto; }
+  .dg text { font-family: Nunito, 'Noto Serif TC', sans-serif; }
+  .dg .lab  { fill:#fcd34d; font-size:15px; font-weight:800; }
+  .dg .sub  { fill:#94a3b8; font-size:13px; }
+  .dg .val  { fill:#f1f5f9; font-size:13px; font-weight:800; }
+  .dg .grid { stroke: rgba(148,163,184,0.18); stroke-width:1; }
+  .dia-box { background:#100d08; border:1px solid rgba(148,163,184,0.14); border-radius:1rem; padding:1rem; }
+
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-amber-500 selection:text-white">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(245,158,11,0.13) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(234,179,8,0.11) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#0a0806]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-yellow-500 to-lime-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#0a0806] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-coins text-amber-400 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-amber-400 uppercase bg-amber-500/10 rounded-full border border-amber-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav id="nav" class="flex flex-wrap gap-2 text-xs"></nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <div id="sections" class="space-y-12"></div>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+const NF = () => new Intl.NumberFormat(LANG === 'zh' ? 'zh-TW' : LANG === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: 0 });
+
+/* ═══════════════════════════════════════════════════════════
+   Diagrams. Each returns an SVG string in the current language.
+   Every curve and number is computed from the formula it shows.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Shared line-chart frame: x from 0..xMax, y from 0..yMax. */
+function frame(W, H, P, xMax, yMax, xStep, yStep, xLab, yFmt) {
+  const X = v => P.l + v / xMax * (W - P.l - P.r);
+  const Y = v => H - P.b - v / yMax * (H - P.t - P.b);
+  let s = '';
+  for (let v = 0; v <= yMax + 1e-9; v += yStep)
+    s += `<line x1="${P.l}" y1="${Y(v)}" x2="${W - P.r}" y2="${Y(v)}" class="grid"/><text x="${P.l - 8}" y="${Y(v) + 4}" class="sub" text-anchor="end">${yFmt(v)}</text>`;
+  for (let v = 0; v <= xMax + 1e-9; v += xStep)
+    s += `<text x="${X(v)}" y="${H - P.b + 20}" class="sub" text-anchor="middle">${v}</text>`;
+  s += `<text x="${W - P.r}" y="${H - 6}" class="sub" text-anchor="end">${xLab}</text>`;
+  return { X, Y, s };
+}
+const pathOf = (pts, X, Y) => pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1)).join(' ');
+
+/* Compound growth of 10,000 over 30 years at four annual rates. */
+function diaCompound() {
+  const L = {
+    title:{zh:'複利：一萬元放 30 年', en:'Compounding: 10,000 left for 30 years', fr:'Les intérêts composés : 10 000 placés 30 ans'},
+    x:{zh:'年', en:'years', fr:'ans'},
+    r:{zh:'年報酬', en:'a year', fr:'par an'},
+  };
+  const W = 900, H = 360, P = { l:70, r:150, t:40, b:60 };
+  const rates = [[0, '#64748b'], [0.03, '#38bdf8'], [0.06, '#a3e635'], [0.09, '#fbbf24']];
+  const f = frame(W, H, P, 30, 140000, 5, 20000, t(L.x), v => (v / 1000) + 'k');
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>` + f.s;
+  let last = -Infinity;
+  rates.slice().reverse().forEach(([r, c]) => {
+    const pts = []; for (let y = 0; y <= 30; y++) pts.push([y, 10000 * Math.pow(1 + r, y)]);
+    const end = pts[30][1], ly = Math.max(f.Y(end), last + 36); last = ly;
+    s += `<path d="${pathOf(pts, f.X, f.Y)}" fill="none" stroke="${c}" stroke-width="3"/>`;
+    s += `<text x="${f.X(30) + 10}" y="${ly + 5}" class="val" style="fill:${c}">${NF().format(end)}</text>`;
+    s += `<text x="${f.X(30) + 10}" y="${ly + 21}" class="sub">${(r * 100).toFixed(0)}% ${t(L.r)}</text>`;
+  });
+  return `<svg class="dg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Fee drag: 10,000 at 7% gross for 30 years, minus three annual fees. */
+function diaFees() {
+  const L = {
+    title:{zh:'費用的侵蝕：同樣 7% 報酬，扣掉不同的年費', en:'Fee drag: the same 7% return, minus different annual fees', fr:'L’érosion des frais : le même 7 %, moins des frais annuels différents'},
+    lost:{zh:'被費用吃掉', en:'lost to fees', fr:'perdu en frais'},
+    fee:{zh:'年費', en:'fee', fr:'frais'},
+  };
+  const fees = [[0.001, '#a3e635'], [0.01, '#fbbf24'], [0.02, '#f87171']];
+  const top = 10000 * Math.pow(1.07, 30);
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  const x0 = 150, wMax = 600;
+  fees.forEach(([fee, c], i) => {
+    const v = 10000 * Math.pow(1.07 - fee, 30), y = 50 + i * 56, w = v / top * wMax;
+    s += `<text x="${x0 - 12}" y="${y + 24}" class="val" text-anchor="end">${t(L.fee)} ${(fee * 100).toFixed(1)}%</text>`;
+    s += `<rect x="${x0}" y="${y}" width="${w.toFixed(1)}" height="36" rx="6" fill="${c}" fill-opacity="0.75"/>`;
+    s += `<rect x="${(x0 + w).toFixed(1)}" y="${y}" width="${(wMax - w).toFixed(1)}" height="36" rx="6" fill="none" stroke="${c}" stroke-dasharray="4 4"/>`;
+    s += `<text x="${x0 + 10}" y="${y + 23}" class="val" style="fill:#0a0806">${NF().format(v)}</text>`;
+    s += `<text x="${x0 + wMax + 10}" y="${y + 23}" class="sub">−${NF().format(top - v)} ${t(L.lost)}</text>`;
+  });
+  return `<svg class="dg" viewBox="0 0 900 220" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Diversification: σp² = σ²/n + (1 − 1/n)·ρ·σ², with σ = 40%, ρ = 0.3. */
+function diaDiversify() {
+  const L = {
+    title:{zh:'分散：持股越多，波動越小，但降不到零', en:'Diversification: more holdings, less volatility, but never zero', fr:'La diversification : plus de titres, moins de volatilité, jamais zéro'},
+    x:{zh:'持有的股票檔數', en:'number of stocks held', fr:'nombre d’actions détenues'},
+    spec:{zh:'個別風險：可以分散掉', en:'Specific risk: diversified away', fr:'Risque spécifique : diversifiable'},
+    sys:{zh:'市場風險：分散不掉', en:'Market risk: cannot be diversified', fr:'Risque de marché : non diversifiable'},
+    note:{zh:'假設：每檔年波動 40%，兩兩相關係數 0.3', en:'Assumes each stock swings 40% a year, pairwise correlation 0.3', fr:'Hypothèse : volatilité de 40 % par titre, corrélation de 0,3'},
+  };
+  const W = 900, H = 330, P = { l:70, r:30, t:40, b:46 };
+  const sg = 0.40, rho = 0.30, floor = sg * Math.sqrt(rho);
+  const f = frame(W, H, P, 40, 0.40, 5, 0.1, t(L.x), v => (v * 100).toFixed(0) + '%');
+  const pts = []; for (let n = 1; n <= 40; n++) pts.push([n, Math.sqrt(sg * sg / n + (1 - 1 / n) * rho * sg * sg)]);
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>` + f.s;
+  s += `<path d="${pathOf(pts, f.X, f.Y)} L${f.X(40)} ${f.Y(0)} L${f.X(1)} ${f.Y(0)} Z" fill="#fbbf24" fill-opacity="0.08"/>`;
+  s += `<rect x="${f.X(1)}" y="${f.Y(floor)}" width="${f.X(40) - f.X(1)}" height="${f.Y(0) - f.Y(floor)}" fill="#f87171" fill-opacity="0.12"/>`;
+  s += `<line x1="${f.X(0)}" y1="${f.Y(floor)}" x2="${f.X(40)}" y2="${f.Y(floor)}" stroke="#f87171" stroke-dasharray="6 4" stroke-width="2"/>`;
+  s += `<path d="${pathOf(pts, f.X, f.Y)}" fill="none" stroke="#fbbf24" stroke-width="3"/>`;
+  s += `<text x="${f.X(14)}" y="${f.Y(0.29)}" class="val" style="fill:#fbbf24">${t(L.spec)}</text>`;
+  s += `<text x="${f.X(14)}" y="${f.Y(floor / 2) + 5}" class="val" style="fill:#fca5a5">${t(L.sys)} ≈ ${(floor * 100).toFixed(1)}%</text>`;
+  [1, 10, 30].forEach(n => { const v = pts[n - 1][1];
+    s += `<circle cx="${f.X(n)}" cy="${f.Y(v)}" r="5" fill="#fbbf24"/><text x="${f.X(n) + 8}" y="${f.Y(v) - 8}" class="val">${(v * 100).toFixed(1)}%</text>`; });
+  s += `<text x="${W - P.r}" y="22" class="sub" text-anchor="end">${t(L.note)}</text>`;
+  return `<svg class="dg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Dollar-cost averaging: 1,000 a month for 12 months into a price that dips and recovers. */
+function diaDCA() {
+  const L = {
+    title:{zh:'定期定額：價格跌時買得多，平均成本低於平均價格', en:'Dollar-cost averaging: buy more when it is cheap, so cost sits below the average price', fr:'L’investissement programmé : on achète plus quand c’est bas, d’où un coût moyen sous le prix moyen'},
+    x:{zh:'月', en:'month', fr:'mois'},
+    price:{zh:'每月價格', en:'monthly price', fr:'prix du mois'},
+    units:{zh:'買到的單位', en:'units bought', fr:'parts achetées'},
+    avgP:{zh:'平均價格', en:'average price', fr:'prix moyen'},
+    avgC:{zh:'平均成本', en:'average cost', fr:'coût moyen'},
+    sum:{zh:'投入 12,000，最後市值', en:'12,000 invested, final value', fr:'12 000 investis, valeur finale'},
+  };
+  const prices = [100, 90, 80, 70, 60, 65, 75, 85, 90, 95, 100, 100];
+  const units = prices.map(p => 1000 / p), tot = units.reduce((a, b) => a + b, 0);
+  const avgP = prices.reduce((a, b) => a + b, 0) / prices.length, avgC = 12000 / tot;
+  const W = 900, H = 330, P = { l:60, r:200, t:44, b:46 };
+  const bw = (W - P.l - P.r) / 12, Y = v => H - P.b - v / 120 * (H - P.t - P.b);
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  for (let v = 0; v <= 120; v += 20) s += `<line x1="${P.l}" y1="${Y(v)}" x2="${W - P.r}" y2="${Y(v)}" class="grid"/><text x="${P.l - 8}" y="${Y(v) + 4}" class="sub" text-anchor="end">${v}</text>`;
+  prices.forEach((p, i) => {
+    const x = P.l + i * bw + 6;
+    s += `<rect x="${x}" y="${Y(p)}" width="${bw - 12}" height="${Y(0) - Y(p)}" rx="4" fill="#38bdf8" fill-opacity="0.35"/>`;
+    s += `<text x="${x + (bw - 12) / 2}" y="${Y(0) - 10}" class="sub" text-anchor="middle" style="fill:#a3e635">${units[i].toFixed(1)}</text>`;
+    s += `<text x="${x + (bw - 12) / 2}" y="${H - P.b + 20}" class="sub" text-anchor="middle">${i + 1}</text>`;
+  });
+  s += `<text x="${W - P.r}" y="${H - 6}" class="sub" text-anchor="end">${t(L.x)}</text>`;
+  [[avgP, '#fbbf24', L.avgP], [avgC, '#a3e635', L.avgC]].forEach(([v, c, lab], k) => {
+    s += `<line x1="${P.l}" y1="${Y(v)}" x2="${W - P.r}" y2="${Y(v)}" stroke="${c}" stroke-width="2.5" stroke-dasharray="${k ? '' : '6 4'}"/>`;
+    s += `<text x="${W - P.r + 10}" y="${Y(v) + (k ? 16 : -4)}" class="val" style="fill:${c}">${t(lab)} ${v.toFixed(2)}</text>`;
+  });
+  s += `<rect x="${W - P.r + 10}" y="${P.t}" width="12" height="12" fill="#38bdf8" fill-opacity="0.5"/><text x="${W - P.r + 28}" y="${P.t + 11}" class="sub">${t(L.price)}</text>`;
+  s += `<text x="${W - P.r + 10}" y="${P.t + 32}" class="sub" style="fill:#a3e635">0.0 = ${t(L.units)}</text>`;
+  s += `<text x="${W - P.r + 10}" y="${Y(30)}" class="sub">${t(L.sum)}</text>`;
+  s += `<text x="${W - P.r + 10}" y="${Y(30) + 18}" class="val">${NF().format(tot * 100)} (+${((tot * 100 / 12000 - 1) * 100).toFixed(1)}%)</text>`;
+  return `<svg class="dg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Risk ladder: rough place of each asset class. */
+function diaLadder() {
+  const L = {
+    title:{zh:'風險與預期報酬的階梯（示意）', en:'The risk and expected-return ladder (schematic)', fr:'L’échelle risque et rendement attendu (schéma)'},
+    lo:{zh:'低風險・低報酬', en:'Low risk, low return', fr:'Risque et rendement faibles'},
+    hi:{zh:'高風險・高預期報酬', en:'High risk, high expected return', fr:'Risque et rendement attendu élevés'},
+  };
+  const items = [
+    ['#64748b', {zh:'存款・貨幣基金', en:'Deposits, money market', fr:'Dépôts, monétaire'}],
+    ['#38bdf8', {zh:'政府公債', en:'Government bonds', fr:'Obligations d’État'}],
+    ['#22d3ee', {zh:'投資級公司債', en:'Investment-grade corporates', fr:'Obligations d’entreprises de qualité'}],
+    ['#a3e635', {zh:'全球股票指數', en:'Global stock index', fr:'Indice actions mondial'}],
+    ['#fbbf24', {zh:'單一國家・產業', en:'Single country or sector', fr:'Un pays ou un secteur'}],
+    ['#fb923c', {zh:'個股・高收益債', en:'Single stocks, high yield', fr:'Actions isolées, haut rendement'}],
+    ['#f87171', {zh:'加密資產・槓桿商品', en:'Crypto, leveraged products', fr:'Crypto, produits à levier'}],
+  ];
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  items.forEach(([c, n], i) => {
+    const y = 42 + i * 36, w = 70 + i * 82;
+    s += `<text x="290" y="${y + 19}" class="sub" text-anchor="end" style="fill:#e2e8f0">${t(n)}</text>`;
+    s += `<rect x="304" y="${y}" width="${w}" height="26" rx="6" fill="${c}" fill-opacity="0.3" stroke="${c}" stroke-width="2"/>`;
+  });
+  s += `<text x="304" y="314" class="sub">${t(L.lo)}</text><text x="880" y="314" class="sub" text-anchor="end">${t(L.hi)}</text>`;
+  s += `<path d="M304 296 H876" stroke="#94a3b8" stroke-width="1.5"/><path d="M870 291 l8 5 l-8 5" fill="none" stroke="#94a3b8" stroke-width="1.5"/>`;
+  return `<svg class="dg" viewBox="0 0 900 324" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+const DIA = { compound: diaCompound, fees: diaFees, diversify: diaDiversify, dca: diaDCA, ladder: diaLadder };
+
+/* ═══════════════════════════════════════════════════════════
+   Content
+   ═══════════════════════════════════════════════════════════ */
+const SECTIONS = [
+
+/* ── 1. Foundations ── */
+{ id:'basics', i:'fa-seedling', c:'#fbbf24',
+  nav:{zh:'基本觀念', en:'Foundations', fr:'Fondamentaux'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'為什麼要投資，以及錢怎麼長大', en:'Why invest, and how money grows', fr:'Pourquoi investir, et comment l’argent fructifie'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'存錢讓你守住今天的購買力，投資讓錢替你工作。<strong class="text-white">通膨</strong>每年讓現金悄悄變薄：年通膨 2% 時，一百元十年後只剩約 82 元的購買力。投資的目標不是一夜致富，而是讓資產的成長長期跑贏通膨，並靠<strong class="text-white">複利</strong>讓時間成為最大的幫手。',
+    en:'Saving protects what your money can buy today; investing puts that money to work. <strong class="text-white">Inflation</strong> quietly thins cash every year: at 2% a year, 100 buys only about 82 worth of goods after ten years. The goal of investing is not to get rich overnight but to outgrow inflation over the long run, letting <strong class="text-white">compounding</strong> turn time into your strongest ally.',
+    fr:'Épargner préserve le pouvoir d’achat d’aujourd’hui ; investir fait travailler l’argent. L’<strong class="text-white">inflation</strong> érode l’épargne chaque année : à 2 % par an, 100 n’achètent plus qu’environ 82 au bout de dix ans. Le but n’est pas de s’enrichir du jour au lendemain, mais de battre l’inflation sur la durée, en laissant les <strong class="text-white">intérêts composés</strong> faire du temps votre meilleur allié.'} },
+  { type:'dia', k:'compound' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-arrows-spin', t:{zh:'複利', en:'Compound interest', fr:'Intérêts composés'},
+      p:{zh:'報酬再投入，下一年連同報酬一起賺報酬。公式是 終值＝本金×(1＋r)ⁿ。上圖中，6% 與 9% 只差 3 個百分點，30 年後的結果卻差了一倍以上。', en:'Returns are reinvested, so next year the gains earn gains too. Future value = principal × (1 + r)ⁿ. Above, 6% and 9% are only three points apart, yet after 30 years one ends at more than twice the other.', fr:'Les gains sont réinvestis et produisent à leur tour des gains. Valeur future = capital × (1 + r)ⁿ. Ci-dessus, 6 % et 9 % ne diffèrent que de trois points, mais après 30 ans l’un vaut plus du double de l’autre.'} },
+    { i:'fa-hourglass-half', t:{zh:'72 法則', en:'The rule of 72', fr:'La règle de 72'},
+      p:{zh:'72 除以年報酬率，約等於資產翻倍所需的年數。6% 約 12 年翻倍、9% 約 8 年。反過來也適用於通膨：通膨 3% 時，物價約 24 年翻倍。', en:'Divide 72 by the annual return to get roughly how many years it takes to double. 6% doubles in about 12 years, 9% in about 8. It works for inflation too: at 3%, prices double in about 24 years.', fr:'72 divisé par le rendement annuel donne à peu près le nombre d’années pour doubler. À 6 %, environ 12 ans ; à 9 %, environ 8. Valable aussi pour l’inflation : à 3 %, les prix doublent en 24 ans environ.'} },
+    { i:'fa-scale-unbalanced', t:{zh:'風險與報酬', en:'Risk and return', fr:'Risque et rendement'},
+      p:{zh:'預期報酬越高的資產，價格波動通常越大，短期可能虧損越多。沒有「高報酬、低風險、高流動性」三者兼得的商品；有人這樣保證，多半是詐騙。', en:'Assets with higher expected returns usually swing more and can lose more in the short run. Nothing offers high return, low risk and easy access all at once; anyone promising all three is most likely running a scam.', fr:'Plus le rendement attendu est élevé, plus le prix fluctue et plus la perte à court terme peut être forte. Aucun placement n’offre à la fois rendement élevé, risque faible et liquidité ; qui promet les trois est très probablement un escroc.'} },
+    { i:'fa-calendar-days', t:{zh:'投資期間', en:'Time horizon', fr:'Horizon de placement'},
+      p:{zh:'錢多久後要用，決定能承擔多少波動。三年內要用的錢（學費、頭期款）不該放股票；十年以上不會動用的錢，才適合承擔股市的起伏。', en:'When you will need the money decides how much swing you can take. Money needed within three years (tuition, a deposit) does not belong in stocks; money you will not touch for ten years or more can ride out the market.', fr:'La date à laquelle vous aurez besoin de l’argent détermine la volatilité acceptable. L’argent nécessaire sous trois ans (études, apport) n’a pas sa place en actions ; celui dont vous n’aurez pas besoin avant dix ans peut traverser les cycles.'} },
+    { i:'fa-droplet', t:{zh:'流動性', en:'Liquidity', fr:'Liquidité'},
+      p:{zh:'資產能多快、多低成本地換成現金。活存隨時可領；股票、ETF 交易日內就能賣；房地產、私募基金可能要幾個月甚至幾年。', en:'How quickly and cheaply an asset turns into cash. A current account is instant; stocks and ETFs sell within a trading day; property or private funds can take months or years.', fr:'La rapidité et le coût de conversion en espèces. Un compte courant est immédiat ; actions et ETF se vendent dans la journée ; l’immobilier ou le non-coté peuvent prendre des mois, voire des années.'} },
+    { i:'fa-percent', t:{zh:'名目與實質報酬', en:'Nominal and real return', fr:'Rendement nominal et réel'},
+      p:{zh:'實質報酬 ≈ 名目報酬 − 通膨。定存利率 1.7%、通膨 2% 時，實質報酬是負的，錢其實在縮水。比較投資時要看扣除通膨、費用與稅之後的數字。', en:'Real return ≈ nominal return − inflation. A deposit paying 1.7% with 2% inflation has a negative real return: the money is shrinking. Compare investments after inflation, fees and tax.', fr:'Rendement réel ≈ rendement nominal − inflation. Un livret à 1,7 % avec 2 % d’inflation a un rendement réel négatif : l’argent fond. Comparez toujours après inflation, frais et impôts.'} },
+  ]},
+]},
+
+/* ── 2. Order of operations ── */
+{ id:'order', i:'fa-list-ol', c:'#facc15',
+  nav:{zh:'理財順序', en:'First steps', fr:'Par où commencer'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'開始投資之前：理財的順序', en:'Before you invest: the order of things', fr:'Avant d’investir : l’ordre des priorités'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'投資是理財金字塔的上層，下面的地基沒打好，市場一跌就可能被迫在最低點賣出。以下六步依序完成，再開始承擔市場風險。',
+    en:'Investing sits near the top of the personal-finance pyramid. Without a solid base, the first market fall can force you to sell at the bottom. Work through these six steps in order before taking market risk.',
+    fr:'L’investissement se situe en haut de la pyramide des finances personnelles. Sans base solide, la première baisse peut contraindre à vendre au plus bas. Suivez ces six étapes dans l’ordre avant de prendre un risque de marché.'} },
+  { type:'steps', items:[
+    { t:{zh:'記帳，算出每月結餘', en:'Track spending and find your monthly surplus', fr:'Suivre ses dépenses et dégager un excédent'},
+      p:{zh:'記一到三個月的收支，分成固定支出、生活開銷與想要的花費。常見的分配是 50／30／20：需要 50%、想要 30%、儲蓄與投資 20%。重點是「先存再花」：發薪日就自動轉出儲蓄。', en:'Log income and spending for one to three months, split into fixed costs, living costs and wants. A common split is 50/30/20: needs 50%, wants 30%, saving and investing 20%. The key is to pay yourself first: move the savings out automatically on payday.', fr:'Notez revenus et dépenses pendant un à trois mois : charges fixes, vie courante, envies. Une répartition courante est 50/30/20 : besoins 50 %, envies 30 %, épargne et investissement 20 %. L’essentiel : se payer en premier, avec un virement automatique le jour de la paie.'} },
+    { t:{zh:'建立緊急預備金', en:'Build an emergency fund', fr:'Constituer une épargne de précaution'},
+      p:{zh:'準備 3 到 6 個月的生活費，放在隨時可領、不會虧損的地方（活存、高利數位帳戶、貨幣基金）。收入不穩定或自雇者準備 6 到 12 個月。', en:'Hold three to six months of living costs somewhere instant and loss-free (current account, high-yield savings, money-market fund). With irregular income or self-employment, aim for six to twelve.', fr:'Gardez trois à six mois de dépenses sur un support disponible et sans risque de perte (livret réglementé, compte rémunéré, fonds monétaire). Revenus irréguliers ou indépendant : six à douze mois.'} },
+    { t:{zh:'還清高利負債', en:'Clear high-interest debt', fr:'Rembourser les dettes chères'},
+      p:{zh:'信用卡循環利息常在 10% 到 15% 之間（各國不同），還掉它等於拿到一筆穩賺不賠的報酬，沒有任何投資能保證贏過。房貸、低利學貸可以邊還邊投資。', en:'Revolving credit-card interest is often 10–20% or more. Paying it off is a guaranteed return no investment can promise to beat. Mortgages and low-rate student loans can be repaid alongside investing.', fr:'Un crédit renouvelable coûte souvent 10 à 20 % par an, voire plus. Le rembourser est un rendement garanti qu’aucun placement ne peut promettre de battre. Le crédit immobilier ou étudiant à taux bas peut se rembourser en parallèle.'} },
+    { t:{zh:'補足基本保險', en:'Cover the basic insurance', fr:'Souscrire les assurances de base'},
+      p:{zh:'保險是轉移「發生機率低、損失大」的風險：醫療、意外、失能，有家人依靠時加上定期壽險。保險與投資分開處理，儲蓄險、投資型保單的費用通常比自己買基金高。', en:'Insurance transfers low-probability, high-cost risks: health, accident, disability, and term life if others depend on you. Keep insurance and investing separate; savings-type and unit-linked policies usually cost more than buying funds yourself.', fr:'L’assurance transfère les risques rares mais coûteux : santé, accident, invalidité, et prévoyance décès si des proches dépendent de vous. Séparez assurance et placement : les contrats mixtes coûtent souvent plus cher que des fonds achetés soi-même.'} },
+    { t:{zh:'設定目標與期限', en:'Set goals and deadlines', fr:'Fixer des objectifs et des échéances'},
+      p:{zh:'把錢依用途分桶：短期（三年內）放存款，中期（三到十年）股債混合，長期（十年以上，如退休）以股票為主。每個目標寫下金額與時間。', en:'Split money into buckets by purpose: short term (under three years) in deposits, medium term (three to ten) in a stock-bond mix, long term (ten-plus, such as retirement) mostly in stocks. Give each goal an amount and a date.', fr:'Répartissez l’argent par objectif : court terme (moins de trois ans) en dépôts, moyen terme (trois à dix ans) en mix actions-obligations, long terme (plus de dix ans, comme la retraite) surtout en actions. Chiffrez et datez chaque objectif.'} },
+    { t:{zh:'開始投資並自動化', en:'Start investing, and automate it', fr:'Commencer à investir et automatiser'},
+      p:{zh:'選好帳戶與低成本的指數型工具，設定每月自動扣款。自動化能避開「等低點再買」的猶豫，也讓紀律不依賴意志力。', en:'Pick an account and low-cost index products, then set up a monthly automatic purchase. Automation removes the urge to wait for a dip and makes discipline independent of willpower.', fr:'Choisissez un compte et des supports indiciels peu coûteux, puis programmez un achat mensuel automatique. L’automatisation évite d’attendre le « bon moment » et rend la discipline indépendante de la volonté.'} },
+  ]},
+  { type:'note', p:{zh:'信用卡循環利率依國家與發卡機構而異：台灣目前上限為 15%，歐美常更高。不論多少，都比長期股市報酬的期望值確定得多。', en:'Card rates vary by country and issuer: Taiwan caps them at 15%, while the US and Europe are often higher. Whatever the figure, it is far more certain than any expected stock return.', fr:'Les taux varient selon le pays et l’émetteur : Taïwan les plafonne à 15 %, ils sont souvent plus élevés aux États-Unis. Quel qu’en soit le niveau, ce coût est bien plus certain que le rendement espéré des actions.'} },
+]},
+
+/* ── 3. Asset classes ── */
+{ id:'assets', i:'fa-cubes', c:'#a3e635',
+  nav:{zh:'資產類別', en:'Asset classes', fr:'Classes d’actifs'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'可以投資什麼：主要資產類別', en:'What you can invest in: the main asset classes', fr:'Dans quoi investir : les grandes classes d’actifs'},
+  blocks:[
+  { type:'dia', k:'ladder' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-piggy-bank', t:{zh:'現金與存款', en:'Cash and deposits', fr:'Liquidités et dépôts'},
+      tag:{zh:'保本・流動性最高', en:'Capital-safe, most liquid', fr:'Capital garanti, très liquide'},
+      p:{zh:'活存、定存、貨幣市場基金。幾乎不會虧本，但報酬常追不上通膨。適合緊急預備金與短期要用的錢。', en:'Current accounts, term deposits, money-market funds. Almost no risk of loss, but returns often trail inflation. Right for the emergency fund and near-term money.', fr:'Comptes, dépôts à terme, livrets, fonds monétaires. Presque aucun risque de perte, mais un rendement souvent inférieur à l’inflation. Pour l’épargne de précaution et les besoins proches.'} },
+    { i:'fa-file-contract', t:{zh:'債券', en:'Bonds', fr:'Obligations'},
+      tag:{zh:'借錢給政府或企業', en:'Lending to governments or companies', fr:'Prêter à un État ou une entreprise'},
+      p:{zh:'買債券就是當債主：定期收利息（票息），到期拿回本金。風險來自發行者違約（信用風險）與利率變動：利率上升時，舊債券價格下跌。', en:'Buying a bond makes you a lender: you collect regular interest (the coupon) and get the principal back at maturity. Risk comes from default (credit risk) and rates: when rates rise, existing bond prices fall.', fr:'Acheter une obligation, c’est prêter : on reçoit des intérêts réguliers (le coupon) et le capital à l’échéance. Les risques : le défaut de l’émetteur (risque de crédit) et les taux, car quand ils montent, le prix des obligations existantes baisse.'},
+      l:[{zh:'存續期間越長，對利率越敏感', en:'Longer duration means more rate sensitivity', fr:'Plus la duration est longue, plus la sensibilité aux taux est forte'},
+         {zh:'信評 BBB－以上為投資級，以下為高收益（垃圾）債', en:'BBB− and above is investment grade; below is high yield (junk)', fr:'BBB− et au-dessus : catégorie investissement ; en dessous : haut rendement'}] },
+    { i:'fa-chart-line', t:{zh:'股票', en:'Stocks (equities)', fr:'Actions'},
+      tag:{zh:'持有公司的一部分', en:'Owning part of a company', fr:'Détenir une part d’entreprise'},
+      p:{zh:'報酬來自股價上漲（資本利得）與股利。長期而言是報酬最高的主要資產，但一年內跌三到五成的情況在歷史上一再發生。', en:'Returns come from price gains and dividends. Over the long run the highest-returning major asset, yet falls of 30–50% within a year have happened again and again.', fr:'Le rendement vient de la hausse du cours (plus-value) et des dividendes. La classe la plus rentable à long terme, mais des baisses de 30 à 50 % en un an se sont produites à maintes reprises.'} },
+    { i:'fa-layer-group', t:{zh:'基金與 ETF', en:'Funds and ETFs', fr:'Fonds et ETF'},
+      tag:{zh:'一次買進一籃子', en:'A whole basket in one purchase', fr:'Un panier entier en un achat'},
+      p:{zh:'把許多人的錢集合起來，買進數十到數千檔標的。ETF 像股票一樣在交易所買賣，多數追蹤指數、費用低。詳見下一章。', en:'Pools many investors’ money to hold dozens to thousands of securities. ETFs trade on an exchange like a stock, mostly track an index and cost little. See the next chapter.', fr:'Mutualisent l’argent de nombreux épargnants pour détenir des dizaines à des milliers de titres. Les ETF se négocient en Bourse comme une action, suivent souvent un indice et coûtent peu. Voir le chapitre suivant.'} },
+    { i:'fa-house', t:{zh:'不動產與 REITs', en:'Property and REITs', fr:'Immobilier et foncières cotées'},
+      tag:{zh:'租金＋增值', en:'Rent plus appreciation', fr:'Loyers et plus-value'},
+      p:{zh:'實體房地產金額大、流動性低、常用房貸槓桿，還要管理維修與租客。不動產投資信託（REITs）讓人用小額參與商辦、物流、住宅的租金收益。', en:'Physical property needs large sums, is illiquid, usually involves mortgage leverage and comes with repairs and tenants. Real estate investment trusts (REITs) let you share in office, logistics or residential rents with small amounts.', fr:'L’immobilier physique demande de gros montants, est peu liquide, se finance souvent à crédit et implique travaux et locataires. Les SIIC et SCPI permettent de toucher des loyers de bureaux, d’entrepôts ou de logements avec de petites sommes.'} },
+    { i:'fa-gem', t:{zh:'黃金與原物料', en:'Gold and commodities', fr:'Or et matières premières'},
+      tag:{zh:'沒有現金流', en:'No cash flow', fr:'Pas de flux de trésorerie'},
+      p:{zh:'黃金不配息，價值來自稀缺與避險需求，常在危機時上漲。原物料（石油、農產品）多透過期貨或 ETF 投資，價格受供需與景氣影響大。適合作為小比例的分散工具。', en:'Gold pays nothing; its value comes from scarcity and demand for safety, and it often rises in crises. Commodities (oil, crops) are usually held through futures or ETFs and swing with supply, demand and the cycle. Best as a small diversifier.', fr:'L’or ne rapporte rien : sa valeur tient à la rareté et à la demande de refuge, et il monte souvent en crise. Les matières premières (pétrole, produits agricoles) s’achètent via des contrats à terme ou des ETF et suivent l’offre, la demande et le cycle. Utiles en petite proportion.'} },
+    { i:'fa-bitcoin-sign', t:{zh:'加密資產', en:'Crypto-assets', fr:'Crypto-actifs'},
+      tag:{zh:'高度投機', en:'Highly speculative', fr:'Très spéculatif'},
+      p:{zh:'比特幣等加密貨幣波動極大，單年漲跌超過五成很常見，也有交易所倒閉、私鑰遺失的風險。若要參與，只放輸光也不影響生活的金額。', en:'Bitcoin and other cryptocurrencies are extremely volatile, with moves above 50% in a year quite common, plus the risks of exchange failures and lost keys. If you take part, use only money you could lose entirely without harm.', fr:'Le bitcoin et les autres cryptomonnaies sont extrêmement volatils (des variations de plus de 50 % par an sont fréquentes), avec en plus le risque de faillite de plateformes et de perte des clés. N’y mettez que ce que vous pouvez perdre entièrement.'} },
+    { i:'fa-shield', t:{zh:'儲蓄險與投資型保單', en:'Savings and unit-linked insurance', fr:'Assurance épargne et unités de compte'},
+      tag:{zh:'先看費用與解約條件', en:'Check fees and surrender terms', fr:'Vérifier frais et conditions de rachat'},
+      p:{zh:'台灣常見的儲蓄險提前解約可能虧本，實質報酬率要用 IRR 計算。法國的 assurance-vie 則是稅務上很重要的投資帳戶（見第九章），差別在於費用與內含的投資標的。', en:'Taiwanese savings policies can lose money if surrendered early; compute the real return as an IRR. France’s assurance-vie, by contrast, is a key tax-advantaged investment wrapper (see chapter 9); what matters is the fees and the funds inside.', fr:'À Taïwan, les assurances épargne peuvent faire perdre de l’argent en cas de rachat anticipé : calculez le TRI. L’assurance-vie française est en revanche une enveloppe fiscale majeure (voir chapitre 9) ; tout dépend des frais et des supports proposés.'} },
+    { i:'fa-bolt', t:{zh:'衍生性商品與槓桿', en:'Derivatives and leverage', fr:'Dérivés et levier'},
+      tag:{zh:'新手避開', en:'Avoid as a beginner', fr:'À éviter au début'},
+      p:{zh:'期貨、選擇權、差價合約（CFD）、槓桿型 ETF 會放大漲跌，損失可能超過本金，或因每日重設而長期偏離指數。了解機制之前不要碰。', en:'Futures, options, CFDs and leveraged ETFs magnify moves; losses can exceed your stake, and daily resets make leveraged ETFs drift from their index over time. Stay away until you understand how they work.', fr:'Contrats à terme, options, CFD et ETF à levier amplifient les variations ; les pertes peuvent dépasser la mise, et la remise à zéro quotidienne fait dériver les ETF à levier de leur indice. À éviter tant que le mécanisme n’est pas compris.'} },
+  ]},
+]},
+
+/* ── 4. Funds and ETFs ── */
+{ id:'etf', i:'fa-basket-shopping', c:'#4ade80',
+  nav:{zh:'基金與 ETF', en:'Funds & ETFs', fr:'Fonds & ETF'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'基金與 ETF：大多數人的主力工具', en:'Funds and ETFs: the workhorse for most people', fr:'Fonds et ETF : l’outil principal de la plupart des épargnants'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'<strong class="text-white">主動型基金</strong>由經理人挑股，想打敗大盤；<strong class="text-white">被動型（指數型）基金</strong>只複製指數，追求跟大盤一樣。標準普爾的 SPIVA 報告長年顯示，十五年期間超過八成的主動型股票基金落後對應指數，主因是費用。對多數人而言，低成本的指數型 ETF 是最簡單也最難被打敗的選擇。',
+    en:'<strong class="text-white">Active funds</strong> have a manager picking stocks to beat the market; <strong class="text-white">passive (index) funds</strong> simply copy an index to match it. S&P’s SPIVA reports have shown year after year that over fifteen years more than 80% of active equity funds trail their benchmark, mainly because of fees. For most people a low-cost index ETF is the simplest choice and the hardest to beat.',
+    fr:'Dans un <strong class="text-white">fonds actif</strong>, un gérant sélectionne les titres pour battre le marché ; un <strong class="text-white">fonds passif (indiciel)</strong> se contente de répliquer un indice. Les rapports SPIVA de S&P montrent année après année que, sur quinze ans, plus de 80 % des fonds actions actifs font moins bien que leur indice, surtout à cause des frais. Pour la plupart des épargnants, un ETF indiciel bon marché est le choix le plus simple et le plus difficile à battre.'} },
+  { type:'dia', k:'fees' },
+  { type:'note', p:{zh:'上圖：一萬元、毛報酬 7%、30 年。年費只差 1.9 個百分點，最後的結果卻少了四成以上。費用是投資裡少數能確定、也能自己控制的變數。', en:'Above: 10,000 at a 7% gross return for 30 years. A fee gap of just 1.9 points leaves the final sum more than 40% smaller. Fees are one of the few certain things in investing, and one you control.', fr:'Ci-dessus : 10 000 à 7 % brut pendant 30 ans. Un écart de frais de 1,9 point réduit le résultat final de plus de 40 %. Les frais sont l’une des rares certitudes de l’investissement, et vous les maîtrisez.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-earth-americas', t:{zh:'全市場／全球股票 ETF', en:'Total-market / global equity ETFs', fr:'ETF actions monde / marché total'},
+      p:{zh:'一檔就持有全球數千家公司，例如追蹤 MSCI ACWI、FTSE All-World 或 MSCI World 的 ETF。最簡單的長期核心部位。', en:'One fund holds thousands of companies worldwide, e.g. ETFs on the MSCI ACWI, FTSE All-World or MSCI World. The simplest long-term core holding.', fr:'Un seul fonds détient des milliers d’entreprises du monde entier, par exemple les ETF sur MSCI ACWI, FTSE All-World ou MSCI World. Le cœur de portefeuille le plus simple.'} },
+    { i:'fa-flag-usa', t:{zh:'單一市場市值型 ETF', en:'Single-market cap-weighted ETFs', fr:'ETF d’un marché, pondérés par capitalisation'},
+      p:{zh:'追蹤 S&P 500、台灣 50（0050、006208）、歐洲 STOXX 600、法國 CAC 40 等。依公司市值決定權重，集中度依市場而不同，例如台灣 50 中台積電占很大比例。', en:'Track the S&P 500, Taiwan 50 (0050, 006208), STOXX Europe 600, CAC 40 and the like. Weighted by company size, so concentration varies: TSMC makes up a large share of the Taiwan 50.', fr:'Répliquent le S&P 500, le Taiwan 50 (0050, 006208), le STOXX Europe 600, le CAC 40, etc. La pondération par capitalisation crée des concentrations : TSMC pèse très lourd dans le Taiwan 50.'} },
+    { i:'fa-hand-holding-dollar', t:{zh:'高股息 ETF', en:'High-dividend ETFs', fr:'ETF à haut dividende'},
+      p:{zh:'挑選配息較高的股票，在台灣非常熱門。配息不是額外的錢，而是從淨值中發出；要看「含息總報酬」而不是只看殖利率，也要注意成分股換股頻繁帶來的成本。', en:'Select high-yielding stocks; hugely popular in Taiwan. A dividend is not extra money but is paid out of the fund’s value, so judge total return including dividends rather than yield alone, and watch the cost of frequent rebalancing.', fr:'Sélectionnent les actions à fort rendement ; très populaires à Taïwan. Un dividende n’est pas un gain supplémentaire : il est prélevé sur la valeur du fonds. Jugez le rendement total, pas le seul taux de distribution, et surveillez le coût des rotations fréquentes.'} },
+    { i:'fa-building-columns', t:{zh:'債券 ETF', en:'Bond ETFs', fr:'ETF obligataires'},
+      p:{zh:'依存續期間（短、中、長）和信用（公債、投資級、高收益）分類。用來降低組合波動時，選中短期公債或投資級較合適；長天期債券對利率非常敏感。', en:'Classed by duration (short, medium, long) and credit (government, investment grade, high yield). To steady a portfolio, short-to-medium government or investment-grade funds suit best; long bonds are very rate-sensitive.', fr:'Classés par duration (courte, moyenne, longue) et par crédit (États, catégorie investissement, haut rendement). Pour stabiliser un portefeuille, privilégiez les maturités courtes à moyennes et la bonne qualité ; les obligations longues sont très sensibles aux taux.'} },
+    { i:'fa-microchip', t:{zh:'主題與產業 ETF', en:'Thematic and sector ETFs', fr:'ETF thématiques et sectoriels'},
+      p:{zh:'半導體、AI、電動車、ESG 等。集中度高、常在熱潮頂點推出，適合當作小比例的衛星部位，而不是核心。', en:'Semiconductors, AI, electric vehicles, ESG and so on. Concentrated and often launched near the peak of a craze; a small satellite position, not the core.', fr:'Semi-conducteurs, IA, véhicules électriques, ESG… Concentrés et souvent lancés au sommet d’un engouement : une petite position satellite, pas le cœur.'} },
+    { i:'fa-sliders', t:{zh:'平衡型與目標日期基金', en:'Balanced and target-date funds', fr:'Fonds équilibrés et à date cible'},
+      p:{zh:'一檔基金內就配置好股債比例，有的還會隨退休年份接近而自動降低股票比重。省事，但要比較費用。', en:'One fund holds a set stock-bond mix; target-date versions shift towards bonds automatically as the retirement year approaches. Effortless, but compare the fees.', fr:'Un seul fonds porte une répartition actions-obligations ; les versions à date cible réduisent automatiquement les actions à l’approche de la retraite. Pratique, mais comparez les frais.'} },
+  ]},
+  { type:'h3', t:{zh:'挑 ETF 要看什麼', en:'What to check when choosing an ETF', fr:'Les critères pour choisir un ETF'} },
+  { type:'table', head:[{zh:'項目', en:'Item', fr:'Critère'},{zh:'說明', en:'What it means', fr:'Signification'},{zh:'參考標準', en:'Rule of thumb', fr:'Repère'}],
+    rows:[
+    [{zh:'追蹤指數', en:'Index tracked', fr:'Indice suivi'}, {zh:'決定買到哪些公司、多分散', en:'Decides which companies you own and how spread out', fr:'Détermine les entreprises détenues et la diversification'}, {zh:'越廣越分散', en:'Broader is more diversified', fr:'Plus large = plus diversifié'}],
+    [{zh:'總費用率（TER）', en:'Total expense ratio (TER)', fr:'Frais courants (TER)'}, {zh:'每年從淨值扣除的管理與保管費', en:'Management and custody costs taken from the fund each year', fr:'Frais de gestion et de garde prélevés chaque année'}, {zh:'寬基指數 0.03% 到 0.3%', en:'0.03–0.3% for broad indices', fr:'0,03 à 0,3 % pour un indice large'}],
+    [{zh:'追蹤誤差', en:'Tracking difference', fr:'Écart de suivi'}, {zh:'ETF 實際報酬與指數的差距', en:'The gap between the ETF’s return and the index', fr:'L’écart entre la performance de l’ETF et celle de l’indice'}, {zh:'越接近 0 越好', en:'The closer to zero the better', fr:'Le plus proche de zéro'}],
+    [{zh:'規模與成交量', en:'Size and volume', fr:'Encours et volume'}, {zh:'規模太小可能下市，成交量低則買賣價差大', en:'Tiny funds may close; thin trading widens the bid-ask spread', fr:'Un petit fonds peut fermer ; peu d’échanges élargit l’écart achat-vente'}, {zh:'規模數億美元以上', en:'Several hundred million USD or more', fr:'Plusieurs centaines de millions de dollars'}],
+    [{zh:'配息或累積', en:'Distributing or accumulating', fr:'Distribution ou capitalisation'}, {zh:'配息型發現金；累積型（Acc）自動再投入', en:'Distributing pays cash; accumulating (Acc) reinvests automatically', fr:'Distribuant : versement en espèces ; capitalisant (Acc) : réinvestissement automatique'}, {zh:'依稅制與需求選擇', en:'Choose by tax rules and needs', fr:'Selon la fiscalité et le besoin'}],
+    [{zh:'註冊地與複製方式', en:'Domicile and replication', fr:'Domiciliation et réplication'}, {zh:'影響股利預扣稅、遺產稅；實體複製持有成分股，合成複製用交換合約', en:'Affects dividend withholding and estate tax; physical funds hold the stocks, synthetic ones use swaps', fr:'Influence la retenue à la source et la succession ; réplication physique (titres détenus) ou synthétique (swap)'}, {zh:'非美國人常選愛爾蘭註冊（UCITS）', en:'Non-US investors often pick Irish-domiciled UCITS', fr:'Hors États-Unis, souvent des UCITS domiciliés en Irlande'}],
+    ]},
+]},
+
+/* ── 5. Allocation ── */
+{ id:'alloc', i:'fa-chart-pie', c:'#34d399',
+  nav:{zh:'資產配置', en:'Allocation', fr:'Allocation'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'資產配置、分散與再平衡', en:'Allocation, diversification and rebalancing', fr:'Allocation, diversification et rééquilibrage'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'研究指出，長期投資組合的波動大部分由<strong class="text-white">股債比例</strong>決定，而不是挑中哪一檔。先決定要承擔多少波動，再決定比例；比例定好之後，挑工具就很簡單了。',
+    en:'Studies find that most of a long-term portfolio’s ups and downs are explained by its <strong class="text-white">stock-bond mix</strong>, not by which individual securities were picked. Decide how much swing you can take, set the mix accordingly, and choosing products becomes easy.',
+    fr:'Les études montrent que l’essentiel des fluctuations d’un portefeuille de long terme s’explique par sa <strong class="text-white">répartition actions-obligations</strong>, et non par le choix des titres. Décidez d’abord la volatilité acceptable, fixez la répartition, et le choix des supports devient simple.'} },
+  { type:'dia', k:'diversify' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-shuffle', t:{zh:'分散的三個維度', en:'Three ways to diversify', fr:'Trois axes de diversification'},
+      p:{zh:'跨資產（股、債、現金）、跨地區（台灣、美國、歐洲、新興市場）、跨時間（分批投入）。上圖顯示，持股從 1 檔增加到 30 檔，波動幾乎減半；剩下的是整個市場一起漲跌的風險。', en:'Across assets (stocks, bonds, cash), across regions (home, US, Europe, emerging) and across time (investing in instalments). Above, going from 1 to 30 stocks nearly halves volatility; what remains is the risk of the whole market moving together.', fr:'Entre classes d’actifs (actions, obligations, liquidités), entre régions (domestique, États-Unis, Europe, émergents) et dans le temps (investir par étapes). Ci-dessus, passer de 1 à 30 actions divise presque la volatilité par deux ; reste le risque du marché dans son ensemble.'} },
+    { i:'fa-house-flag', t:{zh:'本國偏誤', en:'Home bias', fr:'Biais domestique'},
+      p:{zh:'人們傾向重押自己國家的股票。台灣股市約占全球市值 2% 左右、法國約 3%，全部押在本國等於放棄了大部分的分散效果，而且工作收入也綁在同一個經濟體。', en:'People tend to overweight their own country. Taiwan and France are each only a few percent of world market value; putting everything at home gives up most of the diversification and ties your portfolio to the same economy as your salary.', fr:'On a tendance à surpondérer son propre pays. Taïwan et la France ne pèsent chacun que quelques pour cent de la capitalisation mondiale : tout investir chez soi sacrifie l’essentiel de la diversification et lie le portefeuille à l’économie qui verse déjà votre salaire.'} },
+    { i:'fa-scale-balanced', t:{zh:'再平衡', en:'Rebalancing', fr:'Rééquilibrage'},
+      p:{zh:'市場漲跌會讓比例走樣。每年一次，或比例偏離目標 5 個百分點以上時，把漲多的賣一些、補跌多的，回到目標。這等於自動「買低賣高」。也可以只用新投入的錢補不足的部位，避免賣出產生的稅與費用。', en:'Markets push the mix off target. Once a year, or when a weight drifts more than five points, sell some of what rose and add to what fell. That is buying low and selling high on autopilot. You can also direct new money to the underweight part to avoid the tax and costs of selling.', fr:'Les marchés déforment la répartition. Une fois par an, ou dès qu’un poids s’écarte de plus de cinq points, vendez une partie de ce qui a monté et renforcez ce qui a baissé : c’est acheter bas et vendre haut automatiquement. On peut aussi diriger les nouveaux versements vers la poche sous-pondérée pour éviter impôts et frais.'} },
+    { i:'fa-bullseye', t:{zh:'核心與衛星', en:'Core and satellite', fr:'Cœur et satellites'},
+      p:{zh:'80% 到 90% 放在全球指數等低成本核心部位，剩下 10% 到 20% 才拿來嘗試個股、主題 ETF。就算衛星部位看錯，也不會傷到整體。', en:'Keep 80–90% in a low-cost core such as a global index, and use only 10–20% for single stocks or thematic ETFs. If the satellites go wrong, the whole survives.', fr:'Placez 80 à 90 % dans un cœur peu coûteux (indice mondial) et réservez 10 à 20 % aux actions individuelles ou ETF thématiques. Si les satellites échouent, l’ensemble tient.'} },
+    { i:'fa-user-clock', t:{zh:'年齡與股票比例', en:'Age and equity share', fr:'Âge et part d’actions'},
+      p:{zh:'常見的經驗法則是「股票比例＝110（或 100）減年齡」。這只是起點：收入穩定、期間長、心理承受度高的人可以更積極，反之更保守。', en:'A common rule of thumb is equity share = 110 (or 100) minus your age. It is only a starting point: stable income, a long horizon and a strong stomach allow more; the opposite calls for less.', fr:'Une règle courante : part d’actions = 110 (ou 100) moins votre âge. Ce n’est qu’un point de départ : revenus stables, horizon long et sang-froid permettent davantage ; l’inverse appelle à la prudence.'} },
+    { i:'fa-heart-pulse', t:{zh:'壓力測試', en:'Stress test', fr:'Test de résistance'},
+      p:{zh:'假設股票部位跌 50%（2008 年、2000 年都曾發生），整體會虧多少？如果那個數字會讓你睡不著或想全部賣掉，就把股票比例調低。', en:'Imagine the stock part falling 50% (as in 2008 and 2000). How much would the whole lose? If that figure would keep you awake or make you sell everything, lower the equity share.', fr:'Imaginez une chute de 50 % de la poche actions (comme en 2008 et en 2000). Combien perdrait l’ensemble ? Si ce chiffre vous empêcherait de dormir ou vous ferait tout vendre, réduisez la part d’actions.'} },
+  ]},
+  { type:'h3', t:{zh:'配置範例（僅供示意）', en:'Example allocations (for illustration only)', fr:'Exemples d’allocation (à titre indicatif)'} },
+  { type:'table', head:[{zh:'類型', en:'Profile', fr:'Profil'},{zh:'股票', en:'Stocks', fr:'Actions'},{zh:'債券', en:'Bonds', fr:'Obligations'},{zh:'現金等', en:'Cash etc.', fr:'Liquidités etc.'},{zh:'歷史上最大跌幅約', en:'Historical worst fall, roughly', fr:'Pire baisse historique, environ'}],
+    rows:[
+    [{zh:'保守', en:'Conservative', fr:'Prudent'}, '20–30%', '60–70%', '10%', '−10% ~ −15%'],
+    [{zh:'穩健', en:'Balanced', fr:'Équilibré'}, '50–60%', '35–45%', '5%', '−25% ~ −30%'],
+    [{zh:'積極', en:'Growth', fr:'Dynamique'}, '80–90%', '10–20%', '0–5%', '−40% ~ −45%'],
+    [{zh:'全股票', en:'All equity', fr:'100 % actions'}, '100%', '0%', '0%', '−50% ~ −55%'],
+    ]},
+  { type:'note', p:{zh:'跌幅以全球股票與投資級債券組合在 2008 年金融海嘯期間的表現估算，未來可能更大或更小。', en:'Falls are estimated from global-stock and investment-grade-bond mixes during the 2008 financial crisis; future falls may be larger or smaller.', fr:'Baisses estimées d’après des portefeuilles actions monde et obligations de qualité pendant la crise de 2008 ; les baisses futures pourront être plus fortes ou plus faibles.'} },
+]},
+
+/* ── 6. Strategies ── */
+{ id:'strategy', i:'fa-chess', c:'#38bdf8',
+  nav:{zh:'投資策略', en:'Strategies', fr:'Stratégies'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'常見的投資策略', en:'Common investment strategies', fr:'Les stratégies d’investissement courantes'},
+  blocks:[
+  { type:'dia', k:'dca' },
+  { type:'note', p:{zh:'上圖：每月固定投入 1,000，價格從 100 跌到 60 再回到 100。因為價格低時買到較多單位，平均成本低於十二個月的平均價格，價格回到原點時已經有獲利。若價格一路上漲，單筆一次投入反而會更好。', en:'Above: 1,000 a month while the price falls from 100 to 60 and returns to 100. Because more units are bought when the price is low, the average cost ends below the average price, and the position is in profit when the price merely gets back to where it started. If prices only rise, a single lump sum does better.', fr:'Ci-dessus : 1 000 par mois pendant que le prix passe de 100 à 60 puis revient à 100. Comme on achète plus de parts quand le prix est bas, le coût moyen finit sous le prix moyen, et la position est gagnante dès que le prix revient à son point de départ. Si les prix ne font que monter, un versement unique fait mieux.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-calendar-check', t:{zh:'定期定額', en:'Dollar-cost averaging', fr:'Investissement programmé'},
+      tag:{zh:'最適合上班族', en:'Ideal for salaried savers', fr:'Idéal pour les salariés'},
+      p:{zh:'每月固定日期、固定金額買進，不管漲跌。不用猜時機、能跟薪水同步，也降低在高點一次投入的懊悔。', en:'A fixed amount on a fixed date each month, whatever the market does. No timing, in step with your salary, and less regret than going all in at a peak.', fr:'Un montant fixe à date fixe chaque mois, quoi que fasse le marché. Pas de timing, au rythme du salaire, et moins de regrets qu’un achat unique au sommet.'} },
+    { i:'fa-sack-dollar', t:{zh:'單筆投入', en:'Lump sum', fr:'Versement unique'},
+      tag:{zh:'統計上略勝一籌', en:'Slightly better on average', fr:'Légèrement meilleur en moyenne'},
+      p:{zh:'手上已有一大筆錢時，研究顯示約三分之二的時間一次投入勝過分批，因為市場長期多數時間在上漲。若怕買在高點，可以折衷分 6 到 12 個月投入。', en:'With a large sum already in hand, studies show investing it at once beats spreading it out about two-thirds of the time, because markets rise more often than not. If a peak worries you, split it over 6–12 months as a compromise.', fr:'Avec une grosse somme déjà disponible, les études montrent qu’un investissement immédiat bat l’étalement environ deux fois sur trois, car les marchés montent plus souvent qu’ils ne baissent. Si le sommet vous inquiète, étalez sur 6 à 12 mois.'} },
+    { i:'fa-anchor', t:{zh:'買進持有', en:'Buy and hold', fr:'Acheter et conserver'},
+      tag:{zh:'被動投資的核心', en:'The heart of passive investing', fr:'Le cœur de la gestion passive'},
+      p:{zh:'買進分散的指數工具後長期持有，只做再平衡。交易少、費用低、稅也少。最難的部分是在大跌時什麼都不做。', en:'Buy diversified index products and hold them, only rebalancing. Few trades, low costs, little tax. The hardest part is doing nothing during a crash.', fr:'Acheter des supports indiciels diversifiés et les conserver, en se contentant de rééquilibrer. Peu d’opérations, peu de frais, peu d’impôts. Le plus dur : ne rien faire pendant un krach.'} },
+    { i:'fa-magnifying-glass-dollar', t:{zh:'價值投資', en:'Value investing', fr:'Investissement « value »'},
+      tag:{zh:'葛拉漢、巴菲特', en:'Graham, Buffett', fr:'Graham, Buffett'},
+      p:{zh:'找出價格低於內在價值的公司，保留「安全邊際」。需要能讀財報、估價，並耐心等待市場修正。', en:'Find companies priced below their intrinsic value and keep a margin of safety. Requires reading accounts, valuing businesses and waiting patiently for the market to agree.', fr:'Trouver des entreprises cotées sous leur valeur intrinsèque, avec une marge de sécurité. Il faut savoir lire les comptes, valoriser et attendre patiemment que le marché corrige.'} },
+    { i:'fa-rocket', t:{zh:'成長投資', en:'Growth investing', fr:'Investissement « croissance »'},
+      tag:{zh:'看未來營收', en:'Paying for future revenue', fr:'Miser sur les revenus futurs'},
+      p:{zh:'買進營收、獲利快速成長的公司，即使本益比很高。成功時報酬驚人，但若成長不如預期，股價會大幅修正。', en:'Buy fast-growing companies even at high valuations. The payoff can be huge, but if growth disappoints the price can fall hard.', fr:'Acheter des entreprises à forte croissance, même chères. Le gain peut être spectaculaire, mais si la croissance déçoit, le cours peut chuter lourdement.'} },
+    { i:'fa-coins', t:{zh:'存股與股息投資', en:'Dividend investing', fr:'Stratégie de dividendes'},
+      tag:{zh:'台灣常見', en:'Popular in Taiwan', fr:'Populaire à Taïwan'},
+      p:{zh:'持有穩定配息的公司或 ETF，把股息當現金流。要注意「填息」與否、股息的稅務，以及別只看殖利率而忽略公司本身是否還在成長。', en:'Hold steady dividend payers or ETFs and treat dividends as cash flow. Check whether the price recovers after each payout, how dividends are taxed, and whether the business is still growing, not just its yield.', fr:'Détenir des sociétés ou ETF au dividende régulier et s’en servir comme revenu. Vérifiez que le cours se reconstitue après chaque détachement, la fiscalité des dividendes, et la croissance de l’entreprise, pas seulement son rendement.'} },
+  ]},
+  { type:'note', p:{zh:'「擇時」（試圖在高點賣、低點買）長期很難成功：錯過市場表現最好的少數幾天，長期報酬就會大打折扣，而這些日子常出現在大跌之後不久。', en:'Market timing (selling high, buying low) rarely works over time: missing just a handful of the best days cuts long-run returns sharply, and those days often come right after the worst ones.', fr:'Le market timing (vendre haut, racheter bas) réussit rarement dans la durée : manquer quelques-unes des meilleures séances ampute fortement le rendement, et ces séances suivent souvent de près les pires.'} },
+]},
+
+/* ── 7. Reading a company ── */
+{ id:'stocks', i:'fa-magnifying-glass-chart', c:'#818cf8',
+  nav:{zh:'看懂股票', en:'Reading stocks', fr:'Analyser une action'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'看懂一家公司：財報與估值指標', en:'Reading a company: statements and valuation ratios', fr:'Analyser une entreprise : états financiers et ratios'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'想挑個股，至少要讀懂三張財務報表，並用幾個比率判斷價格是否合理。任何單一指標都不夠：要和同產業、和公司自己的歷史比較。',
+    en:'To pick individual stocks you need at least the three financial statements and a few ratios to judge the price. No single ratio is enough: compare with the sector and with the company’s own history.',
+    fr:'Pour choisir des actions, il faut au minimum lire les trois états financiers et quelques ratios pour juger du prix. Aucun ratio ne suffit seul : comparez au secteur et à l’historique de l’entreprise.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-file-invoice-dollar', t:{zh:'損益表', en:'Income statement', fr:'Compte de résultat'},
+      p:{zh:'一段期間賺了多少：營收 − 成本 − 費用 − 稅 = 淨利。看營收成長、毛利率、營業利益率的趨勢。', en:'How much was earned over a period: revenue − costs − expenses − tax = net income. Watch the trend in revenue growth, gross margin and operating margin.', fr:'Ce qui a été gagné sur une période : chiffre d’affaires − coûts − charges − impôts = résultat net. Suivez la croissance du chiffre d’affaires, la marge brute et la marge opérationnelle.'} },
+    { i:'fa-scale-balanced', t:{zh:'資產負債表', en:'Balance sheet', fr:'Bilan'},
+      p:{zh:'某一天的家底：資產 = 負債 + 股東權益。看負債比、流動比，以及現金是否足以應付短期債務。', en:'The position on one date: assets = liabilities + equity. Check the debt ratio, the current ratio and whether cash covers short-term debt.', fr:'La situation à une date : actif = dettes + capitaux propres. Regardez l’endettement, le ratio de liquidité et si la trésorerie couvre les dettes à court terme.'} },
+    { i:'fa-money-bill-transfer', t:{zh:'現金流量表', en:'Cash-flow statement', fr:'Tableau des flux de trésorerie'},
+      p:{zh:'真正進出的現金，分營業、投資、融資三部分。有獲利卻長期沒有營業現金流，是警訊。自由現金流 = 營業現金流 − 資本支出。', en:'Actual cash in and out, split into operating, investing and financing. Profits without operating cash flow over several years are a warning sign. Free cash flow = operating cash flow − capital expenditure.', fr:'Les encaissements et décaissements réels : exploitation, investissement, financement. Des bénéfices sans flux d’exploitation pendant plusieurs années sont un signal d’alerte. Flux de trésorerie disponible = flux d’exploitation − investissements.'} },
+  ]},
+  { type:'table', head:[{zh:'指標', en:'Ratio', fr:'Ratio'},{zh:'算法', en:'Formula', fr:'Calcul'},{zh:'怎麼看', en:'How to read it', fr:'Lecture'}],
+    rows:[
+    [{zh:'每股盈餘 EPS', en:'Earnings per share (EPS)', fr:'Bénéfice par action (BPA)'}, {zh:'淨利 ÷ 流通股數', en:'Net income ÷ shares outstanding', fr:'Résultat net ÷ nombre d’actions'}, {zh:'看是否穩定成長', en:'Look for steady growth', fr:'Rechercher une croissance régulière'}],
+    [{zh:'本益比 P/E', en:'Price-to-earnings (P/E)', fr:'PER'}, {zh:'股價 ÷ EPS', en:'Price ÷ EPS', fr:'Cours ÷ BPA'}, {zh:'回本要幾年的獲利；高成長公司通常較高', en:'Years of earnings to pay the price; higher for fast growers', fr:'Nombre d’années de bénéfices pour payer le cours ; plus élevé pour les sociétés en croissance'}],
+    [{zh:'股價淨值比 P/B', en:'Price-to-book (P/B)', fr:'Cours / valeur comptable'}, {zh:'股價 ÷ 每股淨值', en:'Price ÷ book value per share', fr:'Cours ÷ actif net par action'}, {zh:'適合金融、資產密集產業', en:'Useful for banks and asset-heavy sectors', fr:'Utile pour les banques et secteurs à actifs lourds'}],
+    [{zh:'股東權益報酬率 ROE', en:'Return on equity (ROE)', fr:'Rentabilité des capitaux propres (ROE)'}, {zh:'淨利 ÷ 股東權益', en:'Net income ÷ equity', fr:'Résultat net ÷ capitaux propres'}, {zh:'長期 15% 以上屬優秀，但要留意是否靠高負債撐起', en:'Above 15% over time is strong, unless propped up by heavy debt', fr:'Au-dessus de 15 % dans la durée, c’est solide, sauf si c’est dû à un fort endettement'}],
+    [{zh:'殖利率', en:'Dividend yield', fr:'Rendement du dividende'}, {zh:'每股股利 ÷ 股價', en:'Dividend per share ÷ price', fr:'Dividende par action ÷ cours'}, {zh:'異常高可能代表股價大跌或股利難以持續', en:'An unusually high yield may mean a price collapse or an unsustainable payout', fr:'Un rendement anormalement élevé peut signaler une chute du cours ou un dividende intenable'}],
+    [{zh:'配息率', en:'Payout ratio', fr:'Taux de distribution'}, {zh:'股利 ÷ 淨利', en:'Dividends ÷ net income', fr:'Dividendes ÷ résultat net'}, {zh:'長期超過 100% 代表在吃老本', en:'Above 100% for long means paying out of reserves', fr:'Au-delà de 100 % durablement, on puise dans les réserves'}],
+    [{zh:'負債權益比', en:'Debt-to-equity', fr:'Dette / capitaux propres'}, {zh:'總負債 ÷ 股東權益', en:'Total debt ÷ equity', fr:'Dette totale ÷ capitaux propres'}, {zh:'依產業差很多，與同業比較', en:'Varies widely by sector; compare with peers', fr:'Très variable selon le secteur ; comparer aux concurrents'}],
+    ]},
+  { type:'note', p:{zh:'財報與會計的完整說明，可以參考書架上「商業與金融」卷的會計與財務分支。', en:'For accounting and financial statements in depth, see the accounting and finance branches of the Business & Finance volume on the same shelf.', fr:'Pour la comptabilité et les états financiers en détail, voir les branches comptabilité et finance du volume Business & finance, sur la même étagère.'} },
+]},
+
+/* ── 8. Behaviour and risk ── */
+{ id:'behaviour', i:'fa-brain', c:'#f472b6',
+  nav:{zh:'心理與風險', en:'Behaviour & risk', fr:'Psychologie & risques'},
+  eyebrow:{zh:'第八章', en:'Chapter 8', fr:'Chapitre 8'},
+  h2:{zh:'最大的敵人是自己：行為偏誤與常見陷阱', en:'Your own worst enemy: biases and common traps', fr:'Son pire ennemi, c’est soi-même : biais et pièges courants'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-face-frown', t:{zh:'損失規避', en:'Loss aversion', fr:'Aversion aux pertes'},
+      p:{zh:'虧損帶來的痛苦約是同額獲利快樂的兩倍。結果是不肯認賠、抱著爛股，卻太早賣掉賺錢的部位。', en:'A loss hurts about twice as much as an equal gain pleases. So people hold on to losers and sell winners too early.', fr:'Une perte fait environ deux fois plus mal qu’un gain équivalent ne fait plaisir. On garde alors les perdants et on vend trop tôt les gagnants.'} },
+    { i:'fa-people-group', t:{zh:'從眾效應', en:'Herd behaviour', fr:'Comportement moutonnier'},
+      p:{zh:'看到大家都在買就跟進，常常買在熱潮頂點。媒體與社群上最熱門的標的，往往已經漲完一大段。', en:'Buying because everyone else is buying, often at the top of a craze. What is hottest in the news and on social media has usually already risen a long way.', fr:'Acheter parce que tout le monde achète, souvent au sommet. Ce qui fait le buzz dans les médias et sur les réseaux a généralement déjà beaucoup monté.'} },
+    { i:'fa-crown', t:{zh:'過度自信', en:'Overconfidence', fr:'Excès de confiance'},
+      p:{zh:'高估自己挑股與擇時的能力，導致交易過多。研究發現交易越頻繁的散戶，扣除成本後的報酬越差。', en:'Overrating one’s skill at picking and timing leads to overtrading. Studies find the most active retail traders earn the least after costs.', fr:'Surestimer sa capacité à choisir et à anticiper pousse à trop trader. Les études montrent que les particuliers les plus actifs gagnent le moins après frais.'} },
+    { i:'fa-anchor', t:{zh:'定錨效應', en:'Anchoring', fr:'Ancrage'},
+      p:{zh:'執著於買進價格或歷史高點：「等回到成本再賣」。市場不知道你的成本，該問的是「現在如果手上是現金，我還會買它嗎？」', en:'Fixating on your purchase price or a past high: "I will sell once I am back to break-even". The market does not know your cost; ask whether you would buy it today if you held cash instead.', fr:'Se focaliser sur son prix d’achat ou un ancien sommet : « je vendrai quand je serai revenu à mon prix ». Le marché ignore votre prix de revient ; demandez-vous si vous l’achèteriez aujourd’hui avec des liquidités.'} },
+    { i:'fa-eye', t:{zh:'確認偏誤', en:'Confirmation bias', fr:'Biais de confirmation'},
+      p:{zh:'只看支持自己看法的新聞。買進前刻意找反方論點，寫下「什麼情況下我會承認看錯」。', en:'Reading only news that supports your view. Before buying, seek out the opposing case and write down what would prove you wrong.', fr:'Ne lire que ce qui conforte son opinion. Avant d’acheter, cherchez les arguments contraires et notez ce qui prouverait que vous avez tort.'} },
+    { i:'fa-clock-rotate-left', t:{zh:'近因偏誤', en:'Recency bias', fr:'Biais de récence'},
+      p:{zh:'以為最近發生的會一直持續：漲了三年就覺得不會跌，跌了半年就覺得不會再漲。看長期數據能修正這種錯覺。', en:'Assuming the recent past will continue: three years up and it can never fall, six months down and it will never recover. Long-run data corrects the illusion.', fr:'Croire que le passé récent va durer : trois ans de hausse et rien ne peut baisser, six mois de baisse et rien ne remontera. Les données longues corrigent l’illusion.'} },
+  ]},
+  { type:'h3', t:{zh:'詐騙警訊', en:'Red flags for fraud', fr:'Signaux d’alerte d’escroquerie'} },
+  { type:'cards', cols:2, items:[
+    { i:'fa-triangle-exclamation', t:{zh:'常見手法', en:'Common schemes', fr:'Schémas courants'},
+      p:{zh:'這些手法在台灣與法國都很常見，主管機關（金管會、AMF）會定期公布黑名單。', en:'These schemes are common in both Taiwan and France; regulators (Taiwan’s FSC, France’s AMF) publish blacklists regularly.', fr:'Ces schémas sont fréquents à Taïwan comme en France ; les régulateurs (FSC taïwanaise, AMF) publient régulièrement des listes noires.'},
+      l:[{zh:'假冒名人或投資專家的社群廣告與 LINE／WhatsApp 投資群組', en:'Social-media ads and LINE or WhatsApp groups impersonating celebrities or experts', fr:'Publicités et groupes LINE ou WhatsApp usurpant l’identité de célébrités ou d’experts'},
+         {zh:'保證獲利、每月固定高配息、「穩賺不賠」', en:'Guaranteed profits, high fixed monthly payouts, "no risk"', fr:'Gains garantis, rendements mensuels élevés et fixes, « sans risque »'},
+         {zh:'要求下載不明 App，或匯款到個人帳戶', en:'Asking you to install an unknown app or pay into a personal account', fr:'Demande d’installer une appli inconnue ou de virer sur un compte personnel'},
+         {zh:'龐氏騙局：用後來者的錢付給前面的人', en:'Ponzi schemes: paying earlier investors with newer investors’ money', fr:'Système de Ponzi : payer les anciens avec l’argent des nouveaux'},
+         {zh:'愛情詐騙轉投資（殺豬盤）', en:'Romance scams that turn into "investment" (pig butchering)', fr:'Arnaques sentimentales qui virent à l’« investissement »'}] },
+    { i:'fa-user-shield', t:{zh:'自保原則', en:'How to protect yourself', fr:'Se protéger'},
+      p:{zh:'任何機會在投錢之前都先查證，不要被「限時」「名額有限」催促。', en:'Verify every opportunity before paying anything, and never let "limited time" or "only a few places left" rush you.', fr:'Vérifiez toute proposition avant de verser quoi que ce soit, et ne cédez jamais à l’urgence du « temps limité » ou des « places limitées ».'},
+      l:[{zh:'確認業者有合法執照：台灣查金管會，法國查 AMF／ACPR 的 REGAFI 與 ORIAS', en:'Check the firm is licensed: Taiwan’s FSC, France’s AMF and ACPR registers (REGAFI, ORIAS)', fr:'Vérifier l’agrément : FSC à Taïwan, registres de l’AMF et de l’ACPR (REGAFI, ORIAS) en France'},
+         {zh:'看不懂的商品不買', en:'Never buy what you do not understand', fr:'Ne jamais acheter ce qu’on ne comprend pas'},
+         {zh:'報酬率遠高於市場，就假設它是假的', en:'If returns far exceed the market, assume they are fake', fr:'Si le rendement dépasse largement le marché, présumez qu’il est faux'},
+         {zh:'台灣可撥 165 反詐騙專線諮詢', en:'In Taiwan, call the 165 anti-fraud hotline', fr:'À Taïwan, appelez la ligne antifraude 165'}] },
+  ]},
+]},
+
+/* ── 9. Accounts and tax ── */
+{ id:'accounts', i:'fa-building-columns', c:'#fb923c',
+  nav:{zh:'帳戶與稅', en:'Accounts & tax', fr:'Comptes & fiscalité'},
+  eyebrow:{zh:'第九章', en:'Chapter 9', fr:'Chapitre 9'},
+  h2:{zh:'台灣與法國：投資帳戶與稅務重點', en:'Taiwan and France: accounts and tax essentials', fr:'Taïwan et France : comptes et fiscalité'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'同樣的投資，放在不同的帳戶裡，稅後結果可能差很多。以下整理兩地最常用的帳戶與規則。稅制每年可能調整，實際申報前請查閱財政部、impots.gouv.fr 或諮詢專業人士。',
+    en:'The same investment can end up very differently after tax depending on the account that holds it. Below are the most common accounts and rules in each country. Tax rules change most years, so check the Ministry of Finance, impots.gouv.fr or a professional before filing.',
+    fr:'Un même placement peut donner des résultats très différents après impôt selon l’enveloppe qui le porte. Voici les comptes et règles les plus courants dans chaque pays. La fiscalité évolue presque chaque année : vérifiez auprès du ministère des Finances, d’impots.gouv.fr ou d’un professionnel avant de déclarer.'} },
+  { type:'h3', t:{zh:'台灣', en:'Taiwan', fr:'Taïwan'} },
+  { type:'table', head:[{zh:'項目', en:'Item', fr:'Élément'},{zh:'重點', en:'Key points', fr:'Points clés'}],
+    rows:[
+    [{zh:'證券戶＋交割戶', en:'Brokerage + settlement account', fr:'Compte-titres + compte de règlement'}, {zh:'買賣台股、ETF 用。可設定定期定額，多家券商最低每月 100 元起。', en:'For Taiwanese stocks and ETFs. Monthly plans available, from NT$100 at many brokers.', fr:'Pour les actions et ETF taïwanais. Plans mensuels possibles, dès 100 TWD chez de nombreux courtiers.'}],
+    [{zh:'複委託', en:'Sub-brokerage', fr:'Sous-courtage (« fuweituo »)'}, {zh:'透過台灣券商買美股、海外 ETF。另一種方式是直接開海外券商帳戶。', en:'Buy US stocks and overseas ETFs through a Taiwanese broker; the alternative is opening an account with a foreign broker.', fr:'Acheter des actions américaines et ETF étrangers via un courtier taïwanais ; l’autre option est un courtier étranger.'}],
+    [{zh:'交易成本', en:'Trading costs', fr:'Coûts de transaction'}, {zh:'手續費 0.1425%（常有折扣）；賣出時證券交易稅：股票 0.3%、ETF 0.1%、當沖 0.15%。', en:'Commission 0.1425% (often discounted); securities transaction tax on sales: 0.3% for stocks, 0.1% for ETFs, 0.15% for day trades.', fr:'Commission 0,1425 % (souvent remisée) ; taxe sur les transactions à la vente : 0,3 % pour les actions, 0,1 % pour les ETF, 0,15 % en intraday.'}],
+    [{zh:'資本利得', en:'Capital gains', fr:'Plus-values'}, {zh:'證券交易所得稅目前停徵，買賣台股價差免稅。', en:'Capital-gains tax on securities is currently suspended: price gains on Taiwanese shares are tax-free.', fr:'L’impôt sur les plus-values de titres est suspendu : les gains sur actions taïwanaises sont exonérés.'}],
+    [{zh:'股利', en:'Dividends', fr:'Dividendes'}, {zh:'二選一：併入綜合所得，可抵減 8.5%（每戶上限 8 萬元）；或分開計稅 28%。所得稅率低者通常選前者。', en:'Choose one: add to income with an 8.5% credit (capped at NT$80,000 per household), or a separate flat 28%. Lower-bracket taxpayers usually pick the first.', fr:'Au choix : intégration au revenu avec crédit de 8,5 % (plafonné à 80 000 TWD par foyer) ou imposition séparée à 28 %. Les petites tranches choisissent souvent la première.'}],
+    [{zh:'二代健保補充保費', en:'NHI supplementary premium', fr:'Cotisation santé complémentaire'}, {zh:'單次股利 2 萬元以上，扣 2.11%。', en:'2.11% withheld on any single dividend of NT$20,000 or more.', fr:'2,11 % prélevés sur tout dividende unique d’au moins 20 000 TWD.'}],
+    [{zh:'海外所得', en:'Overseas income', fr:'Revenus étrangers'}, {zh:'海外所得（含複委託股利、價差）全年合計超過 100 萬元要計入基本所得額；美股股利通常先被預扣 30%。', en:'Overseas income (including sub-brokerage dividends and gains) above NT$1 million a year enters the alternative minimum tax base; US dividends usually suffer 30% withholding first.', fr:'Les revenus étrangers (dividendes et plus-values via sous-courtage) au-delà d’un million de TWD par an entrent dans l’impôt minimum alternatif ; les dividendes américains subissent d’abord 30 % de retenue.'}],
+    [{zh:'勞退自提', en:'Voluntary pension contribution', fr:'Cotisation retraite volontaire'}, {zh:'自願提繳最多月薪 6%，可從當年綜合所得中扣除，並可選擇自主投資標的。', en:'Contribute up to 6% of salary voluntarily; it is deducted from taxable income, and you can opt to choose the investments yourself.', fr:'Cotisation volontaire jusqu’à 6 % du salaire, déductible du revenu imposable, avec possibilité de choisir soi-même les placements.'}],
+    ]},
+  { type:'h3', t:{zh:'法國', en:'France', fr:'France'} },
+  { type:'table', head:[{zh:'帳戶', en:'Account', fr:'Enveloppe'},{zh:'重點', en:'Key points', fr:'Points clés'}],
+    rows:[
+    ['Livret A / LDDS', {zh:'政府規定利率、免稅、隨時可領。上限：Livret A 22,950 歐元，LDDS 12,000 歐元。適合放緊急預備金。', en:'Regulated rate, tax-free, instant access. Caps: €22,950 for the Livret A, €12,000 for the LDDS. Ideal for the emergency fund.', fr:'Taux réglementé, exonéré, disponible à tout moment. Plafonds : 22 950 € (Livret A), 12 000 € (LDDS). Idéal pour l’épargne de précaution.'}],
+    ['PEA (Plan d’épargne en actions)', {zh:'投資歐洲股票與符合資格的 ETF（包括部分追蹤全球指數的合成 ETF）。存入上限 15 萬歐元。滿五年後提領，獲利免所得稅，只繳社會捐。', en:'Holds European shares and eligible ETFs (including some synthetic world-index ETFs). Deposit cap €150,000. After five years, gains are free of income tax and only social charges apply.', fr:'Actions européennes et ETF éligibles (dont certains ETF monde synthétiques). Plafond de versements : 150 000 €. Après cinq ans, gains exonérés d’impôt sur le revenu, seuls les prélèvements sociaux s’appliquent.'}],
+    ['Assurance-vie', {zh:'可投資保本歐元基金（fonds euros）與各種單位帳戶（ETF、基金）。滿八年後，每年獲利免稅額：單身 4,600 歐元、夫妻 9,200 歐元。也是重要的遺產規劃工具。', en:'Holds the capital-guaranteed fonds euros and unit-linked funds (ETFs, funds). After eight years, an annual gain allowance of €4,600 (single) or €9,200 (couple). Also a key estate-planning tool.', fr:'Fonds euros garanti et unités de compte (ETF, fonds). Après huit ans, abattement annuel sur les gains de 4 600 € (personne seule) ou 9 200 € (couple). Outil majeur de transmission.'}],
+    ['PER (Plan d’épargne retraite)', {zh:'存入金額可在額度內從應稅所得扣除，原則上鎖到退休（購買主要住宅等例外可提前領）。邊際稅率越高越划算。', en:'Contributions are deductible from taxable income within limits; locked until retirement in principle (with exceptions such as buying a main home). Worth more the higher your marginal rate.', fr:'Versements déductibles du revenu imposable dans certaines limites ; bloqués jusqu’à la retraite en principe (sauf exceptions comme l’achat de la résidence principale). D’autant plus intéressant que la tranche marginale est élevée.'}],
+    ['Compte-titres ordinaire (CTO)', {zh:'沒有投資範圍與金額限制，可買全球股票、ETF、債券。股利與資本利得適用單一稅率（PFU，即 flat tax，約 30%，包括所得稅 12.8% 與社會捐）。', en:'No limits on what or how much: global stocks, ETFs, bonds. Dividends and gains bear the flat tax (PFU, about 30%: 12.8% income tax plus social charges).', fr:'Aucune limite de supports ni de montants : actions monde, ETF, obligations. Dividendes et plus-values soumis au PFU (« flat tax », environ 30 % : 12,8 % d’impôt plus prélèvements sociaux).'}],
+    ]},
+  { type:'note', p:{zh:'法國的社會捐率在 2026 年起對部分資本所得有所調高，PFU 實際稅率因此可能略高於 30%；Livret A 利率也會定期調整。請以 impots.gouv.fr 與 service-public.fr 的最新公告為準。', en:'France raised social charges on some capital income from 2026, so the effective PFU may be slightly above 30%, and the Livret A rate is revised periodically. Rely on the latest notices on impots.gouv.fr and service-public.fr.', fr:'Les prélèvements sociaux sur certains revenus du capital ont augmenté à partir de 2026 : le PFU effectif peut donc dépasser légèrement 30 %, et le taux du Livret A est révisé régulièrement. Référez-vous aux dernières informations d’impots.gouv.fr et de service-public.fr.'} },
+  { type:'h3', t:{zh:'在法國的常見順序', en:'A common order in France', fr:'Un ordre courant en France'} },
+  { type:'steps', items:[
+    { t:{zh:'Livret A／LDDS 放緊急預備金', en:'Livret A / LDDS for the emergency fund', fr:'Livret A / LDDS pour l’épargne de précaution'}, p:{zh:'免稅且隨時可領。', en:'Tax-free and instantly available.', fr:'Exonéré et disponible.'} },
+    { t:{zh:'儘早開 PEA，先「占日期」', en:'Open a PEA early to start the clock', fr:'Ouvrir un PEA tôt pour prendre date'}, p:{zh:'五年期限從開戶日起算，即使先只存小額也值得。', en:'The five-year clock starts at opening, so it is worth it even with a small first deposit.', fr:'Le délai de cinq ans court dès l’ouverture : utile même avec un petit versement.'} },
+    { t:{zh:'開 assurance-vie，同樣先占日期', en:'Open an assurance-vie, again to start the clock', fr:'Ouvrir une assurance-vie, là aussi pour prendre date'}, p:{zh:'選擇管理費低、提供 ETF 的網路合約。', en:'Choose a low-fee online contract that offers ETFs.', fr:'Choisir un contrat en ligne à frais réduits proposant des ETF.'} },
+    { t:{zh:'超出額度再用 CTO 或 PER', en:'Then a CTO or PER beyond the caps', fr:'Puis CTO ou PER au-delà des plafonds'}, p:{zh:'依稅率與退休規劃決定。', en:'Depending on your tax bracket and retirement plans.', fr:'Selon votre tranche d’imposition et vos projets de retraite.'} },
+  ]},
+]},
+
+/* ── 10. Glossary ── */
+{ id:'glossary', i:'fa-book', c:'#94a3b8',
+  nav:{zh:'名詞表', en:'Glossary', fr:'Glossaire'},
+  eyebrow:{zh:'附錄', en:'Appendix', fr:'Annexe'},
+  h2:{zh:'投資名詞對照', en:'Investment terms', fr:'Lexique de l’investissement'},
+  blocks:[
+  { type:'table', head:[{zh:'中文', en:'Chinese', fr:'Chinois'},'English','Français',{zh:'意思', en:'Meaning', fr:'Sens'}],
+    rows:[
+    ['淨值', 'Net asset value (NAV)', 'Valeur liquidative', {zh:'基金每單位的價值', en:'Value of one fund unit', fr:'Valeur d’une part de fonds'}],
+    ['殖利率', 'Yield', 'Rendement', {zh:'配息占價格的比例', en:'Income as a share of price', fr:'Revenu rapporté au prix'}],
+    ['除息／填息', 'Ex-dividend / price recovery', 'Détachement / reconstitution', {zh:'配息日股價扣掉股利，之後回到原價稱填息', en:'The price drops by the dividend on the ex-date; regaining it is "filling"', fr:'Le cours baisse du dividende au détachement ; le regagner, c’est le « reconstituer »'}],
+    ['波動率', 'Volatility', 'Volatilité', {zh:'報酬的標準差，衡量漲跌幅度', en:'Standard deviation of returns', fr:'Écart-type des rendements'}],
+    ['最大回撤', 'Maximum drawdown', 'Perte maximale', {zh:'從高點到低點的最大跌幅', en:'Largest fall from peak to trough', fr:'Plus forte baisse d’un sommet à un creux'}],
+    ['夏普比率', 'Sharpe ratio', 'Ratio de Sharpe', {zh:'每承擔一單位風險得到的超額報酬', en:'Excess return per unit of risk', fr:'Rendement excédentaire par unité de risque'}],
+    ['相關係數', 'Correlation', 'Corrélation', {zh:'兩項資產同漲同跌的程度，−1 到 1', en:'How two assets move together, from −1 to 1', fr:'Co-mouvement de deux actifs, de −1 à 1'}],
+    ['存續期間', 'Duration', 'Duration / sensibilité', {zh:'債券價格對利率的敏感度', en:'Bond price sensitivity to rates', fr:'Sensibilité du prix aux taux'}],
+    ['市值加權', 'Market-cap weighting', 'Pondération par capitalisation', {zh:'依公司市值決定在指數中的比重', en:'Weighting by company market value', fr:'Poids selon la valeur boursière'}],
+    ['年化報酬率', 'Annualised return (CAGR)', 'Rendement annualisé', {zh:'把多年報酬換算成平均每年的複利報酬', en:'Multi-year return expressed as a compound yearly rate', fr:'Rendement pluriannuel exprimé en taux annuel composé'}],
+    ['空頭／多頭', 'Bear / bull market', 'Marché baissier / haussier', {zh:'空頭通常指從高點下跌 20% 以上', en:'A bear market usually means a 20%+ fall from the peak', fr:'Marché baissier : en général une baisse de plus de 20 %'}],
+    ['停損', 'Stop-loss', 'Stop-loss', {zh:'跌到預設價位就賣出的機制', en:'Selling automatically at a preset price', fr:'Vente automatique à un prix prédéfini'}],
+    ['內部報酬率', 'Internal rate of return (IRR)', 'TRI', {zh:'考量每筆現金流時間的真實年報酬', en:'True yearly return accounting for cash-flow timing', fr:'Rendement réel tenant compte du calendrier des flux'}],
+    ]},
+]},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   UI strings
+   ═══════════════════════════════════════════════════════════ */
+const I18N = {
+zh:{
+ 'doc.title':'投資理財 | 觀念、工具與資產配置',
+ 'hdr.badge':'投資理財入門','hdr.title':'投資理財：觀念、工具與資產配置',
+ 'intro':'投資理財不是預測明天的股價，而是一套讓錢長期穩定成長的系統：先打好收支、緊急預備金與保險的地基，再用低成本、分散的工具，依照自己能承擔的風險配置資產，最後靠紀律與時間讓複利發揮作用。',
+ 'intro2':'這一卷依學習順序排列：先講複利、通膨與風險，接著是開始投資前的理財順序，然後介紹各種資產、基金與 ETF、資產配置與再平衡、常見策略、財報與估值，再談行為偏誤與詐騙，最後整理台灣與法國的帳戶與稅務，並附三語名詞表。圖表中的每條曲線與數字都依公式實際計算。',
+ 'footer':'投資理財入門參考，內容僅供教育用途，不構成任何投資建議或特定商品推薦。過去績效不代表未來報酬，投資有虧損本金的風險。稅制、利率與存入上限可能每年調整，請以財政部、金管會、impots.gouv.fr、service-public.fr 等官方資訊為準。'
+},
+en:{
+ 'doc.title':'Investing: Concepts, Products & Allocation',
+ 'hdr.badge':'INVESTING PRIMER','hdr.title':'Personal investing: concepts, products and allocation',
+ 'intro':'Investing is not about predicting tomorrow’s prices. It is a system for growing money steadily over the long run: first a base of budgeting, an emergency fund and insurance, then low-cost diversified products allocated to the risk you can bear, and finally discipline and time so that compounding can do its work.',
+ 'intro2':'This volume follows the order you learn in: compounding, inflation and risk; the steps to take before investing; the asset classes, funds and ETFs; allocation and rebalancing; common strategies; financial statements and valuation; behavioural biases and fraud; and finally accounts and tax in Taiwan and France, with a trilingual glossary. Every curve and figure in the charts is computed from its formula.',
+ 'footer':'An introductory reference for educational purposes only; nothing here is investment advice or a recommendation of any product. Past performance does not predict future returns, and investing can lose capital. Tax rules, rates and caps change from year to year: rely on official sources such as Taiwan’s Ministry of Finance and FSC, impots.gouv.fr and service-public.fr.'
+},
+fr:{
+ 'doc.title':'Investir : notions, supports et allocation',
+ 'hdr.badge':'INITIATION À L’INVESTISSEMENT','hdr.title':'Investir : notions, supports et allocation d’actifs',
+ 'intro':'Investir ne consiste pas à prédire les cours de demain, mais à mettre en place un système qui fait croître l’argent régulièrement sur le long terme : d’abord une base faite de budget, d’épargne de précaution et d’assurances, puis des supports diversifiés et peu coûteux, répartis selon le risque que l’on peut supporter, et enfin de la discipline et du temps pour laisser agir les intérêts composés.',
+ 'intro2':'Ce volume suit l’ordre d’apprentissage : intérêts composés, inflation et risque ; les étapes préalables ; les classes d’actifs, fonds et ETF ; l’allocation et le rééquilibrage ; les stratégies courantes ; états financiers et valorisation ; biais comportementaux et escroqueries ; enfin comptes et fiscalité à Taïwan et en France, avec un glossaire trilingue. Chaque courbe et chaque chiffre des graphiques est calculé à partir de sa formule.',
+ 'footer':'Référence d’initiation à but uniquement pédagogique ; rien ici ne constitue un conseil en investissement ni une recommandation de produit. Les performances passées ne préjugent pas des performances futures, et tout investissement comporte un risque de perte en capital. Fiscalité, taux et plafonds évoluent chaque année : référez-vous aux sources officielles (ministère des Finances et FSC de Taïwan, impots.gouv.fr, service-public.fr).'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Rendering
+   ═══════════════════════════════════════════════════════════ */
+const COLS = { 2:'grid md:grid-cols-2 gap-4', 3:'grid md:grid-cols-2 lg:grid-cols-3 gap-4', 4:'grid sm:grid-cols-2 lg:grid-cols-4 gap-4' };
+function kbdify(s){ return s.split(' / ').map(p => `<kbd>${p}</kbd>`).join(' / '); }
+
+const BLOCK = {
+  lead: (b) => `<p class="text-slate-300 leading-relaxed max-w-4xl">${t(b.p)}</p>`,
+  h3:   (b) => `<h3 class="text-base font-black text-white pt-2">${t(b.t)}</h3>`,
+  note: (b, s) => `<p class="text-sm text-slate-300 leading-relaxed rounded-2xl p-4 border" style="background:${s.c}0f;border-color:${s.c}40"><i class="fa-solid fa-lightbulb mr-2" style="color:${s.c}"></i>${t(b.p)}</p>`,
+  dia:  (b) => { const h = DIA[b.k](); return h.startsWith('<svg') ? `<div class="dia-box reveal">${h}</div>` : h; },
+  cards:(b, s) => `<div class="${COLS[b.cols || 3]}">` + b.items.map((c, n) => `
+    <article class="reveal bg-slate-900/40 rounded-2xl border border-slate-800 p-5 hover:border-slate-600 transition-colors" data-i="${n % 6}">
+      <div class="flex items-start gap-3">
+        <div class="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center border" style="color:${s.c};background:${s.c}14;border-color:${s.c}33"><i class="fa-solid ${c.i} text-sm"></i></div>
+        <div class="min-w-0">
+          <h4 class="font-black text-white text-sm leading-snug">${t(c.t)}</h4>
+          ${c.tag ? `<p class="text-[11px] font-bold mt-1" style="color:${s.c}">${t(c.tag)}</p>` : ''}
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed mt-3">${t(c.p)}</p>
+      ${c.l ? `<ul class="mt-3 space-y-1.5">${c.l.map(x => `<li class="text-xs text-slate-300 leading-relaxed flex gap-2"><span style="color:${s.c}">▸</span><span>${t(x)}</span></li>`).join('')}</ul>` : ''}
+    </article>`).join('') + `</div>`,
+  steps:(b, s) => `<ol class="grid md:grid-cols-2 gap-4">` + b.items.map((c, n) => `
+    <li class="reveal flex gap-4 bg-slate-900/40 rounded-2xl border border-slate-800 p-5" data-i="${n % 6}">
+      <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border" style="color:${s.c};background:${s.c}14;border-color:${s.c}55">${n + 1}</div>
+      <div><h4 class="font-black text-white text-sm">${t(c.t)}</h4><p class="text-sm text-slate-400 leading-relaxed mt-1.5">${t(c.p)}</p></div>
+    </li>`).join('') + `</ol>`,
+  table:(b) => `<div class="table-scroll overflow-x-auto"><table class="w-full text-sm min-w-[640px]">
+    <thead><tr class="text-left text-slate-400 border-b border-slate-800">${b.head.map(h => `<th class="py-3 px-4 font-bold">${t(h)}</th>`).join('')}</tr></thead>
+    <tbody class="divide-y divide-slate-800/60">${b.rows.map(r => `<tr>${r.map((c, i) => `<td class="py-3 px-4 align-top ${i ? 'text-slate-300' : 'text-white font-bold'}">${b.kbd && i ? kbdify(t(c)) : t(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`,
+};
+
+function renderSections() {
+  document.getElementById('nav').innerHTML = SECTIONS.map(s =>
+    `<a href="#${s.id}" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors">${t(s.nav)}</a>`).join('');
+  document.getElementById('sections').innerHTML = SECTIONS.map(s => `
+  <section id="${s.id}" class="scroll-mt-28">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 rounded-2xl border" style="color:${s.c};background:${s.c}1a;border-color:${s.c}40;box-shadow:0 0 20px ${s.c}33"><i class="fa-solid ${s.i} text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider font-bold" style="color:${s.c}">${t(s.eyebrow)}</span>
+        <h2 class="text-2xl font-black text-white">${t(s.h2)}</h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      ${s.blocks.map(b => BLOCK[b.type](b, s)).join('')}
+    </div>
+  </section>`).join('');
+}
+
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach(e => revealObserver.observe(e));
+}
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-amber-500/15 text-amber-300 border border-amber-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderSections();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>
