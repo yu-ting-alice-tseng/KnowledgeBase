@@ -752,7 +752,7 @@ body.edit-mode .glass-card:hover { transform: none !important; }
   display: none; position: fixed; inset: 0; z-index: 100;
   background: var(--bg); animation: slide-up 0.42s cubic-bezier(0.4,0,0.2,1);
 }
-#module-viewer.from-book { animation: viewer-fade 0.34s ease-out; }
+#module-viewer.from-book { animation: viewer-fade 0.36s cubic-bezier(0.4,0,0.6,1); }
 @keyframes viewer-fade { from{opacity:0;} to{opacity:1;} }
 #viewer-bar {
   --va: 201,168,92;           /* 依模組主色調整（JS 設定） */
@@ -1571,53 +1571,57 @@ function clearBook() {
 function playBookOpen(cardEl, onDissolve) {
   const b = buildBook(cardEl);
   /* settle into a slight three-quarter view: dead-on reads flat */
-  const mid  = `translate(${b.tx}px,${b.ty}px) scale(${b.scale}) rotateY(7deg) rotateX(-3deg)`;
-  const near = `translate(${b.tx}px,${b.ty}px) scale(${b.scale * 1.5}) rotateY(7deg) rotateX(-3deg)`;
+  const tilt = 'rotateY(7deg) rotateX(-3deg)';
+  const at   = k => `translate(${b.tx}px,${b.ty}px) scale(${b.scale * k}) ${tilt}`;
+
+  /* Timing. The hand-off to the document starts while the cover is still
+     settling, so the motion never comes to rest before the page appears;
+     waiting for every animation to finish first is what made it stall. */
+  const LIFT = 560, FLIP = 520, FLIP_AT = 40, LEAF = 400, LEAF_AT = 150;
+  const HANDOFF = 420, DISSOLVE = 360;
 
   b.veil.animate([{ opacity: 0 }, { opacity: 1 }],
-    { duration: 460, easing: 'ease-out', fill: 'forwards' });
+    { duration: 380, easing: 'ease-out', fill: 'forwards' });
   b.halo.animate([{ opacity: 0, transform: 'scale(0.72)' }, { opacity: 1, transform: 'scale(1)' }],
-    { duration: 660, delay: 50, easing: EASE_LIFT, fill: 'forwards' });
+    { duration: 520, delay: 30, easing: EASE_LIFT, fill: 'forwards' });
 
-  /* One continuous lift for the whole opening: the book keeps drifting
-     while the cover swings, so there is never a frame where it sits still. */
-  const lift = b.bk.animate([
-      { transform: 'translate(0,0) scale(1) rotateY(0deg) rotateX(0deg)', offset: 0 },
-      { transform: mid, offset: 0.62 },
-      { transform: `translate(${b.tx}px,${b.ty}px) scale(${b.scale * 1.04}) rotateY(7deg) rotateX(-3deg)`, offset: 1 },
-    ], { duration: 700, easing: EASE_LIFT, fill: 'forwards' });
+  /* One continuous lift: the book keeps drifting while the cover swings */
+  b.bk.animate([
+      { transform: `translate(0,0) scale(1) rotateY(0deg) rotateX(0deg)`, offset: 0 },
+      { transform: at(1), offset: 0.62 },
+      { transform: at(1.04), offset: 1 },
+    ], { duration: LIFT, easing: EASE_LIFT, fill: 'forwards' });
 
   /* the modern card acquires its patina on the way up */
   b.patina.animate([{ opacity: 0 }, { opacity: 1 }],
-    { duration: 480, delay: 30, easing: 'ease-out', fill: 'forwards' });
+    { duration: 380, delay: 20, easing: 'ease-out', fill: 'forwards' });
 
   /* the cover: heavy at the start, opens past flat, settles */
-  const flip = b.cover.animate([
+  b.cover.animate([
       { transform: 'translateZ(2px) rotateY(0deg)', offset: 0 },
       { transform: `translateZ(2px) rotateY(${OPEN_DEG - 5}deg)`, offset: 0.88 },
       { transform: `translateZ(2px) rotateY(${OPEN_DEG}deg)`, offset: 1 },
-    ], { duration: 620, delay: 90, easing: EASE_BOARD, fill: 'forwards' });
+    ], { duration: FLIP, delay: FLIP_AT, easing: EASE_BOARD, fill: 'forwards' });
 
   b.bk.querySelector('.bk-glow').animate([{ opacity: 0 }, { opacity: 1 }],
-    { duration: 460, delay: 220, easing: 'ease-out', fill: 'forwards' });
+    { duration: 360, delay: 150, easing: 'ease-out', fill: 'forwards' });
 
   /* one leaf follows the cover over, so the block reads as paper */
-  const leaf = b.leaf.animate([
+  b.leaf.animate([
       { transform: 'translateZ(1px) rotateY(0deg)', opacity: 1, offset: 0 },
       { transform: 'translateZ(1px) rotateY(-150deg)', opacity: 1, offset: 0.82 },
       { transform: `translateZ(1px) rotateY(${OPEN_DEG}deg)`, opacity: 0, offset: 1 },
-    ], { duration: 470, delay: 280, easing: EASE_BOARD, fill: 'forwards' });
+    ], { duration: LEAF, delay: LEAF_AT, easing: EASE_BOARD, fill: 'forwards' });
 
-  /* Hand off by drifting toward the page rather than rushing at it, and
-     let the caller raise the document underneath at the same moment , 
-     otherwise the book dissolves back to the shelf and the viewer snaps
-     in afterwards, which is the seam this whole sequence exists to hide. */
-  return Promise.all([lift.finished, flip.finished, leaf.finished])
-    .then(() => { if (onDissolve) onDissolve(); })
-    .then(() => b.bk.animate(
-      [{ transform: mid, opacity: 1 }, { transform: near, opacity: 0 }],
-      { duration: 380, easing: 'cubic-bezier(0.32,0,0.30,1)', fill: 'forwards' }).finished)
-    .catch(() => {});
+  /* Drift toward the page and raise the document underneath at the same
+     moment, so the two cross-fade. It starts from exactly where the lift
+     is heading, so there is no jump backwards at the seam. */
+  const dissolve = b.bk.animate(
+    [{ transform: at(1.04), opacity: 1 }, { transform: at(1.5), opacity: 0 }],
+    { duration: DISSOLVE, delay: HANDOFF, easing: 'cubic-bezier(0.4,0,0.6,1)', fill: 'forwards' });
+  setTimeout(() => { if (onDissolve) onDissolve(); }, HANDOFF);
+
+  return dissolve.finished.catch(() => {});
 }
 
 function playBookClose(cardEl) {
@@ -1634,18 +1638,18 @@ function playBookClose(cardEl) {
       { transform: near, opacity: 0, offset: 0 },
       { transform: mid, opacity: 1, offset: 0.30 },
       { transform: 'translate(0,0) scale(1) rotateY(0deg) rotateX(0deg)', opacity: 1, offset: 1 },
-    ], { duration: 600, easing: 'cubic-bezier(0.36,0,0.24,1)', fill: 'forwards' });
+    ], { duration: 500, easing: 'cubic-bezier(0.36,0,0.24,1)', fill: 'forwards' });
 
   const shut = b.cover.animate(
     [{ transform: `translateZ(2px) rotateY(${OPEN_DEG}deg)` }, { transform: 'translateZ(2px) rotateY(0deg)' }],
-    { duration: 470, delay: 110, easing: 'cubic-bezier(0.42,0,0.22,1)', fill: 'forwards' });
+    { duration: 400, delay: 80, easing: 'cubic-bezier(0.42,0,0.22,1)', fill: 'forwards' });
 
   b.patina.animate([{ opacity: 1 }, { opacity: 0 }],
-    { duration: 320, delay: 340, easing: 'ease-in', fill: 'forwards' });
+    { duration: 280, delay: 260, easing: 'ease-in', fill: 'forwards' });
   b.veil.animate([{ opacity: 1 }, { opacity: 0 }],
-    { duration: 560, delay: 120, easing: 'ease-in', fill: 'forwards' });
+    { duration: 460, delay: 80, easing: 'ease-in', fill: 'forwards' });
   b.halo.animate([{ opacity: 1 }, { opacity: 0 }],
-    { duration: 460, delay: 100, easing: 'ease-in', fill: 'forwards' });
+    { duration: 380, delay: 80, easing: 'ease-in', fill: 'forwards' });
 
   return Promise.all([settle.finished, shut.finished]).catch(() => {});
 }
