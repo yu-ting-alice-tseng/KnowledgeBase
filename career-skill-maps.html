@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>職業技能心智圖</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Serif+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0907;
+  --panel: #12100c;
+  --panel2: #18150f;
+  --line: rgba(148,163,184,0.16);
+  --text: #e7e2d6;
+  --muted: #9a9384;
+  --faint: #6b6558;
+  --gold: #e3c27a;
+  --accent: #38bdf8;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(56,189,248,0.07) 0px, transparent 45%),
+    radial-gradient(at 100% 0%, rgba(227,194,122,0.07) 0px, transparent 45%);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: 'Nunito', 'Noto Serif TC', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+
+/* Header */
+header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10,9,7,0.88); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 16px;
+}
+.hdr { max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  background: linear-gradient(145deg, rgba(56,189,248,0.18), rgba(227,194,122,0.12));
+  border: 1px solid rgba(227,194,122,0.28); color: var(--gold); font-size: 18px; }
+.brand .badge { font-size: 9px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.brand h1 { font-family: 'Noto Serif TC', serif; font-size: 21px; font-weight: 700; letter-spacing: .01em; }
+.hdr-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.back { font-size: 12px; font-weight: 700; color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); }
+.back:hover { color: var(--text); border-color: rgba(227,194,122,0.4); }
+.langs { display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: #15130f; border: 1px solid var(--line); }
+.langs button { font: 700 12px Nunito, sans-serif; color: var(--muted); background: none; border: 1px solid transparent; padding: 4px 10px; border-radius: 7px; cursor: pointer; }
+.langs button.on { color: var(--gold); background: rgba(227,194,122,0.12); border-color: rgba(227,194,122,0.3); }
+
+main { max-width: 1240px; margin: 0 auto; padding: 32px 16px 80px; }
+.intro { color: #c9c3b5; line-height: 1.85; max-width: 860px; font-size: 15px; }
+.intro b { color: var(--gold); font-weight: 700; }
+
+/* Career picker */
+.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin: 28px 0 26px; }
+.pick { display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer;
+  padding: 11px 12px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line);
+  color: var(--muted); font: 700 13px/1.3 Nunito, 'Noto Serif TC', sans-serif; transition: border-color .2s, color .2s, background .2s; }
+.pick i { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; font-size: 13px; flex-shrink: 0;
+  background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--c); }
+.pick:hover { color: var(--text); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+.pick.on { color: var(--text); background: color-mix(in srgb, var(--c) 9%, var(--panel)); border-color: color-mix(in srgb, var(--c) 60%, transparent); }
+
+/* Career head */
+.chead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.chead h2 { font-family: 'Noto Serif TC', serif; font-size: clamp(24px, 3.4vw, 34px); font-weight: 700; }
+.chead h2 small { display: block; font-family: Nunito, sans-serif; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--c); margin-bottom: 4px; }
+.chead p { color: var(--muted); max-width: 720px; line-height: 1.7; margin-top: 8px; font-size: 14.5px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.lg-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+.lg-ring { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--muted); }
+.lg-chip { padding: 1px 7px; border-radius: 6px; border: 1px solid var(--muted); font-size: 11px; }
+
+/* Mind map */
+.mapbox { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; overflow-y: hidden; }
+.mapbox::-webkit-scrollbar { height: 8px; }
+.mapbox::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+#map { display: block; width: 100%; min-width: 960px; height: auto; }
+#map text { font-family: Nunito, 'Noto Serif TC', sans-serif; }
+#map .leaf-t { font-size: 13.5px; fill: #ddd7ca; }
+#map .br-t { font-size: 15px; font-weight: 800; }
+#map .ctr-t { font-size: 19px; font-weight: 900; fill: #0a0907; font-family: 'Noto Serif TC', serif; }
+#map .branch { cursor: pointer; transition: opacity .25s; }
+#map.dim .branch { opacity: .22; }
+#map.dim .branch.hot { opacity: 1; }
+.hint { font-size: 12px; color: var(--faint); margin-top: 8px; }
+.hint .mob { display: none; }
+@media (max-width: 980px) { .hint .mob { display: inline; } }
+
+/* Branch cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin-top: 26px; }
+@media (max-width: 380px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--bc); border-radius: 14px; padding: 16px 18px; scroll-margin-top: 90px; transition: box-shadow .3s; }
+.card.flash { box-shadow: 0 0 0 2px var(--bc); }
+.card h3 { font-size: 16px; font-weight: 800; color: var(--bc); display: flex; align-items: center; gap: 8px; }
+.card h3 em { font-style: normal; font-size: 11px; color: var(--faint); font-weight: 700; }
+.card p { color: var(--muted); font-size: 13.5px; line-height: 1.7; margin: 6px 0 10px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12.5px; padding: 3px 9px; border-radius: 999px; background: #1b1812; border: 1px solid transparent; color: #d6d0c2; display: inline-flex; align-items: center; gap: 6px; }
+.tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--bc); flex-shrink: 0; }
+.tag.l2::before { background: transparent; box-shadow: inset 0 0 0 1.5px var(--bc); }
+.tag.tool { border-radius: 6px; border-color: color-mix(in srgb, var(--bc) 45%, transparent); background: color-mix(in srgb, var(--bc) 8%, #14120e); }
+
+/* Roadmap */
+.sec-title { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; margin: 38px 0 14px; display: flex; align-items: center; gap: 10px; }
+.sec-title i { color: var(--gold); font-size: 16px; }
+.road { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 760px) { .road { grid-template-columns: 1fr; } }
+.stage { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; position: relative; }
+.stage .n { font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; color: var(--c); }
+.stage h4 { font-size: 15.5px; font-weight: 800; margin: 4px 0 8px; }
+.stage p { color: var(--muted); font-size: 13.5px; line-height: 1.75; }
+.proj { margin-top: 14px; background: color-mix(in srgb, var(--c) 7%, var(--panel)); border: 1px dashed color-mix(in srgb, var(--c) 45%, transparent); border-radius: 14px; padding: 14px 18px; font-size: 14px; line-height: 1.75; color: #d6d0c2; }
+.proj b { color: var(--c); }
+
+/* Matrix */
+.mx-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+table.mx { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13px; }
+.mx th, .mx td { padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--line); }
+.mx thead th { color: var(--muted); font-weight: 800; font-size: 12px; vertical-align: bottom; }
+.mx thead th i { display: block; font-size: 14px; margin-bottom: 4px; }
+.mx tbody th { text-align: left; font-weight: 700; color: #d6d0c2; white-space: nowrap; padding-left: 16px; }
+.mx tr:last-child th, .mx tr:last-child td { border-bottom: none; }
+.mx td span { display: inline-block; width: 26px; height: 26px; border-radius: 7px; line-height: 26px; font-weight: 900; font-size: 11px; }
+.mx .v0 { background: transparent; color: var(--faint); }
+.mx .v1 { background: rgba(56,189,248,0.12); color: #7dd3fc; }
+.mx .v2 { background: rgba(56,189,248,0.30); color: #e0f2fe; }
+.mx .v3 { background: rgba(227,194,122,0.85); color: #1a1408; }
+.mx-leg { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--muted); margin-top: 10px; }
+.mx-leg span { display: inline-flex; align-items: center; gap: 6px; }
+.mx-leg i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12px; color: var(--faint); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div class="brand">
+      <div class="ico"><i class="fa-solid fa-diagram-project"></i></div>
+      <div>
+        <div class="badge" data-i18n="badge"></div>
+        <h1 data-i18n="title"></h1>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <a class="back" href="index.html" target="_top" data-i18n="back"></a>
+      <div class="langs">
+        <button id="lang-zh" onclick="setLanguage('zh')">繁中</button>
+        <button id="lang-en" onclick="setLanguage('en')">EN</button>
+        <button id="lang-fr" onclick="setLanguage('fr')">FR</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <p class="intro" data-i18n="intro"></p>
+
+  <div class="picker" id="picker"></div>
+
+  <section id="career"></section>
+
+  <h2 class="sec-title"><i class="fa-solid fa-table-cells"></i><span data-i18n="mxTitle"></span></h2>
+  <p class="intro" style="font-size:14px;margin-bottom:14px" data-i18n="mxIntro"></p>
+  <div class="mx-wrap"><table class="mx" id="matrix"></table></div>
+  <div class="mx-leg" id="mxleg"></div>
+
+  <footer data-i18n="footer"></footer>
+</main>
+
+<script>
+const L = (zh, en, fr) => ({ zh, en, fr });
+let LANG = 'zh';
+const t = o => o == null ? '' : (typeof o === 'string' ? o : (o[LANG] || o.en || o.zh || ''));
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/* ─── Interface text ─── */
+const UI = {
+  badge: L('Career Skill Maps', 'Career Skill Maps', 'Cartes des compétences'),
+  title: L('職業技能心智圖', 'Career Skill Maps', 'Cartes des compétences métier'),
+  back: L('← 返回知識書庫', '← Back to the library', '← Retour à la bibliothèque'),
+  intro: L(
+    '八個常見職業，每個都畫成一張心智圖：中間是職業，六條分支是<b>應該掌握的能力類別</b>，末端是具體的<b>技能與工具</b>。實心圓點是入門必備，空心圓圈是進階加分；方框標籤是軟體或工具，其餘是觀念與能力。每張圖下方有逐項說明、三階段學習路線，以及一個可以放進作品集的練習專案。',
+    'Eight common careers, each drawn as a mind map: the job sits in the middle, six branches are the <b>areas of ability you need</b>, and the tips are the concrete <b>skills and tools</b>. A filled dot is a must-have for beginners, a hollow ring is an advanced plus; boxed labels are software or tools, the rest are concepts and abilities. Under each map you will find the branches explained, a three-stage learning path, and a practice project for your portfolio.',
+    'Huit métiers courants, chacun sous forme de carte mentale : le métier au centre, six branches pour les <b>domaines de compétence à maîtriser</b>, et au bout les <b>savoir-faire et outils</b> concrets. Un point plein signale l\'indispensable du débutant, un cercle vide un atout avancé ; les étiquettes encadrées sont des logiciels ou outils, le reste des notions et aptitudes. Sous chaque carte : le détail des branches, un parcours en trois étapes et un projet d\'entraînement pour votre portfolio.'),
+  legDot: L('入門必備', 'Must-have', 'Indispensable'),
+  legRing: L('進階加分', 'Advanced plus', 'Atout avancé'),
+  legChip: L('工具／軟體', 'Tool / software', 'Outil / logiciel'),
+  hint: L('點一條分支可以聚焦，並跳到下方的說明卡片；再點一次空白處取消。', 'Click a branch to focus it and jump to its card below; click empty space to clear.', 'Cliquez sur une branche pour la mettre en avant et aller à sa fiche ; cliquez dans le vide pour annuler.'),
+  hintMob: L('　手機上可以左右滑動心智圖。', '  On a phone, swipe the map sideways.', '  Sur mobile, faites glisser la carte latéralement.'),
+  road: L('學習路線', 'Learning path', 'Parcours d\'apprentissage'),
+  stages: [L('第一階段', 'Stage 1', 'Étape 1'), L('第二階段', 'Stage 2', 'Étape 2'), L('第三階段', 'Stage 3', 'Étape 3')],
+  stageNames: [L('打地基（約 0–3 個月）', 'Foundations (about 0–3 months)', 'Les bases (environ 0–3 mois)'),
+               L('做得出東西（約 3–6 個月）', 'Building things (about 3–6 months)', 'Produire (environ 3–6 mois)'),
+               L('準備求職（約 6–12 個月）', 'Getting hired (about 6–12 months)', 'Se faire recruter (environ 6–12 mois)')],
+  proj: L('作品集練習：', 'Portfolio project: ', 'Projet de portfolio : '),
+  items: L('項', 'items', 'éléments'),
+  mxTitle: L('跨職業共通技能', 'Skills shared across careers', 'Compétences communes aux métiers'),
+  mxIntro: L('同一項技能在不同職業裡的份量不同。這張表可以幫助你看出轉職時哪些能力可以直接帶走，哪些需要補強。',
+             'The same skill weighs differently from one job to the next. This table shows which abilities carry over when you switch careers and which need work.',
+             'Une même compétence ne pèse pas autant d\'un métier à l\'autre. Ce tableau montre ce qui se transfère lors d\'une reconversion et ce qu\'il faut renforcer.'),
+  mxLeg: [L('幾乎用不到', 'Rarely used', 'Peu utilisé'), L('偶爾用到', 'Occasional', 'Occasionnel'), L('經常用到', 'Frequent', 'Fréquent'), L('核心能力', 'Core', 'Essentiel')],
+  footer: L('內容依各職業常見的職缺要求與學習資源整理，實際要求會因公司、產業與地區而不同。工具名稱以業界通用的英文名稱標示。',
+            'Compiled from common job postings and learning resources for each role; actual requirements vary by company, industry and region. Tools are listed under their usual English names.',
+            'Synthèse des offres d\'emploi et ressources courantes pour chaque métier ; les exigences réelles varient selon l\'entreprise, le secteur et le pays. Les outils sont cités sous leur nom anglais usuel.'),
+};
+
+/* ─── Careers ───
+   Leaf: [label, kind, level]  kind: 's' skill/concept, 't' tool   level: 1 must-have, 2 advanced */
+const CAREERS = [
+{
+  id: 'da', icon: 'fa-chart-column', color: '#38bdf8',
+  name: L('數據分析師', 'Data Analyst', 'Data analyst'),
+  tag: L('把散落的資料整理成數字與圖表，回答「發生了什麼、為什麼」，協助團隊做決策。',
+         'Turns scattered data into numbers and charts that answer "what happened and why", so teams can decide.',
+         'Transforme des données éparses en chiffres et graphiques qui répondent à « que s\'est-il passé et pourquoi », pour aider les équipes à décider.'),
+  branches: [
+    { name: L('統計基礎', 'Statistics', 'Statistiques'), color: '#38bdf8',
+      desc: L('判斷差異是真的還是巧合，是分析結論站得住腳的前提。', 'Telling a real difference from chance is what makes a conclusion hold up.', 'Distinguer un vrai écart du hasard : c\'est ce qui rend une conclusion solide.'),
+      leaves: [[L('描述統計', 'Descriptive statistics', 'Statistique descriptive'),'s',1], [L('機率分布', 'Probability distributions', 'Lois de probabilité'),'s',1], [L('假設檢定', 'Hypothesis testing', 'Tests d\'hypothèse'),'s',2], [L('迴歸分析', 'Regression', 'Régression'),'s',2], [L('A/B 測試', 'A/B testing', 'Tests A/B'),'s',2]] },
+    { name: L('資料處理', 'Data wrangling', 'Préparation des données'), color: '#22d3ee',
+      desc: L('分析師大約一半的時間花在取資料與清資料，SQL 是第一優先。', 'About half an analyst\'s time goes into pulling and cleaning data; SQL comes first.', 'Environ la moitié du temps d\'un analyste passe à extraire et nettoyer les données ; SQL d\'abord.'),
+      leaves: [['SQL','t',1], ['Excel / Google Sheets','t',1], [L('資料清理', 'Data cleaning', 'Nettoyage des données'),'s',1], ['Python · pandas','t',2], [L('ETL 概念', 'ETL concepts', 'Notions d\'ETL'),'s',2]] },
+    { name: L('視覺化與報表', 'Visualisation', 'Visualisation'), color: '#a78bfa',
+      desc: L('用對的圖表讓人一眼看懂，並把常用報表做成自動更新的儀表板。', 'Pick the chart that reads at a glance, and turn recurring reports into self-updating dashboards.', 'Choisir le graphique lisible d\'un coup d\'œil et transformer les rapports récurrents en tableaux de bord automatiques.'),
+      leaves: [['Power BI','t',1], ['Tableau','t',1], ['Looker Studio','t',1], [L('圖表選擇', 'Choosing a chart', 'Choisir un graphique'),'s',1], [L('儀表板設計', 'Dashboard design', 'Conception de tableaux de bord'),'s',2]] },
+    { name: L('商業理解', 'Business sense', 'Sens des affaires'), color: '#34d399',
+      desc: L('知道公司靠什麼賺錢、哪些指標重要，才問得出有價值的問題。', 'Knowing how the company makes money and which metrics matter is what lets you ask useful questions.', 'Savoir comment l\'entreprise gagne de l\'argent et quels indicateurs comptent permet de poser les bonnes questions.'),
+      leaves: [[L('KPI 與指標定義', 'KPIs and metric definitions', 'KPI et définition des indicateurs'),'s',1], [L('漏斗分析', 'Funnel analysis', 'Analyse d\'entonnoir'),'s',1], [L('同期群與留存', 'Cohorts and retention', 'Cohortes et rétention'),'s',2], [L('產業知識', 'Industry knowledge', 'Connaissance du secteur'),'s',2]] },
+    { name: L('溝通與呈現', 'Communication', 'Communication'), color: '#fbbf24',
+      desc: L('分析的價值在於有人採取行動，所以要能把結論講清楚。', 'Analysis only matters if someone acts on it, so the conclusion has to land.', 'Une analyse ne vaut que si quelqu\'un agit : la conclusion doit être claire.'),
+      leaves: [[L('需求釐清', 'Scoping the question', 'Cadrer la demande'),'s',1], [L('資料敘事', 'Data storytelling', 'Storytelling de données'),'s',1], [L('簡報製作', 'Presentations', 'Présentations'),'s',1], [L('分析報告撰寫', 'Writing analysis reports', 'Rédaction de rapports'),'s',2]] },
+    { name: L('進階工具', 'Advanced tooling', 'Outils avancés'), color: '#f472b6',
+      desc: L('讓分析可重複、可追蹤，並能處理更大量的資料。', 'Makes analysis repeatable, traceable and able to handle larger data.', 'Rend l\'analyse reproductible, traçable et capable de traiter de gros volumes.'),
+      leaves: [['Jupyter','t',1], ['Git','t',2], ['BigQuery / Snowflake','t',2], ['dbt','t',2], [L('AI 輔助分析', 'AI-assisted analysis', 'Analyse assistée par IA'),'s',2]] },
+  ],
+  road: [
+    L('學 Excel 樞紐分析與 SQL（SELECT、JOIN、GROUP BY、子查詢），同時複習描述統計。', 'Learn Excel pivot tables and SQL (SELECT, JOIN, GROUP BY, subqueries) while revising descriptive statistics.', 'Apprendre les tableaux croisés Excel et SQL (SELECT, JOIN, GROUP BY, sous-requêtes) en révisant la statistique descriptive.'),
+    L('選一套 BI 工具（Power BI 或 Tableau）做出第一個儀表板，再學 Python pandas 處理較髒的資料。', 'Pick one BI tool (Power BI or Tableau) and build a first dashboard, then learn Python pandas for messier data.', 'Choisir un outil de BI (Power BI ou Tableau) et construire un premier tableau de bord, puis apprendre pandas pour les données plus sales.'),
+    L('補上 A/B 測試與漏斗、留存分析，完成兩到三個作品並寫成分析報告，可以考慮 Google Data Analytics 或 PL-300 證照。', 'Add A/B testing, funnel and retention analysis, finish two or three projects written up as reports; consider the Google Data Analytics or PL-300 certificate.', 'Ajouter tests A/B, entonnoirs et rétention, finir deux ou trois projets rédigés en rapports ; envisager le certificat Google Data Analytics ou PL-300.'),
+  ],
+  proj: L('拿一份公開的電商訂單資料，用 SQL 算出月營收、回購率與各品類貢獻，做成 Power BI 儀表板，最後寫一頁「三個發現與建議」。',
+          'Take a public e-commerce orders dataset, use SQL to compute monthly revenue, repeat-purchase rate and category share, build a Power BI dashboard, and finish with a one-page "three findings and recommendations".',
+          'Prendre un jeu de données public de commandes e-commerce, calculer en SQL le CA mensuel, le taux de réachat et la part par catégorie, en faire un tableau de bord Power BI, puis une page « trois constats et recommandations ».'),
+},
+{
+  id: 'ds', icon: 'fa-brain', color: '#a78bfa',
+  name: L('資料科學家', 'Data Scientist', 'Data scientist'),
+  tag: L('用統計與機器學習建立預測或分類模型，回答「接下來會怎樣、該怎麼做」。',
+         'Builds predictive and classification models with statistics and machine learning to answer "what happens next, and what should we do".',
+         'Construit des modèles de prédiction et de classification grâce aux statistiques et à l\'apprentissage automatique pour répondre à « que va-t-il se passer et que faire ».'),
+  branches: [
+    { name: L('數學基礎', 'Maths', 'Mathématiques'), color: '#a78bfa',
+      desc: L('看懂模型在做什麼、為什麼會失敗，需要這些數學。', 'You need this maths to understand what a model does and why it fails.', 'Ces mathématiques servent à comprendre ce que fait un modèle et pourquoi il échoue.'),
+      leaves: [[L('線性代數', 'Linear algebra', 'Algèbre linéaire'),'s',1], [L('機率與統計推論', 'Probability and inference', 'Probabilités et inférence'),'s',1], [L('微積分', 'Calculus', 'Analyse'),'s',2], [L('最佳化', 'Optimisation', 'Optimisation'),'s',2]] },
+    { name: L('機器學習', 'Machine learning', 'Apprentissage automatique'), color: '#818cf8',
+      desc: L('從線性模型與樹模型開始，學會正確評估，比追最新模型重要。', 'Start with linear and tree models; evaluating correctly matters more than chasing the newest model.', 'Commencer par les modèles linéaires et les arbres ; bien évaluer compte plus que suivre le dernier modèle.'),
+      leaves: [[L('監督式學習', 'Supervised learning', 'Apprentissage supervisé'),'s',1], [L('非監督式學習', 'Unsupervised learning', 'Apprentissage non supervisé'),'s',1], [L('特徵工程', 'Feature engineering', 'Ingénierie des variables'),'s',1], [L('模型評估與交叉驗證', 'Evaluation and cross-validation', 'Évaluation et validation croisée'),'s',1], [L('深度學習', 'Deep learning', 'Apprentissage profond'),'s',2]] },
+    { name: L('程式與套件', 'Code & libraries', 'Code & bibliothèques'), color: '#38bdf8',
+      desc: L('Python 是主流，搭配幾個核心套件就能完成大部分工作。', 'Python dominates; a handful of core libraries cover most of the work.', 'Python domine ; quelques bibliothèques de base couvrent l\'essentiel.'),
+      leaves: [['Python','t',1], ['pandas · NumPy','t',1], ['scikit-learn','t',1], ['PyTorch','t',2], ['R','t',2]] },
+    { name: L('資料與部署', 'Data & deployment', 'Données & déploiement'), color: '#22d3ee',
+      desc: L('模型要上線才有價值，需要懂資料來源與基本的部署方式。', 'A model only creates value in production, so you need data sources and basic deployment.', 'Un modèle ne crée de la valeur qu\'en production : il faut maîtriser les sources de données et le déploiement de base.'),
+      leaves: [['SQL','t',1], ['Git','t',1], ['Spark','t',2], ['Docker','t',2], ['MLflow','t',2], ['AWS / GCP / Azure','t',2]] },
+    { name: L('實驗與因果', 'Experiments & causality', 'Expériences & causalité'), color: '#34d399',
+      desc: L('相關不等於因果，產品決策常需要實驗與因果推論。', 'Correlation is not causation; product decisions often need experiments and causal inference.', 'Corrélation n\'est pas causalité : les décisions produit exigent souvent expériences et inférence causale.'),
+      leaves: [[L('A/B 測試設計', 'A/B test design', 'Conception de tests A/B'),'s',1], [L('時間序列預測', 'Time-series forecasting', 'Prévision de séries temporelles'),'s',2], [L('因果推論', 'Causal inference', 'Inférence causale'),'s',2]] },
+    { name: L('產品思維與溝通', 'Product sense', 'Sens produit'), color: '#fbbf24',
+      desc: L('把商業問題轉成可以建模的問題，再把結果翻譯回商業語言。', 'Turn a business problem into a modelling problem, then translate the result back into business terms.', 'Traduire un problème métier en problème de modélisation, puis le résultat en langage métier.'),
+      leaves: [[L('問題定義', 'Framing the problem', 'Formuler le problème'),'s',1], [L('結果轉譯為決策', 'Turning results into decisions', 'Des résultats aux décisions'),'s',1], [L('模型可解釋性', 'Model explainability', 'Explicabilité des modèles'),'s',2], [L('偏誤與負責任 AI', 'Bias and responsible AI', 'Biais et IA responsable'),'s',2]] },
+  ],
+  road: [
+    L('打好 Python、pandas 與統計推論的基礎，複習線性代數裡的向量與矩陣。', 'Get solid on Python, pandas and statistical inference; revise vectors and matrices from linear algebra.', 'Consolider Python, pandas et l\'inférence statistique ; réviser vecteurs et matrices.'),
+    L('用 scikit-learn 跑完整流程：切資料、特徵工程、訓練、交叉驗證、調參，至少做兩個 Kaggle 入門賽。', 'Run the full scikit-learn workflow: split, feature engineering, training, cross-validation, tuning; do at least two beginner Kaggle competitions.', 'Dérouler tout le flux scikit-learn : découpage, variables, entraînement, validation croisée, réglage ; faire au moins deux compétitions Kaggle débutant.'),
+    L('選一個方向深入（深度學習、推薦系統或因果推論），學會用 Docker 或簡單 API 把模型上線。', 'Go deep in one direction (deep learning, recommenders or causal inference) and learn to ship a model with Docker or a simple API.', 'Approfondir une voie (apprentissage profond, recommandation ou causalité) et apprendre à mettre un modèle en ligne avec Docker ou une API simple.'),
+  ],
+  proj: L('做一個顧客流失預測：從原始資料到特徵工程與模型比較，用 SHAP 說明哪些因素最影響流失，再估算挽留方案能省下多少營收。',
+          'Build a customer churn predictor: from raw data to features and model comparison, use SHAP to show which factors drive churn, then estimate how much revenue a retention plan would save.',
+          'Construire un modèle de prédiction de l\'attrition client : des données brutes aux variables et à la comparaison de modèles, expliquer avec SHAP les facteurs clés, puis chiffrer le revenu sauvé par un plan de rétention.'),
+},
+{
+  id: 'pm', icon: 'fa-cubes', color: '#fbbf24',
+  name: L('產品經理', 'Product Manager', 'Product manager'),
+  tag: L('決定要做什麼、為誰做、先做哪個，並帶著設計與工程團隊把產品交付出去。',
+         'Decides what to build, for whom and in what order, and leads design and engineering to ship it.',
+         'Décide quoi construire, pour qui et dans quel ordre, et mène design et ingénierie jusqu\'à la livraison.'),
+  branches: [
+    { name: L('使用者研究', 'User research', 'Recherche utilisateur'), color: '#fbbf24',
+      desc: L('先確認問題真的存在，再談解法。', 'Confirm the problem is real before talking solutions.', 'Vérifier que le problème existe avant de parler solutions.'),
+      leaves: [[L('使用者訪談', 'User interviews', 'Entretiens utilisateurs'),'s',1], [L('人物誌', 'Personas', 'Personas'),'s',1], [L('使用者旅程地圖', 'Journey mapping', 'Parcours utilisateur'),'s',1], [L('問卷設計', 'Survey design', 'Conception de questionnaires'),'s',2], [L('可用性測試', 'Usability testing', 'Tests d\'utilisabilité'),'s',2]] },
+    { name: L('產品策略', 'Strategy', 'Stratégie'), color: '#fb923c',
+      desc: L('資源永遠不夠，排序與說「不」是核心工作。', 'There are never enough resources; prioritising and saying no is the core of the job.', 'Les ressources manquent toujours : prioriser et dire non est le cœur du métier.'),
+      leaves: [[L('市場與競品分析', 'Market and competitor analysis', 'Analyse marché et concurrence'),'s',1], [L('產品路線圖', 'Product roadmap', 'Feuille de route produit'),'s',1], [L('優先排序（RICE）', 'Prioritisation (RICE)', 'Priorisation (RICE)'),'s',1], [L('OKR 目標設定', 'OKRs', 'OKR'),'s',2], [L('商業模式與定價', 'Business model and pricing', 'Modèle économique et prix'),'s',2]] },
+    { name: L('需求與交付', 'Delivery', 'Livraison'), color: '#f472b6',
+      desc: L('把想法寫成工程師能做、測試能驗的規格。', 'Write ideas up as specs engineers can build and QA can verify.', 'Rédiger des spécifications que les développeurs peuvent construire et les testeurs vérifier.'),
+      leaves: [[L('PRD 撰寫', 'Writing PRDs', 'Rédaction de PRD'),'s',1], [L('使用者故事', 'User stories', 'User stories'),'s',1], [L('驗收條件', 'Acceptance criteria', 'Critères d\'acceptation'),'s',1], [L('敏捷與 Scrum', 'Agile and Scrum', 'Agile et Scrum'),'s',1]] },
+    { name: L('數據能力', 'Data', 'Données'), color: '#38bdf8',
+      desc: L('能自己看數字，才能判斷功能有沒有用。', 'Reading the numbers yourself is how you know whether a feature worked.', 'Lire les chiffres soi-même permet de savoir si une fonctionnalité a marché.'),
+      leaves: [[L('北極星與產品指標', 'North-star and product metrics', 'Étoile polaire et indicateurs produit'),'s',1], [L('A/B 測試', 'A/B testing', 'Tests A/B'),'s',2], ['SQL','t',2], ['GA4','t',1], ['Amplitude / Mixpanel','t',2]] },
+    { name: L('常用工具', 'Tools', 'Outils'), color: '#a78bfa',
+      desc: L('工具會換，但每間公司都有一套追蹤需求與文件的系統。', 'Tools change, but every company has a system for tracking work and docs.', 'Les outils changent, mais chaque entreprise a un système de suivi et de documentation.'),
+      leaves: [['Jira','t',1], ['Figma','t',1], ['Notion / Confluence','t',1], ['Miro','t',2]] },
+    { name: L('軟實力', 'Soft skills', 'Savoir-être'), color: '#34d399',
+      desc: L('PM 沒有直屬權力，靠溝通與信任推動事情。', 'PMs rarely have direct authority; they move things through communication and trust.', 'Le PM a rarement d\'autorité directe : il avance par la communication et la confiance.'),
+      leaves: [[L('跨部門溝通', 'Cross-team communication', 'Communication transverse'),'s',1], [L('利害關係人管理', 'Stakeholder management', 'Gestion des parties prenantes'),'s',1], [L('取捨與談判', 'Trade-offs and negotiation', 'Arbitrage et négociation'),'s',2], [L('基礎技術理解（API）', 'Technical literacy (APIs)', 'Culture technique (API)'),'s',2]] },
+  ],
+  road: [
+    L('讀完一本 PM 入門書（如《Inspired》），練習拆解你常用的 App：它解決誰的什麼問題、怎麼賺錢。', 'Read an intro PM book (such as Inspired) and practise dissecting apps you use: whose problem they solve and how they make money.', 'Lire un livre d\'introduction (par exemple Inspired) et s\'entraîner à décortiquer ses applis : quel problème, pour qui, quel modèle économique.'),
+    L('做五場使用者訪談，寫一份完整 PRD，用 Figma 畫出低保真原型，並學會 GA4 與基礎 SQL。', 'Run five user interviews, write a full PRD, sketch a low-fi prototype in Figma, and learn GA4 and basic SQL.', 'Mener cinq entretiens, rédiger un PRD complet, maquetter en basse fidélité sur Figma, apprendre GA4 et les bases de SQL.'),
+    L('參與一個真實專案（社團、志工或 side project）從需求到上線，整理成案例研究；可考慮 PSPO 證照。', 'Take a real project (club, volunteer or side project) from requirement to launch and write it up as a case study; consider the PSPO certificate.', 'Mener un vrai projet (association, bénévolat, projet perso) du besoin au lancement et en faire une étude de cas ; envisager la certification PSPO.'),
+  ],
+  proj: L('挑一個你常用的 App，找出一個痛點：訪談五位使用者，寫一頁 PRD（問題、目標指標、範圍、不做什麼），附 Figma 原型與上線後要看的三個指標。',
+          'Pick an app you use and find one pain point: interview five users, write a one-page PRD (problem, target metric, scope, out of scope), and attach a Figma prototype plus the three metrics you would watch after launch.',
+          'Choisir une appli et un point de friction : interroger cinq utilisateurs, rédiger un PRD d\'une page (problème, indicateur cible, périmètre, hors périmètre), avec une maquette Figma et les trois indicateurs à suivre après lancement.'),
+},
+{
+  id: 'mkt', icon: 'fa-bullhorn', color: '#f472b6',
+  name: L('數位行銷', 'Digital Marketer', 'Marketing digital'),
+  tag: L('透過內容、搜尋、廣告與 Email 找到目標客群，並用數據證明每一筆預算的成效。',
+         'Reaches the target audience through content, search, ads and email, and proves with data what each budget line returned.',
+         'Atteint la cible par le contenu, la recherche, la publicité et l\'e-mail, et prouve par les données ce que chaque euro a rapporté.'),
+  branches: [
+    { name: L('行銷策略', 'Strategy', 'Stratégie'), color: '#f472b6',
+      desc: L('先想清楚對誰說、說什麼、在哪裡說，戰術才不會亂槍打鳥。', 'Decide who you speak to, what you say and where before picking tactics.', 'Définir à qui parler, quoi dire et où, avant de choisir les tactiques.'),
+      leaves: [[L('受眾與市場區隔', 'Audience and segmentation', 'Cibles et segmentation'),'s',1], [L('行銷漏斗', 'Marketing funnel', 'Entonnoir marketing'),'s',1], [L('品牌定位', 'Brand positioning', 'Positionnement de marque'),'s',2], [L('預算分配', 'Budget allocation', 'Répartition du budget'),'s',2]] },
+    { name: L('內容與社群', 'Content & social', 'Contenu & réseaux'), color: '#fb7185',
+      desc: L('內容是所有管道的燃料，短影音已經是基本功。', 'Content fuels every channel; short-form video is now a basic skill.', 'Le contenu alimente tous les canaux ; la vidéo courte est devenue une base.'),
+      leaves: [[L('文案撰寫', 'Copywriting', 'Rédaction publicitaire'),'s',1], [L('社群經營', 'Community management', 'Animation de communauté'),'s',1], [L('短影音', 'Short-form video', 'Vidéo courte'),'s',1], ['Canva','t',1], ['CapCut','t',2]] },
+    { name: L('搜尋行銷', 'Search', 'Référencement'), color: '#fbbf24',
+      desc: L('讓有需求的人主動找到你，SEO 慢但長久，搜尋廣告快但要花錢。', 'Be found by people already looking; SEO is slow but lasting, search ads are fast but paid.', 'Être trouvé par ceux qui cherchent déjà ; le SEO est lent mais durable, le SEA rapide mais payant.'),
+      leaves: [[L('關鍵字研究', 'Keyword research', 'Recherche de mots-clés'),'s',1], [L('站內與技術 SEO', 'On-page and technical SEO', 'SEO on-page et technique'),'s',2], ['Google Search Console','t',1], ['Ahrefs / Semrush','t',2]] },
+    { name: L('付費廣告', 'Paid ads', 'Publicité payante'), color: '#fb923c',
+      desc: L('懂得設定受眾、測試素材，並看懂廣告的投資報酬。', 'Set up audiences, test creatives, and read the return on ad spend.', 'Paramétrer les audiences, tester les visuels et lire le retour sur dépenses publicitaires.'),
+      leaves: [['Meta Ads','t',1], ['Google Ads','t',1], [L('再行銷', 'Retargeting', 'Reciblage'),'s',2], [L('ROAS 與 CPA', 'ROAS and CPA', 'ROAS et CPA'),'s',1], [L('素材 A/B 測試', 'Creative A/B testing', 'Tests A/B de visuels'),'s',2]] },
+    { name: L('數據與追蹤', 'Analytics', 'Mesure'), color: '#38bdf8',
+      desc: L('追蹤設定錯了，後面所有判斷都會錯。', 'If tracking is wrong, every decision built on it is wrong too.', 'Si le suivi est faux, toutes les décisions qui en découlent le sont aussi.'),
+      leaves: [['GA4','t',1], [L('UTM 參數', 'UTM parameters', 'Paramètres UTM'),'s',1], ['Google Tag Manager','t',2], [L('歸因模型', 'Attribution models', 'Modèles d\'attribution'),'s',2], ['Looker Studio','t',2]] },
+    { name: L('CRM 與自動化', 'CRM & automation', 'CRM & automatisation'), color: '#34d399',
+      desc: L('留住舊客比找新客便宜，Email 與自動化流程是留客的主力。', 'Keeping customers costs less than finding new ones; email and automation do most of that work.', 'Fidéliser coûte moins cher qu\'acquérir ; e-mail et automatisation font l\'essentiel du travail.'),
+      leaves: [[L('Email 行銷', 'Email marketing', 'E-mail marketing'),'s',1], [L('名單分眾', 'List segmentation', 'Segmentation de listes'),'s',1], ['HubSpot','t',2], ['Mailchimp / Klaviyo','t',2], [L('自動化旅程', 'Automated journeys', 'Parcours automatisés'),'s',2]] },
+  ],
+  road: [
+    L('學行銷漏斗與受眾設定，考 Google Analytics 與 Google Ads 的免費認證，開始經營一個自己的社群帳號。', 'Learn the funnel and audience targeting, take the free Google Analytics and Google Ads certifications, and start running a social account of your own.', 'Apprendre l\'entonnoir et le ciblage, passer les certifications gratuites Google Analytics et Google Ads, et lancer son propre compte social.'),
+    L('用小額預算（例如三千元）跑一次 Meta 廣告，練習 UTM、GA4 事件與素材測試，再學基礎 SEO 寫三篇文章。', 'Run a small Meta ads budget (for example 100 euros), practise UTMs, GA4 events and creative tests, then learn SEO basics and write three articles.', 'Lancer une petite campagne Meta (par exemple 100 €), pratiquer UTM, événements GA4 et tests de visuels, puis les bases du SEO avec trois articles.'),
+    L('整合成一份完整的行銷企劃與成效報告，補上 Email 自動化（HubSpot 有免費課程與認證）。', 'Bring it together into a full marketing plan and results report, and add email automation (HubSpot has free courses and certificates).', 'Réunir le tout en plan marketing et bilan de résultats, et ajouter l\'automatisation e-mail (HubSpot propose cours et certificats gratuits).'),
+  ],
+  proj: L('幫一個小店家或社團做一個月的行銷：設定目標與受眾、產出內容、投放小額廣告、用 GA4 與 UTM 追蹤，最後交一份含 ROAS 與學到什麼的成效報告。',
+          'Run one month of marketing for a small shop or club: set goals and audience, produce content, run a small ad budget, track it with GA4 and UTMs, and hand in a results report with ROAS and lessons learned.',
+          'Animer un mois de marketing pour un petit commerce ou une association : objectifs et cible, contenus, petite campagne payante, suivi GA4 et UTM, puis un bilan avec ROAS et enseignements.'),
+},
+{
+  id: 'fa', icon: 'fa-sack-dollar', color: '#34d399',
+  name: L('財務分析師', 'Financial Analyst', 'Analyste financier'),
+  tag: L('讀懂財報、建立財務模型與預算，評估投資與營運決策的價值。',
+         'Reads financial statements, builds models and budgets, and values investment and operating decisions.',
+         'Lit les états financiers, construit modèles et budgets, et évalue les décisions d\'investissement et d\'exploitation.'),
+  branches: [
+    { name: L('會計基礎', 'Accounting', 'Comptabilité'), color: '#34d399',
+      desc: L('財務分析的語言就是會計，三大報表要能互相連結。', 'Accounting is the language of finance; you must link the three statements.', 'La comptabilité est la langue de la finance : savoir relier les trois états.'),
+      leaves: [[L('三大財務報表', 'The three statements', 'Les trois états financiers'),'s',1], [L('財務比率分析', 'Ratio analysis', 'Analyse par ratios'),'s',1], [L('IFRS 會計準則', 'IFRS standards', 'Normes IFRS'),'s',2]] },
+    { name: L('財務建模', 'Modelling', 'Modélisation'), color: '#2dd4bf',
+      desc: L('把假設寫進 Excel，讓數字隨假設變動，是每天的工作。', 'Encoding assumptions in Excel so numbers flow from them is the daily work.', 'Traduire les hypothèses dans Excel pour que les chiffres en découlent : c\'est le quotidien.'),
+      leaves: [[L('三表連動模型', 'Three-statement model', 'Modèle à trois états'),'s',1], [L('預算與預測', 'Budgeting and forecasting', 'Budget et prévisions'),'s',1], [L('敏感度與情境分析', 'Sensitivity and scenarios', 'Sensibilité et scénarios'),'s',2], [L('差異分析', 'Variance analysis', 'Analyse des écarts'),'s',1]] },
+    { name: L('估值與投資', 'Valuation', 'Évaluation'), color: '#38bdf8',
+      desc: L('判斷一個專案或一家公司值多少錢。', 'Working out what a project or a company is worth.', 'Déterminer ce que vaut un projet ou une entreprise.'),
+      leaves: [[L('DCF 現金流折現', 'DCF valuation', 'Actualisation des flux (DCF)'),'s',1], [L('可比公司法', 'Comparable companies', 'Comparables boursiers'),'s',2], [L('WACC 資金成本', 'WACC', 'CMPC (WACC)'),'s',2], [L('NPV 與 IRR', 'NPV and IRR', 'VAN et TRI'),'s',1]] },
+    { name: L('工具', 'Tools', 'Outils'), color: '#a78bfa',
+      desc: L('Excel 熟練度幾乎決定工作效率，其他工具用來自動化與呈現。', 'Excel fluency largely sets your speed; other tools automate and present.', 'L\'aisance sur Excel fixe en grande partie la vitesse ; les autres outils automatisent et présentent.'),
+      leaves: [[L('Excel 進階', 'Advanced Excel', 'Excel avancé'),'t',1], ['PowerPoint','t',1], ['Power BI','t',2], ['Bloomberg / Capital IQ','t',2], ['Python / VBA','t',2]] },
+    { name: L('產業與總經', 'Industry & macro', 'Secteur & macro'), color: '#fbbf24',
+      desc: L('數字背後是產業競爭與經濟環境。', 'Behind the numbers lie industry competition and the economy.', 'Derrière les chiffres : la concurrence du secteur et la conjoncture.'),
+      leaves: [[L('產業研究', 'Industry research', 'Études sectorielles'),'s',1], [L('總體經濟指標', 'Macro indicators', 'Indicateurs macroéconomiques'),'s',2], [L('利率與匯率', 'Rates and FX', 'Taux et change'),'s',2]] },
+    { name: L('證照與溝通', 'Credentials', 'Certifications'), color: '#f472b6',
+      desc: L('證照能證明基本功，溝通能力決定建議會不會被採納。', 'Credentials prove the basics; communication decides whether advice is taken.', 'Les certifications prouvent les bases ; la communication décide si le conseil est suivi.'),
+      leaves: [[L('管理報告', 'Management reporting', 'Reporting de gestion'),'s',1], ['CFA','t',2], ['FMVA','t',2], [L('簡報與說服', 'Presenting and persuading', 'Présenter et convaincre'),'s',1]] },
+  ],
+  road: [
+    L('讀懂三大報表與財務比率，練熟 Excel 快捷鍵、XLOOKUP、樞紐分析與基本圖表。', 'Learn to read the three statements and ratios; get fluent with Excel shortcuts, XLOOKUP, pivots and basic charts.', 'Savoir lire les trois états et les ratios ; maîtriser raccourcis Excel, RECHERCHEX, tableaux croisés et graphiques simples.'),
+    L('從零做出一家上市公司的三表模型與 DCF 估值，加上敏感度分析表。', 'Build a three-statement model and DCF for a listed company from scratch, with a sensitivity table.', 'Construire de zéro un modèle à trois états et un DCF d\'une société cotée, avec table de sensibilité.'),
+    L('把模型結論寫成一份投資建議或預算報告；考慮 CFA 一級或 FMVA，並學 Power BI 做管理報表。', 'Write the model\'s conclusion up as an investment memo or budget report; consider CFA Level I or FMVA, and learn Power BI for management reporting.', 'Rédiger la conclusion en note d\'investissement ou rapport budgétaire ; envisager le CFA niveau I ou le FMVA, et Power BI pour le reporting.'),
+  ],
+  proj: L('選一家你熟悉的上市公司，用近五年財報建立三表模型與 DCF，算出合理股價區間，寫一份兩頁的投資建議，說明關鍵假設與風險。',
+          'Pick a listed company you know, build a three-statement model and DCF from five years of filings, derive a fair price range, and write a two-page memo on the key assumptions and risks.',
+          'Choisir une société cotée connue, bâtir un modèle à trois états et un DCF sur cinq ans de comptes, en tirer une fourchette de valeur, puis une note de deux pages sur hypothèses clés et risques.'),
+},
+{
+  id: 'ux', icon: 'fa-pen-ruler', color: '#fb7185',
+  name: L('UX／UI 設計師', 'UX/UI Designer', 'Designer UX/UI'),
+  tag: L('研究使用者的需求與行為，設計出好用又好看的介面。',
+         'Studies what users need and do, and designs interfaces that are easy and pleasant to use.',
+         'Étudie les besoins et comportements des utilisateurs et conçoit des interfaces simples et agréables.'),
+  branches: [
+    { name: L('使用者研究', 'Research', 'Recherche'), color: '#fb7185',
+      desc: L('設計的根據來自觀察使用者，而不是自己的喜好。', 'Design rests on watching users, not on your own taste.', 'Le design s\'appuie sur l\'observation des utilisateurs, pas sur ses goûts.'),
+      leaves: [[L('使用者訪談', 'User interviews', 'Entretiens utilisateurs'),'s',1], [L('可用性測試', 'Usability testing', 'Tests d\'utilisabilité'),'s',1], [L('競品分析', 'Competitor review', 'Analyse concurrentielle'),'s',1], [L('卡片分類', 'Card sorting', 'Tri par cartes'),'s',2]] },
+    { name: L('資訊架構與互動', 'IA & interaction', 'Architecture & interaction'), color: '#f472b6',
+      desc: L('先決定內容怎麼組織、使用者怎麼走，再談畫面。', 'Decide how content is organised and how users move before drawing screens.', 'Organiser le contenu et les parcours avant de dessiner les écrans.'),
+      leaves: [[L('使用者流程', 'User flows', 'Parcours utilisateur'),'s',1], [L('線框圖', 'Wireframes', 'Wireframes'),'s',1], [L('資訊架構', 'Information architecture', 'Architecture de l\'information'),'s',1], [L('互動設計原則', 'Interaction principles', 'Principes d\'interaction'),'s',2]] },
+    { name: L('視覺設計', 'Visual design', 'Design visuel'), color: '#fbbf24',
+      desc: L('排版、字體與色彩決定資訊層次是否清楚。', 'Layout, type and colour decide whether the hierarchy reads.', 'Mise en page, typographie et couleur décident de la lisibilité de la hiérarchie.'),
+      leaves: [[L('排版與字體', 'Layout and typography', 'Mise en page et typographie'),'s',1], [L('色彩', 'Colour', 'Couleur'),'s',1], [L('網格系統', 'Grid systems', 'Grilles'),'s',1], [L('設計系統', 'Design systems', 'Design systems'),'s',2]] },
+    { name: L('設計工具', 'Tools', 'Outils'), color: '#a78bfa',
+      desc: L('Figma 已是業界標準，其他工具視需求補充。', 'Figma is the industry standard; add others as needed.', 'Figma est le standard ; les autres outils viennent selon les besoins.'),
+      leaves: [['Figma','t',1], ['FigJam','t',1], ['Adobe Illustrator / Photoshop','t',2], ['ProtoPie','t',2], ['Maze','t',2]] },
+    { name: L('與開發協作', 'Working with devs', 'Collaboration dev'), color: '#38bdf8',
+      desc: L('懂一點前端與無障礙規範，設計才做得出來。', 'A little front-end and accessibility knowledge keeps designs buildable.', 'Un peu de front-end et d\'accessibilité rend le design réalisable.'),
+      leaves: [[L('響應式設計', 'Responsive design', 'Design responsive'),'s',1], [L('設計交付', 'Design handoff', 'Passation aux devs'),'s',1], [L('無障礙設計（WCAG）', 'Accessibility (WCAG)', 'Accessibilité (WCAG)'),'s',2], ['HTML / CSS','t',2]] },
+    { name: L('作品集與溝通', 'Portfolio', 'Portfolio'), color: '#34d399',
+      desc: L('面試看的是你的思考過程，不只是最後的畫面。', 'Interviews judge your reasoning, not just the final screens.', 'En entretien, on juge le raisonnement, pas seulement les écrans finaux.'),
+      leaves: [[L('案例研究撰寫', 'Writing case studies', 'Rédiger des études de cas'),'s',1], [L('設計提案', 'Presenting designs', 'Présenter un design'),'s',1], [L('接受與給予回饋', 'Giving and taking feedback', 'Donner et recevoir des retours'),'s',2]] },
+  ],
+  road: [
+    L('學 Figma 基本操作（框架、自動排版、元件），臨摹三個你喜歡的 App 畫面，同時讀《Don\'t Make Me Think》。', 'Learn Figma basics (frames, auto layout, components), copy three app screens you like, and read Don\'t Make Me Think.', 'Apprendre les bases de Figma (frames, auto layout, composants), reproduire trois écrans d\'applis appréciées et lire Don\'t Make Me Think.'),
+    L('完整走一次設計流程：訪談、流程圖、線框圖、高保真稿、可用性測試，然後依測試結果修改。', 'Go through the full process once: interviews, flows, wireframes, high-fidelity mock-ups, usability test, then revise from the results.', 'Dérouler tout le processus : entretiens, parcours, wireframes, maquettes haute fidélité, test d\'utilisabilité, puis itération.'),
+    L('做出兩到三個案例研究放上作品集網站，補上設計系統與無障礙規範，可參考 Google UX Design 證書課程。', 'Publish two or three case studies on a portfolio site, add design systems and accessibility; the Google UX Design certificate is a useful guide.', 'Publier deux ou trois études de cas sur un site portfolio, ajouter design system et accessibilité ; le certificat Google UX Design peut servir de guide.'),
+  ],
+  proj: L('重新設計一個你覺得難用的服務（例如公家機關網站的預約流程）：記錄原本的問題、訪談與測試結果、改版前後對照，寫成一篇案例研究。',
+          'Redesign a service you find hard to use (for example a public-office booking flow): record the original problems, the interviews and test results, a before-and-after comparison, and write it up as a case study.',
+          'Repenser un service pénible (par exemple la prise de rendez-vous d\'une administration) : problèmes initiaux, entretiens et tests, comparaison avant/après, le tout en étude de cas.'),
+},
+{
+  id: 'swe', icon: 'fa-code', color: '#22d3ee',
+  name: L('軟體工程師', 'Software Engineer', 'Ingénieur logiciel'),
+  tag: L('以網頁開發為例：設計、撰寫與維護穩定的程式，讓產品能被大量使用者使用。',
+         'Taking web development as the example: designs, writes and maintains reliable code so a product can serve many users.',
+         'Exemple du développement web : concevoir, écrire et maintenir un code fiable pour servir de nombreux utilisateurs.'),
+  branches: [
+    { name: L('程式基礎', 'Fundamentals', 'Fondamentaux'), color: '#22d3ee',
+      desc: L('先把一種語言學深，觀念會帶到其他語言。', 'Learn one language deeply; the concepts carry over to others.', 'Approfondir un langage ; les concepts se transfèrent aux autres.'),
+      leaves: [['JavaScript / TypeScript','t',1], [L('資料結構與演算法', 'Data structures and algorithms', 'Structures de données et algorithmes'),'s',1], [L('除錯', 'Debugging', 'Débogage'),'s',1], [L('物件導向與設計模式', 'OOP and design patterns', 'POO et patrons de conception'),'s',2]] },
+    { name: L('前端', 'Front end', 'Front-end'), color: '#38bdf8',
+      desc: L('使用者看到與操作的部分。', 'Everything the user sees and touches.', 'Tout ce que l\'utilisateur voit et manipule.'),
+      leaves: [['HTML / CSS','t',1], ['React','t',1], [L('響應式版面', 'Responsive layout', 'Mise en page responsive'),'s',1], [L('狀態管理', 'State management', 'Gestion d\'état'),'s',2], [L('網頁效能', 'Web performance', 'Performance web'),'s',2]] },
+    { name: L('後端', 'Back end', 'Back-end'), color: '#a78bfa',
+      desc: L('處理資料、商業邏輯與權限。', 'Handles data, business logic and permissions.', 'Gère les données, la logique métier et les droits.'),
+      leaves: [['Node.js','t',1], [L('REST API 設計', 'REST API design', 'Conception d\'API REST'),'s',1], ['SQL · PostgreSQL','t',1], [L('身分驗證', 'Authentication', 'Authentification'),'s',2], [L('資料庫設計', 'Database design', 'Modélisation de bases'),'s',2]] },
+    { name: L('工程實務', 'Engineering practice', 'Pratiques d\'ingénierie'), color: '#34d399',
+      desc: L('團隊合作寫程式的規矩，決定程式能不能長期維護。', 'Team habits for writing code decide whether it stays maintainable.', 'Les pratiques d\'équipe décident si le code reste maintenable.'),
+      leaves: [['Git / GitHub','t',1], [L('自動化測試', 'Automated testing', 'Tests automatisés'),'s',1], [L('程式碼審查', 'Code review', 'Revue de code'),'s',1], [L('CI/CD', 'CI/CD', 'CI/CD'),'s',2]] },
+    { name: L('部署與雲端', 'Deploy & cloud', 'Déploiement & cloud'), color: '#fbbf24',
+      desc: L('程式要能穩定跑在伺服器上，出問題時能查得到。', 'Code has to run reliably on servers, and problems have to be traceable.', 'Le code doit tourner de façon fiable sur des serveurs, et les incidents doivent être traçables.'),
+      leaves: [[L('Linux 命令列', 'Linux command line', 'Ligne de commande Linux'),'s',1], ['Docker','t',2], ['AWS / GCP','t',2], [L('監控與日誌', 'Monitoring and logs', 'Supervision et journaux'),'s',2]] },
+    { name: L('進階能力', 'Going further', 'Pour aller plus loin'), color: '#f472b6',
+      desc: L('資深工程師與一般工程師的差別多在這裡。', 'This is mostly what separates senior engineers from the rest.', 'C\'est surtout ici que se distinguent les ingénieurs seniors.'),
+      leaves: [[L('系統設計', 'System design', 'Conception de systèmes'),'s',2], [L('資安基礎（OWASP）', 'Security basics (OWASP)', 'Sécurité de base (OWASP)'),'s',2], [L('AI 程式助手', 'AI coding assistants', 'Assistants de code IA'),'s',1], [L('技術文件撰寫', 'Technical writing', 'Rédaction technique'),'s',2]] },
+  ],
+  road: [
+    L('學 HTML、CSS 與 JavaScript，做出三個靜態網頁；同時學 Git，所有練習都推上 GitHub。', 'Learn HTML, CSS and JavaScript and build three static pages; learn Git at the same time and push every exercise to GitHub.', 'Apprendre HTML, CSS et JavaScript et réaliser trois pages statiques ; apprendre Git en parallèle et tout pousser sur GitHub.'),
+    L('學 React 與 Node.js，做一個有登入、資料庫與 API 的全端應用，並寫基本測試。', 'Learn React and Node.js and build a full-stack app with login, a database and an API, with basic tests.', 'Apprendre React et Node.js et construire une application complète avec connexion, base de données et API, avec des tests de base.'),
+    L('把應用部署上雲端，練習資料結構與演算法題目準備面試，並開始參與開源專案或團隊專案。', 'Deploy the app to the cloud, practise data-structure and algorithm problems for interviews, and start contributing to open source or a team project.', 'Déployer l\'application dans le cloud, s\'entraîner aux exercices d\'algorithmique pour les entretiens et contribuer à un projet open source ou d\'équipe.'),
+  ],
+  proj: L('做一個真的會用到的全端小工具（例如記帳或讀書計畫 App）：React 前端、Node.js API、PostgreSQL、登入功能、自動化測試，部署上線並在 README 說明架構。',
+          'Build a small full-stack tool you would actually use (a budget or study-plan app): React front end, Node.js API, PostgreSQL, login, automated tests, deployed live, with the architecture explained in the README.',
+          'Créer un petit outil complet que vous utiliseriez vraiment (budget ou planning de révisions) : front React, API Node.js, PostgreSQL, connexion, tests automatisés, mis en ligne, architecture expliquée dans le README.'),
+},
+{
+  id: 'proj', icon: 'fa-list-check', color: '#fb923c',
+  name: L('專案經理', 'Project Manager', 'Chef de projet'),
+  tag: L('在時間、預算與範疇的限制下，協調各方把專案準時、準確地完成。',
+         'Coordinates everyone to deliver a project on time and to spec, within the limits of schedule, budget and scope.',
+         'Coordonne tous les acteurs pour livrer un projet dans les délais et conforme, sous contraintes de temps, budget et périmètre.'),
+  branches: [
+    { name: L('規劃', 'Planning', 'Planification'), color: '#fb923c',
+      desc: L('把大目標拆成可以排時程、分派與追蹤的小工作。', 'Break a big goal into tasks that can be scheduled, assigned and tracked.', 'Découper un grand objectif en tâches planifiables, assignables et suivies.'),
+      leaves: [[L('範疇定義', 'Scope definition', 'Définition du périmètre'),'s',1], [L('WBS 工作分解', 'Work breakdown (WBS)', 'Découpage du travail (WBS)'),'s',1], [L('甘特圖與關鍵路徑', 'Gantt and critical path', 'Gantt et chemin critique'),'s',1], [L('預算與資源', 'Budget and resources', 'Budget et ressources'),'s',2]] },
+    { name: L('方法論', 'Methods', 'Méthodes'), color: '#fbbf24',
+      desc: L('需求穩定用瀑布式，變動大用敏捷，多數公司是混合。', 'Stable requirements suit waterfall, shifting ones suit agile; most companies mix both.', 'Besoins stables : cycle en V ; besoins mouvants : agile ; la plupart des entreprises mélangent.'),
+      leaves: [[L('瀑布式', 'Waterfall', 'Cycle en cascade'),'s',1], ['Scrum','s',1], ['Kanban','s',1], [L('混合式', 'Hybrid', 'Hybride'),'s',2]] },
+    { name: L('風險與品質', 'Risk & quality', 'Risques & qualité'), color: '#f472b6',
+      desc: L('提早發現問題，比事後救火便宜得多。', 'Spotting problems early is far cheaper than firefighting later.', 'Repérer tôt les problèmes coûte bien moins que d\'éteindre des incendies.'),
+      leaves: [[L('風險登錄冊', 'Risk register', 'Registre des risques'),'s',1], [L('變更管理', 'Change control', 'Gestion des changements'),'s',1], [L('品質管理', 'Quality management', 'Gestion de la qualité'),'s',2], [L('專案回顧', 'Retrospectives', 'Rétrospectives'),'s',2]] },
+    { name: L('人與溝通', 'People', 'Humain'), color: '#34d399',
+      desc: L('專案經理大部分時間都在溝通。', 'Most of a project manager\'s time goes into communication.', 'L\'essentiel du temps d\'un chef de projet passe en communication.'),
+      leaves: [[L('利害關係人分析', 'Stakeholder analysis', 'Analyse des parties prenantes'),'s',1], [L('進度報告', 'Status reporting', 'Reporting d\'avancement'),'s',1], [L('會議引導', 'Facilitation', 'Animation de réunions'),'s',1], [L('衝突處理', 'Conflict resolution', 'Gestion des conflits'),'s',2]] },
+    { name: L('常用工具', 'Tools', 'Outils'), color: '#38bdf8',
+      desc: L('選一套追蹤工具用熟，Excel 仍是萬用備案。', 'Master one tracking tool; Excel remains the universal fallback.', 'Maîtriser un outil de suivi ; Excel reste la solution de secours universelle.'),
+      leaves: [['Excel','t',1], ['Jira','t',1], ['Asana / Monday','t',1], ['MS Project','t',2], ['Slack / Teams','t',1]] },
+    { name: L('證照', 'Certifications', 'Certifications'), color: '#a78bfa',
+      desc: L('證照在專案管理領域特別受重視。', 'Certifications carry particular weight in project management.', 'Les certifications pèsent particulièrement en gestion de projet.'),
+      leaves: [['CAPM','t',1], ['PSM / CSM','t',1], ['PMP','t',2], ['PRINCE2','t',2]] },
+  ],
+  road: [
+    L('學專案生命週期、WBS 與甘特圖，用 Excel 或 Asana 規劃一個自己的生活專案（例如搬家或考試）。', 'Learn the project life cycle, WBS and Gantt charts, and plan a personal project (a move, an exam) in Excel or Asana.', 'Apprendre le cycle de vie d\'un projet, le WBS et le Gantt, et planifier un projet personnel (déménagement, examen) dans Excel ou Asana.'),
+    L('學 Scrum 與 Kanban，在 Jira 跑一次模擬衝刺；練習寫風險登錄冊與每週進度報告。', 'Learn Scrum and Kanban, run a mock sprint in Jira, and practise writing a risk register and weekly status reports.', 'Apprendre Scrum et Kanban, simuler un sprint dans Jira, et s\'exercer au registre des risques et au reporting hebdomadaire.'),
+    L('實際帶一個多人專案，整理成案例；考 CAPM 或 PSM I，有三年以上經驗後再考 PMP。', 'Lead a real multi-person project and write it up; take CAPM or PSM I, and PMP once you have three or more years of experience.', 'Piloter un vrai projet en équipe et en faire une étude de cas ; passer CAPM ou PSM I, puis PMP après au moins trois ans d\'expérience.'),
+  ],
+  proj: L('把一場活動（研討會、社團成果展）當專案管理：寫專案章程、WBS、甘特圖、預算表與風險登錄冊，活動結束後寫一份回顧，比較計畫與實際的差異。',
+          'Run an event (a seminar, a club showcase) as a project: write the charter, WBS, Gantt chart, budget and risk register, then a retrospective comparing plan and reality.',
+          'Gérer un événement (séminaire, exposition d\'association) comme un projet : charte, WBS, Gantt, budget et registre des risques, puis un retour d\'expérience comparant prévu et réel.'),
+},
+];
+
+/* ─── Shared-skills matrix (0 rarely – 3 core) ─── */
+const MATRIX = [
+  { name: L('Excel／試算表', 'Excel / spreadsheets', 'Excel / tableurs'),     v: { da:3, ds:1, pm:2, mkt:2, fa:3, ux:0, swe:0, proj:3 } },
+  { name: L('SQL', 'SQL', 'SQL'),                                              v: { da:3, ds:3, pm:2, mkt:1, fa:1, ux:0, swe:2, proj:0 } },
+  { name: L('Python／程式', 'Python / coding', 'Python / code'),              v: { da:2, ds:3, pm:0, mkt:0, fa:1, ux:0, swe:3, proj:0 } },
+  { name: L('統計與實驗', 'Statistics & experiments', 'Statistiques & tests'), v: { da:3, ds:3, pm:2, mkt:2, fa:1, ux:1, swe:0, proj:0 } },
+  { name: L('資料視覺化', 'Data visualisation', 'Visualisation de données'), v: { da:3, ds:2, pm:1, mkt:2, fa:2, ux:1, swe:0, proj:1 } },
+  { name: L('使用者研究', 'User research', 'Recherche utilisateur'),          v: { da:0, ds:0, pm:3, mkt:2, fa:0, ux:3, swe:1, proj:0 } },
+  { name: L('簡報與溝通', 'Presenting & communication', 'Présentation & communication'), v: { da:3, ds:2, pm:3, mkt:3, fa:3, ux:3, swe:1, proj:3 } },
+  { name: L('專案與時程管理', 'Project & schedule management', 'Gestion de projet & planning'), v: { da:1, ds:1, pm:3, mkt:2, fa:1, ux:1, swe:1, proj:3 } },
+  { name: L('商業與財務理解', 'Business & finance sense', 'Sens des affaires & finance'), v: { da:2, ds:1, pm:3, mkt:2, fa:3, ux:1, swe:0, proj:2 } },
+  { name: L('AI 工具應用', 'Using AI tools', 'Usage des outils d\'IA'),        v: { da:2, ds:3, pm:2, mkt:2, fa:1, ux:2, swe:3, proj:1 } },
+];
+
+/* ─── Mind map layout ───
+   Widths adapt to the longest labels in the current language. */
+const ROW = 30, PADY = 34, GAP = 18;
+const textW = (s, px) => { let w = 0; for (const ch of s) w += /[\u2E80-\uFFEF]/.test(ch) ? px : (/[A-Z]/.test(ch) ? px * 0.68 : px * 0.56); return w; };
+const sideH = brs => brs.reduce((n, b) => n + b.leaves.length, 0) * ROW + (brs.length - 1) * GAP;
+
+function drawMap(c) {
+  const left = c.branches.slice(0, 3), right = c.branches.slice(3);
+  const H = Math.max(sideH(left), sideH(right)) + PADY * 2;
+  const CY = H / 2;
+  const cname = t(c.name);
+  const cw = Math.max(170, textW(cname, 19) + 44);
+  const bws = c.branches.map(b => Math.max(110, textW(t(b.name), 15) + 30));
+  const bwMax = Math.max(...bws);
+  const leafMax = Math.max(...c.branches.flatMap(b => b.leaves.map(([l, k]) => textW(t(l), 13.5) + (k === 't' ? 10 : 0))));
+  const BX = Math.max(220, cw / 2 + bwMax / 2 + 40);   // branch centre offset
+  const LX = BX + bwMax / 2 + 70;                      // leaf dot offset
+  const W = Math.ceil(2 * (LX + 14 + leafMax + 24));
+  const CX = W / 2;
+  let nodes = '';
+
+  [[left, -1, 0], [right, 1, 3]].forEach(([brs, s, off]) => {
+    let y = (H - sideH(brs)) / 2 + ROW / 2;
+    brs.forEach((b, bi) => {
+      const idx = off + bi;
+      const n = b.leaves.length;
+      const ys = b.leaves.map((_, i) => y + i * ROW);
+      const by = (ys[0] + ys[n - 1]) / 2;
+      const bx = CX + s * BX;
+      const label = t(b.name);
+      const bw = bws[idx];
+      let g = `<g class="branch" data-b="${idx}">`;
+      const x0 = CX + s * (cw / 2 - 8), x1 = bx - s * bw / 2;
+      g += `<path d="M${x0},${CY} C${(x0 + x1) / 2},${CY} ${(x0 + x1) / 2},${by} ${x1},${by}" fill="none" stroke="${b.color}" stroke-width="3" stroke-opacity=".75"/>`;
+      const xb = bx + s * bw / 2, xl = CX + s * LX;
+      ys.forEach((ly, i) => {
+        const [lab, kind, lvl] = b.leaves[i];
+        const txt = t(lab);
+        g += `<path d="M${xb},${by} C${(xb + xl) / 2},${by} ${(xb + xl) / 2},${ly} ${xl - s * 7},${ly}" fill="none" stroke="${b.color}" stroke-width="1.6" stroke-opacity=".5"/>`;
+        g += lvl === 1
+          ? `<circle cx="${xl}" cy="${ly}" r="5.5" fill="${b.color}"/>`
+          : `<circle cx="${xl}" cy="${ly}" r="4.6" fill="#12100c" stroke="${b.color}" stroke-width="2"/>`;
+        const tx = xl + s * 16, anchor = s < 0 ? 'end' : 'start';
+        if (kind === 't') {
+          const tw = textW(txt, 13.5) + 14;
+          const rx = s < 0 ? tx - tw + 7 : tx - 7;
+          g += `<rect x="${rx}" y="${ly - 11}" width="${tw}" height="22" rx="5" fill="${b.color}" fill-opacity=".1" stroke="${b.color}" stroke-opacity=".55"/>`;
+        }
+        g += `<text x="${tx}" y="${ly + 4.5}" text-anchor="${anchor}" class="leaf-t">${esc(txt)}</text>`;
+      });
+      g += `<rect x="${bx - bw / 2}" y="${by - 17}" width="${bw}" height="34" rx="17" fill="#18150f" stroke="${b.color}" stroke-width="2"/>`;
+      g += `<text x="${bx}" y="${by + 5}" text-anchor="middle" class="br-t" fill="${b.color}">${esc(label)}</text>`;
+      g += `</g>`;
+      nodes += g;
+      y += n * ROW + GAP;
+    });
+  });
+
+  const centre = `<rect x="${CX - cw / 2}" y="${CY - 30}" width="${cw}" height="60" rx="30" fill="${c.color}"/>
+    <text x="${CX}" y="${CY + 7}" text-anchor="middle" class="ctr-t">${esc(cname)}</text>`;
+  return `<svg id="map" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(cname)}">${nodes}${centre}</svg>`;
+}
+
+/* ─── Render ─── */
+let current = 'da';
+try { const s = localStorage.getItem('kb_career_map'); if (CAREERS.some(c => c.id === s)) current = s; } catch (e) {}
+
+function renderPicker() {
+  document.getElementById('picker').innerHTML = CAREERS.map(c =>
+    `<button class="pick${c.id === current ? ' on' : ''}" style="--c:${c.color}" onclick="pick('${c.id}')"><i class="fa-solid ${c.icon}"></i>${esc(t(c.name))}</button>`).join('');
+}
+
+function renderCareer() {
+  const c = CAREERS.find(x => x.id === current);
+  const sec = document.getElementById('career');
+  sec.style.setProperty('--c', c.color);
+  const cards = c.branches.map((b, i) => `
+    <div class="card" id="br-${i}" style="--bc:${b.color}">
+      <h3>${esc(t(b.name))} <em>${b.leaves.length} ${t(UI.items)}</em></h3>
+      <p>${esc(t(b.desc))}</p>
+      <div class="tags">${b.leaves.map(([lab, kind, lvl]) =>
+        `<span class="tag${kind === 't' ? ' tool' : ''}${lvl === 2 ? ' l2' : ''}">${esc(t(lab))}</span>`).join('')}</div>
+    </div>`).join('');
+  const road = c.road.map((r, i) => `
+    <div class="stage"><div class="n">${t(UI.stages[i])}</div><h4>${t(UI.stageNames[i])}</h4><p>${esc(t(r))}</p></div>`).join('');
+  sec.innerHTML = `
+    <div class="chead">
+      <div><h2><small>${esc(c.name.en)}</small>${esc(t(c.name))}</h2><p>${esc(t(c.tag))}</p></div>
+      <div class="legend">
+        <span><i class="lg-dot" style="background:${c.color}"></i>${t(UI.legDot)}</span>
+        <span><i class="lg-ring" style="border-color:${c.color}"></i>${t(UI.legRing)}</span>
+        <span><i class="lg-chip" style="border-color:${c.color}">Aa</i>${t(UI.legChip)}</span>
+      </div>
+    </div>
+    <div class="mapbox">${drawMap(c)}</div>
+    <p class="hint">${t(UI.hint)}<span class="mob">${t(UI.hintMob)}</span></p>
+    <div class="cards">${cards}</div>
+    <h2 class="sec-title"><i class="fa-solid fa-route"></i>${t(UI.road)}</h2>
+    <div class="road">${road}</div>
+    <div class="proj"><b>${t(UI.proj)}</b>${esc(t(c.proj))}</div>`;
+  wireMap();
+}
+
+function wireMap() {
+  const map = document.getElementById('map');
+  map.addEventListener('click', e => {
+    const g = e.target.closest('.branch');
+    map.querySelectorAll('.branch').forEach(b => b.classList.remove('hot'));
+    if (!g) { map.classList.remove('dim'); return; }
+    map.classList.add('dim'); g.classList.add('hot');
+    const card = document.getElementById('br-' + g.dataset.b);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 1400);
+    }
+  });
+}
+
+function renderMatrix() {
+  const head = `<thead><tr><th></th>${CAREERS.map(c => `<th><i class="fa-solid ${c.icon}" style="color:${c.color}"></i>${esc(t(c.name))}</th>`).join('')}</tr></thead>`;
+  const body = MATRIX.map(r => `<tr><th>${esc(t(r.name))}</th>${CAREERS.map(c => {
+    const v = r.v[c.id]; return `<td><span class="v${v}">${v ? v : '·'}</span></td>`; }).join('')}</tr>`).join('');
+  document.getElementById('matrix').innerHTML = head + `<tbody>${body}</tbody>`;
+  document.getElementById('mxleg').innerHTML = UI.mxLeg.map((l, i) =>
+    `<span><i class="v${i}" style="${['border:1px solid #6b6558', 'background:rgba(56,189,248,0.12)', 'background:rgba(56,189,248,0.30)', 'background:rgba(227,194,122,0.85)'][i]}"></i>${i} · ${t(l)}</span>`).join('');
+}
+
+function pick(id) {
+  current = id;
+  try { localStorage.setItem('kb_career_map', id); } catch (e) {}
+  renderPicker(); renderCareer();
+}
+
+function setLanguage(lang) {
+  if (!['zh', 'en', 'fr'].includes(lang)) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh', 'en', 'fr'].forEach(l => document.getElementById('lang-' + l).classList.toggle('on', l === lang));
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
+  document.title = t(UI.title);
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(UI[el.dataset.i18n]); });
+  renderPicker(); renderCareer(); renderMatrix();
+}
+
+let _l = 'zh';
+try { const s = localStorage.getItem('kb_lang'); if (['zh', 'en', 'fr'].includes(s)) _l = s; } catch (e) {}
+setLanguage(_l);
+</script>
+</body>
+</html>
