@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bachata | 歷史、音樂、風格與步法教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* One eight of bachata: steps on 1-3 and 5-7, the accented tap on 4 and 8,
+   and the hip curve that rises on each tap (drawn as a computed wave). */
+function diaEight() {
+  const L = {
+    title:{zh:'Bachata 的一個八拍：三步＋一個重音', en:'One eight of bachata: three steps and an accent', fr:'Un huit de bachata : trois pas et un accent'},
+    feet:{zh:'腳步', en:'Feet', fr:'Pieds'}, hip:{zh:'髖部', en:'Hips', fr:'Hanches'},
+    step:{zh:'踏', en:'step', fr:'pas'}, tap:{zh:'tap', en:'tap', fr:'tap'},
+    note:{zh:'音樂在 4 與 8 有明顯的重音（吉他與 bongo），舞者用 tap 和髖部把它「跳出來」。', en:'The music accents 4 and 8 (guitar and bongo); dancers show it with the tap and the hip.', fr:'La musique accentue 4 et 8 (guitare et bongo) ; le danseur le montre avec le tap et la hanche.'},
+  };
+  const X0 = 90, cw = 96, y = 60;
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>
+    <text x="0" y="${y + 26}" class="sub">${t(L.feet)}</text><text x="0" y="${y + 110}" class="sub">${t(L.hip)}</text>`;
+  for (let i = 0; i < 8; i++) {
+    const x = X0 + i * cw, accent = (i === 3 || i === 7);
+    s += `<rect x="${x}" y="${y}" width="${cw - 8}" height="44" rx="8" fill="${accent ? '#e879f9' : 'rgba(148,163,184,0.08)'}" fill-opacity="${accent ? 0.55 : 1}" stroke="rgba(148,163,184,0.25)"/>`;
+    s += `<text x="${x + (cw - 8) / 2}" y="${y + 20}" text-anchor="middle" class="val">${i + 1}</text>`;
+    s += `<text x="${x + (cw - 8) / 2}" y="${y + 37}" text-anchor="middle" class="sub">${accent ? t(L.tap) : t(L.step)}</text>`;
+  }
+  /* hip: low through the steps, popping up on each accent */
+  let d = '';
+  for (let k = 0; k <= 320; k++) {
+    const beat = k / 40;                              /* 0..8 */
+    const near = Math.min(Math.abs(beat - 3.5), Math.abs(beat - 7.5));
+    const v = Math.exp(-near * near * 10);
+    d += (k ? ' L' : 'M') + (X0 + beat * cw).toFixed(1) + ' ' + (y + 130 - v * 40).toFixed(1);
+  }
+  s += `<path d="${d}" fill="none" stroke="#e879f9" stroke-width="3"/>`;
+  s += `<text x="0" y="${y + 166}" class="sub">${t(L.note)}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 240" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const M = '#e879f9', P = '#f472b6', R = '#fb7185', V = '#a78bfa', S = '#38bdf8', T = '#2dd4bf', Y = '#fbbf24';
+
+CourseKit.start({
+icon:'fa-guitar', accent:M, accent2:'#fb7185', bg:'#0b070b',
+back:{ href:'dance.html', label:{zh:'回到舞蹈總覽', en:'Back to the dance overview', fr:'Retour à la vue d’ensemble'} },
+dia:{ eight: diaEight },
+ui:{
+zh:{
+ 'doc.title':'Bachata | 歷史、音樂、風格與步法教學',
+ 'hdr.badge':'舞種詳解・Bachata','hdr.title':'Bachata：歷史、音樂、風格與步法教學',
+ 'intro':'Bachata 來自多明尼加共和國，一開始是鄉村與貧民區裡唱失戀與心碎的吉他音樂，曾被上流社會看不起，後來卻成為全世界舞會最受歡迎的音樂之一。它的速度比 Salsa 慢、基本步只有「三步加一個點地」，很適合入門；但從多明尼加式的快速腳步到 Sensual 的身體波浪，可以一直跳得很深。',
+ 'intro2':'這一頁介紹 Bachata 的歷史與 2019 年列入聯合國非物質文化遺產的過程、音樂的樂器與三種段落，比較 Dominican、Sensual 與 Moderna 三種風格，接著一拍一拍教側步、前後步、方步、多明尼加式的切分步、轉圈、cross body lead 與身體波浪，最後是連結、安全與練習計畫。',
+ 'footer':'Bachata 入門參考。Sensual 風格的 dip、頭部繞圈（head roll）與身體波浪對頸部與下背有負擔，請在老師指導下練習，並隨時尊重舞伴的界線。各地教室的步法名稱可能不同，請以你的老師為準。'
+},
+en:{
+ 'doc.title':'Bachata: History, Music, Styles & Steps',
+ 'hdr.badge':'STYLE GUIDE · BACHATA','hdr.title':'Bachata: history, music, styles and steps',
+ 'intro':'Bachata comes from the Dominican Republic. It began as guitar music of heartbreak from the countryside and poor neighbourhoods, once looked down on by the elite, and became one of the most popular musics on dance floors worldwide. Slower than salsa, with a basic of just three steps and a tap, it is easy to start, yet it runs deep, from fast Dominican footwork to sensual body waves.',
+ 'intro2':'This page covers bachata’s history up to its 2019 UNESCO listing, the instruments and three sections of the music, compares Dominican, sensual and moderna styles, then teaches count by count the side, forward-back and box basics, Dominican syncopations, turns, the cross-body lead and the body wave, and ends with connection, safety and a practice plan.',
+ 'footer':'An introductory bachata reference. Sensual dips, head rolls and body waves load the neck and lower back: learn them with a teacher and always respect your partner’s boundaries. Studios may name steps differently; follow your teacher.'
+},
+fr:{
+ 'doc.title':'Bachata : histoire, musique, styles & pas',
+ 'hdr.badge':'FICHE STYLE · BACHATA','hdr.title':'La bachata : histoire, musique, styles et pas',
+ 'intro':'La bachata vient de République dominicaine. D’abord musique de guitare des campagnes et des quartiers pauvres, chantant le chagrin d’amour et méprisée par les élites, elle est devenue l’une des musiques les plus dansées au monde. Plus lente que la salsa, avec un pas de base de trois pas et un tap, elle s’aborde facilement, mais va loin, des jeux de pieds dominicains aux ondulations de la sensual.',
+ 'intro2':'Cette page retrace l’histoire de la bachata jusqu’à son inscription à l’UNESCO en 2019, présente les instruments et les trois sections de la musique, compare les styles dominicain, sensual et moderna, puis enseigne temps par temps les pas de base latéral, avant-arrière et en carré, les syncopes dominicaines, les tours, le cross body lead et l’ondulation, et termine par la connexion, la sécurité et un plan de pratique.',
+ 'footer':'Une référence d’initiation à la bachata. Les dips, head rolls et ondulations de la sensual sollicitent la nuque et le bas du dos : apprenez-les avec un professeur et respectez toujours les limites de votre partenaire. Les noms des pas varient selon les écoles ; suivez votre professeur.'
+}},
+sections:[
+
+/* ── 1. History ── */
+{ id:'history', i:'fa-landmark', c:M,
+  nav:{zh:'歷史', en:'History', fr:'Histoire'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'從「苦澀的音樂」到世界舞池', en:'From the “music of bitterness” to the world’s dance floors', fr:'De la « musique d’amertume » aux pistes du monde'},
+  blocks:[
+  { type:'table', head:[{zh:'時期', en:'Period', fr:'Période'}, {zh:'發生了什麼', en:'What happened', fr:'Ce qui s’est passé'}], rows:[
+    [{zh:'1960 年代', en:'1960s', fr:'Années 1960'}, {zh:'多明尼加鄉村的吉他歌曲，受古巴 bolero 影響。1962 年 José Manuel Calderón 錄下第一批 bachata 唱片。「bachata」原指鄉下的喧鬧聚會。', en:'Rural Dominican guitar songs influenced by Cuban bolero. José Manuel Calderón records the first bachatas in 1962. “Bachata” originally meant a rowdy country get-together.', fr:'Chansons rurales dominicaines à la guitare, influencées par le boléro cubain. José Manuel Calderón enregistre les premières bachatas en 1962. « Bachata » désignait une fête populaire.'}],
+    [{zh:'1970–80 年代', en:'1970s–80s', fr:'Années 1970–80'}, {zh:'隨鄉村移民進入首都聖多明哥的貧民區，被稱為「música de amargue」（苦澀的音樂），被主流電台與上層社會排斥。', en:'It follows rural migrants into the barrios of Santo Domingo; called “música de amargue” (music of bitterness), it is shunned by mainstream radio and the elite.', fr:'Elle suit l’exode rural vers les quartiers pauvres de Saint-Domingue ; surnommée « música de amargue », elle est rejetée par les radios et les élites.'}],
+    [{zh:'1990 年代', en:'1990s', fr:'Années 1990'}, {zh:'Juan Luis Guerra 的專輯《Bachata Rosa》（1990）讓 bachata 登上國際；吉他手開始用電吉他，形成現代聲音。', en:'Juan Luis Guerra’s album Bachata Rosa (1990) takes bachata international; electric guitars shape the modern sound.', fr:'L’album Bachata Rosa de Juan Luis Guerra (1990) internationalise la bachata ; la guitare électrique forge le son moderne.'}],
+    [{zh:'2000 年代', en:'2000s', fr:'Années 2000'}, {zh:'紐約的 Aventura（主唱 Romeo Santos）加入 R&B 與流行，成為「都會 bachata」；西班牙的 Korke 與 Judith 發展出 Bachata Sensual。', en:'New York’s Aventura (singer Romeo Santos) adds R&B and pop to create urban bachata; in Spain, Korke and Judith develop bachata sensual.', fr:'À New York, Aventura (chanteur Romeo Santos) y mêle R&B et pop : la bachata urbaine ; en Espagne, Korke et Judith créent la bachata sensual.'}],
+    ['2019', {zh:'Bachata 的音樂與舞蹈列入聯合國教科文組織人類非物質文化遺產代表名錄。', en:'Bachata music and dance are inscribed on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity.', fr:'La musique et la danse bachata entrent sur la liste représentative du patrimoine culturel immatériel de l’UNESCO.'}],
+  ]},
+]},
+
+/* ── 2. Music ── */
+{ id:'music', i:'fa-guitar', c:P,
+  nav:{zh:'音樂', en:'Music', fr:'Musique'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'聽懂 Bachata 音樂', en:'Hearing bachata', fr:'Écouter la bachata'},
+  blocks:[
+  { type:'dia', k:'eight' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-guitar', t:{zh:'Requinto（主奏吉他）', en:'Requinto (lead guitar)', fr:'Requinto (guitare solo)'}, p:{zh:'高音、快速的撥弦旋律，是 bachata 最有辨識度的聲音。', en:'High, fast plucked melodies: the most recognisable bachata sound.', fr:'Mélodies aiguës et rapides : le son le plus reconnaissable de la bachata.'} },
+    { i:'fa-guitar', t:{zh:'Segunda（節奏吉他）', en:'Segunda (rhythm guitar)', fr:'Segunda (guitare rythmique)'}, p:{zh:'刷和弦撐起節奏與和聲。', en:'Strummed chords holding rhythm and harmony.', fr:'Des accords grattés qui tiennent rythme et harmonie.'} },
+    { i:'fa-wave-square', t:{zh:'貝斯', en:'Bass', fr:'Basse'}, p:{zh:'常在 4 與 8 前後有切分，帶出 tap 的重音。', en:'Often syncopates around 4 and 8, setting up the tap accent.', fr:'Souvent syncopée autour de 4 et 8, elle prépare l’accent du tap.'} },
+    { i:'fa-drum', t:{zh:'Bongo', en:'Bongo', fr:'Bongo'}, p:{zh:'主歌時打 martillo 節奏；進入 mambo 段改打 tumbadora（康加鼓）。', en:'Plays the martillo pattern in verses; switches to tumbadora (conga) in the mambo.', fr:'Joue le martillo dans les couplets ; passe à la tumbadora (conga) dans le mambo.'} },
+    { i:'fa-bars', t:{zh:'Güira（金屬刮瓜）', en:'Güira', fr:'Güira'}, p:{zh:'金屬刮器，持續的「沙沙」聲標出每一拍，是找拍子的好幫手。', en:'A metal scraper whose steady shushing marks every beat; a great help for finding the count.', fr:'Un racloir métallique dont le frottement régulier marque chaque temps : idéal pour se repérer.'} },
+    { i:'fa-list-ol', t:{zh:'三種段落', en:'Three sections', fr:'Trois sections'}, p:{zh:'Derecho（主歌，平穩）→ Majao（較柔和、常有休止）→ Mambo（最熱烈，吉他與鼓加強，適合多明尼加式的快腳步）。', en:'Derecho (verse, steady) → majao (softer, often with breaks) → mambo (the hottest part, guitar and drums driving: perfect for Dominican footwork).', fr:'Derecho (couplet, régulier) → majao (plus doux, avec des breaks) → mambo (le plus intense, guitares et percussions : idéal pour le jeu de pieds dominicain).'} },
+  ]},
+  { type:'note', p:{
+    zh:'入門歌單（約 120–135 BPM，拍子清楚）：Prince Royce〈Stand by Me〉、Aventura〈Obsesión〉、Romeo Santos〈Propuesta Indecente〉、Juan Luis Guerra〈Bachata Rosa〉、Juan Luis Guerra〈Burbujas de Amor〉。',
+    en:'Starter playlist (about 120–135 BPM, clear beat): Prince Royce “Stand by Me”, Aventura “Obsesión”, Romeo Santos “Propuesta Indecente”, Juan Luis Guerra “Bachata Rosa” and “Burbujas de Amor”.',
+    fr:'Playlist pour débuter (environ 120–135 BPM, temps clair) : Prince Royce « Stand by Me », Aventura « Obsesión », Romeo Santos « Propuesta Indecente », Juan Luis Guerra « Bachata Rosa » et « Burbujas de Amor ».'} },
+]},
+
+/* ── 3. Styles ── */
+{ id:'styles', i:'fa-layer-group', c:R,
+  nav:{zh:'三種風格', en:'Styles', fr:'Styles'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'Dominican、Sensual 與 Moderna', en:'Dominican, sensual and moderna', fr:'Dominicaine, sensual et moderna'},
+  blocks:[
+  { type:'table', head:[{zh:'風格', en:'Style', fr:'Style'}, {zh:'舞姿', en:'Hold', fr:'Tenue'}, {zh:'重點', en:'Focus', fr:'Accent'}, {zh:'音樂', en:'Music', fr:'Musique'}, {zh:'感覺', en:'Feel', fr:'Ressenti'}], rows:[
+    [{zh:'Dominican（傳統）', en:'Dominican (traditional)', fr:'Dominicaine (traditionnelle)'}, {zh:'開放與閉式交替，距離較大', en:'Alternates open and closed, more space', fr:'Alterne ouvert et fermé, plus d’espace'}, {zh:'快速腳步、切分、彈跳、即興玩音樂', en:'Fast footwork, syncopations, bounce, playing with the music', fr:'Pieds rapides, syncopes, rebond, jeu avec la musique'}, {zh:'傳統與 mambo 段強的歌', en:'Traditional songs with strong mambos', fr:'Morceaux traditionnels au mambo marqué'}, {zh:'歡樂、俏皮', en:'Joyful, playful', fr:'Joyeux, espiègle'}],
+    [{zh:'Sensual（西班牙）', en:'Sensual (Spain)', fr:'Sensual (Espagne)'}, {zh:'近身閉式、連結緊密', en:'Close hold, strong connection', fr:'Tenue rapprochée, forte connexion'}, {zh:'身體波浪、繞頭、dip、流暢的轉圈', en:'Body waves, head rolls, dips, flowing turns', fr:'Ondulations, head rolls, dips, tours fluides'}, {zh:'慢一點的都會 bachata、remix', en:'Slower urban bachata and remixes', fr:'Bachata urbaine plus lente, remix'}, {zh:'流動、浪漫', en:'Flowing, romantic', fr:'Fluide, romantique'}],
+    [{zh:'Moderna／Fusion', en:'Moderna / fusion', fr:'Moderna / fusion'}, {zh:'開放式為主', en:'Mostly open', fr:'Surtout ouvert'}, {zh:'借用 Salsa 的轉圈與花式，加入 Tango、Zouk 元素', en:'Borrows salsa turns and patterns, with tango and zouk touches', fr:'Emprunte tours et figures à la salsa, avec des touches de tango et de zouk'}, {zh:'流行 bachata', en:'Pop bachata', fr:'Bachata pop'}, {zh:'華麗、多變', en:'Showy, varied', fr:'Spectaculaire, varié'}],
+  ]},
+  { type:'note', p:{
+    zh:'台灣與法國的舞會多以 Sensual 與 Moderna 為主，但多明尼加式的腳步與音樂性越來越受重視。建議兩種都學：Dominican 打好節奏與腳步，Sensual 學會身體與連結。',
+    en:'Socials in Taiwan and France are mostly sensual and moderna, but Dominican footwork and musicality are increasingly valued. Learn both: Dominican for rhythm and feet, sensual for body and connection.',
+    fr:'À Taïwan comme en France, les soirées dansent surtout sensual et moderna, mais le jeu de pieds et la musicalité dominicains gagnent du terrain. Apprenez les deux : le dominicain pour le rythme et les pieds, la sensual pour le corps et la connexion.'} },
+]},
+
+/* ── 4. Basics ── */
+{ id:'basics', i:'fa-shoe-prints', c:V,
+  nav:{zh:'基本步', en:'Basics', fr:'Bases'},
+  eyebrow:{zh:'第四章・教學', en:'Chapter 4 · Lessons', fr:'Chapitre 4 · Leçons'},
+  h2:{zh:'四種基本步，一拍一拍', en:'Four basics, count by count', fr:'Quatre pas de base, temps par temps'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'Bachata 的髖部動作不是刻意扭屁股，而是<strong class="text-white">膝蓋輕微彎曲、伸直的結果</strong>：踏步的那隻腳膝蓋伸直，髖就自然移到那一側。以下以男步描述，女步為鏡像（男生先動左腳，女生先動右腳）。',
+    en:'Bachata hip action is not a deliberate wiggle but <strong class="text-white">the result of bending and straightening the knees</strong>: as the stepping leg straightens, the hip settles over it. Steps are for the leader; the follower mirrors (he starts left, she starts right).',
+    fr:'L’action de hanche n’est pas un déhanché volontaire mais <strong class="text-white">le résultat de la flexion et de l’extension des genoux</strong> : quand la jambe d’appui se tend, la hanche s’y installe. Pas décrits pour le cavalier ; la cavalière fait l’inverse (il part du pied gauche, elle du droit).'} },
+  { type:'counts', t:{zh:'一、側步基本步（Side basic）', en:'1. Side basic', fr:'1. Pas de base latéral'}, items:[
+    {n:'1', p:{zh:'左腳往左', en:'Left to the left', fr:'Gauche à gauche'}},
+    {n:'2', p:{zh:'右腳併左腳', en:'Right closes', fr:'Droit rejoint'}},
+    {n:'3', p:{zh:'左腳往左', en:'Left to the left', fr:'Gauche à gauche'}},
+    {n:'4', p:{zh:'右腳點地，髖往上', en:'Right taps, hip up', fr:'Droit tape, hanche haute'}},
+    {n:'5', p:{zh:'右腳往右', en:'Right to the right', fr:'Droit à droite'}},
+    {n:'6', p:{zh:'左腳併右腳', en:'Left closes', fr:'Gauche rejoint'}},
+    {n:'7', p:{zh:'右腳往右', en:'Right to the right', fr:'Droit à droite'}},
+    {n:'8', p:{zh:'左腳點地，髖往上', en:'Left taps, hip up', fr:'Gauche tape, hanche haute'}},
+  ]},
+  { type:'counts', t:{zh:'二、前後基本步', en:'2. Forward-back basic', fr:'2. Pas de base avant-arrière'}, items:[
+    {n:'1', p:{zh:'左腳往前', en:'Left forward', fr:'Gauche en avant'}},
+    {n:'2', p:{zh:'重心回右腳', en:'Replace on right', fr:'Retour sur le droit'}},
+    {n:'3', p:{zh:'左腳收回', en:'Left closes', fr:'Gauche rejoint'}},
+    {n:'4', p:{zh:'右腳點地', en:'Right taps', fr:'Droit tape'}},
+    {n:'5', p:{zh:'右腳往後', en:'Right back', fr:'Droit en arrière'}},
+    {n:'6', p:{zh:'重心回左腳', en:'Replace on left', fr:'Retour sur le gauche'}},
+    {n:'7', p:{zh:'右腳收回', en:'Right closes', fr:'Droit rejoint'}},
+    {n:'8', p:{zh:'左腳點地', en:'Left taps', fr:'Gauche tape'}},
+  ]},
+  { type:'counts', t:{zh:'三、方步（Box basic）', en:'3. Box basic', fr:'3. Pas carré'},
+    p:{zh:'兩個側步加上前後，走出一個方形。用來從側步過渡到前後方向，也常用來旋轉整對舞伴的方向。', en:'Side steps plus forward and back trace a box. It links side and forward-back work and can rotate the couple.', fr:'Des pas latéraux et avant-arrière dessinent un carré. Relie les deux directions et permet de faire pivoter le couple.'},
+    items:[
+      {n:'1–3', p:{zh:'往左側步（左、右、左）', en:'Side left (L, R, L)', fr:'Latéral à gauche (G, D, G)'}},
+      {n:'4', p:{zh:'右腳點地', en:'Right taps', fr:'Droit tape'}},
+      {n:'5–7', p:{zh:'往前三步（右、左、右）', en:'Three steps forward (R, L, R)', fr:'Trois pas en avant (D, G, D)'}},
+      {n:'8', p:{zh:'左腳點地', en:'Left taps', fr:'Gauche tape'}},
+      {n:'1–3', p:{zh:'往左側步', en:'Side left', fr:'Latéral à gauche'}},
+      {n:'4', p:{zh:'點地', en:'Tap', fr:'Tap'}},
+      {n:'5–7', p:{zh:'往後三步，回到原點', en:'Three steps back to the start', fr:'Trois pas en arrière, retour au départ'}},
+      {n:'8', p:{zh:'點地', en:'Tap', fr:'Tap'}},
+    ]},
+  { type:'counts', t:{zh:'四、多明尼加式切分（Syncopation）', en:'4. Dominican syncopation', fr:'4. Syncope dominicaine'},
+    p:{zh:'把原本的 tap 換成更多小步，常見的是在「3 & 4」踩出三連步。先在原地練，熟了再配 mambo 段的快歌。', en:'Replace the tap with extra small steps; a common one is a triple on “3 & 4”. Practise on the spot, then use it in the mambo of fast songs.', fr:'Remplacez le tap par de petits pas ; la plus courante est un triple pas sur « 3 et 4 ». Travaillez-la sur place, puis dans le mambo des morceaux rapides.'},
+    items:[
+      {n:'1', p:{zh:'左腳原地', en:'Left in place', fr:'Gauche sur place'}},
+      {n:'2', p:{zh:'右腳原地', en:'Right in place', fr:'Droit sur place'}},
+      {n:'3', p:{zh:'左腳原地', en:'Left in place', fr:'Gauche sur place'}},
+      {n:'&', p:{zh:'右腳快踏', en:'Right quick step', fr:'Droit, pas rapide'}},
+      {n:'4', p:{zh:'左腳快踏', en:'Left quick step', fr:'Gauche, pas rapide'}},
+      {n:'5–8', p:{zh:'另一邊：右、左、右、& 左、右', en:'Other side: R, L, R, & L, R', fr:'Autre côté : D, G, D, et G, D'}},
+    ]},
+  { type:'note', p:{
+    zh:'Tap 的變化：點地（tap）、抬膝（lift）、往旁踢（kick）、髖部繞圈（hip roll），都是在 4 與 8 上把重音表現出來的方式。',
+    en:'Tap variations: a tap, a knee lift, a side kick or a hip roll are all ways of showing the accent on 4 and 8.',
+    fr:'Variantes du tap : pointé, genou levé, petit kick latéral ou cercle de hanche, autant de façons de marquer l’accent sur 4 et 8.'} },
+]},
+
+/* ── 5. Partner work ── */
+{ id:'partner', i:'fa-people-arrows', c:S,
+  nav:{zh:'雙人與花式', en:'Partner work', fr:'En couple'},
+  eyebrow:{zh:'第五章・教學', en:'Chapter 5 · Lessons', fr:'Chapitre 5 · Leçons'},
+  h2:{zh:'舞姿、轉圈與入門花式', en:'Holds, turns and first figures', fr:'Tenues, tours et premières figures'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-people-pulling', t:{zh:'閉式（Close hold）', en:'Close hold', fr:'Tenue fermée'}, p:{zh:'男生右手放在女生左肩胛骨或腰後，左手握女生右手在肩膀高度；女生左手搭在男生右肩或上臂。胸口保持一點距離（Dominican）或貼近（Sensual）。', en:'His right hand on her left shoulder blade or lower back, his left holding her right at shoulder height; her left hand on his right shoulder or upper arm. A little space between chests (Dominican) or close (sensual).', fr:'Main droite du cavalier sur l’omoplate gauche ou le bas du dos, main gauche tenant sa droite à hauteur d’épaule ; main gauche de la cavalière sur son épaule ou son bras. Un peu d’espace (dominicain) ou rapproché (sensual).'} },
+    { i:'fa-handshake', t:{zh:'開放式（Open hold）', en:'Open hold', fr:'Tenue ouverte'}, p:{zh:'雙手相握在腰的高度，手肘微彎有張力，用來轉圈與花式。', en:'Both hands joined at waist height, elbows softly bent with tone; for turns and patterns.', fr:'Les deux mains jointes à hauteur de taille, coudes légèrement fléchis et toniques ; pour les tours et figures.'} },
+    { i:'fa-heart', t:{zh:'連結', en:'Connection', fr:'Connexion'}, p:{zh:'帶領從軀幹出發，透過手臂與背上的手傳遞。跟隨者保持自己的平衡，不要整個人掛在對方身上。', en:'The lead starts in the torso and travels through the arms and the hand on the back. Followers keep their own balance and never hang on their partner.', fr:'Le guidage part du buste et passe par les bras et la main dans le dos. La cavalière garde son équilibre sans se suspendre à son partenaire.'} },
+  ]},
+  { type:'steps', items:[
+    { t:{zh:'女生右轉（Right turn）', en:'Follower’s right turn', fr:'Tour à droite de la cavalière'}, p:{zh:'開放式。1–4 側步往左並在 4 給準備（左手往左下輕帶）；5 男生左手舉高到女生頭頂；女生 5–7 用三步向右轉一圈（右、左、右），8 點地面對男生。男生在原地踏基本步。', en:'Open hold. Side basic to the left on 1–4 with a prep on 4 (left hand slightly down-left); on 5 he raises his left hand above her head; she turns right in three steps on 5–7 (R, L, R) and taps facing him on 8. He keeps his basic on the spot.', fr:'Tenue ouverte. Pas latéral à gauche sur 1–4 avec une préparation sur 4 (main gauche vers le bas à gauche) ; sur 5, il lève la main au-dessus de sa tête ; elle tourne à droite en trois pas sur 5–7 (D, G, D) et tape face à lui sur 8. Lui reste sur son pas de base.'} },
+    { t:{zh:'男生轉身（Leader’s turn）', en:'Leader’s turn', fr:'Tour du cavalier'}, p:{zh:'男生自己在 5–7 往左轉一圈，手從女生手中滑過或在頭頂交換，8 點地回到面對面。', en:'He turns left himself on 5–7, letting her hand slide around or passing it over his head, and taps facing her on 8.', fr:'Il tourne lui-même à gauche sur 5–7, la main glissant autour ou passant au-dessus de sa tête, et tape face à elle sur 8.'} },
+    { t:{zh:'Cross body lead（換位）', en:'Cross-body lead', fr:'Cross body lead'}, p:{zh:'1–3 男生往前並轉 90° 讓出路線，4 點地；5–7 女生走過男生身前，兩人交換位置並在 7 轉回面對面，8 點地。', en:'On 1–3 he steps forward turning 90° to open a path, tapping on 4; on 5–7 she walks across in front of him, they swap places and face each other again on 7, tapping on 8.', fr:'Sur 1–3, il avance en pivotant de 90° pour ouvrir le passage, tap sur 4 ; sur 5–7, elle passe devant lui, ils échangent leurs places et se refont face sur 7, tap sur 8.'} },
+    { t:{zh:'Hammerlock（手臂纏繞）', en:'Hammerlock', fr:'Hammerlock'}, p:{zh:'女生右轉半圈時，男生把她的右手輕放在她背後，兩人變成並肩，再用另一個右轉解開。動作要溫和，不要把手臂往上扳。', en:'During a half right turn, he places her right hand gently behind her back so they end side by side, then unwinds with another right turn. Be gentle: never lever the arm upwards.', fr:'Pendant un demi-tour à droite, il pose doucement sa main droite dans son dos, ils se retrouvent côte à côte, puis il défait la figure par un autre tour. En douceur : ne jamais forcer le bras vers le haut.'} },
+  ]},
+  { type:'h3', t:{zh:'身體波浪（Body wave）：Sensual 的核心', en:'The body wave: the heart of sensual', fr:'L’ondulation : le cœur de la sensual'} },
+  { type:'counts', t:{zh:'單人練習：由上而下的波浪（四拍一次）', en:'Solo drill: a top-down wave (one every four counts)', fr:'Exercice solo : ondulation de haut en bas (une tous les quatre temps)'},
+    p:{zh:'雙腳與髖同寬、膝蓋放鬆，對著鏡子側身做。重點是一個部位接著一個部位，像水流經過，而不是同時一起動。', en:'Feet hip-width, knees soft, side-on to a mirror. The point is one part after another, like water flowing through, never all at once.', fr:'Pieds largeur de hanches, genoux souples, de profil face au miroir. Une partie après l’autre, comme de l’eau qui s’écoule, jamais tout en même temps.'},
+    items:[
+      {n:'1', p:{zh:'頭與胸往前推', en:'Head and chest push forward', fr:'Tête et poitrine vers l’avant'}},
+      {n:'2', p:{zh:'胸收回、腹部往前', en:'Chest back, belly forward', fr:'Poitrine en arrière, ventre en avant'}},
+      {n:'3', p:{zh:'腹部收回、髖往前', en:'Belly back, hips forward', fr:'Ventre en arrière, bassin en avant'}},
+      {n:'4', p:{zh:'髖收回、膝蓋微彎再伸直', en:'Hips back, knees bend and straighten', fr:'Bassin en arrière, genoux fléchis puis tendus'}},
+    ]},
+  { type:'warn', p:{
+    zh:'安全與尊重：dip（下腰）與 head roll（頭部繞圈）只在雙方都會、而且舞伴同意時做；帶領者要撐住舞伴的重量，動作慢、幅度小，絕不能突然甩頭。近身舞姿可以由跟隨者調整距離，覺得不舒服隨時可以拉開。',
+    en:'Safety and respect: do dips and head rolls only when both of you know them and your partner agrees; the leader supports the follower’s weight, moving slowly and small, never whipping the head. In close hold the follower can adjust the distance and step back whenever they feel uncomfortable.',
+    fr:'Sécurité et respect : dips et head rolls seulement si les deux les maîtrisent et que le partenaire est d’accord ; le cavalier soutient le poids, lentement et en petite amplitude, sans jamais fouetter la tête. En tenue rapprochée, la cavalière règle la distance et peut s’écarter dès qu’elle se sent mal à l’aise.'} },
+]},
+
+/* ── 6. Practice ── */
+{ id:'practice', i:'fa-calendar-check', c:T,
+  nav:{zh:'練習計畫', en:'Practice plan', fr:'Plan de pratique'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'八週練習計畫與常見錯誤', en:'An eight-week plan and common mistakes', fr:'Plan de huit semaines et erreurs courantes'},
+  blocks:[
+  { type:'table', head:[{zh:'週次', en:'Weeks', fr:'Semaines'}, {zh:'目標', en:'Goal', fr:'Objectif'}, {zh:'練習', en:'Practice', fr:'Pratique'}], rows:[
+    ['1–2', {zh:'聽出 4 與 8 的重音；側步與前後步', en:'Hear the accents on 4 and 8; side and forward-back basics', fr:'Entendre les accents sur 4 et 8 ; pas latéral et avant-arrière'}, {zh:'每天 10 分鐘跟歌踩基本步，用膝蓋帶出髖', en:'10 minutes a day stepping to songs, driving the hip from the knees', fr:'10 minutes par jour sur la musique, la hanche menée par les genoux'}],
+    ['3–4', {zh:'方步、右轉、男生轉身', en:'Box basic, right turn, leader’s turn', fr:'Pas carré, tour à droite, tour du cavalier'}, {zh:'一週兩堂團體課，課後和同學複習', en:'Two group classes a week, reviewing with classmates', fr:'Deux cours collectifs par semaine, révisions avec des camarades'}],
+    ['5–6', {zh:'Cross body lead、hammerlock；第一次去舞會', en:'Cross-body lead, hammerlock; first social', fr:'Cross body lead, hammerlock ; première soirée'}, {zh:'舞會先跳慢歌，把三到四個動作輪流用', en:'Start with slow songs at socials, rotating three or four figures', fr:'En soirée, commencez par les morceaux lents avec trois ou quatre figures'}],
+    ['7–8', {zh:'多明尼加式切分、身體波浪', en:'Dominican syncopations, body wave', fr:'Syncopes dominicaines, ondulation'}, {zh:'鏡子前練波浪；mambo 段試著加切分', en:'Wave drills at the mirror; try syncopations in the mambo', fr:'Ondulations au miroir ; syncopes dans le mambo'}],
+  ]},
+  { type:'cards', cols:3, items:[
+    { i:'fa-xmark', t:{zh:'用腰扭髖', en:'Twisting the waist for hips', fr:'Tordre la taille'}, p:{zh:'髖部動作要來自膝蓋，不是上半身左右扭。上半身保持安靜。', en:'Hip action comes from the knees, not from twisting the upper body. Keep the torso calm.', fr:'L’action de hanche vient des genoux, pas d’une torsion du buste. Gardez le haut du corps calme.'} },
+    { i:'fa-xmark', t:{zh:'步伐太大', en:'Steps too big', fr:'Des pas trop grands'}, p:{zh:'側步約與肩同寬即可，太大會跟不上而且失去重心。', en:'A side step about shoulder-width is plenty; bigger and you fall behind and lose balance.', fr:'Un pas latéral de la largeur des épaules suffit ; plus grand, on prend du retard et on perd l’équilibre.'} },
+    { i:'fa-xmark', t:{zh:'把 tap 當休息', en:'Treating the tap as a rest', fr:'Le tap comme une pause'}, p:{zh:'4 與 8 是音樂的重音，是最該被看見的拍子，要做得清楚有力。', en:'4 and 8 are the musical accents, the beats most worth showing: make them clear.', fr:'4 et 8 sont les accents musicaux, les temps à montrer : marquez-les nettement.'} },
+  ]},
+]},
+]});
+</script>
+</body>
+</html>

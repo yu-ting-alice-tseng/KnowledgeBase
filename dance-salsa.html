@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salsa | 歷史、音樂、風格與步法教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* Son clave over two bars, on a grid of eighth notes. The 3 side hits counts
+   1, 2& and 4; the 2 side hits 2 and 3 of the next bar (dance counts 6 and 7). */
+function diaClave() {
+  const L = {
+    title:{zh:'Son clave（3-2）：整首歌的節奏骨架', en:'Son clave (3-2): the rhythmic backbone of the song', fr:'La clave son (3-2) : la colonne rythmique du morceau'},
+    s3:{zh:'「3」的一側：三下', en:'The “3” side: three hits', fr:'Côté « 3 » : trois coups'},
+    s2:{zh:'「2」的一側：兩下', en:'The “2” side: two hits', fr:'Côté « 2 » : deux coups'},
+    st:{zh:'On1 的踏步', en:'On1 steps', fr:'Pas en on1'},
+    note:{zh:'2-3 clave 就是把兩半對調。舞者的 8 拍＝兩小節。', en:'2-3 clave simply swaps the halves. A dancer’s eight = two bars.', fr:'La clave 2-3 inverse simplement les deux moitiés. Un huit de danseur = deux mesures.'},
+  };
+  const X0 = 60, cw = 50, y = 70;
+  const labels = ['1', '&', '2', '&', '3', '&', '4', '&', '5', '&', '6', '&', '7', '&', '8', '&'];
+  const clave = [0, 3, 6, 10, 12];                  /* eighth-note positions */
+  const steps = [0, 2, 4, 8, 10, 12];               /* 1 2 3 · 5 6 7 · */
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  labels.forEach((l, i) => {
+    const x = X0 + i * cw;
+    s += `<rect x="${x}" y="${y}" width="${cw - 4}" height="40" rx="6" fill="${clave.includes(i) ? '#f97316' : 'rgba(148,163,184,0.08)'}" fill-opacity="${clave.includes(i) ? 0.8 : 1}" stroke="rgba(148,163,184,0.25)"/>`;
+    s += `<text x="${x + (cw - 4) / 2}" y="${y + 60}" text-anchor="middle" class="${l === '&' ? 'sub' : 'val'}">${l}</text>`;
+    s += `<rect x="${x}" y="${y + 74}" width="${cw - 4}" height="22" rx="5" fill="${steps.includes(i) ? '#facc15' : 'transparent'}" fill-opacity="0.55"/>`;
+  });
+  s += `<line x1="${X0 + 8 * cw - 2}" y1="${y - 10}" x2="${X0 + 8 * cw - 2}" y2="${y + 100}" stroke="#94a3b8" stroke-dasharray="4 4"/>`;
+  s += `<text x="${X0}" y="${y - 12}" class="sub">${t(L.s3)}</text><text x="${X0 + 8 * cw + 6}" y="${y - 12}" class="sub">${t(L.s2)}</text>`;
+  s += `<text x="0" y="${y + 89}" class="sub" style="font-size:11px">${t(L.st)}</text>`;
+  s += `<text x="0" y="${y + 126}" class="sub">${t(L.note)}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 210" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* The slot: in LA and New York style the follower travels up and down a line
+   while the leader steps out of it and back in. */
+function diaSlot() {
+  const L = {
+    title:{zh:'線性 Salsa 的「slot」：Cross body lead 的換位', en:'The slot of linear salsa: the cross-body lead', fr:'Le « slot » de la salsa linéaire : le cross body lead'},
+    a:{zh:'1–3：男生退出 slot，讓出路線', en:'1–3: leader steps out of the slot, opening the line', fr:'1–3 : le cavalier sort du slot et ouvre la ligne'},
+    b:{zh:'5–7：女生沿著線走過去，兩人交換位置', en:'5–7: follower walks along the line; they swap places', fr:'5–7 : la cavalière parcourt la ligne ; ils échangent leurs places'},
+    lead:{zh:'男', en:'L', fr:'C'}, fol:{zh:'女', en:'F', fr:'F'},
+  };
+  const y = 110;
+  const dot = (x, yy, c, l, o) => `<circle cx="${x}" cy="${yy}" r="17" fill="${c}" fill-opacity="${o}"/><text x="${x}" y="${yy + 5}" text-anchor="middle" class="val">${l}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 220" role="img" aria-label="${t(L.title)}">
+    <text x="0" y="22" class="lab">${t(L.title)}</text>
+    <rect x="80" y="${y - 22}" width="420" height="44" rx="22" fill="rgba(249,115,22,0.08)" stroke="#f97316" stroke-dasharray="6 5"/>
+    ${dot(170, y, '#38bdf8', t(L.lead), 0.35)}${dot(410, y, '#f472b6', t(L.fol), 0.35)}
+    ${dot(250, y + 62, '#38bdf8', t(L.lead), 0.85)}
+    <path d="M170 ${y + 18} q20 40 60 44" stroke="#38bdf8" stroke-width="2" fill="none"/>
+    <path d="M392 ${y} H200" stroke="#f472b6" stroke-width="2" fill="none" marker-end="url(#ah)"/>
+    ${dot(170, y, '#f472b6', '', 0)}
+    <path d="M250 ${y + 44} q30 -30 160 -44" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#f472b6"/></marker></defs>
+    <text x="540" y="${y - 6}" class="val" style="fill:#7dd3fc">${t(L.a)}</text>
+    <text x="540" y="${y + 24}" class="val" style="fill:#f9a8d4">${t(L.b)}</text></svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const O = '#f97316', Y = '#facc15', R = '#f87171', P = '#f472b6', S = '#38bdf8', T = '#2dd4bf', V = '#a78bfa';
+
+CourseKit.start({
+icon:'fa-pepper-hot', accent:O, accent2:'#facc15', bg:'#0b0705',
+back:{ href:'dance.html', label:{zh:'回到舞蹈總覽', en:'Back to the dance overview', fr:'Retour à la vue d’ensemble'} },
+dia:{ clave: diaClave, slot: diaSlot },
+ui:{
+zh:{
+ 'doc.title':'Salsa | 歷史、音樂、風格與步法教學',
+ 'hdr.badge':'舞種詳解・Salsa','hdr.title':'Salsa：歷史、音樂、風格與步法教學',
+ 'intro':'Salsa 是全世界最多人跳的社交拉丁舞。它的根在古巴的 son 音樂，在 1960–70 年代的紐約由波多黎各與古巴移民的樂手發揚光大，再傳到哥倫比亞、洛杉磯，以及亞洲與歐洲的每一個城市。幾乎每個大城市每週都有 Salsa 舞會，一個人去就能跟陌生人跳上一整晚。',
+ 'intro2':'這一頁介紹 Salsa 的歷史、讓舞者找到「1」的音樂結構（clave、樂器與樂段），比較 LA、紐約、古巴與哥倫比亞四大風格，接著一拍一拍教基本步、cross body lead、轉圈、古巴式的 dile que no 與 enchufla、個人花步（shines），最後是帶領跟隨、舞會禮儀與三個月的練習計畫。',
+ 'footer':'Salsa 入門參考。各地教室對步法名稱與 on1、on2 的教法略有不同，請以你的老師為準。速度快的歌容易讓膝蓋與腳踝負擔過大，請穿有麂皮或光滑鞋底的鞋，轉圈時不要用力扭膝蓋。'
+},
+en:{
+ 'doc.title':'Salsa: History, Music, Styles & Steps',
+ 'hdr.badge':'STYLE GUIDE · SALSA','hdr.title':'Salsa: history, music, styles and steps',
+ 'intro':'Salsa is the most widely danced social Latin dance in the world. Its roots are in Cuban son; in 1960s–70s New York, Puerto Rican and Cuban musicians made it explode, and from there it spread to Colombia, Los Angeles and every city in Asia and Europe. Almost every big city has weekly socials, and you can go alone and dance all night with strangers.',
+ 'intro2':'This page covers salsa’s history, the musical structure that lets dancers find the “1” (clave, instruments and sections), compares the LA, New York, Cuban and Colombian styles, then teaches count by count the basic, the cross-body lead, turns, the Cuban dile que no and enchufla and solo shines, and ends with lead and follow, social etiquette and a three-month practice plan.',
+ 'footer':'An introductory salsa reference. Studios name figures and teach on1 and on2 slightly differently: follow your teacher. Fast songs load the knees and ankles, so wear suede or smooth-soled shoes and never twist the knee to turn.'
+},
+fr:{
+ 'doc.title':'Salsa : histoire, musique, styles & pas',
+ 'hdr.badge':'FICHE STYLE · SALSA','hdr.title':'La salsa : histoire, musique, styles et pas',
+ 'intro':'La salsa est la danse latine sociale la plus pratiquée au monde. Ses racines sont dans le son cubain ; dans le New York des années 1960–70, des musiciens portoricains et cubains l’ont fait exploser, puis elle a gagné la Colombie, Los Angeles et toutes les villes d’Asie et d’Europe. Presque chaque grande ville a ses soirées hebdomadaires : on peut y aller seul et danser toute la nuit.',
+ 'intro2':'Cette page présente l’histoire de la salsa, la structure musicale qui permet de trouver le « 1 » (clave, instruments, sections), compare les styles LA, New York, cubain et colombien, puis enseigne temps par temps le pas de base, le cross body lead, les tours, le dile que no et l’enchufla cubains et les shines en solo, et se termine par le guidage, l’étiquette en soirée et un plan de trois mois.',
+ 'footer':'Une référence d’initiation à la salsa. Les écoles nomment les figures et enseignent on1 et on2 un peu différemment : suivez votre professeur. Les morceaux rapides sollicitent genoux et chevilles : portez des semelles en daim ou lisses et ne tournez jamais en vrillant le genou.'
+}},
+sections:[
+
+/* ── 1. History ── */
+{ id:'history', i:'fa-landmark', c:O,
+  nav:{zh:'歷史', en:'History', fr:'Histoire'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'從古巴 son 到全世界的舞會', en:'From Cuban son to dance floors worldwide', fr:'Du son cubain aux pistes du monde entier'},
+  blocks:[
+  { type:'table', head:[{zh:'時期', en:'Period', fr:'Période'}, {zh:'發生了什麼', en:'What happened', fr:'Ce qui s’est passé'}], rows:[
+    [{zh:'19 世紀末–1920 年代', en:'Late 1800s–1920s', fr:'Fin XIXᵉ–années 1920'}, {zh:'古巴東部的 son 結合西班牙吉他與非洲鼓樂，clave 節奏成為骨架。', en:'In eastern Cuba, son blends Spanish guitar with African drumming; the clave becomes its backbone.', fr:'Dans l’est de Cuba, le son mêle guitare espagnole et percussions africaines ; la clave en devient l’ossature.'}],
+    [{zh:'1940–50 年代', en:'1940s–50s', fr:'Années 1940–50'}, {zh:'Mambo 與 cha-cha 在哈瓦那與紐約的 Palladium 舞廳風靡。', en:'Mambo and cha-cha sweep Havana and New York’s Palladium Ballroom.', fr:'Le mambo et le cha-cha déferlent à La Havane et au Palladium de New York.'}],
+    [{zh:'1960–70 年代', en:'1960s–70s', fr:'Années 1960–70'}, {zh:'紐約的波多黎各與古巴樂手把這些音樂融合、加上爵士與城市感，Fania Records 用「Salsa」一詞行銷。代表樂手：Celia Cruz、Héctor Lavoe、Willie Colón、Rubén Blades。', en:'Puerto Rican and Cuban musicians in New York fuse these sounds with jazz and an urban edge; Fania Records markets it as “salsa”. Key artists: Celia Cruz, Héctor Lavoe, Willie Colón, Rubén Blades.', fr:'À New York, des musiciens portoricains et cubains fusionnent ces musiques avec le jazz et l’énergie urbaine ; Fania Records lance le mot « salsa ». Figures : Celia Cruz, Héctor Lavoe, Willie Colón, Rubén Blades.'}],
+    [{zh:'1970–80 年代', en:'1970s–80s', fr:'Années 1970–80'}, {zh:'古巴發展出 Casino 與多人圓圈舞 Rueda de Casino；哥倫比亞卡利發展出腳步飛快的 Salsa caleña。', en:'Cuba develops casino and the circle dance rueda de casino; Cali in Colombia develops the lightning-footed salsa caleña.', fr:'Cuba développe le casino et la ronde rueda de casino ; Cali, en Colombie, invente la salsa caleña aux pieds ultra-rapides.'}],
+    [{zh:'1990 年代至今', en:'1990s–today', fr:'Depuis les années 1990'}, {zh:'Eddie Torres 系統化紐約 on2；Vazquez 兄弟等人在洛杉磯發展華麗的 on1；Salsa congress 與舞會遍布全球。', en:'Eddie Torres codifies New York on2; the Vazquez brothers and others build flashy LA on1; congresses and socials spread worldwide.', fr:'Eddie Torres codifie le on2 new-yorkais ; les frères Vazquez et d’autres développent le on1 spectaculaire de LA ; congrès et soirées essaiment partout.'}],
+  ]},
+]},
+
+/* ── 2. Music ── */
+{ id:'music', i:'fa-drum', c:Y,
+  nav:{zh:'音樂', en:'Music', fr:'Musique'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'聽懂 Salsa 音樂：找到「1」', en:'Hearing salsa: finding the “1”', fr:'Écouter la salsa : trouver le « 1 »'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'Salsa 的速度約 150–220 BPM，初學者最大的難題是「找不到 1」。訣竅是：<strong class="text-white">舞者的一個八拍＝音樂的兩小節</strong>，而樂句、歌詞的開頭和重拍大多落在 1。下面的 clave 是貫穿整首歌的節奏骨架，所有樂器都圍繞它演奏。',
+    en:'Salsa runs at about 150–220 BPM, and the beginner’s great struggle is finding the “1”. The key: <strong class="text-white">a dancer’s eight = two bars of music</strong>, and phrases, lyrics and strong accents mostly start on 1. The clave below is the rhythmic backbone that every instrument plays around.',
+    fr:'La salsa va d’environ 150 à 220 BPM, et le grand défi du débutant est de trouver le « 1 ». La clé : <strong class="text-white">un huit de danseur = deux mesures</strong>, et phrases, paroles et accents forts commencent surtout sur le 1. La clave ci-dessous est l’ossature autour de laquelle jouent tous les instruments.'} },
+  { type:'dia', k:'clave' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-drum', t:{zh:'Conga（康加鼓）', en:'Congas', fr:'Congas'}, p:{zh:'基本節奏 tumbao 在 4 與 8 拍有兩聲明亮的開放音（open tone），是跳 on2 的人最愛聽的提示。', en:'The tumbao pattern puts two bright open tones on 4 and 8, the favourite cue of on2 dancers.', fr:'Le tumbao place deux tons ouverts éclatants sur 4 et 8 : le repère préféré des danseurs on2.'} },
+    { i:'fa-bell', t:{zh:'牛鈴（Campana）', en:'Cowbell (campana)', fr:'Cloche (campana)'}, p:{zh:'在副歌段落敲出響亮穩定的拍子，最大聲的那一下通常在 1、3、5、7。', en:'Hammers out a loud, steady beat in the chorus sections; the strongest strokes usually fall on 1, 3, 5, 7.', fr:'Marque un temps fort et régulier dans les refrains ; les coups les plus forts tombent souvent sur 1, 3, 5, 7.'} },
+    { i:'fa-music', t:{zh:'鋼琴 montuno', en:'Piano montuno', fr:'Montuno du piano'}, p:{zh:'不斷重複的切分琴型，與 clave 對齊。', en:'A repeating syncopated figure locked to the clave.', fr:'Un motif syncopé répétitif calé sur la clave.'} },
+    { i:'fa-guitar', t:{zh:'貝斯', en:'Bass', fr:'Basse'}, p:{zh:'常在「2&」與 4 出音，故意避開 1，製造推進感（anticipated bass）。', en:'Often plays on “2&” and 4, deliberately avoiding 1 to create drive (the anticipated bass).', fr:'Joue souvent sur « 2 et » et 4, évitant le 1 pour créer l’élan (basse anticipée).'} },
+    { i:'fa-microphone', t:{zh:'人聲與樂段', en:'Voice and sections', fr:'Voix et sections'}, p:{zh:'歌曲結構：前奏 → 主歌（verso）→ 副歌對唱（coro–pregón）→ 間奏 mambo（銅管齊奏，最熱鬧）→ 結尾。主歌適合基本步，mambo 段最適合大花式。', en:'Structure: intro → verse → call-and-response chorus (coro–pregón) → mambo break (brass in unison, the hottest part) → ending. Verses suit basics; the mambo suits your big moves.', fr:'Structure : intro → couplet → refrain en question-réponse (coro–pregón) → mambo (cuivres à l’unisson, le moment le plus chaud) → fin. Les couplets pour les pas de base, le mambo pour les grandes figures.'} },
+    { i:'fa-headphones', t:{zh:'入門歌單', en:'Starter playlist', fr:'Playlist pour débuter'}, p:{zh:'中速、拍子清楚：Marc Anthony〈Vivir Mi Vida〉、Grupo Niche〈Cali Pachanguero〉、Celia Cruz〈La Vida Es Un Carnaval〉、Oscar D’León〈Llorarás〉。', en:'Mid-tempo with a clear beat: Marc Anthony “Vivir Mi Vida”, Grupo Niche “Cali Pachanguero”, Celia Cruz “La Vida Es Un Carnaval”, Oscar D’León “Llorarás”.', fr:'Tempo moyen, temps bien marqué : Marc Anthony « Vivir Mi Vida », Grupo Niche « Cali Pachanguero », Celia Cruz « La Vida Es Un Carnaval », Oscar D’León « Llorarás ».'} },
+  ]},
+]},
+
+/* ── 3. Styles ── */
+{ id:'styles', i:'fa-layer-group', c:R,
+  nav:{zh:'四大風格', en:'Styles', fr:'Styles'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'四大風格比較', en:'The four main styles compared', fr:'Les quatre grands styles comparés'},
+  blocks:[
+  { type:'table', head:[{zh:'風格', en:'Style', fr:'Style'}, {zh:'時機', en:'Timing', fr:'Temps'}, {zh:'移動', en:'Movement', fr:'Déplacement'}, {zh:'特色', en:'Character', fr:'Caractère'}, {zh:'適合', en:'Suits', fr:'Pour qui'}], rows:[
+    [{zh:'LA 式', en:'LA style', fr:'Style LA'}, {zh:'On1（在 1 往前踏）', en:'On1 (break forward on 1)', fr:'On1 (cassure sur 1)'}, {zh:'線性 slot', en:'Linear slot', fr:'Slot linéaire'}, {zh:'華麗、多轉圈、dip 與托舉，舞台感強', en:'Flashy: many spins, dips and tricks, stage-ready', fr:'Spectaculaire : tours, dips et portés, très scénique'}, {zh:'想要表演、比賽', en:'Performers, competitors', fr:'Danseurs de scène, compétiteurs'}],
+    [{zh:'紐約式（Mambo）', en:'New York (mambo)', fr:'New York (mambo)'}, {zh:'On2（在 2 往前踏）', en:'On2 (break on 2)', fr:'On2 (cassure sur 2)'}, {zh:'線性 slot', en:'Linear slot', fr:'Slot linéaire'}, {zh:'平順、優雅、與 conga 契合，大量 shines', en:'Smooth, elegant, locked to the conga, lots of shines', fr:'Fluide, élégant, calé sur la conga, beaucoup de shines'}, {zh:'喜歡音樂性與細節', en:'Musicality lovers', fr:'Amateurs de musicalité'}],
+    [{zh:'古巴式（Casino）', en:'Cuban (casino)', fr:'Cubain (casino)'}, {zh:'多為 on1，也有 contratiempo', en:'Mostly on1, also contratiempo', fr:'Surtout on1, aussi contratiempo'}, {zh:'圓形繞轉', en:'Circular', fr:'Circulaire'}, {zh:'隨興、熱鬧、手臂纏繞，身體律動多；有多人的 Rueda', en:'Relaxed, joyful, intertwined arms, lots of body movement; the group rueda', fr:'Décontracté, festif, bras entrelacés, beaucoup de mouvement du corps ; la rueda en groupe'}, {zh:'喜歡社交、好玩', en:'Social, playful dancers', fr:'Danseurs sociaux et joueurs'}],
+    [{zh:'哥倫比亞式（Caleña）', en:'Colombian (caleña)', fr:'Colombien (caleña)'}, {zh:'On1 為主', en:'Mainly on1', fr:'Surtout on1'}, {zh:'原地為主', en:'Mostly on the spot', fr:'Surtout sur place'}, {zh:'極快的腳步與踢腿，常配合快歌', en:'Extremely fast footwork and kicks, often to fast songs', fr:'Jeux de pieds et kicks ultra-rapides, souvent sur des morceaux rapides'}, {zh:'愛挑戰速度', en:'Speed lovers', fr:'Amateurs de vitesse'}],
+  ]},
+  { type:'note', p:{
+    zh:'新手建議先選你所在城市舞會最常見的風格。台灣的教室以 LA on1 與古巴式最多；法國巴黎則古巴式、LA 與紐約式都很普遍。學會一種之後，另一種大約一兩個月就能適應。',
+    en:'As a beginner, pick the style most danced at socials in your city. In Taiwan, LA on1 and Cuban dominate; in Paris, Cuban, LA and New York styles are all common. Once you know one, adapting to another takes a month or two.',
+    fr:'Au début, choisissez le style le plus dansé dans les soirées de votre ville. À Taïwan, on1 LA et cubain dominent ; à Paris, cubain, LA et New York sont tous courants. Une fois un style acquis, un ou deux mois suffisent pour s’adapter à un autre.'} },
+]},
+
+/* ── 4. Basics ── */
+{ id:'basics', i:'fa-shoe-prints', c:P,
+  nav:{zh:'基本步', en:'Basics', fr:'Bases'},
+  eyebrow:{zh:'第四章・教學', en:'Chapter 4 · Lessons', fr:'Chapitre 4 · Leçons'},
+  h2:{zh:'基本步：每個八拍踏六步', en:'The basics: six steps in every eight', fr:'Les bases : six pas par huit'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'所有 Salsa 都是「三步、停、三步、停」：在 4 與 8 不踩步，讓身體準備換方向。踩在第一步並改變方向的那一拍叫「break step」。以下步法以男步描述，女步做鏡像（從右腳後退開始）。',
+    en:'All salsa is “three steps, pause, three steps, pause”: no step on 4 and 8 while the body prepares to change direction. The step where you change direction is the “break step”. Steps are given for the leader; the follower mirrors, starting right foot back.',
+    fr:'Toute salsa, c’est « trois pas, pause, trois pas, pause » : pas d’appui sur 4 et 8, le temps de préparer le changement de direction. Le pas où l’on change de sens est le « break step ». Pas décrits pour le cavalier ; la cavalière fait l’inverse, départ pied droit en arrière.'} },
+  { type:'counts', t:{zh:'一、前後基本步（On1）', en:'1. Forward-back basic (on1)', fr:'1. Pas de base avant-arrière (on1)'}, items:[
+    {n:'1', p:{zh:'左腳往前（break）', en:'Left forward (break)', fr:'Gauche en avant (break)'}},
+    {n:'2', p:{zh:'重心回右腳', en:'Replace on right', fr:'Retour sur le droit'}},
+    {n:'3', p:{zh:'左腳併回', en:'Left closes', fr:'Gauche rejoint'}},
+    {n:'4', p:{zh:'停', en:'Pause', fr:'Pause'}},
+    {n:'5', p:{zh:'右腳往後（break）', en:'Right back (break)', fr:'Droit en arrière (break)'}},
+    {n:'6', p:{zh:'重心回左腳', en:'Replace on left', fr:'Retour sur le gauche'}},
+    {n:'7', p:{zh:'右腳併回', en:'Right closes', fr:'Droit rejoint'}},
+    {n:'8', p:{zh:'停', en:'Pause', fr:'Pause'}},
+  ]},
+  { type:'counts', t:{zh:'二、On2 基本步（紐約式，男步）', en:'2. On2 basic (New York, leader)', fr:'2. Pas de base on2 (New York, cavalier)'},
+    p:{zh:'一樣踩在 1 2 3、5 6 7，停在 4 與 8，但改變方向的 break 落在 2 與 6：男生在 2 往前、女生在 2 往後。這讓舞步和 conga 的重音對齊，感覺更平順。', en:'Still stepping on 1 2 3, 5 6 7 and pausing on 4 and 8, but the break falls on 2 and 6: the leader breaks forward on 2, the follower back on 2. It lines the steps up with the conga accents and feels smoother.', fr:'On marche toujours sur 1 2 3, 5 6 7 avec des pauses sur 4 et 8, mais la cassure tombe sur 2 et 6 : le cavalier casse en avant sur 2, la cavalière en arrière. Les pas s’alignent sur les accents de la conga, plus fluides.'},
+    items:[
+      {n:'1', p:{zh:'右腳原地踏（收回）', en:'Right steps in place', fr:'Droit sur place'}},
+      {n:'2', p:{zh:'左腳往前 break', en:'Left forward (break)', fr:'Gauche en avant (break)'}},
+      {n:'3', p:{zh:'重心回右腳', en:'Replace on right', fr:'Retour sur le droit'}},
+      {n:'4', p:{zh:'停', en:'Pause', fr:'Pause'}},
+      {n:'5', p:{zh:'左腳收回併攏', en:'Left closes', fr:'Gauche rejoint'}},
+      {n:'6', p:{zh:'右腳往後 break', en:'Right back (break)', fr:'Droit en arrière (break)'}},
+      {n:'7', p:{zh:'重心回左腳', en:'Replace on left', fr:'Retour sur le gauche'}},
+      {n:'8', p:{zh:'停', en:'Pause', fr:'Pause'}},
+    ]},
+  { type:'counts', t:{zh:'三、古巴式後退基本步（Guapea）', en:'3. Cuban back basic (guapea)', fr:'3. Pas de base cubain (guapea)'},
+    p:{zh:'兩人面對面，各自往後退再收回，像彈簧一樣拉開又靠近。古巴式所有花式都從這裡開始。', en:'Facing each other, both rock back and return, stretching apart and coming together like a spring. Every Cuban figure starts here.', fr:'Face à face, chacun recule puis revient, comme un ressort. Toutes les figures cubaines partent de là.'},
+    items:[
+      {n:'1', p:{zh:'左腳往後', en:'Left back', fr:'Gauche en arrière'}},
+      {n:'2', p:{zh:'重心回右腳', en:'Replace on right', fr:'Retour sur le droit'}},
+      {n:'3', p:{zh:'左腳往前點回中間', en:'Left back to centre', fr:'Gauche revient au centre'}},
+      {n:'4', p:{zh:'停（或點地）', en:'Pause (or tap)', fr:'Pause (ou tap)'}},
+      {n:'5', p:{zh:'右腳往後', en:'Right back', fr:'Droit en arrière'}},
+      {n:'6', p:{zh:'重心回左腳', en:'Replace on left', fr:'Retour sur le gauche'}},
+      {n:'7', p:{zh:'右腳回中間', en:'Right back to centre', fr:'Droit revient au centre'}},
+      {n:'8', p:{zh:'停', en:'Pause', fr:'Pause'}},
+    ]},
+  { type:'steps', items:[
+    { t:{zh:'側步（Side basic）', en:'Side basic', fr:'Pas latéral'}, p:{zh:'1 左腳往左、2 重心回右、3 左腳併回；5 右腳往右、6 重心回左、7 右腳併回。暖身或休息時常用。', en:'1 left to the side, 2 replace right, 3 left closes; 5 right to the side, 6 replace left, 7 right closes. Used to warm up or rest.', fr:'1 gauche à gauche, 2 retour sur le droit, 3 gauche rejoint ; 5 droit à droite, 6 retour, 7 droit rejoint. Pour s’échauffer ou souffler.'} },
+    { t:{zh:'身體與手臂', en:'Body and arms', fr:'Corps et bras'}, p:{zh:'膝蓋放鬆、腳掌先著地，讓步伐帶動髖部的古巴動作（見拉丁與國標舞頁）。上半身保持穩定，手肘在身體前方、不要甩。', en:'Soft knees, land on the ball of the foot, and let the steps drive Cuban hip motion (see the Latin and ballroom page). Keep the upper body steady and the elbows in front of you.', fr:'Genoux souples, avant-pied d’abord, et laissez les pas entraîner le mouvement cubain des hanches (voir la page latines & salon). Buste stable, coudes devant soi.'} },
+    { t:{zh:'步伐要小', en:'Keep the steps small', fr:'Des pas petits'}, p:{zh:'快歌時步幅約半個腳長。步子太大一定跟不上。', en:'At speed, a step is about half a foot long. Big steps will never keep up.', fr:'En rapide, un pas fait environ une demi-longueur de pied. Les grands pas ne suivent jamais.'} },
+  ]},
+]},
+
+/* ── 5. Partner figures ── */
+{ id:'figures', i:'fa-people-arrows', c:S,
+  nav:{zh:'雙人花式', en:'Partner figures', fr:'Figures en couple'},
+  eyebrow:{zh:'第五章・教學', en:'Chapter 5 · Lessons', fr:'Chapitre 5 · Leçons'},
+  h2:{zh:'六個入門雙人花式', en:'Six first partner figures', fr:'Six premières figures en couple'},
+  blocks:[
+  { type:'dia', k:'slot' },
+  { type:'steps', items:[
+    { t:{zh:'Cross body lead（CBL，線性風格的核心）', en:'Cross-body lead (CBL, the core of linear styles)', fr:'Cross body lead (CBL, cœur des styles linéaires)'}, p:{zh:'1 男生左腳往前、2 重心回右、3 左腳往左後方轉 90° 退出 slot（同時左手把女生往前帶）；5–7 男生轉回 90° 回到 slot，女生沿著 slot 走過男生身前並在 6–7 轉半圈面對他。兩人交換了位置。', en:'1 leader left forward, 2 replace right, 3 left steps back and turns 90° out of the slot (the left hand invites the follower forward); 5–7 he turns back into the slot while she walks past in front of him and turns half round on 6–7 to face him. They have swapped places.', fr:'1 cavalier gauche en avant, 2 retour, 3 gauche recule en tournant de 90° pour sortir du slot (la main gauche invite la cavalière) ; 5–7 il revient dans le slot pendant qu’elle passe devant lui et fait un demi-tour sur 6–7. Ils ont échangé leurs places.'} },
+    { t:{zh:'女生右轉（Right turn / outside turn）', en:'Follower’s right turn (outside turn)', fr:'Tour à droite de la cavalière (outside turn)'}, p:{zh:'開放式握手。準備：在 1–3 男生左手稍微往左下帶（prep）；5 時把手舉到女生頭頂上方，像在她頭上畫一個小圈；女生在 5–6 以右腳為軸向右轉一圈、7 面對男生。男生的手要鬆，像套環而不是擰毛巾。', en:'Open hold. Prep on 1–3 with a small down-left move of the leader’s left hand; on 5 raise it above her head, drawing a small halo; she turns right on 5–6 pivoting on the right foot and faces him on 7. Keep the hand loose, a halo not a wrung towel.', fr:'Prise ouverte. Préparation sur 1–3 par un léger mouvement vers le bas et la gauche ; sur 5, la main monte au-dessus de sa tête et dessine un petit halo ; elle tourne à droite sur 5–6 en pivotant sur le pied droit et lui fait face sur 7. Main souple : un halo, pas une serviette qu’on essore.'} },
+    { t:{zh:'女生左轉（Inside turn）', en:'Follower’s left turn (inside turn)', fr:'Tour à gauche de la cavalière (inside turn)'}, p:{zh:'常和 CBL 組合：在 CBL 的 5 舉手，讓女生走過時往左轉一圈（inside turn）。準備方向和右轉相反。', en:'Often combined with the CBL: raise the hand on 5 so she turns left as she passes. The prep goes the opposite way to the right turn.', fr:'Souvent combiné au CBL : la main monte sur 5 et elle tourne à gauche en passant. La préparation va dans le sens inverse du tour à droite.'} },
+    { t:{zh:'Dile que no（古巴式）', en:'Dile que no (Cuban)', fr:'Dile que no (cubain)'}, p:{zh:'從閉式舞姿開始：1–3 做基本步，5–7 男生往右轉 90° 並放開右手，用左手把女生送到自己右前方，兩人變成開放式面對面。這是古巴式最重要的連接動作。', en:'From closed hold: basic on 1–3, then on 5–7 the leader turns 90° right, releases the right hand and sends the follower to his front right with the left hand, ending in open position. The most important connecting figure in Cuban style.', fr:'Depuis la position fermée : pas de base sur 1–3, puis sur 5–7 le cavalier pivote de 90° à droite, lâche la main droite et envoie la cavalière devant lui à droite : position ouverte. La liaison la plus importante du cubain.'} },
+    { t:{zh:'Enchufla（古巴式）', en:'Enchufla (Cuban)', fr:'Enchufla (cubain)'}, p:{zh:'開放式右手握女生右手：1–3 往後基本步並把手舉起；5–7 男生往左轉半圈、女生往左轉一圈，兩人交換位置，常接 dile que no 回閉式。', en:'Open hold, right hand in right: back basic on 1–3 raising the hands; on 5–7 he turns half left and she turns fully left, swapping places; often followed by a dile que no back to closed.', fr:'Prise ouverte main droite dans main droite : pas de base arrière sur 1–3 en levant les mains ; sur 5–7 il fait un demi-tour à gauche et elle un tour complet, ils échangent leurs places ; souvent suivi d’un dile que no.'} },
+    { t:{zh:'Copa（換手轉身）', en:'Copa', fr:'Copa'}, p:{zh:'在 CBL 的過程中男生把女生往前送、再拉回並讓她轉半圈，像倒酒的手勢（copa＝酒杯）。熟練 CBL 後的下一步。', en:'During a CBL the leader sends her forward, then brings her back with a half turn, like pouring from a glass (copa). The next step once your CBL is solid.', fr:'Pendant un CBL, le cavalier l’envoie en avant puis la ramène avec un demi-tour, comme on verse un verre (copa). L’étape suivante après le CBL.'} },
+  ]},
+]},
+
+/* ── 6. Shines ── */
+{ id:'shines', i:'fa-star', c:T,
+  nav:{zh:'Shines', en:'Shines', fr:'Shines'},
+  eyebrow:{zh:'第六章・教學', en:'Chapter 6 · Lessons', fr:'Chapitre 6 · Leçons'},
+  h2:{zh:'個人花步（Shines／Footwork）', en:'Solo footwork (shines)', fr:'Jeux de pieds en solo (shines)'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'Shines 是兩人分開、各自跳的腳步段落，常出現在音樂的 mambo 段。可以自己在家練，是提升節奏感最快的方法。',
+    en:'Shines are passages where partners separate and dance their own footwork, often in the mambo section. You can practise them alone at home: the fastest way to improve your timing.',
+    fr:'Les shines sont des passages où les partenaires se séparent pour danser leurs pas, souvent pendant le mambo. On les travaille seul à la maison : le moyen le plus rapide d’améliorer son timing.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-shoe-prints', t:{zh:'Cross over', en:'Cross-over', fr:'Cross-over'}, p:{zh:'1 左腳往右前方交叉、2 重心回右、3 左腳回中間；5 右腳往左前交叉、6 回、7 回中間。上半身朝前，像在跨過一條線。', en:'1 left crosses in front to the right, 2 replace, 3 back to centre; 5 right crosses to the left, 6 replace, 7 centre. Chest faces front, as if stepping over a line.', fr:'1 gauche croise devant vers la droite, 2 retour, 3 au centre ; 5 droit croise vers la gauche, 6 retour, 7 au centre. Buste face, comme pour enjamber une ligne.'} },
+    { i:'fa-rotate', t:{zh:'Suzie Q', en:'Suzie Q', fr:'Suzie Q'}, p:{zh:'以腳跟、腳尖交替轉動的方式往側邊移動，一隻腳交叉在另一隻前面，扭動感強。', en:'Travel sideways swivelling heel and toe, one foot crossing in front of the other; very twisty.', fr:'Déplacement latéral en pivotant talon-pointe, un pied croisant devant l’autre ; très tournoyant.'} },
+    { i:'fa-arrows-left-right', t:{zh:'Mambo 點踏', en:'Mambo taps', fr:'Taps mambo'}, p:{zh:'把基本步的停頓拍改成點地（tap），再加上踢腿或腳跟點地，做出自己的變化。', en:'Turn the pause beats of the basic into taps, then add kicks or heel taps to make your own variations.', fr:'Remplacez les pauses du pas de base par des taps, puis ajoutez des kicks ou des talons pour créer vos variations.'} },
+    { i:'fa-person-walking', t:{zh:'Lazy 8／Hook', en:'Lazy eight / hook', fr:'Lazy eight / hook'}, p:{zh:'腳在地上畫 8 字、勾腳轉身，常用來結束一段 shine。', en:'Draw a figure eight on the floor and hook-turn; often closes a shine sequence.', fr:'Dessiner un huit au sol et tourner en crochet ; conclut souvent une séquence.'} },
+    { i:'fa-hand', t:{zh:'手臂造型（Styling）', en:'Arm styling', fr:'Style des bras'}, p:{zh:'手臂順著身體的螺旋與節奏移動，不是另外加上去的裝飾。先把腳練穩再加手。', en:'Arms follow the spiral and rhythm of the body rather than being added on. Secure the feet first, then the arms.', fr:'Les bras suivent la spirale et le rythme du corps au lieu d’être plaqués. D’abord les pieds, ensuite les bras.'} },
+    { i:'fa-circle', t:{zh:'Rueda de Casino', en:'Rueda de casino', fr:'Rueda de casino'}, p:{zh:'多對舞者圍成一圈，一位「叫令者」（cantante）喊出動作名稱，大家同時做並輪換舞伴，熱鬧又適合新手。', en:'Several couples in a circle; a caller (cantante) shouts figure names, everyone does them together and rotates partners. Lively and great for beginners.', fr:'Plusieurs couples en cercle ; un meneur (cantante) annonce les figures, tous les exécutent ensemble et changent de partenaire. Festif et idéal pour débuter.'} },
+  ]},
+]},
+
+/* ── 7. Social & practice ── */
+{ id:'social', i:'fa-calendar-check', c:V,
+  nav:{zh:'舞會與練習', en:'Socials & practice', fr:'Soirées & pratique'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'舞會禮儀與三個月練習計畫', en:'Social etiquette and a three-month plan', fr:'Étiquette en soirée et plan de trois mois'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-hand-holding-heart', t:{zh:'邀舞與拒絕', en:'Asking and declining', fr:'Inviter et refuser'}, p:{zh:'伸出手、微笑問「要跳嗎？」。拒絕時說「謝謝，我休息一下」就好，被拒絕不用放在心上。跳完一首說謝謝；連跳兩三首是習慣，但不要霸占別人。', en:'Offer a hand and smile: “Would you like to dance?” To decline, “Thanks, I’m taking a break” is enough, and a no is nothing personal. Say thank you after the song; two or three in a row is normal, but do not monopolise anyone.', fr:'Tendez la main en souriant : « On danse ? » Pour refuser, « Merci, je fais une pause » suffit, et un refus n’a rien de personnel. On remercie après la danse ; deux ou trois d’affilée, c’est l’usage, sans accaparer.'} },
+    { i:'fa-shield-heart', t:{zh:'安全第一', en:'Safety first', fr:'La sécurité d’abord'}, p:{zh:'帶領者要看路、避免把舞伴送去撞人；不要在擁擠的舞池做 dip 或托舉。跟隨者手臂保持張力但不要硬撐，覺得不舒服可以直接放開。', en:'Leaders watch the floor and never send their partner into someone; no dips or lifts on a crowded floor. Followers keep tone in the arms without locking, and can let go if anything feels wrong.', fr:'Le cavalier regarde la piste et n’envoie jamais sa partenaire dans quelqu’un ; pas de dips ni de portés sur une piste bondée. La cavalière garde du tonus sans bloquer et peut lâcher si quelque chose la gêne.'} },
+    { i:'fa-shirt', t:{zh:'準備', en:'What to bring', fr:'À prévoir'}, p:{zh:'吸汗的衣服、備用上衣、毛巾、止汗劑與口香糖。鞋底要能轉：舞鞋或光滑鞋底的鞋，不要穿運動鞋的橡膠底。', en:'Breathable clothes, a spare top, a towel, deodorant and mints. Soles must pivot: dance shoes or smooth soles, not rubber trainers.', fr:'Vêtements respirants, haut de rechange, serviette, déodorant et chewing-gum. Semelles qui pivotent : chaussures de danse ou semelles lisses, pas de baskets à semelle caoutchouc.'} },
+  ]},
+  { type:'table', head:[{zh:'週次', en:'Weeks', fr:'Semaines'}, {zh:'目標', en:'Goal', fr:'Objectif'}, {zh:'每週練習', en:'Weekly practice', fr:'Pratique hebdomadaire'}], rows:[
+    ['1–2', {zh:'聽到 1、基本步不看腳', en:'Hear the 1; basic without looking at your feet', fr:'Entendre le 1 ; pas de base sans regarder ses pieds'}, {zh:'一堂團體課＋每天 10 分鐘跟歌數拍與踩基本步', en:'One group class + 10 minutes a day counting and stepping to songs', fr:'Un cours collectif + 10 minutes par jour à compter et faire le pas de base'}],
+    ['3–4', {zh:'右轉、CBL（或古巴式 dile que no、enchufla）', en:'Right turn and CBL (or Cuban dile que no and enchufla)', fr:'Tour à droite et CBL (ou dile que no et enchufla)'}, {zh:'兩堂課，課後找同學複習', en:'Two classes, reviewing with classmates afterwards', fr:'Deux cours, révision avec des camarades'}],
+    ['5–8', {zh:'把 3–4 個花式串成組合；第一次去舞會', en:'Chain 3–4 figures into combos; first social', fr:'Enchaîner 3 à 4 figures ; première soirée'}, {zh:'課＋每週一次舞會（先跳慢歌）', en:'Classes + one social a week (start with slower songs)', fr:'Cours + une soirée par semaine (en commençant par les morceaux lents)'}],
+    ['9–12', {zh:'Shines、音樂段落、跟不同舞伴跳', en:'Shines, musical sections, dancing with many partners', fr:'Shines, sections musicales, danser avec différents partenaires'}, {zh:'錄影檢查姿勢；每次舞會至少邀五個人', en:'Film yourself to check posture; ask at least five people each social', fr:'Filmez-vous pour vérifier la posture ; invitez au moins cinq personnes par soirée'}],
+  ]},
+]},
+]});
+</script>
+</body>
+</html>
