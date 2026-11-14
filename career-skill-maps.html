@@ -139,6 +139,15 @@ table.mx { border-collapse: collapse; width: 100%; min-width: 1040px; font-size:
 .mx-leg span { display: inline-flex; align-items: center; gap: 6px; }
 .mx-leg i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
 
+.law { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+@media (max-width: 400px) { .law { grid-template-columns: 1fr; } }
+.law-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.law-card h4 { font-size: 15px; font-weight: 800; color: var(--c); display: flex; align-items: center; gap: 9px; margin-bottom: 8px; }
+.law-card ul { list-style: none; display: grid; gap: 8px; }
+.law-card li { position: relative; padding-left: 14px; color: #cfc9bb; font-size: 13.5px; line-height: 1.75; }
+.law-card li::before { content: ''; position: absolute; left: 0; top: .72em; width: 5px; height: 5px; border-radius: 50%; background: var(--c); }
+.see-law { display: inline-block; margin-top: 8px; font-size: 12.5px; font-weight: 700; color: var(--bc); text-decoration: none; }
+
 footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12px; color: var(--faint); line-height: 1.7; }
 </style>
 </head>
@@ -199,6 +208,7 @@ const UI = {
   legChip: L('工具／軟體', 'Tool / software', 'Outil / logiciel'),
   hint: L('點一條分支可以聚焦，並跳到下方的說明卡片；再點一次空白處取消。', 'Click a branch to focus it and jump to its card below; click empty space to clear.', 'Cliquez sur une branche pour la mettre en avant et aller à sa fiche ; cliquez dans le vide pour annuler.'),
   hintMob: L('　手機上可以左右滑動心智圖。', '  On a phone, swipe the map sideways.', '  Sur mobile, faites glisser la carte latéralement.'),
+  seeLaw: L('↓ 法國勞動法重點', '↓ French labour law essentials', '↓ L\'essentiel du droit du travail français'),
   road: L('學習路線', 'Learning path', 'Parcours d\'apprentissage'),
   stages: [L('第一階段', 'Stage 1', 'Étape 1'), L('第二階段', 'Stage 2', 'Étape 2'), L('第三階段', 'Stage 3', 'Étape 3')],
   stageNames: [L('打地基（約 0–3 個月）', 'Foundations (about 0–3 months)', 'Les bases (environ 0–3 mois)'),
@@ -545,8 +555,8 @@ const CAREERS = [
       desc: L('找到對的人，是人資最直接被看見的貢獻。', 'Hiring the right people is HR\'s most visible contribution.', 'Recruter les bonnes personnes est la contribution la plus visible des RH.'),
       leaves: [[L('職缺分析與 JD 撰寫', 'Job analysis and job descriptions', 'Analyse de poste et fiches de poste'),'s',1], [L('履歷篩選與面試技巧', 'Screening and interviewing', 'Présélection et entretiens'),'s',1], [L('人才搜尋', 'Sourcing', 'Sourcing'),'s',2], [L('雇主品牌', 'Employer branding', 'Marque employeur'),'s',2]] },
     { name: L('勞動法規', 'Labour law', 'Droit du travail'), color: '#f472b6',
-      desc: L('人資的決定都有法律後果，法規是不能出錯的底線。', 'Every HR decision has legal consequences; the law is the line you cannot cross.', 'Chaque décision RH a des conséquences juridiques : le droit est la limite à ne jamais franchir.'),
-      leaves: [[L('勞動基準法規', 'Employment law basics', 'Bases du droit du travail'),'s',1], [L('勞動契約', 'Employment contracts', 'Contrats de travail'),'s',1], [L('工時與休假', 'Working time and leave', 'Temps de travail et congés'),'s',1], [L('勞資爭議處理', 'Disputes and discipline', 'Contentieux et discipline'),'s',2]] },
+      desc: L('人資的決定都有法律後果，法規是不能出錯的底線。', 'Every HR decision has legal consequences; the law is the line you cannot cross.', 'Chaque décision RH a des conséquences juridiques : le droit est la limite à ne jamais franchir.'), lawNote: true,
+      leaves: [[L('勞動基準法規', 'Employment law basics', 'Bases du droit du travail'),'s',1], [L('勞動契約', 'Employment contracts', 'Contrats de travail'),'s',1], [L('工時與休假', 'Working time and leave', 'Temps de travail et congés'),'s',1], [L('勞資爭議處理', 'Disputes and discipline', 'Contentieux et discipline'),'s',2], [L('法國勞動法典', 'French Labour Code', 'Code du travail'),'s',2]] },
     { name: L('薪酬福利', 'Compensation & benefits', 'Rémunération'), color: '#fbbf24',
       desc: L('薪資算錯會立刻失去信任，薪酬設計則影響能不能留住人。', 'Payroll errors destroy trust at once; pay design decides whether people stay.', 'Une erreur de paie détruit la confiance ; la politique salariale décide si les gens restent.'),
       leaves: [[L('薪資計算與勞健保', 'Payroll and social insurance', 'Paie et cotisations sociales'),'s',1], [L('薪酬結構與職等', 'Pay structure and grades', 'Grilles et classifications'),'s',2], [L('市場薪資調查', 'Salary benchmarking', 'Études de rémunération'),'s',2], [L('福利設計', 'Benefits design', 'Avantages sociaux'),'s',2]] },
@@ -558,13 +568,72 @@ const CAREERS = [
       leaves: [[L('員工溝通', 'Employee communication', 'Communication interne'),'s',1], [L('敬業度調查', 'Engagement surveys', 'Enquêtes d\'engagement'),'s',2], [L('組織變革', 'Change management', 'Conduite du changement'),'s',2], [L('多元共融（DEI）', 'Diversity and inclusion', 'Diversité et inclusion'),'s',2]] },
     { name: L('工具與數據', 'Tools & data', 'Outils & données'), color: '#a78bfa',
       desc: L('人資越來越倚重系統與數據，例如用離職率找出問題部門。', 'HR relies more and more on systems and data, such as using turnover to spot problem teams.', 'Les RH s\'appuient de plus en plus sur les SIRH et les données, par exemple le turnover pour repérer les équipes en difficulté.'),
-      leaves: [['Excel','t',1], ['LinkedIn Recruiter','t',1], ['Workday / SAP SuccessFactors','t',2], [L('HR 數據分析', 'People analytics', 'Analyse de données RH'),'s',2]] },
+      leaves: [['Excel','t',1], ['LinkedIn Recruiter','t',1], ['Workday / SAP SuccessFactors','t',2], ['Silae / PayFit','t',2], [L('HR 數據分析', 'People analytics', 'Analyse de données RH'),'s',2]] },
   ],
   road: [
     L('讀懂所在國家的勞動法規重點（工時、休假、資遣），並學會薪資與勞健保的計算，用 Excel 做一份薪資表。', 'Learn the key points of your country\'s labour law (hours, leave, dismissal) and how payroll and social insurance are computed; build a payroll sheet in Excel.', 'Maîtriser l\'essentiel du droit du travail local (temps de travail, congés, licenciement) et le calcul de la paie et des cotisations ; construire un bulletin dans Excel.'),
     L('練習寫 JD、設計結構化面試題，並規劃一份新人入職計畫；可以先從招募或人資助理的職位切入。', 'Practise writing job descriptions, design structured interview questions and plan an onboarding programme; recruiting or HR assistant roles are good entry points.', 'S\'exercer aux fiches de poste, concevoir des entretiens structurés et un plan d\'intégration ; les postes de chargé de recrutement ou d\'assistant RH sont de bonnes portes d\'entrée.'),
     L('學績效管理、薪酬設計與 HR 數據分析，選一個方向深入（招募、薪酬、培訓或 HRBP）；可考 SHRM-CP 或相關證照。', 'Learn performance management, pay design and people analytics, then specialise (recruiting, compensation, L&D or HRBP); consider SHRM-CP or a local equivalent.', 'Apprendre la gestion de la performance, la politique salariale et l\'analyse RH, puis se spécialiser (recrutement, rémunération, formation ou HRBP) ; envisager SHRM-CP ou un équivalent local.'),
   ],
+  extra: {
+    title: L('法國勞動法重點', 'French labour law essentials', 'L\'essentiel du droit du travail français'),
+    intro: L('在法國做人資，法規與薪資是最吃重的部分。以下整理日常最常碰到的規定，數字以 2026 年的一般規則為準；實際適用時，產業集體協約常有更優厚的條款，請一併查閱。',
+             'In French HR, law and payroll are the heaviest part of the job. These are the rules you meet most often, with figures reflecting the general rules in 2026; the applicable branch agreement often grants more, so always check it too.',
+             'En RH en France, le droit et la paie sont le cœur du métier. Voici les règles les plus courantes, chiffres selon le régime général en 2026 ; la convention collective applicable prévoit souvent mieux, à vérifier systématiquement.'),
+    groups: [
+      { icon: 'fa-landmark', title: L('法源與層級', 'Sources and hierarchy', 'Sources et hiérarchie'), items: [
+        L('《勞動法典》（Code du travail）是基本法源，條文分為 L（法律）、R 與 D（命令）三類。', 'The Labour Code (Code du travail) is the core source; articles are numbered L (statute), R and D (decrees).', 'Le Code du travail est la source principale ; ses articles sont numérotés L (loi), R et D (règlements).'),
+        L('各產業另有全國集體協約（convention collective nationale，CCN），薪資等級、試用期、預告期與資遣費常比法典優厚。適用哪一份協約會寫在薪資單上。', 'Each industry has a national collective agreement (CCN) that often improves on the Code for pay grades, probation, notice and severance. The applicable one is printed on the payslip.', 'Chaque branche a sa convention collective nationale (CCN), souvent plus favorable que le Code sur les minima, l\'essai, le préavis et les indemnités. Celle qui s\'applique figure sur le bulletin de paie.'),
+        L('2017 年的馬克宏勞動改革（ordonnances Macron）之後，工時安排、加班加給等多數事項以企業協議（accord d\'entreprise）優先於產業協約。', 'Since the 2017 Macron ordinances, company agreements take precedence over branch agreements on most topics, such as working-time arrangements and overtime rates.', 'Depuis les ordonnances Macron de 2017, l\'accord d\'entreprise prime sur l\'accord de branche dans la plupart des domaines, comme l\'aménagement du temps de travail ou la majoration des heures supplémentaires.'),
+      ] },
+      { icon: 'fa-file-signature', title: L('勞動契約', 'Employment contracts', 'Contrats de travail'), items: [
+        L('CDI（不定期契約）是常態。CDD（定期契約）只能用於法定情形，例如代理缺席員工、暫時性業務增加或季節性工作，不能用來填補常態職位。', 'The CDI (open-ended contract) is the norm. A CDD (fixed-term contract) is allowed only in listed cases, such as replacing an absent employee, a temporary increase in activity or seasonal work, never to fill a permanent post.', 'Le CDI est la règle. Le CDD n\'est permis que dans les cas prévus (remplacement d\'un salarié absent, accroissement temporaire d\'activité, emploi saisonnier) et jamais pour pourvoir un emploi permanent.'),
+        L('CDD 一定要有書面契約，否則視為 CDI。一般含續約最長 18 個月、最多續約兩次（產業協約可另訂），期滿通常要付總薪資 10% 的不穩定補償（indemnité de précarité）。', 'A CDD must be in writing or it is treated as a CDI. As a rule it lasts at most 18 months including renewals, with at most two renewals (branch agreements may differ), and usually ends with a 10% end-of-contract payment (indemnité de précarité).', 'Un CDD doit être écrit, sinon il est requalifié en CDI. En règle générale, 18 mois maximum renouvellements compris, deux renouvellements au plus (la branche peut prévoir autrement), et une indemnité de précarité de 10 % en fin de contrat.'),
+        L('CDI 試用期上限：職員與工人 2 個月、技術人員與基層主管 3 個月、幹部（cadres）4 個月；產業協約允許時可延長一次。', 'Maximum CDI probation: 2 months for employees and workers, 3 for technicians and supervisors, 4 for managers (cadres); renewable once if the branch agreement allows.', 'Période d\'essai maximale en CDI : 2 mois pour les employés et ouvriers, 3 pour les agents de maîtrise et techniciens, 4 pour les cadres ; renouvelable une fois si la branche le prévoit.'),
+      ] },
+      { icon: 'fa-clock', title: L('工時', 'Working time', 'Durée du travail'), items: [
+        L('法定工時每週 35 小時，超過的部分算加班：第 36 到 43 小時加給 25%，之後加給 50%。企業協議可以另訂比例，但不得低於 10%。', 'The legal week is 35 hours; beyond that is overtime, paid at +25% for hours 36 to 43 and +50% after. A company agreement may set other rates, but never below 10%.', 'La durée légale est de 35 heures ; au-delà, heures supplémentaires majorées de 25 % de la 36e à la 43e heure, puis de 50 %. Un accord d\'entreprise peut fixer d\'autres taux, sans descendre sous 10 %.'),
+        L('上限：每天 10 小時、每週 48 小時，連續 12 週平均不得超過 44 小時；每天至少休息 11 小時，每週至少連續休息 35 小時。', 'Limits: 10 hours a day, 48 hours a week, and an average of 44 over any 12 weeks; at least 11 hours\' daily rest and 35 consecutive hours\' weekly rest.', 'Plafonds : 10 heures par jour, 48 heures par semaine, 44 heures en moyenne sur 12 semaines ; repos quotidien de 11 heures et repos hebdomadaire de 35 heures consécutives.'),
+        L('幹部常採年工作日數制（forfait jours），不計時數，一年最多 218 天；必須有集體協議依據，並定期追蹤工作負荷。', 'Managers are often on a days-based arrangement (forfait jours) with no hour count, up to 218 days a year; it needs a collective agreement and regular workload monitoring.', 'Les cadres sont souvent au forfait jours, sans décompte horaire, dans la limite de 218 jours par an ; il faut un accord collectif et un suivi régulier de la charge de travail.'),
+        L('50 人以上的企業要處理離線權（droit à la déconnexion），沒有協議時由雇主訂定章程；遠距工作也以協議或章程（charte）規範。', 'Companies with 50 or more staff must address the right to disconnect, by agreement or, failing that, an employer charter; remote work is likewise set by agreement or charter.', 'Les entreprises d\'au moins 50 salariés doivent traiter le droit à la déconnexion, par accord ou à défaut par une charte ; le télétravail est encadré de la même façon.'),
+      ] },
+      { icon: 'fa-umbrella-beach', title: L('休假', 'Leave', 'Congés'), items: [
+        L('每工作一個月累積 2.5 個工作日（jours ouvrables）的特休，一年 30 個工作日，也就是五週；夏季的主要假期至少要連休 12 個工作日。', 'Paid leave accrues at 2.5 working days (jours ouvrables) per month, 30 a year, which is five weeks; the main summer leave must include at least 12 consecutive working days.', 'Les congés payés s\'acquièrent à raison de 2,5 jours ouvrables par mois, soit 30 jours (cinq semaines) par an ; le congé principal d\'été doit comporter au moins 12 jours ouvrables continus.'),
+        L('2024 年 4 月的法律修正後，非因公病假期間也會累積特休，每月 2 天、每年上限 24 天。', 'Since the April 2024 law, employees on non-work-related sick leave also accrue paid leave, at 2 days a month up to 24 a year.', 'Depuis la loi d\'avril 2024, l\'arrêt maladie d\'origine non professionnelle ouvre aussi droit à congés payés, à raison de 2 jours par mois dans la limite de 24 par an.'),
+        L('國定假日共 11 天，其中只有 5 月 1 日依法必須休假且照付薪資，其他節日是否放假依協約或公司規定。', 'There are 11 public holidays, but only 1 May is legally a paid day off for everyone; whether the others are worked depends on agreements or company practice.', 'On compte 11 jours fériés, mais seul le 1er mai est obligatoirement chômé et payé ; pour les autres, tout dépend des accords ou des usages.'),
+        L('產假一般為 16 週；陪產假 25 天（多胞胎 32 天），另有 3 天出生假。', 'Maternity leave is usually 16 weeks; paternity leave is 25 days (32 for multiple births), plus 3 days of birth leave.', 'Le congé maternité est en général de 16 semaines ; le congé de paternité de 25 jours (32 pour des naissances multiples), plus 3 jours de congé de naissance.'),
+      ] },
+      { icon: 'fa-euro-sign', title: L('薪資與社會保險', 'Pay and social charges', 'Paie et cotisations'), items: [
+        L('法定最低工資 SMIC 每年 1 月 1 日調整，通膨高時年中也會加調；產業協約的最低薪資等級不得低於 SMIC。', 'The minimum wage (SMIC) is revised every 1 January, and mid-year when inflation is high; branch pay minimums may not fall below it.', 'Le SMIC est revalorisé chaque 1er janvier, et en cours d\'année si l\'inflation est forte ; les minima de branche ne peuvent pas lui être inférieurs.'),
+        L('薪資單（bulletin de paie）從毛薪（brut）扣除員工負擔的社會保險費，大約是毛薪的 20%–25%（幹部較高），得到淨薪（net）；所得稅自 2019 年起由雇主從源扣繳（prélèvement à la source）。', 'The payslip (bulletin de paie) takes the employee\'s social contributions, roughly 20–25% of gross (more for cadres), off the gross to give the net; since 2019 income tax is withheld at source by the employer.', 'Le bulletin de paie déduit du brut les cotisations salariales, environ 20 à 25 % (davantage pour les cadres), pour obtenir le net ; depuis 2019, l\'impôt sur le revenu est prélevé à la source par l\'employeur.'),
+        L('雇主另外負擔的社會保險費，一般薪資水準約為毛薪的四成左右，接近最低工資時有大幅減免。', 'Employer contributions come on top, around 40% of gross at typical salaries, with large reductions near the minimum wage.', 'Les cotisations patronales s\'ajoutent, autour de 40 % du brut pour un salaire courant, avec de fortes réductions près du SMIC.'),
+        L('每月透過 DSN（déclaration sociale nominative）向 URSSAF 等機構申報。企業必須提供團體健康補充保險（mutuelle），雇主至少負擔一半保費。', 'Each month, payroll is declared through the DSN to URSSAF and other bodies. Employers must offer group top-up health cover (mutuelle) and pay at least half of it.', 'Chaque mois, la paie est déclarée via la DSN à l\'URSSAF et aux autres organismes. L\'employeur doit proposer une mutuelle collective et en financer au moins la moitié.'),
+      ] },
+      { icon: 'fa-door-open', title: L('終止僱傭', 'Ending employment', 'Rupture du contrat'), items: [
+        L('員工辭職（démission）要遵守預告期，天數依協約而定。雇主解僱必須有「真實且嚴重的理由」（cause réelle et sérieuse），分為個人原因（包括過失）與經濟原因。', 'An employee who resigns (démission) works a notice period set by the agreement. An employer dismissal needs a real and serious cause (cause réelle et sérieuse), either personal (including misconduct) or economic.', 'La démission implique un préavis fixé par la convention. Le licenciement exige une cause réelle et sérieuse, d\'ordre personnel (faute comprise) ou économique.'),
+        L('解僱程序：書面通知召開事前面談（entretien préalable），通知與面談至少間隔五個工作日；面談後至少兩個工作日，才能寄出寫明理由的解僱信。', 'Procedure: a written invitation to a prior interview (entretien préalable) at least five working days ahead; the dismissal letter, stating the reasons, can go out no sooner than two working days after it.', 'Procédure : convocation écrite à l\'entretien préalable au moins cinq jours ouvrables avant ; la lettre de licenciement motivée ne peut partir que deux jours ouvrables au moins après l\'entretien.'),
+        L('年資滿 8 個月的員工被解僱時（重大過失除外），可領法定資遣費：前 10 年每年四分之一個月薪資，之後每年三分之一個月。', 'Dismissed employees with 8 months\' service (except for serious misconduct) receive statutory severance: a quarter of a month\'s pay per year for the first 10 years, a third per year after that.', 'Après 8 mois d\'ancienneté, le salarié licencié (hors faute grave) perçoit l\'indemnité légale : un quart de mois par année jusqu\'à 10 ans, un tiers au-delà.'),
+        L('協議解約（rupture conventionnelle）由雙方合意，簽署後有 15 天撤回期，再送勞動主管機關（DREETS）核准。員工可領失業給付，這是和辭職最大的不同。', 'A mutual termination (rupture conventionnelle) is agreed by both sides, has a 15-day withdrawal period after signing, then needs approval from the labour authority (DREETS). The employee can claim unemployment benefit, which is the key difference from resigning.', 'La rupture conventionnelle se signe d\'un commun accord, avec 15 jours de rétractation, puis une homologation par la DREETS. Le salarié peut toucher le chômage, ce qui la distingue de la démission.'),
+      ] },
+      { icon: 'fa-users', title: L('員工代表與人數門檻', 'Staff bodies and thresholds', 'Représentation et seuils'), items: [
+        L('員工人數連續 12 個月達 11 人以上：必須選出社會經濟委員會（CSE）。', '11 or more employees for 12 consecutive months: a social and economic committee (CSE) must be elected.', 'À partir de 11 salariés pendant 12 mois consécutifs : élection obligatoire d\'un CSE.'),
+        L('50 人以上：CSE 取得經濟與社會事項的諮詢權，要建立 BDESE 資料庫；公司必須訂定工作規則（règlement intérieur）、實施員工分紅（participation），並在每年 3 月 1 日前公布性別平等指數（index égalité）。', '50 or more: the CSE gains consultation rights on economic and social matters and a BDESE database; the company must have internal rules (règlement intérieur), a profit-sharing scheme (participation), and publish its gender-equality index by 1 March each year.', 'À partir de 50 : le CSE dispose d\'attributions économiques et sociales et d\'une BDESE ; l\'entreprise doit avoir un règlement intérieur, un accord de participation et publier son index égalité avant le 1er mars de chaque année.'),
+        L('有工會代表（délégué syndical）的企業，每年要就薪資、工時與職場生活品質進行強制協商（NAO）。', 'Where there is a union delegate (délégué syndical), annual mandatory bargaining (NAO) covers pay, working time and quality of working life.', 'En présence d\'un délégué syndical, les négociations annuelles obligatoires (NAO) portent sur les salaires, le temps de travail et la qualité de vie au travail.'),
+        L('歐盟薪酬透明指令要求各國在 2026 年 6 月前轉化為國內法，內容包括在招募時揭露薪資範圍；法國的實施細節請以最新法規為準。', 'The EU Pay Transparency Directive had to be transposed by June 2026 and includes disclosing pay ranges when recruiting; check the latest French rules for the details.', 'La directive européenne sur la transparence salariale devait être transposée avant juin 2026 et impose notamment d\'indiquer la rémunération lors du recrutement ; vérifier les textes français les plus récents.'),
+      ] },
+      { icon: 'fa-shield-heart', title: L('安全、培訓與爭議', 'Safety, training and disputes', 'Santé, formation et contentieux'), items: [
+        L('不論公司規模，雇主都要撰寫並更新職業風險評估文件（DUERP）；新進員工須接受職業醫學的資訊與預防訪視。', 'Whatever its size, an employer must write and update a risk assessment (DUERP); new hires go through an occupational health information and prevention visit.', 'Quel que soit l\'effectif, l\'employeur doit tenir à jour le DUERP ; les nouveaux salariés passent une visite d\'information et de prévention.'),
+        L('每兩年一次職涯面談（entretien professionnel），每六年做一次總檢視；職涯面談和績效考核是分開的兩件事。', 'A career interview (entretien professionnel) every two years and a full review every six; it is separate from the performance appraisal.', 'Entretien professionnel tous les deux ans et bilan récapitulatif tous les six ans ; il est distinct de l\'entretien d\'évaluation.'),
+        L('每位員工都有個人培訓帳戶（CPF），一般每年累積 500 歐元、上限 5,000 歐元，可自行用於認證課程。', 'Every employee has a personal training account (CPF), usually credited 500 euros a year up to 5,000, to spend on certified courses.', 'Chaque salarié dispose d\'un CPF, en général crédité de 500 € par an dans la limite de 5 000 €, utilisable pour des formations certifiantes.'),
+        L('勞資爭議由勞動法院（conseil de prud\'hommes）處理；對解僱提出異議的時效一般是 12 個月，不當解僱的賠償有上下限的級距表（barème Macron）。', 'Disputes go to the labour court (conseil de prud\'hommes); dismissals can generally be challenged within 12 months, and unfair-dismissal awards follow a capped scale (barème Macron).', 'Les litiges relèvent du conseil de prud\'hommes ; le licenciement se conteste en général dans les 12 mois, et l\'indemnité pour licenciement sans cause suit le barème Macron.'),
+      ] },
+      { icon: 'fa-briefcase', title: L('在法國從事人資', 'Working in HR in France', 'Travailler en RH en France'), items: [
+        L('常見職位：chargé(e) de recrutement（招募）、gestionnaire de paie（薪資）、chargé(e) RH 與 RRH（人資專員與主管）、HRBP。', 'Common roles: chargé(e) de recrutement (recruiter), gestionnaire de paie (payroll), chargé(e) RH and RRH (HR officer and manager), HRBP.', 'Postes courants : chargé(e) de recrutement, gestionnaire de paie, chargé(e) RH et RRH, HRBP.'),
+        L('常用薪資系統有 Silae、Sage、ADP、PayFit。學歷常見為人資碩士（Master RH）或 RNCP 認證的職業證書，工讀合約（alternance）是進入業界的主要管道。', 'Common payroll software: Silae, Sage, ADP, PayFit. Typical qualifications are a Master RH or an RNCP-registered certificate, and work-study contracts (alternance) are the main way in.', 'Logiciels de paie courants : Silae, Sage, ADP, PayFit. Diplômes typiques : Master RH ou titre RNCP ; l\'alternance est la principale porte d\'entrée.'),
+        L('查法規的官方來源：code.travail.gouv.fr、service-public.fr、legifrance.gouv.fr，以及各產業協約的全文。', 'Official sources: code.travail.gouv.fr, service-public.fr, legifrance.gouv.fr, and the full text of each branch agreement.', 'Sources officielles : code.travail.gouv.fr, service-public.fr, legifrance.gouv.fr et le texte intégral de chaque convention collective.'),
+      ] },
+    ],
+  },
   proj: L('替一間虛構的五十人公司設計一套招募到入職的流程：一份職缺 JD、結構化面試題與評分表、三十天入職計畫，並用一份模擬資料算出離職率與招募週期。',
           'For a fictional fifty-person company, design a hiring-to-onboarding process: a job description, structured interview questions with a scoring grid, a thirty-day onboarding plan, and turnover and time-to-hire computed from a mock dataset.',
           'Pour une entreprise fictive de cinquante personnes, concevoir le parcours du recrutement à l\'intégration : fiche de poste, grille d\'entretien structuré, plan d\'intégration de trente jours, et calcul du turnover et du délai de recrutement sur des données fictives.'),
@@ -699,7 +768,7 @@ function renderCareer() {
   const cards = c.branches.map((b, i) => `
     <div class="card" id="br-${i}" style="--bc:${b.color}">
       <h3>${esc(t(b.name))} <em>${b.leaves.length} ${t(UI.items)}</em></h3>
-      <p>${esc(t(b.desc))}</p>
+      <p>${esc(t(b.desc))}${b.lawNote ? `<br><a class="see-law" href="#extra">${t(UI.seeLaw)}</a>` : ''}</p>
       <div class="tags">${b.leaves.map(([lab, kind, lvl]) =>
         `<span class="tag${kind === 't' ? ' tool' : ''}${lvl === 2 ? ' l2' : ''}">${esc(t(lab))}</span>`).join('')}</div>
     </div>`).join('');
@@ -719,7 +788,10 @@ function renderCareer() {
     <div class="cards">${cards}</div>
     <h2 class="sec-title"><i class="fa-solid fa-route"></i>${t(UI.road)}</h2>
     <div class="road">${road}</div>
-    <div class="proj"><b>${t(UI.proj)}</b>${esc(t(c.proj))}</div>`;
+    <div class="proj"><b>${t(UI.proj)}</b>${esc(t(c.proj))}</div>
+    ${c.extra ? `<h2 class="sec-title" id="extra" style="scroll-margin-top:90px"><i class="fa-solid fa-scale-balanced"></i>${esc(t(c.extra.title))}</h2>
+    <p class="intro" style="font-size:14px;margin-bottom:14px">${esc(t(c.extra.intro))}</p>
+    <div class="law">${c.extra.groups.map(g => `<div class="law-card"><h4><i class="fa-solid ${g.icon}"></i>${esc(t(g.title))}</h4><ul>${g.items.map(i => `<li>${esc(t(i))}</li>`).join('')}</ul></div>`).join('')}</div>` : ''}`;
   wireMap();
 }
 
