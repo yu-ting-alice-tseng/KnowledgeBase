@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>電影產業 | 製作、資金、發行與映演</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+<style>
+  body {
+    background-color: #08070c;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(244,63,94,0.08) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(245,158,11,0.06) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(244,63,94,0.04) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+  kbd { display:inline-block; padding:.05rem .4rem; border-radius:.35rem; font-size:.72rem; font-weight:700;
+        font-family: Nunito, sans-serif; color:#e2e8f0; background:#1e1b2e; border:1px solid #3f3a5c;
+        box-shadow: 0 1px 0 #3f3a5c; white-space: nowrap; }
+
+  /* ── Diagrams ──
+     Every diagram is drawn in SVG from the rules and figures it illustrates. */
+  .dg { display:block; width:100%; height:auto; }
+  .dg text { font-family: Nunito, 'Noto Serif TC', sans-serif; }
+  .dg .lab  { fill:#fda4af; font-size:15px; font-weight:800; }
+  .dg .sub  { fill:#94a3b8; font-size:13px; }
+  .dg .val  { fill:#f1f5f9; font-size:13px; font-weight:800; }
+  .dg .grid { stroke: rgba(148,163,184,0.18); stroke-width:1; }
+  .dg .trk  { fill:#120f1c; stroke:#2a2540; stroke-width:1; }
+  .dia-box { background:#0e0c16; border:1px solid rgba(148,163,184,0.14); border-radius:1rem; padding:1rem; }
+
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-rose-500 selection:text-white">
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(244,63,94,0.14) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(245,158,11,0.11) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#08070c]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-rose-500 via-amber-500 to-pink-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#08070c] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-clapperboard text-rose-400 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-rose-400 uppercase bg-rose-500/10 rounded-full border border-rose-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav id="nav" class="flex flex-wrap gap-2 text-xs"></nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <div id="sections" class="space-y-12"></div>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Diagrams. Each returns an SVG string in the current language.
+   ═══════════════════════════════════════════════════════════ */
+
+/* The value chain, from idea to the last licence. */
+function diaChain() {
+  const S = [
+    { c:'#f472b6', n:{zh:'開發', en:'Development', fr:'Développement'}, d:{zh:'版權、劇本、包裝', en:'Rights, script, package', fr:'Droits, scénario, montage'} },
+    { c:'#fb7185', n:{zh:'籌資', en:'Financing', fr:'Financement'}, d:{zh:'預售、補助、投資', en:'Presales, aid, equity', fr:'Préventes, aides, fonds'} },
+    { c:'#f59e0b', n:{zh:'前製', en:'Pre-production', fr:'Préproduction'}, d:{zh:'選角、勘景、預算', en:'Casting, scouting, budget', fr:'Casting, repérages, devis'} },
+    { c:'#fbbf24', n:{zh:'拍攝', en:'Production', fr:'Tournage'}, d:{zh:'通常 4 至 12 週', en:'Usually 4 to 12 weeks', fr:'En général 4 à 12 semaines'} },
+    { c:'#34d399', n:{zh:'後製', en:'Post', fr:'Postproduction'}, d:{zh:'剪輯、聲音、調色、特效', en:'Edit, sound, grade, VFX', fr:'Montage, son, étalonnage, VFX'} },
+    { c:'#38bdf8', n:{zh:'銷售與發行', en:'Sales & distribution', fr:'Ventes & distribution'}, d:{zh:'影展、版權、行銷', en:'Festivals, rights, marketing', fr:'Festivals, droits, marketing'} },
+    { c:'#a78bfa', n:{zh:'映演與後續', en:'Exhibition & after', fr:'Exploitation & suite'}, d:{zh:'戲院、平台、電視', en:'Cinemas, streaming, TV', fr:'Salles, plateformes, TV'} },
+  ];
+  const w = 150, h = 92, gap = 26, top = 46;
+  let s = '';
+  S.forEach((o, i) => {
+    const x = 10 + i * (w + gap);
+    s += `<rect x="${x}" y="${top}" width="${w}" height="${h}" rx="12" fill="${o.c}" fill-opacity="0.14" stroke="${o.c}" stroke-width="2"/>`;
+    s += `<text x="${x + w/2}" y="${top + 30}" text-anchor="middle" class="val" style="font-size:15px">${i + 1}. ${t(o.n)}</text>`;
+    s += `<text x="${x + w/2}" y="${top + 58}" text-anchor="middle" class="sub" style="font-size:12px">${t(o.d)}</text>`;
+    if (i < S.length - 1) {
+      const ax = x + w + 3;
+      s += `<path d="M${ax} ${top + h/2} L${ax + gap - 8} ${top + h/2}" stroke="#64748b" stroke-width="2"/><path d="M${ax + gap - 8} ${top + h/2 - 5} L${ax + gap - 2} ${top + h/2} L${ax + gap - 8} ${top + h/2 + 5}" fill="#64748b"/>`;
+    }
+  });
+  const W = 10 + S.length * (w + gap) - gap + 10;
+  const money = {zh:'錢從右邊（觀眾、平台、電視台）往左回流，依合約順序分給每一方', en:'Money flows back from the right (audiences, platforms, broadcasters) and is paid out to each party in contract order', fr:'L’argent revient de la droite (public, plateformes, chaînes) et se répartit dans l’ordre fixé par les contrats'};
+  const title = {zh:'電影產業鏈：七個階段', en:'The film value chain in seven stages', fr:'La chaîne de valeur du film en sept étapes'};
+  s += `<path d="M${W - 40} ${top + h + 34} L50 ${top + h + 34}" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 5"/><path d="M58 ${top + h + 28} L48 ${top + h + 34} L58 ${top + h + 40}" fill="#fbbf24"/>`;
+  s += `<text x="${W/2}" y="${top + h + 60}" text-anchor="middle" class="sub" style="fill:#fcd34d">${t(money)}</text>`;
+  return `<svg class="dg" viewBox="0 0 ${W} ${top + h + 76}" role="img" aria-label="${t(title)}"><text x="10" y="24" class="lab">${t(title)}</text>${s}</svg>`;
+}
+
+/* A worked theatrical waterfall. Every bar is computed from the inputs below. */
+const WF = { budget: 40, pa: 30, gross: 120, exhib: 0.50, fee: 0.30 };
+function wfCalc() {
+  const rentals = WF.gross * (1 - WF.exhib);
+  const fee = rentals * WF.fee;
+  const toProd = rentals - fee - WF.pa;
+  return { rentals, fee, toProd, exh: WF.gross - rentals, gap: WF.budget - toProd };
+}
+function diaWaterfall() {
+  const r = wfCalc();
+  const L = {
+    title:{zh:'範例：全球票房 1.2 億美元，錢最後剩多少給製片方', en:'Example: USD 120m worldwide box office, and what reaches the producer', fr:'Exemple : 120 M$ de recettes mondiales, et ce qu’il reste au producteur'},
+    gross:{zh:'票房總收入', en:'Box office gross', fr:'Recettes guichet'},
+    exh:{zh:'戲院分走（50%）', en:'Cinemas keep (50%)', fr:'Part des salles (50 %)'},
+    rent:{zh:'片租（給發行商）', en:'Rentals to distributor', fr:'Location au distributeur'},
+    fee:{zh:'發行費（片租 30%）', en:'Distribution fee (30% of rentals)', fr:'Commission (30 % de la location)'},
+    pa:{zh:'回收宣發費 P&A', en:'P&A recouped', fr:'Frais d’édition remboursés'},
+    prod:{zh:'回到製片方', en:'Back to the producer', fr:'Retour au producteur'},
+    bud:{zh:'製作預算', en:'Production budget', fr:'Budget de production'},
+    unit:{zh:'單位：百萬美元', en:'USD millions', fr:'En millions de dollars'},
+  };
+  const rows = [
+    { k:'gross', v: WF.gross, from: 0, c:'#38bdf8' },
+    { k:'exh',   v: -r.exh,   from: WF.gross, c:'#64748b' },
+    { k:'rent',  v: r.rentals, from: 0, c:'#a78bfa' },
+    { k:'fee',   v: -r.fee,   from: r.rentals, c:'#64748b' },
+    { k:'pa',    v: -WF.pa,   from: r.rentals - r.fee, c:'#64748b' },
+    { k:'prod',  v: r.toProd, from: 0, c:'#34d399' },
+    { k:'bud',   v: WF.budget, from: 0, c:'#f472b6' },
+  ];
+  const x0 = 250, sc = 4.2, rh = 30, gap = 14, top = 58;
+  let s = `<text x="${x0}" y="${top - 14}" class="sub">${t(L.unit)}</text>`;
+  rows.forEach((o, i) => {
+    const y = top + i * (rh + gap);
+    const a = Math.min(o.from, o.from + o.v), b = Math.max(o.from, o.from + o.v);
+    s += `<text x="${x0 - 12}" y="${y + rh/2 + 5}" text-anchor="end" class="sub" style="fill:#e2e8f0">${t(L[o.k])}</text>`;
+    s += `<rect x="${x0 + a*sc}" y="${y}" width="${(b - a)*sc}" height="${rh}" rx="5" fill="${o.c}" fill-opacity="${o.v < 0 ? 0.22 : 0.4}" stroke="${o.c}" stroke-width="1.5" ${o.v < 0 ? 'stroke-dasharray="4 3"' : ''}/>`;
+    s += `<text x="${x0 + b*sc + 8}" y="${y + rh/2 + 5}" class="val">${o.v < 0 ? '−' : ''}${Math.abs(o.v).toFixed(0)}</text>`;
+  });
+  const H = top + rows.length * (rh + gap) + 10;
+  return `<svg class="dg" viewBox="0 0 820 ${H}" role="img" aria-label="${t(L.title)}"><text x="10" y="24" class="lab">${t(L.title)}</text>${s}</svg>`;
+}
+
+/* Release windows: France (2025 agreement) against a typical US studio release, in months. */
+function diaWindows() {
+  const L = {
+    title:{zh:'發行窗口：上映後幾個月可以在哪裡看到', en:'Release windows: months after the cinema release', fr:'Fenêtres de diffusion : mois après la sortie en salles'},
+    fr:{zh:'法國（媒體時序）', en:'France (chronologie des médias)', fr:'France (chronologie des médias)'},
+    us:{zh:'美國大片廠常見做法', en:'Typical US studio release', fr:'Pratique courante des studios américains'},
+    m:{zh:'月', en:'mo', fr:'mois'},
+  };
+  const FR = [
+    { m:0,  n:{zh:'戲院', en:'Cinemas', fr:'Salles'} },
+    { m:4,  n:{zh:'單片付費 VOD', en:'Pay-per-view VOD', fr:'VOD à l’acte'} },
+    { m:6,  n:{zh:'Canal+', en:'Canal+', fr:'Canal+'} },
+    { m:9,  n:{zh:'Disney+', en:'Disney+', fr:'Disney+'} },
+    { m:15, n:{zh:'Netflix', en:'Netflix', fr:'Netflix'} },
+    { m:22, n:{zh:'免費電視', en:'Free TV', fr:'TV gratuite'} },
+  ];
+  const US = [
+    { m:0,   n:{zh:'戲院', en:'Cinemas', fr:'Salles'} },
+    { m:1.5, n:{zh:'付費數位（PVOD）', en:'Premium VOD', fr:'VOD premium'} },
+    { m:4,   n:{zh:'自家串流平台', en:'Studio’s own streamer', fr:'Plateforme du studio'} },
+    { m:18,  n:{zh:'電視與其他授權', en:'TV and other licences', fr:'TV et autres licences'} },
+  ];
+  const x0 = 40, sc = 30, max = 24;
+  let s = '';
+  for (let m = 0; m <= max; m += 3) {
+    const x = x0 + m * sc;
+    s += `<line x1="${x}" y1="48" x2="${x}" y2="300" class="grid"/><text x="${x}" y="318" text-anchor="middle" class="sub">${m} ${t(L.m)}</text>`;
+  }
+  const lane = (arr, y, col, label) => {
+    let o = `<text x="${x0}" y="${y - 12}" class="lab" style="fill:${col}">${t(label)}</text>`;
+    o += `<line x1="${x0}" y1="${y + 18}" x2="${x0 + max*sc}" y2="${y + 18}" stroke="${col}" stroke-opacity="0.35" stroke-width="2"/>`;
+    arr.forEach((p, i) => {
+      const x = x0 + p.m * sc, ly = y + 42 + (i % 2) * 22;
+      o += `<circle cx="${x}" cy="${y + 18}" r="7" fill="${col}"/>`;
+      o += `<line x1="${x}" y1="${y + 25}" x2="${x}" y2="${ly - 12}" stroke="${col}" stroke-opacity="0.5"/>`;
+      o += `<text x="${x}" y="${ly}" text-anchor="${p.m === 0 ? 'start' : 'middle'}" class="val" style="font-size:12px">${t(p.n)}</text>`;
+    });
+    return o;
+  };
+  s += lane(FR, 72, '#f472b6', L.fr);
+  s += lane(US, 200, '#38bdf8', L.us);
+  const W = x0 + max * sc + 60;
+  return `<svg class="dg" viewBox="0 0 ${W} 330" role="img" aria-label="${t(L.title)}"><text x="10" y="24" class="lab">${t(L.title)}</text>${s}</svg>`;
+}
+
+/* Where a French cinema ticket goes, computed from the legal rates. */
+function diaTicket() {
+  const P = 10;                       // ticket price in euros
+  const net = P / 1.055;              // VAT 5.5% included in the price
+  const tsa = net * 0.1072;           // TSA 10.72% to the CNC
+  const sacem = (net - tsa) * 0.015;  // music rights, about 1.5%
+  const base = net - tsa - sacem;
+  const dist = base * 0.47, exh = base - dist;
+  const parts = [
+    { v: P - net, c:'#64748b', n:{zh:'增值稅 5.5%', en:'VAT 5.5%', fr:'TVA 5,5 %'} },
+    { v: tsa,     c:'#fbbf24', n:{zh:'TSA 10.72%（給 CNC）', en:'TSA 10.72% (to the CNC)', fr:'TSA 10,72 % (au CNC)'} },
+    { v: sacem,   c:'#94a3b8', n:{zh:'音樂版權', en:'Music rights', fr:'Sacem'} },
+    { v: dist,    c:'#a78bfa', n:{zh:'發行商（約 47%）', en:'Distributor (about 47%)', fr:'Distributeur (env. 47 %)'} },
+    { v: exh,     c:'#34d399', n:{zh:'戲院', en:'Cinema', fr:'Salle'} },
+  ];
+  const title = {zh:'法國一張 10 歐元的電影票，錢去了哪裡', en:'Where a €10 cinema ticket goes in France', fr:'Où vont les 10 € d’un billet de cinéma en France'};
+  const x0 = 20, W = 780, y = 56, h = 46;
+  let x = x0, s = '';
+  parts.forEach((p, i) => {
+    const w = p.v / P * W;
+    s += `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${p.c}" fill-opacity="0.4" stroke="${p.c}" stroke-width="1.5"/>`;
+    if (w > 40) s += `<text x="${x + w/2}" y="${y + h/2 + 5}" text-anchor="middle" class="val">€${p.v.toFixed(2)}</text>`;
+    x += w;
+  });
+  parts.forEach((p, i) => {
+    const lx = x0 + (i % 3) * 270, ly = y + h + 32 + Math.floor(i / 3) * 26;
+    s += `<rect x="${lx}" y="${ly - 12}" width="14" height="14" rx="3" fill="${p.c}" fill-opacity="0.6" stroke="${p.c}"/>`;
+    s += `<text x="${lx + 22}" y="${ly}" class="sub" style="fill:#e2e8f0">${t(p.n)}　€${p.v.toFixed(2)}</text>`;
+  });
+  return `<svg class="dg" viewBox="0 0 820 180" role="img" aria-label="${t(title)}"><text x="20" y="24" class="lab">${t(title)}</text>${s}</svg>`;
+}
+
+const DIA = { chain: diaChain, waterfall: diaWaterfall, windows: diaWindows, ticket: diaTicket };
+
+/* ═══════════════════════════════════════════════════════════
+   Content. Each section is a list of blocks rendered below.
+   ═══════════════════════════════════════════════════════════ */
+const SECTIONS = [
+
+/* ── 1. The chain ── */
+{ id:'chain', i:'fa-link', c:'#f472b6',
+  nav:{zh:'產業鏈', en:'Value chain', fr:'Chaîne'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'一部電影從構想到下檔', en:'A film from idea to last licence', fr:'Un film, de l’idée à la dernière licence'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'電影是一門<strong class="text-white">先花錢、很久以後才回收</strong>的生意。一部劇情長片從買下版權到第一次上映，常常要三到五年；上映之後，它還會在串流、電視與海外市場一路賣上十幾年。整個產業可以拆成七個階段，每個階段由不同的公司與職業負責。',
+    en:'Film is a business that <strong class="text-white">spends first and earns back much later</strong>. A feature often takes three to five years from optioning the rights to its first screening, and then keeps selling to streamers, broadcasters and foreign markets for a decade or more. The industry splits into seven stages, each run by different companies and professions.',
+    fr:'Le cinéma est une activité qui <strong class="text-white">dépense d’abord et encaisse bien plus tard</strong>. Un long métrage met souvent trois à cinq ans entre l’option sur les droits et sa première projection, puis continue à se vendre aux plateformes, aux chaînes et à l’étranger pendant dix ans ou plus. Le secteur se découpe en sept étapes, chacune tenue par des entreprises et des métiers différents.'} },
+  { type:'dia', k:'chain' },
+  { type:'steps', items:[
+    { t:{zh:'開發 Development', en:'Development', fr:'Développement'}, p:{zh:'製片取得小說、真實故事或原創構想的改編權（通常先付一筆「選擇權」費用），請編劇寫出劇本，再找導演與主要演員「包裝」成一個能拿去募資的案子。大多數案子停在這一步。', en:'A producer options a novel, a true story or an original idea, hires a writer, then attaches a director and lead actors to “package” it into something that can be financed. Most projects never leave this stage.', fr:'Le producteur prend une option sur un roman, une histoire vraie ou une idée originale, engage un scénariste, puis attache un réalisateur et des têtes d’affiche pour constituer un « package » finançable. La plupart des projets s’arrêtent là.'} },
+    { t:{zh:'籌資 Financing', en:'Financing', fr:'Financement'}, p:{zh:'把預算拆成好幾塊：海外預售、政府補助與租稅抵減、電視台或平台的預購、私人投資，最後缺的一塊叫「缺口」。資金到齊，片子才算「開綠燈」。', en:'The budget is assembled from several pieces: foreign presales, public aid and tax credits, broadcaster or streamer pre-buys, private equity, and a final “gap”. Only when the money closes is the film green-lit.', fr:'Le budget s’assemble en plusieurs morceaux : préventes à l’étranger, aides publiques et crédits d’impôt, préachats des chaînes ou plateformes, fonds privés, et un dernier « gap ». Le film n’est lancé qu’une fois le plan de financement bouclé.'} },
+    { t:{zh:'前製 Pre-production', en:'Pre-production', fr:'Préproduction'}, p:{zh:'定出拍攝日程與逐項預算、選角、勘景、組織劇組、設計美術與服裝、買保險。前製做得越細，拍攝期越不會燒錢。', en:'The shooting schedule and line budget are locked, roles cast, locations scouted, crew hired, sets and costumes designed, insurance bought. The tighter the prep, the less money burns on set.', fr:'On fige le plan de travail et le devis détaillé, on fait le casting et les repérages, on embauche l’équipe, on conçoit décors et costumes, on s’assure. Plus la préparation est précise, moins le tournage coûte.'} },
+    { t:{zh:'拍攝 Production', en:'Production', fr:'Tournage'}, p:{zh:'最貴的一段：每一天都有幾十到上百人的薪水、器材與場地費。製片會計每天比對實際花費與預算，導演每天看前一天的毛片。', en:'The most expensive stretch: every day carries the wages of dozens or hundreds of people, plus kit and locations. The production accountant tracks spend against budget daily, and the director reviews the previous day’s rushes.', fr:'La phase la plus chère : chaque jour paie des dizaines ou des centaines de personnes, le matériel et les décors. Le comptable de production suit les dépenses contre le devis chaque jour, et le réalisateur visionne les rushes de la veille.'} },
+    { t:{zh:'後製 Post-production', en:'Post-production', fr:'Postproduction'}, p:{zh:'剪輯、配樂、音效與混音、調色、視覺特效、字幕，最後輸出成戲院放映用的 DCP 數位拷貝與給平台的交付檔。', en:'Editing, score, sound design and mix, colour grading, visual effects and subtitles, ending in a DCP for cinemas and the delivery files for platforms.', fr:'Montage, musique, montage son et mixage, étalonnage, effets visuels et sous-titres, jusqu’au DCP pour les salles et aux éléments de livraison pour les plateformes.'} },
+    { t:{zh:'銷售與發行 Sales & distribution', en:'Sales & distribution', fr:'Ventes & distribution'}, p:{zh:'國際銷售代理把各國版權賣給當地發行商；發行商決定檔期、廳數、預告與廣告，並向戲院收片租。影展是這一步最重要的櫥窗。', en:'An international sales agent sells territory rights to local distributors; each distributor sets the date, the number of screens, trailers and advertising, and collects rentals from cinemas. Festivals are the main shop window.', fr:'Le vendeur international cède les droits pays par pays à des distributeurs locaux ; chacun fixe la date, le nombre de copies, la bande-annonce et la publicité, et encaisse la location des salles. Les festivals sont la principale vitrine.'} },
+    { t:{zh:'映演與後續 Exhibition & ancillary', en:'Exhibition & ancillary', fr:'Exploitation & droits dérivés'}, p:{zh:'戲院上映之後，依序進入付費數位、付費電視、串流平台、免費電視、航空與海外授權。對多數電影來說，戲院之後的收入加起來比票房更多。', en:'After cinemas come paid digital, pay TV, streaming, free TV, airlines and other licences, in a set order. For most films, everything after the cinema adds up to more than the box office.', fr:'Après les salles viennent la VOD payante, la TV payante, la SVOD, la TV gratuite, l’aérien et les autres licences, dans un ordre fixé. Pour la plupart des films, tout ce qui suit la salle rapporte davantage que le guichet.'} },
+  ]},
+]},
+
+/* ── 2. Roles ── */
+{ id:'roles', i:'fa-people-group', c:'#fb7185',
+  nav:{zh:'角色', en:'Roles', fr:'Métiers'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'誰在做什麼', en:'Who does what', fr:'Qui fait quoi'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'預算表把人分成兩類：<strong class="text-white">線上（above-the-line）</strong>是創意與主導者，例如編劇、導演、製片、主要演員，酬勞多半個別談判；<strong class="text-white">線下（below-the-line）</strong>是技術與執行人員，例如攝影、美術、燈光、剪輯，多半依工會或公會的費率計酬。',
+    en:'A budget splits people in two. <strong class="text-white">Above the line</strong> are the creative leads (writer, director, producers, principal cast), whose fees are negotiated one by one. <strong class="text-white">Below the line</strong> are the technical crew (camera, art, lighting, editing), mostly paid at union or guild rates.',
+    fr:'Un devis sépare les gens en deux. <strong class="text-white">Au-dessus de la ligne</strong> : les responsables créatifs (scénariste, réalisateur, producteurs, rôles principaux), dont la rémunération se négocie au cas par cas. <strong class="text-white">En dessous</strong> : l’équipe technique (image, décor, lumière, montage), payée surtout selon les grilles conventionnelles.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-briefcase', t:{zh:'製片 Producer', en:'Producer', fr:'Producteur'}, tag:{zh:'對錢與成敗負責', en:'Answers for money and outcome', fr:'Répond de l’argent et du résultat'}, p:{zh:'從頭到尾帶著案子走：取得版權、找錢、組團隊、控預算、談發行。執行製片管日常營運，監製或出品人多半是出資方的代表。', en:'Carries the project from start to finish: rights, money, team, budget control, distribution deals. A line producer runs day-to-day operations; executive producers usually represent the financiers.', fr:'Porte le projet du début à la fin : droits, argent, équipe, maîtrise du budget, accords de distribution. Le directeur de production gère le quotidien ; les producteurs exécutifs représentent souvent les financeurs.'} },
+    { i:'fa-video', t:{zh:'導演 Director', en:'Director', fr:'Réalisateur'}, tag:{zh:'對畫面與表演負責', en:'Answers for what is on screen', fr:'Répond de ce qui est à l’écran'}, p:{zh:'把劇本變成影像，指導演員與各部門。在法國，導演被視為作品的作者，享有著作人格權；在好萊塢，最終剪輯權通常在片廠手上。', en:'Turns the script into images and directs actors and departments. In France the director is legally the author of the work; in Hollywood, final cut usually stays with the studio.', fr:'Transforme le scénario en images et dirige comédiens et départements. En France, le réalisateur est l’auteur de l’œuvre ; à Hollywood, le final cut reste en général au studio.'} },
+    { i:'fa-pen-nib', t:{zh:'編劇 Screenwriter', en:'Screenwriter', fr:'Scénariste'}, p:{zh:'從故事大綱、分場到完整劇本，常常改上十幾稿。一頁劇本大約等於銀幕上一分鐘。', en:'Works from outline and treatment to the full script, often through a dozen drafts. One script page runs roughly one minute on screen.', fr:'Passe du synopsis au traitement puis à la continuité dialoguée, souvent en une dizaine de versions. Une page de scénario fait environ une minute à l’écran.'} },
+    { i:'fa-camera-retro', t:{zh:'攝影指導 DoP', en:'Director of photography', fr:'Directeur de la photographie'}, p:{zh:'決定鏡頭、構圖與燈光，帶領攝影組與燈光組，與調色師一起完成影像風格。', en:'Chooses lenses, framing and lighting, leads the camera and lighting crews, and finishes the look with the colourist.', fr:'Choisit optiques, cadrages et lumière, dirige les équipes image et électrique, et finalise le rendu avec l’étalonneur.'} },
+    { i:'fa-scissors', t:{zh:'剪輯師 Editor', en:'Editor', fr:'Monteur'}, p:{zh:'從幾十小時的素材中組出影片的節奏與結構，常被稱為「第二位編劇」。', en:'Builds the film’s rhythm and structure out of dozens of hours of footage, often called the second writer.', fr:'Construit le rythme et la structure du film à partir de dizaines d’heures de rushes, souvent appelé le second scénariste.'} },
+    { i:'fa-calculator', t:{zh:'製片會計 Production accountant', en:'Production accountant', fr:'Comptable de production'}, p:{zh:'每週出成本報告、管理現金流與薪資、整理租稅抵減與補助申請的支出證明。對有會計背景的人，這是進入電影業最直接的門。', en:'Produces the weekly cost report, manages cash flow and payroll, and documents spending for tax credit and grant claims. For anyone with an accounting background, this is the most direct way into the industry.', fr:'Établit le coût de production hebdomadaire, gère trésorerie et paie, et justifie les dépenses pour les crédits d’impôt et les aides. Avec une formation comptable, c’est la porte d’entrée la plus directe.'} },
+    { i:'fa-globe', t:{zh:'國際銷售代理 Sales agent', en:'Sales agent', fr:'Vendeur international'}, p:{zh:'在影展與市場展把片子賣給各國發行商，通常抽售價的一到兩成佣金，並常在開拍前就先預售。', en:'Sells the film to distributors country by country at festivals and markets, typically for a 10 to 20 percent commission, often presold before shooting.', fr:'Vend le film aux distributeurs de chaque pays dans les festivals et marchés, contre une commission de 10 à 20 % environ, souvent en prévente avant le tournage.'} },
+    { i:'fa-bullhorn', t:{zh:'發行商 Distributor', en:'Distributor', fr:'Distributeur'}, p:{zh:'買下某個地區的版權，決定上映日期與廳數，支付預告、海報、廣告等宣發費用（P&A），再向戲院收取片租。', en:'Buys rights for a territory, picks the date and screen count, pays prints and advertising (P&A), and collects rentals from cinemas.', fr:'Achète les droits d’un territoire, choisit la date et le plan de sortie, paie les frais d’édition (copies et publicité) et encaisse la location auprès des salles.'} },
+    { i:'fa-ticket', t:{zh:'映演商 Exhibitor', en:'Exhibitor', fr:'Exploitant'}, p:{zh:'經營戲院，決定排片。票房要分給發行商，所以餐飲的利潤率常常比售票高得多。', en:'Runs the cinemas and programmes the screens. Ticket money is shared with the distributor, so concessions often earn a far higher margin than tickets.', fr:'Gère les salles et la programmation. La recette guichet se partage avec le distributeur, si bien que la confiserie dégage souvent une marge bien plus forte que les billets.'} },
+  ]},
+]},
+
+/* ── 3. Financing ── */
+{ id:'money', i:'fa-sack-dollar', c:'#f59e0b',
+  nav:{zh:'籌資', en:'Financing', fr:'Financement'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'錢從哪裡來', en:'Where the money comes from', fr:'D’où vient l’argent'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'好萊塢大片廠用自己的資金拍片，也自己發行。獨立電影則像拼圖：<strong class="text-white">沒有任何一個來源會付全部的錢</strong>，製片要把公共資金、預售、投資與貸款拼成一份「財務計畫」，而且每一塊都有自己的回收順序。',
+    en:'Hollywood studios finance and distribute from their own balance sheet. Independent film is a jigsaw: <strong class="text-white">no single source pays for everything</strong>, so the producer builds a finance plan from public money, presales, equity and loans, each with its own place in the repayment order.',
+    fr:'Les studios hollywoodiens financent et distribuent sur leurs fonds propres. Le cinéma indépendant est un puzzle : <strong class="text-white">aucune source ne paie tout</strong>, et le producteur bâtit un plan de financement avec de l’argent public, des préventes, des fonds propres et des prêts, chacun avec son rang de remboursement.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-handshake', t:{zh:'預售 Presales', en:'Presales', fr:'Préventes'}, p:{zh:'開拍前就把某些國家的版權賣給當地發行商，對方先簽「最低保證金」（MG）合約，製片拿合約向銀行借款。', en:'Territory rights are sold before shooting against a minimum guarantee (MG); the producer borrows from a bank against those contracts.', fr:'Les droits de certains pays sont vendus avant le tournage contre un minimum garanti (MG) ; le producteur emprunte auprès d’une banque sur ces contrats.'} },
+    { i:'fa-landmark', t:{zh:'補助與租稅抵減', en:'Grants and tax incentives', fr:'Aides et crédits d’impôt'}, p:{zh:'各國用租稅抵減吸引劇組到當地花錢，常見比例是當地合格支出的 20% 到 40%。許多國家另有選擇性補助，由評審委員會挑案子。', en:'Countries attract shoots with tax credits, commonly 20 to 40 percent of qualifying local spend. Many also run selective grants decided by a committee.', fr:'Les pays attirent les tournages par des crédits d’impôt, souvent de 20 à 40 % des dépenses éligibles. Beaucoup ont aussi des aides sélectives attribuées par commission.'} },
+    { i:'fa-tv', t:{zh:'電視台與平台預購', en:'Broadcaster and streamer pre-buys', fr:'Préachats des chaînes et plateformes'}, p:{zh:'電視台或串流平台先買下未來的播映權。在法國，這是法律規定的投資義務，Canal+ 長年是最大的電影出資者。', en:'A broadcaster or streamer buys future screening rights in advance. In France this is a legal investment obligation, and Canal+ has long been the largest single funder of films.', fr:'Une chaîne ou une plateforme achète à l’avance des droits de diffusion. En France c’est une obligation légale d’investissement, et Canal+ reste depuis longtemps le premier financeur du cinéma.'} },
+    { i:'fa-earth-europe', t:{zh:'國際合製 Co-production', en:'Co-production', fr:'Coproduction'}, p:{zh:'兩國以上的公司依合製條約共同出資，片子可在每個合製國都被當作「本國片」，同時申請各國的補助。', en:'Companies from two or more countries co-finance under a treaty, so the film counts as national in each and can tap each country’s aid.', fr:'Des sociétés de plusieurs pays cofinancent dans le cadre d’un accord, si bien que le film est national dans chacun et accède à leurs aides.'} },
+    { i:'fa-chart-pie', t:{zh:'股權投資 Equity', en:'Equity', fr:'Fonds propres'}, p:{zh:'私人投資人或基金直接出資，換取回收後的利潤分成。風險最高，所以通常排在最後才回收，但分紅比例也最高。', en:'Private investors or funds put in cash for a share of profits. It carries the most risk, so it recoups last but takes the largest upside.', fr:'Des investisseurs privés ou des fonds apportent du cash contre une part des bénéfices. Risque maximal, remboursement en dernier, mais la plus grosse part du profit.'} },
+    { i:'fa-shield-halved', t:{zh:'完片保證 Completion bond', en:'Completion bond', fr:'Garantie de bonne fin'}, p:{zh:'保險公司向出資方保證片子一定拍完並交片；若製片超支失控，保證人可以接管劇組。銀行通常要求有這份保證才肯借錢。', en:'A guarantor promises financiers the film will be finished and delivered, and can take over the production if it spirals. Banks usually require one before lending.', fr:'Un garant promet aux financeurs que le film sera terminé et livré, et peut reprendre la production en cas de dérapage. Les banques l’exigent en général avant de prêter.'} },
+  ]},
+  { type:'h3', t:{zh:'法國與台灣的公共資金', en:'Public money in France and Taiwan', fr:'L’argent public en France et à Taïwan'} },
+  { type:'table', head:[{zh:'機制', en:'Scheme', fr:'Dispositif'},{zh:'國家', en:'Country', fr:'Pays'},{zh:'怎麼運作', en:'How it works', fr:'Fonctionnement'}],
+    rows:[
+    [{zh:'CNC 自動補助（compte de soutien）', en:'CNC automatic support (compte de soutien)', fr:'Soutien automatique du CNC'}, {zh:'法國', en:'France', fr:'France'}, {zh:'每張票都要繳 10.72% 的 TSA 給國家電影中心 CNC。片子賣得越好，製片與發行商帳戶裡累積的補助就越多，只能再投入下一部法國片。', en:'Every ticket pays a 10.72% TSA levy to the CNC. The better a film sells, the more support builds up in its producer’s and distributor’s accounts, to be reinvested in their next French film.', fr:'Chaque billet acquitte la TSA de 10,72 % au CNC. Plus un film marche, plus le soutien généré s’accumule sur le compte du producteur et du distributeur, à réinvestir dans leur prochain film français.'}],
+    [{zh:'預支票房補助（avance sur recettes）', en:'Advance on receipts (avance sur recettes)', fr:'Avance sur recettes'}, {zh:'法國', en:'France', fr:'France'}, {zh:'CNC 的選擇性補助，由委員會讀劇本決定，偏重首部片與作者電影，名義上是預支，實際上大多不必歸還。', en:'A selective CNC grant decided by a committee that reads the script, favouring first films and auteur cinema. Nominally an advance, in practice it is rarely repaid.', fr:'Aide sélective du CNC attribuée par une commission sur lecture, favorable aux premiers films et au cinéma d’auteur. Remboursable en principe, rarement remboursée en pratique.'}],
+    [{zh:'電影租稅抵減（crédit d’impôt cinéma）', en:'Film tax credit (crédit d’impôt cinéma)', fr:'Crédit d’impôt cinéma'}, {zh:'法國', en:'France', fr:'France'}, {zh:'法國片在法國的合格支出可抵減 30%，特效支出超過 200 萬歐元的可到 40%。外國片另有國際租稅抵減（TRIP），比例相同。', en:'30% of qualifying French spend on French films, 40% when VFX spend exceeds €2m. Foreign shoots get the international credit (TRIP) at the same rates.', fr:'30 % des dépenses éligibles en France, 40 % au-delà de 2 M€ d’effets visuels. Les tournages étrangers bénéficient du crédit international (C2I, ex-TRIP) aux mêmes taux.'}],
+    [{zh:'SOFICA', en:'SOFICA', fr:'SOFICA'}, {zh:'法國', en:'France', fr:'France'}, {zh:'個人投資這類基金可以抵所得稅，基金再投資電影與影集，是獨立製片重要的民間資金。', en:'Individuals investing in these funds get an income tax break; the funds then invest in films and series, an important source of private money for independents.', fr:'Les particuliers qui y souscrivent réduisent leur impôt sur le revenu ; ces sociétés investissent ensuite dans des films et séries, une ressource privée importante pour les indépendants.'}],
+    [{zh:'國產電影長片輔導金', en:'Feature film production grant', fr:'Aide à la production de longs métrages'}, {zh:'台灣', en:'Taiwan', fr:'Taïwan'}, {zh:'文化部影視及流行音樂產業局每年徵件，由評審挑選劇情長片給予補助，是台灣多數國片最重要的第一筆錢。', en:'An annual call by the Ministry of Culture’s audiovisual bureau; a jury selects features to fund. For most Taiwanese films it is the first and most important money in.', fr:'Appel annuel du bureau de l’audiovisuel du ministère de la Culture ; un jury sélectionne les longs métrages aidés. C’est souvent le premier financement d’un film taïwanais.'}],
+    [{zh:'文策院投資', en:'TAICCA investment', fr:'Investissement de la TAICCA'}, {zh:'台灣', en:'Taiwan', fr:'Taïwan'}, {zh:'文化內容策進院（2019 年成立）以國發基金與民間共同投資影視案，採投資而非補助，會要求商業回報。', en:'The Taiwan Creative Content Agency (founded 2019) co-invests with private partners using national development funds. It invests rather than grants, so it expects a commercial return.', fr:'L’agence TAICCA (créée en 2019) co-investit avec des partenaires privés sur des fonds publics de développement. Elle investit au lieu de subventionner et attend donc un retour.'}],
+    ]},
+  { type:'note', p:{
+    zh:'各國補助比例、上限與申請條件每年都可能調整，申請前請以 CNC、文化部影視局或各地影視委員會的最新公告為準。',
+    en:'Rates, caps and eligibility rules change from year to year: check the latest notices from the CNC, Taiwan’s audiovisual bureau or the relevant film commission before applying.',
+    fr:'Taux, plafonds et conditions évoluent chaque année : vérifiez les derniers textes du CNC, du bureau audiovisuel taïwanais ou de la commission du film concernée avant de déposer.'} },
+]},
+
+/* ── 4. Waterfall ── */
+{ id:'waterfall', i:'fa-water', c:'#34d399',
+  nav:{zh:'分帳', en:'Waterfall', fr:'Remontées'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'票房怎麼分：收益瀑布', en:'How box office is split: the waterfall', fr:'Le partage des recettes : la cascade'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'新聞上的票房數字是<strong class="text-white">觀眾付的總金額</strong>，不是片商賺的錢。錢會像瀑布一樣一層一層往下流：戲院先拿走自己那份，發行商扣掉發行費與宣發費，剩下的才依合約順序還給貸款方、投資人，最後才輪到分紅。',
+    en:'The box office figure in the news is <strong class="text-white">what audiences paid</strong>, not what the film earned. The money cascades down: cinemas keep their share, the distributor deducts its fee and its marketing costs, and only then does the rest repay lenders and investors in contract order, with profit shares last.',
+    fr:'Le chiffre du box-office est <strong class="text-white">ce que le public a payé</strong>, pas ce que le film a gagné. L’argent descend en cascade : les salles gardent leur part, le distributeur retient sa commission et ses frais d’édition, et le reste rembourse prêteurs puis investisseurs dans l’ordre des contrats, les intéressements venant en dernier.'} },
+  { type:'dia', k:'waterfall' },
+  { type:'note', p:{
+    zh:'這是假設數字：製作預算 4,000 萬美元、宣發費 3,000 萬美元、戲院分一半、發行費為片租的三成。票房是預算的三倍，回到製片方的卻只有 1,200 萬美元，比預算少了 2,800 萬。這就是業界常說「票房要到預算的 2.5 倍左右才打平」的原因，剩下的缺口要靠串流、電視與海外授權補上。',
+    en:'Hypothetical figures: a USD 40m budget, USD 30m of P&A, cinemas keeping half and a distribution fee of 30% of rentals. The box office is three times the budget, yet only USD 12m reaches the producer, USD 28m short of the budget. Hence the rule of thumb that a film needs roughly 2.5 times its budget at the box office to break even, with streaming, TV and foreign licences filling the rest.',
+    fr:'Chiffres hypothétiques : budget de 40 M$, 30 M$ de frais d’édition, moitié pour les salles et commission de 30 % de la location. Le box-office vaut trois fois le budget, mais seuls 12 M$ reviennent au producteur, 28 M$ de moins que le budget. D’où la règle empirique selon laquelle un film doit faire environ 2,5 fois son budget en salles pour être à l’équilibre, le reste venant des plateformes, de la TV et des ventes à l’étranger.'} },
+  { type:'h3', t:{zh:'各地戲院與片商的拆帳', en:'How cinemas and distributors split the ticket', fr:'Le partage entre salles et distributeurs'} },
+  { type:'dia', k:'ticket' },
+  { type:'table', head:[{zh:'市場', en:'Market', fr:'Marché'},{zh:'片商大約分到', en:'Distributor’s share, roughly', fr:'Part du distributeur, environ'},{zh:'說明', en:'Notes', fr:'Remarques'}],
+    rows:[
+    [{zh:'美國', en:'United States', fr:'États-Unis'}, {zh:'約五成，首週更高', en:'About half, more in week one', fr:'Environ la moitié, plus en 1re semaine'}, {zh:'大片首週片商可分到六成以上，之後逐週遞減。', en:'Big releases can take over 60% in the opening week, sliding down week by week.', fr:'Les grosses sorties dépassent 60 % la première semaine, puis la part baisse chaque semaine.'}],
+    [{zh:'法國', en:'France', fr:'France'}, {zh:'扣稅後 25% 至 50%', en:'25% to 50% after taxes', fr:'25 % à 50 % après taxes'}, {zh:'法律規定片租比例必須在這個區間內，實務上多在 45% 至 50%。', en:'The law caps the rental rate within this range; in practice it is usually 45% to 50%.', fr:'La loi encadre le taux de location dans cette fourchette ; en pratique il se situe souvent entre 45 % et 50 %.'}],
+    [{zh:'中國', en:'China', fr:'Chine'}, {zh:'進口分帳片 25%', en:'25% for imported revenue-share films', fr:'25 % pour les films importés en partage'}, {zh:'國片的片方比例較高；票房還要先扣電影專項資金與稅。', en:'Local films get a higher share; a film fund levy and tax come off first.', fr:'Les films chinois obtiennent plus ; un prélèvement pour le fonds du cinéma et les taxes passent d’abord.'}],
+    [{zh:'台灣', en:'Taiwan', fr:'Taïwan'}, {zh:'依合約，約四到六成', en:'By contract, about 40% to 60%', fr:'Selon contrat, environ 40 % à 60 %'}, {zh:'通常前幾週片商比例較高，之後調低；國片與好萊塢片條件不同。', en:'Usually higher in the first weeks and lower later; terms differ for local and Hollywood titles.', fr:'Souvent plus élevée les premières semaines ; les conditions diffèrent entre films taïwanais et hollywoodiens.'}],
+    ]},
+]},
+
+/* ── 5. Windows ── */
+{ id:'windows', i:'fa-calendar-days', c:'#38bdf8',
+  nav:{zh:'窗口', en:'Windows', fr:'Fenêtres'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'發行窗口：同一部片賣很多次', en:'Release windows: selling one film many times', fr:'Les fenêtres : vendre un film plusieurs fois'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'「窗口」是指一部電影在某個管道獨家播映的期間。先讓願意付最多錢的人看（戲院），再一層層往便宜的管道放，同一部片就能賣很多次。疫情之後，美國的戲院獨家期從約 90 天縮短到 30 至 45 天；法國則用法律協議固定順序，稱為<strong class="text-white">媒體時序（chronologie des médias）</strong>。',
+    en:'A window is a period in which one channel has a film exclusively. Selling first to those who pay most (cinemas), then to cheaper channels in turn, lets the same film be sold many times. Since the pandemic the US theatrical window has shrunk from about 90 days to 30 to 45; France fixes the order by industry agreement, the <strong class="text-white">chronologie des médias</strong>.',
+    fr:'Une fenêtre est une période d’exclusivité accordée à un mode de diffusion. On vend d’abord à ceux qui paient le plus (les salles), puis à des canaux moins chers, ce qui permet de vendre plusieurs fois le même film. Depuis la pandémie, la fenêtre salles américaine est passée d’environ 90 jours à 30 ou 45 ; la France fixe l’ordre par accord interprofessionnel : la <strong class="text-white">chronologie des médias</strong>.'} },
+  { type:'dia', k:'windows' },
+  { type:'note', p:{
+    zh:'法國的時序依 2025 年協議繪製；平台的窗口長短取決於它承諾投資多少法國與歐洲作品（例如 Netflix 15 個月、與 CNC 簽約的 Disney+ 9 個月），沒有簽投資協議的平台要等更久。協議每隔幾年重新談判，請以 CNC 最新版本為準。',
+    en:'The French line follows the 2025 agreement. A streamer’s window depends on how much it commits to invest in French and European works (Netflix 15 months, Disney+ 9 months after signing its deal), and services without such a deal wait longer. The agreement is renegotiated every few years, so check the CNC’s current version.',
+    fr:'La ligne française suit l’accord de 2025. La fenêtre d’une plateforme dépend de son engagement d’investissement dans la création française et européenne (Netflix à 15 mois, Disney+ à 9 mois après la signature de son accord) ; les services sans accord attendent plus longtemps. L’accord est renégocié régulièrement : référez-vous à la version en vigueur publiée par le CNC.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-film', t:{zh:'戲院獨家', en:'Theatrical exclusive', fr:'Exclusivité salles'}, p:{zh:'口碑與宣傳都在這段時間累積，後面每個窗口的售價也常以票房表現為準。', en:'Word of mouth and publicity build here, and the price of every later window often follows the box office.', fr:'Le bouche-à-oreille et la notoriété se construisent ici, et le prix des fenêtres suivantes dépend souvent du box-office.'} },
+    { i:'fa-cart-shopping', t:{zh:'單片付費 TVOD／PVOD', en:'TVOD / PVOD', fr:'VOD à l’acte'}, p:{zh:'觀眾按片租借或購買。美國的 PVOD 在上映一個多月後就推出，單片租價接近一張戲票。', en:'Viewers rent or buy title by title. US premium VOD can arrive just over a month after release, at close to the price of a ticket.', fr:'Location ou achat à l’unité. Aux États-Unis, la VOD premium arrive un peu plus d’un mois après la sortie, à un prix proche d’une place de cinéma.'} },
+    { i:'fa-tower-broadcast', t:{zh:'串流與電視', en:'Streaming and TV', fr:'Plateformes et TV'}, p:{zh:'平台與電視台付一筆授權費取得一段期間的播映權；片廠自己的平台（如 Disney+、Peacock）通常先拿。', en:'Platforms and broadcasters pay a licence fee for a term; a studio’s own service (Disney+, Peacock) usually comes first.', fr:'Plateformes et chaînes paient une licence pour une durée donnée ; la plateforme du studio (Disney+, Peacock) passe en général en premier.'} },
+  ]},
+]},
+
+/* ── 6. Exhibition ── */
+{ id:'screens', i:'fa-couch', c:'#a78bfa',
+  nav:{zh:'映演', en:'Exhibition', fr:'Exploitation'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'戲院與票房', en:'Cinemas and the box office', fr:'Les salles et le box-office'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'全球票房在 2019 年達到約 420 億美元的高峰，疫情後回升，但還沒有完全回到那個水準。戲院的對策是讓「去戲院」更像一場活動：大銀幕、更好的聲音、更舒服的座位，以及一年到頭的大片檔期。',
+    en:'Global box office peaked at about USD 42bn in 2019 and has recovered since the pandemic without fully returning to that level. Cinemas have answered by making a trip to the movies feel like an event: bigger screens, better sound, more comfortable seats and a year-round slate of tentpoles.',
+    fr:'Le box-office mondial a culminé à environ 42 milliards de dollars en 2019 et s’est redressé depuis la pandémie sans retrouver tout à fait ce niveau. Les salles ont répondu en faisant de la séance un événement : grands écrans, meilleur son, sièges confortables et grosses sorties toute l’année.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-expand', t:{zh:'高級放映廳 PLF', en:'Premium large format', fr:'Grands formats premium'}, p:{zh:'IMAX、Dolby Cinema 與各連鎖自有的大廳，票價較高，在大片上映時常貢獻不成比例的票房。', en:'IMAX, Dolby Cinema and chains’ own large screens charge more and take a disproportionate share of a blockbuster’s gross.', fr:'IMAX, Dolby Cinema et les grandes salles maison des circuits coûtent plus cher et captent une part disproportionnée des recettes d’un blockbuster.'} },
+    { i:'fa-chair', t:{zh:'體感與特殊廳', en:'Motion and specialty seats', fr:'Salles immersives'}, p:{zh:'4DX、ScreenX、躺椅廳等，靠體驗差異化，與串流在家看做出區隔。', en:'4DX, ScreenX, recliner rooms and the like compete on experience, setting the cinema apart from watching at home.', fr:'4DX, ScreenX, fauteuils inclinables : ces salles misent sur l’expérience pour se distinguer du visionnage à domicile.'} },
+    { i:'fa-burger', t:{zh:'餐飲收入', en:'Concessions', fr:'Confiserie'}, p:{zh:'爆米花和飲料的毛利率常在八成以上，而且不用跟片商分，是戲院獲利的主要來源之一。', en:'Popcorn and drinks often carry gross margins above 80% and are not shared with the distributor, making them one of a cinema’s main profit sources.', fr:'Pop-corn et boissons dépassent souvent 80 % de marge brute et ne se partagent pas avec le distributeur : c’est l’une des principales sources de profit des salles.'} },
+    { i:'fa-hard-drive', t:{zh:'數位放映 DCP', en:'Digital cinema (DCP)', fr:'Projection numérique (DCP)'}, p:{zh:'2010 年代戲院幾乎全面數位化，影片以加密的 DCP 檔案交付，用金鑰（KDM）控制可放映的廳與時段。', en:'Cinemas went almost entirely digital in the 2010s. Films are delivered as encrypted DCPs, unlocked by keys (KDMs) that control which screens and dates may play them.', fr:'Les salles sont passées presque entièrement au numérique dans les années 2010. Les films arrivent en DCP chiffrés, déverrouillés par des clés (KDM) qui fixent écrans et dates.'} },
+    { i:'fa-store', t:{zh:'法國的藝術電影院', en:'France’s art-house network', fr:'Le réseau art et essai'}, p:{zh:'法國有超過 2,000 家電影院、約 6,000 塊銀幕，其中一半以上被認證為藝術電影院，可以得到補助。法國片的市占率常在四成上下，是歐洲最高之一。', en:'France has over 2,000 cinemas and about 6,000 screens, more than half of them certified art-house and eligible for support. French films regularly take around 40% of admissions, among the highest home shares in Europe.', fr:'La France compte plus de 2 000 cinémas et environ 6 000 écrans, dont plus de la moitié classés art et essai et aidés. Les films français font souvent autour de 40 % des entrées, l’une des parts nationales les plus élevées d’Europe.'} },
+    { i:'fa-map-location-dot', t:{zh:'台灣的戲院市場', en:'Taiwan’s cinema market', fr:'Le marché taïwanais'}, p:{zh:'由威秀、秀泰、國賓等連鎖主導，好萊塢片佔票房大宗；國片票房破億新台幣就被視為賣座，台北市場常是全台的風向球。', en:'Dominated by chains such as Vieshow, Showtime and Ambassador, with Hollywood titles taking most of the gross. A local film that passes NT$100m is a hit, and Taipei usually signals how a release will go nationwide.', fr:'Dominé par des circuits comme Vieshow, Showtime et Ambassador, avec une majorité de recettes pour Hollywood. Un film taïwanais qui dépasse 100 M NT$ est un succès, et Taipei donne souvent la tendance nationale.'} },
+  ]},
+]},
+
+/* ── 7. Festivals ── */
+{ id:'fest', i:'fa-award', c:'#fbbf24',
+  nav:{zh:'影展', en:'Festivals', fr:'Festivals'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'影展、市場展與獎項', en:'Festivals, markets and awards', fr:'Festivals, marchés et prix'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'對獨立電影來說，影展不只是頒獎典禮，而是<strong class="text-white">交易場所</strong>：大影展旁都有市場展，國際銷售代理在那裡把片子賣給各國發行商。片子在哪個影展「世界首映」很重要，因為一部片只能首映一次。',
+    en:'For independent film, a festival is not just a prize-giving but <strong class="text-white">a marketplace</strong>: the big festivals run film markets where sales agents sell to distributors from every country. Where a film holds its world premiere matters, because it only gets one.',
+    fr:'Pour le cinéma indépendant, un festival n’est pas seulement une remise de prix mais <strong class="text-white">une place de marché</strong> : les grands festivals ont un marché du film où les vendeurs cèdent les droits aux distributeurs du monde entier. Le lieu de la première mondiale compte, car un film n’en a qu’une.'} },
+  { type:'table', head:[{zh:'影展', en:'Festival', fr:'Festival'},{zh:'時間', en:'When', fr:'Quand'},{zh:'最高獎', en:'Top prize', fr:'Prix principal'},{zh:'定位', en:'Profile', fr:'Profil'}],
+    rows:[
+    [{zh:'坎城影展', en:'Cannes', fr:'Cannes'}, {zh:'5 月', en:'May', fr:'Mai'}, {zh:'金棕櫚', en:'Palme d’Or', fr:'Palme d’or'}, {zh:'全球最重要的影展，旁邊的 Marché du Film 是最大的電影市場。', en:'The world’s leading festival; its Marché du Film is the largest film market.', fr:'Le premier festival du monde ; son Marché du Film est le plus grand marché.'}],
+    [{zh:'威尼斯影展', en:'Venice', fr:'Venise'}, {zh:'8 月底至 9 月初', en:'Late Aug to early Sep', fr:'Fin août à début sept.'}, {zh:'金獅獎', en:'Golden Lion', fr:'Lion d’or'}, {zh:'最古老的影展（1932），近年常是奧斯卡季的起點。', en:'The oldest festival (1932), now often the launch pad of awards season.', fr:'Le plus ancien (1932), devenu le coup d’envoi de la saison des prix.'}],
+    [{zh:'柏林影展', en:'Berlinale', fr:'Berlinale'}, {zh:'2 月', en:'February', fr:'Février'}, {zh:'金熊獎', en:'Golden Bear', fr:'Ours d’or'}, {zh:'政治與社會議題色彩較濃，有 EFM 歐洲電影市場。', en:'More political and social in tone, with the European Film Market (EFM).', fr:'Plus politique et social, avec l’European Film Market (EFM).'}],
+    [{zh:'多倫多影展', en:'Toronto (TIFF)', fr:'Toronto (TIFF)'}, {zh:'9 月', en:'September', fr:'Septembre'}, {zh:'觀眾票選獎', en:'People’s Choice Award', fr:'Prix du public'}, {zh:'北美最大的觀眾型影展，觀眾獎常預告奧斯卡結果。', en:'North America’s biggest audience festival; its audience award often foreshadows the Oscars.', fr:'Le plus grand festival public d’Amérique du Nord ; son prix du public annonce souvent les Oscars.'}],
+    [{zh:'日舞影展', en:'Sundance', fr:'Sundance'}, {zh:'1 月', en:'January', fr:'Janvier'}, {zh:'評審團大獎', en:'Grand Jury Prize', fr:'Grand prix du jury'}, {zh:'美國獨立電影的主要舞台，片商常在這裡競價買片。', en:'The main stage for US independent film, where buyers bid for titles.', fr:'La grande scène du cinéma indépendant américain, où les acheteurs s’affrontent.'}],
+    [{zh:'金馬影展與金馬獎', en:'Golden Horse', fr:'Golden Horse'}, {zh:'11 月', en:'November', fr:'Novembre'}, {zh:'最佳劇情片', en:'Best Feature Film', fr:'Meilleur film'}, {zh:'華語電影最重要的獎項之一，1962 年創立，旁有金馬創投會議媒合案子與資金。', en:'One of the top awards for Chinese-language film, founded 1962, with the Golden Horse Film Project Promotion matching projects and money.', fr:'L’un des grands prix du cinéma en langue chinoise, créé en 1962, avec un forum de coproduction qui réunit projets et financeurs.'}],
+    ]},
+  { type:'cards', cols:3, items:[
+    { i:'fa-trophy', t:{zh:'奧斯卡', en:'The Oscars', fr:'Les Oscars'}, p:{zh:'美國影藝學院的會員投票，每年 3 月前後頒獎。得獎能明顯拉高串流與海外的授權價，所以片商會花大錢做「頒獎季宣傳」。', en:'Voted by members of the Academy and presented around March. A win lifts licence fees for streaming and abroad, so distributors spend heavily on awards campaigns.', fr:'Votés par les membres de l’Académie, remis vers mars. Une statuette fait grimper le prix des licences, d’où d’importantes campagnes de promotion.'} },
+    { i:'fa-star', t:{zh:'凱薩獎', en:'The Césars', fr:'Les César'}, p:{zh:'法國電影藝術與技術學院頒發，約在 2 月，是法國電影業的年度盛事。', en:'Awarded by France’s Académie des arts et techniques du cinéma, around February, the French industry’s big night.', fr:'Décernés par l’Académie des arts et techniques du cinéma vers février, la grande soirée du cinéma français.'} },
+    { i:'fa-store', t:{zh:'純市場展', en:'Markets without a festival', fr:'Marchés sans festival'}, p:{zh:'美國電影市場 AFM（11 月）與香港國際影視展 FILMART（3 月）只做交易，不辦競賽。', en:'The American Film Market (November) and Hong Kong FILMART (March) are pure trading events with no competition.', fr:'L’American Film Market (novembre) et le FILMART de Hong Kong (mars) sont des marchés purs, sans compétition.'} },
+  ]},
+]},
+
+/* ── 8. Players ── */
+{ id:'players', i:'fa-building', c:'#22d3ee',
+  nav:{zh:'主要公司', en:'Players', fr:'Acteurs'},
+  eyebrow:{zh:'第八章', en:'Chapter 8', fr:'Chapitre 8'},
+  h2:{zh:'片廠、平台與地方業者', en:'Studios, streamers and local players', fr:'Studios, plateformes et acteurs locaux'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'好萊塢的大片廠同時做製作與全球發行，背後多半是更大的媒體集團。近年併購不斷，例如派拉蒙在 2025 年與 Skydance 合併、華納兄弟探索也進入出售程序，所以集團歸屬請以最新消息為準。',
+    en:'The Hollywood majors both produce and distribute worldwide, and most sit inside larger media groups. Mergers have been frequent, with Paramount combining with Skydance in 2025 and Warner Bros. Discovery put up for sale, so check current news for who owns whom.',
+    fr:'Les majors hollywoodiennes produisent et distribuent dans le monde entier, et la plupart appartiennent à de grands groupes de médias. Les fusions se multiplient, comme Paramount avec Skydance en 2025 ou la mise en vente de Warner Bros. Discovery : vérifiez l’actualité pour savoir qui possède quoi.'} },
+  { type:'table', head:[{zh:'類型', en:'Type', fr:'Type'},{zh:'代表', en:'Examples', fr:'Exemples'},{zh:'特色', en:'What sets them apart', fr:'Particularité'}],
+    rows:[
+    [{zh:'好萊塢大片廠', en:'Hollywood majors', fr:'Majors hollywoodiennes'}, 'Disney · Universal · Warner Bros. · Paramount · Sony Pictures', {zh:'系列電影與品牌（漫威、皮克斯、DC 等），擁有全球發行網與自家串流平台。', en:'Franchises and brands (Marvel, Pixar, DC and more), a worldwide distribution network and their own streaming services.', fr:'Franchises et marques (Marvel, Pixar, DC…), réseau de distribution mondial et plateformes maison.'}],
+    [{zh:'獨立片廠', en:'Independents', fr:'Indépendants'}, 'Lionsgate · A24 · Neon · Focus Features', {zh:'中低預算、作者電影與類型片，擅長影展與頒獎季。', en:'Mid and low budgets, auteur and genre films, strong at festivals and in awards season.', fr:'Budgets moyens ou modestes, films d’auteur et de genre, très présents en festivals et dans la course aux prix.'}],
+    [{zh:'串流平台', en:'Streamers', fr:'Plateformes'}, 'Netflix · Amazon MGM · Apple', {zh:'買斷全球版權或自製，多半跳過或縮短戲院上映。Amazon 在 2022 年買下米高梅。', en:'Buy worldwide rights or produce in-house, often skipping or shortening the cinema run. Amazon bought MGM in 2022.', fr:'Achètent les droits monde ou produisent en interne, en court-circuitant ou en écourtant souvent la salle. Amazon a racheté MGM en 2022.'}],
+    [{zh:'法國', en:'France', fr:'France'}, 'Pathé · Gaumont · StudioCanal · UGC · MK2', {zh:'許多公司同時做製作、發行與戲院，Gaumont（1895）是現存最老的電影公司之一。', en:'Many are integrated across production, distribution and cinemas; Gaumont (1895) is among the oldest film companies still operating.', fr:'Beaucoup sont intégrés de la production à l’exploitation ; Gaumont (1895) est l’une des plus anciennes sociétés de cinéma en activité.'}],
+    [{zh:'亞洲', en:'Asia', fr:'Asie'}, 'Toho · CJ ENM · Bona · Emperor', {zh:'日本的東寶靠動畫與系列片長年稱霸本地票房；韓國 CJ ENM 從製作、發行到 CGV 戲院一條龍。', en:'Japan’s Toho dominates its home box office with anime and franchises; Korea’s CJ ENM runs from production and distribution to CGV cinemas.', fr:'Au Japon, Toho domine le box-office avec l’animation et les franchises ; en Corée, CJ ENM va de la production à la distribution et aux salles CGV.'}],
+    ]},
+]},
+
+/* ── 9. Careers ── */
+{ id:'careers', i:'fa-route', c:'#f472b6',
+  nav:{zh:'入行', en:'Careers', fr:'Carrières'},
+  eyebrow:{zh:'第九章', en:'Chapter 9', fr:'Chapitre 9'},
+  h2:{zh:'不拿攝影機也能進電影業', en:'Ways in without holding a camera', fr:'Entrer dans le cinéma sans tenir la caméra'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'電影業有很多商業端的工作，需要的是會計、財務、法律、行銷與語言能力。多數人從短期專案或實習開始，靠作品名單（credits）與人脈一部接一部往上走。',
+    en:'Much of the film industry is business work that calls for accounting, finance, law, marketing and languages. Most people start on short contracts or internships and move up film by film through credits and contacts.',
+    fr:'Une grande partie du cinéma relève de métiers de gestion qui demandent comptabilité, finance, droit, marketing et langues. La plupart commencent par des contrats courts ou des stages et progressent de film en film grâce à leur filmographie et à leur réseau.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-calculator', t:{zh:'製片會計與成本控制', en:'Production accounting', fr:'Comptabilité de production'}, tag:{zh:'會計背景最直接', en:'Most direct for accountants', fr:'Le plus direct pour un comptable'}, p:{zh:'從會計助理做起，學預算科目表、每週成本報告、薪資與租稅抵減申請。', en:'Start as an assistant accountant and learn the chart of accounts, weekly cost reports, payroll and tax credit claims.', fr:'Débuter comme assistant comptable et apprendre le plan comptable, le coût hebdomadaire, la paie et les dossiers de crédit d’impôt.'}, l:[{zh:'工具：Movie Magic Budgeting、EP 或 Cast & Crew 的會計系統', en:'Tools: Movie Magic Budgeting, EP or Cast & Crew accounting', fr:'Outils : Movie Magic Budgeting, logiciels comptables EP ou Cast & Crew'}, {zh:'法國：多以 CDD d’usage 簽約，需熟悉 intermittent 制度', en:'France: usually CDD d’usage contracts; know the intermittent system', fr:'France : CDD d’usage et régime de l’intermittence'}] },
+    { i:'fa-chart-line', t:{zh:'電影金融', en:'Film finance', fr:'Financement du cinéma'}, p:{zh:'在銀行影視部門、基金或製片公司做融資結構、現金流模型與收益瀑布試算。', en:'Structure deals, cash flow models and waterfall projections at a bank’s media desk, a fund or a production company.', fr:'Montages financiers, modèles de trésorerie et simulations de remontées dans une banque spécialisée, un fonds ou une société de production.'}, l:[{zh:'法國：Coficiné、BNP Paribas 的影視部門', en:'France: Coficiné, BNP Paribas media desk', fr:'France : Coficiné, pôle cinéma de BNP Paribas'}] },
+    { i:'fa-globe', t:{zh:'國際銷售與採購', en:'Sales and acquisitions', fr:'Ventes internationales et acquisitions'}, p:{zh:'在銷售公司或發行商跑影展、看片、談價格與合約，多語能力是很大的優勢。', en:'Work festivals, screen films and negotiate prices and contracts for a sales company or distributor; several languages are a real advantage.', fr:'Festivals, visionnages et négociations pour un vendeur ou un distributeur ; le multilinguisme est un vrai atout.'} },
+    { i:'fa-gavel', t:{zh:'法務與商務', en:'Business and legal affairs', fr:'Affaires juridiques'}, p:{zh:'起草與審閱版權、演員、合製與發行合約，追蹤權利期限與地區。', en:'Draft and review rights, talent, co-production and distribution agreements, and track rights by term and territory.', fr:'Rédiger et relire les contrats de droits, d’artistes, de coproduction et de distribution, et suivre les droits par durée et territoire.'} },
+    { i:'fa-bullhorn', t:{zh:'發行與行銷', en:'Distribution and marketing', fr:'Distribution et marketing'}, p:{zh:'規劃檔期、預告、社群、媒體試映與票房追蹤，需要懂數據也懂觀眾。', en:'Plan release dates, trailers, social media, press screenings and box office tracking, combining data with a feel for audiences.', fr:'Planifier dates, bandes-annonces, réseaux sociaux, projections presse et suivi des entrées, entre données et sens du public.'} },
+    { i:'fa-ticket', t:{zh:'影展與映演', en:'Festivals and exhibition', fr:'Festivals et exploitation'}, p:{zh:'影展的選片、來賓與市場展工作，或戲院的排片與營運管理，常是新人第一份工作。', en:'Programming, guest and market work at festivals, or programming and operations at cinemas, is often a newcomer’s first job.', fr:'Programmation, accueil des invités et marché en festival, ou programmation et gestion en salle : souvent le premier emploi.'} },
+  ]},
+]},
+
+/* ── 10. Glossary ── */
+{ id:'glossary', i:'fa-book', c:'#94a3b8',
+  nav:{zh:'名詞', en:'Glossary', fr:'Lexique'},
+  eyebrow:{zh:'參考', en:'Reference', fr:'Référence'},
+  h2:{zh:'電影業常用名詞', en:'Industry glossary', fr:'Lexique du métier'},
+  blocks:[
+  { type:'table', head:[{zh:'名詞', en:'Term', fr:'Terme'},{zh:'意思', en:'Meaning', fr:'Sens'}],
+    rows:[
+    [{zh:'Logline／一句話故事', en:'Logline', fr:'Logline / pitch'}, {zh:'用一兩句話說出主角、目標與阻礙，募資與推銷的第一步。', en:'One or two sentences giving the protagonist, the goal and the obstacle; the first step of any pitch.', fr:'Une ou deux phrases donnant le héros, son but et l’obstacle ; la base de tout pitch.'}],
+    [{zh:'Option／選擇權', en:'Option', fr:'Option'}, {zh:'付一小筆錢，取得在一段期間內買下改編權的獨家權利。', en:'A small payment for the exclusive right to buy adaptation rights within a set period.', fr:'Petite somme versée pour l’exclusivité de l’achat des droits d’adaptation pendant une durée donnée.'}],
+    [{zh:'Greenlight／開綠燈', en:'Greenlight', fr:'Feu vert'}, {zh:'資金到齊、正式決定開拍。', en:'Financing closed and the decision to shoot taken.', fr:'Financement bouclé et décision de tourner prise.'}],
+    [{zh:'Slate／片單', en:'Slate', fr:'Line-up'}, {zh:'一家公司在一段期間內要開發或發行的作品清單。', en:'The list of titles a company is developing or releasing over a period.', fr:'La liste des films qu’une société développe ou sort sur une période.'}],
+    [{zh:'Rushes／Dailies 毛片', en:'Rushes / dailies', fr:'Rushes'}, {zh:'每天拍完、尚未剪輯的原始素材。', en:'Unedited footage from each shooting day.', fr:'Images brutes de chaque journée de tournage.'}],
+    [{zh:'Final cut／最終剪輯權', en:'Final cut', fr:'Final cut'}, {zh:'決定上映版本的權利，寫在導演合約裡。', en:'The right to decide the release version, set in the director’s contract.', fr:'Le droit de décider de la version exploitée, prévu au contrat du réalisateur.'}],
+    [{zh:'MG／最低保證金', en:'Minimum guarantee (MG)', fr:'Minimum garanti (MG)'}, {zh:'發行商為取得版權預付的金額，之後從收益中先扣回。', en:'An advance a distributor pays for rights, recouped from receipts first.', fr:'Avance versée par le distributeur pour les droits, récupérée en priorité sur les recettes.'}],
+    [{zh:'P&A／宣發費', en:'P&A', fr:'Frais d’édition'}, {zh:'拷貝與廣告（prints and advertising）費用，現在大部分是數位廣告。', en:'Prints and advertising; today mostly digital advertising.', fr:'Copies et publicité ; aujourd’hui surtout de la publicité numérique.'}],
+    [{zh:'Recoupment／回收', en:'Recoupment', fr:'Récupération'}, {zh:'出資方依合約順序從收益中拿回投入的錢。', en:'Financiers getting their money back from receipts in contract order.', fr:'Les financeurs récupèrent leur mise sur les recettes selon l’ordre contractuel.'}],
+    [{zh:'Gross／Net points 分紅點數', en:'Gross / net points', fr:'Points sur brut / net'}, {zh:'按總收入或淨利計算的分紅，以百分比的「點」表示；淨利分紅常常因為成本計算而拿不到。', en:'Profit shares on gross or net receipts, in percentage points. Net points often pay nothing once costs are counted.', fr:'Intéressement sur recettes brutes ou nettes, en points de pourcentage ; les points sur le net rapportent souvent peu une fois les coûts imputés.'}],
+    [{zh:'Day-and-date／同步上映', en:'Day-and-date', fr:'Sortie simultanée'}, {zh:'戲院與串流或數位在同一天推出。', en:'Releasing in cinemas and on streaming or VOD on the same day.', fr:'Sortie le même jour en salles et en VOD ou sur plateforme.'}],
+    [{zh:'DCP', en:'DCP', fr:'DCP'}, {zh:'Digital Cinema Package，戲院放映用的數位檔案格式。', en:'Digital Cinema Package, the file format cinemas project.', fr:'Digital Cinema Package, le format de fichier projeté en salle.'}],
+    [{zh:'E&O 保險', en:'E&O insurance', fr:'Assurance E&O'}, {zh:'錯誤與疏漏保險，涵蓋侵權、誹謗等法律風險，發行商通常要求提供。', en:'Errors and omissions cover for claims such as infringement or defamation, usually required by distributors.', fr:'Assurance erreurs et omissions contre les réclamations (contrefaçon, diffamation), exigée en général par les distributeurs.'}],
+    ]},
+]},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   UI strings
+   ═══════════════════════════════════════════════════════════ */
+const I18N = {
+zh:{
+ 'doc.title':'電影產業 | 製作、資金、發行與映演',
+ 'hdr.badge':'電影產業入門','hdr.title':'電影產業：一部片的錢與路',
+ 'intro':'看電影時我們看到的是導演與演員，但一部電影能夠存在，背後是一整條產業鏈：有人買下故事的版權、有人拼湊預算、有人把片子賣到幾十個國家，還有戲院、平台與電視台一層層把它送到觀眾面前。',
+ 'intro2':'這一卷從商業的角度認識電影業：先看產業鏈的七個階段與各種職務，再看錢從哪裡來、票房怎麼拆帳、發行窗口如何安排，接著是戲院、影展、主要公司與入行方式，最後是常用名詞。圖表依實際規則計算，例如收益瀑布的範例與法國電影票的稅與拆帳。',
+ 'footer':'電影產業入門參考，涵蓋製作流程、籌資、收益分配、發行窗口、映演、影展與職涯。補助比例、發行窗口與公司歸屬會隨政策與併購改變，請以 CNC、文化部影視局與各公司最新公告為準；收益瀑布為假設數字的教學範例。'
+},
+en:{
+ 'doc.title':'The Film Industry: Production, Money, Distribution & Exhibition',
+ 'hdr.badge':'FILM INDUSTRY PRIMER','hdr.title':'The film industry: the money and the road',
+ 'intro':'At the cinema we see directors and actors, but every film exists because of a whole value chain: someone buys the rights to a story, someone pieces the budget together, someone sells the film to dozens of countries, and cinemas, streamers and broadcasters bring it to audiences one after another.',
+ 'intro2':'This volume looks at film as a business: the seven stages of the value chain and the jobs within them, where the money comes from, how box office is split and how release windows are ordered, then cinemas, festivals, the main companies and ways into the industry, ending with a glossary. The charts are computed from real rules, such as the worked waterfall and the taxes and split on a French cinema ticket.',
+ 'footer':'An introductory reference to the film industry: production, financing, revenue sharing, release windows, exhibition, festivals and careers. Support rates, windows and corporate ownership change with policy and mergers, so the latest notices from the CNC, Taiwan’s audiovisual bureau and the companies themselves take precedence; the waterfall uses hypothetical figures for teaching.'
+},
+fr:{
+ 'doc.title':'L’industrie du cinéma : production, financement, distribution & salles',
+ 'hdr.badge':'INITIATION À L’INDUSTRIE DU CINÉMA','hdr.title':'L’industrie du cinéma : l’argent et le parcours d’un film',
+ 'intro':'Au cinéma, on voit des réalisateurs et des comédiens, mais chaque film existe grâce à toute une chaîne : quelqu’un achète les droits d’une histoire, quelqu’un assemble le budget, quelqu’un vend le film dans des dizaines de pays, puis salles, plateformes et chaînes le font parvenir au public tour à tour.',
+ 'intro2':'Ce volume aborde le cinéma comme une économie : les sept étapes de la chaîne de valeur et ses métiers, l’origine de l’argent, le partage des recettes et l’ordre des fenêtres, puis les salles, les festivals, les grandes sociétés et les façons d’entrer dans le métier, avec un lexique pour finir. Les graphiques sont calculés à partir de règles réelles, comme la cascade d’exemple et les taxes et le partage d’un billet en France.',
+ 'footer':'Une référence d’initiation à l’industrie du cinéma : production, financement, partage des recettes, fenêtres, exploitation, festivals et carrières. Taux d’aide, fenêtres et actionnariats évoluent avec la réglementation et les fusions : les textes du CNC, du bureau audiovisuel taïwanais et des sociétés font foi ; la cascade repose sur des chiffres hypothétiques à visée pédagogique.'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Rendering
+   ═══════════════════════════════════════════════════════════ */
+const COLS = { 2:'grid md:grid-cols-2 gap-4', 3:'grid md:grid-cols-2 lg:grid-cols-3 gap-4', 4:'grid sm:grid-cols-2 lg:grid-cols-4 gap-4' };
+function kbdify(s){ return s.split(' / ').map(p => `<kbd>${p}</kbd>`).join(' / '); }
+
+const BLOCK = {
+  lead: (b) => `<p class="text-slate-300 leading-relaxed max-w-4xl">${t(b.p)}</p>`,
+  h3:   (b) => `<h3 class="text-base font-black text-white pt-2">${t(b.t)}</h3>`,
+  note: (b, s) => `<p class="text-sm text-slate-300 leading-relaxed rounded-2xl p-4 border" style="background:${s.c}0f;border-color:${s.c}40"><i class="fa-solid fa-lightbulb mr-2" style="color:${s.c}"></i>${t(b.p)}</p>`,
+  dia:  (b) => { const h = DIA[b.k](); return h.startsWith('<svg') ? `<div class="dia-box reveal">${h}</div>` : h; },
+  cards:(b, s) => `<div class="${COLS[b.cols || 3]}">` + b.items.map((c, n) => `
+    <article class="reveal bg-slate-900/40 rounded-2xl border border-slate-800 p-5 hover:border-slate-600 transition-colors" data-i="${n % 6}">
+      <div class="flex items-start gap-3">
+        <div class="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center border" style="color:${s.c};background:${s.c}14;border-color:${s.c}33"><i class="fa-solid ${c.i} text-sm"></i></div>
+        <div class="min-w-0">
+          <h4 class="font-black text-white text-sm leading-snug">${t(c.t)}</h4>
+          ${c.tag ? `<p class="text-[11px] font-bold mt-1" style="color:${s.c}">${t(c.tag)}</p>` : ''}
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed mt-3">${t(c.p)}</p>
+      ${c.l ? `<ul class="mt-3 space-y-1.5">${c.l.map(x => `<li class="text-xs text-slate-300 leading-relaxed flex gap-2"><span style="color:${s.c}">▸</span><span>${t(x)}</span></li>`).join('')}</ul>` : ''}
+    </article>`).join('') + `</div>`,
+  steps:(b, s) => `<ol class="grid md:grid-cols-2 gap-4">` + b.items.map((c, n) => `
+    <li class="reveal flex gap-4 bg-slate-900/40 rounded-2xl border border-slate-800 p-5" data-i="${n % 6}">
+      <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border" style="color:${s.c};background:${s.c}14;border-color:${s.c}55">${n + 1}</div>
+      <div><h4 class="font-black text-white text-sm">${t(c.t)}</h4><p class="text-sm text-slate-400 leading-relaxed mt-1.5">${t(c.p)}</p></div>
+    </li>`).join('') + `</ol>`,
+  table:(b) => `<div class="table-scroll overflow-x-auto"><table class="w-full text-sm min-w-[640px]">
+    <thead><tr class="text-left text-slate-400 border-b border-slate-800">${b.head.map(h => `<th class="py-3 px-4 font-bold">${t(h)}</th>`).join('')}</tr></thead>
+    <tbody class="divide-y divide-slate-800/60">${b.rows.map(r => `<tr>${r.map((c, i) => `<td class="py-3 px-4 align-top ${i ? 'text-slate-300' : 'text-white font-bold'}">${b.kbd && i ? kbdify(t(c)) : t(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`,
+};
+
+function renderSections() {
+  document.getElementById('nav').innerHTML = SECTIONS.map(s =>
+    `<a href="#${s.id}" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors">${t(s.nav)}</a>`).join('');
+  document.getElementById('sections').innerHTML = SECTIONS.map(s => `
+  <section id="${s.id}" class="scroll-mt-28">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 rounded-2xl border" style="color:${s.c};background:${s.c}1a;border-color:${s.c}40;box-shadow:0 0 20px ${s.c}33"><i class="fa-solid ${s.i} text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider font-bold" style="color:${s.c}">${t(s.eyebrow)}</span>
+        <h2 class="text-2xl font-black text-white">${t(s.h2)}</h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      ${s.blocks.map(b => BLOCK[b.type](b, s)).join('')}
+    </div>
+  </section>`).join('');
+}
+
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach(e => revealObserver.observe(e));
+}
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-rose-500/15 text-rose-300 border border-rose-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderSections();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>
