@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>化妝 | 工具、技法與妝容教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* Colour correction: a hue wheel computed in HSL; each corrector sits opposite the tone it cancels. */
+function diaWheel() {
+  const L = {
+    title:{zh:'校色輪：用對面的顏色抵銷', en:'Colour correction: cancel with the opposite hue', fr:'Correction colorimétrique : neutraliser par la couleur opposée'},
+  };
+  const cx = 170, cy = 180, R = 120, r = 62, N = 24;
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  for (let i = 0; i < N; i++) {
+    const a0 = (i / N) * 2 * Math.PI - Math.PI / 2, a1 = ((i + 1) / N) * 2 * Math.PI - Math.PI / 2;
+    const p = (a, rr) => `${(cx + rr * Math.cos(a)).toFixed(1)} ${(cy + rr * Math.sin(a)).toFixed(1)}`;
+    s += `<path d="M${p(a0, r)} L${p(a0, R)} A${R} ${R} 0 0 1 ${p(a1, R)} L${p(a1, r)} A${r} ${r} 0 0 0 ${p(a0, r)} Z" fill="hsl(${i * 360 / N},70%,58%)"/>`;
+  }
+  const pairs = [
+    [0, 120, {zh:'綠 ↔ 紅：泛紅、痘疤、微血管', en:'Green ↔ red: redness, acne marks, veins', fr:'Vert ↔ rouge : rougeurs, marques, couperose'}],
+    [220, 30, {zh:'橘／蜜桃 ↔ 藍紫：黑眼圈、青色鬍渣', en:'Orange/peach ↔ blue-violet: dark circles, shadow', fr:'Orange/pêche ↔ bleu-violet : cernes, ombres'}],
+    [60, 270, {zh:'紫 ↔ 黃：暗沉蠟黃', en:'Lavender ↔ yellow: sallowness', fr:'Lavande ↔ jaune : teint terne'}],
+  ];
+  pairs.forEach(([h1, h2, lab], i) => {
+    const a = h => h / 360 * 2 * Math.PI - Math.PI / 2, rr = R - 30;
+    const x1 = cx + rr * Math.cos(a(h1)), y1 = cy + rr * Math.sin(a(h1)), x2 = cx + rr * Math.cos(a(h2)), y2 = cy + rr * Math.sin(a(h2));
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#f8fafc" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.7"/>`;
+    s += `<rect x="340" y="${70 + i * 70}" width="30" height="30" rx="6" fill="hsl(${h2},55%,70%)"/><rect x="376" y="${70 + i * 70}" width="30" height="30" rx="6" fill="hsl(${h1},60%,55%)"/>`;
+    s += `<text x="420" y="${90 + i * 70}" class="val">${t(lab)}</text>`;
+  });
+  s += `<text x="340" y="296" class="sub">${t({zh:'淺膚色用淡粉橘，深膚色用橘紅；校色後再上粉底。', en:'Fair skin takes pale peach; deep skin takes orange-red. Foundation goes on after.', fr:'Peau claire : pêche pâle ; peau foncée : orange-rouge. Le fond de teint vient après.'})}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 320" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Face map: where contour, highlight and blush go on an oval face. */
+function diaFace() {
+  const L = {
+    title:{zh:'臉部配置：修容、打亮與腮紅', en:'Face map: contour, highlight and blush', fr:'Carte du visage : contouring, highlighter et blush'},
+    c:{zh:'修容（暗）', en:'Contour (dark)', fr:'Contouring (foncé)'},
+    h:{zh:'打亮（亮）', en:'Highlight (light)', fr:'Highlighter (clair)'},
+    b:{zh:'腮紅', en:'Blush', fr:'Blush'},
+  };
+  const face = (ox, mode) => {
+    let g = `<g transform="translate(${ox},40)">
+      <ellipse cx="130" cy="150" rx="105" ry="140" fill="#e8b89a" stroke="#c48a6c" stroke-width="2"/>
+      <path d="M78 118 q20 -10 40 0 M142 118 q20 -10 40 0" stroke="#5b3a29" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="98" cy="140" rx="16" ry="7" fill="#fff"/><circle cx="98" cy="140" r="5" fill="#3b2418"/>
+      <ellipse cx="162" cy="140" rx="16" ry="7" fill="#fff"/><circle cx="162" cy="140" r="5" fill="#3b2418"/>
+      <path d="M130 150 v34 q-10 6 -14 2 M130 184 q10 6 14 2" stroke="#b07a5c" stroke-width="2" fill="none"/>
+      <path d="M106 222 q24 14 48 0 q-24 -8 -48 0" fill="#c9576b"/>`;
+    if (mode === 'c') g += `
+      <path d="M40 160 q40 10 70 20" stroke="#7c4a33" stroke-width="16" stroke-linecap="round" opacity="0.55" fill="none"/>
+      <path d="M220 160 q-40 10 -70 20" stroke="#7c4a33" stroke-width="16" stroke-linecap="round" opacity="0.55" fill="none"/>
+      <path d="M44 80 q8 -24 30 -40" stroke="#7c4a33" stroke-width="14" stroke-linecap="round" opacity="0.45" fill="none"/>
+      <path d="M216 80 q-8 -24 -30 -40" stroke="#7c4a33" stroke-width="14" stroke-linecap="round" opacity="0.45" fill="none"/>
+      <path d="M50 230 q30 50 60 56 M210 230 q-30 50 -60 56" stroke="#7c4a33" stroke-width="12" stroke-linecap="round" opacity="0.45" fill="none"/>
+      <path d="M121 136 v40 M139 136 v40" stroke="#7c4a33" stroke-width="4" opacity="0.4"/>`;
+    if (mode === 'h') g += `
+      <path d="M62 152 q28 -6 46 6 M198 152 q-28 -6 -46 6" stroke="#fff7e6" stroke-width="12" stroke-linecap="round" opacity="0.85" fill="none"/>
+      <path d="M130 70 v30 M130 140 v34" stroke="#fff7e6" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+      <path d="M78 104 q20 -10 40 -4 M142 100 q20 -6 40 4" stroke="#fff7e6" stroke-width="6" stroke-linecap="round" opacity="0.6" fill="none"/>
+      <circle cx="130" cy="212" r="5" fill="#fff7e6" opacity="0.9"/><ellipse cx="130" cy="262" rx="12" ry="7" fill="#fff7e6" opacity="0.8"/>`;
+    if (mode === 'b') g += `
+      <ellipse cx="80" cy="182" rx="30" ry="18" fill="#f472b6" opacity="0.45" transform="rotate(-18 80 182)"/>
+      <ellipse cx="180" cy="182" rx="30" ry="18" fill="#f472b6" opacity="0.45" transform="rotate(18 180 182)"/>`;
+    return g + `<text x="130" y="318" text-anchor="middle" class="val">${t(L[mode])}</text></g>`;
+  };
+  return `<svg class="dg" viewBox="0 0 900 380" role="img" aria-label="${t(L.title)}"><text x="0" y="22" class="lab">${t(L.title)}</text>${face(20, 'c')}${face(320, 'h')}${face(620, 'b')}</svg>`;
+}
+
+/* Brow mapping: three guide lines from the side of the nose. */
+function diaBrow() {
+  const L = {
+    title:{zh:'眉形三點定位', en:'Mapping the brow: three points', fr:'Placer le sourcil : trois repères'},
+    a:{zh:'① 眉頭：鼻翼垂直往上', en:'① Start: straight up from the side of the nose', fr:'① Début : à la verticale de l’aile du nez'},
+    b:{zh:'② 眉峰：鼻翼經過瞳孔外緣', en:'② Arch: nose through the outer edge of the iris', fr:'② Pointe : du nez par le bord externe de l’iris'},
+    c:{zh:'③ 眉尾：鼻翼經過外眼角', en:'③ Tail: nose through the outer corner of the eye', fr:'③ Fin : du nez par le coin externe de l’œil'},
+    d:{zh:'眉頭與眉尾約在同一水平線，眉尾不低於眉頭', en:'Start and tail sit roughly level; the tail never lower than the start', fr:'Début et fin à peu près alignés ; la fin jamais plus bas que le début'},
+  };
+  const N = [120, 250];                  /* side of the nose */
+  const A = [120, 70], B = [250, 52], Cc = [330, 78];
+  const ext = (p, k) => [N[0] + (p[0] - N[0]) * k, N[1] + (p[1] - N[1]) * k];
+  const B2 = ext(B, 1.08), C2 = ext(Cc, 1.06);
+  return `<svg class="dg" viewBox="0 0 900 290" role="img" aria-label="${t(L.title)}">
+    <text x="0" y="22" class="lab">${t(L.title)}</text>
+    <path d="M118 78 q50 -38 132 -26 q50 8 80 26" stroke="#5b3a29" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M140 130 q60 -40 150 0 q-75 34 -150 0" fill="#fff" stroke="#94a3b8"/><circle cx="218" cy="128" r="18" fill="#6b4226"/><circle cx="218" cy="128" r="8" fill="#111"/>
+    <path d="M110 160 q-6 60 10 90 q14 10 26 0" stroke="#c48a6c" stroke-width="3" fill="none"/>
+    <circle cx="${N[0]}" cy="${N[1]}" r="5" fill="#f472b6"/>
+    <line x1="${N[0]}" y1="${N[1]}" x2="${A[0]}" y2="${A[1] - 20}" stroke="#f472b6" stroke-width="2" stroke-dasharray="5 4"/>
+    <line x1="${N[0]}" y1="${N[1]}" x2="${B2[0]}" y2="${B2[1]}" stroke="#facc15" stroke-width="2" stroke-dasharray="5 4"/>
+    <line x1="${N[0]}" y1="${N[1]}" x2="${C2[0]}" y2="${C2[1]}" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5 4"/>
+    <circle cx="${A[0]}" cy="${A[1]}" r="6" fill="#f472b6"/><circle cx="${B[0]}" cy="${B[1]}" r="6" fill="#facc15"/><circle cx="${Cc[0]}" cy="${Cc[1]}" r="6" fill="#38bdf8"/>
+    <text x="420" y="90" class="val" style="fill:#f9a8d4">${t(L.a)}</text>
+    <text x="420" y="125" class="val" style="fill:#fde68a">${t(L.b)}</text>
+    <text x="420" y="160" class="val" style="fill:#7dd3fc">${t(L.c)}</text>
+    <text x="420" y="205" class="sub">${t(L.d)}</text></svg>`;
+}
+
+/* Eyeshadow zones on a closed eye. */
+function diaEye() {
+  const L = {
+    title:{zh:'眼影四區：由淺到深、由內到外', en:'Four eyeshadow zones: light to dark, inside to out', fr:'Quatre zones de fard : du clair au foncé, de l’intérieur vers l’extérieur'},
+    z:[
+      ['#fde68a', {zh:'① 打底／眉骨：淺米色或霧面膚色', en:'① Base / brow bone: light beige or skin-tone matte', fr:'① Base / arcade : beige clair ou mat chair'}],
+      ['#f9a8d4', {zh:'② 過渡色：中間色，刷在眼窩摺痕上下', en:'② Transition: mid tone, blended above and below the crease', fr:'② Transition : ton moyen, estompé autour du pli'}],
+      ['#be185d', {zh:'③ 加深色：外眼角 V 區與睫毛根部', en:'③ Depth: outer V and lash line', fr:'③ Profondeur : V externe et ras des cils'}],
+      ['#fff7e6', {zh:'④ 提亮：眼頭與眼皮中央，亮片或珠光', en:'④ Brighten: inner corner and centre of lid, shimmer', fr:'④ Éclat : coin interne et centre de la paupière, nacré'}],
+    ],
+  };
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>
+    <path d="M40 150 q150 -150 320 -20 q-10 -50 -60 -70 q-120 -40 -260 90z" fill="${L.z[0][0]}" opacity="0.55"/>
+    <path d="M50 150 q140 -90 300 -10 q-150 -50 -300 10z" fill="${L.z[1][0]}" opacity="0.7"/>
+    <path d="M250 112 q70 6 105 28 l-30 18 q-30 -20 -75 -26z" fill="${L.z[2][0]}" opacity="0.85"/>
+    <path d="M50 150 q150 -60 300 -10 q-150 40 -300 10z" fill="#e8b89a" stroke="#7c4a33" stroke-width="2"/>
+    <path d="M60 152 q140 30 290 -12" stroke="#1f1410" stroke-width="5" fill="none"/>
+    <ellipse cx="78" cy="148" rx="20" ry="10" fill="${L.z[3][0]}" opacity="0.9"/><ellipse cx="190" cy="132" rx="26" ry="10" fill="${L.z[3][0]}" opacity="0.6"/>
+    <path d="M70 70 q140 -50 290 10" stroke="#5b3a29" stroke-width="10" fill="none" stroke-linecap="round"/>`;
+  L.z.forEach((z, i) => {
+    s += `<rect x="420" y="${58 + i * 40}" width="22" height="22" rx="5" fill="${z[0]}"/><text x="452" y="${74 + i * 40}" class="val">${t(z[1])}</text>`;
+  });
+  return `<svg class="dg" viewBox="0 0 900 230" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const C1 = '#f472b6', C2 = '#fb7185', C3 = '#fbbf24', C4 = '#e879f9', C5 = '#a78bfa', C6 = '#f9a8d4', C7 = '#34d399', C8 = '#38bdf8', C9 = '#94a3b8';
+
+CourseKit.start({
+icon:'fa-palette', accent:'#f472b6', accent2:'#e879f9', bg:'#0b0709',
+dia:{ wheel: diaWheel, face: diaFace, brow: diaBrow, eye: diaEye },
+ui:{
+zh:{
+ 'doc.title':'化妝 | 工具、技法與妝容教學',
+ 'hdr.badge':'化妝入門','hdr.title':'化妝：工具、技法與妝容教學',
+ 'intro':'化妝不是把臉蓋起來，而是用光影與顏色調整你想被看見的樣子：讓膚色均勻、氣色更好、五官更立體，或為不同場合換上不同的個性。所有妝容都由同幾個基本技法組成，學會它們，看任何教學影片都能自己拆解。',
+ 'intro2':'這一卷依化妝順序排列：工具與刷具、膚色與妝前準備、底妝與校色、修容打亮與腮紅、眉毛、眼妝、唇妝，接著是四套從日常到派對的完整妝容教學，最後是卸妝、衛生與保存期限。',
+ 'footer':'化妝入門參考。產品質地與成分因品牌而異，敏感肌或有皮膚疾病者請先在耳後或手臂內側試用 24 小時；眼部產品不要與他人共用。色號建議僅為一般原則，請在自然光下試色。'
+},
+en:{
+ 'doc.title':'Makeup: Tools, Techniques & Looks',
+ 'hdr.badge':'MAKEUP PRIMER','hdr.title':'Makeup: tools, techniques and looks',
+ 'intro':'Makeup is not about covering the face but about using light, shadow and colour to shape how you want to be seen: an even complexion, a healthy glow, more defined features, or a different personality for each occasion. Every look is built from the same few techniques; learn them and you can take apart any tutorial yourself.',
+ 'intro2':'This volume follows the order you apply makeup in: tools and brushes, skin tone and prep, base and colour correction, contour, highlight and blush, brows, eyes, lips, then four complete looks from everyday to evening, and finally removal, hygiene and shelf life.',
+ 'footer':'An introductory makeup reference. Textures and ingredients vary by brand; if you have sensitive skin or a skin condition, patch-test for 24 hours behind the ear or inside the arm. Never share eye products. Shade advice is general: always test in daylight.'
+},
+fr:{
+ 'doc.title':'Maquillage : outils, techniques & looks',
+ 'hdr.badge':'INITIATION AU MAQUILLAGE','hdr.title':'Le maquillage : outils, techniques et looks',
+ 'intro':'Se maquiller, ce n’est pas cacher son visage, mais jouer de la lumière, de l’ombre et de la couleur pour choisir comment on veut être vu : un teint unifié, bonne mine, des traits plus sculptés, ou une personnalité différente selon l’occasion. Tous les looks reposent sur les mêmes techniques ; une fois acquises, on sait décomposer n’importe quel tutoriel.',
+ 'intro2':'Ce volume suit l’ordre d’application : outils et pinceaux, carnation et préparation, teint et correction, contouring, highlighter et blush, sourcils, yeux, lèvres, puis quatre looks complets du quotidien au soir, et enfin démaquillage, hygiène et durée de conservation.',
+ 'footer':'Une référence d’initiation au maquillage. Textures et ingrédients varient selon les marques ; en cas de peau sensible ou de maladie de peau, testez 24 heures derrière l’oreille ou au creux du bras. Ne partagez jamais vos produits pour les yeux. Les conseils de teinte sont généraux : testez toujours à la lumière du jour.'
+}},
+sections:[
+
+/* ── 1. Tools ── */
+{ id:'tools', i:'fa-brush', c:C1,
+  nav:{zh:'工具', en:'Tools', fr:'Outils'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'工具與刷具', en:'Tools and brushes', fr:'Outils et pinceaux'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'入門不需要買一整組刷具。下面前六樣能完成九成的日常妝，其他等需要時再補。<strong class="text-white">合成毛</strong>適合液狀與霜狀產品、好清洗；<strong class="text-white">動物毛</strong>抓粉力強，適合粉狀產品，但價格高、需要細心保養。',
+    en:'You do not need a full brush set to start. The first six items below cover nine everyday looks out of ten; add the rest when you need them. <strong class="text-white">Synthetic bristles</strong> suit liquids and creams and wash easily; <strong class="text-white">natural hair</strong> picks up powder well but costs more and needs care.',
+    fr:'Inutile d’acheter un set complet pour débuter. Les six premiers outils ci-dessous suffisent pour neuf looks quotidiens sur dix. Les <strong class="text-white">fibres synthétiques</strong> conviennent aux textures liquides et crèmes et se lavent facilement ; les <strong class="text-white">poils naturels</strong> prennent bien la poudre mais coûtent plus cher et demandent du soin.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-egg', t:{zh:'美妝蛋', en:'Makeup sponge', fr:'Éponge à maquillage'}, tag:{zh:'必備・底妝', en:'Essential · base', fr:'Indispensable · teint'},
+      p:{zh:'先沾濕擰乾再用，以「按壓」方式上粉底與遮瑕，妝感最服貼自然。', en:'Use damp and wrung out; press foundation and concealer in with a bouncing motion for the most natural finish.', fr:'À utiliser humide et essorée ; tapotez fond de teint et correcteur pour le fini le plus naturel.'} },
+    { i:'fa-paintbrush', t:{zh:'蜜粉刷／大刷', en:'Powder brush', fr:'Pinceau à poudre'}, tag:{zh:'必備・定妝', en:'Essential · setting', fr:'Indispensable · fixation'},
+      p:{zh:'毛量蓬鬆，輕掃全臉定妝；也可兼用來刷腮紅。', en:'Fluffy; sweeps setting powder over the face and can double for blush.', fr:'Touffu ; balaie la poudre sur le visage et peut servir pour le blush.'} },
+    { i:'fa-paintbrush', t:{zh:'眼影刷兩支', en:'Two eyeshadow brushes', fr:'Deux pinceaux à fard'}, tag:{zh:'必備・眼妝', en:'Essential · eyes', fr:'Indispensable · yeux'},
+      p:{zh:'一支扁平刷鋪色，一支蓬鬆的暈染刷（blending brush）把邊界刷開。', en:'A flat shader to lay colour and a fluffy blending brush to soften the edges.', fr:'Un pinceau plat pour déposer la couleur et un pinceau estompeur pour fondre les bords.'} },
+    { i:'fa-pen', t:{zh:'眉筆＋螺旋刷', en:'Brow pencil + spoolie', fr:'Crayon à sourcils + goupillon'}, tag:{zh:'必備・眉', en:'Essential · brows', fr:'Indispensable · sourcils'},
+      p:{zh:'畫完用螺旋刷把顏色刷勻，就不會像畫上去的。', en:'Brush the colour through with the spoolie so it never looks drawn on.', fr:'Brossez avec le goupillon pour que le trait ne paraisse pas dessiné.'} },
+    { i:'fa-eye', t:{zh:'睫毛夾', en:'Eyelash curler', fr:'Recourbe-cils'}, tag:{zh:'必備・眼', en:'Essential · eyes', fr:'Indispensable · yeux'},
+      p:{zh:'選弧度貼合自己眼型的。從睫毛根部、中段、尾端分三段輕壓。', en:'Choose a curve that fits your eye. Press gently at the root, middle and tips.', fr:'Choisissez une courbe adaptée à votre œil. Pressez doucement à la racine, au milieu et aux pointes.'} },
+    { i:'fa-hand-dots', t:{zh:'手指', en:'Fingers', fr:'Les doigts'}, tag:{zh:'免費・萬用', en:'Free · versatile', fr:'Gratuit · polyvalent'},
+      p:{zh:'體溫能讓霜狀腮紅、遮瑕與唇膏更融合。無名指力道最輕，適合眼周。', en:'Body heat melts cream blush, concealer and lipstick into the skin. The ring finger is the lightest, ideal around the eyes.', fr:'La chaleur fait fondre blush crème, correcteur et rouge. L’annulaire est le plus léger, idéal autour des yeux.'} },
+    { i:'fa-paintbrush', t:{zh:'粉底刷', en:'Foundation brush', fr:'Pinceau fond de teint'}, tag:{zh:'進階', en:'Next step', fr:'Ensuite'},
+      p:{zh:'平頭密毛刷遮瑕力較高；刷完再用美妝蛋按壓去除刷痕。', en:'A dense flat-top gives more coverage; press with a sponge afterwards to remove streaks.', fr:'Un pinceau plat et dense couvre davantage ; tapotez ensuite à l’éponge pour effacer les traces.'} },
+    { i:'fa-paintbrush', t:{zh:'修容刷／斜角刷', en:'Angled contour brush', fr:'Pinceau biseauté'}, tag:{zh:'進階', en:'Next step', fr:'Ensuite'},
+      p:{zh:'斜角剛好卡進顴骨下方的凹陷。', en:'The angle fits neatly into the hollow under the cheekbone.', fr:'Le biseau se loge sous la pommette.'} },
+    { i:'fa-pen-nib', t:{zh:'眼線刷／小細刷', en:'Liner / detail brush', fr:'Pinceau eye-liner / précision'}, tag:{zh:'進階', en:'Next step', fr:'Ensuite'},
+      p:{zh:'沾眼影當眼線、畫下眼影，或修整唇線。', en:'Use with shadow as liner, for the lower lash line, or to clean up a lip line.', fr:'Avec un fard en guise d’eye-liner, pour le ras des cils inférieurs, ou pour nettoyer le contour des lèvres.'} },
+  ]},
+]},
+
+/* ── 2. Skin tone & prep ── */
+{ id:'prep', i:'fa-droplet', c:C2,
+  nav:{zh:'膚色與妝前', en:'Skin & prep', fr:'Carnation'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'認識膚色，做好妝前準備', en:'Know your skin tone; prepare the skin', fr:'Connaître sa carnation, préparer la peau'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'選粉底要看兩件事：<strong class="text-white">色階</strong>（多深多淺）與<strong class="text-white">底調</strong>（皮膚底下透出的偏黃、偏粉或中性）。色階會隨季節日曬改變，底調則一輩子大致不變。',
+    en:'Choosing foundation means reading two things: <strong class="text-white">depth</strong> (how light or dark) and <strong class="text-white">undertone</strong> (the warm, cool or neutral cast beneath the surface). Depth changes with the seasons; undertone stays the same for life.',
+    fr:'Choisir un fond de teint, c’est lire deux choses : la <strong class="text-white">profondeur</strong> (clair ou foncé) et le <strong class="text-white">sous-ton</strong> (chaud, froid ou neutre sous la surface). La profondeur varie avec les saisons ; le sous-ton reste le même.'} },
+  { type:'table', head:[{zh:'測試', en:'Test', fr:'Test'}, {zh:'暖調（黃調）', en:'Warm', fr:'Chaud'}, {zh:'冷調（粉調）', en:'Cool', fr:'Froid'}, {zh:'中性', en:'Neutral', fr:'Neutre'}], rows:[
+    [{zh:'看手腕血管', en:'Wrist veins', fr:'Veines du poignet'}, {zh:'偏綠', en:'Greenish', fr:'Verdâtres'}, {zh:'偏藍紫', en:'Blue-purple', fr:'Bleu-violet'}, {zh:'藍綠都有', en:'A mix', fr:'Un mélange'}],
+    [{zh:'金銀飾品', en:'Gold or silver', fr:'Or ou argent'}, {zh:'金色更顯氣色', en:'Gold flatters', fr:'L’or flatte'}, {zh:'銀色更顯氣色', en:'Silver flatters', fr:'L’argent flatte'}, {zh:'兩者都好', en:'Both work', fr:'Les deux vont'}],
+    [{zh:'白紙貼臉', en:'White paper by the face', fr:'Feuille blanche près du visage'}, {zh:'臉看起來偏黃', en:'Face looks yellow', fr:'Le visage paraît jaune'}, {zh:'臉看起來偏粉紅', en:'Face looks pink', fr:'Le visage paraît rosé'}, {zh:'看不出明顯偏色', en:'No clear cast', fr:'Pas de nuance nette'}],
+    [{zh:'粉底色號常見標示', en:'Common shade codes', fr:'Codes de teinte courants'}, 'W / Y / G', 'C / P / R', 'N'],
+  ]},
+  { type:'steps', items:[
+    { t:{zh:'清潔', en:'Cleanse', fr:'Nettoyer'}, p:{zh:'用溫和洗面乳洗臉，去掉油脂與前一天殘留。', en:'Wash with a gentle cleanser to remove oil and leftover product.', fr:'Un nettoyant doux pour retirer le sébum et les résidus.'} },
+    { t:{zh:'保濕', en:'Moisturise', fr:'Hydrater'}, p:{zh:'化妝水＋乳液或乳霜。皮膚缺水時粉底會卡紋、浮粉。等 3–5 分鐘吸收。', en:'Toner plus lotion or cream. Dehydrated skin makes foundation cling to lines and flake. Wait 3–5 minutes.', fr:'Lotion puis émulsion ou crème. Une peau déshydratée fait marquer et peler le fond de teint. Attendre 3 à 5 minutes.'} },
+    { t:{zh:'防曬', en:'Sunscreen', fr:'Protection solaire'}, p:{zh:'白天一定要擦，SPF30 以上、PA+++ 以上，用量約兩指節長。', en:'Every day: SPF 30 or more, PA+++ or more, about two finger-lengths for the face.', fr:'Tous les jours : SPF 30 minimum, PA+++, environ deux longueurs de doigt pour le visage.'} },
+    { t:{zh:'妝前乳（選用）', en:'Primer (optional)', fr:'Base (facultatif)'}, p:{zh:'控油型擦 T 字、修飾毛孔型擦鼻翼兩側、潤色型修正膚色。不是每個人都需要。', en:'Mattifying on the T-zone, pore-blurring beside the nose, colour-correcting where needed. Not everyone needs one.', fr:'Matifiante sur la zone T, lissante près du nez, correctrice si besoin. Elle n’est pas indispensable.'} },
+  ]},
+]},
+
+/* ── 3. Base ── */
+{ id:'base', i:'fa-circle-half-stroke', c:C3,
+  nav:{zh:'底妝', en:'Base', fr:'Teint'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'底妝：校色、粉底、遮瑕與定妝', en:'Base: correct, foundation, conceal, set', fr:'Le teint : corriger, unifier, camoufler, fixer'},
+  blocks:[
+  { type:'dia', k:'wheel' },
+  { type:'table', head:[{zh:'底妝類型', en:'Type', fr:'Type'}, {zh:'遮瑕力', en:'Coverage', fr:'Couvrance'}, {zh:'妝感', en:'Finish', fr:'Fini'}, {zh:'適合', en:'Suits', fr:'Pour qui'}], rows:[
+    [{zh:'素顏霜／BB 霜', en:'Tinted moisturiser / BB', fr:'Crème teintée / BB'}, {zh:'低', en:'Sheer', fr:'Légère'}, {zh:'自然水潤', en:'Natural, dewy', fr:'Naturel, frais'}, {zh:'膚況好、想要輕薄', en:'Good skin, a light look', fr:'Belle peau, effet léger'}],
+    [{zh:'氣墊粉餅', en:'Cushion', fr:'Cushion'}, {zh:'低到中', en:'Light–medium', fr:'Légère à moyenne'}, {zh:'光澤', en:'Glowy', fr:'Lumineux'}, {zh:'方便補妝、乾肌與一般肌', en:'Easy touch-ups; dry or normal skin', fr:'Retouches faciles ; peau sèche ou normale'}],
+    [{zh:'粉底液', en:'Liquid foundation', fr:'Fond de teint fluide'}, {zh:'中到高（可疊加）', en:'Medium–full (buildable)', fr:'Moyenne à forte (modulable)'}, {zh:'霧面、自然、光澤皆有', en:'Matte, natural or radiant', fr:'Mat, naturel ou lumineux'}, {zh:'所有膚質，選對質地即可', en:'All skin types, in the right texture', fr:'Tous types de peau, dans la bonne texture'}],
+    [{zh:'粉霜／粉條', en:'Cream / stick', fr:'Crème / stick'}, {zh:'高', en:'Full', fr:'Forte'}, {zh:'滋潤', en:'Creamy', fr:'Crémeux'}, {zh:'乾肌、需要遮斑', en:'Dry skin, pigmentation', fr:'Peau sèche, taches'}],
+    [{zh:'粉餅', en:'Pressed powder', fr:'Poudre compacte'}, {zh:'低到中', en:'Light–medium', fr:'Légère à moyenne'}, {zh:'霧面', en:'Matte', fr:'Mat'}, {zh:'油肌、補妝', en:'Oily skin, touch-ups', fr:'Peau grasse, retouches'}],
+  ]},
+  { type:'steps', items:[
+    { t:{zh:'局部校色', en:'Spot-correct', fr:'Corriger localement'}, p:{zh:'只在需要的地方薄擦校色產品（黑眼圈用橘、泛紅用綠），拍開邊緣。', en:'Apply corrector thinly only where needed (peach or orange under the eyes, green on redness) and tap out the edges.', fr:'Correcteur en couche fine uniquement là où il faut (pêche sous les yeux, vert sur les rougeurs), bords estompés.'} },
+    { t:{zh:'粉底由中間往外', en:'Foundation from the centre out', fr:'Le fond de teint du centre vers l’extérieur'}, p:{zh:'取一顆黃豆大小，點在額頭、鼻子、兩頰、下巴，由臉中央往外推開或按壓，越到髮際與下顎越薄。試色要在下顎線，自然光下看不出界線才是對的色號。', en:'Take a pea-sized amount, dot it on forehead, nose, cheeks and chin, and press or blend outwards from the centre, thinner towards hairline and jaw. Test shades on the jawline: the right one disappears in daylight.', fr:'Une noisette, en points sur le front, le nez, les joues et le menton, puis tapotez ou étirez du centre vers l’extérieur, plus fin vers les tempes et la mâchoire. Testez sur la mâchoire : la bonne teinte disparaît à la lumière du jour.'} },
+    { t:{zh:'遮瑕', en:'Conceal', fr:'Camoufler'}, p:{zh:'黑眼圈用比膚色亮半號的遮瑕畫倒三角，痘痘斑點用與膚色同色、較乾的遮瑕點在正中央，只拍邊緣、不要抹。', en:'Under the eyes, a concealer half a shade lighter in an inverted triangle; on spots, a drier formula matching your skin dotted right on top. Tap only the edges; do not rub.', fr:'Sous les yeux, un correcteur une demi-teinte plus claire en triangle inversé ; sur les imperfections, une texture plus sèche de la couleur de la peau, posée au centre. Tapotez les bords sans frotter.'} },
+    { t:{zh:'定妝', en:'Set', fr:'Fixer'}, p:{zh:'用蜜粉刷沾少量蜜粉，先壓 T 字與眼下（容易出油、卡紋的地方），再輕掃全臉。乾肌可只定局部，最後噴定妝噴霧。', en:'Load a little loose powder and press it on the T-zone and under the eyes first (where oil and creasing start), then sweep lightly over the rest. Dry skin can set only those areas; finish with setting spray.', fr:'Un peu de poudre libre, d’abord pressée sur la zone T et sous les yeux (là où ça brille et marque), puis balayée légèrement ailleurs. Peau sèche : fixez seulement ces zones ; terminez par un spray fixateur.'} },
+  ]},
+]},
+
+/* ── 4. Sculpt ── */
+{ id:'sculpt', i:'fa-mountain-sun', c:C4,
+  nav:{zh:'修容與腮紅', en:'Sculpt & blush', fr:'Sculpter'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'修容、打亮與腮紅', en:'Contour, highlight and blush', fr:'Contouring, highlighter et blush'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'原理很簡單：<strong class="text-white">暗色讓東西後退、亮色讓東西前進。</strong>修容要用帶灰的冷棕色（像陰影），不要用曬黑感的古銅色（那是 bronzer，用來增加暖度）。',
+    en:'The principle is simple: <strong class="text-white">dark recedes, light advances.</strong> Contour with a cool, greyish brown, like a real shadow, not a warm bronze (that is bronzer, which adds warmth).',
+    fr:'Le principe est simple : <strong class="text-white">le foncé recule, le clair avance.</strong> Le contouring se fait avec un brun froid, grisé, comme une vraie ombre, pas un bronze chaud (c’est le rôle de la poudre bronzante).'} },
+  { type:'dia', k:'face' },
+  { type:'table', head:[{zh:'臉型', en:'Face shape', fr:'Forme du visage'}, {zh:'特徵', en:'Features', fr:'Caractéristiques'}, {zh:'修容', en:'Contour', fr:'Contouring'}, {zh:'腮紅', en:'Blush', fr:'Blush'}], rows:[
+    [{zh:'鵝蛋臉', en:'Oval', fr:'Ovale'}, {zh:'長寬比約 1.5：1，線條柔和', en:'About 1.5 : 1, soft lines', fr:'Environ 1,5 : 1, lignes douces'}, {zh:'只需輕刷顴骨下', en:'Just a touch under the cheekbones', fr:'Une touche sous les pommettes'}, {zh:'蘋果肌往太陽穴斜刷', en:'Apples sweeping to the temples', fr:'Des pommettes vers les tempes'}],
+    [{zh:'圓臉', en:'Round', fr:'Rond'}, {zh:'長寬接近、下顎圓', en:'Length ≈ width, rounded jaw', fr:'Longueur ≈ largeur, mâchoire ronde'}, {zh:'兩頰外側與下顎角往內修，製造長度', en:'Outer cheeks and jaw angles, to add length', fr:'Côtés des joues et angles de la mâchoire, pour allonger'}, {zh:'斜長刷，從顴骨往太陽穴', en:'Long diagonal from cheekbone to temple', fr:'En diagonale de la pommette à la tempe'}],
+    [{zh:'方臉', en:'Square', fr:'Carré'}, {zh:'額頭與下顎寬、下顎角明顯', en:'Wide forehead and jaw, strong angles', fr:'Front et mâchoire larges, angles marqués'}, {zh:'只修下顎角與額角，柔化稜角', en:'Only jaw and forehead corners, to soften', fr:'Seulement les angles du front et de la mâchoire'}, {zh:'圓形刷在蘋果肌', en:'Round on the apples', fr:'En rond sur les pommettes'}],
+    [{zh:'長臉', en:'Long', fr:'Long'}, {zh:'長大於寬很多', en:'Much longer than wide', fr:'Nettement plus long que large'}, {zh:'髮際與下巴底部，縮短長度', en:'Hairline and under the chin, to shorten', fr:'Racine des cheveux et sous le menton, pour raccourcir'}, {zh:'橫向刷，增加寬度', en:'Horizontal, to add width', fr:'À l’horizontale, pour élargir'}],
+    [{zh:'心形臉／倒三角', en:'Heart', fr:'Cœur'}, {zh:'額頭寬、下巴尖', en:'Wide forehead, pointed chin', fr:'Front large, menton pointu'}, {zh:'額角與太陽穴；下巴尖端輕修', en:'Temples and forehead corners; a touch on the chin tip', fr:'Tempes et angles du front ; une touche sur la pointe du menton'}, {zh:'蘋果肌稍低處', en:'Slightly low on the apples', fr:'Un peu bas sur les pommettes'}],
+  ]},
+  { type:'note', p:{
+    zh:'找顴骨凹陷的方法：嘴巴做出「O」形或吸臉頰，凹下去那條線的上緣就是修容位置，起點不要超過眼睛外緣往內。打亮只放在骨頭高點，有毛孔與痘痘的地方避開，否則會放大。',
+    en:'To find the hollow, make an “O” with your mouth or suck in your cheeks: contour along the upper edge of the dip, starting no further in than the outer edge of the eye. Highlight only the high points of the bone; avoid areas with visible pores or spots, which shimmer magnifies.',
+    fr:'Pour trouver le creux, faites un « O » avec la bouche ou aspirez les joues : le contouring suit le bord supérieur du creux, sans dépasser vers l’intérieur le coin externe de l’œil. L’enlumineur ne va que sur les reliefs osseux, jamais sur les pores ou les imperfections qu’il accentue.'} },
+]},
+
+/* ── 5. Brows ── */
+{ id:'brows', i:'fa-pen', c:C5,
+  nav:{zh:'眉毛', en:'Brows', fr:'Sourcils'},
+  eyebrow:{zh:'第五章・教學', en:'Chapter 5 · Lesson', fr:'Chapitre 5 · Leçon'},
+  h2:{zh:'眉毛：決定整張臉的印象', en:'Brows: they frame the whole face', fr:'Les sourcils : ils encadrent tout le visage'},
+  blocks:[
+  { type:'dia', k:'brow' },
+  { type:'steps', items:[
+    { t:{zh:'梳整', en:'Brush up', fr:'Brosser'}, p:{zh:'用螺旋刷把眉毛往上、往外梳順，看清楚哪裡稀疏。', en:'Brush the hairs up and out with the spoolie to see where they are sparse.', fr:'Brossez vers le haut et l’extérieur pour repérer les zones clairsemées.'} },
+    { t:{zh:'定三點', en:'Mark three points', fr:'Placer trois repères'}, p:{zh:'依上圖用眉筆輕點出眉頭、眉峰、眉尾。', en:'Using the diagram, dot the start, arch and tail lightly with the pencil.', fr:'D’après le schéma, marquez légèrement début, pointe et fin.'} },
+    { t:{zh:'先畫下緣，再畫上緣', en:'Lower edge first, then upper', fr:'Le bord inférieur, puis le supérieur'}, p:{zh:'從眉峰往眉尾畫出清楚的下緣線，再連起上緣。眉尾最細最清楚。', en:'Draw a clean lower line from arch to tail, then connect the upper edge. The tail is the thinnest and sharpest part.', fr:'Tracez une ligne inférieure nette de la pointe à la fin, puis reliez le bord supérieur. La fin est la partie la plus fine et la plus nette.'} },
+    { t:{zh:'填色由淡到濃', en:'Fill from light to dark', fr:'Remplir du clair au foncé'}, p:{zh:'眉頭最淡、用刷的或用眉粉，越往眉尾顏色越深。眉頭一筆一筆往上畫出毛流感。', en:'The start is lightest, brushed or done with powder, getting darker towards the tail. At the start, draw upward hair-like strokes.', fr:'Le début est le plus clair, à la poudre, de plus en plus foncé vers la fin. Au début, tracez des petits traits vers le haut, comme des poils.'} },
+    { t:{zh:'刷勻＋眉膠', en:'Blend + gel', fr:'Estomper + gel'}, p:{zh:'用螺旋刷把顏色刷勻，最後用染眉膏或透明眉膠固定毛流。', en:'Soften everything with the spoolie, then set the hairs with tinted or clear brow gel.', fr:'Estompez au goupillon, puis fixez avec un gel teinté ou transparent.'} },
+  ]},
+  { type:'note', p:{
+    zh:'眉色選擇：比髮色淺一到兩階（黑髮選深咖啡或灰棕，不選純黑），染髮後跟著髮色調整。',
+    en:'Brow colour: one or two shades lighter than your hair (dark brown or taupe for black hair, never pure black), adjusting if you dye your hair.',
+    fr:'Couleur : une à deux teintes plus claires que les cheveux (brun foncé ou taupe pour des cheveux noirs, jamais noir pur), à adapter après une coloration.'} },
+]},
+
+/* ── 6. Eyes ── */
+{ id:'eyes', i:'fa-eye', c:C6,
+  nav:{zh:'眼妝', en:'Eyes', fr:'Yeux'},
+  eyebrow:{zh:'第六章・教學', en:'Chapter 6 · Lessons', fr:'Chapitre 6 · Leçons'},
+  h2:{zh:'眼妝：眼影、眼線與睫毛', en:'Eyes: shadow, liner and lashes', fr:'Les yeux : fard, eye-liner et cils'},
+  blocks:[
+  { type:'dia', k:'eye' },
+  { type:'h3', t:{zh:'依眼型調整', en:'Adapting to your eye shape', fr:'S’adapter à la forme des yeux'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-eye', t:{zh:'單眼皮', en:'Monolid', fr:'Paupière sans pli'},
+      p:{zh:'睜眼時眼皮會蓋住大部分眼影，所以要睜眼對著鏡子畫：加深色往上刷到睜眼仍看得見的高度，形成漸層。眼線畫在睫毛根部、眼尾稍微拉長上揚。', en:'The lid hides most shadow when open, so work with the eyes open: take the deep shade high enough to show when you look straight ahead, as a gradient. Keep liner at the lash root, extended slightly upward at the end.', fr:'La paupière cache le fard une fois l’œil ouvert : travaillez les yeux ouverts et montez la couleur foncée jusqu’à ce qu’elle reste visible, en dégradé. L’eye-liner reste au ras des cils, légèrement étiré vers le haut.'} },
+    { i:'fa-eye', t:{zh:'內雙', en:'Hooded / hidden crease', fr:'Pli caché'},
+      p:{zh:'摺痕被蓋住，深色要畫在摺痕「上方」一點點才看得到；眼線細、不要粗，以免把眼皮吃掉。', en:'The crease is hidden, so place the deeper shade slightly above it to be seen; keep the liner thin so it does not eat the lid.', fr:'Le pli est masqué : posez la teinte foncée juste au-dessus pour qu’elle se voie ; gardez un trait fin pour ne pas « manger » la paupière.'} },
+    { i:'fa-eye', t:{zh:'雙眼皮', en:'Double eyelid', fr:'Paupière avec pli'},
+      p:{zh:'最好發揮。依摺痕刷過渡色，加深色在摺痕內與外眼角，任何畫法都適合。', en:'The easiest to work with. Blend transition along the crease, depth inside it and at the outer corner; any technique works.', fr:'La plus facile. Teinte de transition le long du pli, profondeur dans le pli et au coin externe : toutes les techniques fonctionnent.'} },
+    { i:'fa-arrow-trend-down', t:{zh:'下垂眼', en:'Downturned', fr:'Yeux tombants'},
+      p:{zh:'眼尾的眼影與眼線往上拉，不要跟著眼型往下；下眼影只畫內側三分之二。', en:'Lift shadow and liner upward at the outer corner rather than following the eye down; keep lower shadow to the inner two thirds.', fr:'Remontez fard et eye-liner au coin externe au lieu de suivre la courbe ; sous l’œil, limitez-vous aux deux tiers internes.'} },
+    { i:'fa-arrow-trend-up', t:{zh:'上揚眼', en:'Upturned', fr:'Yeux en amande relevés'},
+      p:{zh:'下眼尾加一點深色平衡，眼線水平拉出即可。', en:'Add a little depth at the lower outer corner to balance, and extend liner horizontally.', fr:'Un peu de foncé au coin externe inférieur pour équilibrer, eye-liner étiré à l’horizontale.'} },
+    { i:'fa-circle', t:{zh:'圓眼／大眼', en:'Round / large', fr:'Ronds / grands'},
+      p:{zh:'想拉長就把加深色集中在外眼角往外延伸；眼頭不畫太多亮片。', en:'To elongate, concentrate depth at the outer corner and extend it outwards; go easy on inner-corner shimmer.', fr:'Pour allonger, concentrez le foncé au coin externe et étirez-le ; peu de nacre au coin interne.'} },
+  ]},
+  { type:'h3', t:{zh:'眼線與睫毛', en:'Liner and lashes', fr:'Eye-liner et cils'} },
+  { type:'steps', items:[
+    { t:{zh:'填滿睫毛根部（內眼線）', en:'Tightline the lash roots', fr:'Combler la racine des cils'}, p:{zh:'輕輕抬起上眼皮，用眼線膠筆在睫毛之間一點一點填滿空隙。最自然、也最能讓眼睛有神。', en:'Lift the upper lid gently and dot a gel pencil into the gaps between lashes. The most natural way to define the eye.', fr:'Soulevez doucement la paupière et piquez un crayon gel entre les cils. La façon la plus naturelle d’intensifier le regard.'} },
+    { t:{zh:'眼尾拉線', en:'The wing', fr:'L’œil de chat'}, p:{zh:'眼睛平視，從下眼尾延伸線往太陽穴方向畫一條短線（2–5 毫米），再從線尾連回上眼皮中段，填滿三角形。兩眼先各畫一半、再慢慢對稱。', en:'Looking straight ahead, draw a short flick (2–5 mm) continuing the lower lash line towards the temple, then connect its tip back to the middle of the upper lid and fill the triangle. Work on both eyes in stages to keep them even.', fr:'Regard droit, tracez une petite virgule (2 à 5 mm) dans le prolongement de la ligne inférieure vers la tempe, puis reliez sa pointe au milieu de la paupière et remplissez le triangle. Avancez par étapes sur les deux yeux pour les équilibrer.'} },
+    { t:{zh:'夾睫毛', en:'Curl', fr:'Recourber'}, p:{zh:'睫毛夾放到根部、輕壓 5 秒，往中段、尾端各壓一次，像彎出一道弧，不要一次夾成直角。', en:'Clamp at the root for 5 seconds, then at the middle and tips, following an arc rather than one sharp bend.', fr:'Pincez 5 secondes à la racine, puis au milieu et aux pointes, en arrondi plutôt qu’en angle.'} },
+    { t:{zh:'刷睫毛膏', en:'Mascara', fr:'Mascara'}, p:{zh:'從根部左右輕晃（Z 字形）往上刷，讓膏體附著在根部，再往尾端帶。下睫毛用刷頭尖端直刷。第二層趁第一層未乾時刷，避免結塊。', en:'Wiggle the wand side to side at the root, then sweep up to the tips. Use the tip of the wand vertically for lower lashes. Add a second coat before the first dries to avoid clumps.', fr:'Zigzaguez à la racine puis remontez vers les pointes. Pour les cils inférieurs, utilisez la pointe de la brosse à la verticale. Deuxième couche avant que la première sèche pour éviter les paquets.'} },
+  ]},
+]},
+
+/* ── 7. Lips ── */
+{ id:'lips', i:'fa-kiss-wink-heart', c:C2,
+  nav:{zh:'唇妝', en:'Lips', fr:'Lèvres'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'唇妝：質地與畫法', en:'Lips: textures and techniques', fr:'Les lèvres : textures et techniques'},
+  blocks:[
+  { type:'cards', cols:4, items:[
+    { i:'fa-droplet', t:{zh:'滋潤唇膏', en:'Satin lipstick', fr:'Rouge satiné'}, p:{zh:'好上手、不顯唇紋，但容易沾杯。', en:'Easy to wear and forgiving on dry lips, but transfers.', fr:'Facile et indulgent sur lèvres sèches, mais transfère.'} },
+    { i:'fa-square', t:{zh:'霧面唇膏', en:'Matte lipstick', fr:'Rouge mat'}, p:{zh:'顯色持久，但會顯唇紋，擦前先上護唇膏並等吸收。', en:'Intense and long-lasting but shows dry lines; apply balm first and let it sink in.', fr:'Intense et tenace mais marque les ridules ; appliquez un baume avant.'} },
+    { i:'fa-glass-water', t:{zh:'唇釉／唇彩', en:'Liquid lip / gloss', fr:'Encre / gloss'}, p:{zh:'唇釉服貼持久；唇蜜水亮，讓唇形看起來更飽滿。', en:'Liquid lips last; gloss adds shine and makes lips look fuller.', fr:'Les encres tiennent ; le gloss apporte de la brillance et du volume.'} },
+    { i:'fa-fill-drip', t:{zh:'染唇液', en:'Lip tint', fr:'Tint'}, p:{zh:'像天然氣色，吃東西也不易掉，但乾唇會不均勻。', en:'Looks like natural colour and survives meals, but patches on dry lips.', fr:'Effet naturel qui résiste aux repas, mais irrégulier sur lèvres sèches.'} },
+  ]},
+  { type:'steps', items:[
+    { t:{zh:'飽滿唇', en:'Full lips', fr:'Lèvres pleines'}, p:{zh:'護唇打底 → 唇線筆沿唇峰與唇角描邊（可略微超出 0.5 毫米）→ 填滿唇膏 → 用紙巾輕抿、再上一層 → 唇中央點唇蜜。', en:'Balm → line along the cupid’s bow and corners (up to 0.5 mm beyond) → fill with lipstick → blot with tissue, apply again → a dab of gloss in the centre.', fr:'Baume → crayon le long de l’arc de Cupidon et des coins (jusqu’à 0,5 mm au-delà) → remplir → tamponner au mouchoir, deuxième couche → une touche de gloss au centre.'} },
+    { t:{zh:'韓系咬唇（漸層唇）', en:'Gradient “bitten” lip', fr:'Lèvre dégradée « mordue »'}, p:{zh:'用遮瑕或粉底輕壓淡化唇色與唇線 → 唇釉點在內側唇 → 用手指或棉棒往外拍開，邊緣模糊、中心最濃。', en:'Blur the natural lip colour and outline with a little concealer → dot tint on the inner lips → tap outwards with a finger or cotton bud, soft at the edges and strongest in the centre.', fr:'Estompez la couleur et le contour naturels avec un peu de correcteur → posez le tint à l’intérieur des lèvres → tapotez vers l’extérieur, flou sur les bords, intense au centre.'} },
+  ]},
+]},
+
+/* ── 8. Looks ── */
+{ id:'looks', i:'fa-wand-magic-sparkles', c:C7,
+  nav:{zh:'妝容教學', en:'Full looks', fr:'Looks complets'},
+  eyebrow:{zh:'第八章・教學', en:'Chapter 8 · Lessons', fr:'Chapitre 8 · Leçons'},
+  h2:{zh:'四套完整妝容，一步一步', en:'Four complete looks, step by step', fr:'Quatre looks complets, pas à pas'},
+  blocks:[
+  { type:'h3', t:{zh:'A. 十分鐘日常裸妝', en:'A. Ten-minute everyday look', fr:'A. Le naturel en dix minutes'} },
+  { type:'steps', items:[
+    { t:{zh:'保濕＋防曬', en:'Moisturiser + sunscreen', fr:'Hydratant + SPF'}, p:{zh:'等 3 分鐘吸收。', en:'Wait 3 minutes.', fr:'Attendre 3 minutes.'} },
+    { t:{zh:'氣墊或素顏霜，局部遮瑕', en:'Cushion or tinted moisturiser, spot-conceal', fr:'Cushion ou crème teintée, correcteur ponctuel'}, p:{zh:'只蓋需要的地方，保留肌膚本身的透明感。', en:'Cover only what needs it and let skin show through.', fr:'Ne couvrez que le nécessaire, laissez la peau respirer.'} },
+    { t:{zh:'T 字與眼下定妝', en:'Powder the T-zone and under-eyes', fr:'Poudre sur la zone T et sous les yeux'}, p:{zh:'其他地方保留光澤。', en:'Leave the rest dewy.', fr:'Laissez le reste lumineux.'} },
+    { t:{zh:'眉毛', en:'Brows', fr:'Sourcils'}, p:{zh:'補空隙＋透明眉膠即可。', en:'Fill gaps and use clear gel.', fr:'Combler les manques, gel transparent.'} },
+    { t:{zh:'單色大地眼影＋內眼線', en:'One earthy shadow + tightline', fr:'Un fard terre + ras des cils'}, p:{zh:'用手指把淺棕色拍在眼皮，深棕眼影畫在睫毛根部。', en:'Tap a light brown over the lid with a finger, and a darker brown into the lash line.', fr:'Tapotez un brun clair au doigt sur la paupière, un brun plus foncé au ras des cils.'} },
+    { t:{zh:'夾睫毛、刷一層睫毛膏', en:'Curl and one coat of mascara', fr:'Recourber, une couche de mascara'}, p:{zh:'自然捲翹就好。', en:'Just a natural lift.', fr:'Juste un léger recourbement.'} },
+    { t:{zh:'霜狀腮紅兼唇色', en:'Cream blush on cheeks and lips', fr:'Blush crème sur joues et lèvres'}, p:{zh:'同一支豆沙或蜜桃色同時用在臉頰與嘴唇，整體最協調。', en:'One rosy or peach shade for both cheeks and lips ties everything together.', fr:'Une même teinte rosée ou pêche pour les joues et les lèvres unifie le tout.'} },
+  ]},
+  { type:'h3', t:{zh:'B. 面試／職場妝', en:'B. Interview / office look', fr:'B. Entretien / bureau'} },
+  { type:'note', p:{
+    zh:'在日常裸妝的基礎上：底妝改用持久型粉底液並完整定妝；眉形畫得更清楚俐落；眼影用大地色三色漸層（打底、過渡、加深），細內眼線＋短眼尾；腮紅降低彩度；唇色選豆沙、玫瑰或磚紅等「比自己唇色深一階」的顏色。重點是精神、乾淨、可信賴，避免大面積亮片與過長的假睫毛。',
+    en:'Start from the everyday look: switch to a long-wear foundation and set fully; define the brows more crisply; use a three-step earth-tone gradient (base, transition, depth) with a fine tightline and short wing; tone down the blush; choose a lip one shade deeper than your own, such as rose, mauve or brick. The aim is fresh, neat and trustworthy: no large areas of glitter or very long false lashes.',
+    fr:'Partir du look naturel : fond de teint longue tenue entièrement fixé ; sourcils plus nets ; dégradé terre en trois temps (base, transition, profondeur), ras de cils fin et petite virgule ; blush plus discret ; lèvres une teinte plus foncée que la couleur naturelle (rose, vieux rose, brique). L’objectif : frais, soigné et rassurant, sans grandes surfaces pailletées ni faux cils très longs.'} },
+  { type:'h3', t:{zh:'C. 約會妝（柔和光澤）', en:'C. Date look (soft glow)', fr:'C. Rendez-vous (éclat doux)'} },
+  { type:'steps', items:[
+    { t:{zh:'光澤底妝', en:'Radiant base', fr:'Teint lumineux'}, p:{zh:'粉底液混一滴液態打亮，只在 T 字定妝。', en:'Mix a drop of liquid highlighter into foundation and powder only the T-zone.', fr:'Une goutte d’enlumineur liquide dans le fond de teint, poudre seulement sur la zone T.'} },
+    { t:{zh:'粉色系眼影', en:'Pink-toned eyes', fr:'Yeux rosés'}, p:{zh:'蜜桃或玫瑰粉當過渡色，眼皮中央點珠光，臥蠶用淺色珠光提亮、下方用淺棕畫出陰影。', en:'Peach or rose as transition, shimmer in the centre of the lid; brighten the under-eye fold (aegyo-sal) with pale shimmer and shade beneath it with light brown.', fr:'Pêche ou rose en transition, nacre au centre de la paupière ; éclairez le bourrelet sous l’œil avec un nacré clair et ombrez dessous avec un brun léger.'} },
+    { t:{zh:'眼尾拉長＋睫毛', en:'Longer outer corner + lashes', fr:'Coin allongé + cils'}, p:{zh:'棕色眼線順著眼尾拉長，睫毛刷兩層或貼局部假睫毛在眼尾。', en:'Extend a brown liner at the outer corner, two coats of mascara or a few individual lashes at the ends.', fr:'Eye-liner brun étiré au coin, deux couches de mascara ou quelques cils individuels aux extrémités.'} },
+    { t:{zh:'腮紅與打亮', en:'Blush and highlight', fr:'Blush et highlighter'}, p:{zh:'腮紅刷在蘋果肌稍高處並帶到鼻樑，打亮點在顴骨與鼻尖。', en:'Blush high on the apples and across the bridge of the nose; highlight on cheekbones and nose tip.', fr:'Blush haut sur les pommettes et à travers l’arête du nez ; highlighter sur les pommettes et le bout du nez.'} },
+    { t:{zh:'水潤唇', en:'Juicy lips', fr:'Lèvres gourmandes'}, p:{zh:'漸層唇＋唇蜜。', en:'Gradient lip plus gloss.', fr:'Lèvre dégradée et gloss.'} },
+  ]},
+  { type:'h3', t:{zh:'D. 派對煙燻妝', en:'D. Evening smoky eye', fr:'D. Smoky de soirée'} },
+  { type:'steps', items:[
+    { t:{zh:'先畫眼妝再上底妝', en:'Eyes before base', fr:'Les yeux avant le teint'}, p:{zh:'深色眼影容易掉粉，先畫眼睛，之後再清理眼下、上粉底，就不會弄髒。也可以在眼下先墊一層厚蜜粉。', en:'Dark shadow drops fallout, so do the eyes first, then clean underneath and apply foundation. Or lay a thick layer of loose powder under the eyes first.', fr:'Le fard foncé tombe : faites les yeux d’abord, nettoyez dessous puis posez le fond de teint. Ou déposez une épaisse couche de poudre sous les yeux.'} },
+    { t:{zh:'眼影打底霜', en:'Eye primer', fr:'Base à paupières'}, p:{zh:'讓顏色更飽和、不暈染。', en:'For richer colour and no creasing.', fr:'Pour une couleur plus intense, sans plis.'} },
+    { t:{zh:'眼線筆當底，再疊深色眼影', en:'Pencil base, then dark shadow', fr:'Crayon en base, puis fard foncé'}, p:{zh:'用軟質黑或深棕眼線筆在睫毛根部畫粗線並往上暈開，再用同色眼影壓上去定色。', en:'Draw a thick line of soft black or deep brown pencil at the lash line, smudge it upwards, then press the same colour in shadow on top to set it.', fr:'Tracez un trait épais au crayon noir ou brun profond, estompez vers le haut, puis fixez avec un fard de la même couleur.'} },
+    { t:{zh:'過渡色把邊緣刷開', en:'Blend the edge with transition', fr:'Fondre le bord avec la transition'}, p:{zh:'用乾淨的暈染刷沾中間色，畫小圓把深色邊緣往上刷到沒有界線。煙燻的關鍵就是「沒有硬邊」。', en:'With a clean blending brush and a mid tone, work in small circles to diffuse the top edge until no line remains. A smoky eye is all about having no hard edges.', fr:'Avec un pinceau estompeur propre et un ton moyen, travaillez en petits cercles jusqu’à effacer toute limite. Le secret du smoky : aucun bord net.'} },
+    { t:{zh:'下眼尾與亮片', en:'Lower lash line and sparkle', fr:'Ras des cils inférieurs et paillettes'}, p:{zh:'下眼尾外側三分之一暈上深色，連接上眼影；眼皮中央可疊亮片。', en:'Smudge dark shade along the outer third of the lower lashes to join the top; press glitter onto the centre of the lid if you like.', fr:'Estompez le foncé sur le tiers externe inférieur pour rejoindre le haut ; des paillettes au centre de la paupière si vous voulez.'} },
+    { t:{zh:'平衡其他部位', en:'Balance the rest', fr:'Équilibrer le reste'}, p:{zh:'眼妝重時，腮紅淡、唇色選裸色或淡豆沙；想要紅唇就把煙燻改成棕色系。', en:'With heavy eyes, keep blush soft and lips nude; if you want a red lip, switch the smoky eye to browns.', fr:'Yeux intenses : blush léger et lèvres nude ; pour une bouche rouge, passez à un smoky brun.'} },
+  ]},
+]},
+
+/* ── 9. Removal & hygiene ── */
+{ id:'care', i:'fa-soap', c:C8,
+  nav:{zh:'卸妝與衛生', en:'Removal & hygiene', fr:'Démaquillage'},
+  eyebrow:{zh:'第九章', en:'Chapter 9', fr:'Chapitre 9'},
+  h2:{zh:'卸妝、清潔與保存期限', en:'Removal, cleaning and shelf life', fr:'Démaquillage, nettoyage et conservation'},
+  blocks:[
+  { type:'steps', items:[
+    { t:{zh:'先卸眼唇', en:'Eyes and lips first', fr:'D’abord yeux et lèvres'}, p:{zh:'化妝棉沾眼唇卸妝液，敷在眼睛上 10–15 秒，再輕輕往下擦，不要來回搓。防水睫毛膏一定要用含油的卸妝液。', en:'Soak a pad in eye-and-lip remover, hold it on the eye for 10–15 seconds, then wipe down gently without scrubbing. Waterproof mascara needs an oil-based remover.', fr:'Imbibez un coton de démaquillant yeux et lèvres, posez-le 10 à 15 secondes, puis essuyez vers le bas sans frotter. Le mascara waterproof exige un démaquillant huileux.'} },
+    { t:{zh:'全臉卸妝', en:'Whole-face remover', fr:'Démaquillant visage'}, p:{zh:'卸妝油或卸妝膏在乾臉上按摩 1 分鐘，加少量水乳化變白，再沖掉。', en:'Massage cleansing oil or balm onto dry skin for a minute, add a little water to emulsify until milky, then rinse.', fr:'Massez l’huile ou le baume démaquillant sur peau sèche une minute, émulsionnez avec un peu d’eau, puis rincez.'} },
+    { t:{zh:'洗面乳（雙重清潔）', en:'Cleanser (double cleanse)', fr:'Nettoyant (double nettoyage)'}, p:{zh:'洗掉卸妝品殘留，再接晚間保養。', en:'Removes the remover; follow with your evening skincare.', fr:'Élimine les résidus ; enchaînez avec les soins du soir.'} },
+    { t:{zh:'清洗工具', en:'Wash your tools', fr:'Laver ses outils'}, p:{zh:'粉底刷、美妝蛋每週洗一次，眼影刷每兩週一次；用溫和洗劑，平放陰乾，刷毛朝下避免水流進刷柄。美妝蛋每 3 個月換新。', en:'Foundation brushes and sponges weekly, eye brushes every two weeks; mild soap, dry flat or bristles down so water does not enter the handle. Replace sponges every 3 months.', fr:'Pinceaux à teint et éponges chaque semaine, pinceaux à yeux toutes les deux semaines ; savon doux, séchage à plat ou tête en bas. Changez l’éponge tous les 3 mois.'} },
+  ]},
+  { type:'table', head:[{zh:'產品', en:'Product', fr:'Produit'}, {zh:'開封後建議使用期', en:'Use within (after opening)', fr:'À utiliser dans (après ouverture)'}, {zh:'該丟的訊號', en:'Throw out when', fr:'À jeter si'}], rows:[
+    [{zh:'睫毛膏、眼線液', en:'Mascara, liquid liner', fr:'Mascara, eye-liner liquide'}, {zh:'3 個月', en:'3 months', fr:'3 mois'}, {zh:'變乾、結塊、有異味', en:'Dry, clumpy, smells', fr:'Sec, en paquets, odeur'}],
+    [{zh:'粉底液、遮瑕液', en:'Liquid foundation, concealer', fr:'Fond de teint, correcteur liquides'}, {zh:'6–12 個月', en:'6–12 months', fr:'6–12 mois'}, {zh:'油水分離、變色', en:'Separates, changes colour', fr:'Se sépare, change de couleur'}],
+    [{zh:'唇膏、唇釉', en:'Lipstick, liquid lip', fr:'Rouge, encre'}, {zh:'12–18 個月', en:'12–18 months', fr:'12–18 mois'}, {zh:'油耗味、表面出水珠', en:'Rancid smell, beads of moisture', fr:'Odeur rance, gouttelettes'}],
+    [{zh:'粉狀（眼影、腮紅、蜜粉）', en:'Powders (shadow, blush, setting)', fr:'Poudres (fards, blush, poudre)'}, {zh:'24 個月', en:'24 months', fr:'24 mois'}, {zh:'表面變硬發亮、刷不起色', en:'Hard, shiny surface that no longer picks up', fr:'Surface dure et brillante, ne se prend plus'}],
+  ]},
+  { type:'note', p:{
+    zh:'包裝上一個打開的罐子圖示、裡面寫「12M」，就是 PAO（Period After Opening），代表開封後 12 個月內用完。眼部產品有紅腫刺痛時立刻停用。',
+    en:'The open-jar symbol marked “12M” on the packaging is the PAO (period after opening): use within 12 months of opening. Stop any eye product immediately if it causes redness or stinging.',
+    fr:'Le pot ouvert marqué « 12M » sur l’emballage est la PAO (période après ouverture) : à utiliser dans les 12 mois. Arrêtez immédiatement tout produit pour les yeux qui provoque rougeur ou picotements.'} },
+]},
+]});
+</script>
+</body>
+</html>

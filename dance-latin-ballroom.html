@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拉丁與國標舞 | 十支舞、社交拉丁與基本步教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* The waltz box step for the leader, seen from above, and the line of dance. */
+function diaBox() {
+  const L = {
+    title:{zh:'華爾滋方步（男步，俯視）與舞程線', en:'The waltz box step (leader, from above) and the line of dance', fr:'Le pas carré de la valse (cavalier, vu de dessus) et la ligne de danse'},
+    s:[
+      {zh:'1 左腳前進', en:'1 left forward', fr:'1 gauche en avant'},
+      {zh:'2 右腳往右旁', en:'2 right to the side', fr:'2 droit sur le côté'},
+      {zh:'3 左腳併右腳', en:'3 left closes to right', fr:'3 gauche rejoint le droit'},
+      {zh:'4 右腳後退', en:'4 right back', fr:'4 droit en arrière'},
+      {zh:'5 左腳往左旁', en:'5 left to the side', fr:'5 gauche sur le côté'},
+      {zh:'6 右腳併左腳', en:'6 right closes to left', fr:'6 droit rejoint le gauche'},
+    ],
+    lod:{zh:'舞程線：沿舞池逆時針前進', en:'Line of dance: anticlockwise round the floor', fr:'Ligne de danse : sens inverse des aiguilles d’une montre'},
+    f:{zh:'女步是鏡像：從右腳後退開始', en:'The follower mirrors it, starting right foot back', fr:'La cavalière fait l’inverse, départ pied droit en arrière'},
+  };
+  /* positions after each step: L foot, R foot; start feet together at bottom */
+  const P = [[100, 80, 'L'], [190, 80, 'R'], [160, 80, 'L'], [190, 160, 'R'], [100, 160, 'L'], [130, 160, 'R']];
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>
+    <rect x="100" y="80" width="90" height="80" fill="none" stroke="#475569" stroke-dasharray="5 4"/>
+    <text x="145" y="194" text-anchor="middle" class="sub">${t({zh:'起點：雙腳併攏', en:'Start: feet together', fr:'Départ : pieds joints'})}</text>`;
+  P.forEach((p, i) => {
+    const col = p[2] === 'L' ? '#fbbf24' : '#f87171';
+    s += `<ellipse cx="${p[0]}" cy="${p[1]}" rx="11" ry="18" fill="${col}" fill-opacity="0.35" stroke="${col}" stroke-width="2"/>
+      <text x="${p[0]}" y="${p[1] + 5}" text-anchor="middle" class="val">${i + 1}</text>`;
+    s += `<text x="250" y="${66 + i * 24}" class="val" style="fill:${col}">${t(L.s[i])}</text>`;
+  });
+  s += `<text x="250" y="${70 + 6 * 24}" class="sub">${t(L.f)}</text>`;
+  /* line of dance: a rounded rectangle with anticlockwise arrows */
+  const ox = 600, oy = 50, w = 260, h = 150;
+  s += `<rect x="${ox}" y="${oy}" width="${w}" height="${h}" rx="40" fill="none" stroke="#475569"/>`;
+  const arr = (x, y, ang) => `<g transform="translate(${x},${y}) rotate(${ang})"><path d="M-12 0 H12 M4 -7 L12 0 L4 7" stroke="#fbbf24" stroke-width="3" fill="none"/></g>`;
+  s += arr(ox + w / 2, oy, 180) + arr(ox, oy + h / 2, 90) + arr(ox + w / 2, oy + h, 0) + arr(ox + w, oy + h / 2, -90);
+  s += `<text x="${ox + w / 2}" y="${oy + h / 2 + 5}" text-anchor="middle" class="sub">${t(L.lod)}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 236" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const A = '#fbbf24', R = '#f87171', O = '#fb923c', P = '#f472b6', V = '#c4b5fd', T = '#5eead4';
+
+CourseKit.start({
+icon:'fa-fire', accent:A, accent2:'#f87171', bg:'#0b0806',
+back:{ href:'dance.html', label:{zh:'回到舞蹈總覽', en:'Back to the dance overview', fr:'Retour à la vue d’ensemble'} },
+dia:{ box: diaBox },
+ui:{
+zh:{
+ 'doc.title':'拉丁與國標舞 | 十支舞、社交拉丁與基本步教學',
+ 'hdr.badge':'舞種詳解・拉丁與國標舞','hdr.title':'拉丁與國標舞：十支舞、社交拉丁與基本步教學',
+ 'intro':'國際標準舞（國標舞，又稱體育舞蹈）由英國在二十世紀初整理成形，分成優雅流動的「標準舞」與熱情奔放的「拉丁舞」各五支。另一方面，Salsa、Bachata 等「社交拉丁舞」則在拉丁美洲的街頭與舞會中自由發展，重視即興的帶領與跟隨。兩者都是雙人舞，學會一種，對另一種會有很大的幫助。',
+ 'intro2':'這一頁先說明兩大體系與十支國標舞的起源、拍子、速度與性格，再介紹 Salsa、Bachata 等社交舞，接著整理標準舞與拉丁舞的技巧核心與帶領跟隨，然後一拍一拍教華爾滋方步、恰恰、倫巴、捷舞、Salsa 與 Bachata 的基本步，最後是舞鞋、舞會禮儀與比賽級別。',
+ 'footer':'拉丁與國標舞入門參考。速度依世界舞蹈運動總會（WDSF）的規定，以每分鐘小節數表示；各協會與社交舞場的習慣可能不同。步法以男步（帶領者）描述，女步（跟隨者）為鏡像，實際名稱以你的老師所用為準。'
+},
+en:{
+ 'doc.title':'Latin & Ballroom: the Ten Dances, Social Latin & Basics',
+ 'hdr.badge':'STYLE GUIDE · LATIN & BALLROOM','hdr.title':'Latin and ballroom: the ten dances, social Latin and the basics',
+ 'intro':'International ballroom (also called DanceSport) was codified in England in the early twentieth century: five flowing Standard dances and five fiery Latin ones. Social Latin dances such as salsa and bachata grew freely in the streets and dance halls of Latin America and prize improvised lead and follow. Both are partner dances, and learning one helps a great deal with the other.',
+ 'intro2':'This page explains the two systems and the origin, time signature, tempo and character of the ten ballroom dances, introduces salsa, bachata and other social dances, sets out the core of Standard and Latin technique and of lead and follow, then teaches count by count the waltz box, cha-cha, rumba, jive, salsa and bachata basics, and ends with shoes, social etiquette and competition levels.',
+ 'footer':'An introductory reference to Latin and ballroom dance. Tempos follow the World DanceSport Federation (WDSF) in bars per minute; other bodies and social floors may differ. Steps are described for the leader; the follower mirrors them. Use the names your teacher uses.'
+},
+fr:{
+ 'doc.title':'Danses latines & de salon : les dix danses, latino social & bases',
+ 'hdr.badge':'FICHE STYLE · LATINES & SALON','hdr.title':'Danses latines et de salon : les dix danses, le latino social et les bases',
+ 'intro':'La danse sportive internationale a été codifiée en Angleterre au début du XXᵉ siècle : cinq danses standard, fluides et élégantes, et cinq danses latines, ardentes. Les danses latines sociales comme la salsa et la bachata sont nées librement dans les rues et les bals d’Amérique latine et reposent sur un guidage improvisé. Ce sont toutes des danses de couple : apprendre l’une aide beaucoup pour l’autre.',
+ 'intro2':'Cette page présente les deux systèmes et l’origine, la mesure, le tempo et le caractère des dix danses, les danses sociales comme la salsa et la bachata, les principes techniques du standard, du latin et du guidage, puis enseigne temps par temps le pas carré de valse, le cha-cha, la rumba, le jive, la salsa et la bachata, et se termine par les chaussures, l’étiquette en soirée et les niveaux de compétition.',
+ 'footer':'Une référence d’initiation aux danses latines et de salon. Les tempos suivent la World DanceSport Federation (WDSF), en mesures par minute ; d’autres fédérations ou soirées peuvent différer. Les pas sont décrits pour le cavalier ; la cavalière fait l’inverse. Gardez les noms employés par votre professeur.'
+}},
+sections:[
+
+/* ── 1. The ten dances ── */
+{ id:'ten', i:'fa-crown', c:A,
+  nav:{zh:'十支國標舞', en:'The ten dances', fr:'Les dix danses'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'標準舞與拉丁舞：十支國標舞', en:'Standard and Latin: the ten dances', fr:'Standard et latines : les dix danses'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'<strong class="text-white">標準舞</strong>（又稱摩登舞）男女全程保持閉式舞姿、身體相貼，沿舞程線在舞池中流動，像在冰上滑行。<strong class="text-white">拉丁舞</strong>可以分開、換手、轉圈，大多在原地發展，重點在髖部動作、腿的線條與節奏感。',
+    en:'In <strong class="text-white">Standard</strong> (also called Modern) the couple stays in closed hold with body contact throughout, flowing round the floor along the line of dance as if gliding on ice. In <strong class="text-white">Latin</strong> partners can separate, change hands and turn, mostly dancing on the spot, with the focus on hip action, leg lines and rhythm.',
+    fr:'En <strong class="text-white">standard</strong>, le couple reste en position fermée, corps en contact, et voyage autour de la piste sur la ligne de danse comme sur la glace. En <strong class="text-white">latines</strong>, les partenaires se séparent, changent de main et tournent, surtout sur place, avec l’accent sur l’action de hanche, les lignes de jambes et le rythme.'} },
+  { type:'table', head:[{zh:'舞', en:'Dance', fr:'Danse'}, {zh:'起源', en:'Origin', fr:'Origine'}, {zh:'拍子', en:'Time', fr:'Mesure'}, {zh:'速度（小節／分）', en:'Tempo (bars/min)', fr:'Tempo (mesures/min)'}, {zh:'性格', en:'Character', fr:'Caractère'}, {zh:'基本節奏', en:'Basic rhythm', fr:'Rythme de base'}], rows:[
+    [{zh:'華爾滋 Waltz', en:'Waltz', fr:'Valse lente'}, {zh:'奧地利與德國的鄉村舞 Ländler，英國改為慢版', en:'Austrian–German Ländler, slowed down in England', fr:'Ländler austro-allemand, ralenti en Angleterre'}, '3/4', '28–30', {zh:'浪漫、起伏、旋轉', en:'Romantic, rising and falling, turning', fr:'Romantique, élévation, rotation'}, '1 2 3'],
+    [{zh:'探戈 Tango', en:'Tango', fr:'Tango'}, {zh:'阿根廷探戈經巴黎傳到英國後改編', en:'Argentine tango adapted via Paris and England', fr:'Tango argentin adapté via Paris et Londres'}, '2/4', '31–33', {zh:'銳利、斷奏、沒有起伏', en:'Sharp, staccato, no rise and fall', fr:'Tranchant, staccato, sans élévation'}, 'S S Q Q S'],
+    [{zh:'維也納華爾滋', en:'Viennese waltz', fr:'Valse viennoise'}, {zh:'十八世紀末的維也納宮廷與舞廳', en:'Vienna’s ballrooms in the late 18th c.', fr:'Les bals de Vienne, fin XVIIIᵉ'}, '3/4', '58–60', {zh:'快速、連續旋轉', en:'Fast, continuous turning', fr:'Rapide, rotation continue'}, '1 2 3'],
+    [{zh:'狐步 Slow foxtrot', en:'Slow foxtrot', fr:'Slow fox'}, {zh:'美國，1914 年演員 Harry Fox', en:'USA, actor Harry Fox, 1914', fr:'États-Unis, l’acteur Harry Fox, 1914'}, '4/4', '28–30', {zh:'平順、長步、最難的標準舞', en:'Smooth, long strides, the hardest Standard', fr:'Fluide, grands pas, la plus difficile'}, 'S Q Q'],
+    [{zh:'快步舞 Quickstep', en:'Quickstep', fr:'Quickstep'}, {zh:'1920 年代英國，狐步加查爾斯頓', en:'1920s England, foxtrot meets Charleston', fr:'Angleterre années 1920, slow fox et charleston'}, '4/4', '50–52', {zh:'輕快、跳躍、歡樂', en:'Light, hopping, joyful', fr:'Léger, sautillant, joyeux'}, 'S Q Q S'],
+    [{zh:'森巴 Samba', en:'Samba', fr:'Samba'}, {zh:'巴西', en:'Brazil', fr:'Brésil'}, '2/4', '50–52', {zh:'彈跳（bounce）、嘉年華', en:'Bouncing, carnival', fr:'Rebond, carnaval'}, '1 a 2'],
+    [{zh:'恰恰 Cha-cha', en:'Cha-cha', fr:'Cha-cha'}, {zh:'1950 年代古巴，由曼波演變', en:'1950s Cuba, from the mambo', fr:'Cuba années 1950, issu du mambo'}, '4/4', '30–32', {zh:'俏皮、銳利、調情', en:'Cheeky, crisp, flirtatious', fr:'Espiègle, net, séducteur'}, '2 3 4&1'],
+    [{zh:'倫巴 Rumba', en:'Rumba', fr:'Rumba'}, {zh:'古巴的 son 與 bolero', en:'Cuban son and bolero', fr:'Son et boléro cubains'}, '4/4', '24–26', {zh:'慢、性感、愛情之舞', en:'Slow, sensual, the dance of love', fr:'Lente, sensuelle, danse de l’amour'}, '2 3 4-1'],
+    [{zh:'鬥牛舞 Paso doble', en:'Paso doble', fr:'Paso doble'}, {zh:'西班牙鬥牛與法國進行曲', en:'Spanish bullfight and French march', fr:'Corrida espagnole et marche française'}, '2/4', '60–62', {zh:'男為鬥牛士、女為斗篷，戲劇性強', en:'He is the matador, she the cape; theatrical', fr:'Lui le torero, elle la cape ; théâtral'}, '1 2'],
+    [{zh:'捷舞 Jive', en:'Jive', fr:'Jive'}, {zh:'美國搖擺舞與 jitterbug', en:'American swing and jitterbug', fr:'Swing américain et jitterbug'}, '4/4', '42–44', {zh:'快速、彈跳、充滿活力', en:'Fast, kicking, energetic', fr:'Rapide, rebondi, énergique'}, '1&2 3&4 5 6'],
+  ]},
+  { type:'note', p:{
+    zh:'S（slow）佔兩拍、Q（quick）佔一拍。比賽中拉丁舞的順序是森巴、恰恰、倫巴、鬥牛、捷舞；標準舞是華爾滋、探戈、維也納華爾滋、狐步、快步。',
+    en:'S (slow) takes two beats, Q (quick) one. In competition the Latin order is samba, cha-cha, rumba, paso doble, jive; Standard is waltz, tango, Viennese waltz, foxtrot, quickstep.',
+    fr:'S (slow) dure deux temps, Q (quick) un. En compétition, l’ordre latin est samba, cha-cha, rumba, paso doble, jive ; en standard : valse lente, tango, valse viennoise, slow fox, quickstep.'} },
+]},
+
+/* ── 2. Social Latin ── */
+{ id:'social', i:'fa-champagne-glasses', c:R,
+  nav:{zh:'社交拉丁', en:'Social Latin', fr:'Latino social'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'社交拉丁舞', en:'Social Latin dances', fr:'Les danses latines sociales'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-pepper-hot', t:{zh:'Salsa', en:'Salsa', fr:'Salsa'}, tag:{zh:'古巴、波多黎各、紐約・150–220 BPM', en:'Cuba, Puerto Rico, New York · 150–220 BPM', fr:'Cuba, Porto Rico, New York · 150–220 BPM'},
+      p:{zh:'8 拍跳 6 步，第 4、8 拍停。主要風格：LA 式（on1，在 1 拍往前踏）、紐約式（on2，在 2 拍踏出，更流暢）、古巴 Casino（圓形移動，多人換舞伴的 Rueda）。', en:'Six steps over eight counts, pausing on 4 and 8. Main styles: LA (on1, breaking forward on 1), New York (on2, smoother), Cuban casino (circular, with the partner-swapping rueda).', fr:'Six pas sur huit temps, pause sur 4 et 8. Styles : LA (on1, cassure sur le 1), New York (on2, plus fluide), casino cubain (circulaire, avec la rueda où l’on change de partenaire).'} },
+    { i:'fa-guitar', t:{zh:'Bachata', en:'Bachata', fr:'Bachata'}, tag:{zh:'多明尼加・120–140 BPM', en:'Dominican Republic · 120–140 BPM', fr:'République dominicaine · 120–140 BPM'},
+      p:{zh:'左右移動三步，第四拍點地（tap）並帶出髖部。風格有傳統 Dominican、浪漫的 Sensual（大量身體波浪）與兩者混合的 Moderna。', en:'Three steps to the side and a tap with a hip pop on 4. Styles: traditional Dominican, sensual (many body waves) and the in-between moderna.', fr:'Trois pas de côté et un tap avec la hanche sur 4. Styles : dominicaine traditionnelle, sensual (beaucoup d’ondulations) et moderna entre les deux.'} },
+    { i:'fa-drum', t:{zh:'Merengue', en:'Merengue', fr:'Merengue'}, tag:{zh:'多明尼加', en:'Dominican Republic', fr:'République dominicaine'},
+      p:{zh:'每拍一步、原地踏步加髖部擺動，最容易入門的社交拉丁舞。', en:'One step per beat, marching with hip action: the easiest social Latin dance to start.', fr:'Un pas par temps, en marchant avec les hanches : la danse latine la plus facile à aborder.'} },
+    { i:'fa-heart', t:{zh:'Kizomba', en:'Kizomba', fr:'Kizomba'}, tag:{zh:'安哥拉', en:'Angola', fr:'Angola'},
+      p:{zh:'緊密擁抱、慢而流暢的走步，重視連結與音樂感，類似非洲版的探戈。', en:'A close embrace with slow, smooth walking, all about connection and musicality; sometimes called an African tango.', fr:'Un abrazo serré et une marche lente et fluide, toute de connexion et de musicalité ; parfois dite « tango africain ».'} },
+    { i:'fa-compact-disc', t:{zh:'Mambo 與 Rumba 社交版', en:'Mambo and social rumba', fr:'Mambo et rumba sociale'}, tag:{zh:'古巴', en:'Cuba', fr:'Cuba'},
+      p:{zh:'美式社交舞的 Rhythm 組也有 Rumba、Cha-cha、Mambo，步法與國際式略有不同（膝蓋較彎）。', en:'The American Rhythm category also has rumba, cha-cha and mambo, with slightly different technique (softer knees).', fr:'La catégorie américaine Rhythm a aussi rumba, cha-cha et mambo, avec une technique un peu différente (genoux plus souples).'} },
+    { i:'fa-music', t:{zh:'阿根廷探戈與 Swing', en:'Argentine tango and swing', fr:'Tango argentin et swing'}, tag:{zh:'見舞蹈總覽', en:'See the overview', fr:'Voir la vue d’ensemble'},
+      p:{zh:'兩者都是活躍的社交舞場，詳見舞蹈總覽第三章。', en:'Both have thriving social scenes; see chapter 3 of the overview.', fr:'Deux scènes sociales très actives ; voir le chapitre 3 de la vue d’ensemble.'} },
+  ]},
+]},
+
+/* ── 3. Technique ── */
+{ id:'technique', i:'fa-ruler-combined', c:O,
+  nav:{zh:'技巧核心', en:'Technique', fr:'Technique'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'技巧核心與帶領跟隨', en:'Core technique and lead and follow', fr:'Technique et guidage'},
+  blocks:[
+  { type:'h3', t:{zh:'標準舞', en:'Standard', fr:'Standard'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-people-arrows', t:{zh:'舞姿框架（Frame / Hold）', en:'Frame and hold', fr:'Cadre et tenue'}, p:{zh:'男生右手放在女生左肩胛骨下緣，左手與女生右手相握在眼睛高度；女生左手輕放在男生右上臂。雙方右側身體相貼，女生站在男生右側一點點。手臂由背部撐起，不是自己出力抬著。', en:'His right hand on her left shoulder blade, his left hand holding her right at eye level; her left hand on his right upper arm. Right sides in contact, she slightly to his right. The arms are held from the back, not lifted by themselves.', fr:'Main droite du cavalier sous l’omoplate gauche de la cavalière, main gauche tenant sa droite à hauteur des yeux ; main gauche de la cavalière sur son bras droit. Côtés droits en contact, elle légèrement décalée à sa droite. Les bras sont portés par le dos.'} },
+    { i:'fa-arrows-up-down', t:{zh:'升降（Rise & fall）', en:'Rise and fall', fr:'Élévation et abaissement'}, p:{zh:'華爾滋、狐步、快步透過腳踝與膝蓋的伸展上升、彎曲下降，像海浪；探戈沒有升降。', en:'Waltz, foxtrot and quickstep rise through ankles and knees and lower again, like waves; tango has none.', fr:'Valse, slow fox et quickstep s’élèvent par les chevilles et les genoux puis redescendent, comme une houle ; le tango n’en a pas.'} },
+    { i:'fa-arrows-spin', t:{zh:'反身動作（CBM）', en:'Contra body movement (CBM)', fr:'Mouvement contraire du corps (CBM)'}, p:{zh:'旋轉時，身體往反方向轉向踏出的腳，讓轉身更流暢。', en:'On turns, the body rotates towards the moving leg, making turns flow.', fr:'Dans les tours, le corps tourne vers la jambe qui avance, ce qui fluidifie la rotation.'} },
+    { i:'fa-shoe-prints', t:{zh:'腳跟先行', en:'Heel leads', fr:'Attaque talon'}, p:{zh:'前進步以腳跟先著地再滾到腳掌，像在走路。', en:'Forward steps land heel first and roll through the foot, like walking.', fr:'Les pas en avant posent le talon puis déroulent le pied, comme en marchant.'} },
+    { i:'fa-person-skating', t:{zh:'擺盪（Sway）', en:'Sway', fr:'Inclinaison (sway)'}, p:{zh:'轉身時身體自然往內側傾斜，像單車轉彎。', en:'In turns the body tilts towards the inside, like a bicycle cornering.', fr:'En tournant, le corps s’incline vers l’intérieur, comme un vélo dans un virage.'} },
+    { i:'fa-compass', t:{zh:'舞程線（Line of dance）', en:'Line of dance', fr:'Ligne de danse'}, p:{zh:'所有人沿舞池逆時針前進，避免碰撞。', en:'Everyone travels anticlockwise round the floor to avoid collisions.', fr:'Tout le monde avance dans le sens inverse des aiguilles d’une montre.'} },
+  ]},
+  { type:'h3', t:{zh:'拉丁舞', en:'Latin', fr:'Latines'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-circle-notch', t:{zh:'古巴動作（Cuban motion）', en:'Cuban motion', fr:'Mouvement cubain'}, p:{zh:'髖部動作不是刻意扭腰，而是「腳掌壓地 → 膝蓋打直 → 髖自然移到那隻腳上」的結果。', en:'Hip action is not a deliberate wiggle but the result of pressing into the floor, straightening the knee, and letting the hip settle over that leg.', fr:'L’action de hanche n’est pas un déhanché volontaire : elle résulte de la pression dans le sol, du genou qui se tend et de la hanche qui s’installe sur cette jambe.'} },
+    { i:'fa-shoe-prints', t:{zh:'腳掌先著地、推地', en:'Ball first, press the floor', fr:'Avant-pied d’abord, pousser le sol'}, p:{zh:'拉丁舞的步伐以前腳掌內側先著地，再放下腳跟，持續把地板往下推。', en:'Latin steps land on the inside of the ball of the foot, then the heel, always pressing into the floor.', fr:'Les pas latins se posent sur l’intérieur de l’avant-pied puis le talon, en poussant constamment dans le sol.'} },
+    { i:'fa-grip-lines-vertical', t:{zh:'直膝與線條', en:'Straight legs and lines', fr:'Jambes tendues et lignes'}, p:{zh:'重心腳的膝蓋伸直，腿與手臂延伸出清楚的線條。', en:'The standing knee straightens; legs and arms extend into clear lines.', fr:'Le genou d’appui se tend ; jambes et bras dessinent des lignes nettes.'} },
+  ]},
+  { type:'h3', t:{zh:'帶領與跟隨', en:'Lead and follow', fr:'Guidage'} },
+  { type:'steps', items:[
+    { t:{zh:'連結（Connection）', en:'Connection', fr:'Connexion'}, p:{zh:'雙方手臂保持適當張力（像握手時的輕微壓力），訊號才能傳遞。太軟像麵條、太硬像推車都不行。', en:'Both keep gentle tone in the arms, like the pressure of a handshake, so signals can travel. Too soft is a noodle; too stiff is a shopping trolley.', fr:'Les deux gardent un léger tonus dans les bras, comme une poignée de main, pour que les signaux passent. Trop mou, c’est une nouille ; trop raide, un caddie.'} },
+    { t:{zh:'帶領從身體出發', en:'Lead from the body', fr:'Guider avec le corps'}, p:{zh:'帶領者先移動自己的重心與軀幹，手只是把訊號傳出去，不是用手拉或推舞伴。', en:'The leader moves their own weight and torso first; the hands transmit, they do not pull or push.', fr:'Le cavalier déplace d’abord son poids et son buste ; les mains transmettent, elles ne tirent ni ne poussent.'} },
+    { t:{zh:'跟隨者等待訊號', en:'The follower waits for the lead', fr:'La cavalière attend le signal'}, p:{zh:'不要預測下一步，等訊號到了再動；同時保持自己的平衡與軸心。', en:'Do not anticipate; move when the signal arrives, keeping your own balance and axis.', fr:'Ne pas anticiper : bouger quand le signal arrive, en gardant son propre équilibre et son axe.'} },
+    { t:{zh:'準備（Prep）', en:'Preparation', fr:'Préparation'}, p:{zh:'轉圈前，帶領者在前一拍給一個小小的準備動作，讓跟隨者知道「要轉了」。', en:'Before a turn the leader gives a small preparation on the previous beat so the follower knows it is coming.', fr:'Avant un tour, le cavalier donne une petite préparation au temps précédent pour prévenir la cavalière.'} },
+  ]},
+]},
+
+/* ── 4. Lessons ── */
+{ id:'lessons', i:'fa-chalkboard-user', c:P,
+  nav:{zh:'基本步教學', en:'Lessons', fr:'Leçons'},
+  eyebrow:{zh:'第四章・教學', en:'Chapter 4 · Lessons', fr:'Chapitre 4 · Leçons'},
+  h2:{zh:'六支舞的基本步，一拍一拍', en:'Six basic steps, count by count', fr:'Six pas de base, temps par temps'},
+  blocks:[
+  { type:'dia', k:'box' },
+  { type:'counts', t:{zh:'一、華爾滋方步（男步）', en:'1. Waltz box step (leader)', fr:'1. Pas carré de valse (cavalier)'},
+    p:{zh:'每拍一步。1 拍腳跟先著地往下（plié），2、3 拍升起到腳掌，3 拍結束時降下，形成「下、上、上、下」的起伏。', en:'One step per beat. Land heel first on 1, lowering; rise onto the balls on 2 and 3, lowering at the end of 3: down, up, up, down.', fr:'Un pas par temps. Talon sur 1 en descendant ; montée sur l’avant-pied en 2 et 3, puis on redescend à la fin du 3 : bas, haut, haut, bas.'},
+    items:[
+      {n:'1', p:{zh:'左腳前進', en:'Left forward', fr:'Gauche en avant'}},
+      {n:'2', p:{zh:'右腳往右旁、升起', en:'Right to the side, rising', fr:'Droit sur le côté, en montant'}},
+      {n:'3', p:{zh:'左腳併右腳、降下', en:'Left closes, lowering', fr:'Gauche rejoint, en descendant'}},
+      {n:'4', p:{zh:'右腳後退', en:'Right back', fr:'Droit en arrière'}},
+      {n:'5', p:{zh:'左腳往左旁、升起', en:'Left to the side, rising', fr:'Gauche sur le côté, en montant'}},
+      {n:'6', p:{zh:'右腳併左腳、降下', en:'Right closes, lowering', fr:'Droit rejoint, en descendant'}},
+    ]},
+  { type:'counts', t:{zh:'二、恰恰基本步（男步，閉式）', en:'2. Cha-cha basic (leader, closed)', fr:'2. Pas de base cha-cha (cavalier, fermé)'},
+    p:{zh:'恰恰從第 2 拍開始踏步，「4 & 1」就是「恰恰恰」的三連步（chassé）。初學時第 1 拍可以先做一個準備的側步。', en:'Cha-cha steps start on 2; “4 & 1” is the cha-cha-cha chassé. Beginners can take a preparatory side step on 1.', fr:'Le cha-cha commence sur le 2 ; « 4 et 1 », c’est le chassé « cha-cha-cha ». Au début, faites un pas de côté préparatoire sur le 1.'},
+    items:[
+      {n:'2', p:{zh:'左腳前進（rock）', en:'Left forward (rock)', fr:'Gauche en avant (rock)'}},
+      {n:'3', p:{zh:'重心回右腳', en:'Replace weight on right', fr:'Retour du poids sur le droit'}},
+      {n:'4', p:{zh:'左腳往旁', en:'Left to the side', fr:'Gauche sur le côté'}},
+      {n:'&', p:{zh:'右腳半併', en:'Right half-closes', fr:'Droit se rapproche'}},
+      {n:'1', p:{zh:'左腳往旁', en:'Left to the side', fr:'Gauche sur le côté'}},
+      {n:'2', p:{zh:'右腳後退（rock）', en:'Right back (rock)', fr:'Droit en arrière (rock)'}},
+      {n:'3', p:{zh:'重心回左腳', en:'Replace on left', fr:'Retour sur le gauche'}},
+      {n:'4&1', p:{zh:'往右「恰恰恰」', en:'Cha-cha-cha to the right', fr:'Cha-cha-cha à droite'}},
+    ]},
+  { type:'counts', t:{zh:'三、倫巴基本步（男步）', en:'3. Rumba basic (leader)', fr:'3. Pas de base rumba (cavalier)'},
+    p:{zh:'和恰恰的方向相同，但沒有三連步：第 4 拍踏出、延續到第 1 拍慢慢讓髖部完成動作，所以節奏是「快、快、慢」。', en:'Same pattern as cha-cha without the chassé: step on 4 and let the hip action continue through 1, so the rhythm is quick, quick, slow.', fr:'Même dessin que le cha-cha sans chassé : on pose sur 4 et la hanche termine son action jusqu’au 1 : vite, vite, lent.'},
+    items:[
+      {n:'2', p:{zh:'左腳前進', en:'Left forward', fr:'Gauche en avant'}},
+      {n:'3', p:{zh:'重心回右腳', en:'Replace on right', fr:'Retour sur le droit'}},
+      {n:'4–1', p:{zh:'左腳往旁，慢慢完成髖部動作', en:'Left to the side, completing the hip slowly', fr:'Gauche sur le côté, la hanche finit lentement'}},
+      {n:'2', p:{zh:'右腳後退', en:'Right back', fr:'Droit en arrière'}},
+      {n:'3', p:{zh:'重心回左腳', en:'Replace on left', fr:'Retour sur le gauche'}},
+      {n:'4–1', p:{zh:'右腳往旁', en:'Right to the side', fr:'Droit sur le côté'}},
+    ]},
+  { type:'counts', t:{zh:'四、捷舞基本步（男步，原地換位 fallaway rock）', en:'4. Jive basic (leader, fallaway rock)', fr:'4. Pas de base jive (cavalier, fallaway rock)'},
+    p:{zh:'六拍一組：兩個三連步加一個搖滾步。膝蓋保持彈性、腳掌踩地，輕快有彈性。', en:'Six beats: two chassés and a rock step. Springy knees, on the balls of the feet, light and bouncy.', fr:'Six temps : deux chassés et un rock step. Genoux souples, sur l’avant-pied, léger et rebondi.'},
+    items:[
+      {n:'1&2', p:{zh:'往左三連步：左、右、左', en:'Chassé left: L, R, L', fr:'Chassé à gauche : G, D, G'}},
+      {n:'3&4', p:{zh:'往右三連步：右、左、右', en:'Chassé right: R, L, R', fr:'Chassé à droite : D, G, D'}},
+      {n:'5', p:{zh:'左腳往後搖（rock back）', en:'Rock back on the left', fr:'Rock arrière sur le gauche'}},
+      {n:'6', p:{zh:'重心回右腳', en:'Replace on right', fr:'Retour sur le droit'}},
+    ]},
+  { type:'counts', t:{zh:'五、Salsa 基本步（on1，男步）', en:'5. Salsa basic (on1, leader)', fr:'5. Pas de base salsa (on1, cavalier)'},
+    p:{zh:'第 4、8 拍不踏步，讓身體停頓、重心準備換方向。女生從右腳後退開始做鏡像。', en:'No step on 4 and 8: the body pauses as weight prepares to change direction. The follower mirrors, starting right foot back.', fr:'Pas de pas sur 4 et 8 : le corps marque une pause avant de changer de direction. La cavalière fait l’inverse, départ pied droit en arrière.'},
+    items:[
+      {n:'1', p:{zh:'左腳前進', en:'Left forward', fr:'Gauche en avant'}},
+      {n:'2', p:{zh:'重心回右腳', en:'Replace on right', fr:'Retour sur le droit'}},
+      {n:'3', p:{zh:'左腳收回併攏', en:'Left closes', fr:'Gauche rejoint'}},
+      {n:'4', p:{zh:'停（tap 或停住）', en:'Pause', fr:'Pause'}},
+      {n:'5', p:{zh:'右腳後退', en:'Right back', fr:'Droit en arrière'}},
+      {n:'6', p:{zh:'重心回左腳', en:'Replace on left', fr:'Retour sur le gauche'}},
+      {n:'7', p:{zh:'右腳收回併攏', en:'Right closes', fr:'Droit rejoint'}},
+      {n:'8', p:{zh:'停', en:'Pause', fr:'Pause'}},
+    ]},
+  { type:'counts', t:{zh:'六、Bachata 基本步（側步）', en:'6. Bachata basic (side)', fr:'6. Pas de base bachata (latéral)'},
+    p:{zh:'每個 tap 時髖部微微往上推（hip pop）。熟練後可以改成前後方向，或加入身體波浪。', en:'On each tap the hip pops slightly up. Once comfortable, try it forward and back or add body waves.', fr:'À chaque tap, la hanche monte légèrement (hip pop). Ensuite, essayez-le avant-arrière ou ajoutez des ondulations.'},
+    items:[
+      {n:'1', p:{zh:'左腳往左', en:'Left to the left', fr:'Gauche à gauche'}},
+      {n:'2', p:{zh:'右腳併左腳', en:'Right closes', fr:'Droit rejoint'}},
+      {n:'3', p:{zh:'左腳往左', en:'Left to the left', fr:'Gauche à gauche'}},
+      {n:'4', p:{zh:'右腳點地＋髖', en:'Right taps + hip', fr:'Droit tape + hanche'}},
+      {n:'5', p:{zh:'右腳往右', en:'Right to the right', fr:'Droit à droite'}},
+      {n:'6', p:{zh:'左腳併右腳', en:'Left closes', fr:'Gauche rejoint'}},
+      {n:'7', p:{zh:'右腳往右', en:'Right to the right', fr:'Droit à droite'}},
+      {n:'8', p:{zh:'左腳點地＋髖', en:'Left taps + hip', fr:'Gauche tape + hanche'}},
+    ]},
+]},
+
+/* ── 5. Practicalities ── */
+{ id:'practical', i:'fa-shoe-prints', c:V,
+  nav:{zh:'舞鞋與禮儀', en:'Shoes & etiquette', fr:'Chaussures & étiquette'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'舞鞋、舞會禮儀與比賽級別', en:'Shoes, social etiquette and competition levels', fr:'Chaussures, étiquette et niveaux de compétition'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-shoe-prints', t:{zh:'舞鞋', en:'Shoes', fr:'Chaussures'}, p:{zh:'舞鞋鞋底是麂皮，能在木地板上滑又不會太滑。拉丁女鞋為露趾、跟高 5–7.5 公分；標準舞女鞋為包頭；男鞋拉丁跟較高、標準舞跟較低。初學可先穿低跟的練習鞋。用鋼刷定期刷麂皮，也不要穿舞鞋走到戶外。', en:'Dance shoes have suede soles that slide on wood without being slippery. Women’s Latin shoes are open-toed with 5–7.5 cm heels, Standard shoes closed; men’s Latin heels are higher than Standard. Beginners can start with low-heeled practice shoes. Brush the suede regularly and never wear them outdoors.', fr:'Les chaussures de danse ont une semelle en daim qui glisse sans patiner. Latines femmes : bout ouvert, talon de 5 à 7,5 cm ; standard : bout fermé ; chez les hommes, talon latin plus haut. Au début, des chaussures d’entraînement à talon bas. Brossez le daim et ne sortez jamais avec.'} },
+    { i:'fa-handshake', t:{zh:'舞會禮儀', en:'Social etiquette', fr:'Étiquette en soirée'}, p:{zh:'任何人都可以邀舞，被拒絕也沒關係；跳完一首說謝謝。不要在舞池上教別人跳舞。標準舞沿舞程線前進，跳拉丁時待在舞池中央。注意個人衛生與口氣。', en:'Anyone may ask anyone to dance, and a “no” is fine; say thank you after the song. Never teach on the social floor. Standard travels with the line of dance; Latin stays in the middle. Mind hygiene and breath.', fr:'Chacun peut inviter chacun, et un refus n’est pas grave ; on remercie après la danse. On ne donne pas de cours sur la piste. Le standard suit la ligne de danse, les latines restent au centre. Attention à l’hygiène et à l’haleine.'} },
+    { i:'fa-medal', t:{zh:'比賽級別', en:'Competition levels', fr:'Niveaux de compétition'}, p:{zh:'常見的業餘分級：新人（Newcomer）→ 銅牌（Bronze）→ 銀牌（Silver）→ 金牌（Gold）→ 公開組（Open），每級規定能用的步法。另有職業組。英國黑池舞蹈節（Blackpool Dance Festival）是全球最著名的國標比賽。', en:'Typical amateur levels: newcomer → bronze → silver → gold → open, each with a syllabus of permitted figures. There are also professional divisions. The Blackpool Dance Festival in England is the world’s most famous ballroom competition.', fr:'Niveaux amateurs courants : débutant → bronze → argent → or → open, chacun avec ses figures autorisées. Il existe aussi des catégories professionnelles. Le festival de Blackpool, en Angleterre, est la compétition la plus célèbre.'} },
+  ]},
+  { type:'note', p:{
+    zh:'雙人舞最常見的困擾是「找不到舞伴」。社交拉丁舞的團體課通常會輪換舞伴，一個人報名完全沒問題；國標舞課程也多半可以單人參加，之後再透過教室或社群配對固定舞伴。',
+    en:'The most common worry about partner dance is not having a partner. Social Latin group classes usually rotate partners, so coming alone is completely fine; most ballroom classes accept singles too, and studios or communities help you find a regular partner later.',
+    fr:'Le souci le plus fréquent : ne pas avoir de partenaire. En cours collectif de latino social, on change de partenaire, donc venir seul ne pose aucun problème ; la plupart des cours de danse sportive acceptent aussi les inscriptions individuelles, et l’école aide ensuite à trouver un partenaire.'} },
+]},
+]});
+</script>
+</body>
+</html>
