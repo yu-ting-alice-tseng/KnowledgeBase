@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>現代與當代舞 | 技巧、即興與地板教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* Doris Humphrey's "arc between two deaths": a pendulum swinging between
+   standing still (balance) and lying still (the fall). Drawn as a computed arc. */
+function diaArc() {
+  const L = {
+    title:{zh:'韓福瑞的「兩個死亡之間的弧線」', en:'Humphrey’s “arc between two deaths”', fr:'L’« arc entre deux morts » de Humphrey'},
+    a:{zh:'完全平衡：靜止、不動', en:'Perfect balance: stillness', fr:'Équilibre parfait : immobilité'},
+    b:{zh:'完全倒下：躺在地上', en:'Complete fall: lying down', fr:'Chute complète : allongé'},
+    m:{zh:'舞蹈發生在中間：失衡（fall）→ 懸浮（suspension）→ 恢復（recovery）', en:'Dance happens in between: fall → suspension → recovery', fr:'La danse se joue entre les deux : chute → suspension → rétablissement'},
+  };
+  const cx = 300, cy = 210, r = 160;
+  let d = '';
+  for (let i = 0; i <= 60; i++) {
+    const a = -Math.PI / 2 + (i / 60) * (Math.PI / 2);   /* from top to right side */
+    d += (i ? ' L' : 'M') + (cx + r * Math.cos(a)).toFixed(1) + ' ' + (cy + r * Math.sin(a)).toFixed(1);
+  }
+  const fig = (x, y, ang) => {
+    const rad = ang * Math.PI / 180, ex = x + (r - 22) * Math.sin(rad), ey = y - (r - 22) * Math.cos(rad);
+    return `<line x1="${x}" y1="${y}" x2="${ex}" y2="${ey}" stroke="#5eead4" stroke-width="5" stroke-linecap="round"/><circle cx="${ex + 9 * Math.sin(rad)}" cy="${ey - 9 * Math.cos(rad)}" r="8" fill="#5eead4"/>`;
+  };
+  return `<svg class="dg" viewBox="0 0 900 260" role="img" aria-label="${t(L.title)}">
+    <text x="0" y="22" class="lab">${t(L.title)}</text>
+    <line x1="120" y1="${cy}" x2="560" y2="${cy}" stroke="#475569"/>
+    <path d="${d}" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 5"/>
+    ${fig(cx, cy, 0)}${fig(cx, cy, 30)}${fig(cx, cy, 60)}
+    <line x1="${cx + 10}" y1="${cy - 6}" x2="${cx + r - 14}" y2="${cy - 6}" stroke="#5eead4" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+    <text x="${cx}" y="${cy - r - 14}" text-anchor="middle" class="val">${t(L.a)}</text>
+    <text x="${cx + r + 16}" y="${cy + 4}" class="val">${t(L.b)}</text>
+    <text x="0" y="248" class="sub">${t(L.m)}</text></svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const T = '#5eead4', S = '#7dd3fc', V = '#c4b5fd', G = '#86efac', Y = '#fde68a', R = '#fda4af';
+
+CourseKit.start({
+icon:'fa-wind', accent:T, accent2:'#7dd3fc', bg:'#06090a',
+back:{ href:'dance.html', label:{zh:'回到舞蹈總覽', en:'Back to the dance overview', fr:'Retour à la vue d’ensemble'} },
+dia:{ arc: diaArc },
+ui:{
+zh:{
+ 'doc.title':'現代與當代舞 | 技巧、即興與地板教學',
+ 'hdr.badge':'舞種詳解・現代與當代舞','hdr.title':'現代與當代舞：技巧、即興與地板教學',
+ 'intro':'二十世紀初，一群舞者脫下芭蕾舞鞋與束腹，赤腳走上舞台。他們不再追求擺脫地心引力的輕盈，而是接受重量、呼吸與情感，讓動作從身體內部長出來。這就是現代舞。之後的當代舞再把即興、地板技巧、接觸即興與各種文化融進來，成為今日舞團最普遍的語彙。',
+ 'intro2':'這一頁介紹現代舞到當代舞的歷史與重要舞蹈家（包括台灣的雲門舞集與法國的國家編舞中心），說明各技巧體系的核心概念，然後是一系列可在家練習的地板與脊椎教學、即興練習，以及欣賞作品的方法。',
+ 'footer':'現代與當代舞入門參考。各技巧體系都有正式認證的教師，深入學習請找受過該體系訓練的老師。地板練習請在乾淨、平滑但不滑的地面上進行，膝蓋與髖骨可加護具。'
+},
+en:{
+ 'doc.title':'Modern & Contemporary Dance: Technique, Improvisation & Floorwork',
+ 'hdr.badge':'STYLE GUIDE · MODERN & CONTEMPORARY','hdr.title':'Modern and contemporary dance: technique, improvisation and floorwork',
+ 'intro':'In the early twentieth century a group of dancers took off their ballet slippers and corsets and walked on stage barefoot. Instead of escaping gravity they accepted weight, breath and emotion, letting movement grow from inside the body: modern dance. Contemporary dance then folded in improvisation, floorwork, contact improvisation and other cultures, becoming the common language of today’s companies.',
+ 'intro2':'This page traces the history from modern to contemporary dance and its key artists (including Taiwan’s Cloud Gate and France’s national choreographic centres), explains the core ideas of each technique, then offers floor and spine lessons to practise at home, improvisation tasks and ways to watch a piece.',
+ 'footer':'An introductory reference to modern and contemporary dance. Each technique has certified teachers; to go deeper, find one trained in that system. Do floorwork on a clean, smooth but not slippery surface; knee pads help.'
+},
+fr:{
+ 'doc.title':'Danse moderne & contemporaine : technique, improvisation & sol',
+ 'hdr.badge':'FICHE STYLE · MODERNE & CONTEMPORAIN','hdr.title':'Danse moderne et contemporaine : technique, improvisation et sol',
+ 'intro':'Au début du XXᵉ siècle, des danseurs ôtent chaussons et corsets et entrent pieds nus en scène. Plutôt que fuir la pesanteur, ils acceptent le poids, le souffle et l’émotion, et laissent le mouvement naître de l’intérieur : c’est la danse moderne. La danse contemporaine y ajoute improvisation, travail au sol, contact improvisation et d’autres cultures, et devient la langue commune des compagnies actuelles.',
+ 'intro2':'Cette page retrace l’histoire du moderne au contemporain et ses grands artistes (dont le Cloud Gate de Taïwan et les centres chorégraphiques nationaux français), explique les notions de chaque technique, puis propose des leçons de sol et de colonne à faire chez soi, des exercices d’improvisation et des clés pour regarder une pièce.',
+ 'footer':'Une référence d’initiation à la danse moderne et contemporaine. Chaque technique a ses enseignants certifiés ; pour approfondir, cherchez un professeur formé à ce système. Travaillez le sol sur une surface propre, lisse mais non glissante ; des genouillères aident.'
+}},
+sections:[
+
+/* ── 1. History ── */
+{ id:'history', i:'fa-landmark', c:T,
+  nav:{zh:'歷史', en:'History', fr:'Histoire'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'從赤腳革命到當代舞', en:'From the barefoot revolution to contemporary dance', fr:'De la révolution pieds nus au contemporain'},
+  blocks:[
+  { type:'table', head:[{zh:'時期', en:'Period', fr:'Période'}, {zh:'發展', en:'Development', fr:'Évolution'}, {zh:'代表人物', en:'Key figures', fr:'Figures'}], rows:[
+    [{zh:'先驅（1900–20 年代）', en:'Pioneers (1900s–20s)', fr:'Pionniers (1900–1920)'}, {zh:'反對芭蕾的僵化，從自然、古希臘與東方文化尋找自由的動作。', en:'Rejecting ballet’s rigidity, seeking free movement in nature, ancient Greece and the East.', fr:'Contre la rigidité du ballet, une quête de liberté dans la nature, la Grèce antique et l’Orient.'}, 'Isadora Duncan, Loïe Fuller, Ruth St. Denis & Ted Shawn'],
+    [{zh:'現代舞第一代（1920–50 年代）', en:'First modern generation (1920s–50s)', fr:'Première génération moderne (1920–1950)'}, {zh:'建立有系統的技巧：收縮與釋放、失衡與恢復。', en:'Systematic techniques: contraction and release, fall and recovery.', fr:'Des techniques systématiques : contraction-relâchement, chute-rétablissement.'}, 'Martha Graham, Doris Humphrey, Charles Weidman, Lester Horton, José Limón'],
+    [{zh:'新方向（1950–60 年代）', en:'New directions (1950s–60s)', fr:'Nouvelles voies (1950–1960)'}, {zh:'Cunningham 讓舞蹈與音樂分開創作、用擲骰子決定順序（機遇法）；Alvin Ailey 呈現非裔美國人的經驗。', en:'Cunningham creates dance and music separately and uses chance; Alvin Ailey stages the African-American experience.', fr:'Cunningham sépare danse et musique et recourt au hasard ; Alvin Ailey porte l’expérience afro-américaine.'}, 'Merce Cunningham & John Cage, Alvin Ailey'],
+    [{zh:'後現代（1960–70 年代）', en:'Postmodern (1960s–70s)', fr:'Postmoderne (1960–1970)'}, {zh:'Judson 舞蹈劇場質疑「什麼是舞蹈」：走路、日常動作、任務、即興都可以是舞；接觸即興誕生。', en:'Judson Dance Theater asks what dance is: walking, everyday movement, tasks and improvisation all count; contact improvisation is born.', fr:'Le Judson Dance Theater interroge la danse : marcher, gestes quotidiens, tâches et improvisation ; naissance du contact improvisation.'}, 'Yvonne Rainer, Trisha Brown, Steve Paxton'],
+    [{zh:'舞蹈劇場（1970 年代起）', en:'Tanztheater (from the 1970s)', fr:'Tanztheater (dès 1970)'}, {zh:'在德國，舞蹈結合戲劇、重複與日常，直視人際關係。', en:'In Germany, dance merges with theatre, repetition and the everyday, facing human relationships head on.', fr:'En Allemagne, la danse rejoint le théâtre, la répétition et le quotidien pour regarder les relations humaines.'}, 'Pina Bausch'],
+    [{zh:'當代舞（1980 年代至今）', en:'Contemporary (1980s–today)', fr:'Contemporain (depuis 1980)'}, {zh:'融合芭蕾、現代、街舞、武術與各地傳統；重視即興、地板與個人身體語彙。', en:'Fuses ballet, modern, street, martial arts and local traditions; values improvisation, floorwork and personal movement language.', fr:'Mêle classique, moderne, urbain, arts martiaux et traditions ; valorise improvisation, sol et langage personnel.'}, 'William Forsythe, Jiří Kylián, Ohad Naharin, Crystal Pite, Akram Khan, Hofesh Shechter'],
+  ]},
+  { type:'cards', cols:2, items:[
+    { i:'fa-cloud', t:{zh:'台灣：雲門舞集', en:'Taiwan: Cloud Gate', fr:'Taïwan : Cloud Gate'}, tag:{zh:'林懷民・1973 創立', en:'Lin Hwai-min · founded 1973', fr:'Lin Hwai-min · fondé en 1973'},
+      p:{zh:'華人世界第一個當代舞團。舞者每天練太極導引、靜坐、內家拳與書法，發展出獨特的身體語言。代表作《薪傳》《水月》《流浪者之歌》《行草》。2019 年起由鄭宗龍擔任藝術總監。其他值得認識的還有布拉瑞揚舞團與驫舞劇場。', en:'The first contemporary company in the Chinese-speaking world. Dancers train daily in tai chi daoyin, meditation, internal martial arts and calligraphy, forging a unique language. Key works: Legacy, Moon Water, Songs of the Wanderers, Cursive. Cheng Tsung-lung has led it since 2019. Also look at Bulareyaung Dance Company and Horse.', fr:'La première compagnie contemporaine du monde sinophone. Les danseurs pratiquent chaque jour tai chi daoyin, méditation, arts martiaux internes et calligraphie. Œuvres : Legacy, Moon Water, Songs of the Wanderers, Cursive. Cheng Tsung-lung la dirige depuis 2019. À découvrir aussi : Bulareyaung Dance Company et Horse.'} },
+    { i:'fa-landmark-flag', t:{zh:'法國：國家編舞中心', en:'France: national choreographic centres', fr:'France : centres chorégraphiques nationaux'}, tag:{zh:'19 個 CCN', en:'19 CCNs', fr:'19 CCN'},
+      p:{zh:'法國在 1980 年代建立國家編舞中心（CCN）網絡，讓編舞家在各城市駐地創作，是當代舞的重鎮。值得認識的編舞家有 Maguy Marin、Angelin Preljocaj、Jérôme Bel 與 Boris Charmatz；巴黎的 Théâtre de la Ville、Chaillot 與里昂舞蹈雙年展都是好去處。', en:'In the 1980s France built a network of national choreographic centres (CCN) giving choreographers residencies across the country; a hub of contemporary dance. Look up Maguy Marin, Angelin Preljocaj, Jérôme Bel and Boris Charmatz; Théâtre de la Ville, Chaillot and the Lyon Dance Biennale are good places to start.', fr:'Dans les années 1980, la France crée le réseau des CCN, qui accueillent des chorégraphes en résidence dans tout le pays : un pôle majeur du contemporain. À découvrir : Maguy Marin, Angelin Preljocaj, Jérôme Bel, Boris Charmatz ; le Théâtre de la Ville, Chaillot et la Biennale de la danse de Lyon.'} },
+  ]},
+]},
+
+/* ── 2. Techniques ── */
+{ id:'techniques', i:'fa-diagram-project', c:S,
+  nav:{zh:'技巧體系', en:'Techniques', fr:'Techniques'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'主要技巧體系', en:'The main techniques', fr:'Les grandes techniques'},
+  blocks:[
+  { type:'dia', k:'arc' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-person-falling', t:{zh:'Graham 技巧', en:'Graham technique', fr:'Technique Graham'}, tag:{zh:'收縮與釋放', en:'Contraction and release', fr:'Contraction et relâchement'},
+      p:{zh:'吐氣時骨盆往內捲、腹部深深收進、背部拱起（contraction），吸氣時延伸回來（release）。另有螺旋（spiral）與從地板開始的系統練習，動作強烈而有戲劇性。', en:'On the exhale the pelvis curls, the abdomen hollows and the back rounds (contraction); on the inhale the spine lengthens (release). Spirals and a sequence starting on the floor; strong and dramatic.', fr:'À l’expiration, le bassin s’enroule, le ventre se creuse, le dos s’arrondit (contraction) ; à l’inspiration, la colonne s’allonge (release). Spirales et travail débutant au sol ; fort et dramatique.'} },
+    { i:'fa-scale-unbalanced', t:{zh:'Humphrey-Limón 技巧', en:'Humphrey-Limón', fr:'Humphrey-Limón'}, tag:{zh:'失衡與恢復', en:'Fall and recovery', fr:'Chute et rétablissement'},
+      p:{zh:'利用重量的落下、反彈與懸浮，像鐘擺一樣。強調呼吸、擺盪（swing）與連貫的流動。', en:'Uses the drop, rebound and suspension of weight, like a pendulum; breath, swings and continuous flow.', fr:'Utilise la chute, le rebond et la suspension du poids, comme un pendule ; souffle, swings et flux continu.'} },
+    { i:'fa-ruler', t:{zh:'Horton 技巧', en:'Horton technique', fr:'Technique Horton'}, tag:{zh:'平背與側傾', en:'Flat backs and laterals', fr:'Dos plat et latéraux'},
+      p:{zh:'以長線條、平背（flat back）、側傾（lateral T）與深層肌力著稱，Alvin Ailey 舞團的基礎訓練。', en:'Long lines, flat backs, lateral T and deep strength; the basis of Alvin Ailey training.', fr:'Lignes longues, dos plat, T latéral et force profonde ; base de la formation Alvin Ailey.'} },
+    { i:'fa-dice', t:{zh:'Cunningham 技巧', en:'Cunningham technique', fr:'Technique Cunningham'}, tag:{zh:'脊椎與方向', en:'Spine and direction', fr:'Colonne et direction'},
+      p:{zh:'背部的彎曲、扭轉與傾斜組合，加上精準快速的腿部動作；空間中沒有「正面」，每個方向都同等重要。', en:'Curves, twists and tilts of the back with precise, fast legwork; space has no “front”, every direction matters equally.', fr:'Courbes, torsions et inclinaisons du dos, jambes précises et rapides ; pas de « face », toutes les directions se valent.'} },
+    { i:'fa-feather-pointed', t:{zh:'Release 技巧', en:'Release technique', fr:'Release technique'}, tag:{zh:'放掉多餘的力量', en:'Letting go of excess effort', fr:'Lâcher l’effort inutile'},
+      p:{zh:'以骨骼對位與意象引導動作，用最少的肌力達成最大的流動，是今日當代舞課最常見的基礎。', en:'Skeletal alignment and imagery guide movement, achieving the most flow with the least effort; the most common basis of contemporary classes today.', fr:'Alignement osseux et images guident le mouvement : le maximum de fluidité pour le minimum d’effort. La base la plus courante des cours actuels.'} },
+    { i:'fa-handshake', t:{zh:'接觸即興', en:'Contact improvisation', fr:'Contact improvisation'}, tag:{zh:'Steve Paxton・1972', en:'Steve Paxton · 1972', fr:'Steve Paxton · 1972'},
+      p:{zh:'兩人透過身體接觸點分享重量、滾動、支撐與托舉，即興回應彼此。', en:'Two dancers share weight through points of contact, rolling, supporting and lifting, improvising in response to each other.', fr:'Deux danseurs partagent leur poids par des points de contact, roulent, se soutiennent et se portent en improvisant.'} },
+    { i:'fa-water', t:{zh:'Gaga', en:'Gaga', fr:'Gaga'}, tag:{zh:'Ohad Naharin・以色列', en:'Ohad Naharin · Israel', fr:'Ohad Naharin · Israël'},
+      p:{zh:'不用鏡子，跟著老師的意象指令（「讓身體像在水中漂浮」）探索感覺與質地，分為舞者課與一般人的 Gaga/people。', en:'No mirrors: you follow the teacher’s images (“float as if in water”) to explore sensation and texture. Classes for dancers and Gaga/people for everyone.', fr:'Sans miroir, on suit les images du professeur (« flotter comme dans l’eau ») pour explorer sensations et textures. Cours pour danseurs et Gaga/people pour tous.'} },
+    { i:'fa-arrows-spin', t:{zh:'地板技巧（Floorwork）', en:'Floorwork', fr:'Travail au sol'}, tag:{zh:'如 Flying Low', en:'e.g. Flying Low', fr:'ex. Flying Low'},
+      p:{zh:'用螺旋、滾動與手的支撐在地板上快速移動、上下地板，不靠蠻力而是順著動量。', en:'Spirals, rolls and hand support to travel fast on the floor and get up and down, riding momentum rather than force.', fr:'Spirales, roulades et appuis des mains pour se déplacer vite au sol et en sortir, en suivant l’élan plutôt que la force.'} },
+  ]},
+]},
+
+/* ── 3. Concepts ── */
+{ id:'concepts', i:'fa-lightbulb', c:V,
+  nav:{zh:'核心概念', en:'Concepts', fr:'Notions'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'讓動作有質感的語言：拉邦動作分析', en:'A language for movement quality: Laban', fr:'Un langage pour la qualité du mouvement : Laban'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'當代舞課常用拉邦（Rudolf Laban）的「力效」（Effort）來描述動作質感。四個因素各有兩極，組合出八種基本動作，例如「重、快、直接」就是「出拳」（punch），「輕、慢、間接」就是「漂浮」（float）。',
+    en:'Contemporary classes often describe quality with Rudolf Laban’s Efforts. Four factors each have two poles; combining three of them gives eight basic actions: strong, sudden and direct is a punch; light, sustained and indirect is a float.',
+    fr:'Les cours contemporains décrivent souvent la qualité avec les Efforts de Rudolf Laban. Quatre facteurs à deux pôles ; trois combinés donnent huit actions de base : fort, soudain et direct, c’est frapper ; léger, soutenu et indirect, c’est flotter.'} },
+  { type:'table', head:[{zh:'因素', en:'Factor', fr:'Facteur'}, {zh:'一端', en:'One pole', fr:'Un pôle'}, {zh:'另一端', en:'Other pole', fr:'Autre pôle'}], rows:[
+    [{zh:'重量 Weight', en:'Weight', fr:'Poids'}, {zh:'強（strong）', en:'Strong', fr:'Fort'}, {zh:'輕（light）', en:'Light', fr:'Léger'}],
+    [{zh:'時間 Time', en:'Time', fr:'Temps'}, {zh:'突然（sudden）', en:'Sudden', fr:'Soudain'}, {zh:'持續（sustained）', en:'Sustained', fr:'Soutenu'}],
+    [{zh:'空間 Space', en:'Space', fr:'Espace'}, {zh:'直接（direct）', en:'Direct', fr:'Direct'}, {zh:'間接（indirect）', en:'Indirect', fr:'Indirect'}],
+    [{zh:'流動 Flow', en:'Flow', fr:'Flux'}, {zh:'受控（bound）', en:'Bound', fr:'Contrôlé'}, {zh:'自由（free）', en:'Free', fr:'Libre'}],
+  ]},
+  { type:'table', head:[{zh:'八種基本動作', en:'Eight basic actions', fr:'Huit actions de base'}, {zh:'重量', en:'Weight', fr:'Poids'}, {zh:'時間', en:'Time', fr:'Temps'}, {zh:'空間', en:'Space', fr:'Espace'}], rows:[
+    [{zh:'出拳 Punch', en:'Punch', fr:'Frapper'}, {zh:'強', en:'Strong', fr:'Fort'}, {zh:'突然', en:'Sudden', fr:'Soudain'}, {zh:'直接', en:'Direct', fr:'Direct'}],
+    [{zh:'揮砍 Slash', en:'Slash', fr:'Fouetter'}, {zh:'強', en:'Strong', fr:'Fort'}, {zh:'突然', en:'Sudden', fr:'Soudain'}, {zh:'間接', en:'Indirect', fr:'Indirect'}],
+    [{zh:'推壓 Press', en:'Press', fr:'Presser'}, {zh:'強', en:'Strong', fr:'Fort'}, {zh:'持續', en:'Sustained', fr:'Soutenu'}, {zh:'直接', en:'Direct', fr:'Direct'}],
+    [{zh:'扭絞 Wring', en:'Wring', fr:'Tordre'}, {zh:'強', en:'Strong', fr:'Fort'}, {zh:'持續', en:'Sustained', fr:'Soutenu'}, {zh:'間接', en:'Indirect', fr:'Indirect'}],
+    [{zh:'輕點 Dab', en:'Dab', fr:'Tapoter'}, {zh:'輕', en:'Light', fr:'Léger'}, {zh:'突然', en:'Sudden', fr:'Soudain'}, {zh:'直接', en:'Direct', fr:'Direct'}],
+    [{zh:'輕彈 Flick', en:'Flick', fr:'Effleurer'}, {zh:'輕', en:'Light', fr:'Léger'}, {zh:'突然', en:'Sudden', fr:'Soudain'}, {zh:'間接', en:'Indirect', fr:'Indirect'}],
+    [{zh:'滑行 Glide', en:'Glide', fr:'Glisser'}, {zh:'輕', en:'Light', fr:'Léger'}, {zh:'持續', en:'Sustained', fr:'Soutenu'}, {zh:'直接', en:'Direct', fr:'Direct'}],
+    [{zh:'漂浮 Float', en:'Float', fr:'Flotter'}, {zh:'輕', en:'Light', fr:'Léger'}, {zh:'持續', en:'Sustained', fr:'Soutenu'}, {zh:'間接', en:'Indirect', fr:'Indirect'}],
+  ]},
+]},
+
+/* ── 4. Floor lessons ── */
+{ id:'lessons', i:'fa-chalkboard-user', c:G,
+  nav:{zh:'地板教學', en:'Floor lessons', fr:'Leçons au sol'},
+  eyebrow:{zh:'第四章・教學', en:'Chapter 4 · Lessons', fr:'Chapitre 4 · Leçons'},
+  h2:{zh:'脊椎與地板：在家可以做的六個練習', en:'Spine and floor: six exercises for home', fr:'Colonne et sol : six exercices à la maison'},
+  blocks:[
+  { type:'steps', items:[
+    { t:{zh:'建構式休息位（5 分鐘）', en:'Constructive rest (5 min)', fr:'Repos constructif (5 min)'}, p:{zh:'仰躺、雙膝彎曲腳掌踩地、膝蓋互相靠著。閉眼、慢慢吐氣，感覺背部每一節脊椎落到地板上。這是 Release 技巧的起點。', en:'Lie on your back, knees bent, feet on the floor, knees leaning together. Close your eyes, exhale slowly, and feel each vertebra settle onto the floor. The starting point of release technique.', fr:'Allongé sur le dos, genoux pliés, pieds au sol, genoux appuyés l’un contre l’autre. Yeux fermés, expirez lentement et sentez chaque vertèbre se déposer. Le point de départ du release.'} },
+    { t:{zh:'站姿捲下與捲上（Roll down / up）', en:'Roll down and roll up', fr:'Enroulé et déroulé'}, p:{zh:'站直、膝蓋放鬆。從頭頂開始，下巴收、頸椎一節一節往下捲，經過胸椎、腰椎，最後掛在髖上像布娃娃（8 拍）。再從尾椎開始一節一節往上疊回來，頭最後抬起（8 拍）。', en:'Stand tall, knees soft. Starting from the crown, tuck the chin and roll down vertebra by vertebra through neck, ribs and lower back until you hang from the hips like a rag doll (8 counts). Then restack from the tailbone up, the head arriving last (8 counts).', fr:'Debout, genoux souples. Depuis le sommet du crâne, rentrez le menton et enroulez vertèbre par vertèbre jusqu’à pendre depuis les hanches comme une poupée de chiffon (8 temps). Puis déroulez depuis le coccyx, la tête arrivant en dernier (8 temps).'} },
+    { t:{zh:'坐姿 Graham 收縮', en:'Seated Graham contraction', fr:'Contraction Graham assise'}, p:{zh:'盤腿坐（腳掌相對），背部挺直。吐氣：骨盆往後捲、肚臍往脊椎深深收、背部變成 C 字，視線往下（4 拍）。吸氣：從尾椎開始延伸回到直立（4 拍）。做 8 次，感覺動作從腹部中心發出。', en:'Sit with the soles of the feet together, back tall. Exhale: curl the pelvis back, draw the navel deep to the spine, round into a C, eyes down (4 counts). Inhale: lengthen back up from the tailbone (4 counts). Eight times, feeling the movement start in the centre.', fr:'Assis plantes de pieds jointes, dos droit. Expirez : bassin enroulé, nombril vers la colonne, dos en C, regard bas (4 temps). Inspirez : déroulez depuis le coccyx (4 temps). Huit fois, en sentant le mouvement naître du centre.'} },
+    { t:{zh:'側滾（Log roll 到屈膝滾）', en:'Side rolls (log roll to bent-knee roll)', fr:'Roulades latérales (bûche puis genoux pliés)'}, p:{zh:'仰躺、雙手舉過頭，像圓木一樣往一邊滾（4 拍），再滾回（4 拍）。接著屈膝版：雙膝抱胸，從髖帶動往側邊滾到四足跪姿再回來。重點是讓身體柔軟地接觸地板，不要「撞」下去。', en:'Lying with arms overhead, roll to one side like a log (4 counts) and back (4 counts). Then the bent-knee version: knees to chest, let the hips lead the roll onto all fours and back. Meet the floor softly; never drop onto it.', fr:'Allongé bras au-dessus de la tête, roulez comme une bûche d’un côté (4 temps) puis revenez (4 temps). Puis genoux pliés : genoux contre la poitrine, les hanches mènent la roulade jusqu’à quatre pattes et retour. Rencontrez le sol en douceur, sans tomber dessus.'} },
+    { t:{zh:'螺旋下地板與起身', en:'Spiral down and up', fr:'Descendre et remonter en spirale'}, p:{zh:'站姿，右腳往左後方交叉，雙膝彎曲，身體向右轉，像螺絲一樣往下旋，臀部外側先著地，順勢側躺（8 拍）。起身時反向：手推地、膝蓋跪、轉回站立（8 拍）。左右各做四次，越熟越不需要用手。', en:'Standing, cross the right foot behind to the left, bend both knees and twist to the right, screwing down until the outer hip touches the floor, then roll onto your side (8 counts). Reverse to get up: push with the hand, come to the knees, spiral back to standing (8 counts). Four each side; with practice the hands matter less.', fr:'Debout, croisez le pied droit derrière à gauche, fléchissez et tournez à droite en vissant vers le bas jusqu’à poser la hanche, puis allongez-vous sur le côté (8 temps). Remontez à l’inverse : main au sol, genoux, spirale jusqu’à debout (8 temps). Quatre de chaque côté ; avec le temps, les mains servent moins.'} },
+    { t:{zh:'擺盪（Swing）', en:'Swings', fr:'Swings'}, p:{zh:'雙腳與髖同寬，手臂舉高。吐氣讓手臂與上半身往下掉、膝蓋彎曲（1），利用反彈往上甩到另一側高點並在最高點停留一瞬（2 & 懸浮），再落下。用 3/4 拍音樂做，感受「失衡、懸浮、恢復」。', en:'Feet hip-width, arms high. Exhale and let arms and torso drop as the knees bend (1), use the rebound to swing up to the other high point and hang there for an instant (2 & suspension), then drop again. Do it to 3/4 music and feel fall, suspension, recovery.', fr:'Pieds largeur de hanches, bras en haut. Expirez, laissez tomber bras et buste en fléchissant (1), profitez du rebond pour remonter de l’autre côté et suspendez un instant (2 et suspension), puis retombez. Sur une musique à 3/4 : chute, suspension, rétablissement.'} },
+  ]},
+  { type:'warn', p:{
+    zh:'地板練習時，膝蓋、髖骨與肩膀這些骨頭突出的地方不要直接撞地，要用肌肉較多的部位（臀部外側、大腿外側、背部肌肉）去承接重量。初學者可以戴護膝。',
+    en:'On the floor, never land on bony points such as knees, hip bones or shoulders; take the weight on fleshy areas such as the outer hip, outer thigh and back muscles. Beginners can wear knee pads.',
+    fr:'Au sol, ne tombez jamais sur les points osseux (genoux, hanches, épaules) ; recevez le poids sur les zones charnues (côté de la hanche, extérieur de la cuisse, muscles du dos). Des genouillères aident au début.'} },
+]},
+
+/* ── 5. Improvisation ── */
+{ id:'improv', i:'fa-shuffle', c:Y,
+  nav:{zh:'即興', en:'Improvisation', fr:'Improvisation'},
+  eyebrow:{zh:'第五章・教學', en:'Chapter 5 · Lessons', fr:'Chapitre 5 · Leçons'},
+  h2:{zh:'即興練習：找到自己的動作', en:'Improvisation: finding your own movement', fr:'Improvisation : trouver son propre mouvement'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-signature', t:{zh:'用身體寫字', en:'Write with your body', fr:'Écrire avec le corps'}, p:{zh:'用右手在空中寫自己的名字，再換成手肘、頭、膝蓋、骨盆來寫。字越大，動作越完整。', en:'Write your name in the air with your right hand, then with an elbow, head, knee, pelvis. The bigger the letters, the fuller the movement.', fr:'Écrivez votre prénom dans l’air avec la main droite, puis le coude, la tête, le genou, le bassin. Plus les lettres sont grandes, plus le mouvement est ample.'} },
+    { i:'fa-cubes', t:{zh:'改變力效', en:'Change the Effort', fr:'Changer d’Effort'}, p:{zh:'選一個簡單動作（例如舉手），用八種基本動作的質感各做一次：出拳、漂浮、扭絞……同一個動作會變成完全不同的意思。', en:'Take one simple gesture (raising an arm) and do it in each of the eight actions: punch, float, wring… The same gesture takes on new meanings.', fr:'Prenez un geste simple (lever le bras) et faites-le dans chacune des huit actions : frapper, flotter, tordre… Le même geste change de sens.'} },
+    { i:'fa-clone', t:{zh:'鏡像雙人', en:'Mirror duet', fr:'Duo miroir'}, p:{zh:'兩人面對面，一人慢慢動、另一人像鏡子一樣同步。一分鐘後交換，最後試著不決定誰帶領。', en:'Face a partner; one moves slowly while the other mirrors. Swap after a minute, then try with no leader at all.', fr:'Face à face, l’un bouge lentement, l’autre fait miroir. On échange après une minute, puis on essaie sans meneur.'} },
+    { i:'fa-weight-hanging', t:{zh:'分享重量', en:'Sharing weight', fr:'Partager le poids'}, p:{zh:'兩人背靠背坐下，慢慢互相推著一起站起來、再坐下。這是接觸即興的第一步。', en:'Sit back to back, then push into each other to stand up together and sit down again. The first step of contact improvisation.', fr:'Assis dos à dos, poussez l’un contre l’autre pour vous lever ensemble puis vous rasseoir. Le premier pas du contact.'} },
+    { i:'fa-image', t:{zh:'意象', en:'Imagery', fr:'Images'}, p:{zh:'想像身體裡充滿蜂蜜、空氣或沙子，或地板變成冰、熱沙、彈簧床，讓想像改變動作。', en:'Imagine your body full of honey, air or sand, or the floor turning to ice, hot sand or a trampoline, and let it change how you move.', fr:'Imaginez votre corps rempli de miel, d’air ou de sable, ou le sol devenu glace, sable brûlant ou trampoline, et laissez l’image transformer le mouvement.'} },
+    { i:'fa-stopwatch', t:{zh:'限制與規則', en:'Constraints', fr:'Contraintes'}, p:{zh:'規定「只能用一隻手接觸地板」「每 8 拍必須停一次」「只能往後移動」。限制反而會激發新動作。', en:'Set rules: “only one hand may touch the floor”, “stop every 8 counts”, “only travel backwards”. Constraints spark new movement.', fr:'Fixez des règles : « une seule main au sol », « s’arrêter tous les 8 temps », « se déplacer seulement en arrière ». La contrainte stimule l’invention.'} },
+  ]},
+  { type:'note', p:{
+    zh:'怎麼看當代舞作品：不需要「看懂」故事。可以問自己：身體在做什麼（動作）、在哪裡做（空間）、怎麼做（力效）、和誰一起（關係）、讓我感覺到什麼。',
+    en:'How to watch a contemporary piece: you do not need to “understand” a story. Ask: what are the bodies doing (action), where (space), how (Effort), with whom (relationship), and what does it make me feel?',
+    fr:'Regarder une pièce contemporaine : inutile de « comprendre » une histoire. Demandez-vous ce que font les corps (action), où (espace), comment (Effort), avec qui (relation), et ce que vous ressentez.'} },
+]},
+]});
+</script>
+</body>
+</html>

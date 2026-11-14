@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爵士舞 | 歷史、風格與基本技巧教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* The jazz square seen from above: four steps tracing a square, numbered in order. */
+function diaSquare() {
+  const L = {
+    title:{zh:'Jazz square 俯視圖（右腳開始）', en:'The jazz square from above (starting right)', fr:'Le jazz square vu de dessus (départ pied droit)'},
+    s:[
+      {zh:'1 右腳往前交叉到左腳前', en:'1 right crosses in front of left', fr:'1 droit croise devant le gauche'},
+      {zh:'2 左腳往後退', en:'2 left steps back', fr:'2 gauche recule'},
+      {zh:'3 右腳往右打開', en:'3 right steps open to the right', fr:'3 droit s’ouvre à droite'},
+      {zh:'4 左腳往前回到起點', en:'4 left steps forward to the start', fr:'4 gauche avance au départ'},
+    ],
+    front:{zh:'↑ 面向觀眾', en:'↑ facing front', fr:'↑ face au public'},
+  };
+  const pts = [[150, 70, '#fb7185'], [110, 150, '#fcd34d'], [190, 150, '#fb7185'], [110, 70, '#fcd34d']];
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>
+    <rect x="110" y="70" width="80" height="80" fill="none" stroke="#475569" stroke-dasharray="5 4"/>
+    <text x="150" y="52" text-anchor="middle" class="sub">${t(L.front)}</text>`;
+  let path = '';
+  pts.forEach((p, i) => { path += (i ? ' L' : 'M') + p[0] + ' ' + p[1]; });
+  s += `<path d="${path}" fill="none" stroke="#94a3b8" stroke-width="1.5"/>`;
+  pts.forEach((p, i) => {
+    s += `<ellipse cx="${p[0]}" cy="${p[1]}" rx="11" ry="20" fill="${p[2]}" fill-opacity="0.4" stroke="${p[2]}" stroke-width="2"/>
+      <text x="${p[0]}" y="${p[1] + 5}" text-anchor="middle" class="val">${i + 1}</text>`;
+    s += `<text x="300" y="${76 + i * 30}" class="val" style="fill:${p[2]}">${t(L.s[i])}</text>`;
+  });
+  s += `<text x="300" y="${76 + 4 * 30}" class="sub">${t({zh:'粉色＝右腳，黃色＝左腳', en:'Pink = right foot, yellow = left foot', fr:'Rose = pied droit, jaune = pied gauche'})}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 210" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const R = '#fb7185', Y = '#fcd34d', O = '#fb923c', V = '#c4b5fd', T = '#5eead4', S = '#7dd3fc';
+
+CourseKit.start({
+icon:'fa-hat-cowboy', accent:R, accent2:'#fcd34d', bg:'#0b0708',
+back:{ href:'dance.html', label:{zh:'回到舞蹈總覽', en:'Back to the dance overview', fr:'Retour à la vue d’ensemble'} },
+dia:{ square: diaSquare },
+ui:{
+zh:{
+ 'doc.title':'爵士舞 | 歷史、風格與基本技巧教學',
+ 'hdr.badge':'舞種詳解・爵士舞','hdr.title':'爵士舞：歷史、風格與基本技巧教學',
+ 'intro':'爵士舞是美國最具代表性的劇場舞蹈之一。它源自非裔美國人的舞蹈與爵士音樂，在百老匯音樂劇與好萊塢電影中發展成熟，後來吸收芭蕾、現代舞與街舞的元素。它的特色是身體分離、切分節奏、銳利的線條與滿滿的表演性。',
+ 'intro2':'這一頁介紹爵士舞的歷史與重要編舞家、今日常見的爵士風格分支、身體技巧的核心觀念與術語，然後分解 jazz walk、jazz square、kick ball change、pas de bourrée、pirouette 與大跳，最後給出一段可以照著練的八拍組合。',
+ 'footer':'爵士舞入門參考。爵士舞的風格分類在各地教室的叫法不盡相同，請以課程說明為準。大跳與旋轉練習前務必充分暖身，地板太滑或太黏都容易受傷。'
+},
+en:{
+ 'doc.title':'Jazz Dance: History, Styles & Technique',
+ 'hdr.badge':'STYLE GUIDE · JAZZ','hdr.title':'Jazz dance: history, styles and technique',
+ 'intro':'Jazz is one of America’s defining theatre dances. Rooted in African-American dance and jazz music, it matured on Broadway and in Hollywood films and later absorbed ballet, modern and street dance. Its marks are isolations, syncopation, sharp lines and a great deal of showmanship.',
+ 'intro2':'This page covers jazz history and its key choreographers, the branches of jazz taught today, the core ideas and vocabulary of the technique, then breaks down the jazz walk, jazz square, kick ball change, pas de bourrée, pirouette and leaps, and ends with an eight-count combination to practise.',
+ 'footer':'An introductory jazz reference. Studios name jazz styles differently, so check the class description. Warm up thoroughly before leaps and turns; floors that are too slippery or too sticky both cause injuries.'
+},
+fr:{
+ 'doc.title':'Danse jazz : histoire, styles & technique',
+ 'hdr.badge':'FICHE STYLE · JAZZ','hdr.title':'La danse jazz : histoire, styles et technique',
+ 'intro':'Le jazz est l’une des grandes danses de scène américaines. Issu des danses afro-américaines et du jazz, il a mûri à Broadway et à Hollywood, puis absorbé le classique, le moderne et l’urbain. Ses marques : isolations, syncopes, lignes nettes et beaucoup de présence.',
+ 'intro2':'Cette page présente l’histoire du jazz et ses grands chorégraphes, les courants enseignés aujourd’hui, les notions et le vocabulaire de la technique, puis décompose la jazz walk, le jazz square, le kick ball change, le pas de bourrée, la pirouette et les sauts, et se termine par un enchaînement de huit temps.',
+ 'footer':'Une référence d’initiation à la danse jazz. Les écoles nomment les courants différemment : référez-vous au descriptif du cours. Échauffez-vous bien avant les sauts et les tours ; un sol trop glissant ou trop collant blesse.'
+}},
+sections:[
+
+/* ── 1. History ── */
+{ id:'history', i:'fa-landmark', c:R,
+  nav:{zh:'歷史', en:'History', fr:'Histoire'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'從社交舞廳到百老匯', en:'From the dance hall to Broadway', fr:'Du dancing à Broadway'},
+  blocks:[
+  { type:'table', head:[{zh:'時期', en:'Period', fr:'Période'}, {zh:'發展', en:'Development', fr:'Évolution'}, {zh:'代表人物', en:'Key figures', fr:'Figures'}], rows:[
+    [{zh:'19 世紀末–1920 年代', en:'Late 1800s–1920s', fr:'Fin XIXᵉ–années 1920'}, {zh:'非裔美國人的社交舞（cakewalk、Charleston）與踢踏，隨爵士樂流行全美。', en:'African-American social dances (cakewalk, Charleston) and tap spread with jazz music.', fr:'Les danses sociales afro-américaines (cakewalk, charleston) et les claquettes se répandent avec le jazz.'}, {zh:'哈林區的舞廳與俱樂部', en:'Harlem ballrooms and clubs', fr:'Dancings et clubs de Harlem'}],
+    [{zh:'1930–40 年代', en:'1930s–40s', fr:'Années 1930–40'}, {zh:'搖擺時代，Lindy hop 流行；好萊塢歌舞片興起。', en:'The swing era and the Lindy hop; Hollywood musicals take off.', fr:'L’ère swing et le lindy hop ; essor des comédies musicales hollywoodiennes.'}, {zh:'Katherine Dunham（結合加勒比海舞蹈）、Jack Cole（爵士技巧之父）', en:'Katherine Dunham (Caribbean influences), Jack Cole (“father of jazz technique”)', fr:'Katherine Dunham (influences caribéennes), Jack Cole (« père de la technique jazz »)'}],
+    [{zh:'1950–70 年代', en:'1950s–70s', fr:'Années 1950–70'}, {zh:'百老匯黃金期，爵士舞成為劇場技巧；出現系統化教學。', en:'Broadway’s golden age; jazz becomes a theatre technique with codified teaching.', fr:'L’âge d’or de Broadway ; le jazz devient une technique de scène enseignée.'}, {zh:'Bob Fosse、Jerome Robbins（《西城故事》）、Luigi、Gus Giordano', en:'Bob Fosse, Jerome Robbins (West Side Story), Luigi, Gus Giordano', fr:'Bob Fosse, Jerome Robbins (West Side Story), Luigi, Gus Giordano'}],
+    [{zh:'1980 年代至今', en:'1980s–today', fr:'Des années 1980 à nos jours'}, {zh:'MV 與流行音樂帶動商業爵士；與街舞融合出 Jazz funk；與當代舞融合出 Lyrical。', en:'Music videos drive commercial jazz; fusion with street gives jazz funk, with contemporary gives lyrical.', fr:'Les clips portent le jazz commercial ; la fusion avec l’urbain donne le jazz funk, avec le contemporain le lyrical.'}, {zh:'Michael Jackson 的 MV、Beyoncé 的舞台', en:'Michael Jackson’s videos, Beyoncé’s stage shows', fr:'Les clips de Michael Jackson, les shows de Beyoncé'}],
+  ]},
+]},
+
+/* ── 2. Styles ── */
+{ id:'styles', i:'fa-layer-group', c:Y,
+  nav:{zh:'風格分支', en:'Branches', fr:'Courants'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'今日常見的爵士風格', en:'Jazz styles taught today', fr:'Les courants du jazz aujourd’hui'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-masks-theater', t:{zh:'Broadway／音樂劇爵士', en:'Broadway / musical theatre', fr:'Broadway / comédie musicale'}, p:{zh:'為說故事服務，動作大、清楚、有角色感，常需邊唱邊跳。', en:'Serves the story: big, clear, in character, often while singing.', fr:'Au service de l’histoire : ample, lisible, incarné, souvent en chantant.'} },
+    { i:'fa-hat-cowboy', t:{zh:'Fosse 風格', en:'Fosse style', fr:'Style Fosse'}, p:{zh:'內八的膝蓋、聳肩、手指張開的 jazz hands、帽子道具與極小的身體分離，冷調又性感。代表作《芝加哥》《歌廳》。', en:'Turned-in knees, rolled shoulders, splayed jazz hands, bowler hats and tiny isolations: cool and sensual. Chicago, Cabaret.', fr:'Genoux en dedans, épaules arrondies, jazz hands, chapeau melon et micro-isolations : froid et sensuel. Chicago, Cabaret.'} },
+    { i:'fa-feather', t:{zh:'Lyrical（抒情爵士）', en:'Lyrical jazz', fr:'Lyrical jazz'}, p:{zh:'結合芭蕾技巧與當代舞的流動，跟著歌詞說故事，旋轉與延伸多，情感濃厚。', en:'Ballet technique with contemporary flow, telling the story of the lyrics; lots of turns, extensions and emotion.', fr:'Technique classique et fluidité contemporaine, au service des paroles ; tours, extensions et émotion.'} },
+    { i:'fa-bolt', t:{zh:'Jazz funk', en:'Jazz funk', fr:'Jazz funk'}, p:{zh:'爵士技巧遇上 Hip-hop 的律動與態度，動作銳利、有 groove，是 MV 與演唱會最常見的風格。', en:'Jazz technique meets hip-hop groove and attitude; sharp and grooving, the style of music videos and tours.', fr:'La technique jazz rencontre le groove et l’attitude hip-hop ; net et groovy, le style des clips et des tournées.'} },
+    { i:'fa-guitar', t:{zh:'Street jazz／商業爵士', en:'Street / commercial jazz', fr:'Street / jazz commercial'}, p:{zh:'強調流行感與鏡頭表現，和 Heels、K-pop 的界線常常模糊。', en:'Pop feel and camera presence; often blurs into heels and K-pop.', fr:'Esprit pop et présence à l’image ; frontière floue avec le heels et la K-pop.'} },
+    { i:'fa-music', t:{zh:'Afro-jazz 與傳統爵士', en:'Afro-jazz & vernacular jazz', fr:'Afro-jazz & jazz vernaculaire'}, p:{zh:'回到非洲與搖擺時代的根源：低重心、多節奏（polyrhythm）、跟音樂即興互動。', en:'Back to African and swing-era roots: low centre, polyrhythms and improvised play with the music.', fr:'Retour aux racines africaines et swing : centre bas, polyrythmies, jeu improvisé avec la musique.'} },
+  ]},
+]},
+
+/* ── 3. Technique ── */
+{ id:'technique', i:'fa-ruler-combined', c:O,
+  nav:{zh:'技巧與術語', en:'Technique', fr:'Technique'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'核心觀念與術語', en:'Core ideas and vocabulary', fr:'Notions et vocabulaire'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-arrows-to-dot', t:{zh:'身體分離', en:'Isolations', fr:'Isolations'}, p:{zh:'頭、肩、胸、髖各自獨立移動，是爵士舞的招牌。（練法見舞蹈總覽第五章。）', en:'Head, shoulders, ribs and hips moving independently: jazz’s signature. (Drills in chapter 5 of the overview.)', fr:'Tête, épaules, cage thoracique et bassin indépendants : la signature du jazz. (Exercices au chapitre 5 de la vue d’ensemble.)'} },
+    { i:'fa-wave-square', t:{zh:'切分音（Syncopation）', en:'Syncopation', fr:'Syncope'}, p:{zh:'把重音放在反拍「&」上，讓動作有爵士的搖擺感。', en:'Accents on the off-beat “&”, which gives movement its swing.', fr:'Accent sur le contretemps « et », qui donne le swing.'} },
+    { i:'fa-arrow-down', t:{zh:'Plié 與低重心', en:'Plié and a low centre', fr:'Plié et centre bas'}, p:{zh:'比芭蕾更常在彎膝狀態下移動，重心較低、可隨時爆發。', en:'More time in a bent knee than ballet; a lower centre ready to explode.', fr:'Plus de travail genoux fléchis qu’en classique ; un centre bas prêt à exploser.'} },
+    { i:'fa-arrows-left-right', t:{zh:'平行與外開', en:'Parallel and turned out', fr:'Parallèle et en dehors'}, p:{zh:'爵士舞兩種腳位都用，平行位（腳尖朝前）特別常見。', en:'Jazz uses both, with parallel position (toes forward) especially common.', fr:'Le jazz utilise les deux, la position parallèle étant très fréquente.'} },
+    { i:'fa-person-falling', t:{zh:'收縮（Contraction）', en:'Contraction', fr:'Contraction'}, p:{zh:'從現代舞借來：腹部往內收、背部拱起，再釋放。', en:'Borrowed from modern: the abdomen pulls in and the back rounds, then releases.', fr:'Emprunté au moderne : le ventre se creuse, le dos s’arrondit, puis relâche.'} },
+    { i:'fa-face-grin-stars', t:{zh:'表演（Performance）', en:'Performance', fr:'Présence'}, p:{zh:'眼神與表情是技巧的一部分。爵士舞是跳給觀眾看的。', en:'Eyes and face are part of the technique. Jazz is danced for an audience.', fr:'Le regard et le visage font partie de la technique. Le jazz se danse pour un public.'} },
+  ]},
+  { type:'table', head:[{zh:'術語', en:'Term', fr:'Terme'}, {zh:'動作', en:'The movement', fr:'Le mouvement'}], rows:[
+    ['Jazz walk', {zh:'低重心、彎膝的行走，腳掌先著地，髖與肩帶出態度。', en:'A low, bent-knee walk landing ball first, hips and shoulders giving attitude.', fr:'Marche basse genoux fléchis, avant-pied d’abord, hanches et épaules donnant l’attitude.'}],
+    ['Jazz square', {zh:'四步走出一個方形：交叉、退後、打開、回前。', en:'Four steps tracing a square: cross, back, open, forward.', fr:'Quatre pas en carré : croiser, reculer, ouvrir, avancer.'}],
+    ['Kick ball change', {zh:'踢腳、腳掌落地、重心換到另一腳，數成「1 & 2」。', en:'Kick, step on the ball of that foot, change weight to the other: “1 & 2”.', fr:'Coup de pied, poser l’avant-pied, transférer sur l’autre : « 1 et 2 ».'}],
+    ['Pas de bourrée', {zh:'後、旁、前三步換重心，常接在旋轉或跳躍前。', en:'Back, side, front: three weight changes, often before a turn or jump.', fr:'Derrière, côté, devant : trois transferts, souvent avant un tour ou un saut.'}],
+    ['Chassé', {zh:'一腳「追」上另一腳的滑步，數成「1 & 2」。', en:'A gliding step where one foot chases the other: “1 & 2”.', fr:'Pas glissé où un pied chasse l’autre : « 1 et 2 ».'}],
+    ['Ball change', {zh:'快速在兩腳間換兩次重心，前腳掌踩地。', en:'Two quick weight changes on the balls of the feet.', fr:'Deux transferts rapides sur les avant-pieds.'}],
+    ['Pivot turn', {zh:'一腳往前踏，以腳掌為軸半圈轉身。', en:'Step forward and turn half-way round on the balls of the feet.', fr:'Pas en avant et demi-tour sur les avant-pieds.'}],
+    ['Fan kick', {zh:'腿伸直在身前畫扇形弧線的踢腿。', en:'A straight leg sweeping a fan-shaped arc in front of the body.', fr:'Jambe tendue qui balaie un éventail devant le corps.'}],
+    ['Hitch kick', {zh:'一腳抬起後另一腳在空中踢出交換，像剪刀。', en:'One leg lifts, then the other kicks through in the air, like scissors.', fr:'Une jambe monte, puis l’autre la remplace en l’air, en ciseaux.'}],
+    ['Grand jeté / Leap', {zh:'前後劈腿的大跳，爵士舞常接 chassé 助跑。', en:'A split leap, often prepared with a chassé run-up.', fr:'Grand saut en écart, souvent précédé d’un chassé.'}],
+    ['Jazz hands', {zh:'五指用力張開、掌心朝前，常配合抖動。', en:'Fingers spread wide, palms forward, often shimmering.', fr:'Doigts écartés, paumes vers l’avant, souvent en tremblant.'}],
+    ['Layout', {zh:'身體向後仰、一腿高踢的平衡大動作。', en:'A big balance with the torso arched back and one leg kicked high.', fr:'Grand équilibre buste renversé, une jambe lancée haut.'}],
+  ]},
+]},
+
+/* ── 4. Lessons ── */
+{ id:'lessons', i:'fa-chalkboard-user', c:V,
+  nav:{zh:'教學', en:'Lessons', fr:'Leçons'},
+  eyebrow:{zh:'第四章・教學', en:'Chapter 4 · Lessons', fr:'Chapitre 4 · Leçons'},
+  h2:{zh:'基本步分解', en:'The basic steps, broken down', fr:'Les pas de base, décomposés'},
+  blocks:[
+  { type:'dia', k:'square' },
+  { type:'steps', items:[
+    { t:{zh:'Jazz walk', en:'Jazz walk', fr:'Jazz walk'}, p:{zh:'膝蓋保持彎曲、身體不要上下彈跳。腳掌先落地再到腳跟，每一步讓同側的髖往外推。手臂自然擺動或放在髖上。走一個八拍往前、一個八拍往後。', en:'Keep the knees bent and do not bob up and down. Land on the ball, then the heel, pushing the same-side hip out with each step. Arms swing or rest on the hips. One eight forward, one back.', fr:'Genoux fléchis, sans rebondir. Avant-pied puis talon, la hanche du même côté s’ouvre à chaque pas. Bras libres ou sur les hanches. Un huit en avant, un huit en arrière.'} },
+    { t:{zh:'Jazz square', en:'Jazz square', fr:'Jazz square'}, p:{zh:'照上圖：1 右腳交叉到左前、2 左腳退後、3 右腳往右開、4 左腳往前併回。重複四次，然後換左腳開始。熟了之後在每一步加上肩膀的切分動作。', en:'As in the diagram: 1 right crosses in front, 2 left back, 3 right opens to the side, 4 left steps forward. Four times, then start with the left. Once it is easy, add syncopated shoulders.', fr:'Selon le schéma : 1 droit croise devant, 2 gauche recule, 3 droit s’ouvre, 4 gauche avance. Quatre fois, puis départ à gauche. Ensuite, ajoutez des épaules syncopées.'} },
+    { t:{zh:'Kick ball change', en:'Kick ball change', fr:'Kick ball change'}, p:{zh:'1：右腳往前低踢；&：右腳收回、前腳掌踩在左腳旁；2：重心換回左腳。左右交替各做四次，越快越要輕。', en:'1: low kick forward with the right; &: bring it back and step on the ball beside the left; 2: change weight back to the left. Four each side; the faster it gets, the lighter.', fr:'1 : petit coup de pied droit devant ; & : le ramener sur l’avant-pied à côté du gauche ; 2 : retour du poids sur le gauche. Quatre de chaque côté ; plus vite, plus léger.'} },
+    { t:{zh:'Pas de bourrée', en:'Pas de bourrée', fr:'Pas de bourrée'}, p:{zh:'1：右腳踏到左腳後方；&：左腳往左旁踏；2：右腳往前踏。數成「1 & 2」，重心在三步間流動，身體保持在同一高度。', en:'1: right steps behind the left; &: left steps to the side; 2: right steps in front. “1 & 2”, the weight flowing through the three steps at an even height.', fr:'1 : droit derrière le gauche ; & : gauche sur le côté ; 2 : droit devant. « 1 et 2 », le poids passant d’un pied à l’autre à hauteur constante.'} },
+    { t:{zh:'爵士 Pirouette', en:'Jazz pirouette', fr:'Pirouette jazz'}, p:{zh:'和芭蕾類似，但常用平行 passé（膝蓋朝前）。準備：四位 plié、手在一位與二位；推地 relevé、腳尖拉到膝蓋旁、手收到胸前、頭定點。先練外轉（en dehors，往支撐腳的反方向），再練內轉。', en:'As in ballet, but often in parallel passé (knee forward). Prepare in fourth plié, arms in first and second; push to relevé, toe to the knee, arms close to the chest, spot. Learn outside turns (en dehors) first, then inside.', fr:'Comme en classique, mais souvent en passé parallèle (genou vers l’avant). Préparation en quatrième pliée, bras en première et seconde ; relevé, pointe au genou, bras fermés, repère. Tours en dehors d’abord, puis en dedans.'} },
+    { t:{zh:'Chassé 接 Leap', en:'Chassé into a leap', fr:'Chassé et grand saut'}, p:{zh:'沿教室對角線：右腳 chassé（1 & 2）、左腳往前踏、右腳踢出向前大跳，後腳同時往後延伸，左腳落地 plié 緩衝。先求高度與落地安全，劈腿角度慢慢加大。', en:'Along the diagonal: chassé with the right (1 & 2), step forward on the left, throw the right leg forward into the leap while the back leg extends, land on the left in plié. Height and safe landing first; the split will come.', fr:'En diagonale : chassé du droit (1 et 2), pas du gauche, jambe droite lancée dans le saut pendant que l’arrière s’allonge, réception sur le gauche en plié. D’abord la hauteur et une réception sûre ; l’écart viendra.'} },
+  ]},
+  { type:'h3', t:{zh:'練習組合（四個八拍，約 110 BPM）', en:'Practice combination (four eights, about 110 BPM)', fr:'Enchaînement d’entraînement (quatre huit, environ 110 BPM)'} },
+  { type:'counts', t:{zh:'第一個八拍', en:'Eight 1', fr:'Huit 1'}, items:[
+    {n:'1–4', p:{zh:'Jazz walk 往前四步（右起）', en:'Four jazz walks forward (right first)', fr:'Quatre jazz walks en avant (droit d’abord)'}},
+    {n:'5–6', p:{zh:'右腳 kick ball change', en:'Kick ball change, right', fr:'Kick ball change droit'}},
+    {n:'7–8', p:{zh:'右肩、左肩往前切分推', en:'Syncopated right then left shoulder', fr:'Épaule droite puis gauche, syncopées'}},
+  ]},
+  { type:'counts', t:{zh:'第二個八拍', en:'Eight 2', fr:'Huit 2'}, items:[
+    {n:'1–4', p:{zh:'Jazz square（右起）', en:'Jazz square (right)', fr:'Jazz square (droit)'}},
+    {n:'5 & 6', p:{zh:'Pas de bourrée', en:'Pas de bourrée', fr:'Pas de bourrée'}},
+    {n:'7–8', p:{zh:'Pivot turn 半圈＋jazz hands', en:'Half pivot turn + jazz hands', fr:'Demi pivot turn + jazz hands'}},
+  ]},
+  { type:'counts', t:{zh:'第三個八拍', en:'Eight 3', fr:'Huit 3'}, items:[
+    {n:'1–2', p:{zh:'胸口往左、往右分離', en:'Rib isolation left, right', fr:'Isolation de cage thoracique gauche, droite'}},
+    {n:'3–4', p:{zh:'髖部繞一圈', en:'One hip circle', fr:'Un cercle de hanches'}},
+    {n:'5–6', p:{zh:'Contraction 收縮、再釋放', en:'Contract and release', fr:'Contraction et relâchement'}},
+    {n:'7–8', p:{zh:'四位 plié 準備', en:'Fourth-position plié preparation', fr:'Préparation en quatrième pliée'}},
+  ]},
+  { type:'counts', t:{zh:'第四個八拍', en:'Eight 4', fr:'Huit 4'}, items:[
+    {n:'1–2', p:{zh:'單圈 pirouette，落地四位', en:'Single pirouette, land in fourth', fr:'Pirouette simple, réception en quatrième'}},
+    {n:'3–4', p:{zh:'右腳 fan kick', en:'Fan kick, right', fr:'Fan kick droit'}},
+    {n:'5–6', p:{zh:'Jazz walk 往後兩步', en:'Two jazz walks back', fr:'Deux jazz walks en arrière'}},
+    {n:'7–8', p:{zh:'Ending pose：重心在一腳、一手上舉', en:'Ending pose: weight on one leg, one arm up', fr:'Pose finale : poids sur une jambe, un bras levé'}},
+  ]},
+  { type:'note', p:{
+    zh:'先用口數不放音樂練到熟，再配 90 BPM 的音樂，最後到原速。每個八拍的最後一拍都是「準備下一個動作」的時間，不要停在那裡。',
+    en:'Practise to spoken counts without music first, then to a 90 BPM track, then at full tempo. The last count of each eight is your preparation for the next move: do not stop on it.',
+    fr:'D’abord en comptant à voix haute sans musique, puis sur 90 BPM, puis au tempo normal. Le dernier temps de chaque huit prépare le mouvement suivant : ne vous y arrêtez pas.'} },
+]},
+
+/* ── 5. Class & works ── */
+{ id:'class', i:'fa-film', c:T,
+  nav:{zh:'課堂與作品', en:'Class & works', fr:'Cours & œuvres'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'爵士課的結構與值得看的作品', en:'How a jazz class runs, and what to watch', fr:'Le déroulé d’un cours et les œuvres à voir'},
+  blocks:[
+  { type:'steps', items:[
+    { t:{zh:'暖身與身體分離（15 分）', en:'Warm-up and isolations (15 min)', fr:'Échauffement et isolations (15 min)'}, p:{zh:'跟著音樂從頭到腳的分離、plié、tendu、伸展。', en:'Head-to-toe isolations, pliés, tendus and stretches to music.', fr:'Isolations de la tête aux pieds, pliés, tendus et étirements en musique.'} },
+    { t:{zh:'地板與肌力（10 分）', en:'Floor and strength (10 min)', fr:'Sol et renforcement (10 min)'}, p:{zh:'核心、柔軟度、劈腿。', en:'Core, flexibility, splits.', fr:'Gainage, souplesse, écarts.'} },
+    { t:{zh:'對角線（20 分）', en:'Across the floor (20 min)', fr:'Diagonales (20 min)'}, p:{zh:'jazz walk、chassé、旋轉、踢腿、大跳。', en:'Jazz walks, chassés, turns, kicks and leaps.', fr:'Jazz walks, chassés, tours, battements, sauts.'} },
+    { t:{zh:'組合（30 分）', en:'Combination (30 min)', fr:'Enchaînement (30 min)'}, p:{zh:'學一段編舞，分組表演。', en:'Learn a routine and perform it in groups.', fr:'Apprendre une chorégraphie, la présenter par groupes.'} },
+  ]},
+  { type:'cards', cols:3, items:[
+    { i:'fa-film', t:{zh:'《西城故事》（1961）', en:'West Side Story (1961)', fr:'West Side Story (1961)'}, p:{zh:'Jerome Robbins 編舞，芭蕾與爵士在街頭幫派間碰撞。', en:'Jerome Robbins’s choreography: ballet and jazz collide on the street.', fr:'Chorégraphie de Jerome Robbins : classique et jazz s’affrontent dans la rue.'} },
+    { i:'fa-hat-cowboy', t:{zh:'《芝加哥》', en:'Chicago', fr:'Chicago'}, p:{zh:'Fosse 風格的經典，舞台劇與 2002 年電影版都值得看。', en:'Classic Fosse, on stage and in the 2002 film.', fr:'Du Fosse classique, sur scène et dans le film de 2002.'} },
+    { i:'fa-star', t:{zh:'《All That Jazz》（1979）', en:'All That Jazz (1979)', fr:'Que le spectacle commence (1979)'}, p:{zh:'Fosse 的半自傳電影，看見編舞家的創作過程。', en:'Fosse’s semi-autobiographical film about a choreographer at work.', fr:'Le film semi-autobiographique de Fosse sur un chorégraphe au travail.'} },
+    { i:'fa-umbrella', t:{zh:'《萬花嬉春》（1952）', en:'Singin’ in the Rain (1952)', fr:'Chantons sous la pluie (1952)'}, p:{zh:'Gene Kelly 的踢踏與爵士，好萊塢歌舞片代表。', en:'Gene Kelly’s tap and jazz; the Hollywood musical at its best.', fr:'Claquettes et jazz de Gene Kelly ; la comédie musicale hollywoodienne au sommet.'} },
+    { i:'fa-compact-disc', t:{zh:'Michael Jackson〈Thriller〉', en:'Michael Jackson, Thriller', fr:'Michael Jackson, Thriller'}, p:{zh:'MV 舞蹈的里程碑，商業爵士的起點之一。', en:'A landmark of music-video dance and an origin of commercial jazz.', fr:'Un jalon de la danse de clip et une origine du jazz commercial.'} },
+    { i:'fa-city', t:{zh:'《La La Land》（2016）', en:'La La Land (2016)', fr:'La La Land (2016)'}, p:{zh:'向好萊塢歌舞片致敬的當代作品。', en:'A modern homage to Hollywood musicals.', fr:'Un hommage moderne aux comédies musicales d’Hollywood.'} },
+  ]},
+]},
+]});
+</script>
+</body>
+</html>
