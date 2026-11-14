@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>街舞 | 風格、文化與基本步教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* The timing of a pop: tension rises sharply on the beat and releases before the "&". */
+function diaPop() {
+  const L = {
+    title:{zh:'Pop 的時間感：在拍點瞬間收縮，馬上放鬆', en:'Timing a pop: contract sharply on the beat, release at once', fr:'Le timing du pop : contracter net sur le temps, relâcher aussitôt'},
+    y:{zh:'肌肉張力', en:'Muscle tension', fr:'Tension'},
+  };
+  const X0 = 70, W = 800, beats = 8, bw = W / beats, H = 110, base = 170;
+  let d = '';
+  for (let i = 0; i <= 400; i++) {
+    const x = i / 400 * beats;                      /* time in beats */
+    const ph = x - Math.floor(x);                   /* phase within the beat */
+    const v = Math.exp(-ph * 9) * (ph < 0.02 ? ph / 0.02 : 1);
+    d += (i ? ' L' : 'M') + (X0 + x * bw).toFixed(1) + ' ' + (base - v * H).toFixed(1);
+  }
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>
+    <text x="0" y="${base - H / 2}" class="sub">${t(L.y)}</text>
+    <line x1="${X0}" y1="${base}" x2="${X0 + W}" y2="${base}" stroke="#475569"/>`;
+  for (let b = 0; b < beats; b++) {
+    const x = X0 + b * bw;
+    s += `<line x1="${x}" y1="${base - H - 6}" x2="${x}" y2="${base + 4}" class="grid"/>`;
+    s += `<text x="${x}" y="${base + 22}" text-anchor="middle" class="val">${b + 1}</text>`;
+    s += `<text x="${x + bw / 2}" y="${base + 22}" text-anchor="middle" class="sub">&amp;</text>`;
+  }
+  s += `<path d="${d}" fill="none" stroke="#facc15" stroke-width="3"/>`;
+  return `<svg class="dg" viewBox="0 0 900 206" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const Y = '#facc15', O = '#fb923c', R = '#f87171', P = '#e879f9', T = '#2dd4bf', S = '#38bdf8', G = '#a3e635', W = '#94a3b8';
+
+CourseKit.start({
+icon:'fa-headphones', accent:Y, accent2:'#fb923c', bg:'#0a0907',
+back:{ href:'dance.html', label:{zh:'回到舞蹈總覽', en:'Back to the dance overview', fr:'Retour à la vue d’ensemble'} },
+dia:{ pop: diaPop },
+ui:{
+zh:{
+ 'doc.title':'街舞 | 風格、文化與基本步教學',
+ 'hdr.badge':'舞種詳解・街舞','hdr.title':'街舞：風格、文化與基本步教學',
+ 'intro':'「街舞」不是一種舞，而是一整個家族。它們在 1970 年代以後的美國，從派對、俱樂部、街角與校園裡長出來，沒有學院、沒有固定教材，靠的是音樂、社群與不斷的即興交流。每一種風格都有自己的創始者、音樂與基本步，學街舞就是學這些文化。',
+ 'intro2':'這一頁先介紹嘻哈文化的起源，再逐一說明 Breaking、Hip-hop、Popping、Locking、House、Waacking、Voguing、Krump 與 K-pop 等商業舞蹈，接著整理各風格的招牌動作，給出 Running man、Six-step、Pop、Lock、House 基本步與 K-pop 翻跳的分解教學，最後介紹 cypher 與 battle 的文化和禮儀。',
+ 'footer':'街舞入門參考。各風格的歷史有許多口述版本，本頁採用較普遍的說法；學習時請尊重每個風格的先驅（OG）與社群。Breaking 的地板與倒立動作請在有軟墊、有人指導的環境練習。'
+},
+en:{
+ 'doc.title':'Street Dance: Styles, Culture & Foundations',
+ 'hdr.badge':'STYLE GUIDE · STREET','hdr.title':'Street dance: styles, culture and foundations',
+ 'intro':'“Street dance” is not one dance but a whole family. These styles grew in the United States from the 1970s at parties, in clubs, on corners and in schools, with no academy and no set syllabus, carried by music, community and constant improvised exchange. Each has its own pioneers, music and foundations; learning street dance means learning those cultures.',
+ 'intro2':'This page starts with the birth of hip-hop culture, then goes through breaking, hip-hop, popping, locking, house, waacking, voguing, krump and commercial dance such as K-pop, lists each style’s signature moves, breaks down the running man, six-step, pop, lock, house basics and K-pop covers, and ends with cypher and battle culture and etiquette.',
+ 'footer':'An introductory street dance reference. Histories exist in many oral versions; this page follows the most common accounts. Respect each style’s pioneers (OGs) and community as you learn. Practise breaking floor moves and inversions on padding with supervision.'
+},
+fr:{
+ 'doc.title':'Danses urbaines : styles, culture & bases',
+ 'hdr.badge':'FICHE STYLE · URBAIN','hdr.title':'Les danses urbaines : styles, culture et bases',
+ 'intro':'Les « danses urbaines » ne sont pas une danse mais une famille. Elles sont nées aux États-Unis à partir des années 1970, dans les fêtes, les clubs, les coins de rue et les écoles, sans académie ni programme, portées par la musique, la communauté et l’échange improvisé. Chaque style a ses pionniers, sa musique et ses bases : apprendre ces danses, c’est apprendre ces cultures.',
+ 'intro2':'Cette page commence par la naissance de la culture hip-hop, présente le breaking, le hip-hop, le popping, le locking, la house, le waacking, le voguing, le krump et la danse commerciale comme la K-pop, recense les mouvements emblématiques, décompose le running man, le six-step, le pop, le lock, les bases house et la reprise K-pop, puis termine par la culture et l’étiquette des cyphers et des battles.'
+ ,'footer':'Une référence d’initiation aux danses urbaines. Les histoires existent en de nombreuses versions orales ; cette page suit les récits les plus courants. Respectez les pionniers (OG) et les communautés. Travaillez les passages au sol et les figures inversées sur tapis, encadré.'
+}},
+sections:[
+
+/* ── 1. Origins ── */
+{ id:'origins', i:'fa-record-vinyl', c:Y,
+  nav:{zh:'起源', en:'Origins', fr:'Origines'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'嘻哈文化與兩條源頭', en:'Hip-hop culture and the two roots', fr:'La culture hip-hop et ses deux racines'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'街舞有兩條主要源頭。<strong class="text-white">東岸</strong>：1973 年，DJ Kool Herc 在紐約布朗克斯的派對上把唱片裡只有鼓的段落（break）重複播放，跳舞的年輕人被稱為 b-boy 與 b-girl，Breaking 由此誕生，和 DJ、MC（饒舌）、塗鴉並列嘻哈四大元素。<strong class="text-white">西岸</strong>：同一時期的加州，跟著 Funk 音樂發展出 Locking 與 Popping，統稱 Funk styles。1980 年代後，芝加哥與紐約的俱樂部又誕生了 House。',
+    en:'Street dance has two main roots. <strong class="text-white">East Coast</strong>: in 1973 DJ Kool Herc looped the drum-only “breaks” of records at a party in the Bronx; the dancers became b-boys and b-girls, and breaking was born, one of hip-hop’s four elements alongside DJing, MCing and graffiti. <strong class="text-white">West Coast</strong>: at the same time in California, locking and popping grew out of funk music, together known as the funk styles. In the 1980s house dance followed in the clubs of Chicago and New York.',
+    fr:'Les danses urbaines ont deux racines. <strong class="text-white">Côte est</strong> : en 1973, DJ Kool Herc fait tourner en boucle les « breaks » de batterie lors d’une fête dans le Bronx ; les danseurs deviennent b-boys et b-girls et le breaking naît, l’un des quatre éléments du hip-hop avec le DJing, le rap et le graffiti. <strong class="text-white">Côte ouest</strong> : à la même époque en Californie, le locking et le popping naissent du funk : ce sont les funk styles. Dans les années 1980, la house apparaît dans les clubs de Chicago et New York.'} },
+  { type:'table', head:[{zh:'年代', en:'When', fr:'Quand'}, {zh:'事件', en:'What', fr:'Quoi'}], rows:[
+    [{zh:'約 1970', en:'c. 1970', fr:'vers 1970'}, {zh:'Don Campbell 在洛杉磯創造 Locking，之後組成 The Lockers。', en:'Don Campbell creates locking in Los Angeles, later forming The Lockers.', fr:'Don Campbell invente le locking à Los Angeles, puis fonde The Lockers.'}],
+    ['1973', {zh:'Kool Herc 的 break 派對，Breaking 出現。', en:'Kool Herc’s break parties; breaking appears.', fr:'Les fêtes de Kool Herc ; naissance du breaking.'}],
+    [{zh:'1970 年代中後期', en:'Mid–late 1970s', fr:'Milieu–fin 1970'}, {zh:'Boogaloo Sam 與 Electric Boogaloos 在加州弗雷斯諾發展 Popping 與 Boogaloo；Waacking 在洛杉磯的同志俱樂部興起。', en:'Boogaloo Sam and the Electric Boogaloos develop popping and boogaloo in Fresno; waacking rises in LA’s gay clubs.', fr:'Boogaloo Sam et les Electric Boogaloos développent popping et boogaloo à Fresno ; le waacking naît dans les clubs gays de LA.'}],
+    [{zh:'1980 年代', en:'1980s', fr:'Années 1980'}, {zh:'Voguing 在哈林區的 ballroom 文化中成熟；House 舞在俱樂部發展；Hip-hop 派對舞（party dances）大量出現。', en:'Voguing matures in Harlem ballroom culture; house dance grows in clubs; a wave of hip-hop party dances.', fr:'Le voguing mûrit dans la ballroom culture de Harlem ; la house se développe en club ; vague de party dances hip-hop.'}],
+    [{zh:'2000 年代初', en:'Early 2000s', fr:'Début 2000'}, {zh:'Krump 在洛杉磯南區由 Tight Eyez、Big Mijo 等人發展。', en:'Krump emerges in South Central LA with Tight Eyez, Big Mijo and others.', fr:'Le krump émerge dans le sud de LA avec Tight Eyez, Big Mijo et d’autres.'}],
+    ['2024', {zh:'Breaking 成為巴黎奧運正式比賽項目。', en:'Breaking is an official event at the Paris Olympics.', fr:'Le breaking est discipline officielle aux JO de Paris.'}],
+  ]},
+]},
+
+/* ── 2. Styles ── */
+{ id:'styles', i:'fa-layer-group', c:O,
+  nav:{zh:'各風格', en:'Styles', fr:'Styles'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'九種主要風格', en:'Nine main styles', fr:'Neuf grands styles'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-rotate', t:{zh:'Breaking', en:'Breaking', fr:'Breaking'}, tag:{zh:'紐約・Funk、break beat', en:'New York · funk, breakbeats', fr:'New York · funk, breakbeats'},
+      p:{zh:'由站姿舞步（toprock）、地板步法（footwork）、定格（freeze）與大地板動作（power moves）組成，最具運動性。媒體常稱 breakdance，但舞者自稱 breaking。', en:'Built from standing steps (toprock), floor footwork, freezes and power moves; the most athletic style. Media say “breakdance”; dancers say breaking.', fr:'Composé de pas debout (toprock), de footwork au sol, de freezes et de power moves ; le plus athlétique. Les médias disent « breakdance », les danseurs « breaking ».'},
+      l:[{zh:'招牌：six-step、windmill、headspin、baby freeze', en:'Signature: six-step, windmill, headspin, baby freeze', fr:'Emblèmes : six-step, coupole, headspin, baby freeze'}] },
+    { i:'fa-headphones', t:{zh:'Hip-hop（新派）', en:'Hip-hop (new style)', fr:'Hip-hop (new style)'}, tag:{zh:'紐約・嘻哈音樂', en:'New York · hip-hop music', fr:'New York · musique hip-hop'},
+      p:{zh:'以 bounce 與 rock 為律動核心，大量使用 1980–90 年代的派對舞步，強調 groove 與音樂詮釋。教室中的「Hip-hop 編舞」多半由此延伸。', en:'Rooted in the bounce and rock, drawing on 1980s–90s party dances, all about groove and musical interpretation. Most “hip-hop choreography” classes grow from it.', fr:'Fondé sur le bounce et le rock, puisant dans les party dances des années 80–90, centré sur le groove et l’interprétation. La plupart des cours de « choré hip-hop » en découlent.'},
+      l:[{zh:'招牌：running man、Roger Rabbit、kick step', en:'Signature: running man, Roger Rabbit, kick step', fr:'Emblèmes : running man, Roger Rabbit, kick step'}] },
+    { i:'fa-bolt', t:{zh:'Popping', en:'Popping', fr:'Popping'}, tag:{zh:'加州・Funk、electro', en:'California · funk, electro', fr:'Californie · funk, électro'},
+      p:{zh:'在拍點瞬間收縮肌肉製造「彈」（pop／hit）的效果，搭配 boogaloo 的滾動、wave、機器人、tutting（手臂直角幾何）等分支。', en:'Muscles contract sharply on the beat to create a “pop” or hit, combined with boogaloo rolls, waves, robot and tutting (right-angle arm geometry).', fr:'Contraction nette des muscles sur le temps pour créer le « pop », avec les roulements du boogaloo, les waves, le robot et le tutting (géométrie des bras à angle droit).'},
+      l:[{zh:'招牌：hit、fresno、wave、twist-o-flex', en:'Signature: hit, fresno, wave, twist-o-flex', fr:'Emblèmes : hit, fresno, wave, twist-o-flex'}] },
+    { i:'fa-lock', t:{zh:'Locking', en:'Locking', fr:'Locking'}, tag:{zh:'洛杉磯・Funk', en:'Los Angeles · funk', fr:'Los Angeles · funk'},
+      p:{zh:'在動作中突然「鎖住」停格，再快速接下一個動作，搭配指人（point）、轉手腕、擊掌，風格歡樂誇張、與觀眾互動。', en:'Fast movement suddenly “locked” in place, then released, with points, wrist rolls and claps; joyful, exaggerated and audience-facing.', fr:'Mouvement rapide soudain « verrouillé », puis relâché, avec pointés, rotations de poignets et claps ; joyeux, exagéré, tourné vers le public.'},
+      l:[{zh:'招牌：lock、point、wrist roll、Scooby doo、stop and go', en:'Signature: lock, point, wrist roll, Scooby doo, stop and go', fr:'Emblèmes : lock, point, wrist roll, Scooby doo, stop and go'}] },
+    { i:'fa-compact-disc', t:{zh:'House', en:'House', fr:'House'}, tag:{zh:'芝加哥、紐約・House music', en:'Chicago, New York · house music', fr:'Chicago, New York · musique house'},
+      p:{zh:'由上半身的 jacking（身體隨拍子起伏）、靈活的步法（footwork）與地板動作（lofting）組成，融合踢踏、Salsa、非洲舞與武術元素，輕快流暢。', en:'Upper-body jacking, fluid footwork and floor work (lofting), mixing tap, salsa, African dance and martial-arts elements; light and flowing.', fr:'Jacking du buste, footwork fluide et passages au sol (lofting), mêlant claquettes, salsa, danses africaines et arts martiaux ; léger et fluide.'},
+      l:[{zh:'招牌：jack、stomp、shuffle、loose legs、heel-toe', en:'Signature: jack, stomp, shuffle, loose legs, heel-toe', fr:'Emblèmes : jack, stomp, shuffle, loose legs, heel-toe'}] },
+    { i:'fa-hand-sparkles', t:{zh:'Waacking', en:'Waacking', fr:'Waacking'}, tag:{zh:'洛杉磯・Disco', en:'Los Angeles · disco', fr:'Los Angeles · disco'},
+      p:{zh:'手臂高速甩動、旋轉，搭配擺姿（posing），靈感來自好萊塢明星，強調戲劇性與自信。', en:'Fast arm whips and rotations with poses inspired by Hollywood stars; theatrical and confident.', fr:'Bras fouettés et rotations rapides, poses inspirées des stars d’Hollywood ; théâtral et assuré.'},
+      l:[{zh:'招牌：arm whip、pose、strut', en:'Signature: arm whip, pose, strut', fr:'Emblèmes : arm whip, pose, strut'}] },
+    { i:'fa-star', t:{zh:'Voguing', en:'Voguing', fr:'Voguing'}, tag:{zh:'哈林區 ballroom', en:'Harlem ballroom', fr:'Ballroom de Harlem'},
+      p:{zh:'源自黑人與拉丁裔 LGBTQ+ 社群的 ballroom 競賽，模仿時尚雜誌擺拍。分為 Old way、New way 與 Vogue femme，五大元素是 hands、catwalk、duckwalk、spins and dips、floor performance。', en:'From the ballroom competitions of Black and Latino LGBTQ+ communities, imitating fashion-magazine poses. Old way, new way and vogue femme; five elements: hands, catwalk, duckwalk, spins and dips, floor performance.', fr:'Né des compétitions ballroom des communautés LGBTQ+ noires et latinos, imitant les poses des magazines. Old way, new way et vogue femme ; cinq éléments : hands, catwalk, duckwalk, spins and dips, floor performance.'} },
+    { i:'fa-fire', t:{zh:'Krump', en:'Krump', fr:'Krump'}, tag:{zh:'洛杉磯南區', en:'South Central LA', fr:'Sud de Los Angeles'},
+      p:{zh:'充滿能量與情緒的釋放，有 chest pop、stomp、arm swing、jab，常被誤認為攻擊，但核心是表達與社群的支持。', en:'An intense, emotional release with chest pops, stomps, arm swings and jabs; often mistaken for aggression, but at heart it is expression and community support.', fr:'Une libération intense et émotionnelle : chest pops, stomps, arm swings, jabs ; souvent pris pour de l’agressivité, c’est avant tout expression et soutien communautaire.'} },
+    { i:'fa-video', t:{zh:'K-pop 與商業舞蹈', en:'K-pop & commercial', fr:'K-pop & commercial'}, tag:{zh:'韓國・流行音樂', en:'Korea · pop', fr:'Corée · pop'},
+      p:{zh:'融合 Hip-hop、Popping、Jazz、Waacking 等元素的團體編舞，講究隊形、整齊度、副歌的「招牌動作」（point choreography）與表情管理。', en:'Group choreography blending hip-hop, popping, jazz, waacking and more; all about formations, unison, the chorus “point choreography” and facial expression.', fr:'Chorégraphies de groupe mêlant hip-hop, popping, jazz, waacking ; formations, synchronisation, « point choreography » du refrain et maîtrise des expressions.'} },
+  ]},
+]},
+
+/* ── 3. Moves ── */
+{ id:'moves', i:'fa-list', c:R,
+  nav:{zh:'招牌動作', en:'Moves', fr:'Mouvements'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'各風格的招牌動作', en:'Signature moves by style', fr:'Mouvements emblématiques par style'},
+  blocks:[
+  { type:'h3', t:{zh:'Breaking 的四個部分', en:'The four parts of breaking', fr:'Les quatre parties du breaking'} },
+  { type:'table', head:[{zh:'部分', en:'Part', fr:'Partie'}, {zh:'是什麼', en:'What it is', fr:'Ce que c’est'}, {zh:'代表動作', en:'Examples', fr:'Exemples'}], rows:[
+    ['Toprock', {zh:'站著跳的舞步，開場與進入地板前的過門。', en:'Standing steps: the entry and the lead-in to the floor.', fr:'Pas debout : l’entrée et la transition vers le sol.'}, 'Indian step, salsa step, cross step, kick'],
+    [{zh:'Footwork／Downrock', en:'Footwork / downrock', fr:'Footwork / downrock'}, {zh:'雙手撐地、腳在地板上繞行的步法。', en:'Hands on the floor while the legs travel round.', fr:'Mains au sol, les jambes tournent autour.'}, 'Six-step, three-step, CC, zulu spin'],
+    ['Freeze', {zh:'在拍點上定格，常用來結束一段。', en:'A hold on the beat, often to finish a round.', fr:'Un arrêt sur le temps, souvent pour conclure.'}, 'Baby freeze, chair freeze, air chair, headstand'],
+    ['Power moves', {zh:'連續旋轉的大動作，需要大量肌力與動量。', en:'Continuous rotating moves needing strength and momentum.', fr:'Rotations continues demandant force et élan.'}, 'Windmill, flare, headspin, airflare'],
+  ]},
+  { type:'h3', t:{zh:'Hip-hop 派對舞步（Party dances）', en:'Hip-hop party dances', fr:'Les party dances hip-hop'} },
+  { type:'table', head:[{zh:'名稱', en:'Name', fr:'Nom'}, {zh:'怎麼做', en:'How', fr:'Comment'}], rows:[
+    ['Running man', {zh:'像原地跑步：一腳抬膝時另一腳往後滑，換腳重複。', en:'Running on the spot: as one knee lifts, the other foot slides back; alternate.', fr:'Courir sur place : un genou monte pendant que l’autre pied glisse en arrière ; alterner.'}],
+    ['Roger Rabbit', {zh:'Running man 的反向版：一腳往後踢再往後滑，身體往後退。', en:'A reverse running man: kick one foot back and slide back, travelling backwards.', fr:'Un running man inversé : on lance un pied en arrière et on recule.'}],
+    ['Kick step', {zh:'往前踢、收回腳尖點地、換腳，搭配 bounce。', en:'Kick forward, tap the toe back in, change feet, with a bounce.', fr:'Coup de pied devant, pointe au sol, changement, avec bounce.'}],
+    ['Cabbage patch', {zh:'雙拳在胸前像攪拌一樣畫圓，身體跟著繞。', en:'Fists circling in front of the chest as if stirring, the body following.', fr:'Poings qui tournent devant la poitrine comme pour remuer, le corps suit.'}],
+    ['Smurf', {zh:'雙手往前甩、膝蓋內外交替，輕快的跳躍感。', en:'Arms swing forward while knees alternate in and out, springy.', fr:'Bras lancés vers l’avant, genoux qui s’ouvrent et se ferment, rebondi.'}],
+    ['Wop', {zh:'胸與肩交替前後推，手臂跟著擺動。', en:'Chest and shoulders push back and forth in turn, arms swinging.', fr:'Poitrine et épaules poussent en alternance, bras en balancier.'}],
+  ]},
+  { type:'h3', t:{zh:'Funk styles 與 House 的基本元素', en:'Funk-style and house foundations', fr:'Bases des funk styles et de la house'} },
+  { type:'table', head:[{zh:'名稱', en:'Name', fr:'Nom'}, {zh:'風格', en:'Style', fr:'Style'}, {zh:'怎麼做', en:'How', fr:'Comment'}], rows:[
+    ['Hit / Pop', 'Popping', {zh:'在拍點瞬間收縮前臂、大腿與胸部，馬上放鬆。', en:'Flex forearms, thighs and chest sharply on the beat, then release at once.', fr:'Contracter avant-bras, cuisses et poitrine sur le temps, puis relâcher aussitôt.'}],
+    ['Fresno', 'Popping', {zh:'左右踏步，每踏一步配一次 hit，手臂在身側成直角。', en:'Step side to side with a hit on each step, arms at right angles.', fr:'Pas latéraux avec un hit à chaque pas, bras à angle droit.'}],
+    ['Wave', 'Popping', {zh:'動作像水波從指尖經手臂、肩膀傳到另一手。', en:'A ripple that travels from fingertips through arms and shoulders to the other hand.', fr:'Une ondulation qui passe des doigts aux bras et aux épaules jusqu’à l’autre main.'}],
+    ['Lock', 'Locking', {zh:'往前彎腰、雙手在身前停住，像被鎖住，然後彈起。', en:'Bend forward and freeze the hands in front as if locked, then spring up.', fr:'On se penche, mains bloquées devant comme verrouillées, puis on se redresse.'}],
+    ['Point', 'Locking', {zh:'手臂伸直、手指指向斜前方，身體同時轉向。', en:'Arm straight, finger pointing to the front diagonal, body turning with it.', fr:'Bras tendu, doigt pointé vers la diagonale, le corps suit.'}],
+    ['Wrist roll', 'Locking', {zh:'雙手在身前繞手腕畫圓。', en:'Hands circling at the wrists in front of the body.', fr:'Rotations de poignets devant soi.'}],
+    ['Jack', 'House', {zh:'軀幹隨每拍前後或上下起伏，是 House 的「心跳」。', en:'The torso rocks forward-back or up-down on each beat: house’s heartbeat.', fr:'Le buste ondule sur chaque temps : le battement de cœur de la house.'}],
+    ['Stomp / Shuffle', 'House', {zh:'一腳踏地另一腳滑出；shuffle 是腳跟腳尖交替的橫移。', en:'Stomp one foot as the other slides; shuffle is a heel-toe travel to the side.', fr:'Un pied frappe, l’autre glisse ; le shuffle se déplace en talon-pointe.'}],
+  ]},
+]},
+
+/* ── 4. Lessons ── */
+{ id:'lessons', i:'fa-chalkboard-user', c:P,
+  nav:{zh:'教學', en:'Lessons', fr:'Leçons'},
+  eyebrow:{zh:'第四章・教學', en:'Chapter 4 · Lessons', fr:'Chapitre 4 · Leçons'},
+  h2:{zh:'六個基本步，一拍一拍拆解', en:'Six foundations, count by count', fr:'Six bases, temps par temps'},
+  blocks:[
+  { type:'note', p:{
+    zh:'所有練習都先在原地做 Down 律動（見舞蹈總覽第五章）4 個八拍熱身。每個動作先用 70–80 BPM 的慢歌練，再換到 90–100 BPM。',
+    en:'Warm up every time with four eights of the down groove (see chapter 5 of the overview). Learn each move to a slow 70–80 BPM track, then move up to 90–100 BPM.',
+    fr:'Échauffez-vous toujours avec quatre huit de groove « down » (voir le chapitre 5 de la vue d’ensemble). Apprenez chaque pas sur 70–80 BPM, puis passez à 90–100 BPM.'} },
+  { type:'counts', t:{zh:'一、Running man（一個八拍，做兩次）', en:'1. Running man (one eight, twice)', fr:'1. Running man (un huit, deux fois)'},
+    p:{zh:'重點：落地的腳往後滑時，抬起的腳同時落下，像在跑步機上跑步，身體保持在原地。', en:'Key: as the standing foot slides back, the lifted foot comes down, like running on a treadmill; the body stays in place.', fr:'Clé : quand le pied d’appui glisse en arrière, le pied levé redescend, comme sur un tapis de course ; le corps reste sur place.'},
+    items:[
+      {n:'&', p:{zh:'右膝抬起', en:'Lift right knee', fr:'Lever le genou droit'}},
+      {n:'1', p:{zh:'右腳往前落地，同時左腳往後滑', en:'Right foot down in front as the left slides back', fr:'Pied droit devant au sol, le gauche glisse en arrière'}},
+      {n:'&', p:{zh:'左膝抬起，右腳往後滑回中間', en:'Lift left knee, right foot slides back to centre', fr:'Genou gauche levé, pied droit revient au centre'}},
+      {n:'2', p:{zh:'左腳往前落地，右腳往後滑', en:'Left foot down in front, right slides back', fr:'Pied gauche devant, le droit glisse en arrière'}},
+      {n:'3–4', p:{zh:'重複 1、2', en:'Repeat 1–2', fr:'Répéter 1–2'}},
+      {n:'5–6', p:{zh:'重複，手臂前後擺', en:'Repeat, swinging the arms', fr:'Répéter, bras en balancier'}},
+      {n:'7', p:{zh:'重複', en:'Repeat', fr:'Répéter'}},
+      {n:'8', p:{zh:'雙腳併攏停', en:'Feet together, stop', fr:'Pieds joints, stop'}},
+    ]},
+  { type:'counts', t:{zh:'二、Six-step（Breaking 地板基本步，每步一拍）', en:'2. Six-step (breaking footwork, one count per step)', fr:'2. Six-step (footwork de breaking, un temps par pas)'},
+    p:{zh:'起始姿勢：蹲低、雙手撐地在身體前方，像伏地挺身但臀部抬高。身體以雙手為中心繞一圈，六步後回到原點。先慢慢走，不用跳。', en:'Start crouched with both hands on the floor in front, like a push-up with hips high. The body circles around the hands and returns home after six steps. Walk it slowly at first.', fr:'Départ accroupi, mains au sol devant, comme une pompe fesses hautes. Le corps tourne autour des mains et revient au départ en six pas. Marchez-le lentement d’abord.'},
+    items:[
+      {n:'1', p:{zh:'右腳跨過左腳前方（交叉）', en:'Right foot crosses in front of the left', fr:'Pied droit croise devant le gauche'}},
+      {n:'2', p:{zh:'左腳往後退，右手抬起讓路', en:'Left foot steps back; lift the right hand to let it through', fr:'Pied gauche recule ; la main droite se lève pour le laisser passer'}},
+      {n:'3', p:{zh:'右腳往後與左腳並排（像伏地挺身）', en:'Right foot back beside the left (push-up position)', fr:'Pied droit recule à côté du gauche (position de pompe)'}},
+      {n:'4', p:{zh:'左腳往前收回，左手抬起讓路', en:'Left foot comes forward; lift the left hand', fr:'Pied gauche revient devant ; la main gauche se lève'}},
+      {n:'5', p:{zh:'右腳跨到左腳後方', en:'Right foot steps behind the left', fr:'Pied droit passe derrière le gauche'}},
+      {n:'6', p:{zh:'左腳打開回到起始，蹲姿', en:'Left foot opens back to the start, crouched', fr:'Pied gauche s’ouvre, retour au départ, accroupi'}},
+      {n:'7–8', p:{zh:'接 baby freeze 或站起來接 toprock', en:'Finish in a baby freeze or stand into toprock', fr:'Finir en baby freeze ou se relever en toprock'}},
+    ]},
+  { type:'dia', k:'pop' },
+  { type:'steps', items:[
+    { t:{zh:'三、Pop：分部位練習', en:'3. The pop, part by part', fr:'3. Le pop, partie par partie'}, p:{zh:'前臂：握拳、手肘彎 90°，在每一拍瞬間用力收緊前臂再立刻放鬆。腿：膝蓋微彎，每拍瞬間打直再放鬆。胸：每拍把胸口往前「頂」一下。先各練一個八拍，再三個部位一起，最後配上 Fresno 左右踏步。', en:'Forearms: make fists, elbows at 90°, tense the forearms sharply on each beat and release at once. Legs: knees soft, snap straight on the beat and release. Chest: punch the chest forward on each beat. One eight each, then all three together, then add the side-to-side fresno step.', fr:'Avant-bras : poings fermés, coudes à 90°, contractez net sur chaque temps puis relâchez. Jambes : genoux souples, tendez d’un coup sur le temps puis relâchez. Poitrine : poussez-la vers l’avant à chaque temps. Un huit par partie, puis les trois ensemble, puis ajoutez le fresno.'} },
+    { t:{zh:'四、Lock 與 Point 組合', en:'4. Lock and point combo', fr:'4. Combinaison lock et point'}, p:{zh:'1：雙手在胸前握拳往內轉（wrist roll）；2：往前彎腰、雙手停在膝前「鎖」住；3：彈起身、右手指向右上斜前方（point）；4：收回；5–8：換左邊。全程膝蓋保持 Up 律動，表情要開朗。', en:'1: fists roll inwards in front of the chest (wrist roll); 2: bend forward and lock the hands in front of the knees; 3: spring up and point the right hand to the upper right diagonal; 4: recover; 5–8: the left side. Keep an up groove in the knees and a big smile.', fr:'1 : poings qui tournent devant la poitrine (wrist roll) ; 2 : penché en avant, mains verrouillées devant les genoux ; 3 : on se redresse, main droite pointée vers la diagonale haute droite ; 4 : retour ; 5–8 : côté gauche. Gardez un groove « up » et le sourire.'} },
+    { t:{zh:'五、House：Jack＋側步', en:'5. House: jack + side walk', fr:'5. House : jack + pas latéral'}, p:{zh:'先在原地做 jack：每拍胸口往前、背往後弓，像波浪一樣連續。穩定後加上側步：1 右腳往右、& 左腳跟上、2 右腳再往右，腳步輕、腳跟腳尖交替轉動。House 的拍子快（約 120–128 BPM），保持放鬆。', en:'Start jacking on the spot: chest forward and back arching on each beat in a continuous wave. Then add a side walk: 1 right foot to the right, & left foot follows, 2 right again, light feet swivelling heel and toe. House is fast (about 120–128 BPM): stay relaxed.', fr:'Jackez sur place : poitrine en avant, dos qui s’arrondit à chaque temps, en vague continue. Puis ajoutez un pas latéral : 1 pied droit à droite, & le gauche suit, 2 encore à droite, pieds légers pivotant talon-pointe. La house est rapide (120–128 BPM) : restez détendu.'} },
+    { t:{zh:'六、K-pop 翻跳流程', en:'6. Covering a K-pop routine', fr:'6. Reprendre une choré K-pop'}, p:{zh:'1. 找官方的「鏡像練習影片」（mirrored dance practice）並設 0.75 倍速；2. 把歌分成前奏、主歌、Pre-chorus、副歌、間奏；3. 先學副歌（point choreography），最有成就感；4. 每段先學腳、再學手、最後加頭與表情；5. 錄影與原影片並排比對角度與力度；6. 團體翻跳要對齊隊形與換位路線（formation）。', en:'1. Find the official mirrored dance practice and set 0.75× speed; 2. split the song into intro, verse, pre-chorus, chorus and break; 3. learn the chorus (point choreography) first, the most rewarding part; 4. feet, then arms, then head and face; 5. film yourself and compare side by side for angles and power; 6. in a group, agree formations and traffic paths.', fr:'1. Trouvez la vidéo officielle en miroir (dance practice) à 0,75× ; 2. découpez la chanson : intro, couplet, pré-refrain, refrain, pont ; 3. apprenez d’abord le refrain (point choreography), le plus gratifiant ; 4. pieds, puis bras, puis tête et visage ; 5. filmez-vous et comparez côte à côte angles et énergie ; 6. en groupe, fixez formations et déplacements.'} },
+  ]},
+  { type:'warn', p:{
+    zh:'Breaking 的 freeze、headspin 與 power moves 會把全身重量壓在手腕、肩膀與頸部。先練好手腕與肩膀肌力（伏地挺身、倒立靠牆），在軟墊上、有經驗的人陪同下練；headspin 需要頭套或毛帽。',
+    en:'Breaking freezes, headspins and power moves load the whole body onto wrists, shoulders and neck. Build wrist and shoulder strength first (push-ups, wall handstands), practise on mats with an experienced dancer present, and wear a beanie or headspin cap for headspins.',
+    fr:'Freezes, headspins et power moves chargent tout le corps sur les poignets, les épaules et la nuque. Renforcez d’abord poignets et épaules (pompes, équilibre contre un mur), travaillez sur tapis avec un danseur expérimenté, et portez un bonnet pour le headspin.'} },
+]},
+
+/* ── 5. Culture ── */
+{ id:'culture', i:'fa-people-group', c:T,
+  nav:{zh:'Cypher 與 Battle', en:'Cyphers & battles', fr:'Cyphers & battles'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'Cypher、Battle 與街舞禮儀', en:'Cyphers, battles and etiquette', fr:'Cyphers, battles et étiquette'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-circle-notch', t:{zh:'Cypher（圍圈即興）', en:'The cypher', fr:'Le cypher'},
+      p:{zh:'舞者圍成一圈，輪流進到中間即興。沒有評審，重點是交流與能量。想進場時直接進去，跳完退回圈邊讓下一個人上。', en:'Dancers form a circle and take turns freestyling in the middle. No judges: it is about exchange and energy. Step in when you are ready and step back to the edge when you are done.', fr:'Les danseurs forment un cercle et entrent à tour de rôle improviser au centre. Pas de juges : échange et énergie. Entrez quand vous êtes prêt et reculez au bord une fois fini.'} },
+    { i:'fa-trophy', t:{zh:'Battle（對戰）', en:'The battle', fr:'Le battle'},
+      p:{zh:'一對一或團體對團體，輪流上場（每輪約 30–60 秒），由評審舉手或投票決定勝負。DJ 臨場放歌，所以考驗的是即興與音樂性。', en:'One-on-one or crew vs crew, taking turns of about 30–60 seconds; judges point or vote for the winner. The DJ chooses the music live, so it tests improvisation and musicality.', fr:'En un contre un ou crew contre crew, des passages de 30 à 60 secondes ; les juges désignent le vainqueur. Le DJ choisit la musique en direct : on teste l’improvisation et la musicalité.'} },
+    { i:'fa-gavel', t:{zh:'評審常看的面向', en:'What judges look at', fr:'Ce que regardent les juges'},
+      p:{zh:'各比賽標準不同，常見的有：基本功（foundation）、音樂性、技巧與難度、原創性與個人風格、表現力，以及完成度（不失誤）。', en:'It varies by event, but commonly: foundation, musicality, technique and difficulty, originality and personal style, performance, and execution (no mistakes).', fr:'Selon l’événement, souvent : les bases, la musicalité, la technique et la difficulté, l’originalité et le style personnel, la présence, et l’exécution (sans erreur).'} },
+  ]},
+  { type:'steps', items:[
+    { t:{zh:'尊重先驅與文化', en:'Respect the pioneers and the culture', fr:'Respecter les pionniers et la culture'}, p:{zh:'學一個風格時，認識它的創始者與音樂。叫對動作的名字，不要把所有風格都叫做「Hip-hop」。', en:'When you learn a style, learn its creators and its music. Use the right names; not everything is “hip-hop”.', fr:'Apprenez les créateurs et la musique de chaque style. Employez les bons noms : tout n’est pas « hip-hop ».'} },
+    { t:{zh:'不要偷招（biting）', en:'Do not bite', fr:'Ne pas copier (biting)'}, p:{zh:'在 battle 中直接照抄別人的招牌動作是大忌。可以學習，但要轉化成自己的版本。', en:'Copying someone’s signature move in a battle is a serious faux pas. Learn from it, then make your own version.', fr:'Reprendre le mouvement signature d’un autre en battle est très mal vu. Inspirez-vous-en, puis créez votre version.'} },
+    { t:{zh:'不碰觸對手', en:'No contact', fr:'Pas de contact'}, p:{zh:'挑釁（burn）可以用動作表達，但不能真的碰到對方的身體。', en:'You can “burn” an opponent with gestures but never touch them.', fr:'On peut provoquer (burn) par le geste, jamais toucher l’adversaire.'} },
+    { t:{zh:'結束後擁抱或擊掌', en:'Hug or dap afterwards', fr:'Se saluer à la fin'}, p:{zh:'無論輸贏，battle 結束後互相致意。街舞社群很小，今天的對手常是明天的朋友。', en:'Win or lose, acknowledge each other after the battle. The scene is small: today’s opponent is tomorrow’s friend.', fr:'Gagnant ou perdant, on se salue. Le milieu est petit : l’adversaire d’aujourd’hui est l’ami de demain.'} },
+  ]},
+]},
+]});
+</script>
+</body>
+</html>

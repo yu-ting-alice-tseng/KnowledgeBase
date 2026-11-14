@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>健身 | 訓練、課表與飲食</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* The repetition continuum: which rep range trains which quality. */
+function diaReps() {
+  const L = {
+    title:{zh:'次數區間：同一條光譜上的不同重點', en:'The rep continuum: one spectrum, different emphases', fr:'Le continuum des répétitions : un spectre, des priorités différentes'},
+    axis:{zh:'每組可完成的次數（接近力竭）', en:'Reps per set (taken close to failure)', fr:'Répétitions par série (proche de l’échec)'},
+  };
+  const X0 = 40, W = 820, max = 30, x = r => X0 + (r - 1) / (max - 1) * W;
+  const zones = [
+    { a:1,  b:5,  c:'#f43f5e', n:{zh:'肌力（最大力量）', en:'Strength (max force)', fr:'Force (maximale)'}, p:{zh:'85–100% 1RM', en:'85–100% 1RM', fr:'85–100 % 1RM'} },
+    { a:6,  b:12, c:'#fb923c', n:{zh:'肌肥大（最有效率）', en:'Hypertrophy (most efficient)', fr:'Hypertrophie (la plus efficace)'}, p:{zh:'65–85% 1RM', en:'65–85% 1RM', fr:'65–85 % 1RM'} },
+    { a:13, b:20, c:'#facc15', n:{zh:'肌肥大＋肌耐力', en:'Hypertrophy + endurance', fr:'Hypertrophie + endurance'}, p:{zh:'50–65% 1RM', en:'50–65% 1RM', fr:'50–65 % 1RM'} },
+    { a:21, b:30, c:'#34d399', n:{zh:'肌耐力', en:'Muscular endurance', fr:'Endurance musculaire'}, p:{zh:'＜50% 1RM', en:'<50% 1RM', fr:'<50 % 1RM'} },
+  ];
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  zones.forEach((z, i) => {
+    const a = x(z.a) - (i ? W / (max - 1) / 2 : 0), b = x(z.b) + (i < 3 ? W / (max - 1) / 2 : 0);
+    s += `<rect x="${a}" y="48" width="${b - a}" height="40" fill="${z.c}" fill-opacity="0.25" stroke="${z.c}" stroke-width="1.5"/>`;
+    s += `<text x="${(a + b) / 2}" y="73" text-anchor="middle" class="val">${t(z.n)}</text>`;
+    s += `<text x="${(a + b) / 2}" y="108" text-anchor="middle" class="sub">${t(z.p)}</text>`;
+  });
+  [1, 5, 8, 12, 15, 20, 25, 30].forEach(r => {
+    s += `<line x1="${x(r)}" y1="88" x2="${x(r)}" y2="94" stroke="#64748b"/><text x="${x(r)}" y="130" text-anchor="middle" class="sub" style="fill:#e2e8f0">${r}</text>`;
+  });
+  s += `<text x="${X0 + W / 2}" y="154" text-anchor="middle" class="sub">${t(L.axis)}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 166" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Heart-rate zones, computed from HRmax = 208 − 0.7 × age (Tanaka) for a 30-year-old. */
+function diaZones() {
+  const age = 30, hr = Math.round(208 - 0.7 * age);
+  const L = {
+    title:{zh:`心率區間（以 30 歲為例，最大心率 ≈ ${hr} 下／分）`, en:`Heart-rate zones (age 30, max HR ≈ ${hr} bpm)`, fr:`Zones cardiaques (30 ans, FC max ≈ ${hr} bpm)`},
+  };
+  const Z = [
+    [0.5, 0.6, '#38bdf8', {zh:'Z1 恢復', en:'Z1 Recovery', fr:'Z1 Récupération'}, {zh:'散步、緩和', en:'Walking, cool-down', fr:'Marche, retour au calme'}],
+    [0.6, 0.7, '#34d399', {zh:'Z2 有氧基礎', en:'Z2 Aerobic base', fr:'Z2 Base aérobie'}, {zh:'還能完整說話，燃脂效率高', en:'You can still talk in full sentences', fr:'On parle encore en phrases entières'}],
+    [0.7, 0.8, '#facc15', {zh:'Z3 節奏', en:'Z3 Tempo', fr:'Z3 Tempo'}, {zh:'只能說短句', en:'Short phrases only', fr:'Phrases courtes seulement'}],
+    [0.8, 0.9, '#fb923c', {zh:'Z4 閾值', en:'Z4 Threshold', fr:'Z4 Seuil'}, {zh:'喘、只能說幾個字', en:'Heavy breathing, a few words', fr:'Essoufflé, quelques mots'}],
+    [0.9, 1.0, '#f43f5e', {zh:'Z5 最大', en:'Z5 Maximum', fr:'Z5 Maximum'}, {zh:'衝刺、HIIT 的高強度段', en:'Sprints, HIIT work bouts', fr:'Sprints, efforts de HIIT'}],
+  ];
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  Z.forEach((z, i) => {
+    const y = 40 + i * 40, w = 130 + i * 85;
+    s += `<rect x="20" y="${y}" width="${w}" height="30" rx="6" fill="${z[2]}" fill-opacity="0.25" stroke="${z[2]}"/>`;
+    s += `<text x="32" y="${y + 20}" class="val">${t(z[3])}</text>`;
+    s += `<text x="500" y="${y + 20}" class="val">${Math.round(z[0] * hr)}–${Math.round(z[1] * hr)} bpm</text>`;
+    s += `<text x="620" y="${y + 20}" class="sub">${Math.round(z[0] * 100)}–${Math.round(z[1] * 100)}% · ${t(z[4])}</text>`;
+  });
+  return `<svg class="dg" viewBox="0 0 900 246" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+
+/* Calorie and macro calculator (Mifflin-St Jeor). Not an SVG: rendered as a form. */
+const CALC = { sex:'f', age:28, h:162, w:56, act:1.375 };
+function calcOut() {
+  const c = CALC, el = document.getElementById('calc-out');
+  if (!el) return;
+  const bmr = 10 * c.w + 6.25 * c.h - 5 * c.age + (c.sex === 'm' ? 5 : -161);
+  const tdee = bmr * c.act, r = x => Math.round(x / 10) * 10;
+  const cut = Math.max(tdee * 0.8, c.sex === 'm' ? 1500 : 1200), gain = tdee * 1.08;
+  const P = [Math.round(1.6 * c.w), Math.round(2.2 * c.w)], F = Math.round(0.8 * c.w);
+  const carbs = kc => Math.max(0, Math.round((kc - P[0] * 4 - F * 9) / 4));
+  const row = (lab, kc, col) => `<div class="rounded-xl border p-3" style="border-color:${col}55;background:${col}0f">
+    <div class="text-[11px] font-bold" style="color:${col}">${t(lab)}</div>
+    <div class="text-2xl font-black text-white mt-1">${r(kc)} <span class="text-xs text-slate-400">kcal</span></div>
+    <div class="text-[11px] text-slate-400 mt-1">${t({zh:'蛋白質', en:'Protein', fr:'Protéines'})} ${P[0]}–${P[1]} g · ${t({zh:'脂肪', en:'Fat', fr:'Lipides'})} ≈${F} g · ${t({zh:'碳水', en:'Carbs', fr:'Glucides'})} ≈${carbs(kc)} g</div></div>`;
+  el.innerHTML = `<div class="text-xs text-slate-400 mb-3">${t({zh:'基礎代謝率（BMR）', en:'Basal metabolic rate (BMR)', fr:'Métabolisme de base (MB)'})} ≈ <b class="text-white">${r(bmr)} kcal</b> · ${t({zh:'每日總消耗（TDEE）', en:'Total daily energy expenditure (TDEE)', fr:'Dépense énergétique totale (DET)'})} ≈ <b class="text-white">${r(tdee)} kcal</b></div>
+    <div class="grid sm:grid-cols-3 gap-3">
+    ${row({zh:'減脂（約 −20%）', en:'Fat loss (about −20%)', fr:'Perte de gras (environ −20 %)'}, cut, '#38bdf8')}
+    ${row({zh:'維持', en:'Maintenance', fr:'Maintien'}, tdee, '#34d399')}
+    ${row({zh:'增肌（約 +8%）', en:'Muscle gain (about +8%)', fr:'Prise de muscle (environ +8 %)'}, gain, '#fb923c')}</div>`;
+}
+window.calcSet = (k, v) => { CALC[k] = (k === 'sex') ? v : +v; calcOut(); };
+function diaCalc() {
+  const inp = (k, lab, min, max, step) => `<label class="block"><span class="text-[11px] font-bold text-slate-400">${t(lab)}</span>
+    <input type="number" inputmode="decimal" min="${min}" max="${max}" step="${step}" value="${CALC[k]}" oninput="calcSet('${k}', this.value)"
+      class="mt-1 w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-white text-sm focus:outline-none focus:border-orange-400"></label>`;
+  const acts = [
+    [1.2,   {zh:'久坐，幾乎不運動', en:'Sedentary, little exercise', fr:'Sédentaire, peu d’exercice'}],
+    [1.375, {zh:'輕度：每週運動 1–3 天', en:'Light: exercise 1–3 days/week', fr:'Léger : sport 1–3 jours/semaine'}],
+    [1.55,  {zh:'中度：每週運動 3–5 天', en:'Moderate: 3–5 days/week', fr:'Modéré : 3–5 jours/semaine'}],
+    [1.725, {zh:'高度：每週運動 6–7 天', en:'High: 6–7 days/week', fr:'Élevé : 6–7 jours/semaine'}],
+    [1.9,   {zh:'極高：勞力工作＋每天訓練', en:'Very high: physical job + daily training', fr:'Très élevé : métier physique + entraînement quotidien'}],
+  ];
+  setTimeout(calcOut, 0);
+  return `<div class="dia-box reveal">
+    <h4 class="font-black text-sm mb-1" style="color:#fb923c">${t({zh:'熱量與三大營養素計算機', en:'Calorie and macro calculator', fr:'Calculateur de calories et de macronutriments'})}</h4>
+    <p class="text-xs text-slate-400 mb-4">${t({zh:'以 Mifflin-St Jeor 公式估算，誤差約 ±10%。照著吃兩到三週，再依體重變化微調。', en:'Estimated with the Mifflin-St Jeor equation, accurate to about ±10%. Eat to it for two or three weeks, then adjust from your weight trend.', fr:'Estimation par l’équation de Mifflin-St Jeor, à ±10 % près. Suivez-la deux à trois semaines, puis ajustez selon l’évolution du poids.'})}</p>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
+      <label class="block"><span class="text-[11px] font-bold text-slate-400">${t({zh:'生理性別', en:'Sex', fr:'Sexe'})}</span>
+        <select onchange="calcSet('sex', this.value)" class="mt-1 w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-white text-sm">
+          <option value="f" ${CALC.sex === 'f' ? 'selected' : ''}>${t({zh:'女', en:'Female', fr:'Femme'})}</option>
+          <option value="m" ${CALC.sex === 'm' ? 'selected' : ''}>${t({zh:'男', en:'Male', fr:'Homme'})}</option></select></label>
+      ${inp('age', {zh:'年齡', en:'Age', fr:'Âge'}, 15, 90, 1)}
+      ${inp('h', {zh:'身高（公分）', en:'Height (cm)', fr:'Taille (cm)'}, 120, 220, 1)}
+      ${inp('w', {zh:'體重（公斤）', en:'Weight (kg)', fr:'Poids (kg)'}, 30, 200, 0.5)}
+      <label class="block col-span-2 md:col-span-1"><span class="text-[11px] font-bold text-slate-400">${t({zh:'活動量', en:'Activity', fr:'Activité'})}</span>
+        <select onchange="calcSet('act', this.value)" class="mt-1 w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-white text-sm">
+          ${acts.map(a => `<option value="${a[0]}" ${CALC.act === a[0] ? 'selected' : ''}>${t(a[1])}</option>`).join('')}</select></label>
+    </div>
+    <div id="calc-out"></div></div>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const C1 = '#fb923c', C2 = '#f43f5e', C3 = '#facc15', C4 = '#34d399', C5 = '#38bdf8', C6 = '#a78bfa', C7 = '#f472b6', C8 = '#94a3b8';
+
+CourseKit.start({
+icon:'fa-dumbbell', accent:'#fb923c', accent2:'#f43f5e', bg:'#0a0706',
+dia:{ reps: diaReps, zones: diaZones, calc: diaCalc },
+ui:{
+zh:{
+ 'doc.title':'健身 | 訓練、課表與飲食',
+ 'hdr.badge':'健身入門','hdr.title':'健身：訓練、課表與飲食',
+ 'intro':'健身不是只為了好看。肌力訓練讓骨骼更密、關節更穩、代謝更好，有氧運動照顧心肺，柔軟度與活動度讓身體活動得更自在。只要掌握幾個原則、學會幾個基本動作，再照著一份合理的課表持續練，任何人都能在幾個月內看到明顯的進步。',
+ 'intro2':'這一卷依學習順序排列：先認識訓練原則與名詞，再分辨各種訓練類型與主要的動作模式，接著逐一教學八個基本動作，然後是新手到進階的課表、有氧與心率、營養與恢復，再來是飲食控制（附熱量計算機、菜單範例、外食與營養標示）與台灣、法國、世界衛生組織的官方飲食指南，最後整理常見迷思與安全須知。',
+ 'footer':'健身入門參考。內容為一般知識，不能取代醫師、物理治療師或合格教練的個別建議；有慢性病、懷孕、受傷或久未運動者，開始前請先諮詢專業人員。營養數值為一般健康成人的常見建議範圍。'
+},
+en:{
+ 'doc.title':'Fitness: Training, Programmes & Diet',
+ 'hdr.badge':'FITNESS PRIMER','hdr.title':'Fitness: training, programmes and diet',
+ 'intro':'Training is not only about looks. Strength work makes bones denser, joints steadier and metabolism healthier; cardio looks after heart and lungs; flexibility and mobility let the body move freely. Learn a few principles and a handful of basic lifts, follow a sensible programme consistently, and anyone can see clear progress within a few months.',
+ 'intro2':'This volume follows the order you learn in: the principles and vocabulary, the kinds of training and the main movement patterns, step-by-step lessons for eight basic exercises, then programmes from beginner to intermediate, cardio and heart rate, nutrition and recovery, diet control (with a calorie calculator, sample menus, eating out and food labels) and the official dietary guidelines of Taiwan, France and the WHO, and finally common myths and safety.',
+ 'footer':'An introductory fitness reference. It is general information and does not replace individual advice from a doctor, physiotherapist or qualified coach; if you have a chronic condition, are pregnant, injured or returning after a long break, consult a professional first. Nutrition figures are the usual ranges for healthy adults.'
+},
+fr:{
+ 'doc.title':'Forme : entraînement, programmes & alimentation',
+ 'hdr.badge':'INITIATION À LA FORME','hdr.title':'La forme : entraînement, programmes et alimentation',
+ 'intro':'S’entraîner ne sert pas qu’à l’apparence. Le renforcement musculaire densifie les os, stabilise les articulations et améliore le métabolisme ; le cardio entretient le cœur et les poumons ; la souplesse et la mobilité rendent le mouvement plus libre. Quelques principes, une poignée de mouvements de base et un programme sensé suivi avec régularité suffisent pour progresser nettement en quelques mois.',
+ 'intro2':'Ce volume suit l’ordre d’apprentissage : principes et vocabulaire, types d’entraînement et grands schémas de mouvement, leçons pas à pas pour huit exercices de base, puis programmes du débutant à l’intermédiaire, cardio et fréquence cardiaque, nutrition et récupération, gestion de l’alimentation (calculateur de calories, menus types, repas à l’extérieur, étiquettes) et repères officiels de Taïwan, de la France et de l’OMS, et enfin idées reçues et sécurité.',
+ 'footer':'Une référence d’initiation. Ces informations générales ne remplacent pas l’avis personnalisé d’un médecin, d’un kinésithérapeute ou d’un coach qualifié ; en cas de maladie chronique, de grossesse, de blessure ou de longue interruption, consultez d’abord un professionnel. Les valeurs nutritionnelles sont les fourchettes usuelles pour un adulte en bonne santé.'
+}},
+sections:[
+
+/* ── 1. Principles ── */
+{ id:'basics', i:'fa-compass-drafting', c:C1,
+  nav:{zh:'原則', en:'Principles', fr:'Principes'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'訓練原則與基本名詞', en:'Training principles and vocabulary', fr:'Principes d’entraînement et vocabulaire'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'身體會適應你給它的壓力：舉得比以前重一點，肌肉與神經就會變強，好讓下次更輕鬆。所以健身的核心只有一句話：<strong class="text-white">給予足夠但可恢復的刺激，並且隨時間慢慢加重。</strong>以下五個原則都是這句話的延伸。',
+    en:'The body adapts to the stress you give it: lift a little more than before and muscles and nerves get stronger so next time is easier. The whole of training fits in one sentence: <strong class="text-white">give a stimulus that is sufficient but recoverable, and increase it slowly over time.</strong> The five principles below unpack it.',
+    fr:'Le corps s’adapte au stress qu’on lui impose : soulevez un peu plus qu’avant, et muscles et nerfs se renforcent pour que la prochaine fois soit plus facile. Tout l’entraînement tient en une phrase : <strong class="text-white">donner un stimulus suffisant mais récupérable, et l’augmenter lentement.</strong> Les cinq principes ci-dessous la développent.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-arrow-trend-up', t:{zh:'漸進超負荷', en:'Progressive overload', fr:'Surcharge progressive'},
+      p:{zh:'每隔一段時間讓訓練稍微變難：加重量、加次數、加組數，或同樣重量做得更標準、休息更短。沒有漸進，身體就沒有理由改變。', en:'Make training slightly harder over time: more weight, more reps, more sets, or the same load with better form or shorter rests. Without progression the body has no reason to change.', fr:'Rendre l’entraînement un peu plus difficile au fil du temps : plus de charge, de répétitions, de séries, ou la même charge mieux exécutée ou avec moins de repos. Sans progression, le corps n’a aucune raison de changer.'} },
+    { i:'fa-bullseye', t:{zh:'特異性', en:'Specificity', fr:'Spécificité'},
+      p:{zh:'練什麼就進步什麼。想跑得遠就要跑，想深蹲變重就要蹲。訓練要對準目標。', en:'You get better at what you practise. To run further you must run; to squat more you must squat. Aim training at the goal.', fr:'On progresse dans ce que l’on pratique. Pour courir plus loin, il faut courir ; pour squatter plus lourd, il faut squatter.'} },
+    { i:'fa-bed', t:{zh:'恢復', en:'Recovery', fr:'Récupération'},
+      p:{zh:'變強發生在休息時，不是訓練當下。同一肌群通常間隔 48–72 小時再練；睡眠與蛋白質不足，訓練效果會大打折扣。', en:'You get stronger while resting, not while training. Leave a muscle group 48–72 hours before working it hard again; poor sleep and low protein blunt the results.', fr:'On se renforce au repos, pas pendant la séance. Laissez 48 à 72 heures avant de solliciter à nouveau un groupe musculaire ; un mauvais sommeil et peu de protéines freinent les résultats.'} },
+    { i:'fa-calendar-check', t:{zh:'持續性', en:'Consistency', fr:'Régularité'},
+      p:{zh:'一週練三次、持續一年，遠勝於一週練六次、撐三週。選一份你做得到的課表比選「最好」的課表重要。', en:'Three sessions a week for a year beats six a week for three weeks. A programme you can stick to matters more than the “best” one.', fr:'Trois séances par semaine pendant un an valent mieux que six pendant trois semaines. Un programme tenable compte plus que le « meilleur ».'} },
+    { i:'fa-fingerprint', t:{zh:'個別差異', en:'Individual differences', fr:'Différences individuelles'},
+      p:{zh:'身高、四肢比例、訓練年資、作息都會影響適合的動作與份量。別人的課表是起點，不是標準答案。', en:'Height, limb proportions, training age and lifestyle change which exercises and volumes suit you. Someone else’s programme is a starting point, not the answer.', fr:'Taille, proportions, ancienneté et mode de vie changent les exercices et volumes adaptés. Le programme d’un autre est un point de départ, pas la réponse.'} },
+    { i:'fa-scale-unbalanced', t:{zh:'最低有效劑量', en:'Minimum effective dose', fr:'Dose minimale efficace'},
+      p:{zh:'新手每肌群每週約 10 組就有很好的效果。做太多只會累積疲勞，不會更快進步。', en:'For beginners, about 10 hard sets per muscle per week already works very well. More mostly adds fatigue, not progress.', fr:'Pour un débutant, environ 10 séries difficiles par muscle et par semaine fonctionnent déjà très bien. Davantage ajoute surtout de la fatigue.'} },
+  ]},
+  { type:'h3', t:{zh:'必懂的名詞', en:'Words you need', fr:'Le vocabulaire indispensable'} },
+  { type:'table', head:[{zh:'名詞', en:'Term', fr:'Terme'}, {zh:'意思', en:'Meaning', fr:'Sens'}, {zh:'例子', en:'Example', fr:'Exemple'}], rows:[
+    ['Rep / Set', {zh:'次數／組數：連續做一次動作是一下（rep），連續做幾下後休息叫一組（set）。', en:'One repetition of a movement is a rep; a run of reps followed by rest is a set.', fr:'Une exécution est une répétition ; un enchaînement de répétitions suivi d’un repos est une série.'}, {zh:'3×10＝做三組、每組十下', en:'3×10 = three sets of ten', fr:'3×10 = trois séries de dix'}],
+    ['1RM', {zh:'只能做一下的最大重量。用來換算強度，新手不必真的去測。', en:'The heaviest load you can lift once. Used to express intensity; beginners need not test it.', fr:'La charge maximale soulevée une fois. Sert à exprimer l’intensité ; inutile de la tester en débutant.'}, {zh:'70% 1RM 約可做 10 下', en:'70% 1RM ≈ 10 reps', fr:'70 % 1RM ≈ 10 répétitions'}],
+    ['RPE / RIR', {zh:'自覺強度（1–10）與保留次數。RPE 8＝還能再做 2 下（RIR 2）。新手大多停在 RIR 1–3。', en:'Rate of perceived exertion (1–10) and reps in reserve. RPE 8 = two more reps possible (RIR 2). Most sets should end at RIR 1–3.', fr:'Effort perçu (1–10) et répétitions en réserve. RPE 8 = encore deux possibles (RIR 2). La plupart des séries s’arrêtent à RIR 1–3.'}, {zh:'「做到 RPE 8」', en:'“Work up to RPE 8”', fr:'« Monter à RPE 8 »'}],
+    [{zh:'複合／孤立動作', en:'Compound / isolation', fr:'Polyarticulaire / isolation'}, {zh:'複合動作同時動多個關節與肌群（深蹲、划船），孤立動作只動一個關節（二頭彎舉）。課表以複合動作為主。', en:'Compound lifts move several joints and muscles (squat, row); isolation moves one joint (biceps curl). Programmes are built on compounds.', fr:'Les polyarticulaires mobilisent plusieurs articulations (squat, rowing) ; l’isolation une seule (curl biceps). On construit un programme sur les premiers.'}, {zh:'深蹲 vs 腿伸展', en:'Squat vs leg extension', fr:'Squat vs leg extension'}],
+    [{zh:'離心／向心', en:'Eccentric / concentric', fr:'Excentrique / concentrique'}, {zh:'肌肉拉長下放的階段是離心，收縮推起的階段是向心。離心控制慢一點，更安全也更有刺激。', en:'Lowering while the muscle lengthens is eccentric; lifting while it shortens is concentric. A controlled eccentric is safer and more effective.', fr:'La descente, muscle qui s’allonge, est excentrique ; la montée, concentrique. Une descente contrôlée est plus sûre et plus efficace.'}, {zh:'臥推：放下是離心', en:'Bench: lowering is eccentric', fr:'Développé couché : la descente est excentrique'}],
+    [{zh:'訓練量', en:'Volume', fr:'Volume'}, {zh:'通常以「每肌群每週的有效組數」計算。', en:'Usually counted as hard sets per muscle per week.', fr:'Généralement compté en séries difficiles par muscle et par semaine.'}, {zh:'胸：每週 10–20 組', en:'Chest: 10–20 sets/week', fr:'Pectoraux : 10–20 séries/semaine'}],
+    [{zh:'超級組', en:'Superset', fr:'Superset'}, {zh:'兩個動作接著做、中間不休息，常用來節省時間。', en:'Two exercises back to back with no rest between, often to save time.', fr:'Deux exercices enchaînés sans repos, souvent pour gagner du temps.'}, {zh:'划船＋伏地挺身', en:'Row + push-up', fr:'Rowing + pompes'}],
+    [{zh:'減量週', en:'Deload', fr:'Semaine de décharge'}, {zh:'每 4–8 週安排一週減少重量或組數，讓累積的疲勞消退。', en:'Every 4–8 weeks, a lighter week with less load or fewer sets to shed accumulated fatigue.', fr:'Toutes les 4 à 8 semaines, une semaine allégée pour éliminer la fatigue accumulée.'}, {zh:'組數減半', en:'Halve the sets', fr:'Séries divisées par deux'}],
+  ]},
+]},
+
+/* ── 2. Types ── */
+{ id:'types', i:'fa-shapes', c:C2,
+  nav:{zh:'訓練類型', en:'Types', fr:'Types'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'訓練類型：你要練的是哪一種能力', en:'Kinds of training: which quality are you building', fr:'Les types d’entraînement : quelle qualité développer'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'世界衛生組織建議成人每週至少 150–300 分鐘中等強度有氧，加上至少兩天的肌力訓練。健康的課表會混合以下幾種，比例依目標調整。',
+    en:'The WHO recommends adults do at least 150–300 minutes of moderate aerobic activity a week plus strength training on at least two days. A healthy programme mixes the kinds below, weighted by your goal.',
+    fr:'L’OMS recommande aux adultes au moins 150 à 300 minutes d’activité aérobie modérée par semaine et du renforcement musculaire au moins deux jours. Un programme sain mélange les types ci-dessous selon l’objectif.'} },
+  { type:'dia', k:'reps' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-weight-hanging', t:{zh:'肌力訓練', en:'Strength', fr:'Force'}, tag:{zh:'1–5 下・休息 2–5 分', en:'1–5 reps · rest 2–5 min', fr:'1–5 rép. · repos 2–5 min'},
+      p:{zh:'讓神經系統學會一次動員更多肌纖維，目標是舉得更重。以深蹲、硬舉、臥推、肩推等大動作為主。', en:'Teaches the nervous system to recruit more fibres at once; the aim is to lift heavier. Built on squats, deadlifts, bench and overhead press.', fr:'Apprend au système nerveux à recruter plus de fibres à la fois ; l’objectif est de soulever plus lourd. Squat, soulevé de terre, développé couché et militaire.'} },
+    { i:'fa-expand', t:{zh:'肌肥大訓練', en:'Hypertrophy', fr:'Hypertrophie'}, tag:{zh:'6–20 下・休息 1–3 分', en:'6–20 reps · rest 1–3 min', fr:'6–20 rép. · repos 1–3 min'},
+      p:{zh:'目標是讓肌肉變大、線條明顯。只要接近力竭，5–30 下都能長肌肉，6–12 下最省時。', en:'Aims to grow muscle and shape. Anything from 5 to 30 reps builds muscle if taken near failure; 6–12 is the most time-efficient.', fr:'Vise le volume et le dessin musculaire. De 5 à 30 répétitions, tout fonctionne près de l’échec ; 6 à 12 est le plus économe en temps.'} },
+    { i:'fa-battery-full', t:{zh:'肌耐力', en:'Muscular endurance', fr:'Endurance musculaire'}, tag:{zh:'15 下以上・短休息', en:'15+ reps · short rests', fr:'15 rép. et plus · repos courts'},
+      p:{zh:'讓肌肉能長時間反覆出力，常見於循環訓練、徒手訓練與團體課。', en:'Lets muscles work repeatedly for longer; common in circuits, bodyweight work and group classes.', fr:'Permet de répéter l’effort plus longtemps ; fréquent en circuits, poids du corps et cours collectifs.'} },
+    { i:'fa-heart-pulse', t:{zh:'有氧（LISS／Zone 2）', en:'Steady cardio (LISS / Zone 2)', fr:'Cardio continu (LISS / zone 2)'}, tag:{zh:'30–60 分・可以說話', en:'30–60 min · conversational', fr:'30–60 min · on peut parler'},
+      p:{zh:'低到中強度、長時間：快走、慢跑、單車、游泳。打好心肺底子，對恢復也有幫助。', en:'Low-to-moderate and long: brisk walking, jogging, cycling, swimming. Builds the aerobic base and aids recovery.', fr:'Intensité faible à modérée, longue durée : marche rapide, footing, vélo, natation. Construit la base aérobie et aide à récupérer.'} },
+    { i:'fa-bolt', t:{zh:'高強度間歇（HIIT）', en:'Interval training (HIIT)', fr:'Fractionné (HIIT)'}, tag:{zh:'10–25 分・衝刺與休息交替', en:'10–25 min · hard/easy bouts', fr:'10–25 min · effort/repos alternés'},
+      p:{zh:'例如 30 秒衝刺、90 秒慢走，重複 6–10 次。省時但累，一週 1–2 次就夠，避開腿部重訓的隔天。', en:'For example 30 s hard, 90 s easy, repeated 6–10 times. Time-efficient but taxing: once or twice a week, not the day after heavy legs.', fr:'Par exemple 30 s intenses, 90 s faciles, 6 à 10 fois. Efficace mais éprouvant : une à deux fois par semaine, pas le lendemain des jambes.'} },
+    { i:'fa-child-reaching', t:{zh:'柔軟度與活動度', en:'Flexibility & mobility', fr:'Souplesse & mobilité'}, tag:{zh:'每次 5–15 分', en:'5–15 min a session', fr:'5–15 min par séance'},
+      p:{zh:'柔軟度是肌肉能被拉多長，活動度是能在那個範圍裡主動控制。動態伸展放訓練前，靜態伸展放訓練後或另外安排。', en:'Flexibility is how far a muscle can lengthen; mobility is control through that range. Dynamic stretches before training, static ones after or on their own.', fr:'La souplesse est l’amplitude d’allongement ; la mobilité, le contrôle dans cette amplitude. Étirements dynamiques avant, statiques après ou à part.'} },
+  ]},
+]},
+
+/* ── 3. Movement patterns ── */
+{ id:'patterns', i:'fa-person-running', c:C3,
+  nav:{zh:'動作模式', en:'Patterns', fr:'Schémas'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'七種動作模式與主要肌群', en:'Seven movement patterns and the muscles they train', fr:'Sept schémas de mouvement et leurs muscles'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'與其背幾百個動作，不如記住七種「動作模式」。每次訓練從中挑選，一週內每種都練到，全身就不會漏掉。',
+    en:'Rather than memorise hundreds of exercises, learn seven movement patterns. Pick from them each session and cover all seven in a week, and no part of the body is left out.',
+    fr:'Plutôt que mémoriser des centaines d’exercices, retenez sept schémas de mouvement. Couvrez-les tous dans la semaine et aucune partie du corps n’est oubliée.'} },
+  { type:'cards', cols:4, items:[
+    { i:'fa-arrow-down-up-across-line', t:{zh:'蹲（Squat）', en:'Squat', fr:'Squat'}, tag:{zh:'股四頭、臀、內收', en:'Quads, glutes, adductors', fr:'Quadriceps, fessiers, adducteurs'},
+      p:{zh:'膝與髖同時彎曲。', en:'Knees and hips bend together.', fr:'Genoux et hanches fléchissent ensemble.'},
+      l:[{zh:'高腳杯深蹲、槓鈴深蹲、腿推', en:'Goblet squat, back squat, leg press', fr:'Squat gobelet, squat barre, presse'}] },
+    { i:'fa-person-arrow-down-to-line', t:{zh:'髖鉸鏈（Hinge）', en:'Hinge', fr:'Charnière de hanche'}, tag:{zh:'臀、腿後、下背', en:'Glutes, hamstrings, lower back', fr:'Fessiers, ischios, lombaires'},
+      p:{zh:'以髖為軸前傾，膝只微彎。', en:'Bend at the hips with only a soft knee.', fr:'Pencher depuis la hanche, genoux légèrement fléchis.'},
+      l:[{zh:'硬舉、羅馬尼亞硬舉、臀推、壺鈴擺盪', en:'Deadlift, RDL, hip thrust, kettlebell swing', fr:'Soulevé de terre, RDL, hip thrust, swing'}] },
+    { i:'fa-shoe-prints', t:{zh:'單腳／弓步（Lunge）', en:'Lunge / single leg', fr:'Fente / unilatéral'}, tag:{zh:'臀、股四頭、平衡', en:'Glutes, quads, balance', fr:'Fessiers, quadriceps, équilibre'},
+      p:{zh:'一次一腳，修正左右不平衡。', en:'One leg at a time, fixing left-right imbalances.', fr:'Une jambe à la fois, pour corriger les déséquilibres.'},
+      l:[{zh:'弓步、保加利亞分腿蹲、登階', en:'Lunges, Bulgarian split squat, step-ups', fr:'Fentes, squat bulgare, step-up'}] },
+    { i:'fa-hand-back-fist', t:{zh:'水平推', en:'Horizontal push', fr:'Poussée horizontale'}, tag:{zh:'胸、前三角、三頭', en:'Chest, front delts, triceps', fr:'Pectoraux, deltoïdes ant., triceps'},
+      p:{zh:'把重量往身體前方推。', en:'Push away in front of the body.', fr:'Pousser devant soi.'},
+      l:[{zh:'伏地挺身、臥推、啞鈴臥推', en:'Push-up, bench press, dumbbell press', fr:'Pompes, développé couché, haltères'}] },
+    { i:'fa-arrow-up', t:{zh:'垂直推', en:'Vertical push', fr:'Poussée verticale'}, tag:{zh:'肩、三頭', en:'Shoulders, triceps', fr:'Épaules, triceps'},
+      p:{zh:'把重量推過頭頂。', en:'Press overhead.', fr:'Pousser au-dessus de la tête.'},
+      l:[{zh:'站姿肩推、坐姿啞鈴肩推', en:'Standing press, seated dumbbell press', fr:'Développé militaire, haltères assis'}] },
+    { i:'fa-hand-holding', t:{zh:'水平拉', en:'Horizontal pull', fr:'Tirage horizontal'}, tag:{zh:'中背、後三角、二頭', en:'Mid back, rear delts, biceps', fr:'Milieu du dos, deltoïdes post., biceps'},
+      p:{zh:'把重量拉向身體，改善駝背與圓肩。', en:'Pull towards the body; good against rounded shoulders.', fr:'Tirer vers soi ; utile contre les épaules enroulées.'},
+      l:[{zh:'啞鈴划船、坐姿划船、反向划船', en:'Dumbbell row, cable row, inverted row', fr:'Rowing haltère, poulie, rowing inversé'}] },
+    { i:'fa-arrow-down', t:{zh:'垂直拉', en:'Vertical pull', fr:'Tirage vertical'}, tag:{zh:'背闊、二頭', en:'Lats, biceps', fr:'Grand dorsal, biceps'},
+      p:{zh:'從上方往下拉，打造背部寬度。', en:'Pull down from above; builds back width.', fr:'Tirer depuis le haut ; élargit le dos.'},
+      l:[{zh:'滑輪下拉、引體向上、彈力帶輔助引體', en:'Lat pulldown, pull-up, band-assisted pull-up', fr:'Tirage poulie haute, traction, traction assistée'}] },
+    { i:'fa-circle-dot', t:{zh:'核心與攜行', en:'Core & carry', fr:'Gainage & portés'}, tag:{zh:'腹、腹斜、深層穩定', en:'Abs, obliques, deep stabilisers', fr:'Abdos, obliques, stabilisateurs'},
+      p:{zh:'核心的主要工作是「抵抗」動作，保持軀幹穩定。', en:'The core’s main job is to resist movement and keep the trunk stable.', fr:'Le rôle premier du tronc est de résister au mouvement.'},
+      l:[{zh:'棒式、死蟲、側棒式、農夫走路', en:'Plank, dead bug, side plank, farmer’s carry', fr:'Planche, dead bug, planche latérale, marche du fermier'}] },
+  ]},
+]},
+
+/* ── 4. Lessons ── */
+{ id:'lessons', i:'fa-chalkboard-user', c:C4,
+  nav:{zh:'動作教學', en:'Lessons', fr:'Leçons'},
+  eyebrow:{zh:'第四章・教學', en:'Chapter 4 · Lessons', fr:'Chapitre 4 · Leçons'},
+  h2:{zh:'八個基本動作，一步一步做', en:'Eight basic exercises, step by step', fr:'Huit exercices de base, pas à pas'},
+  blocks:[
+  { type:'note', p:{
+    zh:'學新動作時，先用很輕的重量或徒手做，錄影從側面看自己。動作穩定、連續三次訓練都做得標準後，再開始加重。每個動作下方列出最常見的錯誤。',
+    en:'Learn each movement with a very light load or bodyweight, and film yourself from the side. Add weight only once the form has been solid for three sessions in a row. Common mistakes are listed under each exercise.',
+    fr:'Apprenez chaque mouvement très léger ou au poids du corps, et filmez-vous de profil. N’ajoutez de la charge qu’après trois séances consécutives avec une bonne technique. Les erreurs courantes sont listées sous chaque exercice.'} },
+  { type:'steps', items:[
+    { t:{zh:'高腳杯深蹲（Goblet Squat）', en:'Goblet squat', fr:'Squat gobelet'},
+      p:{zh:'雙手捧一顆啞鈴或壺鈴貼在胸前。雙腳略寬於肩、腳尖外開 15–30°。吸氣撐住腹部，髖往後往下坐，膝蓋順著腳尖方向推開，蹲到大腿至少與地面平行，手肘落在膝蓋內側。腳掌全貼地，從中足推地站起，吐氣。', en:'Hold a dumbbell or kettlebell against your chest. Feet a little wider than shoulders, toes out 15–30°. Breathe in and brace, sit the hips back and down, push the knees out over the toes, and descend until thighs are at least parallel, elbows inside the knees. Keep the whole foot down and drive up through mid-foot, breathing out.', fr:'Tenez un haltère ou un kettlebell contre la poitrine. Pieds un peu plus larges que les épaules, pointes ouvertes de 15 à 30°. Inspirez et gainez, descendez les hanches en arrière et en bas, poussez les genoux dans l’axe des pieds jusqu’aux cuisses parallèles, coudes à l’intérieur des genoux. Pied entier au sol, remontez en poussant par le milieu du pied en expirant.'},
+      l:[{zh:'錯誤：膝蓋內夾、腳跟離地、下背在最低點捲起。', en:'Mistakes: knees caving in, heels lifting, lower back rounding at the bottom.', fr:'Erreurs : genoux qui rentrent, talons qui décollent, bas du dos qui s’arrondit en bas.'}] },
+    { t:{zh:'羅馬尼亞硬舉（RDL）', en:'Romanian deadlift', fr:'Soulevé de terre roumain'},
+      p:{zh:'站直、雙手持槓或啞鈴在大腿前。膝蓋微彎後固定角度，臀部往後推，像用屁股關車門，重量沿著大腿滑下，背保持平直。感到大腿後側明顯拉緊（約到小腿中段）就停，夾臀把髖推回站直。', en:'Stand tall with a bar or dumbbells against your thighs. Soften the knees and keep that angle, push the hips back as if closing a car door with your bottom, sliding the weight down the thighs with a flat back. Stop when the hamstrings pull hard (around mid-shin), then squeeze the glutes and drive the hips forward.', fr:'Debout, barre ou haltères contre les cuisses. Genoux légèrement fléchis et fixes, poussez les hanches en arrière comme pour fermer une portière avec les fesses, la charge glissant le long des cuisses, dos plat. Arrêtez quand les ischios tirent fort (vers mi-tibia), puis serrez les fessiers et ramenez les hanches.'},
+      l:[{zh:'錯誤：把它做成深蹲（膝蓋彎太多）、圓背、重量離身體太遠。', en:'Mistakes: turning it into a squat, rounding the back, letting the weight drift away from the legs.', fr:'Erreurs : en faire un squat, arrondir le dos, éloigner la charge des jambes.'}] },
+    { t:{zh:'伏地挺身（Push-up）', en:'Push-up', fr:'Pompe'},
+      p:{zh:'雙手略寬於肩、手指朝前。從頭到腳跟成一直線，收緊腹部與臀部。下放時手肘與身體約呈 45°，胸口接近地面，再推起。做不到標準版就把手放在桌子或椅子上，越高越簡單。', en:'Hands slightly wider than shoulders, fingers forward. Make a straight line from head to heels, abs and glutes tight. Lower with elbows about 45° from the body until the chest nears the floor, then press up. If it is too hard, put your hands on a table or bench: the higher, the easier.', fr:'Mains un peu plus larges que les épaules, doigts vers l’avant. Corps aligné de la tête aux talons, abdos et fessiers serrés. Descendez coudes à environ 45° du buste jusqu’à frôler le sol, puis poussez. Trop dur ? Mains sur une table ou un banc : plus c’est haut, plus c’est facile.'},
+      l:[{zh:'錯誤：腰塌下去、手肘向外張成 90°、只做一半幅度。', en:'Mistakes: sagging hips, elbows flared to 90°, half-range reps.', fr:'Erreurs : bassin qui s’affaisse, coudes à 90°, demi-amplitude.'}] },
+    { t:{zh:'單臂啞鈴划船', en:'One-arm dumbbell row', fr:'Rowing haltère à un bras'},
+      p:{zh:'一手一膝撐在椅子上，背部平行地面。另一手持啞鈴自然垂下，先把肩胛骨往後收，再把手肘往後上方拉向髖部，停一下再慢慢放回。', en:'Support one hand and knee on a bench, back parallel to the floor. Let the dumbbell hang, draw the shoulder blade back first, then pull the elbow back and up towards the hip, pause, and lower slowly.', fr:'Une main et un genou sur un banc, dos parallèle au sol. Haltère pendant, ramenez d’abord l’omoplate, puis tirez le coude vers la hanche, marquez une pause et redescendez lentement.'},
+      l:[{zh:'錯誤：聳肩、身體扭轉借力、用手臂拉而不是背。', en:'Mistakes: shrugging, twisting the torso, pulling with the arm instead of the back.', fr:'Erreurs : hausser l’épaule, tourner le buste, tirer avec le bras plutôt que le dos.'}] },
+    { t:{zh:'站姿啞鈴肩推', en:'Standing dumbbell press', fr:'Développé haltères debout'},
+      p:{zh:'雙腳與髖同寬，啞鈴放在肩膀高度、掌心朝前或相對。夾臀收腹，避免後仰，把啞鈴往上推到手臂伸直、在耳朵旁或略前方，再慢慢放回肩膀。', en:'Feet hip-width, dumbbells at shoulder height, palms forward or facing. Squeeze glutes and brace so you do not lean back, press up until the arms are straight beside or just in front of the ears, then lower to the shoulders.', fr:'Pieds largeur de hanches, haltères à hauteur d’épaules, paumes vers l’avant ou face à face. Serrez fessiers et abdos pour ne pas vous cambrer, poussez jusqu’aux bras tendus près des oreilles, puis redescendez.'},
+      l:[{zh:'錯誤：腰往後凹、聳肩、只推到頭頂一半。', en:'Mistakes: arching the lower back, shrugging, stopping halfway.', fr:'Erreurs : cambrer, hausser les épaules, s’arrêter à mi-course.'}] },
+    { t:{zh:'臀推（Hip Thrust）', en:'Hip thrust', fr:'Hip thrust'},
+      p:{zh:'上背靠在長椅邊緣，雙腳踩地與髖同寬，重量放在髖骨上（初學可徒手或用啞鈴）。下巴微收，用腳跟推地把髖推高，到頂端時小腿垂直地面、身體從膝到肩成一直線，夾臀停一秒。', en:'Upper back against a bench, feet hip-width, load on the hips (bodyweight or a dumbbell to start). Tuck the chin slightly, drive through the heels to raise the hips; at the top shins are vertical and knees-to-shoulders form a line. Squeeze for a second.', fr:'Haut du dos contre un banc, pieds largeur de hanches, charge sur le bassin (poids du corps ou haltère au début). Menton légèrement rentré, poussez dans les talons ; en haut, tibias verticaux et ligne genoux-épaules. Serrez une seconde.'},
+      l:[{zh:'錯誤：頂端用腰反折代替髖伸直、腳離臀太遠變成練腿後。', en:'Mistakes: arching the lower back instead of extending the hips, feet so far out it becomes a hamstring exercise.', fr:'Erreurs : cambrer au lieu d’étendre la hanche, pieds trop loin (ce sont alors les ischios qui travaillent).'}] },
+    { t:{zh:'棒式（Plank）', en:'Plank', fr:'Planche'},
+      p:{zh:'手肘在肩膀正下方，前臂撐地，雙腳併攏或與髖同寬。骨盆微微後傾（尾骨往腳跟方向捲），夾臀、肋骨下沉，像要把手肘拉向腳尖。維持 20–45 秒、品質優先。', en:'Elbows under the shoulders, forearms down, feet together or hip-width. Tilt the pelvis slightly back (tailbone towards heels), squeeze glutes, ribs down, as if pulling elbows towards toes. Hold 20–45 s; quality before duration.', fr:'Coudes sous les épaules, avant-bras au sol, pieds joints ou largeur de hanches. Bassin en légère rétroversion, fessiers serrés, côtes basses, comme pour tirer les coudes vers les pieds. Tenez 20 à 45 s, la qualité avant la durée.'},
+      l:[{zh:'錯誤：腰塌、屁股翹太高、憋氣。撐兩分鐘不如撐三十秒標準的。', en:'Mistakes: sagging, hips too high, holding the breath. Thirty good seconds beat two sloppy minutes.', fr:'Erreurs : dos creusé, fesses trop hautes, apnée. Trente bonnes secondes valent mieux que deux minutes bâclées.'}] },
+    { t:{zh:'滑輪下拉（Lat Pulldown）', en:'Lat pulldown', fr:'Tirage vertical à la poulie'},
+      p:{zh:'坐好、大腿固定在護墊下，握距略寬於肩。胸口挺起、身體微微後傾 10–15°，先把肩膀往下壓，再把手肘往下往後拉，讓橫桿到上胸，慢慢放回到手臂伸直。', en:'Sit with thighs under the pads, grip slightly wider than shoulders. Chest up, lean back 10–15°, set the shoulders down first, then drive the elbows down and back until the bar reaches the upper chest; return slowly to straight arms.', fr:'Assis, cuisses sous les boudins, prise un peu plus large que les épaules. Poitrine sortie, légère inclinaison de 10 à 15°, abaissez d’abord les épaules, puis tirez les coudes vers le bas jusqu’au haut de la poitrine ; remontez lentement.'},
+      l:[{zh:'錯誤：大幅後仰用體重拉、拉到頸後、聳肩。', en:'Mistakes: swinging back to use bodyweight, pulling behind the neck, shrugging.', fr:'Erreurs : se balancer en arrière, tirer derrière la nuque, hausser les épaules.'}] },
+  ]},
+  { type:'h3', t:{zh:'暖身與緩和：每次都要做', en:'Warm-up and cool-down: every time', fr:'Échauffement et retour au calme : à chaque fois'} },
+  { type:'steps', items:[
+    { t:{zh:'一般暖身 5 分鐘', en:'General warm-up, 5 min', fr:'Échauffement général, 5 min'}, p:{zh:'快走、飛輪或跳繩，讓體溫上升、微微出汗。', en:'Brisk walk, bike or skipping until you are warm and lightly sweating.', fr:'Marche rapide, vélo ou corde jusqu’à être chaud et légèrement en sueur.'} },
+    { t:{zh:'動態活動 5 分鐘', en:'Dynamic mobility, 5 min', fr:'Mobilité dynamique, 5 min'}, p:{zh:'貓牛式、世界上最棒的伸展、髖關節繞圈、手臂繞環、徒手深蹲各 8–10 下。', en:'Cat-cow, world’s greatest stretch, hip circles, arm circles, bodyweight squats, 8–10 each.', fr:'Chat-vache, « world’s greatest stretch », cercles de hanches et de bras, squats au poids du corps, 8 à 10 chacun.'} },
+    { t:{zh:'專項暖身組', en:'Ramp-up sets', fr:'Séries de montée'}, p:{zh:'第一個大動作先用空槓或 40%、60%、80% 的工作重量各做幾下，再進正式組。', en:'For the first big lift, do a few reps with the empty bar, then about 40%, 60% and 80% of the working weight before the real sets.', fr:'Pour le premier gros mouvement, quelques répétitions à vide, puis à 40, 60 et 80 % de la charge de travail.'} },
+    { t:{zh:'緩和與靜態伸展', en:'Cool-down and static stretches', fr:'Retour au calme et étirements'}, p:{zh:'慢走 3–5 分鐘讓心跳下降，再對今天練到的部位做靜態伸展，每處 20–30 秒、不彈震。', en:'Walk 3–5 minutes to bring the heart rate down, then hold static stretches for the muscles you trained, 20–30 s each, no bouncing.', fr:'Marchez 3 à 5 minutes, puis étirez les muscles travaillés, 20 à 30 s chacun, sans à-coups.'} },
+  ]},
+]},
+
+/* ── 5. Programmes ── */
+{ id:'programs', i:'fa-calendar-week', c:C5,
+  nav:{zh:'課表', en:'Programmes', fr:'Programmes'},
+  eyebrow:{zh:'第五章・教學', en:'Chapter 5 · Lessons', fr:'Chapitre 5 · Leçons'},
+  h2:{zh:'課表：從新手到進階', en:'Programmes from beginner to intermediate', fr:'Programmes du débutant à l’intermédiaire'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'下面三份課表都可以直接照做。重量選擇的方法：做到規定次數時還能再做 1–3 下（RPE 7–9）。當每一組都能做到範圍上限，下次就加重（上半身約 1–2 公斤，下半身約 2–5 公斤），次數回到下限重新累積。這叫「雙重漸進」。',
+    en:'All three programmes below can be followed as written. Choose a weight you could do 1–3 more reps with (RPE 7–9). When every set reaches the top of the rep range, add weight next time (about 1–2 kg upper body, 2–5 kg lower body) and start again from the bottom of the range. This is “double progression”.',
+    fr:'Les trois programmes ci-dessous s’appliquent tels quels. Choisissez une charge avec 1 à 3 répétitions en réserve (RPE 7–9). Quand toutes les séries atteignent le haut de la fourchette, augmentez la charge (1–2 kg en haut du corps, 2–5 kg en bas) et repartez du bas de la fourchette : c’est la « double progression ».'} },
+  { type:'h3', t:{zh:'A. 新手全身課表（每週 3 天，例如一、三、五）', en:'A. Beginner full body (3 days a week, e.g. Mon/Wed/Fri)', fr:'A. Débutant corps entier (3 jours, par ex. lun/mer/ven)'} },
+  { type:'table', head:[{zh:'動作', en:'Exercise', fr:'Exercice'}, {zh:'第 1 天', en:'Day 1', fr:'Jour 1'}, {zh:'第 2 天', en:'Day 2', fr:'Jour 2'}, {zh:'第 3 天', en:'Day 3', fr:'Jour 3'}], rows:[
+    [{zh:'蹲', en:'Squat', fr:'Squat'}, {zh:'高腳杯深蹲 3×8–12', en:'Goblet squat 3×8–12', fr:'Squat gobelet 3×8–12'}, {zh:'保加利亞分腿蹲 3×8–10／腳', en:'Bulgarian split squat 3×8–10/leg', fr:'Squat bulgare 3×8–10/jambe'}, {zh:'高腳杯深蹲 3×8–12', en:'Goblet squat 3×8–12', fr:'Squat gobelet 3×8–12'}],
+    [{zh:'髖鉸鏈', en:'Hinge', fr:'Charnière'}, {zh:'羅馬尼亞硬舉 3×8–12', en:'RDL 3×8–12', fr:'RDL 3×8–12'}, {zh:'臀推 3×10–15', en:'Hip thrust 3×10–15', fr:'Hip thrust 3×10–15'}, {zh:'羅馬尼亞硬舉 3×8–12', en:'RDL 3×8–12', fr:'RDL 3×8–12'}],
+    [{zh:'推', en:'Push', fr:'Poussée'}, {zh:'伏地挺身 3×最多', en:'Push-up 3×max', fr:'Pompes 3×max'}, {zh:'站姿肩推 3×8–12', en:'Standing press 3×8–12', fr:'Développé debout 3×8–12'}, {zh:'啞鈴臥推 3×8–12', en:'Dumbbell bench 3×8–12', fr:'Développé haltères 3×8–12'}],
+    [{zh:'拉', en:'Pull', fr:'Tirage'}, {zh:'單臂划船 3×10／手', en:'One-arm row 3×10/arm', fr:'Rowing un bras 3×10/bras'}, {zh:'滑輪下拉 3×10–12', en:'Lat pulldown 3×10–12', fr:'Tirage vertical 3×10–12'}, {zh:'坐姿划船 3×10–12', en:'Cable row 3×10–12', fr:'Rowing poulie 3×10–12'}],
+    [{zh:'核心', en:'Core', fr:'Gainage'}, {zh:'棒式 3×30 秒', en:'Plank 3×30 s', fr:'Planche 3×30 s'}, {zh:'死蟲 3×8／側', en:'Dead bug 3×8/side', fr:'Dead bug 3×8/côté'}, {zh:'農夫走路 3×30 公尺', en:'Farmer’s carry 3×30 m', fr:'Marche du fermier 3×30 m'}],
+    [{zh:'休息', en:'Rest', fr:'Repos'}, {zh:'組間 90–120 秒', en:'90–120 s between sets', fr:'90–120 s entre séries'}, {zh:'組間 90–120 秒', en:'90–120 s between sets', fr:'90–120 s entre séries'}, {zh:'組間 90–120 秒', en:'90–120 s between sets', fr:'90–120 s entre séries'}],
+  ]},
+  { type:'h3', t:{zh:'B. 上下半身分化（每週 4 天，練 3–6 個月後）', en:'B. Upper/lower split (4 days, after 3–6 months)', fr:'B. Haut/bas (4 jours, après 3 à 6 mois)'} },
+  { type:'table', head:[{zh:'日', en:'Day', fr:'Jour'}, {zh:'內容', en:'Content', fr:'Contenu'}, {zh:'組數×次數', en:'Sets × reps', fr:'Séries × rép.'}], rows:[
+    [{zh:'一 上半身（重）', en:'Mon Upper (heavy)', fr:'Lun Haut (lourd)'}, {zh:'臥推、槓鈴划船、肩推、引體向上、二頭／三頭', en:'Bench, barbell row, overhead press, pull-ups, biceps/triceps', fr:'Développé couché, rowing barre, militaire, tractions, biceps/triceps'}, {zh:'主項 4×5–8，輔助 3×10–12', en:'Main 4×5–8, accessories 3×10–12', fr:'Principaux 4×5–8, accessoires 3×10–12'}],
+    [{zh:'二 下半身（重）', en:'Tue Lower (heavy)', fr:'Mar Bas (lourd)'}, {zh:'槓鈴深蹲、羅馬尼亞硬舉、弓步、提踵、核心', en:'Back squat, RDL, lunges, calf raises, core', fr:'Squat barre, RDL, fentes, mollets, gainage'}, {zh:'主項 4×5–8，輔助 3×10–15', en:'Main 4×5–8, accessories 3×10–15', fr:'Principaux 4×5–8, accessoires 3×10–15'}],
+    [{zh:'三', en:'Wed', fr:'Mer'}, {zh:'休息或 Zone 2 有氧 30–45 分', en:'Rest or Zone 2 cardio 30–45 min', fr:'Repos ou cardio zone 2, 30–45 min'}, '—'],
+    [{zh:'四 上半身（量）', en:'Thu Upper (volume)', fr:'Jeu Haut (volume)'}, {zh:'上斜啞鈴臥推、滑輪下拉、側平舉、面拉、雙槓撐體', en:'Incline dumbbell press, pulldown, lateral raises, face pulls, dips', fr:'Développé incliné, tirage vertical, élévations latérales, face pull, dips'}, {zh:'3–4×8–15', en:'3–4×8–15', fr:'3–4×8–15'}],
+    [{zh:'五 下半身（量）', en:'Fri Lower (volume)', fr:'Ven Bas (volume)'}, {zh:'臀推、腿推、保加利亞分腿蹲、腿後勾、側棒式', en:'Hip thrust, leg press, split squat, leg curl, side plank', fr:'Hip thrust, presse, squat bulgare, leg curl, planche latérale'}, {zh:'3–4×8–15', en:'3–4×8–15', fr:'3–4×8–15'}],
+    [{zh:'六、日', en:'Sat, Sun', fr:'Sam, dim'}, {zh:'休息、散步、伸展，或一次 HIIT', en:'Rest, walks, stretching, or one HIIT session', fr:'Repos, marche, étirements, ou une séance de HIIT'}, '—'],
+  ]},
+  { type:'h3', t:{zh:'C. 居家無器材（每週 3 次，約 30 分鐘）', en:'C. At home, no equipment (3× a week, about 30 min)', fr:'C. À la maison sans matériel (3× par semaine, 30 min environ)'} },
+  { type:'steps', items:[
+    { t:{zh:'深蹲 3×15–20', en:'Squats 3×15–20', fr:'Squats 3×15–20'}, p:{zh:'太輕鬆時改成慢下 3 秒、底部停 1 秒，或改做保加利亞分腿蹲。', en:'Too easy? Lower for 3 seconds and pause 1 second at the bottom, or switch to split squats.', fr:'Trop facile ? Descendez en 3 secondes avec 1 seconde de pause, ou passez au squat bulgare.'} },
+    { t:{zh:'伏地挺身 3×最多', en:'Push-ups 3×max', fr:'Pompes 3×max'}, p:{zh:'從跪姿或扶牆開始，一週一週降低手的高度。', en:'Start against a wall or on your knees and lower the hands week by week.', fr:'Commencez contre un mur ou à genoux, et abaissez les mains semaine après semaine.'} },
+    { t:{zh:'單腳臀橋 3×10–15／腳', en:'Single-leg glute bridge 3×10–15/leg', fr:'Pont fessier unilatéral 3×10–15/jambe'}, p:{zh:'頂端夾臀停兩秒。', en:'Squeeze for two seconds at the top.', fr:'Serrez deux secondes en haut.'} },
+    { t:{zh:'桌下反向划船或毛巾門把划船 3×10–12', en:'Table inverted row or towel door row 3×10–12', fr:'Rowing inversé sous une table ou à la serviette 3×10–12'}, p:{zh:'躺在穩固的桌子下，抓桌緣把胸口拉上去；或用毛巾繞過關好的門把向後拉。先確認桌子與門夠穩。', en:'Lie under a sturdy table and pull your chest to the edge, or loop a towel round a closed door handle and lean back. Check that the table or door is secure first.', fr:'Allongé sous une table solide, tirez la poitrine vers le bord, ou passez une serviette autour d’une poignée de porte fermée. Vérifiez d’abord la stabilité.'} },
+    { t:{zh:'反向弓步 3×10／腳', en:'Reverse lunges 3×10/leg', fr:'Fentes arrière 3×10/jambe'}, p:{zh:'往後跨比往前跨對膝蓋更友善。', en:'Stepping back is kinder on the knees than stepping forward.', fr:'Reculer ménage davantage les genoux qu’avancer.'} },
+    { t:{zh:'死蟲 3×8／側＋側棒式 2×20 秒／側', en:'Dead bug 3×8/side + side plank 2×20 s/side', fr:'Dead bug 3×8/côté + planche latérale 2×20 s/côté'}, p:{zh:'下背始終貼地，動作慢。', en:'Keep the lower back pressed down and move slowly.', fr:'Bas du dos plaqué au sol, mouvements lents.'} },
+  ]},
+]},
+
+/* ── 6. Cardio ── */
+{ id:'cardio', i:'fa-heart-pulse', c:C6,
+  nav:{zh:'有氧', en:'Cardio', fr:'Cardio'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'有氧運動與心率區間', en:'Cardio and heart-rate zones', fr:'Cardio et zones de fréquence cardiaque'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'最大心率常用 Tanaka 公式估算：<strong class="text-white">208 − 0.7 × 年齡</strong>（比傳統的 220 − 年齡更準一些，但個人誤差仍可達 ±10 下）。沒有心率錶時用「說話測試」就夠了。',
+    en:'Maximum heart rate is commonly estimated with the Tanaka formula: <strong class="text-white">208 − 0.7 × age</strong> (a little more accurate than 220 − age, though individuals still vary by ±10 bpm). Without a monitor, the talk test is enough.',
+    fr:'La fréquence cardiaque maximale s’estime avec la formule de Tanaka : <strong class="text-white">208 − 0,7 × âge</strong> (un peu plus juste que 220 − âge, avec un écart individuel de ±10 bpm). Sans cardiofréquencemètre, le test de la parole suffit.'} },
+  { type:'dia', k:'zones' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-person-walking', t:{zh:'新手：快走到慢跑', en:'Beginner: walk to run', fr:'Débutant : de la marche à la course'},
+      p:{zh:'第 1–2 週：跑 1 分、走 2 分 ×8。每週把跑的時間加一點、走的時間減一點，8–10 週後可連續慢跑 20–30 分鐘。', en:'Weeks 1–2: run 1 min, walk 2 min, ×8. Each week run a little more and walk a little less; after 8–10 weeks you can jog 20–30 minutes non-stop.', fr:'Semaines 1–2 : 1 min de course, 2 min de marche, ×8. Chaque semaine, courez un peu plus ; après 8 à 10 semaines, 20 à 30 minutes en continu.'} },
+    { i:'fa-stopwatch', t:{zh:'HIIT 範例', en:'Sample HIIT', fr:'Exemple de HIIT'},
+      p:{zh:'飛輪：熱身 5 分 → 30 秒全力、90 秒輕踩 ×8 → 緩和 5 分。總長約 26 分。', en:'Bike: 5 min warm-up → 30 s all-out, 90 s easy ×8 → 5 min cool-down. About 26 minutes in all.', fr:'Vélo : 5 min d’échauffement → 30 s à fond, 90 s faciles ×8 → 5 min de retour au calme. Environ 26 minutes.'} },
+    { i:'fa-scale-balanced', t:{zh:'和重訓怎麼搭配', en:'Combining with lifting', fr:'Combiner avec la musculation'},
+      p:{zh:'同一天先重訓再有氧；高強度有氧與腿部重訓間隔 24 小時以上。每週 2–3 次 Zone 2 幾乎不影響增肌。', en:'On the same day, lift first and do cardio after; keep hard cardio and heavy legs at least 24 hours apart. Two or three Zone 2 sessions a week barely affect muscle gain.', fr:'Le même jour, musculation puis cardio ; espacez cardio intense et jambes lourdes d’au moins 24 h. Deux ou trois séances de zone 2 par semaine gênent à peine la prise de muscle.'} },
+  ]},
+]},
+
+/* ── 7. Nutrition ── */
+{ id:'nutrition', i:'fa-bowl-food', c:C7,
+  nav:{zh:'營養', en:'Nutrition', fr:'Nutrition'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'營養基礎、睡眠與恢復', en:'Nutrition basics, sleep and recovery', fr:'Bases de nutrition, sommeil et récupération'},
+  blocks:[
+  { type:'table', head:[{zh:'項目', en:'Item', fr:'Élément'}, {zh:'建議', en:'Guideline', fr:'Repère'}, {zh:'說明', en:'Notes', fr:'Remarques'}], rows:[
+    [{zh:'熱量', en:'Calories', fr:'Calories'}, {zh:'減脂：每日總消耗（TDEE）減 300–500 大卡；增肌：加 200–300 大卡', en:'Fat loss: TDEE − 300–500 kcal; muscle gain: + 200–300 kcal', fr:'Perte de gras : DET − 300 à 500 kcal ; prise de muscle : + 200 à 300 kcal'}, {zh:'每週體重變化約 0.5–1%（減）或 0.25–0.5%（增）較理想', en:'Aim for about 0.5–1% bodyweight change a week (loss) or 0.25–0.5% (gain)', fr:'Viser 0,5–1 % du poids par semaine (perte) ou 0,25–0,5 % (prise)'}],
+    [{zh:'蛋白質', en:'Protein', fr:'Protéines'}, {zh:'每公斤體重 1.6–2.2 公克', en:'1.6–2.2 g per kg bodyweight', fr:'1,6–2,2 g par kg de poids'}, {zh:'分 3–5 餐，每餐 20–40 公克；60 公斤約需 100–130 公克', en:'Spread over 3–5 meals of 20–40 g; 60 kg needs about 100–130 g', fr:'Répartir en 3 à 5 repas de 20 à 40 g ; 60 kg ≈ 100–130 g'}],
+    [{zh:'碳水', en:'Carbohydrate', fr:'Glucides'}, {zh:'每公斤 3–5 公克（訓練量大可更多）', en:'3–5 g per kg (more with heavy training)', fr:'3–5 g par kg (plus si l’entraînement est intense)'}, {zh:'訓練前後吃，表現與恢復都更好', en:'Eaten around training, it improves performance and recovery', fr:'Autour de la séance, il améliore performance et récupération'}],
+    [{zh:'脂肪', en:'Fat', fr:'Lipides'}, {zh:'約佔熱量 20–35%', en:'About 20–35% of calories', fr:'Environ 20–35 % des calories'}, {zh:'過低可能影響荷爾蒙與月經', en:'Too little can disturb hormones and menstrual cycles', fr:'Trop peu peut perturber hormones et cycles'}],
+    [{zh:'水分', en:'Water', fr:'Eau'}, {zh:'每公斤約 30–35 毫升，運動另外補充', en:'About 30–35 ml per kg, plus what you sweat', fr:'Environ 30–35 ml par kg, plus les pertes à l’effort'}, {zh:'尿液淡黃色就足夠', en:'Pale yellow urine means you are fine', fr:'Une urine jaune pâle suffit comme repère'}],
+    [{zh:'睡眠', en:'Sleep', fr:'Sommeil'}, {zh:'每晚 7–9 小時', en:'7–9 hours a night', fr:'7 à 9 heures par nuit'}, {zh:'睡不夠時肌力、食慾控制與恢復都變差', en:'Short sleep hurts strength, appetite control and recovery', fr:'Le manque de sommeil nuit à la force, à l’appétit et à la récupération'}],
+  ]},
+  { type:'cards', cols:3, items:[
+    { i:'fa-flask', t:{zh:'有證據的補充品', en:'Supplements with evidence', fr:'Compléments étayés'},
+      p:{zh:'肌酸（每日 3–5 公克，長期吃、不必循環）、乳清蛋白（只是方便的蛋白質來源）、咖啡因（訓練前 3 毫克／公斤以內）、維生素 D（日曬少者，先驗血）。', en:'Creatine (3–5 g daily, continuously, no cycling), whey (simply a convenient protein), caffeine (up to 3 mg/kg before training), vitamin D (if you get little sun; test first).', fr:'Créatine (3–5 g par jour en continu), whey (une simple source pratique de protéines), caféine (jusqu’à 3 mg/kg avant l’effort), vitamine D (si peu de soleil ; doser d’abord).'} },
+    { i:'fa-ban', t:{zh:'不必花錢的', en:'Not worth the money', fr:'Inutiles'},
+      p:{zh:'燃脂劑、BCAA（蛋白質吃夠就不需要）、排毒茶、各種「睪固酮增強」。', en:'Fat burners, BCAAs (unneeded if protein is sufficient), detox teas, “testosterone boosters”.', fr:'Brûleurs de graisse, BCAA (inutiles si les protéines suffisent), thés détox, « boosters de testostérone ».'} },
+    { i:'fa-utensils', t:{zh:'簡單的盤子法', en:'The simple plate', fr:'L’assiette simple'},
+      p:{zh:'每餐一個手掌的蛋白質、一個拳頭的澱粉、兩個拳頭的蔬菜、一個拇指的油脂。外食族也能照做。', en:'Each meal: a palm of protein, a fist of starch, two fists of vegetables, a thumb of fat. Works when eating out too.', fr:'À chaque repas : une paume de protéines, un poing de féculents, deux poings de légumes, un pouce de matières grasses. Fonctionne aussi au restaurant.'} },
+  ]},
+]},
+
+/* ── 8. Diet control ── */
+{ id:'diet', i:'fa-scale-balanced', c:'#38bdf8',
+  nav:{zh:'飲食控制', en:'Diet control', fr:'Alimentation'},
+  eyebrow:{zh:'第八章・教學', en:'Chapter 8 · Lessons', fr:'Chapitre 8 · Leçons'},
+  h2:{zh:'飲食控制：減脂、增肌與維持', en:'Diet control: losing fat, gaining muscle, maintaining', fr:'Gérer son alimentation : perdre du gras, prendre du muscle, maintenir'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'體重變化的根本是<strong class="text-white">能量平衡</strong>：吃進的熱量少於消耗就會變輕，多於消耗就會變重。飲食法（低醣、生酮、斷食、地中海）的差別主要在「哪一種比較容易讓你長期吃少一點、吃好一點」。身體組成（減的是脂肪還是肌肉）則由<strong class="text-white">蛋白質攝取與重量訓練</strong>決定。',
+    en:'Weight change comes down to <strong class="text-white">energy balance</strong>: eat fewer calories than you burn and you get lighter, more and you get heavier. Diets (low-carb, keto, fasting, Mediterranean) differ mainly in which one makes it easiest for you to eat a bit less and a bit better for a long time. Body composition (whether you lose fat or muscle) is decided by <strong class="text-white">protein intake and resistance training</strong>.',
+    fr:'L’évolution du poids dépend de la <strong class="text-white">balance énergétique</strong> : moins de calories que l’on n’en dépense, on maigrit ; plus, on grossit. Les régimes (pauvre en glucides, cétogène, jeûne, méditerranéen) diffèrent surtout par la facilité à manger un peu moins et un peu mieux sur la durée. La composition corporelle (perdre du gras ou du muscle) dépend des <strong class="text-white">protéines et de la musculation</strong>.'} },
+  { type:'dia', k:'calc' },
+  { type:'h3', t:{zh:'開始控制飲食的五個步驟', en:'Five steps to start', fr:'Cinq étapes pour commencer'} },
+  { type:'steps', items:[
+    { t:{zh:'先記錄一週、不改變', en:'Log a week without changing anything', fr:'Noter une semaine sans rien changer'}, p:{zh:'用 App（例如 MyFitnessPal、Cronometer、FatSecret）或拍照記下所有吃喝，包括飲料與醬料。多數人會發現熱量來自意想不到的地方：手搖飲、宵夜、炸物、醬汁。', en:'Use an app (MyFitnessPal, Cronometer, FatSecret) or photos to record everything you eat and drink, drinks and sauces included. Most people discover calories in unexpected places: sweet drinks, late snacks, fried food, sauces.', fr:'Avec une appli (MyFitnessPal, Cronometer, FatSecret) ou en photos, notez tout ce que vous mangez et buvez, boissons et sauces comprises. On découvre souvent des calories inattendues : boissons sucrées, grignotages du soir, fritures, sauces.'} },
+    { t:{zh:'設定目標熱量與蛋白質', en:'Set a calorie and protein target', fr:'Fixer calories et protéines'}, p:{zh:'用上面的計算機。蛋白質先達標，其他再慢慢調整，是最容易成功的順序。', en:'Use the calculator above. Hitting protein first and adjusting the rest later is the order most likely to work.', fr:'Utilisez le calculateur ci-dessus. Atteindre d’abord l’objectif de protéines, puis ajuster le reste, est l’ordre le plus efficace.'} },
+    { t:{zh:'每天同一時間量體重，看週平均', en:'Weigh daily at the same time; watch the weekly average', fr:'Se peser chaque jour à la même heure ; suivre la moyenne'}, p:{zh:'早上起床、上完廁所、吃東西前量。單日體重會因水分、鹽分、生理期波動 1–2 公斤，只看七天平均的趨勢。也每兩週量一次腰圍。', en:'On waking, after the toilet, before eating. Daily weight swings 1–2 kg with water, salt and the menstrual cycle; follow the seven-day average. Measure your waist every two weeks too.', fr:'Au réveil, après les toilettes, avant de manger. Le poids varie de 1 à 2 kg selon l’eau, le sel et le cycle ; suivez la moyenne sur sept jours. Mesurez aussi le tour de taille toutes les deux semaines.'} },
+    { t:{zh:'兩到三週後調整', en:'Adjust after two or three weeks', fr:'Ajuster après deux ou trois semaines'}, p:{zh:'減脂時若週平均體重沒下降，每日再減 100–200 大卡或多走 2000–3000 步；增肌時體重沒上升就加 100–200 大卡。一次只改一個變數。', en:'Cutting: if the weekly average has not dropped, remove another 100–200 kcal a day or walk 2,000–3,000 more steps. Gaining: if it has not risen, add 100–200 kcal. Change one thing at a time.', fr:'En sèche : si la moyenne ne baisse pas, retirez 100 à 200 kcal par jour ou marchez 2 000 à 3 000 pas de plus. En prise : si elle ne monte pas, ajoutez 100 à 200 kcal. Un seul changement à la fois.'} },
+    { t:{zh:'安排休息期', en:'Plan breaks', fr:'Prévoir des pauses'}, p:{zh:'連續減脂 8–12 週後，回到維持熱量吃 1–2 週（diet break），讓荷爾蒙、訓練表現與心情恢復，再繼續。', en:'After 8–12 weeks of dieting, eat at maintenance for 1–2 weeks (a diet break) to let hormones, training and mood recover, then continue.', fr:'Après 8 à 12 semaines de sèche, revenez au maintien pendant 1 à 2 semaines (diet break) pour laisser récupérer hormones, performance et moral, puis reprenez.'} },
+  ]},
+  { type:'h3', t:{zh:'讓少吃變容易的技巧', en:'Tricks that make eating less easier', fr:'Astuces pour manger moins sans souffrir'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-drumstick-bite', t:{zh:'每餐先有蛋白質', en:'Protein at every meal', fr:'Des protéines à chaque repas'}, p:{zh:'蛋白質最有飽足感，消化時消耗的熱量也最多（約佔其熱量的 20–30%）。', en:'Protein is the most filling nutrient and costs the most energy to digest (about 20–30% of its calories).', fr:'Les protéines rassasient le plus et coûtent le plus d’énergie à digérer (environ 20 à 30 % de leurs calories).'} },
+    { i:'fa-leaf', t:{zh:'大份量、低熱量密度', en:'High volume, low energy density', fr:'Gros volume, faible densité'}, p:{zh:'蔬菜、菇類、湯、水果、瘦肉體積大熱量低。每餐先吃半盤菜，再吃肉和飯。', en:'Vegetables, mushrooms, soups, fruit and lean meat fill you for few calories. Eat half a plate of vegetables first, then protein and rice.', fr:'Légumes, champignons, soupes, fruits et viandes maigres remplissent pour peu de calories. Commencez par une demi-assiette de légumes.'} },
+    { i:'fa-glass-water', t:{zh:'喝的熱量最容易超標', en:'Liquid calories add up fastest', fr:'Les calories liquides s’accumulent vite'}, p:{zh:'手搖飲改無糖或微糖、拿鐵改小杯或美式、酒精減量。光這一項很多人每天就少 200–400 大卡。', en:'Sweet drinks to unsweetened, lattes to small or black, less alcohol. That alone saves many people 200–400 kcal a day.', fr:'Boissons sucrées sans sucre, latte en petit format ou café noir, moins d’alcool. Cela seul fait économiser 200 à 400 kcal par jour à beaucoup.'} },
+    { i:'fa-clock', t:{zh:'固定用餐時間', en:'Regular meal times', fr:'Des repas réguliers'}, p:{zh:'不要整天沒吃、晚上暴食。間歇性斷食（例如 16:8）有效是因為少吃一餐，不是時間本身有魔法；適合你就用，不適合就不要勉強。', en:'Avoid starving all day and bingeing at night. Intermittent fasting (e.g. 16:8) works because it removes a meal, not because the clock is magic; use it if it suits you.', fr:'Évitez de jeûner toute la journée pour vous rattraper le soir. Le jeûne intermittent (16:8) marche parce qu’il supprime un repas, pas par magie horaire ; adoptez-le s’il vous convient.'} },
+    { i:'fa-house', t:{zh:'改變環境', en:'Change the environment', fr:'Changer l’environnement'}, p:{zh:'零食不放在看得見的地方，冰箱前排放切好的水果與優格。用小一號的盤子。', en:'Keep snacks out of sight; put cut fruit and yoghurt at the front of the fridge. Use a smaller plate.', fr:'Rangez les grignotages hors de vue ; mettez fruits coupés et yaourts devant dans le frigo. Prenez une assiette plus petite.'} },
+    { i:'fa-scale-unbalanced-flip', t:{zh:'八二法則', en:'The 80/20 rule', fr:'La règle des 80/20'}, p:{zh:'八成的時間吃原型食物、照計畫；兩成留給聚餐與想吃的東西。完全禁止往往導致報復性暴食。', en:'Eat whole foods to plan 80% of the time and leave 20% for social meals and treats. Total bans tend to end in bingeing.', fr:'80 % du temps, des aliments bruts selon le plan ; 20 % pour les repas entre amis et les envies. Les interdits totaux finissent souvent en excès.'} },
+  ]},
+  { type:'h3', t:{zh:'一日菜單範例', en:'Sample days', fr:'Exemples de journées'} },
+  { type:'table', head:[{zh:'餐別', en:'Meal', fr:'Repas'}, {zh:'減脂日（約 1500 大卡、110 公克蛋白質）', en:'Fat-loss day (≈1,500 kcal, 110 g protein)', fr:'Journée sèche (≈1 500 kcal, 110 g de protéines)'}, {zh:'增肌日（約 2300 大卡、130 公克蛋白質）', en:'Muscle-gain day (≈2,300 kcal, 130 g protein)', fr:'Journée prise de muscle (≈2 300 kcal, 130 g de protéines)'}], rows:[
+    [{zh:'早餐', en:'Breakfast', fr:'Petit-déjeuner'}, {zh:'無糖豆漿 400 毫升＋茶葉蛋 2 顆＋中型地瓜 1 條', en:'400 ml unsweetened soy milk + 2 eggs + 1 medium sweet potato', fr:'400 ml de lait de soja nature + 2 œufs + 1 patate douce moyenne'}, {zh:'燕麥 60 公克煮牛奶 300 毫升＋香蕉＋雞蛋 2 顆＋花生醬 1 湯匙', en:'60 g oats cooked in 300 ml milk + banana + 2 eggs + 1 tbsp peanut butter', fr:'60 g de flocons d’avoine au lait (300 ml) + banane + 2 œufs + 1 c. à soupe de beurre de cacahuète'}],
+    [{zh:'午餐', en:'Lunch', fr:'Déjeuner'}, {zh:'便當：飯半碗、雞腿去皮或魚一份、三樣青菜', en:'Bento: half a bowl of rice, skinless chicken leg or fish, three vegetables', fr:'Bento : demi-bol de riz, cuisse de poulet sans peau ou poisson, trois légumes'}, {zh:'便當：飯一碗半、雞腿或排骨、三樣青菜、滷豆腐', en:'Bento: 1½ bowls of rice, chicken leg or pork chop, three vegetables, braised tofu', fr:'Bento : 1,5 bol de riz, cuisse de poulet ou côte de porc, trois légumes, tofu braisé'}],
+    [{zh:'點心', en:'Snack', fr:'Collation'}, {zh:'無糖優格 150 公克＋一份水果', en:'150 g plain yoghurt + one fruit', fr:'150 g de yaourt nature + un fruit'}, {zh:'乳清一份＋水果＋堅果一小把（訓練後）', en:'Whey shake + fruit + small handful of nuts (post-workout)', fr:'Whey + fruit + une poignée de noix (après la séance)'}],
+    [{zh:'晚餐', en:'Dinner', fr:'Dîner'}, {zh:'鮭魚或雞胸 120 公克、糙米飯半碗、大份燙青菜、味噌湯', en:'120 g salmon or chicken breast, half a bowl of brown rice, a big plate of greens, miso soup', fr:'120 g de saumon ou blanc de poulet, demi-bol de riz complet, grande portion de légumes, soupe miso'}, {zh:'牛肉麵（湯少喝）或義大利麵配雞胸、沙拉', en:'Beef noodle soup (go easy on the broth) or pasta with chicken and salad', fr:'Soupe de nouilles au bœuf (sans finir le bouillon) ou pâtes au poulet et salade'}],
+  ]},
+  { type:'h3', t:{zh:'外食與便利商店怎麼選', en:'Eating out and convenience stores', fr:'Manger dehors et en supérette'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-store', t:{zh:'便利商店組合', en:'Convenience-store combos', fr:'Combinaisons en supérette'}, l:[
+      {zh:'茶葉蛋 2 顆＋地瓜＋無糖豆漿', en:'2 tea eggs + sweet potato + unsweetened soy milk', fr:'2 œufs au thé + patate douce + lait de soja nature'},
+      {zh:'即食雞胸＋飯糰＋生菜沙拉（和風醬減半）', en:'Ready-to-eat chicken breast + rice ball + salad (half the dressing)', fr:'Blanc de poulet prêt + onigiri + salade (moitié de sauce)'},
+      {zh:'關東煮：白蘿蔔、玉米、豆腐、雞蛋、杏鮑菇', en:'Oden: daikon, corn, tofu, egg, king oyster mushroom', fr:'Oden : radis, maïs, tofu, œuf, pleurote'} ],
+      p:{zh:'目標：一份蛋白質＋一份澱粉＋一份蔬菜。', en:'Aim for one protein, one starch, one vegetable.', fr:'Objectif : une protéine, un féculent, un légume.'} },
+    { i:'fa-bowl-rice', t:{zh:'自助餐與便當', en:'Buffets and lunch boxes', fr:'Self-service et bentos'}, l:[
+      {zh:'菜色選清蒸、燙、滷、烤，避開炸、勾芡、糖醋', en:'Choose steamed, boiled, braised, grilled; skip fried, thickened, sweet-and-sour', fr:'Vapeur, bouilli, braisé, grillé ; évitez frit, nappé, aigre-doux'},
+      {zh:'飯改半碗或換五穀飯', en:'Half the rice, or multigrain', fr:'Moitié de riz, ou riz aux céréales'},
+      {zh:'不淋肉燥與滷汁', en:'No minced-pork sauce or braising liquid on the rice', fr:'Pas de sauce de porc haché ni de jus de braisage sur le riz'} ],
+      p:{zh:'一半蔬菜、四分之一肉、四分之一飯。', en:'Half vegetables, a quarter protein, a quarter rice.', fr:'Moitié légumes, un quart protéines, un quart riz.'} },
+    { i:'fa-mug-hot', t:{zh:'手搖飲與咖啡', en:'Bubble tea and coffee', fr:'Bubble tea et café'}, l:[
+      {zh:'一杯 700 毫升全糖飲料約含 50–60 公克糖，已超過一天建議上限', en:'A 700 ml full-sugar drink holds roughly 50–60 g of sugar, over a whole day’s limit', fr:'Une boisson de 700 ml au sucre complet contient environ 50 à 60 g de sucre, plus que la limite quotidienne'},
+      {zh:'珍珠一份約 150–250 大卡', en:'A serving of tapioca pearls is about 150–250 kcal', fr:'Une portion de perles de tapioca ≈ 150–250 kcal'},
+      {zh:'選無糖茶、鮮奶茶（無糖）、美式', en:'Pick unsweetened tea, unsweetened milk tea with fresh milk, black coffee', fr:'Préférez thé nature, thé au lait frais sans sucre, café noir'} ],
+      p:{zh:'甜度從全糖往下每兩週降一階，口味會慢慢適應。', en:'Step the sweetness down one level every two weeks; your taste adapts.', fr:'Baissez le sucre d’un cran toutes les deux semaines : le goût s’habitue.'} },
+  ]},
+  { type:'h3', t:{zh:'看懂營養標示', en:'Reading a nutrition label', fr:'Lire une étiquette nutritionnelle'} },
+  { type:'steps', items:[
+    { t:{zh:'先看「每份」與「本包裝含幾份」', en:'Check “per serving” and servings per pack', fr:'Regarder la portion et le nombre de portions'}, p:{zh:'一包洋芋片常標示 3 份，全部吃完熱量要乘以 3。法國與歐盟標示以「每 100 公克」為主，方便比較不同產品。', en:'A bag of crisps may say 3 servings: eat it all and multiply by three. EU labels are per 100 g, which makes products easy to compare.', fr:'Un paquet de chips peut compter 3 portions : tout manger, c’est multiplier par trois. En Europe, l’étiquette est pour 100 g, ce qui facilite la comparaison.'} },
+    { t:{zh:'看蛋白質與熱量的比例', en:'Compare protein to calories', fr:'Comparer protéines et calories'}, p:{zh:'每 100 大卡有 10 公克以上蛋白質，算是高蛋白食物（雞胸、希臘優格、豆腐、鮪魚罐頭）。', en:'Over 10 g of protein per 100 kcal counts as high-protein (chicken breast, Greek yoghurt, tofu, canned tuna).', fr:'Plus de 10 g de protéines pour 100 kcal, c’est riche en protéines (poulet, yaourt grec, tofu, thon en boîte).'} },
+    { t:{zh:'糖與鈉', en:'Sugar and sodium', fr:'Sucre et sodium'}, p:{zh:'看「糖」一欄（台灣標示的「糖」含添加糖與天然糖）。鈉每份超過 600 毫克就偏高。', en:'Look at the “sugars” line. Over 600 mg of sodium per serving is high.', fr:'Regardez la ligne « dont sucres ». Plus de 600 mg de sodium par portion, c’est élevé.'} },
+    { t:{zh:'成分表依重量排序', en:'Ingredients are listed by weight', fr:'Les ingrédients sont classés par poids'}, p:{zh:'排在最前面的佔最多。前三名出現糖、果糖、麥芽糊精，就是含糖量高的產品。法國的 Nutri-Score（A 到 E）也能快速參考。', en:'The first ingredient is the largest. Sugar, fructose or maltodextrin in the top three means a sugary product. In France, the Nutri-Score (A to E) gives a quick read.', fr:'Le premier ingrédient est le plus présent. Sucre, fructose ou maltodextrine dans les trois premiers : produit sucré. Le Nutri-Score (A à E) donne aussi un repère rapide.'} },
+  ]},
+  { type:'warn', p:{
+    zh:'不建議在沒有專業指導下長期吃低於基礎代謝率、女性低於 1200 大卡或男性低於 1500 大卡。若出現月經停止、掉髮、頭暈、總是想著食物、暴食後催吐或過度運動補償，請尋求醫師、營養師或心理師協助，這可能是飲食失調的警訊。',
+    en:'Without professional supervision, do not eat below your BMR for long, nor below about 1,200 kcal (women) or 1,500 kcal (men). If periods stop, hair falls out, you feel dizzy, think about food constantly, or compensate for binges by vomiting or over-exercising, seek help from a doctor, dietitian or psychologist: these can be signs of an eating disorder.',
+    fr:'Sans suivi professionnel, ne restez pas longtemps sous votre métabolisme de base, ni sous environ 1 200 kcal (femmes) ou 1 500 kcal (hommes). Arrêt des règles, chute de cheveux, vertiges, pensées obsédantes sur la nourriture, vomissements ou sport excessif après des excès : consultez un médecin, un diététicien ou un psychologue, ce peuvent être des signes de trouble alimentaire.'} },
+]},
+
+/* ── 9. Dietary guidelines ── */
+{ id:'guides', i:'fa-plate-wheat', c:'#a3e635',
+  nav:{zh:'飲食指南', en:'Guidelines', fr:'Repères'},
+  eyebrow:{zh:'第九章', en:'Chapter 9', fr:'Chapitre 9'},
+  h2:{zh:'官方飲食指南：台灣、法國與世界衛生組織', en:'Official dietary guidelines: Taiwan, France and the WHO', fr:'Repères officiels : Taïwan, France et OMS'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'各國飲食指南的共同點比差異多：<strong class="text-white">多吃蔬果、全穀與豆類，蛋白質來源多樣，少糖、少鹽、少加工肉品，喝白開水。</strong>以下整理台灣衛福部國民健康署的《每日飲食指南》與「我的餐盤」、法國的國家營養健康計畫（PNNS），以及世界衛生組織的上限建議。',
+    en:'National guidelines agree far more than they differ: <strong class="text-white">plenty of vegetables, fruit, whole grains and pulses; varied protein; little sugar, salt and processed meat; water to drink.</strong> Below are Taiwan’s Daily Food Guide and “My Plate” from the Health Promotion Administration, France’s PNNS recommendations, and the WHO limits.',
+    fr:'Les recommandations nationales se ressemblent bien plus qu’elles ne diffèrent : <strong class="text-white">beaucoup de légumes, fruits, céréales complètes et légumineuses ; des protéines variées ; peu de sucre, de sel et de charcuterie ; de l’eau.</strong> Voici le Guide alimentaire quotidien et « Mon assiette » de Taïwan, les repères du PNNS en France et les limites de l’OMS.'} },
+  { type:'h3', t:{zh:'台灣《每日飲食指南》六大類食物（成人一日建議份量）', en:'Taiwan’s Daily Food Guide: six food groups (adult daily servings)', fr:'Guide alimentaire de Taïwan : six groupes d’aliments (portions quotidiennes, adulte)'} },
+  { type:'table', head:[{zh:'類別', en:'Group', fr:'Groupe'}, {zh:'每日份量', en:'Per day', fr:'Par jour'}, {zh:'一份大約是', en:'One serving is about', fr:'Une portion ≈'}, {zh:'重點', en:'Key point', fr:'À retenir'}], rows:[
+    [{zh:'全穀雜糧類', en:'Whole grains & starches', fr:'Céréales complètes & féculents'}, {zh:'1.5–4 碗', en:'1.5–4 bowls', fr:'1,5–4 bols'}, {zh:'一碗飯＝4 份；地瓜、玉米、南瓜、芋頭、紅豆、綠豆也算這類', en:'One bowl of rice = 4 servings; sweet potato, corn, pumpkin, taro, red and mung beans count here too', fr:'Un bol de riz = 4 portions ; patate douce, maïs, potiron, taro et haricots rouges ou mungo comptent aussi'}, {zh:'至少三分之一是未精製的全穀', en:'At least a third unrefined whole grains', fr:'Au moins un tiers de céréales complètes'}],
+    [{zh:'豆魚蛋肉類', en:'Beans, fish, eggs, meat', fr:'Soja, poisson, œufs, viande'}, {zh:'3–8 份', en:'3–8 servings', fr:'3–8 portions'}, {zh:'雞蛋 1 顆、無糖豆漿 190 毫升、傳統豆腐 80 公克、魚或雞肉約 35 公克（約三指大小）', en:'1 egg, 190 ml unsweetened soy milk, 80 g firm tofu, about 35 g fish or chicken (three fingers)', fr:'1 œuf, 190 ml de lait de soja, 80 g de tofu ferme, environ 35 g de poisson ou poulet (trois doigts)'}, {zh:'優先順序：豆 → 魚 → 蛋 → 肉', en:'Priority: soy → fish → eggs → meat', fr:'Priorité : soja → poisson → œufs → viande'}],
+    [{zh:'乳品類', en:'Dairy', fr:'Produits laitiers'}, {zh:'1.5–2 杯', en:'1.5–2 cups', fr:'1,5–2 verres'}, {zh:'一杯＝240 毫升鮮奶；或優格 210 公克、起司 2 片', en:'One cup = 240 ml milk, or 210 g yoghurt, or 2 slices of cheese', fr:'Un verre = 240 ml de lait, ou 210 g de yaourt, ou 2 tranches de fromage'}, {zh:'主要鈣質來源', en:'Main source of calcium', fr:'Principale source de calcium'}],
+    [{zh:'蔬菜類', en:'Vegetables', fr:'Légumes'}, {zh:'3–5 份', en:'3–5 servings', fr:'3–5 portions'}, {zh:'生重 100 公克，煮熟約半碗', en:'100 g raw, about half a bowl cooked', fr:'100 g crus, environ un demi-bol cuit'}, {zh:'至少一份深綠色', en:'At least one dark green', fr:'Au moins un légume vert foncé'}],
+    [{zh:'水果類', en:'Fruit', fr:'Fruits'}, {zh:'2–4 份', en:'2–4 servings', fr:'2–4 portions'}, {zh:'一個拳頭大小，切塊約一碗', en:'One fist, about a bowl when cut', fr:'Un poing, environ un bol coupé'}, {zh:'吃原型水果，不以果汁取代', en:'Whole fruit, not juice', fr:'Des fruits entiers, pas de jus'}],
+    [{zh:'油脂與堅果種子類', en:'Oils, nuts & seeds', fr:'Huiles, noix & graines'}, {zh:'油 3–7 茶匙＋堅果 1 份', en:'3–7 tsp oil + 1 serving of nuts', fr:'3–7 c. à café d’huile + 1 portion d’oléagineux'}, {zh:'堅果 1 份約一湯匙（杏仁約 5 顆）', en:'One serving of nuts ≈ one tablespoon (about 5 almonds)', fr:'Une portion d’oléagineux ≈ une cuillère à soupe (5 amandes)'}, {zh:'選植物油，少用動物油與反式脂肪', en:'Plant oils; limit animal fat and trans fats', fr:'Huiles végétales ; peu de graisses animales, pas de gras trans'}],
+  ]},
+  { type:'h3', t:{zh:'「我的餐盤」六句口訣', en:'“My Plate”: six rules of thumb', fr:'« Mon assiette » : six règles simples'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-glass-water', t:{zh:'每天早晚一杯奶', en:'A glass of milk morning and evening', fr:'Un verre de lait matin et soir'}, p:{zh:'不喝牛奶可用無糖優格、起司或高鈣豆漿替代。', en:'If you do not drink milk, use plain yoghurt, cheese or calcium-fortified soy milk.', fr:'Sinon : yaourt nature, fromage ou lait de soja enrichi en calcium.'} },
+    { i:'fa-apple-whole', t:{zh:'每餐水果拳頭大', en:'A fist of fruit per meal', fr:'Un poing de fruit par repas'}, p:{zh:'選當季、多種顏色。', en:'In season and in different colours.', fr:'De saison et de couleurs variées.'} },
+    { i:'fa-carrot', t:{zh:'菜比水果多一點', en:'A bit more vegetables than fruit', fr:'Un peu plus de légumes que de fruits'}, p:{zh:'蔬菜熱量更低、纖維更多。', en:'Vegetables have fewer calories and more fibre.', fr:'Les légumes ont moins de calories et plus de fibres.'} },
+    { i:'fa-bowl-rice', t:{zh:'飯跟蔬菜一樣多', en:'As much grain as vegetables', fr:'Autant de féculents que de légumes'}, p:{zh:'減脂時可讓蔬菜多於飯。', en:'When cutting, let vegetables outweigh rice.', fr:'En sèche, plus de légumes que de riz.'} },
+    { i:'fa-fish', t:{zh:'豆魚蛋肉一掌心', en:'A palm of protein', fr:'Une paume de protéines'}, p:{zh:'有在重訓者可增加到一掌半到兩掌。', en:'If you lift, go up to one and a half or two palms.', fr:'En musculation, une paume et demie à deux.'} },
+    { i:'fa-seedling', t:{zh:'堅果種子一茶匙', en:'A spoonful of nuts and seeds', fr:'Une cuillerée d’oléagineux'}, p:{zh:'每餐一茶匙，取代部分烹調油。', en:'One spoonful per meal, replacing some cooking oil.', fr:'Une cuillerée par repas, à la place d’une partie de l’huile.'} },
+  ]},
+  { type:'h3', t:{zh:'法國 PNNS 飲食建議（Manger Bouger）', en:'France’s PNNS recommendations (Manger Bouger)', fr:'Les repères du PNNS (Manger Bouger)'} },
+  { type:'table', head:[{zh:'類別', en:'Food', fr:'Aliment'}, {zh:'建議', en:'Recommendation', fr:'Recommandation'}], rows:[
+    [{zh:'蔬菜水果', en:'Fruit & vegetables', fr:'Fruits et légumes'}, {zh:'每天至少 5 份（每份約 80–100 公克）', en:'At least 5 a day (80–100 g each)', fr:'Au moins 5 par jour (80 à 100 g chacun)'}],
+    [{zh:'豆類（扁豆、鷹嘴豆、乾豆）', en:'Pulses (lentils, chickpeas, beans)', fr:'Légumineuses (lentilles, pois chiches, haricots)'}, {zh:'每週至少 2 次', en:'At least twice a week', fr:'Au moins 2 fois par semaine'}],
+    [{zh:'全穀類', en:'Whole grains', fr:'Féculents complets'}, {zh:'每天吃，優先選全麥麵包、糙米、全麥麵', en:'Daily, preferring wholemeal bread, brown rice and wholewheat pasta', fr:'Chaque jour, de préférence pain complet, riz et pâtes complets'}],
+    [{zh:'乳製品', en:'Dairy', fr:'Produits laitiers'}, {zh:'每天 2 份', en:'2 a day', fr:'2 par jour'}],
+    [{zh:'魚', en:'Fish', fr:'Poisson'}, {zh:'每週 2 次，其中 1 次為富含脂肪的魚（鮭魚、鯖魚、沙丁魚）', en:'Twice a week, once an oily fish (salmon, mackerel, sardines)', fr:'2 fois par semaine, dont 1 poisson gras (saumon, maquereau, sardine)'}],
+    [{zh:'紅肉', en:'Red meat', fr:'Viande rouge'}, {zh:'每週不超過 500 公克，優先選家禽', en:'No more than 500 g a week; prefer poultry', fr:'Pas plus de 500 g par semaine ; privilégier la volaille'}],
+    [{zh:'加工肉品（火腿、香腸）', en:'Processed meat (ham, sausages)', fr:'Charcuterie'}, {zh:'每週不超過 150 公克', en:'No more than 150 g a week', fr:'Pas plus de 150 g par semaine'}],
+    [{zh:'堅果', en:'Nuts', fr:'Fruits à coque'}, {zh:'每天一小把（無調味）', en:'A small handful a day (unsalted)', fr:'Une petite poignée par jour (non salés)'}],
+    [{zh:'含糖飲料、酒精', en:'Sugary drinks, alcohol', fr:'Boissons sucrées, alcool'}, {zh:'盡量減少；酒精每週不超過 10 杯、每天不超過 2 杯，且每週要有不喝酒的日子', en:'Limit; alcohol no more than 10 drinks a week, 2 a day, with alcohol-free days', fr:'À limiter ; alcool pas plus de 10 verres par semaine, 2 par jour, avec des jours sans'}],
+  ]},
+  { type:'h3', t:{zh:'世界衛生組織的上限建議', en:'WHO limits', fr:'Limites de l’OMS'} },
+  { type:'cards', cols:4, items:[
+    { i:'fa-cube', t:{zh:'游離糖', en:'Free sugars', fr:'Sucres libres'}, tag:{zh:'＜10% 熱量，最好＜5%', en:'<10% of energy, ideally <5%', fr:'<10 % de l’énergie, idéalement <5 %'}, p:{zh:'以 2000 大卡計，上限 50 公克，理想是 25 公克（約 6 茶匙）。包含添加糖、蜂蜜、果汁裡的糖。', en:'On 2,000 kcal: at most 50 g, ideally 25 g (about 6 teaspoons). Includes added sugar, honey and the sugar in juice.', fr:'Pour 2 000 kcal : 50 g au plus, idéalement 25 g (6 cuillères à café). Sucre ajouté, miel et sucre des jus compris.'} },
+    { i:'fa-mortar-pestle', t:{zh:'鹽', en:'Salt', fr:'Sel'}, tag:{zh:'＜5 公克／天', en:'<5 g a day', fr:'<5 g par jour'}, p:{zh:'約等於鈉 2000 毫克。台灣國健署建議鈉不超過 2400 毫克。湯、泡麵、醬料是主要來源。', en:'About 2,000 mg of sodium. Soups, instant noodles and sauces are the main sources.', fr:'Environ 2 000 mg de sodium. Soupes, nouilles instantanées et sauces en sont les principales sources.'} },
+    { i:'fa-bacon', t:{zh:'飽和脂肪', en:'Saturated fat', fr:'Graisses saturées'}, tag:{zh:'＜10% 熱量', en:'<10% of energy', fr:'<10 % de l’énergie'}, p:{zh:'反式脂肪＜1%，盡量避免部分氫化油。', en:'Trans fats under 1%; avoid partially hydrogenated oils.', fr:'Gras trans sous 1 % ; évitez les huiles partiellement hydrogénées.'} },
+    { i:'fa-wheat-awn', t:{zh:'膳食纖維', en:'Fibre', fr:'Fibres'}, tag:{zh:'≥25 公克／天', en:'≥25 g a day', fr:'≥25 g par jour'}, p:{zh:'來自蔬果、全穀與豆類，幫助飽足與腸道健康。', en:'From vegetables, fruit, whole grains and pulses; helps fullness and gut health.', fr:'Issues des légumes, fruits, céréales complètes et légumineuses ; rassasient et protègent l’intestin.'} },
+  ]},
+  { type:'note', p:{
+    zh:'指南是給一般健康成人的起點。懷孕哺乳、青少年、長者、素食者，以及有糖尿病、腎臟病、高血壓等狀況的人，需要個別調整，請諮詢醫師或營養師。',
+    en:'Guidelines are a starting point for healthy adults. Pregnancy and breastfeeding, teenagers, older adults, vegetarians and people with diabetes, kidney disease or high blood pressure need individual adjustments: ask a doctor or dietitian.',
+    fr:'Ces repères sont un point de départ pour l’adulte en bonne santé. Grossesse et allaitement, adolescents, seniors, végétariens et personnes diabétiques, insuffisantes rénales ou hypertendues ont besoin d’ajustements : demandez à un médecin ou un diététicien.'} },
+]},
+
+/* ── 10. Myths & safety ── */
+{ id:'myths', i:'fa-shield-heart', c:C8,
+  nav:{zh:'迷思與安全', en:'Myths & safety', fr:'Idées reçues'},
+  eyebrow:{zh:'第十章', en:'Chapter 10', fr:'Chapitre 10'},
+  h2:{zh:'常見迷思與安全須知', en:'Common myths and safety', fr:'Idées reçues et sécurité'},
+  blocks:[
+  { type:'table', head:[{zh:'迷思', en:'Myth', fr:'Idée reçue'}, {zh:'事實', en:'Reality', fr:'Réalité'}], rows:[
+    [{zh:'女生練重訓會變很壯', en:'Women who lift get bulky', fr:'Les femmes qui soulèvent deviennent massives'}, {zh:'女性睪固酮約為男性的十分之一到二十分之一，增肌速度慢很多。練出來的是線條與臀腿曲線，而不是大塊肌肉。', en:'Women have roughly a tenth to a twentieth of men’s testosterone and gain muscle far more slowly. The result is shape and curves, not bulk.', fr:'Les femmes ont environ dix à vingt fois moins de testostérone et prennent du muscle bien plus lentement. Le résultat : du galbe, pas de la masse.'}],
+    [{zh:'練腹肌可以瘦肚子', en:'Ab work burns belly fat', fr:'Les abdos font fondre le ventre'}, {zh:'無法局部減脂。脂肪減少靠整體熱量赤字，腹肌要體脂夠低才看得到。', en:'Spot reduction does not work. Fat loss comes from an overall calorie deficit; abs show only at low body fat.', fr:'On ne perd pas localement. La perte de gras vient du déficit calorique global ; les abdos n’apparaissent qu’avec peu de gras.'}],
+    [{zh:'隔天沒痠就是沒練到', en:'No soreness means no progress', fr:'Pas de courbatures, pas de progrès'}, {zh:'延遲性肌肉痠痛（DOMS）只代表動作新或量突然變多，和效果沒有直接關係。', en:'Delayed-onset soreness (DOMS) only means the movement was new or the volume jumped; it does not measure results.', fr:'Les courbatures (DOMS) signalent un mouvement nouveau ou un volume accru, pas l’efficacité.'}],
+    [{zh:'流汗越多燃脂越多', en:'More sweat, more fat burned', fr:'Plus on transpire, plus on brûle'}, {zh:'流汗是散熱，減掉的是水分，喝水就回來了。', en:'Sweat is cooling; the weight lost is water and returns when you drink.', fr:'La sueur sert à refroidir ; le poids perdu est de l’eau, qui revient en buvant.'}],
+    [{zh:'深蹲膝蓋不能超過腳尖', en:'Knees must never pass the toes in a squat', fr:'Au squat, les genoux ne doivent pas dépasser les orteils'}, {zh:'依身形與腳踝活動度，膝蓋超過腳尖是正常的。重點是膝蓋方向跟腳尖一致、腳跟不離地。', en:'Depending on build and ankle mobility, knees past the toes is normal. What matters is knees tracking the toes and heels staying down.', fr:'Selon la morphologie et la mobilité de cheville, c’est normal. L’essentiel : genoux dans l’axe des pieds et talons au sol.'}],
+  ]},
+  { type:'warn', p:{
+    zh:'出現以下狀況請立即停止並就醫：胸痛或胸悶、異常喘不過氣、頭暈或快昏倒、關節尖銳刺痛或「啪」一聲後腫脹、手腳麻木刺痛持續不退。肌肉痠是正常的，關節痛不是。',
+    en:'Stop immediately and seek medical help for: chest pain or tightness, unusual breathlessness, dizziness or feeling faint, sharp joint pain or a “pop” followed by swelling, persistent numbness or tingling. Muscle soreness is normal; joint pain is not.',
+    fr:'Arrêtez immédiatement et consultez en cas de : douleur ou oppression thoracique, essoufflement inhabituel, vertige ou malaise, douleur articulaire vive ou « claquement » suivi d’un gonflement, engourdissement ou fourmillements persistants. Une courbature est normale, une douleur articulaire non.'} },
+]},
+]});
+</script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>芭蕾 | 歷史、術語與把桿教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* The five positions of the feet seen from above, fully turned out.
+   Each foot is drawn from its heel; the front foot is the right one. */
+function diaFeet() {
+  const L = {
+    title:{zh:'腳的五個位置（俯視，完全外開）', en:'The five positions of the feet (from above, fully turned out)', fr:'Les cinq positions des pieds (vue de dessus, en dehors complet)'},
+    front:{zh:'前腳＝右腳（粉色）', en:'Front foot = right (pink)', fr:'Pied avant = droit (rose)'},
+    n:[
+      {zh:'一位：腳跟併攏', en:'1st: heels together', fr:'1re : talons joints'},
+      {zh:'二位：腳跟相距一腳', en:'2nd: a foot apart', fr:'2e : un pied d’écart'},
+      {zh:'三位：腳跟靠足弓', en:'3rd: heel to arch', fr:'3e : talon au cou-de-pied'},
+      {zh:'四位：前後相距一腳', en:'4th: a foot apart, front-back', fr:'4e : un pied d’écart, devant-derrière'},
+      {zh:'五位：腳跟對腳尖', en:'5th: heel to toe', fr:'5e : talon contre orteils'},
+    ],
+  };
+  const FL = 54, FW = 20;
+  /* foot from heel (x,y) pointing dir (+1 right, -1 left) */
+  const foot = (x, y, dir, front) => {
+    const cx = x + dir * FL / 2, col = front ? '#f9a8d4' : '#c4b5fd';
+    return `<ellipse cx="${cx}" cy="${y}" rx="${FL / 2}" ry="${FW / 2}" fill="${col}" fill-opacity="0.35" stroke="${col}" stroke-width="2"/>
+      <circle cx="${x + dir * (FL - 8)}" cy="${y}" r="5" fill="${col}"/>`;
+  };
+  const cell = (i, inner) => {
+    const ox = 10 + i * 178;
+    return `<g transform="translate(${ox},40)"><rect width="168" height="170" rx="12" fill="rgba(255,255,255,0.02)" stroke="rgba(148,163,184,0.2)"/>${inner}
+      <text x="84" y="158" text-anchor="middle" class="val">${t(L.n[i])}</text></g>`;
+  };
+  const c = 84, y = 70;
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  s += cell(0, foot(c - 2, y, -1, false) + foot(c + 2, y, 1, true));
+  s += cell(1, foot(c - 18, y, -1, false) + foot(c + 18, y, 1, true));
+  s += cell(2, foot(c + 16, y - 12, -1, false) + foot(c + 16 - FL / 2, y + 12, 1, true));
+  s += cell(3, foot(c + FL / 2, y - 30, -1, false) + foot(c - FL / 2, y + 32, 1, true));
+  s += cell(4, foot(c + FL / 2, y - 12, -1, false) + foot(c - FL / 2, y + 12, 1, true));
+  s += `<text x="0" y="236" class="sub">${t(L.front)}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 246" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const P = '#f9a8d4', V = '#c4b5fd', G = '#fcd34d', T = '#5eead4', S = '#7dd3fc', R = '#fda4af';
+
+CourseKit.start({
+icon:'fa-shoe-prints', accent:P, accent2:V, bg:'#0b080b',
+back:{ href:'dance.html', label:{zh:'回到舞蹈總覽', en:'Back to the dance overview', fr:'Retour à la vue d’ensemble'} },
+dia:{ feet: diaFeet },
+ui:{
+zh:{
+ 'doc.title':'芭蕾 | 歷史、術語與把桿教學',
+ 'hdr.badge':'舞種詳解・芭蕾','hdr.title':'芭蕾：歷史、術語與把桿教學',
+ 'intro':'芭蕾是以外開、延伸、輕盈為核心的古典舞蹈。它的術語至今仍使用法語，因為技巧是在十七世紀的法國宮廷被系統化的。今天，世界各地的舞者不論跳什麼舞種，常常都從芭蕾的基本功開始：它訓練的是對齊、控制、平衡與線條。',
+ 'intro2':'這一頁依序介紹芭蕾的歷史、主要流派、核心原則、腳位與手位、常用術語，接著是一堂芭蕾課的完整結構、可以照著做的把桿組合與旋轉教學，最後說明何時能穿足尖鞋，以及值得認識的經典舞劇。',
+ 'footer':'芭蕾入門參考。術語與手位編號依流派略有不同，請以你的老師所用的體系為準。外開必須來自髖關節，強迫膝蓋或腳掌外轉會造成傷害；足尖鞋必須在老師評估後才能開始。'
+},
+en:{
+ 'doc.title':'Ballet: History, Vocabulary & Barre',
+ 'hdr.badge':'STYLE GUIDE · BALLET','hdr.title':'Ballet: history, vocabulary and the barre',
+ 'intro':'Ballet is the classical dance of turnout, extension and lightness. Its vocabulary is still French, because the technique was codified at the French court in the seventeenth century. Today dancers of every style often start with ballet basics, which train alignment, control, balance and line.',
+ 'intro2':'This page covers ballet’s history, its main schools, the core principles, the positions of the feet and arms and the essential vocabulary, then the full structure of a ballet class, barre combinations and a pirouette lesson to follow, and finally when pointe work can start and the classic ballets worth knowing.',
+ 'footer':'An introductory ballet reference. Terms and arm-position numbering vary between schools: follow the system your teacher uses. Turnout must come from the hips; forcing it at the knees or feet causes injury. Pointe work only begins after a teacher’s assessment.'
+},
+fr:{
+ 'doc.title':'Ballet : histoire, vocabulaire & barre',
+ 'hdr.badge':'FICHE STYLE · BALLET','hdr.title':'Le ballet : histoire, vocabulaire et barre',
+ 'intro':'Le ballet est la danse classique de l’en-dehors, de l’allongement et de la légèreté. Son vocabulaire est resté français, car la technique a été codifiée à la cour de France au XVIIᵉ siècle. Aujourd’hui, des danseurs de tous styles commencent par ses bases, qui entraînent l’alignement, le contrôle, l’équilibre et la ligne.',
+ 'intro2':'Cette page présente l’histoire du ballet, ses grandes écoles, ses principes, les positions des pieds et des bras et le vocabulaire essentiel, puis le déroulé complet d’un cours, des enchaînements à la barre et une leçon de pirouette, et enfin le passage aux pointes et les grands ballets du répertoire.',
+ 'footer':'Une référence d’initiation au ballet. Le vocabulaire et la numérotation des bras varient selon les écoles : suivez le système de votre professeur. L’en-dehors vient des hanches ; le forcer aux genoux ou aux pieds blesse. Les pointes ne commencent qu’après l’avis d’un professeur.'
+}},
+sections:[
+
+/* ── 1. History ── */
+{ id:'history', i:'fa-landmark', c:P,
+  nav:{zh:'歷史', en:'History', fr:'Histoire'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'從宮廷到世界舞台', en:'From the court to the world stage', fr:'De la cour aux scènes du monde'},
+  blocks:[
+  { type:'table', head:[{zh:'時期', en:'Period', fr:'Période'}, {zh:'發生了什麼', en:'What happened', fr:'Ce qui s’est passé'}, {zh:'代表', en:'Landmarks', fr:'Repères'}], rows:[
+    [{zh:'15–16 世紀', en:'15th–16th c.', fr:'XVᵉ–XVIᵉ s.'}, {zh:'義大利文藝復興宮廷的宴會舞蹈，經由凱薩琳・德・麥地奇帶到法國。', en:'Court spectacles of the Italian Renaissance, brought to France with Catherine de’ Medici.', fr:'Divertissements des cours de la Renaissance italienne, apportés en France avec Catherine de Médicis.'}, {zh:'《王后的喜劇芭蕾》（1581）', en:'Ballet comique de la Reine (1581)', fr:'Ballet comique de la Reine (1581)'}],
+    [{zh:'17 世紀', en:'17th c.', fr:'XVIIᵉ s.'}, {zh:'熱愛跳舞的路易十四於 1661 年成立皇家舞蹈學院；舞蹈大師博尚（Beauchamp）整理出腳的五個位置。', en:'Louis XIV, a keen dancer, founded the Académie Royale de Danse in 1661; ballet master Pierre Beauchamp codified the five positions of the feet.', fr:'Louis XIV, grand danseur, fonde l’Académie royale de danse en 1661 ; Pierre Beauchamp codifie les cinq positions.'}, {zh:'巴黎歌劇院芭蕾舞團的前身', en:'Forerunner of the Paris Opera Ballet', fr:'Ancêtre du Ballet de l’Opéra de Paris'}],
+    [{zh:'19 世紀前期・浪漫芭蕾', en:'Early 19th c. · Romantic', fr:'Début XIXᵉ · romantique'}, {zh:'足尖技巧出現，女舞者穿長紗裙（Romantic tutu）化身精靈與幽靈。', en:'Pointe work appears; ballerinas in long tulle skirts play sylphs and spirits.', fr:'Apparition des pointes ; les ballerines en longs tutus incarnent sylphides et fantômes.'}, {zh:'《仙女》（1832）、《吉賽兒》（1841）', en:'La Sylphide (1832), Giselle (1841)', fr:'La Sylphide (1832), Giselle (1841)'}],
+    [{zh:'19 世紀後期・古典芭蕾', en:'Late 19th c. · Classical', fr:'Fin XIXᵉ · classique'}, {zh:'在俄國聖彼得堡，佩提帕（Petipa）與柴可夫斯基創造盛大的古典舞劇，短硬的圓盤裙（classical tutu）展現腿部技巧。', en:'In St Petersburg, Marius Petipa and Tchaikovsky create grand classical ballets; the short, stiff tutu shows off the legs.', fr:'À Saint-Pétersbourg, Marius Petipa et Tchaïkovski créent les grands ballets classiques ; le tutu plateau dévoile les jambes.'}, {zh:'《睡美人》（1890）、《胡桃鉗》（1892）、《天鵝湖》（1895 版）', en:'Sleeping Beauty (1890), Nutcracker (1892), Swan Lake (1895 version)', fr:'La Belle au bois dormant (1890), Casse-Noisette (1892), Le Lac des cygnes (version 1895)'}],
+    [{zh:'20 世紀初', en:'Early 20th c.', fr:'Début XXᵉ'}, {zh:'狄亞基列夫的俄羅斯芭蕾舞團（1909）在巴黎結合前衛音樂與美術。', en:'Diaghilev’s Ballets Russes (1909) unite avant-garde music and art in Paris.', fr:'Les Ballets russes de Diaghilev (1909) unissent musique et peinture d’avant-garde à Paris.'}, {zh:'史特拉汶斯基《火鳥》《春之祭》', en:'Stravinsky’s Firebird and Rite of Spring', fr:'L’Oiseau de feu et Le Sacre du printemps de Stravinsky'}],
+    [{zh:'20 世紀中後期', en:'Mid–late 20th c.', fr:'Milieu–fin XXᵉ'}, {zh:'巴蘭欽在紐約發展新古典芭蕾：去掉故事、強調速度與音樂性；之後佛賽（Forsythe）等人把芭蕾推向當代。', en:'Balanchine develops neoclassical ballet in New York: plotless, fast and musical; later Forsythe and others push ballet towards the contemporary.', fr:'Balanchine développe à New York le néoclassique : sans intrigue, rapide et musical ; Forsythe et d’autres mènent ensuite le ballet vers le contemporain.'}, {zh:'紐約市芭蕾舞團（1948）', en:'New York City Ballet (1948)', fr:'New York City Ballet (1948)'}],
+  ]},
+]},
+
+/* ── 2. Schools ── */
+{ id:'schools', i:'fa-building-columns', c:V,
+  nav:{zh:'流派', en:'Schools', fr:'Écoles'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'主要流派與訓練體系', en:'The main schools and training systems', fr:'Les grandes écoles et méthodes'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-landmark', t:{zh:'法國學派', en:'French school', fr:'École française'}, tag:{zh:'巴黎歌劇院', en:'Paris Opera', fr:'Opéra de Paris'},
+      p:{zh:'最古老的體系，優雅、精準、腳下乾淨，重視細膩的小跳與上半身的端莊。', en:'The oldest system: elegant, precise, clean footwork, refined small jumps and a poised upper body.', fr:'Le plus ancien : élégance, précision, batterie fine et haut du corps distingué.'} },
+    { i:'fa-snowflake', t:{zh:'Vaganova（俄國）', en:'Vaganova (Russian)', fr:'Vaganova (russe)'}, tag:{zh:'瓦岡諾娃芭蕾學院', en:'Vaganova Academy', fr:'Académie Vaganova'},
+      p:{zh:'由阿格麗皮娜・瓦岡諾娃整理，融合法、義、俄的優點；上半身與背部非常有表現力，跳躍高、旋轉有力。全世界最普遍的體系之一。', en:'Codified by Agrippina Vaganova from French, Italian and Russian traditions; an expressive back and upper body, big jumps, powerful turns. One of the most widespread systems.', fr:'Codifiée par Agrippina Vaganova à partir des traditions française, italienne et russe ; dos et haut du corps expressifs, grands sauts, tours puissants. Une des méthodes les plus répandues.'} },
+    { i:'fa-scale-balanced', t:{zh:'Cecchetti（義大利）', en:'Cecchetti (Italian)', fr:'Cecchetti (italienne)'}, tag:{zh:'固定的每日練習表', en:'A fixed daily schedule', fr:'Un programme quotidien fixe'},
+      p:{zh:'恩里科・切凱蒂設計，依星期一到六固定練習內容，著重解剖學上的正確與平衡。', en:'Designed by Enrico Cecchetti with set exercises for each day of the week, focused on anatomical correctness and balance.', fr:'Conçue par Enrico Cecchetti, avec des exercices fixes pour chaque jour de la semaine, centrée sur la justesse anatomique et l’équilibre.'} },
+    { i:'fa-feather', t:{zh:'Bournonville（丹麥）', en:'Bournonville (Danish)', fr:'Bournonville (danoise)'}, tag:{zh:'丹麥皇家芭蕾', en:'Royal Danish Ballet', fr:'Ballet royal danois'},
+      p:{zh:'輕快的小跳、連續的打腿（batterie）與自然的上半身，保留了浪漫芭蕾的風格。', en:'Quick small jumps, beaten steps (batterie) and a natural upper body; preserves Romantic style.', fr:'Petits sauts vifs, batterie et haut du corps naturel ; préserve le style romantique.'} },
+    { i:'fa-crown', t:{zh:'RAD（英國皇家舞蹈學院）', en:'RAD (Royal Academy of Dance)', fr:'RAD (Royal Academy of Dance)'}, tag:{zh:'考級系統', en:'Graded exams', fr:'Examens par niveaux'},
+      p:{zh:'有從兒童到專業的分級考試，台灣與世界許多舞蹈教室都採用，適合想要有明確進度的學生。', en:'Graded exams from children to professional, used by many studios worldwide including in Taiwan; good if you want a clear progression.', fr:'Des examens gradués de l’enfance au niveau professionnel, utilisés dans de nombreuses écoles ; idéal pour une progression claire.'} },
+    { i:'fa-bolt', t:{zh:'Balanchine（美國）', en:'Balanchine (American)', fr:'Balanchine (américaine)'}, tag:{zh:'紐約市芭蕾舞團', en:'New York City Ballet', fr:'New York City Ballet'},
+      p:{zh:'速度極快、動作放大、手臂開闊，常用不完全落下的腳跟與更高的臀部線條，強調音樂性。', en:'Very fast, enlarged movement, open arms, often unfinished heels and a higher hip line; all about musicality.', fr:'Très rapide, mouvements amplifiés, bras ouverts, talons souvent levés et hanche plus haute ; tout pour la musicalité.'} },
+  ]},
+]},
+
+/* ── 3. Principles & positions ── */
+{ id:'positions', i:'fa-ruler-combined', c:G,
+  nav:{zh:'原則與位置', en:'Principles', fr:'Principes'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'核心原則、腳位與手位', en:'Core principles, feet and arms', fr:'Principes, pieds et bras'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-arrows-left-right', t:{zh:'外開（Turn-out / En dehors）', en:'Turnout (en dehors)', fr:'L’en-dehors'},
+      p:{zh:'大腿從髖關節向外旋轉，膝蓋與腳尖朝同一方向。初學者 90–120° 就很好，不要用腳掌硬扭到 180°。', en:'The thighs rotate outward from the hip so knees and toes face the same way. 90–120° is fine for a beginner; never wrench the feet to 180°.', fr:'Les cuisses tournent vers l’extérieur depuis la hanche, genoux et pieds dans le même axe. 90 à 120° suffisent au début ; ne forcez jamais les pieds à 180°.'} },
+    { i:'fa-arrow-up', t:{zh:'Pull-up（向上延伸）', en:'Pull-up', fr:'Le grandissement'},
+      p:{zh:'頭頂往上、肚子往內往上收、肋骨合起，讓身體重量從腿上「提起來」，才能輕盈與平衡。', en:'Crown up, abdomen in and up, ribs closed: lift the weight off the legs for lightness and balance.', fr:'Sommet du crâne vers le haut, ventre rentré et remonté, côtes fermées : on « soulage » les jambes pour la légèreté et l’équilibre.'} },
+    { i:'fa-align-center', t:{zh:'對齊（Placement）', en:'Placement', fr:'Le placement'},
+      p:{zh:'耳、肩、髖、膝、腳踝在同一垂直線，骨盆擺正不前傾也不後傾，重量落在腳掌前三分之一。', en:'Ear, shoulder, hip, knee and ankle stacked; a neutral pelvis; weight over the front third of the feet.', fr:'Oreille, épaule, hanche, genou et cheville alignés ; bassin neutre ; poids sur le tiers avant des pieds.'} },
+    { i:'fa-person-rays', t:{zh:'Épaulement（肩頸方向）', en:'Épaulement', fr:'L’épaulement'},
+      p:{zh:'頭與肩相對於臀部的轉向與傾斜，讓動作有立體感與表情。', en:'The angle of head and shoulders against the hips; gives movement depth and expression.', fr:'L’orientation de la tête et des épaules par rapport aux hanches ; donne relief et expression.'} },
+    { i:'fa-eye', t:{zh:'定點（Spotting）', en:'Spotting', fr:'Le repère'},
+      p:{zh:'旋轉時眼睛盯住一個點，頭最後離開、最先回來，防止暈眩並維持方向。', en:'In turns, the eyes fix a point; the head leaves last and returns first, preventing dizziness.', fr:'En tournant, le regard fixe un point ; la tête part en dernier et revient en premier, contre le vertige.'} },
+    { i:'fa-hands', t:{zh:'Port de bras（手臂的運行）', en:'Port de bras', fr:'Le port de bras'},
+      p:{zh:'手臂從背部發力，手肘微彎、手指柔和延伸，永遠在身體前方的視線範圍內。', en:'Arms supported from the back, elbows softly rounded, fingers extended gently, always within peripheral vision.', fr:'Bras soutenus par le dos, coudes arrondis, doigts allongés avec douceur, toujours dans le champ de vision.'} },
+  ]},
+  { type:'dia', k:'feet' },
+  { type:'table', head:[{zh:'手位（俄派／RAD 稱呼）', en:'Arm position (Russian / RAD names)', fr:'Position de bras (noms russes / RAD)'}, {zh:'形狀', en:'Shape', fr:'Forme'}], rows:[
+    [{zh:'預備位（Bras bas）', en:'Preparatory (bras bas)', fr:'Bras bas (préparatoire)'}, {zh:'雙手在大腿前方呈橢圓，手指相距約一個拳頭。', en:'An oval in front of the thighs, fingertips a fist apart.', fr:'Un ovale devant les cuisses, doigts écartés d’un poing.'}],
+    [{zh:'一位', en:'First', fr:'Première'}, {zh:'橢圓抬到胃的高度，像抱著一顆大球。', en:'The oval lifted to stomach height, as if hugging a large ball.', fr:'L’ovale monté à hauteur d’estomac, comme pour tenir un gros ballon.'}],
+    [{zh:'二位', en:'Second', fr:'Seconde'}, {zh:'雙臂向兩側打開，略低於肩、略在身體前方，手肘不下垂。', en:'Arms open to the sides, a little below the shoulders and in front of the body, elbows lifted.', fr:'Bras ouverts sur les côtés, un peu sous les épaules et devant le corps, coudes soutenus.'}],
+    [{zh:'三位（俄派）／五位（RAD、Cecchetti）', en:'Third (Russian) / fifth (RAD, Cecchetti)', fr:'Troisième (russe) / cinquième (RAD, Cecchetti)'}, {zh:'橢圓舉到頭頂前上方，抬眼就能看到手。', en:'The oval raised above and slightly in front of the head, visible when you lift your eyes.', fr:'L’ovale au-dessus et légèrement devant la tête, visible en levant les yeux.'}],
+  ]},
+]},
+
+/* ── 4. Vocabulary ── */
+{ id:'terms', i:'fa-book', c:T,
+  nav:{zh:'術語', en:'Vocabulary', fr:'Vocabulaire'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'必懂的芭蕾術語', en:'Essential ballet vocabulary', fr:'Le vocabulaire essentiel'},
+  blocks:[
+  { type:'table', head:[{zh:'術語', en:'Term', fr:'Terme'}, {zh:'字面意思', en:'Literally', fr:'Sens littéral'}, {zh:'動作', en:'The movement', fr:'Le mouvement'}], rows:[
+    ['Plié', {zh:'彎曲', en:'Bent', fr:'Plié'}, {zh:'膝蓋順著腳尖方向彎曲。demi-plié 腳跟不離地；grand plié 蹲到底，腳跟只在必要時離地（二位不離地）。', en:'Knees bend over the toes. Demi-plié keeps the heels down; grand plié goes all the way, heels rising only when needed (never in second).', fr:'Flexion des genoux dans l’axe des pieds. Demi-plié talons au sol ; grand plié jusqu’en bas, talons décollés seulement si nécessaire (jamais en seconde).'}],
+    ['Tendu', {zh:'伸展', en:'Stretched', fr:'Tendu'}, {zh:'腳沿地面往前、旁、後滑出，腳背與腳尖完全繃直，腳尖不離地。', en:'The foot slides out front, side or back along the floor to a fully pointed foot, toes never leaving the floor.', fr:'Le pied glisse devant, à la seconde ou derrière jusqu’à la pointe tendue, sans quitter le sol.'}],
+    ['Dégagé / Jeté', {zh:'放開／拋出', en:'Disengaged / thrown', fr:'Dégagé / jeté'}, {zh:'如 tendu 但腳尖離地約 5–10 公分，快速而乾淨。', en:'Like a tendu but the toes leave the floor by 5–10 cm, quick and clean.', fr:'Comme un tendu, mais la pointe quitte le sol de 5 à 10 cm, vif et net.'}],
+    ['Rond de jambe', {zh:'腿畫圓', en:'Circle of the leg', fr:'Rond de jambe'}, {zh:'腳尖在地面或空中畫半圓，往前畫為 en dehors，往後為 en dedans。', en:'The toe draws a half-circle on the floor or in the air: front to back is en dehors, back to front en dedans.', fr:'La pointe trace un demi-cercle au sol ou en l’air : d’avant en arrière en dehors, l’inverse en dedans.'}],
+    ['Fondu', {zh:'融化', en:'Melted', fr:'Fondu'}, {zh:'支撐腿與動作腿同時彎曲再同時伸直，柔軟而連貫。', en:'Supporting and working legs bend together and stretch together, smooth and continuous.', fr:'Jambe d’appui et jambe de travail plient et s’étirent ensemble, fondu et continu.'}],
+    ['Frappé', {zh:'敲擊', en:'Struck', fr:'Frappé'}, {zh:'動作腳從腳踝位置（sur le cou-de-pied）快速踢出、腳尖輕擦地板。', en:'The working foot strikes out sharply from the ankle (sur le cou-de-pied), brushing the floor.', fr:'Le pied part vivement du cou-de-pied en frappant le sol.'}],
+    ['Développé', {zh:'展開', en:'Unfolded', fr:'Développé'}, {zh:'腳經過 retiré 慢慢展開到空中，考驗控制與高度。', en:'The leg unfolds slowly through retiré into the air; a test of control and height.', fr:'La jambe se déplie lentement en passant par le retiré ; contrôle et hauteur.'}],
+    ['Grand battement', {zh:'大踢腿', en:'Big beat', fr:'Grand battement'}, {zh:'腿有力地踢高再控制地放下，上半身保持不動。', en:'The leg is thrown high and lowered with control, the upper body still.', fr:'La jambe est lancée haut puis redescend avec contrôle, buste immobile.'}],
+    ['Relevé', {zh:'升起', en:'Raised', fr:'Relevé'}, {zh:'踮起到半腳尖（demi-pointe）或足尖。', en:'Rising to the balls of the feet (demi-pointe) or to pointe.', fr:'Montée sur demi-pointes ou sur pointes.'}],
+    ['Retiré / Passé', {zh:'收回／經過', en:'Withdrawn / passed', fr:'Retiré / passé'}, {zh:'動作腳尖貼在支撐腿膝蓋旁，形成三角形，是旋轉的標準姿勢。', en:'The working toe at the side of the supporting knee, forming a triangle: the standard turning position.', fr:'La pointe au niveau du genou d’appui, en triangle : la position de tour.'}],
+    ['Pirouette', {zh:'旋轉', en:'Spin', fr:'Pirouette'}, {zh:'單腳以 retiré 姿勢旋轉一圈以上。', en:'Turning one or more times on one leg in retiré.', fr:'Tour sur une jambe en retiré, une fois ou plus.'}],
+    ['Arabesque', {zh:'阿拉伯花紋', en:'Arabesque', fr:'Arabesque'}, {zh:'單腳站立，另一腿向後伸直抬起，手臂延伸出一條長線。', en:'Standing on one leg, the other extended straight behind, arms prolonging the line.', fr:'Sur une jambe, l’autre tendue derrière, les bras prolongeant la ligne.'}],
+    ['Attitude', {zh:'姿態', en:'Attitude', fr:'Attitude'}, {zh:'類似 arabesque，但抬起的腿膝蓋彎曲約 90°。', en:'Like an arabesque but with the raised knee bent at about 90°.', fr:'Comme une arabesque, genou levé plié à environ 90°.'}],
+    ['Sauté / Changement', {zh:'跳／交換', en:'Jumped / change', fr:'Sauté / changement'}, {zh:'雙腳跳起；changement 在空中從五位交換前後腳。', en:'A jump from both feet; changement swaps the front foot in the air from fifth.', fr:'Saut sur deux pieds ; le changement inverse les pieds en l’air depuis la cinquième.'}],
+    ['Glissade / Assemblé / Jeté', {zh:'滑／集合／拋', en:'Glide / assembled / thrown', fr:'Glissade / assemblé / jeté'}, {zh:'小跳三兄弟：滑步連接、單腳起雙腳落、單腳起換腳落。', en:'Three small jumps: a gliding link, one foot to two, one foot to the other.', fr:'Trois petits sauts : liaison glissée, d’un pied sur deux, d’un pied sur l’autre.'}],
+    ['Pas de bourrée / Chassé', {zh:'布雷步／追步', en:'Bourrée step / chased', fr:'Pas de bourrée / chassé'}, {zh:'三個小步交換重心；chassé 是一腳「追」上另一腳的滑步。', en:'Three small weight changes; chassé is a slide where one foot chases the other.', fr:'Trois petits transferts d’appui ; le chassé est un glissé où un pied chasse l’autre.'}],
+  ]},
+]},
+
+/* ── 5. Class ── */
+{ id:'class', i:'fa-list-ol', c:S,
+  nav:{zh:'課堂結構', en:'The class', fr:'Le cours'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'一堂芭蕾課怎麼進行', en:'How a ballet class runs', fr:'Le déroulé d’un cours de ballet'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'不論在哪個國家、哪個程度，芭蕾課的順序幾乎相同：從小動作到大動作、從慢到快、從扶把桿到離開把桿、從地面到空中。一堂成人課約 75–90 分鐘。',
+    en:'In every country and at every level, a ballet class follows almost the same order: small to large, slow to fast, holding the barre to free-standing, ground to air. An adult class lasts about 75–90 minutes.',
+    fr:'Partout et à tous les niveaux, le cours suit presque le même ordre : du petit au grand, du lent au rapide, de la barre au milieu, du sol à l’air. Un cours adulte dure environ 75 à 90 minutes.'} },
+  { type:'steps', items:[
+    { t:{zh:'把桿（約 40 分鐘）', en:'Barre (about 40 min)', fr:'Barre (environ 40 min)'}, p:{zh:'plié → tendu → dégagé → rond de jambe à terre → fondu → frappé → adagio（développé）→ grand battement → 伸展。', en:'Plié → tendu → dégagé → rond de jambe à terre → fondu → frappé → adagio (développé) → grand battement → stretch.', fr:'Pliés → tendus → dégagés → ronds de jambe à terre → fondus → frappés → adage (développés) → grands battements → étirements.'} },
+    { t:{zh:'中間練習（Centre）', en:'Centre', fr:'Milieu'}, p:{zh:'離開把桿重做 tendu 與 adagio，練習 port de bras 與平衡。', en:'Away from the barre: tendus and adagio again, port de bras and balances.', fr:'Sans barre : tendus et adage, ports de bras et équilibres.'} },
+    { t:{zh:'旋轉', en:'Turns', fr:'Tours'}, p:{zh:'從 quarter turn、半圈、到單圈與雙圈 pirouette，以及 chaînés 連續轉。', en:'From quarter and half turns to single and double pirouettes, and chaînés.', fr:'Des quarts et demi-tours aux pirouettes simples et doubles, et les chaînés.'} },
+    { t:{zh:'小跳（Petit allegro）', en:'Petit allegro', fr:'Petit allegro'}, p:{zh:'sauté、changement、échappé、glissade、assemblé 組合。', en:'Sautés, changements, échappés, glissades and assemblés.', fr:'Sautés, changements, échappés, glissades et assemblés.'} },
+    { t:{zh:'大跳（Grand allegro）', en:'Grand allegro', fr:'Grand allegro'}, p:{zh:'從教室對角線助跑，grand jeté 等大跳躍。', en:'Travelling across the diagonal with big leaps such as the grand jeté.', fr:'En diagonale, grands sauts comme le grand jeté.'} },
+    { t:{zh:'謝禮（Révérence）', en:'Révérence', fr:'Révérence'}, p:{zh:'以優雅的行禮向老師與伴奏致謝，結束課程。', en:'A graceful bow to thank the teacher and pianist, closing the class.', fr:'Un salut gracieux pour remercier le professeur et le pianiste.'} },
+  ]},
+]},
+
+/* ── 6. Lessons ── */
+{ id:'lessons', i:'fa-chalkboard-user', c:R,
+  nav:{zh:'教學', en:'Lessons', fr:'Leçons'},
+  eyebrow:{zh:'第六章・教學', en:'Chapter 6 · Lessons', fr:'Chapitre 6 · Leçons'},
+  h2:{zh:'在家可以做的把桿組合與旋轉練習', en:'Barre combinations and turn practice at home', fr:'Enchaînements à la barre et tours à la maison'},
+  blocks:[
+  { type:'note', p:{
+    zh:'用一張穩固的椅背或流理台當把桿，左手輕扶（不要靠上去），先做右腳，再轉身做另一邊。音樂選 3/4 拍的慢華爾滋做 plié，4/4 拍做 tendu。',
+    en:'Use a sturdy chair back or kitchen counter as a barre, resting the left hand lightly (do not lean). Work the right side, then turn round for the other. Use a slow 3/4 waltz for pliés and 4/4 for tendus.',
+    fr:'Une chaise solide ou un plan de travail font office de barre ; main gauche posée sans s’appuyer. Côté droit, puis on se retourne. Une valse lente à 3/4 pour les pliés, du 4/4 pour les tendus.'} },
+  { type:'counts', t:{zh:'組合一：一位 Plié（兩個八拍，再於二位重做）', en:'Combination 1: pliés in first (two eights, then repeat in second)', fr:'Enchaînement 1 : pliés en première (deux huit, puis en seconde)'},
+    p:{zh:'每個 demi-plié 用 2 拍下、2 拍上；grand plié 用 4 拍下、4 拍上。全程手臂從預備位經一位到二位。', en:'Each demi-plié takes 2 counts down and 2 up; the grand plié 4 down and 4 up. The arm travels from bras bas through first to second.', fr:'Chaque demi-plié : 2 temps pour descendre, 2 pour remonter ; le grand plié 4 et 4. Le bras passe de bras bas à la première puis à la seconde.'},
+    items:[
+      {n:'1–2', p:{zh:'Demi-plié 下', en:'Demi-plié down', fr:'Demi-plié, descendre'}},
+      {n:'3–4', p:{zh:'伸直上來', en:'Stretch up', fr:'Remonter'}},
+      {n:'5–6', p:{zh:'Demi-plié 下', en:'Demi-plié down', fr:'Demi-plié, descendre'}},
+      {n:'7–8', p:{zh:'伸直上來', en:'Stretch up', fr:'Remonter'}},
+      {n:'1–4', p:{zh:'Grand plié 慢慢下', en:'Grand plié, slowly down', fr:'Grand plié, descendre lentement'}},
+      {n:'5–8', p:{zh:'經 demi-plié 推地上來', en:'Push up through demi-plié', fr:'Remonter en passant par le demi-plié'}},
+      {n:'1–4', p:{zh:'身體往前彎（port de bras forward）', en:'Bend forward (port de bras)', fr:'Port de bras en avant'}},
+      {n:'5–8', p:{zh:'回正、relevé 平衡', en:'Return, rise to relevé and balance', fr:'Revenir, relevé et équilibre'}},
+    ]},
+  { type:'counts', t:{zh:'組合二：五位 Tendu（十字方向，en croix）', en:'Combination 2: tendus from fifth (en croix)', fr:'Enchaînement 2 : tendus en croix depuis la cinquième'},
+    p:{zh:'往前、旁、後、旁各兩次，每次 1 拍出、1 拍收。腳尖出去時先經過腳跟、再到腳掌、最後腳尖；收回時順序相反。', en:'Front, side, back, side, twice each, one count out and one in. Going out, peel through heel, ball and toe; coming back, the reverse.', fr:'Devant, côté, derrière, côté, deux fois chacun : 1 temps pour sortir, 1 pour fermer. En sortant, talon, demi-pointe puis pointe ; l’inverse en rentrant.'},
+    items:[
+      {n:'1', p:{zh:'往前出', en:'Out front', fr:'Devant'}},
+      {n:'2', p:{zh:'收五位', en:'Close fifth', fr:'Fermer en 5e'}},
+      {n:'3', p:{zh:'往前出', en:'Out front', fr:'Devant'}},
+      {n:'4', p:{zh:'收五位', en:'Close', fr:'Fermer'}},
+      {n:'5', p:{zh:'往旁出', en:'Out to the side', fr:'À la seconde'}},
+      {n:'6', p:{zh:'收後五位', en:'Close fifth behind', fr:'Fermer derrière'}},
+      {n:'7', p:{zh:'往旁出', en:'Side', fr:'Seconde'}},
+      {n:'8', p:{zh:'收前五位', en:'Close in front', fr:'Fermer devant'}},
+    ]},
+  { type:'h3', t:{zh:'第一個 Pirouette：分解教學', en:'Your first pirouette, broken down', fr:'Première pirouette, décomposée'} },
+  { type:'steps', items:[
+    { t:{zh:'練 retiré 平衡', en:'Balance in retiré', fr:'Équilibre en retiré'}, p:{zh:'扶把桿，從五位 relevé 把前腳拉到膝蓋旁，放開手平衡 4 拍。每天練到能穩定 8 拍。', en:'At the barre, rise from fifth and draw the front foot to the knee; let go and balance for 4 counts. Build to a steady 8.', fr:'À la barre, relevé depuis la cinquième et pied avant au genou ; lâchez et tenez 4 temps. Visez 8 temps stables.'} },
+    { t:{zh:'準備姿勢：四位 plié', en:'Preparation: fourth position plié', fr:'Préparation : plié en quatrième'}, p:{zh:'右腳在前、左腳在後的四位，兩腳都 plié，重心偏前腳；右手在一位、左手在二位。', en:'Fourth position, right foot front, both knees bent, weight towards the front foot; right arm in first, left in second.', fr:'Quatrième, pied droit devant, les deux genoux pliés, poids vers l’avant ; bras droit en première, gauche en seconde.'} },
+    { t:{zh:'練四分之一圈與半圈', en:'Quarter and half turns', fr:'Quarts et demi-tours'}, p:{zh:'從四位推地，後腳直接拉到 retiré、同時 relevé，左手合到一位，轉向右邊 90°，再到 180°。眼睛先盯鏡子，頭最後轉走。', en:'Push off from fourth, draw the back foot straight to retiré as you rise, close the left arm to first and turn 90° to the right, then 180°. Keep the eyes on the mirror; the head goes last.', fr:'Poussez depuis la quatrième, montez le pied arrière en retiré en relevé, fermez le bras gauche en première et tournez de 90° à droite, puis 180°. Le regard reste sur le miroir ; la tête part en dernier.'} },
+    { t:{zh:'完整一圈', en:'The full turn', fr:'Le tour complet'}, p:{zh:'同樣準備，轉滿 360°，頭快速甩回盯住同一點。結束時控制地落到後五位或四位 plié，不要「掉」下來。', en:'Same preparation, a full 360°, whipping the head round to the same spot. Finish with control in fifth behind or a fourth-position plié; do not drop out of it.', fr:'Même préparation, 360° complets, la tête revenant vite au même point. Finissez contrôlé en cinquième derrière ou en plié quatrième, sans « tomber ».'} },
+  ]},
+  { type:'warn', p:{
+    zh:'常見錯誤：用腳掌硬轉外開（膝蓋會扭傷）、翹臀或塌腰、在 relevé 時腳踝往外倒（sickling）、聳肩。寧可外開小一點、位置正確。',
+    en:'Common mistakes: forcing turnout from the feet (it strains the knees), sticking out the bottom or arching the back, ankles rolling out on relevé (sickling), raised shoulders. Better less turnout and correct placement.',
+    fr:'Erreurs courantes : forcer l’en-dehors par les pieds (les genoux en souffrent), fesses sorties ou dos cambré, cheville qui « faucille » en relevé, épaules remontées. Mieux vaut moins d’en-dehors et un bon placement.'} },
+]},
+
+/* ── 7. Pointe & repertoire ── */
+{ id:'pointe', i:'fa-crown', c:G,
+  nav:{zh:'足尖與舞劇', en:'Pointe & repertoire', fr:'Pointes & répertoire'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'足尖鞋與經典舞劇', en:'Pointe shoes and the classic ballets', fr:'Les pointes et les grands ballets'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'足尖鞋不是靠鞋子撐起來，而是靠腳踝、足弓、小腿與核心的力量。兒童通常要接受 3–4 年、每週數堂的訓練，骨骼發育足夠（多在 11–12 歲以後）才開始。成人學員也必須由老師評估，常見的準備測試包括：單腳連續 relevé 16–25 下不掉高度、retiré 平衡穩定、plié 時腳不內倒。',
+    en:'Pointe shoes do not hold you up: ankles, arches, calves and core do. Children usually train for 3–4 years, several classes a week, and start once their bones are mature enough (often after 11–12). Adult students also need a teacher’s assessment; common readiness tests include 16–25 single-leg relevés without losing height, a steady retiré balance, and feet that do not roll in during plié.',
+    fr:'Les pointes ne portent pas la danseuse : chevilles, voûtes, mollets et tronc le font. Les enfants s’entraînent d’ordinaire 3 à 4 ans, plusieurs cours par semaine, et commencent une fois l’ossature assez mûre (souvent après 11–12 ans). Un adulte a aussi besoin de l’avis de son professeur ; tests usuels : 16 à 25 relevés sur une jambe sans perdre de hauteur, un retiré stable, des pieds qui ne s’affaissent pas en plié.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-dove', t:{zh:'《天鵝湖》', en:'Swan Lake', fr:'Le Lac des cygnes'}, tag:{zh:'柴可夫斯基・1877／1895', en:'Tchaikovsky · 1877/1895', fr:'Tchaïkovski · 1877/1895'}, p:{zh:'白天鵝與黑天鵝由同一位舞者詮釋；第三幕黑天鵝的 32 圈揮鞭轉（fouetté）最有名。', en:'One ballerina plays both the white and the black swan; the black swan’s 32 fouettés in Act III are famous.', fr:'Une même danseuse incarne le cygne blanc et le cygne noir ; les 32 fouettés de l’acte III sont célèbres.'} },
+    { i:'fa-gifts', t:{zh:'《胡桃鉗》', en:'The Nutcracker', fr:'Casse-Noisette'}, tag:{zh:'柴可夫斯基・1892', en:'Tchaikovsky · 1892', fr:'Tchaïkovski · 1892'}, p:{zh:'聖誕節必演，〈糖梅仙子之舞〉與各國舞蹈組曲是入門最好的作品。', en:'A Christmas staple; the Sugar Plum Fairy and the national dances are the perfect first ballet.', fr:'Incontournable de Noël ; la Fée Dragée et les danses nationales en font le ballet idéal pour commencer.'} },
+    { i:'fa-moon', t:{zh:'《吉賽兒》', en:'Giselle', fr:'Giselle'}, tag:{zh:'亞當・1841', en:'Adam · 1841', fr:'Adam · 1841'}, p:{zh:'浪漫芭蕾代表作，第二幕的幽靈群舞（Wilis）展現輕盈與哀傷。', en:'The great Romantic ballet; the ghostly Wilis of Act II embody weightlessness and sorrow.', fr:'Le grand ballet romantique ; les Wilis de l’acte II incarnent légèreté et tristesse.'} },
+    { i:'fa-crown', t:{zh:'《睡美人》', en:'The Sleeping Beauty', fr:'La Belle au bois dormant'}, tag:{zh:'柴可夫斯基・1890', en:'Tchaikovsky · 1890', fr:'Tchaïkovski · 1890'}, p:{zh:'古典芭蕾技巧的百科全書，〈玫瑰慢板〉考驗長時間的單腳平衡。', en:'An encyclopaedia of classical technique; the Rose Adagio tests long balances on one leg.', fr:'Une encyclopédie de la technique ; l’Adage à la rose éprouve les longs équilibres.'} },
+    { i:'fa-guitar', t:{zh:'《唐吉訶德》', en:'Don Quixote', fr:'Don Quichotte'}, tag:{zh:'明庫斯・1869', en:'Minkus · 1869', fr:'Minkus · 1869'}, p:{zh:'充滿西班牙風情的熱鬧舞劇，雙人舞的大跳與旋轉是比賽常見選段。', en:'A lively Spanish-flavoured ballet whose pas de deux leaps and turns are competition favourites.', fr:'Un ballet espagnol plein d’entrain, dont les sauts et tours du pas de deux sont prisés en concours.'} },
+    { i:'fa-heart-crack', t:{zh:'《羅密歐與茱麗葉》', en:'Romeo and Juliet', fr:'Roméo et Juliette'}, tag:{zh:'普羅高菲夫・1938', en:'Prokofiev · 1938', fr:'Prokofiev · 1938'}, p:{zh:'戲劇性最強的芭蕾之一，麥克米倫（MacMillan）版本最常上演。', en:'One of the most dramatic ballets; Kenneth MacMillan’s version is the most often staged.', fr:'Un des ballets les plus dramatiques ; la version de Kenneth MacMillan est la plus jouée.'} },
+  ]},
+]},
+]});
+</script>
+</body>
+</html>

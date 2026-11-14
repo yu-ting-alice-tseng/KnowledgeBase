@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>舞蹈 | 舞種總覽與基礎教學</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+</head>
+<body>
+<script src="course-kit.js"></script>
+<script>
+/* ═══════════════════════════ Diagrams ═══════════════════════════ */
+
+/* Typical tempo of each style in beats per minute. Ballroom tempos are the
+   WDSF bars-per-minute figures multiplied by the beats in a bar. */
+function diaTempo() {
+  const L = {
+    title:{zh:'各舞種音樂的常見速度（BPM，每分鐘拍數）', en:'Typical music tempo by style (BPM)', fr:'Tempo musical typique par style (BPM)'},
+    note:{zh:'國標舞依 WDSF 規定的每分鐘小節數 × 每小節拍數換算。', en:'Ballroom: WDSF bars per minute × beats per bar.', fr:'Danses de salon : mesures par minute WDSF × temps par mesure.'},
+  };
+  const S = [
+    [{zh:'倫巴', en:'Rumba', fr:'Rumba'}, 96, 104, '#f59e0b'],
+    [{zh:'Hip-hop', en:'Hip-hop', fr:'Hip-hop'}, 85, 105, '#facc15'],
+    [{zh:'Popping', en:'Popping', fr:'Popping'}, 95, 112, '#facc15'],
+    [{zh:'Breaking', en:'Breaking', fr:'Breaking'}, 105, 125, '#facc15'],
+    [{zh:'K-pop', en:'K-pop', fr:'K-pop'}, 100, 130, '#facc15'],
+    [{zh:'華爾滋', en:'Waltz', fr:'Valse lente'}, 84, 90, '#f59e0b'],
+    [{zh:'House', en:'House', fr:'House'}, 118, 128, '#facc15'],
+    [{zh:'恰恰', en:'Cha-cha', fr:'Cha-cha'}, 120, 128, '#f59e0b'],
+    [{zh:'Bachata', en:'Bachata', fr:'Bachata'}, 120, 140, '#f59e0b'],
+    [{zh:'Salsa', en:'Salsa', fr:'Salsa'}, 160, 210, '#f59e0b'],
+    [{zh:'捷舞', en:'Jive', fr:'Jive'}, 168, 176, '#f59e0b'],
+    [{zh:'維也納華爾滋', en:'Viennese waltz', fr:'Valse viennoise'}, 174, 180, '#f59e0b'],
+    [{zh:'快步舞', en:'Quickstep', fr:'Quickstep'}, 200, 208, '#f59e0b'],
+  ];
+  S.sort((a, b) => a[1] - b[1]);
+  const X0 = 150, W = 720, lo = 60, hi = 220, x = b => X0 + (b - lo) / (hi - lo) * W;
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  for (let b = 60; b <= 220; b += 20) s += `<line x1="${x(b)}" y1="40" x2="${x(b)}" y2="${48 + S.length * 24}" class="grid"/><text x="${x(b)}" y="${66 + S.length * 24}" text-anchor="middle" class="sub">${b}</text>`;
+  S.forEach((r, i) => {
+    const y = 46 + i * 24;
+    s += `<text x="${X0 - 10}" y="${y + 14}" text-anchor="end" class="val">${t(r[0])}</text>`;
+    s += `<rect x="${x(r[1])}" y="${y + 2}" width="${Math.max(6, x(r[2]) - x(r[1]))}" height="16" rx="5" fill="${r[3]}" fill-opacity="0.7"/>`;
+    s += `<text x="${x(r[2]) + 8}" y="${y + 14}" class="sub">${r[1]}–${r[2]}</text>`;
+  });
+  s += `<text x="0" y="${92 + S.length * 24}" class="sub">${t(L.note)}</text>`;
+  return `<svg class="dg" viewBox="0 0 900 ${104 + S.length * 24}" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ═══════════════════════════ Content ═══════════════════════════ */
+const V = '#a78bfa', P = '#f9a8d4', Y = '#facc15', R = '#fb7185', T = '#2dd4bf', A = '#f59e0b', S = '#38bdf8', G = '#94a3b8';
+
+CourseKit.start({
+icon:'fa-person-dancing', accent:V, accent2:'#f472b6', bg:'#09070d',
+dia:{ tempo: diaTempo },
+ui:{
+zh:{
+ 'doc.title':'舞蹈 | 舞種總覽與基礎教學',
+ 'hdr.badge':'舞蹈入門','hdr.title':'舞蹈：舞種總覽與基礎教學',
+ 'intro':'跳舞是用身體回應音樂。每個舞種都誕生在特定的時代與社群：芭蕾來自歐洲宮廷，街舞來自紐約與洛杉磯的街區派對，國標舞從社交舞廳走向競技舞台。認識它們的來歷，就更能理解為什麼芭蕾往上延伸、街舞往下沉、拉丁舞從腳底推地。',
+ 'intro2':'這一卷是舞蹈的總覽：先介紹舞蹈的五大家族與數十種舞蹈，比較它們的音樂、身體用法與入門難度，再教所有舞種共通的基礎：數拍、律動、身體分離與記舞方法。芭蕾、街舞、爵士舞、現代與當代舞、拉丁與國標舞各有獨立的一頁，介紹歷史、風格分支、術語與一步一步的教學。',
+ 'footer':'舞蹈入門參考。文字教學無法取代老師的現場指導，初學者建議搭配實體或線上課程，並在平整、有彈性的地板上練習。有膝蓋、腳踝或下背舊傷者，請先諮詢醫師或物理治療師。'
+},
+en:{
+ 'doc.title':'Dance: Styles & Fundamentals',
+ 'hdr.badge':'DANCE PRIMER','hdr.title':'Dance: the styles and the fundamentals',
+ 'intro':'Dancing is the body answering music. Every style was born in a particular time and community: ballet in the European courts, street dance at block parties in New York and Los Angeles, ballroom in social dance halls before it became a competitive sport. Knowing where they come from explains why ballet reaches up, street dance sinks down and Latin pushes from the floor.',
+ 'intro2':'This volume is the overview: the five families of dance and dozens of styles, compared by music, use of the body and how hard they are to start, then the fundamentals every style shares: counting, grooves, isolations and how to memorise choreography. Ballet, street dance, jazz, modern and contemporary, and Latin and ballroom each have their own page with history, branches, vocabulary and step-by-step lessons.',
+ 'footer':'An introductory dance reference. Written lessons cannot replace a teacher in the room: beginners should take classes in person or online and practise on a flat, sprung floor. If you have an old knee, ankle or lower-back injury, see a doctor or physiotherapist first.'
+},
+fr:{
+ 'doc.title':'Danse : styles & fondamentaux',
+ 'hdr.badge':'INITIATION À LA DANSE','hdr.title':'La danse : les styles et les fondamentaux',
+ 'intro':'Danser, c’est le corps qui répond à la musique. Chaque style est né dans une époque et une communauté : le ballet dans les cours d’Europe, la danse hip-hop dans les block parties de New York et de Los Angeles, les danses de salon dans les dancings avant de devenir un sport. Connaître leur origine explique pourquoi le ballet s’élève, le hip-hop s’ancre et la danse latine pousse dans le sol.',
+ 'intro2':'Ce volume est la vue d’ensemble : les cinq familles de danse et des dizaines de styles, comparés par leur musique, leur usage du corps et leur difficulté d’accès, puis les fondamentaux communs : compter, les grooves, les isolations et la mémorisation d’une chorégraphie. Le ballet, les danses urbaines, le jazz, le moderne et le contemporain, et les danses latines et de salon ont chacun leur page, avec histoire, courants, vocabulaire et leçons pas à pas.',
+ 'footer':'Une référence d’initiation à la danse. Aucune leçon écrite ne remplace un professeur : les débutants gagnent à suivre des cours en salle ou en ligne et à pratiquer sur un sol plat et souple. En cas d’ancienne blessure au genou, à la cheville ou au dos, consultez d’abord un médecin ou un kinésithérapeute.'
+}},
+sections:[
+
+/* ── 1. Families ── */
+{ id:'families', i:'fa-sitemap', c:V,
+  nav:{zh:'舞蹈家族', en:'Families', fr:'Familles'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'舞蹈的五大家族', en:'The five families of dance', fr:'Les cinq familles de la danse'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'舞蹈的分類方法很多，最實用的是看它<strong class="text-white">在哪裡誕生、為了什麼而跳</strong>：給觀眾看的劇場舞、在社群裡自由發展的街舞、和舞伴一起跳的社交與國標舞、承載文化的傳統與民族舞，以及為流行音樂與影像服務的商業舞蹈。',
+    en:'There are many ways to classify dance; the most useful asks <strong class="text-white">where it was born and what it is danced for</strong>: theatre dance made for an audience, street styles grown freely in communities, social and ballroom dances done with a partner, traditional and folk dances that carry a culture, and commercial dance that serves pop music and video.',
+    fr:'On peut classer la danse de bien des façons ; la plus utile demande <strong class="text-white">où elle est née et pourquoi on la danse</strong> : danses de scène faites pour un public, danses urbaines nées librement dans des communautés, danses sociales et de salon en couple, danses traditionnelles porteuses d’une culture, et danse commerciale au service de la pop et de l’image.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-masks-theater', t:{zh:'劇場舞蹈', en:'Theatre dance', fr:'Danse de scène'}, tag:{zh:'芭蕾・現代・當代・爵士・踢踏', en:'Ballet · modern · contemporary · jazz · tap', fr:'Ballet · moderne · contemporain · jazz · claquettes'},
+      p:{zh:'在舞台上演出給觀眾看，有系統化的技巧訓練與學院體系，講究線條、控制與表現力。', en:'Performed on stage for an audience, with codified technique and academies; it prizes line, control and expression.', fr:'Dansée sur scène pour un public, avec une technique codifiée et des écoles ; elle valorise la ligne, le contrôle et l’expression.'} },
+    { i:'fa-city', t:{zh:'街舞', en:'Street dance', fr:'Danses urbaines'}, tag:{zh:'Breaking・Hip-hop・Popping・Locking・House・Waacking・Krump', en:'Breaking · hip-hop · popping · locking · house · waacking · krump', fr:'Breaking · hip-hop · popping · locking · house · waacking · krump'},
+      p:{zh:'1970 年代起在美國非裔與拉丁裔社群的派對、俱樂部中發展，重視律動、即興、個人風格與 battle 文化。', en:'Grew from the 1970s at parties and clubs in African-American and Latino communities; built on groove, improvisation, personal style and battle culture.', fr:'Nées dans les années 1970 lors de fêtes et en club, dans les communautés afro-américaines et latinos ; fondées sur le groove, l’improvisation, le style personnel et la culture du battle.'} },
+    { i:'fa-people-pulling', t:{zh:'社交與國標舞', en:'Social & ballroom', fr:'Danses sociales & de salon'}, tag:{zh:'標準舞・拉丁舞・Salsa・Bachata・Swing・探戈', en:'Standard · Latin · salsa · bachata · swing · tango', fr:'Standard · latines · salsa · bachata · swing · tango'},
+      p:{zh:'和舞伴一起跳，靠帶領與跟隨（lead & follow）溝通。可以在舞會社交，也有正式的運動競技。', en:'Danced with a partner, communicating through lead and follow. Danced socially at parties or competitively as a sport.', fr:'Dansées en couple, en communiquant par le guidage. En soirée ou en compétition sportive.'} },
+    { i:'fa-earth-asia', t:{zh:'傳統與民族舞', en:'Traditional & folk', fr:'Traditionnelles & folkloriques'}, tag:{zh:'中國古典舞・民族舞・佛朗明哥・肚皮舞・印度古典舞', en:'Chinese classical · folk · flamenco · belly dance · Indian classical', fr:'Classique chinoise · folklore · flamenco · danse orientale · danse indienne'},
+      p:{zh:'承載一個地區的歷史、宗教與生活，動作語彙、服裝與音樂緊密相連。', en:'Carries the history, religion and life of a region; movement vocabulary, costume and music are bound together.', fr:'Porte l’histoire, la religion et la vie d’une région ; vocabulaire, costume et musique y sont indissociables.'} },
+    { i:'fa-video', t:{zh:'商業與流行舞蹈', en:'Commercial dance', fr:'Danse commerciale'}, tag:{zh:'K-pop・Jazz funk・Heels・MV 與演唱會編舞', en:'K-pop · jazz funk · heels · music-video and tour choreography', fr:'K-pop · jazz funk · heels · chorégraphies de clips et de tournées'},
+      p:{zh:'融合街舞、爵士與流行元素，為歌手、廣告、影像服務，重視鏡頭前的整齊度與表情。', en:'Blends street, jazz and pop elements to serve artists, ads and video; prizes unison and facial expression on camera.', fr:'Mélange urbain, jazz et pop au service des artistes, de la pub et de l’image ; mise sur la synchronisation et l’expression face caméra.'} },
+    { i:'fa-heart', t:{zh:'健身與休閒舞蹈', en:'Fitness & leisure dance', fr:'Danse forme & loisir'}, tag:{zh:'Zumba・有氧舞蹈・鋼管舞・廣場舞', en:'Zumba · dance aerobics · pole · line dance', fr:'Zumba · aérobic dansé · pole dance · danse en ligne'},
+      p:{zh:'以運動、社交與快樂為主，門檻低，是很好的入門。', en:'About exercise, socialising and fun; low barrier to entry and a good way in.', fr:'Pour le sport, le lien social et le plaisir ; accessible, une bonne porte d’entrée.'} },
+  ]},
+]},
+
+/* ── 2. Five detailed styles ── */
+{ id:'five', i:'fa-star', c:P,
+  nav:{zh:'五大舞種', en:'Five styles', fr:'Cinq styles'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'五大舞種：各有一頁完整介紹與教學', en:'Five major styles, each with its own page', fr:'Cinq grands styles, chacun sa page'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'下面五種是最多人學、教室最好找、也最能互相打底的舞種。點進每張卡片，可以看到它的歷史、流派、術語、課堂結構與一步一步的教學。',
+    en:'These five are the most widely taught, the easiest to find a class for, and the best foundations for one another. Open each card for its history, schools, vocabulary, class structure and step-by-step lessons.',
+    fr:'Ces cinq styles sont les plus enseignés, les plus faciles à trouver en cours et ceux qui se nourrissent le mieux entre eux. Ouvrez chaque carte pour l’histoire, les écoles, le vocabulaire, le déroulé d’un cours et des leçons pas à pas.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-shoe-prints', href:'dance-ballet.html', t:{zh:'芭蕾', en:'Ballet', fr:'Ballet'}, tag:{zh:'劇場舞蹈的根基', en:'The root of theatre dance', fr:'La base de la danse de scène'},
+      p:{zh:'十七世紀法國宮廷制定的古典舞蹈，以外開、延伸與輕盈為核心，用法語術語教學。幾乎所有劇場舞蹈的基本功都來自芭蕾。', en:'The classical dance codified at the 17th-century French court, built on turnout, extension and lightness, taught in French. The foundation of almost every theatre style.', fr:'La danse classique codifiée à la cour de France au XVIIᵉ siècle, fondée sur l’en-dehors, l’allongement et la légèreté, enseignée en français. La base de presque toute danse de scène.'},
+      l:[{zh:'五個腳位、把桿與中間練習', en:'Five positions, barre and centre', fr:'Cinq positions, barre et milieu'}, {zh:'Vaganova、Cecchetti、RAD、Balanchine', en:'Vaganova, Cecchetti, RAD, Balanchine', fr:'Vaganova, Cecchetti, RAD, Balanchine'}] },
+    { i:'fa-headphones', href:'dance-street.html', t:{zh:'街舞', en:'Street dance', fr:'Danses urbaines'}, tag:{zh:'律動、即興與 battle', en:'Groove, freestyle and battles', fr:'Groove, freestyle et battles'},
+      p:{zh:'從紐約布朗克斯與加州發展出的一整個家族：Breaking、Hip-hop、Popping、Locking、House、Waacking、Krump，以及 K-pop 等商業舞蹈。', en:'A whole family from the Bronx and California: breaking, hip-hop, popping, locking, house, waacking, krump, plus commercial styles such as K-pop.', fr:'Toute une famille née dans le Bronx et en Californie : breaking, hip-hop, popping, locking, house, waacking, krump, et des styles commerciaux comme la K-pop.'},
+      l:[{zh:'基本律動 bounce 與 rock', en:'The bounce and the rock', fr:'Le bounce et le rock'}, {zh:'Six-step、pop、lock 教學', en:'Six-step, pop and lock lessons', fr:'Leçons de six-step, pop et lock'}] },
+    { i:'fa-hat-cowboy', href:'dance-jazz.html', t:{zh:'爵士舞', en:'Jazz dance', fr:'Danse jazz'}, tag:{zh:'百老匯、Fosse 到 Jazz funk', en:'From Broadway and Fosse to jazz funk', fr:'De Broadway et Fosse au jazz funk'},
+      p:{zh:'源自非裔美國人的爵士音樂與舞蹈，經過百老匯與好萊塢發展，結合芭蕾技巧與身體分離，充滿表演性。', en:'Rooted in African-American jazz music and dance, shaped by Broadway and Hollywood; ballet technique plus isolations, full of showmanship.', fr:'Issue du jazz et des danses afro-américaines, façonnée par Broadway et Hollywood ; technique classique et isolations, très spectaculaire.'},
+      l:[{zh:'Jazz square、kick ball change、pirouette', en:'Jazz square, kick ball change, pirouette', fr:'Jazz square, kick ball change, pirouette'}, {zh:'Lyrical、Broadway、Jazz funk', en:'Lyrical, Broadway, jazz funk', fr:'Lyrical, Broadway, jazz funk'}] },
+    { i:'fa-wind', href:'dance-contemporary.html', t:{zh:'現代與當代舞', en:'Modern & contemporary', fr:'Moderne & contemporain'}, tag:{zh:'重力、呼吸與地板', en:'Gravity, breath and the floor', fr:'Gravité, souffle et sol'},
+      p:{zh:'二十世紀初反叛芭蕾而生，擁抱重力、收縮與呼吸。當代舞再融合即興、地板技巧與接觸即興，是今日舞團最常見的語彙。', en:'Born in the early 20th century as a rebellion against ballet, embracing gravity, contraction and breath. Contemporary adds improvisation, floorwork and contact; the common language of today’s companies.', fr:'Né au début du XXᵉ siècle en réaction au ballet, il accepte la gravité, la contraction et le souffle. Le contemporain y ajoute improvisation, travail au sol et contact : la langue commune des compagnies actuelles.'},
+      l:[{zh:'Graham、Limón、Cunningham 技巧', en:'Graham, Limón, Cunningham techniques', fr:'Techniques Graham, Limón, Cunningham'}, {zh:'地板滾動與即興練習', en:'Floor rolls and improvisation tasks', fr:'Roulades au sol et improvisation'}] },
+    { i:'fa-fire', href:'dance-latin-ballroom.html', t:{zh:'拉丁與國標舞', en:'Latin & ballroom', fr:'Latines & salon'}, tag:{zh:'十支國標舞與社交拉丁', en:'The ten ballroom dances and social Latin', fr:'Les dix danses sportives et les danses latines sociales'},
+      p:{zh:'標準舞五支（華爾滋、探戈、維也納華爾滋、狐步、快步）、拉丁舞五支（森巴、恰恰、倫巴、鬥牛、捷舞），加上 Salsa、Bachata 等社交舞。', en:'Five Standard dances (waltz, tango, Viennese waltz, foxtrot, quickstep), five Latin (samba, cha-cha, rumba, paso doble, jive), plus social dances such as salsa and bachata.', fr:'Cinq danses standard (valse lente, tango, valse viennoise, slow fox, quickstep), cinq latines (samba, cha-cha, rumba, paso doble, jive), et des danses sociales comme la salsa et la bachata.'},
+      l:[{zh:'方步、恰恰基本步、Salsa 基本步', en:'Box step, cha-cha basic, salsa basic', fr:'Pas carré, pas de base cha-cha et salsa'}, {zh:'帶領與跟隨、舞姿框架', en:'Lead and follow, the frame', fr:'Guidage et cadre'}] },
+  ]},
+]},
+
+/* ── 3. More styles ── */
+{ id:'more', i:'fa-shapes', c:Y,
+  nav:{zh:'更多舞種', en:'More styles', fr:'Autres styles'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'更多舞種一覽', en:'More styles at a glance', fr:'D’autres styles en un coup d’œil'},
+  blocks:[
+  { type:'cards', cols:3, items:[
+    { i:'fa-shoe-prints', t:{zh:'踢踏舞', en:'Tap', fr:'Claquettes'}, tag:{zh:'美國・19 世紀', en:'USA · 19th century', fr:'États-Unis · XIXᵉ siècle'},
+      p:{zh:'鞋底裝金屬片，腳就是打擊樂器。融合愛爾蘭踢踏與非洲節奏，分成重節奏的 Rhythm tap 與百老匯的 Broadway tap。', en:'Metal plates on the shoes turn the feet into percussion. Blends Irish step dance with African rhythm; split into rhythm tap and Broadway tap.', fr:'Des fers sous les chaussures font des pieds un instrument. Mélange de gigue irlandaise et de rythmes africains : rhythm tap et Broadway tap.'} },
+    { i:'fa-fan', t:{zh:'佛朗明哥', en:'Flamenco', fr:'Flamenco'}, tag:{zh:'西班牙安達魯西亞', en:'Andalusia, Spain', fr:'Andalousie, Espagne'},
+      p:{zh:'吉普賽人（Gitano）文化，由歌、吉他與舞組成。腳下的 zapateado、手的 palmas 與 12 拍的 compás 是靈魂。2010 年列入聯合國教科文組織非物質文化遺產。', en:'From Gitano culture: song, guitar and dance. Footwork (zapateado), clapping (palmas) and the 12-beat compás are its soul. UNESCO intangible heritage since 2010.', fr:'Culture gitane : chant, guitare et danse. Le zapateado, les palmas et le compás à 12 temps en sont l’âme. Patrimoine immatériel de l’UNESCO depuis 2010.'} },
+    { i:'fa-moon', t:{zh:'肚皮舞', en:'Belly dance', fr:'Danse orientale'}, tag:{zh:'中東與北非', en:'Middle East & North Africa', fr:'Moyen-Orient & Afrique du Nord'},
+      p:{zh:'以骨盆與軀幹的分離、shimmy 抖動、8 字與波浪為主，非常鍛鍊核心。分成埃及、土耳其與美式部落風等。', en:'Built on isolations of hips and torso, shimmies, figure-eights and undulations; a strong core workout. Egyptian, Turkish and American tribal styles.', fr:'Isolations du bassin et du buste, shimmies, huit et ondulations ; excellent pour la sangle abdominale. Styles égyptien, turc et tribal américain.'} },
+    { i:'fa-dragon', t:{zh:'中國古典舞', en:'Chinese classical dance', fr:'Danse classique chinoise'}, tag:{zh:'中國・20 世紀整理成形', en:'China · systematised in the 20th c.', fr:'Chine · codifiée au XXᵉ siècle'},
+      p:{zh:'吸收戲曲「身韻」與武術，講究「形、神、勁、律」與圓、擰、傾、曲的身體線條；身段、水袖、翻身、技巧跳躍是特色。', en:'Draws on opera movement (shenyun) and martial arts; prizes form, spirit, force and rhythm, with round, twisting, leaning lines; water sleeves, turns and leaps.', fr:'Puise dans le théâtre chinois (shenyun) et les arts martiaux ; cherche forme, esprit, force et rythme, avec des lignes rondes et torsadées ; manches d’eau, tours et sauts.'} },
+    { i:'fa-people-group', t:{zh:'民族舞', en:'Ethnic folk dance', fr:'Danses folkloriques'}, tag:{zh:'各地區', en:'Every region', fr:'Toutes régions'},
+      p:{zh:'例如台灣原住民的歌舞、蒙古舞、傣族舞、新疆舞、韓國扇子舞、愛爾蘭舞，各自反映生活與信仰。', en:'Taiwanese Indigenous song-dance, Mongolian, Dai and Uyghur dance, Korean fan dance, Irish dance: each reflects a way of life and belief.', fr:'Chants-danses autochtones de Taïwan, danses mongole, dai et ouïghoure, danse coréenne de l’éventail, danse irlandaise : chacune reflète un mode de vie et des croyances.'} },
+    { i:'fa-music', t:{zh:'Swing／Lindy Hop', en:'Swing / Lindy Hop', fr:'Swing / Lindy Hop'}, tag:{zh:'紐約哈林區・1920–30 年代', en:'Harlem · 1920s–30s', fr:'Harlem · années 1920–30'},
+      p:{zh:'搖擺樂時代的雙人社交舞，有 swing out、8 拍與 6 拍步法，氣氛歡樂，全球都有 swing 舞會。', en:'The partner dance of the swing era, with the swing-out and 6- and 8-count patterns; joyful, with social dances worldwide.', fr:'La danse de couple de l’ère swing, avec le swing-out et des passes en 6 et 8 temps ; joyeuse, avec des soirées partout dans le monde.'} },
+    { i:'fa-heart', t:{zh:'阿根廷探戈', en:'Argentine tango', fr:'Tango argentin'}, tag:{zh:'布宜諾斯艾利斯・19 世紀末', en:'Buenos Aires · late 19th c.', fr:'Buenos Aires · fin XIXᵉ'},
+      p:{zh:'與國標探戈不同，阿根廷探戈是即興的擁抱之舞，重在走路、連結與音樂性，在 milonga 舞會中跳。2009 年列入非物質文化遺產。', en:'Unlike ballroom tango, Argentine tango is an improvised dance in an embrace, all about walking, connection and musicality, danced at milongas. UNESCO heritage since 2009.', fr:'Différent du tango de salon, le tango argentin est une danse improvisée dans l’abrazo, faite de marche, de connexion et de musicalité, dansée en milonga. Patrimoine UNESCO depuis 2009.'} },
+    { i:'fa-sun', t:{zh:'Afro 與 Dancehall', en:'Afro & dancehall', fr:'Afro & dancehall'}, tag:{zh:'西非・牙買加', en:'West Africa · Jamaica', fr:'Afrique de l’Ouest · Jamaïque'},
+      p:{zh:'Afrobeats 舞蹈重律動與胸、髖的彈動；Dancehall 來自牙買加，每個動作都有名字與創作者，與音樂同步誕生。', en:'Afrobeats dance is about groove and bounce through chest and hips; dancehall from Jamaica names every step after its creator and grows with the music.', fr:'L’afro danse mise sur le groove et le rebond du buste et des hanches ; le dancehall jamaïcain donne à chaque pas un nom et un créateur, au rythme de la musique.'} },
+    { i:'fa-shoe-prints', t:{zh:'Heels', en:'Heels', fr:'Heels'}, tag:{zh:'商業舞蹈', en:'Commercial', fr:'Commercial'},
+      p:{zh:'穿高跟鞋跳的爵士與街舞融合，強調自信、性感與線條。先在平底鞋練好技巧再換高跟，並選擇鞋跟穩定的舞鞋。', en:'Jazz and street fusion danced in heels, all confidence, sensuality and line. Learn the technique in flats first, then move to stable-heeled dance shoes.', fr:'Fusion jazz-urbain en talons : assurance, sensualité et lignes. Apprenez d’abord en chaussures plates, puis passez à des talons stables.'} },
+    { i:'fa-grip-lines-vertical', t:{zh:'鋼管舞', en:'Pole dance', fr:'Pole dance'}, tag:{zh:'舞蹈＋體操', en:'Dance + gymnastics', fr:'Danse + gymnastique'},
+      p:{zh:'需要大量上肢與核心肌力，有 spins、climbs、inverts 等技巧，已發展出國際競賽。', en:'Demands serious upper-body and core strength, with spins, climbs and inverts; now has international competitions.', fr:'Exige beaucoup de force dans le haut du corps et le tronc : spins, montées, inversions ; il existe des compétitions internationales.'} },
+    { i:'fa-film', t:{zh:'寶萊塢', en:'Bollywood', fr:'Bollywood'}, tag:{zh:'印度電影', en:'Indian cinema', fr:'Cinéma indien'},
+      p:{zh:'融合印度古典舞手勢（mudra）、民間舞與流行舞的電影舞蹈，表情豐富、節奏歡快。', en:'Film dance mixing Indian classical hand gestures (mudras), folk and pop; expressive faces and upbeat rhythms.', fr:'Danse de cinéma mêlant gestes classiques indiens (mudras), folklore et pop ; visages expressifs et rythmes joyeux.'} },
+    { i:'fa-dumbbell', t:{zh:'Zumba 與有氧舞蹈', en:'Zumba & dance fitness', fr:'Zumba & fitness dansé'}, tag:{zh:'健身課', en:'Fitness class', fr:'Cours de fitness'},
+      p:{zh:'以拉丁與流行音樂帶動的有氧課，動作簡單重複，適合想流汗又想跳舞的人。', en:'Cardio classes to Latin and pop music, with simple repeated moves, for people who want to sweat and dance.', fr:'Cours cardio sur musiques latines et pop, mouvements simples et répétés, pour transpirer en dansant.'} },
+  ]},
+]},
+
+/* ── 4. Comparison ── */
+{ id:'compare', i:'fa-table-columns', c:R,
+  nav:{zh:'比較', en:'Compare', fr:'Comparer'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'舞種比較：音樂、身體與入門難度', en:'Comparing styles: music, body and difficulty', fr:'Comparer les styles : musique, corps, difficulté'},
+  blocks:[
+  { type:'table', head:[{zh:'舞種', en:'Style', fr:'Style'}, {zh:'音樂', en:'Music', fr:'Musique'}, {zh:'身體重心與質感', en:'Weight & quality', fr:'Poids & qualité'}, {zh:'鞋', en:'Shoes', fr:'Chaussures'}, {zh:'入門', en:'Entry', fr:'Accès'}, {zh:'適合', en:'Good for', fr:'Pour'}], rows:[
+    [{zh:'芭蕾', en:'Ballet', fr:'Ballet'}, {zh:'古典樂', en:'Classical', fr:'Classique'}, {zh:'向上延伸、外開、輕盈', en:'Lifted, turned out, light', fr:'Élevé, en dehors, léger'}, {zh:'軟鞋；進階才上足尖鞋', en:'Soft slippers; pointe later', fr:'Demi-pointes ; pointes plus tard'}, '★★★★', {zh:'體態、柔軟度、所有舞種的基本功', en:'Posture, flexibility, a base for everything', fr:'Maintien, souplesse, base de tout'}],
+    [{zh:'Hip-hop', en:'Hip-hop', fr:'Hip-hop'}, {zh:'嘻哈、R&B', en:'Hip-hop, R&B', fr:'Hip-hop, R&B'}, {zh:'往下沉、膝蓋放鬆、律動', en:'Low, soft knees, grooving', fr:'Ancré, genoux souples, groove'}, {zh:'球鞋', en:'Sneakers', fr:'Baskets'}, '★★', {zh:'節奏感、自信、即興', en:'Rhythm, confidence, freestyle', fr:'Rythme, confiance, freestyle'}],
+    [{zh:'Breaking', en:'Breaking', fr:'Breaking'}, {zh:'Funk、break beat', en:'Funk, breakbeats', fr:'Funk, breakbeats'}, {zh:'地板、爆發力、體操性', en:'Floor-based, explosive, acrobatic', fr:'Au sol, explosif, acrobatique'}, {zh:'抓地球鞋', en:'Grippy sneakers', fr:'Baskets adhérentes'}, '★★★★', {zh:'肌力、挑戰、競賽（2024 奧運項目）', en:'Strength, challenge, competition (Olympic sport in 2024)', fr:'Force, défi, compétition (discipline olympique en 2024)'}],
+    [{zh:'爵士舞', en:'Jazz', fr:'Jazz'}, {zh:'流行、百老匯、R&B', en:'Pop, show tunes, R&B', fr:'Pop, comédie musicale, R&B'}, {zh:'分離、銳利、表演性', en:'Isolated, sharp, showy', fr:'Isolé, net, spectaculaire'}, {zh:'爵士鞋或襪子', en:'Jazz shoes or socks', fr:'Chaussures de jazz ou chaussettes'}, '★★★', {zh:'舞台表演、音樂劇', en:'Stage, musical theatre', fr:'Scène, comédie musicale'}],
+    [{zh:'當代舞', en:'Contemporary', fr:'Contemporain'}, {zh:'任何音樂，甚至無音樂', en:'Anything, even silence', fr:'Tout, même le silence'}, {zh:'使用重力、流動、地板', en:'Uses gravity, flow, floor', fr:'Gravité, fluidité, sol'}, {zh:'赤腳', en:'Barefoot', fr:'Pieds nus'}, '★★★', {zh:'表達情感、創作', en:'Expression, creation', fr:'Expression, création'}],
+    [{zh:'拉丁舞', en:'Latin', fr:'Latines'}, {zh:'拉丁音樂', en:'Latin music', fr:'Musique latine'}, {zh:'直膝、髖部動作、推地', en:'Straight legs, hip action, pushing the floor', fr:'Jambes tendues, action de hanche, pousser le sol'}, {zh:'拉丁舞鞋（女鞋跟 5–7.5 公分）', en:'Latin shoes (women’s heel 5–7.5 cm)', fr:'Chaussures latines (talon 5–7,5 cm)'}, '★★★', {zh:'雙人互動、比賽', en:'Partnering, competition', fr:'Couple, compétition'}],
+    [{zh:'標準舞', en:'Standard', fr:'Standard'}, {zh:'華爾滋、探戈等', en:'Waltz, tango…', fr:'Valse, tango…'}, {zh:'挺拔框架、流動、升降', en:'Upright frame, travel, rise and fall', fr:'Cadre droit, déplacement, élévation'}, {zh:'摩登舞鞋', en:'Standard shoes', fr:'Chaussures standard'}, '★★★', {zh:'優雅、雙人', en:'Elegance, partnering', fr:'Élégance, couple'}],
+    [{zh:'K-pop', en:'K-pop', fr:'K-pop'}, {zh:'韓國流行音樂', en:'K-pop', fr:'K-pop'}, {zh:'整齊、清楚、表情管理', en:'Unison, clean, facial expression', fr:'Synchro, net, expressions'}, {zh:'球鞋', en:'Sneakers', fr:'Baskets'}, '★★', {zh:'翻跳喜歡的歌、團體練舞', en:'Covering favourite songs, group practice', fr:'Reprendre ses titres préférés, en groupe'}],
+  ]},
+  { type:'dia', k:'tempo' },
+]},
+
+/* ── 5. Fundamentals ── */
+{ id:'basics', i:'fa-wave-square', c:T,
+  nav:{zh:'共通基礎', en:'Fundamentals', fr:'Fondamentaux'},
+  eyebrow:{zh:'第五章・教學', en:'Chapter 5 · Lessons', fr:'Chapitre 5 · Leçons'},
+  h2:{zh:'所有舞種共通的基礎', en:'Fundamentals every style shares', fr:'Les fondamentaux communs à tous les styles'},
+  blocks:[
+  { type:'h3', t:{zh:'一、數拍：舞者的共同語言', en:'1. Counting: the dancer’s shared language', fr:'1. Compter : la langue commune des danseurs'} },
+  { type:'lead', p:{
+    zh:'流行音樂多是 4/4 拍，舞蹈老師把兩小節合成一個「八拍」來數：<strong class="text-white">1、2、3、4、5、6、7、8</strong>。拍與拍中間的半拍叫做「and」（寫成 &），再細分的四分之一拍叫「e」與「a」：1 e & a 2 e & a…。華爾滋是 3/4 拍，數成 1 2 3、4 5 6。',
+    en:'Most popular music is in 4/4, and teachers count two bars together as an “eight”: <strong class="text-white">1, 2, 3, 4, 5, 6, 7, 8</strong>. The half-beat between counts is “and” (&); quarter-beats are “e” and “a”: 1 e & a 2 e & a… Waltz is in 3/4 and is counted 1 2 3, 4 5 6.',
+    fr:'La plupart des musiques actuelles sont en 4/4, et les professeurs comptent deux mesures ensemble, un « huit » : <strong class="text-white">1, 2, 3, 4, 5, 6, 7, 8</strong>. Le demi-temps entre deux comptes est le « et » (&) ; les quarts sont « e » et « a » : 1 e & a 2 e & a… La valse est en 3/4 : 1 2 3, 4 5 6.'} },
+  { type:'counts', t:{zh:'練習：找到「1」', en:'Exercise: find the “1”', fr:'Exercice : trouver le « 1 »'},
+    p:{zh:'放一首中速流行歌（約 100 BPM）。鼓的大鼓（kick）通常落在 1 和 3，小鼓（snare）落在 2 和 4。歌詞段落與旋律的開頭幾乎都在 1。', en:'Put on a mid-tempo pop song (about 100 BPM). The kick drum usually lands on 1 and 3 and the snare on 2 and 4. Verses and melodic phrases almost always start on 1.', fr:'Mettez un morceau pop modéré (environ 100 BPM). La grosse caisse tombe en général sur 1 et 3, la caisse claire sur 2 et 4. Couplets et phrases mélodiques commencent presque toujours sur 1.'},
+    items:[
+      {n:'1', p:{zh:'大鼓・樂句開始，拍手', en:'Kick · phrase starts, clap', fr:'Grosse caisse · début de phrase, frappez'}},
+      {n:'2', p:{zh:'小鼓・點頭', en:'Snare · nod', fr:'Caisse claire · hochez la tête'}},
+      {n:'3', p:{zh:'大鼓・踏右腳', en:'Kick · step right', fr:'Grosse caisse · pied droit'}},
+      {n:'4', p:{zh:'小鼓・點頭', en:'Snare · nod', fr:'Caisse claire · hochez'}},
+      {n:'5', p:{zh:'大鼓・踏左腳', en:'Kick · step left', fr:'Grosse caisse · pied gauche'}},
+      {n:'6', p:{zh:'小鼓・點頭', en:'Snare · nod', fr:'Caisse claire · hochez'}},
+      {n:'7', p:{zh:'大鼓・踏右腳', en:'Kick · step right', fr:'Grosse caisse · pied droit'}},
+      {n:'8', p:{zh:'小鼓・準備下一個 1', en:'Snare · get ready for the next 1', fr:'Caisse claire · préparez le 1 suivant'}},
+    ]},
+  { type:'h3', t:{zh:'二、律動：讓身體跟著拍子活起來', en:'2. Groove: letting the body ride the beat', fr:'2. Le groove : faire vivre le corps sur le temps'} },
+  { type:'steps', items:[
+    { t:{zh:'Down（往下律動）', en:'Down groove', fr:'Groove « down »'}, p:{zh:'雙腳與肩同寬、膝蓋微彎。每一拍膝蓋往下壓一下、胸口跟著微微往下，在「&」回來。Hip-hop 最基本的律動。', en:'Feet shoulder-width, knees soft. On each beat bend the knees and let the chest drop slightly; come back up on the “&”. The most basic hip-hop groove.', fr:'Pieds largeur d’épaules, genoux souples. À chaque temps, fléchissez et laissez la poitrine descendre légèrement ; remontez sur le « et ». Le groove hip-hop le plus basique.'} },
+    { t:{zh:'Up（往上律動）', en:'Up groove', fr:'Groove « up »'}, p:{zh:'相反：每一拍往上彈，「&」往下。House 與 Locking 常用。兩種各做 4 個八拍，交替練習。', en:'The opposite: spring up on each beat and down on the “&”. Common in house and locking. Do four eights of each, alternating.', fr:'L’inverse : on monte sur le temps, on descend sur le « et ». Fréquent en house et en locking. Quatre huit de chaque, en alternance.'} },
+    { t:{zh:'Rock（前後搖）', en:'Rock', fr:'Le rock'}, p:{zh:'上半身以胸口帶動，前後擺動，像在點頭但用整個軀幹。和 Down 一起做，就是很多舞步的底。', en:'Rock the upper body forward and back, led by the chest, like nodding with the whole torso. Combined with the down groove, it underlies many steps.', fr:'Balancez le buste d’avant en arrière, mené par la poitrine, comme un hochement de tout le tronc. Avec le « down », c’est la base de nombreux pas.'} },
+    { t:{zh:'加上步伐', en:'Add a step', fr:'Ajouter un pas'}, p:{zh:'維持律動，在 1 往右踏、2 左腳併攏、3 往左踏、4 右腳併攏（step touch）。律動不能因為走步而停掉。', en:'Keep the groove and step right on 1, close the left on 2, step left on 3, close the right on 4 (step-touch). The groove must not stop because you are stepping.', fr:'Gardez le groove : pas à droite sur 1, joignez le gauche sur 2, pas à gauche sur 3, joignez le droit sur 4 (step-touch). Le groove ne s’arrête pas pendant les pas.'} },
+  ]},
+  { type:'h3', t:{zh:'三、身體分離（Isolation）', en:'3. Isolations', fr:'3. Les isolations'} },
+  { type:'lead', p:{
+    zh:'讓一個部位動、其他部位不動，是爵士、街舞、肚皮舞與 K-pop 的共同基本功。對著鏡子練，每個方向各做一個八拍：',
+    en:'Moving one part while the rest stays still is basic to jazz, street, belly dance and K-pop. Practise facing a mirror, one eight per direction:',
+    fr:'Bouger une partie du corps en gardant le reste immobile est un fondamental du jazz, de l’urbain, de l’oriental et de la K-pop. Face au miroir, un huit par direction :'} },
+  { type:'cards', cols:4, items:[
+    { i:'fa-face-smile', t:{zh:'頭', en:'Head', fr:'Tête'}, p:{zh:'前後、左右平移（不轉頭）、左右傾、繞圈。肩膀保持不動。', en:'Forward-back, side to side (slide, do not turn), tilt, circle. Shoulders stay still.', fr:'Avant-arrière, glissés latéraux (sans tourner), inclinaisons, cercles. Épaules immobiles.'} },
+    { i:'fa-up-down', t:{zh:'肩', en:'Shoulders', fr:'Épaules'}, p:{zh:'上下、前後、單邊交替、繞圈。', en:'Up-down, forward-back, alternating, circles.', fr:'Haut-bas, avant-arrière, en alternance, cercles.'} },
+    { i:'fa-heart', t:{zh:'胸', en:'Chest', fr:'Poitrine'}, p:{zh:'前推後收（pop 與 wave 的基礎）、左右平移、繞圈。骨盆不跟著動。', en:'Push forward and pull back (the root of pops and waves), slide side to side, circle. The pelvis stays still.', fr:'Pousser et rentrer (base des pops et des ondulations), glissés latéraux, cercles. Le bassin ne bouge pas.'} },
+    { i:'fa-circle-notch', t:{zh:'髖', en:'Hips', fr:'Hanches'}, p:{zh:'左右推、前後、繞圈、8 字。胸口保持不動。', en:'Side to side, forward-back, circles, figure-eights. The chest stays still.', fr:'Côté, avant-arrière, cercles, huit. La poitrine reste immobile.'} },
+  ]},
+  { type:'h3', t:{zh:'四、怎麼記舞與練舞', en:'4. How to learn and practise choreography', fr:'4. Apprendre et travailler une chorégraphie'} },
+  { type:'steps', items:[
+    { t:{zh:'先聽音樂', en:'Listen first', fr:'Écouter d’abord'}, p:{zh:'把歌聽到能哼出來，標出每個段落從哪個八拍開始。', en:'Listen until you can hum it, and mark which eight each section starts on.', fr:'Écoutez jusqu’à pouvoir fredonner, et repérez sur quel huit commence chaque partie.'} },
+    { t:{zh:'一次學一個八拍', en:'One eight at a time', fr:'Un huit à la fois'}, p:{zh:'先學腳、再加手、最後加頭與表情。每學會一個八拍，就和前面串起來重做一次。', en:'Feet first, then arms, then head and face. Each time you learn an eight, chain it to the previous ones.', fr:'Les pieds d’abord, puis les bras, puis la tête et le visage. Chaque nouveau huit s’enchaîne aux précédents.'} },
+    { t:{zh:'幫動作取名字', en:'Name the moves', fr:'Nommer les mouvements'}, p:{zh:'用自己記得住的名字（「擦玻璃」「開門」「踢一下」）配上拍數唸出來，記憶會快很多。', en:'Give each move a name you will remember (“wipe the window”, “open the door”, “kick”) and say it with the counts; memory gets much faster.', fr:'Donnez à chaque geste un nom parlant (« essuyer la vitre », « ouvrir la porte », « coup de pied ») et dites-le avec les comptes : on retient bien plus vite.'} },
+    { t:{zh:'放慢速度', en:'Slow it down', fr:'Ralentir'}, p:{zh:'用 0.5–0.75 倍速練到乾淨，再慢慢回到原速。慢的時候做不好，快的時候只會更亂。', en:'Practise at 0.5–0.75× until it is clean, then build back to full speed. What is messy slow is messier fast.', fr:'Travaillez à 0,5–0,75× jusqu’à la propreté, puis revenez à la vitesse normale. Ce qui est brouillon lentement l’est encore plus vite.'} },
+    { t:{zh:'鏡子與錄影交替', en:'Alternate mirror and video', fr:'Alterner miroir et vidéo'}, p:{zh:'鏡子用來修正位置，錄影用來看整體感覺。最後要練到不看鏡子也能跳。', en:'The mirror corrects positions; video shows the overall feel. Finish by dancing without the mirror.', fr:'Le miroir corrige les positions ; la vidéo montre l’ensemble. Terminez sans miroir.'} },
+    { t:{zh:'每天短時間重複', en:'Short daily repetition', fr:'Répéter un peu chaque jour'}, p:{zh:'每天 15 分鐘比週末練三小時更容易記住。睡眠會幫你鞏固動作記憶。', en:'Fifteen minutes a day sticks better than three hours at the weekend. Sleep consolidates movement memory.', fr:'Quinze minutes par jour valent mieux que trois heures le week-end. Le sommeil consolide la mémoire du mouvement.'} },
+  ]},
+]},
+
+/* ── 6. Getting started ── */
+{ id:'start', i:'fa-flag-checkered', c:S,
+  nav:{zh:'開始學舞', en:'Getting started', fr:'Débuter'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'開始學舞：選舞種、選課、準備與安全', en:'Getting started: choosing, classes, kit and safety', fr:'Débuter : choisir, les cours, l’équipement et la sécurité'},
+  blocks:[
+  { type:'table', head:[{zh:'如果你想要…', en:'If you want…', fr:'Si vous voulez…'}, {zh:'推薦舞種', en:'Try', fr:'Essayez'}], rows:[
+    [{zh:'改善體態、柔軟度、氣質', en:'Better posture, flexibility and poise', fr:'Maintien, souplesse et allure'}, {zh:'成人芭蕾、中國古典舞', en:'Adult ballet, Chinese classical', fr:'Ballet adulte, danse classique chinoise'}],
+    [{zh:'跳喜歡的歌、和朋友一起練', en:'Dance to songs you love with friends', fr:'Danser sur vos chansons avec des amis'}, {zh:'K-pop、Hip-hop 編舞班', en:'K-pop, hip-hop choreography classes', fr:'K-pop, cours de chorégraphie hip-hop'}],
+    [{zh:'認識新朋友、社交', en:'Meeting people', fr:'Rencontrer du monde'}, {zh:'Salsa、Bachata、Swing、阿根廷探戈', en:'Salsa, bachata, swing, Argentine tango', fr:'Salsa, bachata, swing, tango argentin'}],
+    [{zh:'表達情緒、創作', en:'Expressing emotion, creating', fr:'Exprimer, créer'}, {zh:'當代舞、Lyrical jazz', en:'Contemporary, lyrical jazz', fr:'Contemporain, lyrical jazz'}],
+    [{zh:'挑戰體能與技巧', en:'A physical and technical challenge', fr:'Un défi physique et technique'}, {zh:'Breaking、鋼管舞、國標舞競技', en:'Breaking, pole, competitive ballroom', fr:'Breaking, pole dance, danse sportive'}],
+    [{zh:'自信與舞台魅力', en:'Confidence and stage presence', fr:'Confiance et présence scénique'}, {zh:'Jazz funk、Heels、Waacking', en:'Jazz funk, heels, waacking', fr:'Jazz funk, heels, waacking'}],
+    [{zh:'流汗健身、壓力釋放', en:'Sweating and de-stressing', fr:'Se dépenser, décompresser'}, {zh:'Zumba、House、Afro', en:'Zumba, house, afro', fr:'Zumba, house, afro'}],
+  ]},
+  { type:'cards', cols:3, items:[
+    { i:'fa-chalkboard-user', t:{zh:'基礎班 vs 編舞班', en:'Technique vs choreography classes', fr:'Cours technique vs chorégraphie'}, p:{zh:'基礎班練律動、技巧與術語，進步穩定；編舞班每週學一支舞，有成就感但基礎容易不扎實。最好兩種都上，比例約 2：1。', en:'Technique classes drill grooves, skills and vocabulary for steady progress; choreography classes teach a routine a week, rewarding but thin on foundations. Take both, about 2 : 1.', fr:'Les cours techniques travaillent grooves, gestes et vocabulaire pour progresser durablement ; les cours de choré apprennent une danse par semaine, gratifiants mais moins solides. Idéalement les deux, environ 2 pour 1.'} },
+    { i:'fa-shirt', t:{zh:'服裝與鞋', en:'Clothes and shoes', fr:'Tenue et chaussures'}, p:{zh:'能看到膝蓋與身體線條、好活動的衣服。鞋依舞種：街舞穿乾淨的球鞋（鞋底不要太黏）、芭蕾穿軟鞋、當代赤腳、國標穿舞鞋。', en:'Clothes you can move in that show your knees and lines. Shoes by style: clean sneakers for street (not too grippy), slippers for ballet, bare feet for contemporary, dance shoes for ballroom.', fr:'Une tenue souple qui laisse voir genoux et lignes. Chaussures selon le style : baskets propres pas trop adhérentes en urbain, demi-pointes en classique, pieds nus en contemporain, chaussures de danse en salon.'} },
+    { i:'fa-shield-heart', t:{zh:'暖身與保護', en:'Warm-up and protection', fr:'Échauffement et protection'}, p:{zh:'每次 10 分鐘暖身：關節繞環、動態伸展、彈跳。落地時膝蓋對準腳尖、腳掌先著地再到腳跟。地板最好是有彈性的木地板，避免直接在水泥地上跳躍。', en:'Ten minutes every time: joint circles, dynamic stretches, light bounces. Land with knees over toes, ball of the foot before the heel. Dance on a sprung wooden floor where possible, not on concrete.', fr:'Dix minutes à chaque fois : rotations articulaires, étirements dynamiques, petits rebonds. Réceptions genoux dans l’axe des pieds, avant-pied puis talon. Un parquet souple plutôt que du béton.'} },
+  ]},
+  { type:'note', p:{
+    zh:'第一堂課最常見的感受是「跟不上」。這完全正常：大部分人需要 6–10 堂課，腦袋才開始能把老師的示範自動轉換成拍數與方向。持續上三個月再判斷喜不喜歡。',
+    en:'The most common first-class feeling is “I can’t keep up”. That is completely normal: most people need 6–10 classes before the brain starts translating a demonstration into counts and directions on its own. Give it three months before deciding.',
+    fr:'Au premier cours, on a presque toujours l’impression de « ne pas suivre ». C’est normal : il faut 6 à 10 cours pour que le cerveau traduise seul une démonstration en comptes et en directions. Donnez-vous trois mois avant de juger.'} },
+]},
+]});
+</script>
+</body>
+</html>
