@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    Edit Mode — a lightweight, site-wide WYSIWYG editor overlay.
-   Include with: <script src="edit-mode.js" defer></script>
+   Include with: <script src="../assets/edit-mode.js" defer></script> (path relative to the page)
    No server, no dependencies. Persistence = download the edited
    HTML file and replace the original with it.
    ═══════════════════════════════════════════════════════════ */
