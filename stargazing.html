@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>觀星 | 星空、器材與觀測技巧</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['Nunito', 'Noto Serif TC', 'sans-serif'] } } } }
+</script>
+<style>
+  body {
+    background-color: #05060d;
+    background-image:
+      radial-gradient(at 0% 0%,   rgba(99,102,241,0.10) 0px, transparent 42%),
+      radial-gradient(at 100% 0%, rgba(139,92,246,0.08) 0px, transparent 42%),
+      radial-gradient(at 50% 100%,rgba(56,189,248,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  #starfield { position:fixed; inset:0; pointer-events:none; z-index:0; }
+  .gradient-border { position: relative; }
+  .gradient-border::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.25); border-radius: 8px; }
+
+  /* ── Diagrams ──
+     Drawn in SVG. Star charts are projected from each star's real
+     right ascension and declination; curves are computed from their formulas. */
+  .dg { display:block; width:100%; height:auto; }
+  .dg text { font-family: Nunito, 'Noto Serif TC', sans-serif; }
+  .dg .lab  { fill:#a5b4fc; font-size:15px; font-weight:800; }
+  .dg .sub  { fill:#94a3b8; font-size:13px; }
+  .dg .val  { fill:#f1f5f9; font-size:13px; font-weight:800; }
+  .dg .star { fill:#f8fafc; font-size:13px; font-weight:700; }
+  .dg .grid { stroke: rgba(148,163,184,0.18); stroke-width:1; }
+  .dia-box { background:#070914; border:1px solid rgba(148,163,184,0.14); border-radius:1rem; padding:1rem; }
+
+  .reveal { opacity: 0; transform: translateY(12px); }
+  .reveal.in { opacity: 1; transform: none;
+               transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen pb-16 overflow-x-hidden antialiased selection:bg-indigo-500 selection:text-white">
+
+<svg id="starfield" aria-hidden="true"></svg>
+<div style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;">
+  <div style="position:absolute;width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(99,102,241,0.14) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+  <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,rgba(168,85,247,0.11) 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
+</div>
+
+<header class="border-b border-slate-900/80 bg-[#05060d]/85 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-sky-500 rounded-xl blur opacity-70 animate-pulse"></div>
+        <div class="relative bg-[#05060d] p-2.5 rounded-xl border border-slate-800">
+          <i class="fa-solid fa-star text-indigo-300 text-xl"></i>
+        </div>
+      </div>
+      <div>
+        <span data-i18n="hdr.badge" class="px-2 py-0.5 text-[9px] font-bold tracking-widest text-indigo-300 uppercase bg-indigo-500/10 rounded-full border border-indigo-500/20"></span>
+        <h1 data-i18n="hdr.title" class="text-xl md:text-2xl font-black bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent tracking-tight"></h1>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="flex p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 shrink-0">
+        <button onclick="setLanguage('zh')" id="lang-zh" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">繁中</button>
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">FR</button>
+      </div>
+      <nav id="nav" class="flex flex-wrap gap-2 text-xs"></nav>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+
+  <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+  </section>
+
+  <div id="sections" class="space-y-12"></div>
+
+  <footer class="pt-6 border-t border-slate-900">
+    <p data-i18n="footer" class="text-xs text-slate-600 leading-relaxed"></p>
+  </footer>
+</main>
+
+<script>
+let LANG = 'zh';
+function t(o){ if(o==null) return ''; if(typeof o==='string') return o; return o[LANG]||o.en||o.zh||''; }
+const D2R = Math.PI / 180;
+const fx = (v, d) => v.toLocaleString(LANG === 'zh' ? 'zh-TW' : LANG === 'fr' ? 'fr-FR' : 'en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+/* Decorative background stars (seeded, so they do not jump on language change). */
+(function(){
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  let s = '';
+  for (let i = 0; i < 140; i++)
+    s += `<circle cx="${(rnd()*100).toFixed(2)}%" cy="${(rnd()*100).toFixed(2)}%" r="${(0.4 + rnd()*1.1).toFixed(2)}" fill="#fff" opacity="${(0.15 + rnd()*0.45).toFixed(2)}"/>`;
+  document.getElementById('starfield').innerHTML = s;
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   Diagrams. Each returns an SVG string in the current language.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Shared line-chart frame. */
+function frame(W, H, P, x0, x1, yMax, xStep, yStep, xLab, xFmt, yFmt) {
+  const X = v => P.l + (v - x0) / (x1 - x0) * (W - P.l - P.r);
+  const Y = v => H - P.b - v / yMax * (H - P.t - P.b);
+  let s = '';
+  for (let v = 0; v <= yMax + 1e-9; v += yStep)
+    s += `<line x1="${P.l}" y1="${Y(v)}" x2="${W - P.r}" y2="${Y(v)}" class="grid"/><text x="${P.l - 8}" y="${Y(v) + 4}" class="sub" text-anchor="end">${yFmt(v)}</text>`;
+  for (let v = x0; v <= x1 + 1e-9; v += xStep)
+    s += `<text x="${X(v)}" y="${H - P.b + 20}" class="sub" text-anchor="middle">${xFmt(v)}</text>`;
+  s += `<text x="${W - P.r}" y="${H - 6}" class="sub" text-anchor="end">${xLab}</text>`;
+  return { X, Y, s };
+}
+
+/* The magnitude scale: smaller numbers are brighter; 5 magnitudes = 100×. */
+function diaMag() {
+  const L = {
+    title:{zh:'星等：數字越小越亮，每差 1 等亮度差約 2.512 倍', en:'Magnitude: lower is brighter, each step about 2.512×', fr:'La magnitude : plus elle est faible, plus l’astre est brillant ; 2,512× par unité'},
+    bright:{zh:'較亮', en:'brighter', fr:'plus brillant'}, faint:{zh:'較暗', en:'fainter', fr:'plus faible'},
+    city:{zh:'市區肉眼極限', en:'city naked-eye limit', fr:'limite à l’œil en ville'},
+    dark:{zh:'暗空肉眼極限', en:'dark-sky naked-eye limit', fr:'limite à l’œil sous ciel noir'},
+    ratio:{zh:'天狼星比暗空下最暗的星亮', en:'Sirius outshines the faintest dark-sky star by', fr:'Sirius surpasse l’étoile la plus faible d’un ciel noir de'},
+    moon:{zh:'滿月約 −12.7 等，太陽約 −26.7 等，都在圖的左邊之外', en:'Full Moon ≈ −12.7 and the Sun ≈ −26.7, both far off the left edge', fr:'Pleine Lune ≈ −12,7 et Soleil ≈ −26,7, loin à gauche du graphique'},
+  };
+  const obj = [
+    [-4.6, {zh:'金星', en:'Venus', fr:'Vénus'}, '#fde68a'],
+    [-2.9, {zh:'木星', en:'Jupiter', fr:'Jupiter'}, '#fcd34d'],
+    [-1.46, {zh:'天狼星', en:'Sirius', fr:'Sirius'}, '#bfdbfe'],
+    [0.03, {zh:'織女星', en:'Vega', fr:'Véga'}, '#e0e7ff'],
+    [1.98, {zh:'北極星', en:'Polaris', fr:'Polaire'}, '#fef3c7'],
+    [3.3, {zh:'天權（北斗最暗）', en:'Megrez (faintest of the Dipper)', fr:'Megrez (la plus faible de la Casserole)'}, '#e2e8f0'],
+  ];
+  const W = 900, H = 300, x0 = 90, x1 = 860, m0 = -5, m1 = 7;
+  const X = m => x0 + (m - m0) / (m1 - m0) * (x1 - x0), ay = 150;
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  s += `<defs><linearGradient id="mg" x1="0" x2="1"><stop offset="0" stop-color="#fef3c7" stop-opacity="0.55"/><stop offset="1" stop-color="#1e1b4b" stop-opacity="0.2"/></linearGradient></defs>`;
+  s += `<rect x="${x0}" y="${ay - 6}" width="${x1 - x0}" height="12" rx="6" fill="url(#mg)"/>`;
+  for (let m = m0; m <= m1; m++)
+    s += `<line x1="${X(m)}" y1="${ay + 8}" x2="${X(m)}" y2="${ay + 14}" stroke="#64748b"/><text x="${X(m)}" y="${ay + 30}" class="sub" text-anchor="middle">${m}</text>`;
+  s += `<text x="${x0}" y="${ay + 52}" class="sub">◀ ${t(L.bright)}</text><text x="${x1}" y="${ay + 52}" class="sub" text-anchor="end">${t(L.faint)} ▶</text>`;
+  obj.forEach(([m, n, c], i) => {
+    const r = Math.max(2, 9 - 1.2 * (m + 1.5)), up = i % 2 === 0, ty = up ? ay - 36 : ay - 70;
+    s += `<circle cx="${X(m)}" cy="${ay}" r="${r.toFixed(1)}" fill="${c}"/>`;
+    s += `<line x1="${X(m)}" y1="${ay - r - 2}" x2="${X(m)}" y2="${ty + 6}" stroke="${c}" stroke-opacity="0.5"/>`;
+    s += `<text x="${X(m)}" y="${ty}" class="val" text-anchor="middle" style="fill:${c}">${t(n)} ${fx(m, m % 1 ? 1 : 0)}</text>`;
+  });
+  [[4, L.city, '#f87171'], [6.5, L.dark, '#a3e635']].forEach(([m, n, c]) => {
+    s += `<line x1="${X(m)}" y1="${ay - 50}" x2="${X(m)}" y2="${ay + 14}" stroke="${c}" stroke-dasharray="4 3" stroke-width="2"/>`;
+    s += `<text x="${X(m)}" y="${m > 5 ? ay - 96 : ay - 112}" class="val" text-anchor="middle" style="fill:${c}">${t(n)} ≈ ${fx(m, m % 1 ? 1 : 0)}</text>`;
+  });
+  const ratio = Math.pow(10, 0.4 * (6.5 + 1.46));
+  s += `<text x="0" y="${H - 36}" class="sub">${t(L.ratio)} 10^(0.4 × ${fx(6.5 + 1.46, 2)}) ≈ <tspan class="val">${Math.round(ratio).toLocaleString()} ×</tspan></text>`;
+  s += `<text x="0" y="${H - 12}" class="sub">${t(L.moon)}</text>`;
+  return `<svg class="dg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Altitude of the celestial pole equals the observer's latitude. */
+function diaPole() {
+  const L = {
+    title:{zh:'北極星的仰角＝你所在的緯度', en:'The height of Polaris equals your latitude', fr:'La hauteur de la Polaire est égale à votre latitude'},
+    hz:{zh:'北方地平線', en:'northern horizon', fr:'horizon nord'},
+    zen:{zh:'天頂', en:'zenith', fr:'zénith'},
+    you:{zh:'觀測者', en:'observer', fr:'observateur'},
+    note:{zh:'整片星空每 23 時 56 分繞北極星轉一圈；赤緯高於 90° 減去當地緯度的星（台北約 +65° 以北）永不落下，稱為拱極星。', en:'The whole sky turns around Polaris once every 23 h 56 min. Stars within your latitude’s worth of degrees of the pole never set (north of about +65° from Taipei): these are the circumpolar stars.', fr:'Le ciel entier tourne autour de la Polaire en 23 h 56 min. Les étoiles situées à moins de votre latitude du pôle ne se couchent jamais (au nord de +41° environ à Paris) : ce sont les circumpolaires.'},
+  };
+  const places = [
+    [22.0, {zh:'墾丁', en:'Kenting', fr:'Kenting'}, '#38bdf8'],
+    [25.0, {zh:'台北', en:'Taipei', fr:'Taipei'}, '#a5b4fc'],
+    [43.7, {zh:'尼斯', en:'Nice', fr:'Nice'}, '#c4b5fd'],
+    [48.9, {zh:'巴黎', en:'Paris', fr:'Paris'}, '#f0abfc'],
+  ];
+  const W = 900, H = 340, ox = 180, oy = 270, R = 300;
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  s += `<line x1="40" y1="${oy}" x2="${W - 40}" y2="${oy}" stroke="#475569" stroke-width="2"/>`;
+  s += `<text x="${W - 40}" y="${oy + 22}" class="sub" text-anchor="end">${t(L.hz)} ▶</text>`;
+  s += `<path d="M${ox + R} ${oy} A${R} ${R} 0 0 0 ${ox} ${oy - R}" fill="none" stroke="#334155" stroke-dasharray="3 5"/>`;
+  s += `<line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy - 230}" stroke="#334155" stroke-dasharray="3 5"/>`;
+  s += `<text x="${ox + 8}" y="${oy - 222}" class="sub">${t(L.zen)} 90°</text>`;
+  s += `<circle cx="${ox}" cy="${oy}" r="6" fill="#e2e8f0"/><text x="${ox}" y="${oy + 24}" class="sub" text-anchor="middle">${t(L.you)}</text>`;
+  places.forEach(([lat, n, c], i) => {
+    const a = lat * D2R, ex = ox + R * Math.cos(a), ey = oy - R * Math.sin(a);
+    s += `<line x1="${ox}" y1="${oy}" x2="${ex}" y2="${ey}" stroke="${c}" stroke-width="2"/>`;
+    s += `<circle cx="${ex}" cy="${ey}" r="5" fill="${c}"/>`;
+    s += `<text x="${ex + 10}" y="${ey + (i === 0 ? 14 : i === 1 ? -2 : 4)}" class="val" style="fill:${c}">${t(n)} ${fx(lat, 1)}°</text>`;
+  });
+  const ar = 70;
+  s += `<path d="M${ox + ar} ${oy} A${ar} ${ar} 0 0 0 ${ox + ar * Math.cos(48.9 * D2R)} ${oy - ar * Math.sin(48.9 * D2R)}" fill="none" stroke="#f0abfc" stroke-opacity="0.6"/>`;
+  s += `<foreignObject x="560" y="70" width="320" height="160"><div xmlns="http://www.w3.org/1999/xhtml" style="color:#94a3b8;font:13px/1.55 Nunito,'Noto Serif TC',sans-serif">${t(L.note)}</div></foreignObject>`;
+  return `<svg class="dg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* ── Star charts ──
+   Stereographic projection centred on the chart's middle, using each
+   star's J2000 right ascension (hours) and declination (degrees).
+   East is drawn on the left, as the sky looks when you face it. */
+const S = {
+  // Ursa Major / Polaris / Cassiopeia
+  dubhe:[11.062, 61.75, 1.8, {zh:'天樞', en:'Dubhe', fr:'Dubhe'}],
+  merak:[11.031, 56.38, 2.4, {zh:'天璇', en:'Merak', fr:'Merak'}],
+  phecda:[11.897, 53.69, 2.4],
+  megrez:[12.257, 57.03, 3.3],
+  alioth:[12.900, 55.96, 1.8],
+  mizar:[13.399, 54.93, 2.2, {zh:'開陽', en:'Mizar', fr:'Mizar'}],
+  alkaid:[13.792, 49.31, 1.9, {zh:'搖光', en:'Alkaid', fr:'Alkaid'}],
+  polaris:[2.530, 89.26, 2.0, {zh:'北極星', en:'Polaris', fr:'Polaire'}],
+  caph:[0.153, 59.15, 2.3],
+  schedar:[0.675, 56.54, 2.2],
+  gcas:[0.945, 60.72, 2.4],
+  ruchbah:[1.430, 60.24, 2.7],
+  segin:[1.907, 63.67, 3.4],
+  // Spring
+  arcturus:[14.261, 19.18, -0.05, {zh:'大角', en:'Arcturus', fr:'Arcturus'}],
+  spica:[13.420, -11.16, 0.97, {zh:'角宿一', en:'Spica', fr:'Spica'}],
+  denebola:[11.818, 14.57, 2.1, {zh:'五帝座一', en:'Denebola', fr:'Dénébola'}],
+  regulus:[10.140, 11.97, 1.35, {zh:'軒轅十四', en:'Regulus', fr:'Régulus'}],
+  // Summer
+  vega:[18.616, 38.78, 0.03, {zh:'織女星', en:'Vega', fr:'Véga'}],
+  deneb:[20.690, 45.28, 1.25, {zh:'天津四', en:'Deneb', fr:'Deneb'}],
+  altair:[19.846, 8.87, 0.77, {zh:'牛郎星', en:'Altair', fr:'Altaïr'}],
+  sadr:[20.370, 40.26, 2.2],
+  gienah:[20.770, 33.97, 2.5],
+  dcyg:[19.750, 45.13, 2.9],
+  albireo:[19.512, 27.96, 3.1, {zh:'輦道增七', en:'Albireo', fr:'Albireo'}],
+  sheliak:[18.835, 33.36, 3.5],
+  sulafat:[18.982, 32.69, 3.3],
+  zlyr:[18.746, 37.61, 4.3],
+  dlyr:[18.908, 36.90, 4.3],
+  tarazed:[19.771, 10.61, 2.7],
+  alshain:[19.922, 6.41, 3.7],
+  // Winter
+  betelgeuse:[5.919, 7.41, 0.5, {zh:'參宿四', en:'Betelgeuse', fr:'Bételgeuse'}],
+  rigel:[5.242, -8.20, 0.13, {zh:'參宿七', en:'Rigel', fr:'Rigel'}],
+  bellatrix:[5.419, 6.35, 1.6],
+  saiph:[5.796, -9.67, 2.1],
+  alnitak:[5.679, -1.94, 1.8],
+  alnilam:[5.604, -1.20, 1.7],
+  mintaka:[5.533, -0.30, 2.2],
+  sirius:[6.752, -16.72, -1.46, {zh:'天狼星', en:'Sirius', fr:'Sirius'}],
+  procyon:[7.655, 5.23, 0.34, {zh:'南河三', en:'Procyon', fr:'Procyon'}],
+  aldebaran:[4.599, 16.51, 0.85, {zh:'畢宿五', en:'Aldebaran', fr:'Aldébaran'}],
+  pleiades:[3.791, 24.11, 2.9, {zh:'昴宿星團', en:'Pleiades', fr:'Pléiades'}],
+  m42:[5.588, -5.39, 4.0, {zh:'M42 獵戶座大星雲', en:'M42 Orion Nebula', fr:'M42 nébuleuse d’Orion'}],
+};
+
+function project(ra, dec, ra0, dec0) {
+  const a = ra * 15 * D2R, d = dec * D2R, a0 = ra0 * 15 * D2R, d0 = dec0 * D2R;
+  const c = Math.sin(d0) * Math.sin(d) + Math.cos(d0) * Math.cos(d) * Math.cos(a - a0);
+  const k = 2 / (1 + c);
+  return [-k * Math.cos(d) * Math.sin(a - a0), k * (Math.cos(d0) * Math.sin(d) - Math.sin(d0) * Math.cos(d) * Math.cos(a - a0))];
+}
+
+/* spec: { title, stars:[keys], lines:[[a,b]], guides:[[a,b,ext]], tri:[a,b,c], labelOff:{key:[dx,dy,anchor]}, notes:[[x,y,text,colour]] } */
+function starChart(spec) {
+  const W = 900, H = 520, pad = { l:60, r:60, t:60, b:40 };
+  const keys = spec.stars;
+  let ra0 = 0, dec0 = 0;
+  // Centre on the mean unit vector of the stars.
+  let vx = 0, vy = 0, vz = 0;
+  keys.forEach(k => { const a = S[k][0] * 15 * D2R, d = S[k][1] * D2R; vx += Math.cos(d) * Math.cos(a); vy += Math.cos(d) * Math.sin(a); vz += Math.sin(d); });
+  ra0 = ((Math.atan2(vy, vx) / D2R + 360) % 360) / 15; dec0 = Math.atan2(vz, Math.hypot(vx, vy)) / D2R;
+  const P = {}; keys.forEach(k => P[k] = project(S[k][0], S[k][1], ra0, dec0));
+  const xs = keys.map(k => P[k][0]), ys = keys.map(k => P[k][1]);
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  const sc = Math.min((W - pad.l - pad.r) / (maxX - minX), (H - pad.t - pad.b) / (maxY - minY));
+  const cx = (W + pad.l - pad.r) / 2 - (minX + maxX) / 2 * sc, cy = (H + pad.t - pad.b) / 2 + (minY + maxY) / 2 * sc;
+  const XY = k => [cx + P[k][0] * sc, cy - P[k][1] * sc];
+  let s = `<rect width="${W}" height="${H}" rx="12" fill="#04050c"/>`;
+  s += `<text x="16" y="30" class="lab">${t(spec.title)}</text>`;
+  if (spec.tri) {
+    const pts = spec.tri.map(XY);
+    s += `<polygon points="${pts.map(p => p.join(',')).join(' ')}" fill="${spec.triC || '#818cf8'}" fill-opacity="0.07" stroke="${spec.triC || '#818cf8'}" stroke-opacity="0.55" stroke-dasharray="6 5" stroke-width="1.5"/>`;
+  }
+  (spec.lines || []).forEach(([a, b]) => { const [x1, y1] = XY(a), [x2, y2] = XY(b);
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#64748b" stroke-width="1.5" stroke-opacity="0.75"/>`; });
+  (spec.guides || []).forEach(([a, b, c]) => { const [x1, y1] = XY(a), [x2, y2] = XY(b);
+    const col = c || '#fbbf24';
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="1.8" stroke-dasharray="7 6" stroke-opacity="0.8" marker-end="url(#ar-${col.slice(1)})"/>`; });
+  const cols = [...new Set((spec.guides || []).map(g => g[2] || '#fbbf24'))];
+  s = `<defs>${cols.map(c => `<marker id="ar-${c.slice(1)}" viewBox="0 0 10 10" refX="16" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="${c}"/></marker>`).join('')}<radialGradient id="glow"><stop offset="0" stop-color="#fff" stop-opacity="0.45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>` + s;
+  keys.forEach(k => {
+    const [x, y] = XY(k), m = S[k][2], r = Math.max(1.6, 5.2 - 1.05 * m);
+    if (k === 'pleiades' || k === 'm42') {
+      s += `<circle cx="${x}" cy="${y}" r="9" fill="none" stroke="#c4b5fd" stroke-dasharray="2 2"/>`;
+    } else {
+      if (m < 1.5) s += `<circle cx="${x}" cy="${y}" r="${r * 3}" fill="url(#glow)"/>`;
+      s += `<circle cx="${x}" cy="${y}" r="${r.toFixed(2)}" fill="${S[k][4] || '#f8fafc'}"/>`;
+    }
+    if (S[k][3]) {
+      const o = (spec.labelOff || {})[k] || [10, -8, 'start'];
+      s += `<text x="${x + o[0]}" y="${y + o[1]}" class="star" text-anchor="${o[2]}">${t(S[k][3])}</text>`;
+    }
+  });
+  (spec.notes || []).forEach(([a, b, txt, c]) => { const [x1, y1] = XY(a), [x2, y2] = XY(b);
+    s += `<text x="${(x1 + x2) / 2 + 8}" y="${(y1 + y2) / 2}" class="val" style="fill:${c || '#fbbf24'}">${t(txt)}</text>`; });
+  s += `<text x="${W - 16}" y="${H - 14}" class="sub" text-anchor="end">${t(spec.foot || {zh:'左為東、右為西；點的大小依星等', en:'East left, west right; dot size by magnitude', fr:'Est à gauche, ouest à droite ; taille selon la magnitude'})}</text>`;
+  return `<svg class="dg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t(spec.title)}">${s}</svg>`;
+}
+
+function diaPole2() {
+  return starChart({
+    title:{zh:'用北斗七星與仙后座找北極星', en:'Finding Polaris from the Big Dipper and Cassiopeia', fr:'Trouver la Polaire avec la Grande Casserole et Cassiopée'},
+    stars:['dubhe','merak','phecda','megrez','alioth','mizar','alkaid','polaris','caph','schedar','gcas','ruchbah','segin'],
+    lines:[['dubhe','merak'],['merak','phecda'],['phecda','megrez'],['megrez','dubhe'],['megrez','alioth'],['alioth','mizar'],['mizar','alkaid'],
+           ['caph','schedar'],['schedar','gcas'],['gcas','ruchbah'],['ruchbah','segin']],
+    guides:[['dubhe','polaris'],['gcas','polaris','#c4b5fd']],
+    labelOff:{ merak:[10,16,'start'], polaris:[12,5,'start'], alkaid:[0,20,'middle'], mizar:[0,-12,'middle'] },
+    notes:[['dubhe','polaris',{zh:'天璇→天樞，延長約 5 倍', en:'Merak → Dubhe, about 5× further', fr:'Merak → Dubhe, environ 5× plus loin'}],
+           ['gcas','polaris',{zh:'仙后座 W 的開口方向', en:'off the open side of Cassiopeia’s W', fr:'du côté ouvert du W de Cassiopée'},'#c4b5fd']],
+    foot:{zh:'北斗與仙后座分在北極星兩側，一個落下時另一個正好升高', en:'The Dipper and Cassiopeia sit on opposite sides of Polaris: when one is low, the other is high', fr:'Casserole et Cassiopée sont de part et d’autre de la Polaire : quand l’une est basse, l’autre est haute'},
+  });
+}
+function diaSpring() {
+  return starChart({
+    title:{zh:'春季：沿著北斗的弧線找到大角與角宿一', en:'Spring: follow the arc to Arcturus, speed on to Spica', fr:'Printemps : suivez l’arc jusqu’à Arcturus, puis filez vers Spica'},
+    stars:['dubhe','merak','phecda','megrez','alioth','mizar','alkaid','arcturus','spica','denebola','regulus'],
+    lines:[['dubhe','merak'],['merak','phecda'],['phecda','megrez'],['megrez','dubhe'],['megrez','alioth'],['alioth','mizar'],['mizar','alkaid']],
+    guides:[['alkaid','arcturus'],['arcturus','spica']],
+    tri:['arcturus','spica','denebola'], triC:'#38bdf8',
+    labelOff:{ alkaid:[-10,4,'end'], mizar:[0,-12,'middle'], spica:[12,5,'start'], arcturus:[12,5,'start'], regulus:[0,22,'middle'], denebola:[0,22,'middle'], dubhe:[0,-12,'middle'], merak:[0,20,'middle'] },
+    notes:[['denebola','spica',{zh:'春季大三角', en:'Spring Triangle', fr:'Triangle du printemps'},'#38bdf8']],
+  });
+}
+function diaSummer() {
+  return starChart({
+    title:{zh:'夏季大三角：織女、牛郎與天津四', en:'The Summer Triangle: Vega, Altair and Deneb', fr:'Le Triangle d’été : Véga, Altaïr et Deneb'},
+    stars:['vega','deneb','altair','sadr','gienah','dcyg','albireo','sheliak','sulafat','zlyr','dlyr','tarazed','alshain'],
+    lines:[['deneb','sadr'],['sadr','albireo'],['gienah','sadr'],['sadr','dcyg'],
+           ['vega','zlyr'],['zlyr','sheliak'],['sheliak','sulafat'],['sulafat','dlyr'],['dlyr','zlyr'],
+           ['tarazed','altair'],['altair','alshain']],
+    tri:['vega','deneb','altair'],
+    labelOff:{ vega:[12,5,'start'], deneb:[-12,5,'end'], altair:[14,5,'start'], albireo:[12,14,'start'] },
+    foot:{zh:'銀河從天鵝座（天津四）穿過三角形；七夕傳說的織女與牛郎隔著銀河相望', en:'The Milky Way runs through Cygnus and across the triangle, between Vega and Altair', fr:'La Voie lactée traverse le Cygne et le triangle, entre Véga et Altaïr'},
+  });
+}
+function diaWinter() {
+  return starChart({
+    title:{zh:'冬季：從獵戶座腰帶出發', en:'Winter: start from Orion’s Belt', fr:'Hiver : partez du Baudrier d’Orion'},
+    stars:['betelgeuse','rigel','bellatrix','saiph','alnitak','alnilam','mintaka','sirius','procyon','aldebaran','pleiades','m42'],
+    lines:[['betelgeuse','bellatrix'],['betelgeuse','alnitak'],['bellatrix','mintaka'],['alnitak','alnilam'],['alnilam','mintaka'],['alnitak','saiph'],['mintaka','rigel']],
+    guides:[['alnitak','sirius'],['mintaka','aldebaran','#f472b6'],['aldebaran','pleiades','#f472b6']],
+    tri:['betelgeuse','sirius','procyon'],
+    labelOff:{ m42:[14,14,'start'], rigel:[12,12,'start'], sirius:[14,6,'start'], procyon:[0,-14,'middle'], betelgeuse:[12,-6,'start'], pleiades:[0,-16,'middle'], aldebaran:[12,12,'start'] },
+    foot:{zh:'腰帶往左下延長到天狼星，往右上到畢宿五與昴宿星團；虛線三角形是冬季大三角', en:'The Belt points down-left to Sirius and up-right to Aldebaran and the Pleiades; the dashed triangle is the Winter Triangle', fr:'Le Baudrier mène en bas à gauche à Sirius, en haut à droite à Aldébaran et aux Pléiades ; le triangle pointillé est le Triangle d’hiver'},
+  });
+}
+
+/* Meteors you actually see: HR = ZHR · sin(h) / r^(6.5 − LM). */
+function diaMeteor() {
+  const L = {
+    title:{zh:'光害讓流星少多少：英仙座流星雨每小時實際看到的數量', en:'What light pollution costs: Perseids actually seen per hour', fr:'Ce que coûte la pollution lumineuse : Perséides réellement vues par heure'},
+    x:{zh:'肉眼極限星等（越大天空越暗）', en:'naked-eye limiting magnitude (higher = darker sky)', fr:'magnitude limite à l’œil (plus haute = ciel plus noir)'},
+    note:{zh:'假設：ZHR 100、族群指數 r＝2.2、輻射點仰角 60°', en:'Assumes ZHR 100, population index r = 2.2, radiant 60° high', fr:'Hypothèses : THZ 100, indice de population r = 2,2, radiant à 60°'},
+    b:[{zh:'市區', en:'city', fr:'ville'},{zh:'郊區', en:'suburb', fr:'banlieue'},{zh:'鄉間', en:'rural', fr:'campagne'},{zh:'暗空保護區', en:'dark-sky site', fr:'site de ciel noir'}],
+  };
+  const W = 900, H = 340, P = { l:60, r:30, t:56, b:56 };
+  const f = frame(W, H, P, 3, 7, 160, 0.5, 20, t(L.x), v => fx(v, 1), v => v);
+  const hr = lm => 100 * Math.sin(60 * D2R) / Math.pow(2.2, 6.5 - lm);
+  const pts = []; for (let lm = 3; lm <= 7.0001; lm += 0.05) pts.push([lm, hr(lm)]);
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>` + f.s;
+  const path = pts.map((p, i) => (i ? 'L' : 'M') + f.X(p[0]).toFixed(1) + ' ' + f.Y(p[1]).toFixed(1)).join(' ');
+  s += `<path d="${path} L${f.X(7)} ${f.Y(0)} L${f.X(3)} ${f.Y(0)} Z" fill="#818cf8" fill-opacity="0.10"/>`;
+  s += `<path d="${path}" fill="none" stroke="#a5b4fc" stroke-width="3"/>`;
+  [[4, '#f87171'], [5.5, '#fbbf24'], [6.5, '#a3e635'], [7, '#38bdf8']].forEach(([lm, c], i) => {
+    const v = hr(lm);
+    s += `<circle cx="${f.X(lm)}" cy="${f.Y(v)}" r="5" fill="${c}"/>`;
+    s += `<text x="${f.X(lm) + (i === 3 ? -10 : 10)}" y="${f.Y(v) - 10}" class="val" text-anchor="${i === 3 ? 'end' : 'start'}" style="fill:${c}">${t(L.b[i])} ≈ ${Math.round(v)}</text>`;
+  });
+  s += `<text x="${W - P.r}" y="22" class="sub" text-anchor="end">${t(L.note)}</text>`;
+  return `<svg class="dg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+/* Light grasp (D / 7 mm)², limiting magnitude ≈ 7.5 + 5·log10(D cm), max useful power ≈ 2 × D mm. */
+function diaAperture() {
+  const L = {
+    title:{zh:'口徑決定一切：集光力、極限星等與最高有效倍率', en:'Aperture is everything: light grasp, limiting magnitude and top useful power', fr:'Tout est dans le diamètre : pouvoir collecteur, magnitude limite et grossissement utile'},
+    grasp:{zh:'集光力（肉眼＝1）', en:'light grasp (eye = 1)', fr:'pouvoir collecteur (œil = 1)'},
+    lim:{zh:'極限星等', en:'limit mag', fr:'mag. limite'},
+    max:{zh:'最高倍率', en:'max power', fr:'gross. max'},
+    items:[{zh:'肉眼（瞳孔 7 mm）', en:'Eye (7 mm pupil)', fr:'Œil (pupille 7 mm)'},{zh:'7×50 雙筒', en:'7×50 binoculars', fr:'Jumelles 7×50'},{zh:'80 mm 折射鏡', en:'80 mm refractor', fr:'Lunette 80 mm'},{zh:'130 mm 反射鏡', en:'130 mm reflector', fr:'Télescope 130 mm'},{zh:'200 mm 杜布森', en:'200 mm Dobsonian', fr:'Dobson 200 mm'}],
+  };
+  const D = [7, 50, 80, 130, 200], top = Math.pow(200 / 7, 2);
+  const x0 = 200, wMax = 420;
+  let s = `<text x="0" y="22" class="lab">${t(L.title)}</text>`;
+  s += `<text x="${x0}" y="52" class="sub">${t(L.grasp)}</text><text x="${x0 + wMax + 110}" y="52" class="sub" text-anchor="middle">${t(L.lim)}</text><text x="${x0 + wMax + 210}" y="52" class="sub" text-anchor="middle">${t(L.max)}</text>`;
+  D.forEach((d, i) => {
+    const g = Math.pow(d / 7, 2), w = Math.max(3, g / top * wMax), y = 66 + i * 46;
+    const lim = 7.5 + 5 * Math.log10(d / 10);
+    s += `<text x="${x0 - 12}" y="${y + 20}" class="val" text-anchor="end">${t(L.items[i])}</text>`;
+    s += `<rect x="${x0}" y="${y}" width="${w.toFixed(1)}" height="30" rx="6" fill="#818cf8" fill-opacity="${0.35 + i * 0.12}"/>`;
+    s += `<text x="${x0 + w + 8}" y="${y + 20}" class="val">${Math.round(g).toLocaleString()} ×</text>`;
+    s += `<text x="${x0 + wMax + 110}" y="${y + 20}" class="val" text-anchor="middle" style="fill:#a3e635">${fx(lim, 1)}</text>`;
+    s += `<text x="${x0 + wMax + 210}" y="${y + 20}" class="val" text-anchor="middle" style="fill:#fbbf24">${i === 0 ? '1×' : (i === 1 ? '7×' : 2 * d + '×')}</text>`;
+  });
+  return `<svg class="dg" viewBox="0 0 900 300" role="img" aria-label="${t(L.title)}">${s}</svg>`;
+}
+
+const DIA = { mag: diaMag, pole: diaPole, polaris: diaPole2, spring: diaSpring, summer: diaSummer, winter: diaWinter, meteor: diaMeteor, aperture: diaAperture };
+
+/* ═══════════════════════════════════════════════════════════
+   Content
+   ═══════════════════════════════════════════════════════════ */
+const SECTIONS = [
+
+/* ── 1. The sky ── */
+{ id:'sky', i:'fa-circle-half-stroke', c:'#a5b4fc',
+  nav:{zh:'認識星空', en:'The sky', fr:'Le ciel'},
+  eyebrow:{zh:'第一章', en:'Chapter 1', fr:'Chapitre 1'},
+  h2:{zh:'星空怎麼運轉，星星有多亮', en:'How the sky moves, and how bright the stars are', fr:'Comment tourne le ciel, et quel est l’éclat des étoiles'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'對肉眼來說，星星像是貼在一個巨大的<strong class="text-white">天球</strong>內側。地球自轉，讓整片天球每天由東向西轉一圈；地球繞太陽公轉，讓同一時間看到的星空每晚提早約 4 分鐘，一個月約 2 小時，所以四季各有不同的星座。台灣與法國都在北半球，看到的是同一片北天星空，只是北極星的高度不同。',
+    en:'To the eye, the stars look fixed to the inside of a vast <strong class="text-white">celestial sphere</strong>. Earth’s spin turns the whole sphere east to west once a day; Earth’s orbit makes the same stars rise about 4 minutes earlier each night, about 2 hours a month, which is why each season has its own constellations. Taiwan and France are both in the northern hemisphere and share the same northern sky; only the height of Polaris differs.',
+    fr:'À l’œil nu, les étoiles semblent fixées à l’intérieur d’une immense <strong class="text-white">sphère céleste</strong>. La rotation de la Terre la fait tourner d’est en ouest en un jour ; la révolution autour du Soleil fait lever les mêmes étoiles environ 4 minutes plus tôt chaque nuit, soit 2 heures par mois : d’où des constellations propres à chaque saison. Taïwan et la France sont dans l’hémisphère nord et partagent le même ciel boréal ; seule la hauteur de la Polaire change.'} },
+  { type:'dia', k:'pole' },
+  { type:'dia', k:'mag' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-arrows-rotate', t:{zh:'周日運動', en:'Diurnal motion', fr:'Mouvement diurne'},
+      p:{zh:'星星東升西落，每小時轉 15°。面向北方時，星星繞北極星逆時針轉；面向南方時，星星由左向右劃過天空。', en:'Stars rise in the east and set in the west, turning 15° an hour. Facing north, they circle Polaris anticlockwise; facing south, they sweep left to right.', fr:'Les étoiles se lèvent à l’est et se couchent à l’ouest, à 15° par heure. Face au nord, elles tournent autour de la Polaire dans le sens antihoraire ; face au sud, elles défilent de gauche à droite.'} },
+    { i:'fa-compass', t:{zh:'地平座標', en:'Alt-azimuth coordinates', fr:'Coordonnées horizontales'},
+      p:{zh:'方位角從正北 0° 順時針量到 360°（東 90°、南 180°），仰角從地平線 0° 量到天頂 90°。App 與星圖常用這組座標告訴你「往哪看」，但數值會隨時間與地點改變。', en:'Azimuth runs clockwise from north (0°) through east (90°) and south (180°); altitude runs from the horizon (0°) to the zenith (90°). Apps use these to say where to look, but the values change with time and place.', fr:'L’azimut se compte depuis le nord (0°) vers l’est (90°) et le sud (180°) ; la hauteur va de l’horizon (0°) au zénith (90°). Les applications s’en servent pour indiquer où regarder, mais les valeurs changent selon l’heure et le lieu.'} },
+    { i:'fa-globe', t:{zh:'赤道座標', en:'Equatorial coordinates', fr:'Coordonnées équatoriales'},
+      p:{zh:'赤經（RA，以小時計，0 到 24 h）與赤緯（Dec，−90° 到 +90°）是天球上的經緯度，固定不變，是星表與赤道儀使用的座標。例如織女星位於赤經 18 h 37 m、赤緯 +38.8°。', en:'Right ascension (RA, 0–24 h) and declination (Dec, −90° to +90°) are longitude and latitude on the sky. They do not change, so catalogues and equatorial mounts use them. Vega sits at RA 18 h 37 m, Dec +38.8°.', fr:'L’ascension droite (AD, 0 à 24 h) et la déclinaison (Déc, −90° à +90°) sont la longitude et la latitude du ciel. Fixes, elles servent aux catalogues et aux montures équatoriales. Véga : AD 18 h 37 min, Déc +38,8°.'} },
+    { i:'fa-star-half-stroke', t:{zh:'星等', en:'Magnitude', fr:'Magnitude'},
+      p:{zh:'古希臘人把最亮的星定為 1 等、肉眼勉強可見的定為 6 等。現代定義為差 5 等＝亮度差 100 倍，因此每 1 等約 2.512 倍，也可以是負數。這裡說的都是「視星等」，也就是從地球看起來的亮度。', en:'The Greeks called the brightest stars first magnitude and the faintest visible sixth. Today 5 magnitudes means exactly 100× in brightness, so each step is about 2.512×, and very bright objects go negative. These are apparent magnitudes: brightness as seen from Earth.', fr:'Les Grecs classaient les plus brillantes en première grandeur, les plus faibles en sixième. Aujourd’hui, 5 magnitudes valent exactement un facteur 100, soit 2,512 par unité, et les astres très brillants ont une magnitude négative. Il s’agit de magnitudes apparentes, vues depuis la Terre.'} },
+    { i:'fa-palette', t:{zh:'星星的顏色', en:'Star colours', fr:'Couleur des étoiles'},
+      p:{zh:'顏色反映表面溫度：參宿四偏橘紅（約 3,500 K），太陽偏黃（約 5,800 K），參宿七與織女星偏藍白（約 10,000 K 以上）。肉眼只看得出最亮星的顏色，雙筒望遠鏡會更明顯。', en:'Colour shows surface temperature: Betelgeuse is orange-red (about 3,500 K), the Sun yellow (about 5,800 K), Rigel and Vega blue-white (10,000 K and up). The eye only picks out colour in the brightest stars; binoculars show it better.', fr:'La couleur traduit la température : Bételgeuse est rouge orangé (environ 3 500 K), le Soleil jaune (5 800 K), Rigel et Véga blanc bleuté (10 000 K et plus). L’œil ne perçoit la couleur que des plus brillantes ; les jumelles la révèlent mieux.'} },
+    { i:'fa-shapes', t:{zh:'星座與星群', en:'Constellations and asterisms', fr:'Constellations et astérismes'},
+      p:{zh:'國際天文聯合會把全天劃分為 88 個星座，每個是一塊有邊界的天區。北斗七星、夏季大三角這類好認的圖形不是正式星座，稱為「星群」，卻是找星最好用的路標。', en:'The International Astronomical Union divides the sky into 88 constellations, each a bounded patch. Easy shapes like the Big Dipper or the Summer Triangle are not official constellations but asterisms, and they are the best signposts for finding your way.', fr:'L’Union astronomique internationale divise le ciel en 88 constellations, chacune une zone délimitée. Les figures faciles comme la Grande Casserole ou le Triangle d’été ne sont pas des constellations mais des astérismes, et ce sont les meilleurs repères.'} },
+  ]},
+]},
+
+/* ── 2. Preparation ── */
+{ id:'prep', i:'fa-list-check', c:'#c4b5fd',
+  nav:{zh:'出發前準備', en:'Before you go', fr:'Avant de partir'},
+  eyebrow:{zh:'第二章', en:'Chapter 2', fr:'Chapitre 2'},
+  h2:{zh:'挑一個好夜晚，讓眼睛適應黑暗', en:'Pick a good night and let your eyes adapt', fr:'Choisir la bonne nuit et habituer ses yeux'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'觀星成敗有九成在出門前就決定了：<strong class="text-white">天氣、月相與光害</strong>。看不到星星的原因通常不是器材不夠好，而是雲、月光或城市燈光。',
+    en:'Nine-tenths of a night’s success is decided before you leave: <strong class="text-white">weather, the Moon and light pollution</strong>. When you see few stars, the cause is rarely your gear; it is clouds, moonlight or city lights.',
+    fr:'L’essentiel se joue avant de partir : <strong class="text-white">météo, Lune et pollution lumineuse</strong>. Si l’on voit peu d’étoiles, c’est rarement le matériel ; ce sont les nuages, la Lune ou les lumières de la ville.'} },
+  { type:'steps', items:[
+    { t:{zh:'看天氣：雲量、透明度、視寧度', en:'Check the weather: cloud, transparency, seeing', fr:'Consulter la météo : nuages, transparence, turbulence'},
+      p:{zh:'雲量越低越好。透明度指空氣中的水氣與懸浮微粒，影響暗弱天體；視寧度指大氣擾動，影響行星與月面細節。Clear Outside、Meteoblue 的天文預報與 Windy 都會分開列出。', en:'Less cloud is better. Transparency is haze and humidity, which hides faint objects; seeing is air turbulence, which blurs planets and lunar detail. Clear Outside, Meteoblue’s astronomy forecast and Windy show them separately.', fr:'Moins de nuages, c’est mieux. La transparence (brume, humidité) masque les objets faibles ; la turbulence (seeing) brouille planètes et détails lunaires. Clear Outside, la prévision astronomique de Meteoblue et Windy les affichent séparément.'} },
+    { t:{zh:'看月相：新月前後一週最暗', en:'Check the Moon: the week around new Moon is darkest', fr:'Regarder la Lune : la semaine autour de la nouvelle Lune est la plus noire'},
+      p:{zh:'滿月的光會讓天空亮到只剩三、四等星。看銀河、星雲、流星選新月前後；看月面坑洞選上弦或下弦，明暗交界線附近的地形最立體。', en:'A full Moon brightens the sky until only third- or fourth-magnitude stars remain. Choose the days around new Moon for the Milky Way, nebulae and meteors; choose first or last quarter for craters, which look sharpest along the terminator.', fr:'La pleine Lune éclaire le ciel au point de ne laisser que les étoiles de magnitude 3 ou 4. Visez la nouvelle Lune pour la Voie lactée, les nébuleuses et les météores ; le premier ou dernier quartier pour les cratères, en relief le long du terminateur.'} },
+    { t:{zh:'離開光害', en:'Get away from light pollution', fr:'S’éloigner de la pollution lumineuse'},
+      p:{zh:'用 lightpollutionmap.info 找附近較暗的地點。離開城市 30 到 50 公里、往山上走，星空會差很多。注意天空的光害「光罩」通常在城市方向，觀測時背對它。', en:'Use lightpollutionmap.info to find darker spots nearby. Driving 30–50 km out of town or uphill changes everything. City glow sits over the horizon towards town, so observe with your back to it.', fr:'Utilisez lightpollutionmap.info pour trouver un site plus sombre. S’éloigner de 30 à 50 km ou monter en altitude change tout. Le halo urbain se trouve du côté de la ville : tournez-lui le dos.'} },
+    { t:{zh:'暗適應 20 到 30 分鐘', en:'Dark-adapt for 20 to 30 minutes', fr:'S’adapter à l’obscurité 20 à 30 minutes'},
+      p:{zh:'瞳孔幾秒內就會放大，但視網膜的視紫質需要 20 到 30 分鐘才完全恢復。一看手機白光就要重來，所以手機開夜間紅色模式、亮度調到最低。', en:'Pupils open within seconds, but the rhodopsin in your retina takes 20–30 minutes to recover fully. One glance at a white phone screen resets it, so switch apps to red night mode at minimum brightness.', fr:'La pupille s’ouvre en quelques secondes, mais la rhodopsine de la rétine met 20 à 30 minutes à se régénérer. Un coup d’œil à un écran blanc remet tout à zéro : passez les applications en mode nuit rouge, luminosité minimale.'} },
+    { t:{zh:'帶紅光手電筒', en:'Bring a red torch', fr:'Prendre une lampe rouge'},
+      p:{zh:'視桿細胞對紅光最不敏感，紅光看星圖不會破壞暗適應。沒有紅光燈可以用紅色玻璃紙包住手電筒。到了觀測點不要開白光，也是對其他觀星者的禮貌。', en:'Rod cells barely respond to red light, so a red torch lets you read charts without losing dark adaptation. Red cellophane over a torch works too. Keep white lights off at the site, out of courtesy to other observers.', fr:'Les bâtonnets sont peu sensibles au rouge : une lampe rouge permet de lire une carte sans perdre l’adaptation. Un papier cellophane rouge sur une lampe suffit. Pas de lumière blanche sur le site, par égard pour les autres.'} },
+    { t:{zh:'保暖、防蚊、帶椅子', en:'Dress warm, repel insects, bring a chair', fr:'Se couvrir, se protéger des moustiques, prendre un siège'},
+      p:{zh:'夜間靜止不動很快就冷，山上即使夏天也可能低於 10°C，要多帶一層外套。躺椅或防潮墊讓你能舒服地看天頂，看流星雨特別需要。', en:'Standing still at night chills you fast; on a mountain it can drop below 10°C even in summer, so bring an extra layer. A recliner or mat lets you look at the zenith comfortably, which you need for meteor showers.', fr:'Immobile la nuit, on se refroidit vite ; en montagne, il peut faire moins de 10 °C même l’été : prévoyez une couche de plus. Un transat ou un tapis permet de regarder le zénith sans effort, indispensable pour les étoiles filantes.'} },
+  ]},
+  { type:'h3', t:{zh:'好用的工具', en:'Handy tools', fr:'Outils pratiques'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-mobile-screen', t:{zh:'星圖 App', en:'Planetarium apps', fr:'Applications de cartes du ciel'},
+      p:{zh:'Stellarium（免費、跨平台，電腦版功能完整）、SkySafari、Star Walk 2、Sky Tonight。拿手機對著天空就會顯示星座名稱，適合入門認星。', en:'Stellarium (free, cross-platform, full-featured on desktop), SkySafari, Star Walk 2, Sky Tonight. Point your phone at the sky and they label what you see: ideal for learning.', fr:'Stellarium (gratuit, multiplateforme, très complet sur ordinateur), SkySafari, Star Walk 2, Sky Tonight. Pointez le téléphone vers le ciel pour voir les noms : idéal pour apprendre.'} },
+    { i:'fa-circle-notch', t:{zh:'旋轉星座盤', en:'Planisphere', fr:'Planisphère'},
+      p:{zh:'轉到日期與時間，就能看到當下的星空。不需要電、不會發白光，選購時要符合你的緯度（台灣約 25°N，法國約 45°N 到 50°N）。', en:'Dial in the date and time to see the current sky. No batteries and no glare, but buy one made for your latitude (Taiwan about 25°N, France about 45–50°N).', fr:'On règle date et heure pour voir le ciel du moment. Ni piles ni lumière, mais il faut le choisir pour sa latitude (Taïwan vers 25° N, France vers 45 à 50° N).'} },
+    { i:'fa-cloud-moon', t:{zh:'預報網站', en:'Forecast sites', fr:'Sites de prévision'},
+      p:{zh:'Clear Outside（雲層分高中低）、Meteoblue「天文觀測」頁（視寧度與透明度）、中央氣象署衛星雲圖、Météo-France。出發前一兩小時再確認一次。', en:'Clear Outside (low, mid and high cloud), Meteoblue’s astronomy seeing page, Taiwan’s Central Weather Administration satellite images, Météo-France. Check again an hour or two before leaving.', fr:'Clear Outside (nuages bas, moyens, hauts), la page « seeing » de Meteoblue, les images satellite de l’Administration météorologique de Taïwan, Météo-France. Revérifiez une à deux heures avant de partir.'} },
+  ]},
+]},
+
+/* ── 3. Finding your way ── */
+{ id:'hop', i:'fa-hand', c:'#818cf8',
+  nav:{zh:'找星技巧', en:'Finding stars', fr:'S’orienter'},
+  eyebrow:{zh:'第三章', en:'Chapter 3', fr:'Chapitre 3'},
+  h2:{zh:'用手量角度，從亮星跳到暗星', en:'Measure with your hand, hop from bright stars to faint ones', fr:'Mesurer avec la main, sauter des étoiles brillantes aux plus faibles'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'天空中的距離用角度表示。手臂伸直時，手的大小與手臂長度大致成比例，所以不論大人小孩，這把「尺」都差不多準。再搭配<strong class="text-white">跳星法</strong>：從認得的亮星出發，沿著圖形一步步找到目標。',
+    en:'Distances on the sky are angles. With your arm straight out, your hand scales with your arm, so this ruler works about the same for anyone. Combine it with <strong class="text-white">star-hopping</strong>: start from a bright star you know and follow patterns step by step to the target.',
+    fr:'Les distances dans le ciel sont des angles. Bras tendu, la main est proportionnelle au bras : cette « règle » vaut pour tout le monde. Associez-la au <strong class="text-white">saut d’étoile en étoile</strong> : partez d’une étoile brillante connue et suivez les figures jusqu’à la cible.'} },
+  { type:'table', head:[{zh:'手勢（手臂伸直）', en:'Hand at arm’s length', fr:'Main, bras tendu'},{zh:'約多少角度', en:'Roughly', fr:'Environ'},{zh:'可以拿來比對', en:'Compare with', fr:'Pour comparer'}],
+    rows:[
+    [{zh:'小指寬', en:'Little finger width', fr:'Largeur du petit doigt'}, '1°', {zh:'月亮直徑約 0.5°，小指可以蓋住兩個月亮', en:'The Moon is 0.5° across: your little finger covers two', fr:'La Lune fait 0,5° : le petit doigt en couvre deux'}],
+    [{zh:'三指併攏', en:'Three middle fingers', fr:'Trois doigts joints'}, '5°', {zh:'北斗的天璇到天樞約 5°', en:'Merak to Dubhe is about 5°', fr:'De Merak à Dubhe, environ 5°'}],
+    [{zh:'握拳', en:'Closed fist', fr:'Poing fermé'}, '10°', {zh:'獵戶座腰帶三星全長約 3°，北斗的斗口寬約 10°', en:'Orion’s Belt is about 3° long; the Dipper’s bowl about 10° wide', fr:'Le Baudrier d’Orion mesure 3° ; le bol de la Casserole environ 10°'}],
+    [{zh:'張開的食指到小指', en:'Spread index to little finger', fr:'Index à auriculaire écartés'}, '15°', {zh:'獵戶座從參宿四到參宿七約 19°', en:'Betelgeuse to Rigel in Orion is about 19°', fr:'De Bételgeuse à Rigel, environ 19°'}],
+    [{zh:'張開的拇指到小指', en:'Spread thumb to little finger', fr:'Pouce à auriculaire écartés'}, '20–25°', {zh:'北斗七星全長約 25°', en:'The whole Big Dipper spans about 25°', fr:'La Grande Casserole entière couvre environ 25°'}],
+    ]},
+  { type:'dia', k:'polaris' },
+  { type:'cards', cols:3, items:[
+    { i:'fa-location-crosshairs', t:{zh:'先找北極星', en:'Find Polaris first', fr:'Trouver d’abord la Polaire'},
+      p:{zh:'北極星只有 2 等，不是最亮的星，但它幾乎不動，找到它就知道正北方。北斗斗口兩顆星（天璇→天樞）延長約 5 倍距離，或從仙后座 W 的開口方向找。', en:'Polaris is only magnitude 2, not the brightest star, but it barely moves, so finding it gives you true north. Extend the Dipper’s pointer stars (Merak → Dubhe) about five times, or work out from the open side of Cassiopeia’s W.', fr:'La Polaire n’a qu’une magnitude 2, elle n’est pas la plus brillante, mais elle ne bouge presque pas et indique le nord. Prolongez les deux « gardes » de la Casserole (Merak → Dubhe) environ cinq fois, ou partez du côté ouvert du W de Cassiopée.'} },
+    { i:'fa-eye-low-vision', t:{zh:'眼角餘光', en:'Averted vision', fr:'Vision décalée'},
+      p:{zh:'視網膜中央只有視錐細胞，對暗光不敏感。看暗弱星雲時，把視線移到目標旁邊一點，用對暗光敏感的視桿細胞去看，目標會突然浮現。', en:'The centre of the retina has only cone cells, which are poor in dim light. For faint nebulae, look slightly to one side so the light falls on the rod cells; the object will suddenly appear.', fr:'Le centre de la rétine ne contient que des cônes, peu sensibles en faible lumière. Pour une nébuleuse faible, regardez légèrement à côté : la lumière tombe sur les bâtonnets et l’objet apparaît.'} },
+    { i:'fa-route', t:{zh:'從亮星開始跳', en:'Hop from bright stars', fr:'Partir des étoiles brillantes'},
+      p:{zh:'每個季節先認三、四顆最亮的星與一個大圖形（北斗、夏季大三角、秋季四邊形、獵戶座），再以它們為起點找其他星座。不要一開始就試著認全部。', en:'Each season, learn the three or four brightest stars and one big shape (the Dipper, the Summer Triangle, the Great Square, Orion), then use them to reach everything else. Do not try to learn the whole sky at once.', fr:'Chaque saison, apprenez les trois ou quatre étoiles les plus brillantes et une grande figure (Casserole, Triangle d’été, Carré de Pégase, Orion), puis servez-vous-en pour trouver le reste. N’essayez pas de tout apprendre d’un coup.'} },
+  ]},
+]},
+
+/* ── 4. Seasons ── */
+{ id:'seasons', i:'fa-calendar', c:'#38bdf8',
+  nav:{zh:'四季星空', en:'Seasonal sky', fr:'Ciel des saisons'},
+  eyebrow:{zh:'第四章', en:'Chapter 4', fr:'Chapitre 4'},
+  h2:{zh:'四季星空：每季先認一個大圖形', en:'The seasonal sky: one big shape per season', fr:'Le ciel des saisons : une grande figure par saison'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'以下的季節指晚上九點到十點左右的天空。半夜之後，下一季的星座已經升起：夏天凌晨三點就能看到秋季星空，冬季的獵戶座在九月的清晨就出現在東方。下面三張星圖的位置都依恆星實際座標投影繪製。',
+    en:'Seasons here mean the sky around 9 to 10 p.m. After midnight the next season’s stars are already up: at 3 a.m. in summer you see the autumn sky, and winter’s Orion rises in the east before dawn in September. The three charts below are projected from each star’s real coordinates.',
+    fr:'Les saisons désignent ici le ciel vers 21 h ou 22 h. Après minuit, les étoiles de la saison suivante sont déjà levées : à 3 h en été, on voit le ciel d’automne, et Orion se lève à l’est avant l’aube dès septembre. Les trois cartes ci-dessous sont projetées à partir des coordonnées réelles des étoiles.'} },
+  { type:'dia', k:'spring' },
+  { type:'dia', k:'summer' },
+  { type:'dia', k:'winter' },
+  { type:'cards', cols:2, items:[
+    { i:'fa-seedling', t:{zh:'春季（3 到 5 月）', en:'Spring (March to May)', fr:'Printemps (mars à mai)'},
+      tag:{zh:'北斗七星高掛、獅子座、牧夫座、室女座', en:'Big Dipper overhead, Leo, Boötes, Virgo', fr:'Grande Casserole au zénith, Lion, Bouvier, Vierge'},
+      p:{zh:'北斗七星在北方高處，斗柄的弧線延伸到橘色的大角（全天第四亮星），再往前「直衝」到藍白色的角宿一。大角、角宿一與獅子座尾巴的五帝座一構成春季大三角。', en:'The Dipper rides high in the north. Follow the arc of its handle to orange Arcturus (fourth-brightest star in the sky), then speed on to blue-white Spica. Arcturus, Spica and Denebola in Leo’s tail form the Spring Triangle.', fr:'La Casserole est haute au nord. L’arc de son manche mène à Arcturus, orangée (quatrième étoile la plus brillante), puis à Spica, blanc bleuté. Arcturus, Spica et Dénébola, la queue du Lion, forment le Triangle du printemps.'},
+      l:[{zh:'台灣南部可在四、五月午夜前後，於南方低空看到南十字座', en:'From southern Taiwan, the Southern Cross peeks above the southern horizon around midnight in April and May', fr:'Depuis le sud de Taïwan, la Croix du Sud apparaît bas au sud vers minuit en avril et mai'},
+         {zh:'望遠鏡目標：M44 蜂巢星團、M81／M82 星系、開陽與輔的雙星', en:'Targets: M44 Beehive Cluster, M81/M82 galaxies, the Mizar–Alcor pair', fr:'Cibles : amas de la Crèche M44, galaxies M81/M82, le couple Mizar–Alcor'}]},
+    { i:'fa-sun', t:{zh:'夏季（6 到 8 月）', en:'Summer (June to August)', fr:'Été (juin à août)'},
+      tag:{zh:'夏季大三角、天蠍座、人馬座、銀河中心', en:'Summer Triangle, Scorpius, Sagittarius, the galactic core', fr:'Triangle d’été, Scorpion, Sagittaire, centre galactique'},
+      p:{zh:'織女星、牛郎星、天津四構成的夏季大三角幾乎在頭頂。南方低空是天蠍座與紅色的心宿二，旁邊人馬座的「茶壺」上方就是銀河最亮的中心區域，暗空下肉眼可見。', en:'Vega, Altair and Deneb make the Summer Triangle almost overhead. Low in the south lies Scorpius with red Antares; just beside it, above the Teapot of Sagittarius, is the bright core of the Milky Way, plain to the eye under dark skies.', fr:'Véga, Altaïr et Deneb forment le Triangle d’été presque au zénith. Bas au sud, le Scorpion et la rouge Antarès ; juste à côté, au-dessus de la « Théière » du Sagittaire, le cœur lumineux de la Voie lactée, visible à l’œil nu sous un ciel noir.'},
+      l:[{zh:'台灣緯度較低，天蠍座的尾巴比在法國看得完整許多', en:'Taiwan’s lower latitude shows Scorpius’s tail far better than France', fr:'La latitude plus basse de Taïwan montre la queue du Scorpion bien mieux qu’en France'},
+         {zh:'望遠鏡目標：M13 武仙座球狀星團、M57 環狀星雲、M8 礁湖星雲、輦道增七（金藍雙星）', en:'Targets: M13 Hercules Cluster, M57 Ring Nebula, M8 Lagoon Nebula, Albireo (gold-and-blue double)', fr:'Cibles : amas d’Hercule M13, nébuleuse de la Lyre M57, nébuleuse de la Lagune M8, Albireo (double or et bleu)'}]},
+    { i:'fa-leaf', t:{zh:'秋季（9 到 11 月）', en:'Autumn (September to November)', fr:'Automne (septembre à novembre)'},
+      tag:{zh:'秋季四邊形、仙女座、仙后座', en:'Great Square of Pegasus, Andromeda, Cassiopeia', fr:'Carré de Pégase, Andromède, Cassiopée'},
+      p:{zh:'秋季亮星少，以飛馬座的四顆星構成的大四邊形為路標。從四邊形左上角沿仙女座的星鏈往外兩顆，再往北一點，就是 250 萬光年外的仙女座星系 M31，肉眼可見最遙遠的天體之一。', en:'Autumn has few bright stars; the four stars of the Great Square of Pegasus are the signpost. From its top-left corner, follow Andromeda’s chain two stars out and nudge north to M31, the Andromeda Galaxy, 2.5 million light-years away and one of the most distant things the eye can see.', fr:'Peu d’étoiles brillantes en automne : le grand Carré de Pégase sert de repère. Depuis son coin supérieur gauche, suivez la chaîne d’Andromède sur deux étoiles puis remontez un peu vers le nord : M31, la galaxie d’Andromède, à 2,5 millions d’années-lumière, l’un des objets les plus lointains visibles à l’œil nu.'},
+      l:[{zh:'南方低空的北落師門是秋季唯一的一等星', en:'Fomalhaut, low in the south, is autumn’s lone first-magnitude star', fr:'Fomalhaut, bas au sud, est la seule étoile de première grandeur de l’automne'},
+         {zh:'望遠鏡目標：M31、英仙座雙星團、M15 球狀星團', en:'Targets: M31, the Double Cluster in Perseus, M15 globular cluster', fr:'Cibles : M31, le Double amas de Persée, l’amas globulaire M15'}]},
+    { i:'fa-snowflake', t:{zh:'冬季（12 到 2 月）', en:'Winter (December to February)', fr:'Hiver (décembre à février)'},
+      tag:{zh:'獵戶座、冬季大三角、昴宿星團', en:'Orion, the Winter Triangle, the Pleiades', fr:'Orion, le Triangle d’hiver, les Pléiades'},
+      p:{zh:'一年中亮星最多的季節。獵戶座腰帶三星往左下指向全天最亮的恆星天狼星，往右上指向畢宿五與昴宿星團。參宿四、天狼星、南河三構成冬季大三角。腰帶下方的「寶劍」中央有一團模糊的光，就是 M42 獵戶座大星雲。', en:'The richest season for bright stars. Orion’s Belt points down-left to Sirius, the brightest star in the night sky, and up-right to Aldebaran and the Pleiades. Betelgeuse, Sirius and Procyon form the Winter Triangle. The fuzzy patch in the Sword below the Belt is M42, the Orion Nebula.', fr:'La saison la plus riche en étoiles brillantes. Le Baudrier d’Orion pointe en bas à gauche vers Sirius, l’étoile la plus brillante du ciel nocturne, et en haut à droite vers Aldébaran et les Pléiades. Bételgeuse, Sirius et Procyon forment le Triangle d’hiver. La tache floue dans l’Épée, sous le Baudrier, est M42, la nébuleuse d’Orion.'},
+      l:[{zh:'御夫座的五車二、雙子座的北河二與北河三也在附近，合稱「冬季六邊形」', en:'Capella, Castor and Pollux join them to form the Winter Hexagon', fr:'Capella, Castor et Pollux complètent l’Hexagone d’hiver'},
+         {zh:'望遠鏡目標：M42、M45 昴宿星團、M35 星團、M1 蟹狀星雲', en:'Targets: M42, M45 Pleiades, M35 cluster, M1 Crab Nebula', fr:'Cibles : M42, Pléiades M45, amas M35, nébuleuse du Crabe M1'}]},
+  ]},
+]},
+
+/* ── 5. Moon and planets ── */
+{ id:'moon', i:'fa-moon', c:'#fbbf24',
+  nav:{zh:'月亮與行星', en:'Moon & planets', fr:'Lune & planètes'},
+  eyebrow:{zh:'第五章', en:'Chapter 5', fr:'Chapitre 5'},
+  h2:{zh:'月亮與行星：最容易上手的目標', en:'The Moon and planets: the easiest targets', fr:'La Lune et les planètes : les cibles les plus faciles'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'月亮和行星夠亮，在市區也看得到，是入門望遠鏡最有成就感的目標。行星的特徵是<strong class="text-white">不閃爍</strong>、幾週內會在星座間移動，而且都落在黃道附近，也就是太陽與月亮走的那條路。',
+    en:'The Moon and planets are bright enough to see from the city and are the most rewarding targets for a first telescope. Planets <strong class="text-white">do not twinkle</strong>, drift among the constellations over weeks, and always lie near the ecliptic, the path of the Sun and Moon.',
+    fr:'La Lune et les planètes sont assez brillantes pour être vues en ville : ce sont les cibles les plus gratifiantes pour une première lunette. Les planètes <strong class="text-white">ne scintillent pas</strong>, se déplacent parmi les constellations en quelques semaines et restent près de l’écliptique, le chemin du Soleil et de la Lune.'} },
+  { type:'table', head:[{zh:'月相', en:'Phase', fr:'Phase'},{zh:'月出', en:'Rises', fr:'Lever'},{zh:'月落', en:'Sets', fr:'Coucher'},{zh:'適合', en:'Best for', fr:'Idéal pour'}],
+    rows:[
+    [{zh:'新月（初一）', en:'New Moon', fr:'Nouvelle Lune'}, {zh:'約 6 時', en:'~6 a.m.', fr:'vers 6 h'}, {zh:'約 18 時', en:'~6 p.m.', fr:'vers 18 h'}, {zh:'整晚無月光：銀河、星雲、流星', en:'Moonless all night: Milky Way, nebulae, meteors', fr:'Nuit sans Lune : Voie lactée, nébuleuses, météores'}],
+    [{zh:'上弦月（初七、八）', en:'First quarter', fr:'Premier quartier'}, {zh:'約 12 時', en:'~noon', fr:'vers 12 h'}, {zh:'約 0 時', en:'~midnight', fr:'vers minuit'}, {zh:'傍晚看月面坑洞；後半夜轉暗', en:'Craters in the evening; dark after midnight', fr:'Cratères en soirée ; nuit noire après minuit'}],
+    [{zh:'滿月（十五）', en:'Full Moon', fr:'Pleine Lune'}, {zh:'約 18 時', en:'~6 p.m.', fr:'vers 18 h'}, {zh:'約 6 時', en:'~6 a.m.', fr:'vers 6 h'}, {zh:'月面亮紋與海；其他目標幾乎都被淹沒', en:'Ray systems and maria; washes out nearly everything else', fr:'Rayons et mers lunaires ; noie presque tout le reste'}],
+    [{zh:'下弦月（廿二、廿三）', en:'Last quarter', fr:'Dernier quartier'}, {zh:'約 0 時', en:'~midnight', fr:'vers minuit'}, {zh:'約 12 時', en:'~noon', fr:'vers 12 h'}, {zh:'前半夜無月光', en:'Dark until midnight', fr:'Nuit noire jusqu’à minuit'}],
+    ]},
+  { type:'note', p:{zh:'月亮每天晚約 50 分鐘升起。農曆日期幾乎就是月齡，看農曆就知道今晚月亮的狀況。', en:'The Moon rises about 50 minutes later each day. On the Chinese lunar calendar the date is nearly the Moon’s age, so it tells you tonight’s Moon at a glance.', fr:'La Lune se lève environ 50 minutes plus tard chaque jour. Dans le calendrier lunaire chinois, la date correspond presque à l’âge de la Lune.'} },
+  { type:'cards', cols:3, items:[
+    { i:'fa-circle', t:{zh:'水星', en:'Mercury', fr:'Mercure'}, tag:{zh:'最難看到', en:'Hardest to catch', fr:'La plus difficile'},
+      p:{zh:'離太陽最遠時（大距）也只有 18° 到 28°，只能在日落後或日出前的低空短暫看到。找一個西方或東方視野開闊的地方。', en:'Even at greatest elongation it is only 18–28° from the Sun, briefly visible low after sunset or before sunrise. Find a clear western or eastern horizon.', fr:'Même à son élongation maximale, elle n’est qu’à 18 à 28° du Soleil, visible brièvement bas après le coucher ou avant le lever. Il faut un horizon dégagé.'} },
+    { i:'fa-circle', t:{zh:'金星', en:'Venus', fr:'Vénus'}, tag:{zh:'最亮，−4 等以上', en:'Brightest, −4 and brighter', fr:'La plus brillante, −4 et plus'},
+      p:{zh:'傍晚的「長庚星」或清晨的「啟明星」，離太陽最遠約 47°。小望遠鏡可以看到它像月亮一樣有盈虧。', en:'The evening or morning star, never more than about 47° from the Sun. A small telescope shows phases just like the Moon’s.', fr:'L’étoile du berger, le soir ou le matin, jamais à plus de 47° environ du Soleil. Une petite lunette montre ses phases, comme celles de la Lune.'} },
+    { i:'fa-circle', t:{zh:'火星', en:'Mars', fr:'Mars'}, tag:{zh:'約每 26 個月最亮一次', en:'Best every 26 months', fr:'Au mieux tous les 26 mois'},
+      p:{zh:'橘紅色。衝（地球在太陽與火星之間）前後最近最亮，望遠鏡可見極冠與暗色區域；其他時候很小。下一次衝在 2027 年 2 月。', en:'Orange-red. Around opposition, when Earth passes between the Sun and Mars, it is closest and brightest and a telescope shows polar caps and dark markings; otherwise it is tiny. The next opposition is in February 2027.', fr:'Rouge orangé. Autour de l’opposition, quand la Terre passe entre le Soleil et Mars, elle est au plus près et une lunette montre calottes polaires et taches sombres ; le reste du temps, elle est minuscule. Prochaine opposition : février 2027.'} },
+    { i:'fa-circle', t:{zh:'木星', en:'Jupiter', fr:'Jupiter'}, tag:{zh:'雙筒就看得到衛星', en:'Moons in binoculars', fr:'Satellites aux jumelles'},
+      p:{zh:'雙筒望遠鏡就能看到四顆伽利略衛星排成一線，每晚位置不同。小望遠鏡可見兩條深色雲帶，口徑大一點能看到大紅斑。', en:'Binoculars show the four Galilean moons in a line, changing night to night. A small telescope shows two dark cloud belts; a larger one, the Great Red Spot.', fr:'Des jumelles montrent les quatre satellites galiléens alignés, qui changent chaque nuit. Une petite lunette révèle deux bandes nuageuses ; un instrument plus grand, la Grande Tache rouge.'} },
+    { i:'fa-circle', t:{zh:'土星', en:'Saturn', fr:'Saturne'}, tag:{zh:'看到光環的那一刻', en:'The moment you see the rings', fr:'Le moment où l’on voit les anneaux'},
+      p:{zh:'約 25 倍以上就能看出光環，是很多人愛上觀星的瞬間。光環約每 15 年側向地球一次而幾乎消失，2025 年剛經過，之後幾年會逐漸張開。', en:'From about 25× the rings show, the moment that hooks many people for life. Every 15 years or so they turn edge-on and nearly vanish; that happened in 2025, and they open up again over the following years.', fr:'Dès 25× environ, les anneaux apparaissent : un moment qui en a conquis plus d’un. Tous les 15 ans environ, ils se présentent par la tranche et disparaissent presque ; ce fut le cas en 2025, et ils s’ouvrent de nouveau les années suivantes.'} },
+    { i:'fa-circle', t:{zh:'天王星與海王星', en:'Uranus and Neptune', fr:'Uranus et Neptune'}, tag:{zh:'需要星圖', en:'Need a chart', fr:'Carte nécessaire'},
+      p:{zh:'天王星約 5.7 等，暗空下肉眼勉強可見；海王星約 7.8 等，要雙筒以上。望遠鏡中是藍綠色的小圓盤，用 App 確認位置最可靠。', en:'Uranus, about magnitude 5.7, is barely naked-eye under dark skies; Neptune, about 7.8, needs binoculars. In a telescope both are small blue-green discs; use an app to locate them.', fr:'Uranus (magnitude 5,7 environ) est à peine visible à l’œil nu sous un ciel noir ; Neptune (7,8) exige des jumelles. Au télescope, ce sont de petits disques bleu-vert ; une application aide à les situer.'} },
+  ]},
+  { type:'note', p:{zh:'絕對不要用肉眼、相機或望遠鏡直接看太陽。看日食或太陽黑子要用符合 ISO 12312-2 的日食眼鏡，或裝在望遠鏡「前端」的專用太陽濾鏡。下一次大範圍日全食是 2027 年 8 月 2 日，經過西班牙南部、北非與中東。', en:'Never look at the Sun directly with your eyes, a camera or a telescope. For eclipses or sunspots, use eclipse glasses meeting ISO 12312-2 or a proper solar filter fitted over the front of the telescope. The next major total solar eclipse is on 2 August 2027, across southern Spain, North Africa and the Middle East.', fr:'Ne regardez jamais le Soleil directement, à l’œil, à l’appareil photo ou au télescope. Pour une éclipse ou des taches solaires, utilisez des lunettes conformes à la norme ISO 12312-2 ou un filtre solaire placé à l’avant de l’instrument. La prochaine grande éclipse totale aura lieu le 2 août 2027, sur le sud de l’Espagne, l’Afrique du Nord et le Moyen-Orient.'} },
+]},
+
+/* ── 6. Meteors ── */
+{ id:'meteors', i:'fa-meteor', c:'#f472b6',
+  nav:{zh:'流星雨', en:'Meteor showers', fr:'Étoiles filantes'},
+  eyebrow:{zh:'第六章', en:'Chapter 6', fr:'Chapitre 6'},
+  h2:{zh:'流星雨：不需要任何器材', en:'Meteor showers: no equipment needed', fr:'Les pluies d’étoiles filantes : aucun matériel requis'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'流星是彗星或小行星留下的塵粒，以每秒數十公里的速度衝進大氣燃燒。地球每年同一時間穿過同一條塵埃帶，所以流星雨的日期年年差不多。流星看起來都從同一點射出，這一點叫<strong class="text-white">輻射點</strong>，流星雨也以它所在的星座命名。',
+    en:'Meteors are grains left by comets or asteroids, burning up as they hit the air at tens of kilometres per second. Earth crosses the same dust trails at the same time each year, so showers recur on nearly the same dates. Their meteors seem to fan out from one point, the <strong class="text-white">radiant</strong>, and the shower is named after its constellation.',
+    fr:'Les météores sont des grains laissés par des comètes ou des astéroïdes, qui se consument en entrant dans l’atmosphère à des dizaines de km/s. La Terre traverse les mêmes traînées aux mêmes dates chaque année. Les météores semblent jaillir d’un point, le <strong class="text-white">radiant</strong>, qui donne son nom à l’essaim.'} },
+  { type:'dia', k:'meteor' },
+  { type:'note', p:{zh:'ZHR（天頂每時出現率）是假設輻射點在頭頂、天空暗到 6.5 等時，一個人每小時能看到的數量。實際數量通常只有一半以下：上圖顯示，同一場英仙座流星雨，在市區只看得到十幾顆，到暗空保護區則有一百多顆。', en:'ZHR (zenithal hourly rate) is how many one observer would see per hour with the radiant overhead and a sky down to magnitude 6.5. Real counts are usually half or less: the chart shows the same Perseids giving a dozen an hour in town and over a hundred at a dark-sky site.', fr:'Le THZ (taux horaire zénithal) est le nombre vu par un observateur en une heure, radiant au zénith et ciel à magnitude 6,5. Les nombres réels sont souvent deux fois moindres : le graphique montre les mêmes Perséides donnant une douzaine par heure en ville et plus de cent sous un ciel noir.'} },
+  { type:'table', head:[{zh:'流星雨', en:'Shower', fr:'Essaim'},{zh:'極大期', en:'Peak', fr:'Maximum'},{zh:'ZHR', en:'ZHR', fr:'THZ'},{zh:'母天體', en:'Parent body', fr:'Corps parent'},{zh:'特色', en:'Notes', fr:'Remarques'}],
+    rows:[
+    [{zh:'象限儀座', en:'Quadrantids', fr:'Quadrantides'}, {zh:'1 月 3 至 4 日', en:'3–4 January', fr:'3–4 janvier'}, '~110', '2003 EH1', {zh:'高峰只有幾小時，冬夜很冷', en:'Peak lasts only hours; cold nights', fr:'Pic de quelques heures ; nuits froides'}],
+    [{zh:'天琴座', en:'Lyrids', fr:'Lyrides'}, {zh:'4 月 22 至 23 日', en:'22–23 April', fr:'22–23 avril'}, '~18', 'C/1861 G1 (Thatcher)', {zh:'有紀錄最古老的流星雨之一', en:'One of the oldest recorded showers', fr:'L’un des plus anciens essaims connus'}],
+    [{zh:'寶瓶座 η', en:'Eta Aquariids', fr:'Êta Aquarides'}, {zh:'5 月 6 日前後', en:'around 6 May', fr:'vers le 6 mai'}, '~50', {zh:'哈雷彗星', en:'Halley’s Comet', fr:'Comète de Halley'}, {zh:'凌晨才升起；台灣比法國好看', en:'Pre-dawn only; better from Taiwan than France', fr:'Avant l’aube ; meilleur depuis Taïwan qu’en France'}],
+    [{zh:'英仙座', en:'Perseids', fr:'Perséides'}, {zh:'8 月 12 至 13 日', en:'12–13 August', fr:'12–13 août'}, '~100', '109P/Swift–Tuttle', {zh:'夏夜溫暖、亮流星多，最受歡迎', en:'Warm nights and bright fireballs: the favourite', fr:'Nuits douces et bolides : le plus populaire'}],
+    [{zh:'獵戶座', en:'Orionids', fr:'Orionides'}, {zh:'10 月 21 日前後', en:'around 21 October', fr:'vers le 21 octobre'}, '~20', {zh:'哈雷彗星', en:'Halley’s Comet', fr:'Comète de Halley'}, {zh:'速度快，常留下餘痕', en:'Fast, often leave trains', fr:'Rapides, laissent souvent une traînée'}],
+    [{zh:'獅子座', en:'Leonids', fr:'Léonides'}, {zh:'11 月 17 至 18 日', en:'17–18 November', fr:'17–18 novembre'}, '~15', '55P/Tempel–Tuttle', {zh:'約每 33 年可能爆發成流星暴', en:'Can storm roughly every 33 years', fr:'Peut donner une averse tous les 33 ans environ'}],
+    [{zh:'雙子座', en:'Geminids', fr:'Géminides'}, {zh:'12 月 13 至 14 日', en:'13–14 December', fr:'13–14 décembre'}, '~150', {zh:'3200 法厄同（小行星）', en:'3200 Phaethon (asteroid)', fr:'3200 Phaéton (astéroïde)'}, {zh:'一年中最穩定最多，晚上十點後就很好看', en:'The richest and steadiest; good from 10 p.m.', fr:'Le plus riche et régulier ; dès 22 h'}],
+    ]},
+  { type:'cards', cols:3, items:[
+    { i:'fa-clock', t:{zh:'後半夜最多', en:'More after midnight', fr:'Davantage après minuit'},
+      p:{zh:'午夜後，我們所在的那一面地球正好朝向地球前進的方向，像車子往前開時擋風玻璃撞到的雨比後窗多。輻射點越高，流星越多。', en:'After midnight your side of Earth faces the direction Earth is moving, like a windscreen catching more rain than the rear window. The higher the radiant, the more meteors.', fr:'Après minuit, votre côté de la Terre fait face au sens de sa course, comme un pare-brise qui reçoit plus de pluie que la lunette arrière. Plus le radiant est haut, plus il y a de météores.'} },
+    { i:'fa-expand', t:{zh:'不要只盯著輻射點', en:'Do not stare at the radiant', fr:'Ne fixez pas le radiant'},
+      p:{zh:'流星會出現在全天任何地方，離輻射點 40° 到 60° 的地方流星的尾巴較長、較好看。躺下來看頭頂偏向較暗的一側，視野越大越好。', en:'Meteors appear anywhere in the sky; those 40–60° from the radiant have longer, finer trails. Lie back and look at the darker part of the sky near the zenith, taking in as wide a field as you can.', fr:'Les météores apparaissent partout ; à 40 ou 60° du radiant, leurs traînées sont plus longues. Allongez-vous et regardez la partie la plus sombre du ciel près du zénith, avec le champ le plus large possible.'} },
+    { i:'fa-hourglass', t:{zh:'至少待一小時', en:'Stay at least an hour', fr:'Restez au moins une heure'},
+      p:{zh:'流星是隨機出現的，可能十分鐘一顆都沒有，接著連續來三顆。眼睛暗適應也要半小時，給自己至少一到兩小時。', en:'Meteors arrive at random: ten empty minutes, then three in a row. Your eyes need half an hour to adapt too, so give it one to two hours at least.', fr:'Les météores arrivent au hasard : dix minutes de rien, puis trois d’affilée. L’adaptation à l’obscurité prend déjà une demi-heure : comptez au moins une à deux heures.'} },
+  ]},
+]},
+
+/* ── 7. Gear ── */
+{ id:'gear', i:'fa-binoculars', c:'#a3e635',
+  nav:{zh:'器材', en:'Equipment', fr:'Matériel'},
+  eyebrow:{zh:'第七章', en:'Chapter 7', fr:'Chapitre 7'},
+  h2:{zh:'先用雙筒，再挑望遠鏡', en:'Start with binoculars, then choose a telescope', fr:'D’abord des jumelles, ensuite un télescope'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'望遠鏡最重要的規格是<strong class="text-white">口徑</strong>，不是倍率。口徑決定能收集多少光、看到多暗的天體、能分辨多細的細節；倍率只是放大，超過口徑能支撐的程度，影像只會變大變糊。包裝上寫「675 倍」的玩具望遠鏡，通常正是用倍率做宣傳。',
+    en:'A telescope’s key figure is its <strong class="text-white">aperture</strong>, not its magnification. Aperture decides how much light it gathers, how faint it reaches and how fine the detail; magnification only enlarges, and beyond what the aperture supports the image just grows bigger and blurrier. A box shouting “675×” is usually a toy sold on magnification.',
+    fr:'Le chiffre clé d’un télescope est son <strong class="text-white">diamètre</strong>, pas son grossissement. Le diamètre fixe la lumière captée, la magnitude atteinte et la finesse des détails ; le grossissement ne fait qu’agrandir, et au-delà de ce que permet le diamètre l’image devient grande et floue. Une boîte qui annonce « 675× » est souvent un jouet vendu sur le grossissement.'} },
+  { type:'dia', k:'aperture' },
+  { type:'cards', cols:2, items:[
+    { i:'fa-binoculars', t:{zh:'雙筒望遠鏡', en:'Binoculars', fr:'Jumelles'}, tag:{zh:'最推薦的第一件器材', en:'The best first purchase', fr:'Le meilleur premier achat'},
+      p:{zh:'規格「7×50」表示 7 倍、物鏡 50 mm。出瞳＝口徑÷倍率，7×50 的出瞳約 7 mm，正好配合暗適應後的瞳孔。10×50 放大較多、手持稍晃。視野寬、好上手，看銀河、星團、月亮都很好。', en:'“7×50” means 7× power and 50 mm lenses. Exit pupil = aperture ÷ power: about 7 mm for 7×50, matching a dark-adapted eye. 10×50 magnifies more but shakes a little more. Wide fields and easy aiming make them great for the Milky Way, clusters and the Moon.', fr:'« 7×50 » signifie 7× et objectifs de 50 mm. Pupille de sortie = diamètre ÷ grossissement : 7 mm environ pour des 7×50, comme un œil adapté à l’obscurité. Les 10×50 grossissent plus mais tremblent davantage. Grand champ, prise en main facile : parfaites pour la Voie lactée, les amas et la Lune.'},
+      l:[{zh:'超過 12 倍建議上三腳架', en:'Above 12× use a tripod', fr:'Au-delà de 12×, un trépied'},
+         {zh:'眼鏡族選眼點距離 15 mm 以上', en:'Glasses wearers: eye relief 15 mm or more', fr:'Porteurs de lunettes : dégagement oculaire de 15 mm ou plus'}]},
+    { i:'fa-magnifying-glass', t:{zh:'折射鏡', en:'Refractor', fr:'Lunette'}, tag:{zh:'免保養、影像銳利', en:'No upkeep, crisp images', fr:'Sans entretien, images nettes'},
+      p:{zh:'用透鏡聚光，鏡筒密封、拿出來就能用，適合月亮、行星與雙星。同口徑價格最高；平價的消色差鏡在亮星周圍會有紫邊，複消色差（APO）改善但更貴。', en:'Lenses gather the light; the sealed tube is ready to use, ideal for the Moon, planets and double stars. The costliest per millimetre; budget achromats show a violet fringe round bright stars, which apochromats (APO) fix at a higher price.', fr:'Des lentilles captent la lumière ; le tube fermé est prêt à l’emploi, idéal pour la Lune, les planètes et les étoiles doubles. Le plus cher au millimètre ; les achromats bon marché montrent un liseré violet autour des étoiles brillantes, corrigé par les apochromats (APO), plus coûteux.'} },
+    { i:'fa-circle-dot', t:{zh:'牛頓式反射鏡與杜布森', en:'Newtonian and Dobsonian', fr:'Newton et Dobson'}, tag:{zh:'同樣預算口徑最大', en:'Most aperture per euro', fr:'Le plus de diamètre pour le prix'},
+      p:{zh:'用凹面鏡聚光，同樣的錢能買到兩三倍的口徑。杜布森是把牛頓鏡放在簡單的上下左右轉台上，操作直覺，150 到 200 mm 是很受推薦的入門款。偶爾需要做光軸校正。', en:'A concave mirror gathers the light, giving two or three times the aperture for the money. A Dobsonian puts a Newtonian on a simple up-down, left-right rocker base; intuitive to use, and 150–200 mm models are classic first scopes. Needs occasional collimation.', fr:'Un miroir concave capte la lumière : deux à trois fois plus de diamètre pour le même prix. Le Dobson pose un Newton sur une base basculante très simple ; intuitif, et les modèles de 150 à 200 mm sont des premiers instruments classiques. Collimation à vérifier de temps en temps.'} },
+    { i:'fa-crosshairs', t:{zh:'折反射鏡（SCT、馬卡）', en:'Catadioptric (SCT, Maksutov)', fr:'Catadioptrique (SC, Maksutov)'}, tag:{zh:'短小、焦距長', en:'Compact, long focal length', fr:'Compact, longue focale'},
+      p:{zh:'結合透鏡與反射鏡，鏡筒短但焦距長，容易得到高倍率，適合行星與月面，常搭配電腦自動尋星（GoTo）。視野較窄，不適合大範圍的星雲。', en:'Combines lenses and mirrors in a short tube with a long focal length, so high power comes easily: good for planets and the Moon, often paired with GoTo computer mounts. Narrow field, less suited to large nebulae.', fr:'Associe lentilles et miroirs dans un tube court à longue focale : forts grossissements faciles, idéal pour les planètes et la Lune, souvent sur monture GoTo. Champ étroit, moins adapté aux grandes nébuleuses.'} },
+  ]},
+  { type:'h3', t:{zh:'常用公式', en:'Useful formulas', fr:'Formules utiles'} },
+  { type:'table', head:[{zh:'項目', en:'Quantity', fr:'Grandeur'},{zh:'算法', en:'Formula', fr:'Formule'},{zh:'例子', en:'Example', fr:'Exemple'}],
+    rows:[
+    [{zh:'倍率', en:'Magnification', fr:'Grossissement'}, {zh:'望遠鏡焦距 ÷ 目鏡焦距', en:'telescope focal length ÷ eyepiece focal length', fr:'focale du télescope ÷ focale de l’oculaire'}, {zh:'1,200 mm 配 25 mm 目鏡＝48 倍；配 10 mm＝120 倍', en:'1,200 mm with a 25 mm eyepiece = 48×; with 10 mm = 120×', fr:'1 200 mm avec oculaire de 25 mm = 48× ; avec 10 mm = 120×'}],
+    [{zh:'焦比', en:'Focal ratio', fr:'Rapport F/D'}, {zh:'焦距 ÷ 口徑', en:'focal length ÷ aperture', fr:'focale ÷ diamètre'}, {zh:'200 mm 口徑、1,200 mm 焦距＝f/6', en:'200 mm aperture, 1,200 mm focal length = f/6', fr:'200 mm, focale 1 200 mm = F/D 6'}],
+    [{zh:'最高有效倍率', en:'Highest useful power', fr:'Grossissement utile max.'}, {zh:'約 2 × 口徑（mm），且受大氣限制，多數夜晚 200 到 250 倍以內', en:'about 2 × aperture in mm, and the air rarely allows more than 200–250×', fr:'environ 2 × diamètre en mm, et l’atmosphère dépasse rarement 200 à 250×'}, {zh:'130 mm 約 260 倍', en:'130 mm: about 260×', fr:'130 mm : environ 260×'}],
+    [{zh:'出瞳', en:'Exit pupil', fr:'Pupille de sortie'}, {zh:'口徑 ÷ 倍率', en:'aperture ÷ magnification', fr:'diamètre ÷ grossissement'}, {zh:'星雲用 4 到 7 mm 最亮；行星用 1 mm 左右', en:'4–7 mm is brightest for nebulae; about 1 mm for planets', fr:'4 à 7 mm pour les nébuleuses ; environ 1 mm pour les planètes'}],
+    [{zh:'集光力', en:'Light grasp', fr:'Pouvoir collecteur'}, {zh:'(口徑 ÷ 7 mm)²', en:'(aperture ÷ 7 mm)²', fr:'(diamètre ÷ 7 mm)²'}, {zh:'200 mm 是肉眼的約 816 倍', en:'200 mm gathers about 816× the eye', fr:'200 mm : environ 816 fois l’œil'}],
+    [{zh:'解析力（道斯極限）', en:'Resolution (Dawes limit)', fr:'Pouvoir séparateur (Dawes)'}, {zh:'116 ÷ 口徑（mm）角秒', en:'116 ÷ aperture in mm, arcseconds', fr:'116 ÷ diamètre en mm, secondes d’arc'}, {zh:'100 mm 可分開相距約 1.2″ 的雙星', en:'100 mm splits doubles about 1.2″ apart', fr:'100 mm sépare des doubles à 1,2″'}],
+    ]},
+  { type:'note', p:{zh:'腳架與腳座比鏡筒更影響使用體驗：晃動的腳架會讓高倍率完全無法使用。經緯儀（上下左右）直覺好用；赤道儀只要轉一軸就能追蹤星星，但需要先對準北極，主要用於天文攝影。', en:'The mount matters more than the tube: a wobbly tripod makes high power useless. An alt-azimuth mount (up-down, left-right) is intuitive; an equatorial mount tracks the stars by turning one axis but must first be aligned on the pole, and is mainly for astrophotography.', fr:'La monture compte plus que le tube : un trépied qui tremble rend les forts grossissements inutilisables. L’azimutale (haut-bas, gauche-droite) est intuitive ; l’équatoriale suit les étoiles en tournant un seul axe mais doit être mise en station sur le pôle ; elle sert surtout à l’astrophoto.'} },
+]},
+
+/* ── 8. Deep sky ── */
+{ id:'deepsky', i:'fa-hurricane', c:'#c084fc',
+  nav:{zh:'深空天體', en:'Deep sky', fr:'Ciel profond'},
+  eyebrow:{zh:'第八章', en:'Chapter 8', fr:'Chapitre 8'},
+  h2:{zh:'星團、星雲與星系：入門清單', en:'Clusters, nebulae and galaxies: a starter list', fr:'Amas, nébuleuses et galaxies : une liste pour débuter'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'「M」代表梅西耶星表，是法國天文學家梅西耶在 18 世紀整理的 110 個模糊天體，原本是為了避免把它們誤認成彗星，如今成了業餘觀測者的必看清單。透過小望遠鏡，大多數星雲與星系都是<strong class="text-white">灰白色的模糊光斑</strong>，不會像照片那樣彩色；照片中的顏色要靠長時間曝光才拍得出來。',
+    en:'“M” stands for the Messier catalogue, 110 fuzzy objects listed by the French astronomer Charles Messier in the 18th century so he would not mistake them for comets; today it is every amateur’s checklist. Through a small telescope most nebulae and galaxies are <strong class="text-white">grey, misty patches</strong>, not the colours of photographs, which need long exposures.',
+    fr:'« M » renvoie au catalogue de Charles Messier, astronome français du XVIIIe siècle, qui recensa 110 objets flous pour ne pas les confondre avec des comètes ; c’est aujourd’hui la liste de référence des amateurs. Dans un petit instrument, la plupart des nébuleuses et galaxies sont des <strong class="text-white">taches grises et diffuses</strong>, sans les couleurs des photos, obtenues par longue pose.'} },
+  { type:'table', head:[{zh:'天體', en:'Object', fr:'Objet'},{zh:'類型', en:'Type', fr:'Type'},{zh:'季節', en:'Season', fr:'Saison'},{zh:'最低需求', en:'Minimum gear', fr:'Matériel minimum'},{zh:'看起來像', en:'What you see', fr:'Ce que l’on voit'}],
+    rows:[
+    [{zh:'M45 昴宿星團', en:'M45 Pleiades', fr:'M45 Pléiades'}, {zh:'疏散星團', en:'Open cluster', fr:'Amas ouvert'}, {zh:'冬', en:'Winter', fr:'Hiver'}, {zh:'肉眼', en:'Naked eye', fr:'Œil nu'}, {zh:'肉眼約六、七顆星擠在一起；雙筒裡數十顆藍白色星', en:'Six or seven stars bunched to the eye; dozens of blue-white stars in binoculars', fr:'Six ou sept étoiles serrées à l’œil ; des dizaines, bleutées, aux jumelles'}],
+    [{zh:'M31 仙女座星系', en:'M31 Andromeda Galaxy', fr:'M31 galaxie d’Andromède'}, {zh:'螺旋星系', en:'Spiral galaxy', fr:'Galaxie spirale'}, {zh:'秋', en:'Autumn', fr:'Automne'}, {zh:'肉眼（暗空）', en:'Naked eye (dark sky)', fr:'Œil nu (ciel noir)'}, {zh:'拉長的模糊光斑，中心較亮', en:'An elongated glow with a brighter core', fr:'Une lueur allongée au cœur plus brillant'}],
+    [{zh:'M42 獵戶座大星雲', en:'M42 Orion Nebula', fr:'M42 nébuleuse d’Orion'}, {zh:'發射星雲', en:'Emission nebula', fr:'Nébuleuse en émission'}, {zh:'冬', en:'Winter', fr:'Hiver'}, {zh:'肉眼／雙筒', en:'Eye / binoculars', fr:'Œil / jumelles'}, {zh:'展翅的雲氣，中心有四顆星組成的「四邊形」', en:'Wings of glowing gas round the four-star Trapezium', fr:'Des ailes de gaz autour du Trapèze, quatre étoiles'}],
+    [{zh:'M44 蜂巢星團', en:'M44 Beehive Cluster', fr:'M44 amas de la Crèche'}, {zh:'疏散星團', en:'Open cluster', fr:'Amas ouvert'}, {zh:'春', en:'Spring', fr:'Printemps'}, {zh:'雙筒', en:'Binoculars', fr:'Jumelles'}, {zh:'雙筒的視野剛好裝滿一群星', en:'Fills a binocular field with stars', fr:'Remplit le champ des jumelles'}],
+    [{zh:'英仙座雙星團', en:'Double Cluster', fr:'Double amas de Persée'}, {zh:'疏散星團', en:'Open clusters', fr:'Amas ouverts'}, {zh:'秋、冬', en:'Autumn, winter', fr:'Automne, hiver'}, {zh:'雙筒', en:'Binoculars', fr:'Jumelles'}, {zh:'兩團並排的星，低倍望遠鏡最美', en:'Two side-by-side swarms, best at low power', fr:'Deux essaims côte à côte, superbes à faible grossissement'}],
+    [{zh:'M13 武仙座球狀星團', en:'M13 Hercules Cluster', fr:'M13 amas d’Hercule'}, {zh:'球狀星團', en:'Globular cluster', fr:'Amas globulaire'}, {zh:'夏', en:'Summer', fr:'Été'}, {zh:'雙筒／小望遠鏡', en:'Binoculars / small scope', fr:'Jumelles / petit instrument'}, {zh:'雙筒是毛球；150 mm 以上邊緣分解成點點星光', en:'A fuzzball in binoculars; 150 mm resolves its edge into stars', fr:'Une boule floue aux jumelles ; 150 mm résout le bord en étoiles'}],
+    [{zh:'M8 礁湖星雲', en:'M8 Lagoon Nebula', fr:'M8 nébuleuse de la Lagune'}, {zh:'發射星雲', en:'Emission nebula', fr:'Nébuleuse en émission'}, {zh:'夏', en:'Summer', fr:'Été'}, {zh:'雙筒', en:'Binoculars', fr:'Jumelles'}, {zh:'人馬座銀河中一團明顯的雲氣與星群', en:'A bright cloud and star group in the Sagittarius Milky Way', fr:'Un nuage brillant dans la Voie lactée du Sagittaire'}],
+    [{zh:'M57 環狀星雲', en:'M57 Ring Nebula', fr:'M57 nébuleuse de la Lyre'}, {zh:'行星狀星雲', en:'Planetary nebula', fr:'Nébuleuse planétaire'}, {zh:'夏', en:'Summer', fr:'Été'}, {zh:'望遠鏡 80 mm 以上', en:'Scope, 80 mm+', fr:'Instrument de 80 mm et +'}, {zh:'小小的灰色甜甜圈，用 100 倍左右', en:'A tiny grey smoke ring; use about 100×', fr:'Un petit anneau de fumée grise ; vers 100×'}],
+    [{zh:'開陽與輔', en:'Mizar and Alcor', fr:'Mizar et Alcor'}, {zh:'雙星', en:'Double star', fr:'Étoile double'}, {zh:'春', en:'Spring', fr:'Printemps'}, {zh:'肉眼／望遠鏡', en:'Eye / scope', fr:'Œil / instrument'}, {zh:'肉眼分得開開陽與輔；望遠鏡再把開陽分成兩顆', en:'The eye splits Mizar from Alcor; a scope splits Mizar itself', fr:'L’œil sépare Mizar d’Alcor ; l’instrument dédouble Mizar'}],
+    [{zh:'輦道增七', en:'Albireo', fr:'Albireo'}, {zh:'雙星', en:'Double star', fr:'Étoile double'}, {zh:'夏、秋', en:'Summer, autumn', fr:'Été, automne'}, {zh:'小望遠鏡', en:'Small scope', fr:'Petit instrument'}, {zh:'一金一藍，全天最漂亮的雙星之一', en:'Gold and blue: one of the loveliest doubles in the sky', fr:'Or et bleu : l’une des plus belles doubles du ciel'}],
+    ]},
+]},
+
+/* ── 9. Where ── */
+{ id:'where', i:'fa-mountain-sun', c:'#34d399',
+  nav:{zh:'去哪看', en:'Where to go', fr:'Où observer'},
+  eyebrow:{zh:'第九章', en:'Chapter 9', fr:'Chapitre 9'},
+  h2:{zh:'光害等級與暗空地點', en:'Light-pollution classes and dark-sky sites', fr:'Échelle de pollution lumineuse et sites de ciel noir'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'天文學家 John Bortle 在 2001 年提出九級的<strong class="text-white">波特爾暗空分類</strong>：1 級最暗，9 級是市中心。最實用的判斷方式，是看肉眼能看到的最暗星等，或是能不能看到銀河。',
+    en:'In 2001 the astronomer John Bortle proposed his nine-class <strong class="text-white">Bortle dark-sky scale</strong>: class 1 is darkest, class 9 an inner city. The most practical test is the faintest star you can see, or whether the Milky Way shows.',
+    fr:'En 2001, l’astronome John Bortle a proposé son <strong class="text-white">échelle de Bortle</strong> en neuf classes : la classe 1 est la plus noire, la 9 un centre-ville. Le test le plus simple : la magnitude des étoiles les plus faibles visibles, ou la présence de la Voie lactée.'} },
+  { type:'table', head:[{zh:'等級', en:'Class', fr:'Classe'},{zh:'描述', en:'Description', fr:'Description'},{zh:'肉眼極限星等', en:'Naked-eye limit', fr:'Magnitude limite'},{zh:'看得到什麼', en:'What shows', fr:'Ce qui est visible'}],
+    rows:[
+    ['1–2', {zh:'極暗的野外', en:'Truly dark site', fr:'Site vraiment noir'}, '7.1–8.0', {zh:'銀河能在地面投下陰影；黃道光明顯；看不清周圍的地形', en:'The Milky Way casts shadows; zodiacal light obvious; you cannot see your surroundings', fr:'La Voie lactée projette des ombres ; lumière zodiacale évidente ; on ne voit pas le paysage'}],
+    ['3–4', {zh:'鄉間、山區', en:'Rural, mountains', fr:'Campagne, montagne'}, '6.1–7.0', {zh:'銀河結構清楚，地平線附近有遠方城市的光罩', en:'Milky Way structure clear; distant town glow on the horizon', fr:'Structure de la Voie lactée nette ; halo de villes lointaines à l’horizon'}],
+    ['5', {zh:'郊區', en:'Suburban', fr:'Périurbain'}, '5.6–6.0', {zh:'銀河在頭頂勉強可見，靠地平線就消失', en:'Milky Way faint overhead, gone near the horizon', fr:'Voie lactée faible au zénith, invisible près de l’horizon'}],
+    ['6–7', {zh:'城郊交界、明亮郊區', en:'Bright suburb, urban fringe', fr:'Banlieue lumineuse'}, '4.6–5.5', {zh:'看不到銀河；主要星座還認得出來', en:'No Milky Way; main constellations still recognisable', fr:'Pas de Voie lactée ; les principales constellations restent reconnaissables'}],
+    ['8–9', {zh:'城市、市中心', en:'City, inner city', fr:'Ville, centre-ville'}, '≤ 4.5', {zh:'只剩最亮的幾十顆星、月亮與行星', en:'Only a few dozen bright stars, the Moon and planets', fr:'Quelques dizaines d’étoiles brillantes, la Lune et les planètes'}],
+    ]},
+  { type:'cards', cols:2, items:[
+    { i:'fa-location-dot', t:{zh:'台灣', en:'Taiwan', fr:'Taïwan'},
+      p:{zh:'高山是台灣觀星的最大優勢，海拔越高、水氣與光害越少。', en:'Taiwan’s high mountains are its great asset: the higher you go, the less haze and light.', fr:'Les hautes montagnes sont l’atout de Taïwan : plus on monte, moins il y a de brume et de lumière.'},
+      l:[{zh:'合歡山國際暗空公園（南投，海拔約 3,000 m）：2019 年獲國際暗空協會認證，是台灣第一座', en:'Hehuanshan International Dark Sky Park (Nantou, about 3,000 m): certified by the International Dark-Sky Association in 2019, Taiwan’s first', fr:'Parc international de ciel étoilé du Hehuanshan (Nantou, environ 3 000 m) : certifié par l’International Dark-Sky Association en 2019, le premier de Taïwan'},
+         {zh:'雪霸國家公園觀霧地區：同樣通過國際暗空公園認證', en:'Guanwu in Shei-Pa National Park: also a certified International Dark Sky Park', fr:'Guanwu, parc national de Shei-Pa : également parc de ciel étoilé certifié'},
+         {zh:'阿里山、塔塔加：鄰近鹿林天文台，東部縱谷與蘭嶼的海岸也很暗', en:'Alishan and Tataka, near Lulin Observatory; the East Rift Valley and Orchid Island coasts are dark too', fr:'Alishan et Tataka, près de l’observatoire de Lulin ; la vallée du Rift oriental et l’île des Orchidées sont aussi très sombres'},
+         {zh:'墾丁：緯度最低，春季可看南十字座；注意夏季颱風與冬季東北季風', en:'Kenting: the southernmost spot, with the Southern Cross in spring; watch for summer typhoons and the winter monsoon', fr:'Kenting : le plus au sud, avec la Croix du Sud au printemps ; attention aux typhons d’été et à la mousson d’hiver'}]},
+    { i:'fa-location-dot', t:{zh:'法國', en:'France', fr:'France'},
+      p:{zh:'法國有多個「國際星空保護區」（RICE），夏季的南部山區最穩定。', en:'France has several International Dark Sky Reserves (RICE in French); the southern mountains in summer are the most reliable.', fr:'La France compte plusieurs Réserves internationales de ciel étoilé (RICE) ; les montagnes du Sud en été sont les plus fiables.'},
+      l:[{zh:'南庇里牛斯山 Pic du Midi：2013 年成為歐洲第一批國際星空保護區，山頂有天文台可預約夜宿', en:'Pic du Midi in the Pyrenees: among Europe’s first dark-sky reserves (2013), with a summit observatory offering night stays', fr:'Pic du Midi (Pyrénées) : parmi les premières RICE d’Europe (2013), avec un observatoire au sommet et des nuits sur réservation'},
+         {zh:'塞文山脈國家公園 Cévennes：2018 年認證，是歐洲面積最大的星空保護區', en:'Cévennes National Park: certified in 2018, the largest dark-sky reserve in Europe', fr:'Parc national des Cévennes : certifié en 2018, la plus grande RICE d’Europe'},
+         {zh:'Alpes Azur Mercantour：2019 年認證，鄰近尼斯', en:'Alpes Azur Mercantour: certified in 2019, near Nice', fr:'Alpes Azur Mercantour : RICE depuis 2019, près de Nice'},
+         {zh:'上普羅旺斯天文台（Saint-Michel-l’Observatoire）一帶與 Queyras 山區；巴黎周邊光害嚴重，至少要往南開一兩個小時', en:'Around the Haute-Provence Observatory (Saint-Michel-l’Observatoire) and the Queyras; around Paris, drive an hour or two south at least', fr:'Autour de l’Observatoire de Haute-Provence (Saint-Michel-l’Observatoire) et dans le Queyras ; depuis Paris, comptez au moins une à deux heures de route vers le sud'}]},
+  ]},
+  { type:'note', p:{zh:'上山觀星注意安全：山路夜間行車要慢，高海拔可能有高山症，天氣變化很快。結伴同行、告訴別人你的去向，並遵守保護區的燈光規範，車燈只開小燈。', en:'Stay safe in the mountains: drive slowly on night roads, watch for altitude sickness, and expect weather to turn fast. Go with someone, tell others where you are going, and follow the site’s lighting rules, using parking lights only.', fr:'Prudence en montagne : roulez lentement de nuit, attention au mal d’altitude, la météo change vite. Partez accompagné, prévenez quelqu’un, respectez les règles d’éclairage du site et n’allumez que les veilleuses.'} },
+]},
+
+/* ── 10. Photography ── */
+{ id:'photo', i:'fa-camera', c:'#38bdf8',
+  nav:{zh:'星空攝影', en:'Astrophotography', fr:'Astrophoto'},
+  eyebrow:{zh:'第十章', en:'Chapter 10', fr:'Chapitre 10'},
+  h2:{zh:'用相機拍下星空', en:'Capturing the sky with a camera', fr:'Photographier le ciel'},
+  blocks:[
+  { type:'lead', p:{
+    zh:'只要一台能手動調整的相機、廣角鏡頭和穩固的三腳架，就能拍到肉眼看不到的銀河色彩。關鍵是在<strong class="text-white">星點不拉長</strong>的前提下，盡量讓更多光進來。曝光與鏡頭的基礎可以參考同一書架上的「攝影」卷。',
+    en:'A camera with manual controls, a wide lens and a solid tripod are enough to record Milky Way colours the eye cannot see. The trick is to let in as much light as possible <strong class="text-white">before the stars start to trail</strong>. For exposure and lens basics, see the Photography volume on the same shelf.',
+    fr:'Un boîtier réglable en manuel, un objectif grand-angle et un trépied stable suffisent pour saisir des couleurs de la Voie lactée invisibles à l’œil. Le principe : faire entrer le plus de lumière possible <strong class="text-white">avant que les étoiles ne filent</strong>. Pour les bases de l’exposition, voir le volume Photographie sur la même étagère.'} },
+  { type:'table', head:[{zh:'鏡頭焦距（全片幅）', en:'Focal length (full frame)', fr:'Focale (plein format)'},{zh:'500 法則：最長曝光', en:'Rule of 500: longest exposure', fr:'Règle des 500 : pose max.'},{zh:'APS-C（×1.5）', en:'APS-C (×1.5)', fr:'APS-C (×1,5)'}],
+    rows: [14, 20, 24, 35, 50].map(f => [f + ' mm', (500 / f).toFixed(1) + ' s', (500 / (f * 1.5)).toFixed(1) + ' s']) },
+  { type:'note', p:{zh:'500 法則：最長曝光秒數 ≈ 500 ÷（焦距 × 片幅換算倍率）。高畫素相機放大看仍會拉長，可以改用更嚴格的 NPF 法則，或直接把結果再減三分之一。', en:'Rule of 500: longest exposure in seconds ≈ 500 ÷ (focal length × crop factor). High-resolution sensors still show trailing up close; use the stricter NPF rule or cut the result by a third.', fr:'Règle des 500 : pose max. en secondes ≈ 500 ÷ (focale × coefficient de recadrage). Sur les capteurs très définis, les étoiles filent encore à 100 % : utilisez la règle NPF, plus stricte, ou retirez un tiers.'} },
+  { type:'steps', items:[
+    { t:{zh:'全手動模式、RAW 檔', en:'Manual mode, RAW files', fr:'Mode manuel, fichiers RAW'},
+      p:{zh:'起始設定：光圈開到最大（f/1.8 到 f/2.8）、ISO 3200、快門依 500 法則（14 mm 約 20 秒）。白平衡設 3,800 到 4,200 K，拍 RAW 方便後製。', en:'Start with the widest aperture (f/1.8–f/2.8), ISO 3200 and a shutter from the rule of 500 (about 20 s at 14 mm). Set white balance to 3,800–4,200 K and shoot RAW for editing.', fr:'Point de départ : ouverture maximale (f/1,8 à f/2,8), ISO 3200, vitesse selon la règle des 500 (environ 20 s à 14 mm). Balance des blancs à 3 800–4 200 K, et RAW pour le traitement.'} },
+    { t:{zh:'手動對焦到星點最小', en:'Focus manually on the smallest star', fr:'Mise au point manuelle sur l’étoile la plus fine'},
+      p:{zh:'自動對焦在黑暗中會失敗。用即時顯示對準一顆亮星，放大 10 倍，慢慢轉對焦環到星點最小最銳利。鏡頭上的無限遠記號通常不準。', en:'Autofocus fails in the dark. In live view, aim at a bright star, zoom in 10×, and turn the focus ring until it is a tiny sharp point. The infinity mark on the lens is rarely exact.', fr:'L’autofocus échoue dans le noir. En visée écran, visez une étoile brillante, zoomez à 10× et tournez la bague jusqu’à obtenir un point minuscule. Le repère infini de l’objectif est rarement exact.'} },
+    { t:{zh:'防震：自拍定時或快門線', en:'Avoid shake: timer or remote', fr:'Éviter les vibrations : retardateur ou télécommande'},
+      p:{zh:'用 2 秒自拍或快門線觸發，關閉鏡頭防手震。三腳架中柱盡量不升，有風時在腳架下掛重物。', en:'Fire with a 2-second timer or a remote and switch off lens stabilisation. Keep the tripod’s centre column down and hang a weight under it in wind.', fr:'Déclenchez au retardateur de 2 s ou à la télécommande et désactivez la stabilisation. Laissez la colonne centrale baissée et lestez le trépied s’il y a du vent.'} },
+    { t:{zh:'銀河季：3 到 10 月', en:'Milky Way season: March to October', fr:'Saison de la Voie lactée : mars à octobre'},
+      p:{zh:'銀河中心在 3 月出現在清晨，6 到 8 月整晚可見，10 月只剩傍晚。選新月前後的夜晚，並用 App 預覽銀河在構圖中的位置。', en:'The galactic core appears before dawn in March, is up all night from June to August, and only in the early evening by October. Pick nights near new Moon and preview its position with an app.', fr:'Le centre galactique apparaît avant l’aube en mars, est visible toute la nuit de juin à août et seulement en début de soirée en octobre. Choisissez la nouvelle Lune et prévisualisez la composition avec une application.'} },
+    { t:{zh:'星軌：多張疊合', en:'Star trails: stack many frames', fr:'Filés d’étoiles : empiler les images'},
+      p:{zh:'連續拍一兩百張 20 到 30 秒的照片，用 StarStaX 或 Sequator 疊合成同心圓的星軌。構圖放進北極星，就能拍出繞著它旋轉的圓弧。', en:'Shoot one or two hundred 20–30 s frames in a row, then stack them in StarStaX or Sequator into circular trails. Include Polaris in the frame for arcs that wheel around it.', fr:'Enchaînez une ou deux centaines de poses de 20 à 30 s, puis empilez-les dans StarStaX ou Sequator. Cadrez la Polaire pour obtenir des arcs qui tournent autour d’elle.'} },
+    { t:{zh:'追蹤與疊圖', en:'Tracking and stacking', fr:'Suivi et empilement'},
+      p:{zh:'想拍星雲與星系，需要赤道儀或星野追蹤器抵銷地球自轉，曝光可拉長到數分鐘，再用 DeepSkyStacker、Siril 疊合多張降低雜訊。', en:'For nebulae and galaxies, an equatorial mount or star tracker cancels Earth’s spin, allowing exposures of minutes; then DeepSkyStacker or Siril stacks many frames to cut noise.', fr:'Pour nébuleuses et galaxies, une monture équatoriale ou un suiveur compense la rotation terrestre et permet des poses de plusieurs minutes ; DeepSkyStacker ou Siril empilent ensuite les images pour réduire le bruit.'} },
+  ]},
+]},
+
+/* ── 11. Glossary ── */
+{ id:'glossary', i:'fa-book', c:'#94a3b8',
+  nav:{zh:'名詞表', en:'Glossary', fr:'Glossaire'},
+  eyebrow:{zh:'附錄', en:'Appendix', fr:'Annexe'},
+  h2:{zh:'觀星名詞對照', en:'Stargazing terms', fr:'Lexique de l’observation'},
+  blocks:[
+  { type:'table', head:[{zh:'中文', en:'Chinese', fr:'Chinois'},'English','Français',{zh:'意思', en:'Meaning', fr:'Sens'}],
+    rows:[
+    ['天球', 'Celestial sphere', 'Sphère céleste', {zh:'想像中包圍地球、星星貼在內側的大球', en:'Imaginary sphere around Earth on which stars appear fixed', fr:'Sphère imaginaire où semblent fixées les étoiles'}],
+    ['天頂', 'Zenith', 'Zénith', {zh:'觀測者正上方的點', en:'The point straight overhead', fr:'Le point à la verticale'}],
+    ['黃道', 'Ecliptic', 'Écliptique', {zh:'太陽一年在星空中走的路徑，行星都在附近', en:'The Sun’s yearly path on the sky; planets stay near it', fr:'Trajet annuel du Soleil ; les planètes en restent proches'}],
+    ['赤經／赤緯', 'Right ascension / declination', 'Ascension droite / déclinaison', {zh:'天球上的經度與緯度', en:'Longitude and latitude on the sky', fr:'Longitude et latitude célestes'}],
+    ['視星等', 'Apparent magnitude', 'Magnitude apparente', {zh:'從地球看到的亮度，數字越小越亮', en:'Brightness seen from Earth; lower is brighter', fr:'Éclat vu de la Terre ; plus faible = plus brillant'}],
+    ['拱極星', 'Circumpolar star', 'Étoile circumpolaire', {zh:'永不落到地平線下的星', en:'A star that never sets', fr:'Étoile qui ne se couche jamais'}],
+    ['星群', 'Asterism', 'Astérisme', {zh:'非正式星座的好認圖形，例如北斗七星', en:'An easy pattern that is not an official constellation', fr:'Figure repère qui n’est pas une constellation officielle'}],
+    ['衝', 'Opposition', 'Opposition', {zh:'外行星與太陽分在地球兩側，最近最亮', en:'An outer planet opposite the Sun: closest and brightest', fr:'Planète extérieure à l’opposé du Soleil : au plus près'}],
+    ['大距', 'Greatest elongation', 'Élongation maximale', {zh:'水星或金星離太陽角距離最大的時候', en:'When Mercury or Venus is farthest from the Sun on the sky', fr:'Écart angulaire maximal de Mercure ou Vénus au Soleil'}],
+    ['輻射點', 'Radiant', 'Radiant', {zh:'流星雨看起來的發射點', en:'The point a meteor shower seems to come from', fr:'Point d’où semblent venir les météores'}],
+    ['暗適應', 'Dark adaptation', 'Adaptation à l’obscurité', {zh:'眼睛在黑暗中變敏感的過程，約 20 到 30 分鐘', en:'The eye’s 20–30 minutes of gaining sensitivity in the dark', fr:'Gain de sensibilité de l’œil en 20 à 30 minutes'}],
+    ['視寧度', 'Seeing', 'Turbulence (seeing)', {zh:'大氣擾動造成的影像晃動程度', en:'How much air turbulence blurs the image', fr:'Flou dû à l’agitation de l’air'}],
+    ['透明度', 'Transparency', 'Transparence', {zh:'空氣的清澈程度，影響暗弱天體', en:'Clarity of the air, which governs faint objects', fr:'Limpidité de l’air, décisive pour les objets faibles'}],
+    ['口徑', 'Aperture', 'Diamètre (ouverture)', {zh:'物鏡或主鏡的直徑', en:'Diameter of the main lens or mirror', fr:'Diamètre de l’objectif ou du miroir'}],
+    ['焦比', 'Focal ratio', 'Rapport F/D', {zh:'焦距除以口徑', en:'Focal length divided by aperture', fr:'Focale divisée par le diamètre'}],
+    ['出瞳', 'Exit pupil', 'Pupille de sortie', {zh:'從目鏡出來的光束直徑', en:'Width of the light beam leaving the eyepiece', fr:'Diamètre du faisceau sortant de l’oculaire'}],
+    ['赤道儀', 'Equatorial mount', 'Monture équatoriale', {zh:'對準天極後只轉一軸就能追蹤星星', en:'Tracks stars on one axis once aligned on the pole', fr:'Suit les étoiles sur un axe une fois mise en station'}],
+    ['光軸校正', 'Collimation', 'Collimation', {zh:'調整反射鏡讓光路對齊', en:'Aligning a telescope’s mirrors', fr:'Alignement des miroirs d’un télescope'}],
+    ['梅西耶天體', 'Messier object', 'Objet de Messier', {zh:'梅西耶星表的 110 個深空天體，以 M 編號', en:'One of 110 deep-sky objects numbered M1–M110', fr:'Un des 110 objets du ciel profond, de M1 à M110'}],
+    ['光年', 'Light-year', 'Année-lumière', {zh:'光走一年的距離，約 9.46 兆公里', en:'Distance light travels in a year, about 9.46 trillion km', fr:'Distance parcourue par la lumière en un an, environ 9 460 milliards de km'}],
+    ]},
+]},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   UI strings
+   ═══════════════════════════════════════════════════════════ */
+const I18N = {
+zh:{
+ 'doc.title':'觀星 | 星空、器材與觀測技巧',
+ 'hdr.badge':'觀星入門','hdr.title':'觀星：星空、器材與觀測技巧',
+ 'intro':'觀星不需要昂貴的器材，最重要的是一片夠暗的天空、一雙適應黑暗的眼睛，以及知道該往哪裡看。學會用北斗七星找北極星、用獵戶座腰帶找天狼星，整片星空就會從一堆光點變成一張認得的地圖。',
+ 'intro2':'這一卷依觀測順序排列：先認識天球的運轉與星等，再談出發前的天氣、月相與暗適應，接著是用手量角度與跳星法、四季星空、月亮與行星、流星雨，然後是雙筒與望遠鏡的選擇、入門深空天體清單、台灣與法國的暗空地點，以及星空攝影，最後附三語名詞表。星圖中每顆星都依實際的赤經赤緯投影繪製，其他圖表也依公式計算。',
+ 'footer':'觀星入門參考，以北半球（台灣約 22°N 到 25°N、法國約 43°N 到 51°N）為準。流星雨日期與 ZHR 為多年平均，每年依月相與活動情形不同；行星、日月食等日期請以天文台、Stellarium 或 IMO（國際流星組織）公布的資訊為準。觀測太陽務必使用合格濾鏡。'
+},
+en:{
+ 'doc.title':'Stargazing: Sky, Gear & Observing Skills',
+ 'hdr.badge':'STARGAZING PRIMER','hdr.title':'Stargazing: the sky, the gear and how to observe',
+ 'intro':'Stargazing needs no expensive equipment. What matters is a dark enough sky, eyes adapted to the dark, and knowing where to look. Once you can find Polaris from the Big Dipper and Sirius from Orion’s Belt, the sky turns from a scatter of lights into a map you can read.',
+ 'intro2':'This volume follows the order you observe in: how the celestial sphere turns and what magnitude means; weather, Moon and dark adaptation before you go; measuring with your hand and star-hopping; the seasonal sky; the Moon and planets; meteor showers; choosing binoculars and telescopes; a starter list of deep-sky objects; dark-sky sites in Taiwan and France; and astrophotography, with a trilingual glossary. Every star in the charts is projected from its real right ascension and declination, and the other charts are computed from their formulas.',
+ 'footer':'An introductory reference for the northern hemisphere (Taiwan about 22–25°N, France about 43–51°N). Meteor-shower dates and ZHRs are long-term averages and vary each year with the Moon and activity; for planets, eclipses and other dates, check an observatory, Stellarium or the IMO (International Meteor Organization). Always use a proper filter to observe the Sun.'
+},
+fr:{
+ 'doc.title':'Observer le ciel : étoiles, matériel et techniques',
+ 'hdr.badge':'INITIATION À L’OBSERVATION','hdr.title':'Observer le ciel : étoiles, matériel et techniques',
+ 'intro':'Observer le ciel ne demande pas de matériel coûteux. L’essentiel : un ciel assez noir, des yeux habitués à l’obscurité, et savoir où regarder. Dès que l’on sait trouver la Polaire grâce à la Grande Casserole et Sirius grâce au Baudrier d’Orion, le ciel cesse d’être un semis de points pour devenir une carte lisible.',
+ 'intro2':'Ce volume suit l’ordre de l’observation : la rotation de la sphère céleste et la magnitude ; météo, Lune et adaptation à l’obscurité avant de partir ; mesurer avec la main et sauter d’étoile en étoile ; le ciel des saisons ; la Lune et les planètes ; les étoiles filantes ; le choix des jumelles et des télescopes ; une première liste d’objets du ciel profond ; les sites de ciel noir à Taïwan et en France ; et l’astrophotographie, avec un glossaire trilingue. Chaque étoile des cartes est projetée à partir de ses coordonnées réelles, et les autres graphiques sont calculés à partir de leurs formules.',
+ 'footer':'Référence d’initiation pour l’hémisphère nord (Taïwan vers 22–25° N, France vers 43–51° N). Les dates et THZ des essaims sont des moyennes et varient selon la Lune et l’activité ; pour les planètes, éclipses et autres dates, consultez un observatoire, Stellarium ou l’IMO (Organisation internationale des météores). Observez toujours le Soleil avec un filtre adapté.'
+}};
+function ui(k){ return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || ''; }
+
+/* ═══════════════════════════════════════════════════════════
+   Rendering
+   ═══════════════════════════════════════════════════════════ */
+const COLS = { 2:'grid md:grid-cols-2 gap-4', 3:'grid md:grid-cols-2 lg:grid-cols-3 gap-4', 4:'grid sm:grid-cols-2 lg:grid-cols-4 gap-4' };
+
+const BLOCK = {
+  lead: (b) => `<p class="text-slate-300 leading-relaxed max-w-4xl">${t(b.p)}</p>`,
+  h3:   (b) => `<h3 class="text-base font-black text-white pt-2">${t(b.t)}</h3>`,
+  note: (b, s) => `<p class="text-sm text-slate-300 leading-relaxed rounded-2xl p-4 border" style="background:${s.c}0f;border-color:${s.c}40"><i class="fa-solid fa-lightbulb mr-2" style="color:${s.c}"></i>${t(b.p)}</p>`,
+  dia:  (b) => `<div class="dia-box reveal">${DIA[b.k]()}</div>`,
+  cards:(b, s) => `<div class="${COLS[b.cols || 3]}">` + b.items.map((c, n) => `
+    <article class="reveal bg-slate-900/40 rounded-2xl border border-slate-800 p-5 hover:border-slate-600 transition-colors" data-i="${n % 6}">
+      <div class="flex items-start gap-3">
+        <div class="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center border" style="color:${s.c};background:${s.c}14;border-color:${s.c}33"><i class="fa-solid ${c.i} text-sm"></i></div>
+        <div class="min-w-0">
+          <h4 class="font-black text-white text-sm leading-snug">${t(c.t)}</h4>
+          ${c.tag ? `<p class="text-[11px] font-bold mt-1" style="color:${s.c}">${t(c.tag)}</p>` : ''}
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed mt-3">${t(c.p)}</p>
+      ${c.l ? `<ul class="mt-3 space-y-1.5">${c.l.map(x => `<li class="text-xs text-slate-300 leading-relaxed flex gap-2"><span style="color:${s.c}">▸</span><span>${t(x)}</span></li>`).join('')}</ul>` : ''}
+    </article>`).join('') + `</div>`,
+  steps:(b, s) => `<ol class="grid md:grid-cols-2 gap-4">` + b.items.map((c, n) => `
+    <li class="reveal flex gap-4 bg-slate-900/40 rounded-2xl border border-slate-800 p-5" data-i="${n % 6}">
+      <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-sm border" style="color:${s.c};background:${s.c}14;border-color:${s.c}55">${n + 1}</div>
+      <div><h4 class="font-black text-white text-sm">${t(c.t)}</h4><p class="text-sm text-slate-400 leading-relaxed mt-1.5">${t(c.p)}</p></div>
+    </li>`).join('') + `</ol>`,
+  table:(b) => `<div class="table-scroll overflow-x-auto"><table class="w-full text-sm min-w-[640px]">
+    <thead><tr class="text-left text-slate-400 border-b border-slate-800">${b.head.map(h => `<th class="py-3 px-4 font-bold">${t(h)}</th>`).join('')}</tr></thead>
+    <tbody class="divide-y divide-slate-800/60">${b.rows.map(r => `<tr>${r.map((c, i) => `<td class="py-3 px-4 align-top ${i ? 'text-slate-300' : 'text-white font-bold'}">${t(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`,
+};
+
+function renderSections() {
+  document.getElementById('nav').innerHTML = SECTIONS.map(s =>
+    `<a href="#${s.id}" class="px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 hover:border-slate-500/60 transition-colors">${t(s.nav)}</a>`).join('');
+  document.getElementById('sections').innerHTML = SECTIONS.map(s => `
+  <section id="${s.id}" class="scroll-mt-28">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="p-3 rounded-2xl border" style="color:${s.c};background:${s.c}1a;border-color:${s.c}40;box-shadow:0 0 20px ${s.c}33"><i class="fa-solid ${s.i} text-xl"></i></div>
+      <div>
+        <span class="text-xs uppercase tracking-wider font-bold" style="color:${s.c}">${t(s.eyebrow)}</span>
+        <h2 class="text-2xl font-black text-white">${t(s.h2)}</h2>
+      </div>
+    </div>
+    <div class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-8 border border-slate-900 space-y-6">
+      ${s.blocks.map(b => BLOCK[b.type](b, s)).join('')}
+    </div>
+  </section>`).join('');
+}
+
+let revealObserver = null;
+function armReveals(root) {
+  const els = root.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(e => e.classList.add('in')); return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((es, obs) => {
+      es.forEach(e => { if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), (+e.target.dataset.i || 0) * 70);
+        obs.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  }
+  els.forEach(e => revealObserver.observe(e));
+}
+
+const BTN_ON  = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all bg-indigo-500/15 text-indigo-300 border border-indigo-500/25';
+const BTN_OFF = 'px-2.5 py-1 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200';
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh','en','fr'].forEach(l => {
+    const b = document.getElementById('lang-' + l);
+    if (b) b.className = (l === lang) ? BTN_ON : BTN_OFF;
+  });
+  document.title = ui('doc.title');
+  document.documentElement.lang = (lang === 'zh') ? 'zh-Hant' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = ui(el.dataset.i18n); if (v) el.innerHTML = v;
+  });
+  renderSections();
+  armReveals(document.querySelector('main'));
+}
+let _l = 'zh';
+try { const st = localStorage.getItem('kb_lang'); if (['zh','en','fr'].includes(st)) _l = st; } catch (e) {}
+setLanguage(_l);
+
+</script>
+</body>
+</html>
