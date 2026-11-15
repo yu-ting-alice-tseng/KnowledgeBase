@@ -263,31 +263,98 @@ body {
 .cat-chip.empty { opacity: .34; }
 .cat-chip.empty:hover { opacity: .6; }
 
-/* ─── Shelf (one category) ─── */
-.shelf { margin-bottom: 54px; }
-.shelf:last-child { margin-bottom: 0; }
-.shelf-header { display: flex; align-items: center; gap: 15px; margin-bottom: 26px; }
-.shelf-header .sh-icon {
-  width: 26px; height: 26px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 8px; font-size: 10px;
-  color: var(--gold-lo);
-  background: rgba(201,168,92,0.08);
-  border: 1px solid rgba(201,168,92,0.16);
+/* ─── Bookcase ───────────────────────────────────────────────
+   One wooden case. Every category is a bay: a dark back panel, the
+   volumes standing on the plank below it, and a brass plaque on the
+   plank's front edge naming the shelf. */
+#shelf-stack { position: relative; padding: 0 24px; }
+#shelf-stack::before, #shelf-stack::after {       /* the uprights */
+  content: ''; position: absolute; top: -14px; bottom: -4px; width: 24px; z-index: 4;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.35), transparent 30%, rgba(255,220,160,0.06) 50%, transparent 70%, rgba(0,0,0,0.45)),
+    repeating-linear-gradient(180deg, rgba(0,0,0,0) 0 7px, rgba(0,0,0,0.08) 7px 9px),
+    linear-gradient(90deg, #3a2512, #563719 50%, #2e1c0c);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.55), 0 0 36px rgba(0,0,0,0.65);
+  border-radius: 3px;
 }
-.shelf-header .sh-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 19px; font-weight: 600; font-style: italic;
-  color: #efe4cb; white-space: nowrap; letter-spacing: 0.01em;
+#shelf-stack::before { left: 0; }
+#shelf-stack::after  { right: 0; }
+
+.shelf { position: relative; margin: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.shelf.single { grid-template-columns: 1fr; }
+.bay-unit { position: relative; min-width: 0; }
+/* the upright between two bays on the same row */
+.bay-unit + .bay-unit .bay::after {
+  content: ''; position: absolute; left: -11px; top: 0; bottom: -7px; width: 22px; z-index: 4;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.40), transparent 32%, rgba(255,220,160,0.05) 50%, transparent 68%, rgba(0,0,0,0.45)),
+    linear-gradient(90deg, #3a2512, #563719 50%, #2e1c0c);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.55), 0 0 22px rgba(0,0,0,0.6);
 }
-.shelf-header .sh-rule {
-  flex: 1; height: 1px;
-  background: linear-gradient(to right, rgba(201,168,92,0.22), transparent);
+@media (max-width: 1000px) {
+  .shelf { grid-template-columns: 1fr; }
+  .bay-unit + .bay-unit .bay::after { display: none; }
 }
-.shelf-header .sh-count {
+.bay {
+  position: relative; height: 312px; display: flex; align-items: flex-end;
+  padding: 0 28px;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 100%, rgba(120,80,30,0.10), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 118px, rgba(0,0,0,0.16) 118px 120px),
+    linear-gradient(180deg, #070503 0%, #110b07 55%, #1a1109 100%);
+  box-shadow:
+    inset 0 34px 44px -22px rgba(0,0,0,0.92),     /* the plank above casts down */
+    inset 0 -14px 30px -16px rgba(0,0,0,0.75);
+}
+.books { display: flex; align-items: flex-end; gap: 4px; height: 100%; padding-top: 44px; min-width: 0; }
+
+/* The plank, seen slightly from above: a lit top surface and a shaded front edge */
+.plank {
+  position: relative; height: 26px; z-index: 3;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 18px 0 14px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 31px, rgba(0,0,0,0.10) 31px 33px, rgba(0,0,0,0) 33px 67px),
+    linear-gradient(180deg, #7a5330 0%, #5c3b1d 22%, #432a12 60%, #2a190a 100%);
+  box-shadow:
+    0 22px 34px -10px rgba(0,0,0,0.9),
+    inset 0 1px 0 rgba(255,222,165,0.28),
+    inset 0 -1px 0 rgba(0,0,0,0.65);
+  border-radius: 2px;
+}
+.plank::before {
+  content: ''; position: absolute; left: 0; right: 0; top: -7px; height: 7px;
+  background: linear-gradient(180deg, #9a6b3e, #7a5330);
+  border-radius: 2px 2px 0 0;
+  box-shadow: inset 0 1px 0 rgba(255,232,190,0.30);
+}
+.plank.top { height: 16px; padding: 0; }
+.plank.top::before { display: none; }
+
+/* brass plaque on the plank's edge */
+.plaque {
+  display: flex; align-items: center; gap: 8px; height: 18px; padding: 0 10px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #e6c37a 0%, #b08d47 48%, #d2ad63 100%);
+  color: #2a1a06;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.05em; white-space: nowrap;
+  box-shadow:
+    inset 0 1px 0 rgba(255,246,214,0.75),
+    inset 0 -1px 0 rgba(0,0,0,0.40),
+    0 1px 3px rgba(0,0,0,0.70);
+  text-shadow: 0 1px 0 rgba(255,240,200,0.45);
+}
+.plaque i { font-size: 9px; opacity: .78; }
+.plaque::before, .plaque::after {        /* the two screws */
+  content: ''; width: 4px; height: 4px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #6b4d18, #3b2908);
+  box-shadow: 0 0 0 1px rgba(255,236,190,0.35);
+}
+.sh-count {
   font-family: 'Nunito', sans-serif;
-  font-size: 9px; font-weight: 800; letter-spacing: 0.10em;
-  color: var(--muted2); white-space: nowrap;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
+  color: rgba(232,204,132,0.42); white-space: nowrap;
 }
 
 /* ─── Search ─── */
@@ -335,129 +402,100 @@ body {
 #upload-btn { color: var(--gold-lo); border-color: rgba(201,168,92,0.16); }
 #upload-btn:hover { color: var(--gold); border-color: rgba(201,168,92,0.38); background: rgba(201,168,92,0.07); }
 
-/* ─── Grid ─── */
-.shelf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 24px; }
-
-/* ─── Liquid Glass Card ─── */
-.glass-card {
-  position: relative;
-  background: var(--gl-base);
-  backdrop-filter: blur(48px) saturate(200%) brightness(1.07);
-  -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.07);
-  border-radius: 18px;
-  border: 1px solid var(--gl-border);
+/* ─── A volume on the shelf: the spine ─── */
+.book {
+  --w: 68px; --h: 240px; --lean: 0deg; --k: 1;
+  position: relative; flex: 0 1 auto; min-width: 0;   /* a crowded shelf squeezes its spines rather than spilling */
+  width: calc(var(--w) * var(--k)); height: calc(var(--h) * var(--k));
+  border-radius: 2px 5px 5px 2px;
+  cursor: pointer; outline: none;
+  transform-origin: bottom center;
+  transform: rotate(var(--lean));
+  background:
+    /* rounded spine: shadow in the hinge, a highlight down the middle */
+    linear-gradient(90deg,
+      rgba(0,0,0,0.46) 0%, rgba(0,0,0,0.12) 9%, rgba(255,255,255,0.12) 20%,
+      rgba(255,255,255,0.00) 38%, rgba(0,0,0,0.04) 68%, rgba(0,0,0,0.40) 100%),
+    /* cloth grain */
+    repeating-linear-gradient(180deg, rgba(255,255,255,0.025) 0 1px, rgba(0,0,0,0.03) 1px 3px),
+    var(--spine);
   box-shadow:
-    0 32px 80px rgba(0,0,0,0.62),
-    0 10px 28px rgba(0,0,0,0.40),
-    /* page-stack right edge */
-    3px 3px 0 -1px rgba(20,14,6,0.55),
-    5px 6px 0 -2px rgba(20,14,6,0.40),
-    7px 9px 0 -3px rgba(20,14,6,0.28),
-    /* inner top highlight */
-    inset 0 1.5px 0 rgba(255,242,170,0.34),
-    /* inner bottom shadow */
-    inset 0 -1px 0 rgba(0,0,0,0.30),
-    /* inner side warm tint */
-    inset 2px 0 10px rgba(255,225,130,0.03),
-    inset -2px 0 10px rgba(0,0,0,0.08);
+    inset 0 0 0 1px rgba(0,0,0,0.28),
+    inset 0 2px 0 rgba(255,255,255,0.18),
+    inset 0 -2px 0 rgba(0,0,0,0.40),
+    2px 0 0 rgba(0,0,0,0.35),
+    0 12px 18px -8px rgba(0,0,0,0.85);
   transition:
-    transform 0.10s ease,   /* fast during mouse move */
-    box-shadow 0.35s ease,
-    border-color 0.28s ease,
-    background 0.28s ease;
-  overflow: hidden;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  will-change: transform;
+    transform 0.42s cubic-bezier(0.34,1.3,0.64,1),
+    box-shadow 0.35s ease, filter 0.35s ease;
+  animation: book-in 0.55s cubic-bezier(0.22,1,0.36,1) backwards;
 }
-
-/* Top specular line */
-.glass-card::before {
-  content: '';
-  position: absolute; top: 0; left: 6%; right: 6%;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,242,165,0.55) 20%,
-    var(--gl-shine) 50%,
-    rgba(255,242,165,0.55) 80%,
-    transparent);
-  pointer-events: none; z-index: 5;
+@keyframes book-in {
+  from { opacity: 0; transform: translateY(28px) rotate(var(--lean)); }
+  to   { opacity: 1; transform: translateY(0)    rotate(var(--lean)); }
 }
-
-/* Fresnel upper glow */
-.glass-card::after {
-  content: '';
-  position: absolute; top: 1px; left: 1px; right: 1px;
-  height: 42%;
-  background: linear-gradient(180deg, var(--gl-fresnel) 0%, transparent 100%);
-  border-radius: 17px 17px 55% 55% / 17px 17px 26% 26%;
-  pointer-events: none; z-index: 4;
+/* gilt bands near the head and tail */
+.book::before, .book::after {
+  content: ''; position: absolute; left: 7px; right: 7px; height: 4px;
+  border-top: 1px solid rgba(240,214,140,0.62);
+  border-bottom: 1px solid rgba(240,214,140,0.62);
+  pointer-events: none;
 }
-
-/* Diagonal refraction band: the key "liquid" feel */
-.card-glare {
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    112deg,
-    transparent 0%,
-    transparent 33%,
-    rgba(255,248,215,0.038) 41%,
-    rgba(255,252,228,0.060) 49%,
-    rgba(255,248,215,0.038) 57%,
-    transparent 65%,
-    transparent 100%
-  );
-  border-radius: inherit;
-  pointer-events: none; z-index: 3;
-  transition: opacity 0.4s;
+.book::before { top: 9px; }
+.book::after  { bottom: 30px; }
+.book-ico {
+  position: absolute; top: 21px; left: 50%; transform: translateX(-50%);
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: rgba(255,246,222,0.92);
+  background: rgba(0,0,0,0.30);
+  box-shadow: inset 0 0 0 1px rgba(240,214,140,0.50);
 }
-.glass-card:hover .card-glare { opacity: 1.4; }
-
-/* Book spine: raised hardcover bands + gutter shadow where cover meets spine */
-.book-spine {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 9px; border-radius: 18px 0 0 18px;
-  z-index: 6;
+.book-title {
+  position: absolute; top: 50px; bottom: 42px; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.book-title span {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  max-height: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-weight: 600; font-size: 15px; letter-spacing: 0.08em;
+  color: #f8efd9;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.65), 0 0 8px rgba(0,0,0,0.35);
+}
+.book-num {
+  position: absolute; bottom: 11px; left: 0; right: 0; text-align: center;
+  font-family: 'Cormorant SC', serif; font-size: 10px; letter-spacing: 0.12em;
+  color: rgba(246,228,176,0.88);
+}
+.book:hover, .book:focus-visible {
+  transform: translateY(-20px) rotate(var(--lean)) scale(1.02);
+  z-index: 6; filter: brightness(1.12) saturate(1.05);
   box-shadow:
-    inset -1px 0 3px rgba(0,0,0,0.28),
-    inset 1px 0 0 rgba(255,255,255,0.16),
-    4px 0 10px -3px rgba(0,0,0,0.55);
+    inset 0 0 0 1px rgba(0,0,0,0.28),
+    inset 0 2px 0 rgba(255,255,255,0.22),
+    inset 0 -2px 0 rgba(0,0,0,0.40),
+    2px 0 0 rgba(0,0,0,0.35),
+    0 30px 40px -12px rgba(0,0,0,0.95),
+    0 0 44px var(--glow);
 }
-.book-spine::after {
-  content: ''; position: absolute; inset: 0; border-radius: inherit;
-  background: repeating-linear-gradient(
-    180deg,
-    transparent 0 16px,
-    rgba(0,0,0,0.30) 16px 18px,
-    rgba(255,255,255,0.13) 18px 19px,
-    transparent 19px 35px
-  );
-}
+@media (max-width: 640px) { .book { --k: 0.76; } .bay { padding: 0 18px; } }
+@media (max-width: 480px) { .book { --k: 0.66; } .book-title span { font-size: 12px; } .book-ico { width: 18px; height: 18px; top: 16px; font-size: 8px; } .book-title { top: 40px; bottom: 36px; } .bay { padding: 0 12px; height: 270px; } .books { gap: 3px; } }
 
-/* Page-edge texture on right */
-.page-edge {
-  position: absolute; right: 0; top: 10px; bottom: 10px;
-  width: 4px; border-radius: 0 3px 3px 0;
-  z-index: 6;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(255,248,220,0.20) 0px,
-    rgba(255,248,220,0.20) 1px,
-    rgba(180,155,110,0.08) 1px,
-    rgba(180,155,110,0.08) 2px
-  );
+/* ─── Detail slip: floats above the book under the pointer ─── */
+#book-tip {
+  position: fixed; z-index: 60; width: 300px; max-width: calc(100vw - 24px);
+  pointer-events: none; opacity: 0; transform: translateY(8px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  background: rgba(16,12,8,0.93);
+  backdrop-filter: blur(26px) saturate(160%);
+  border: 1px solid rgba(201,168,92,0.30);
+  border-radius: 14px; padding: 18px 20px 16px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.72), inset 0 1px 0 rgba(255,242,170,0.26);
 }
-
-/* Card content */
-.card-body { padding: 28px 30px 28px 42px; position: relative; z-index: 7; }
-
-/* Card entry animation */
-@keyframes card-in {
-  from { opacity: 0; transform: translateY(22px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)   scale(1); }
-}
-.glass-card { animation: card-in 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+#book-tip.on { opacity: 1; transform: translateY(0); }
+#book-tip .tip-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+#book-tip .icon-box { width: 38px; height: 38px; border-radius: 11px; font-size: 15px; }
 
 /* Icon box */
 .icon-box {
@@ -516,23 +554,19 @@ body {
 .pulse-dot { width: 5px; height: 5px; border-radius: 50%; animation: pulse 2.6s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.42;transform:scale(0.78);} }
 
-/* Open arrow */
-.open-arr { opacity: 0; transition: opacity 0.28s; color: rgba(201,168,92,0.45); font-size: 11px; margin-top: 5px; }
-.glass-card:hover .open-arr { opacity: 1; }
-
-/* Delete btn */
+/* Delete btn (edit mode): sits on the head of the book */
 .delete-btn {
-  display: none; position: absolute; top: 12px; right: 14px;
-  width: 32px; height: 32px; border-radius: 50%;
+  display: none; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  width: 26px; height: 26px; border-radius: 50%;
   background: rgba(239,68,68,0.11); border: 1px solid rgba(239,68,68,0.28);
   color: #f87171; font-size: 10px;
   align-items: center; justify-content: center;
   cursor: pointer; transition: all 0.18s; z-index: 20;
 }
-.delete-btn:hover { background: rgba(239,68,68,0.35); color: #fff; transform: scale(1.1); }
+.delete-btn:hover { background: rgba(239,68,68,0.35); color: #fff; transform: translateX(-50%) scale(1.1); }
 body.edit-mode .delete-btn { display: flex; }
-body.edit-mode .glass-card { cursor: default; }
-body.edit-mode .glass-card:hover { transform: none !important; }
+body.edit-mode .book { cursor: default; }
+body.edit-mode .book:hover { transform: rotate(var(--lean)) !important; filter: none; }
 
 /* ─── No results ─── */
 #no-results {
@@ -596,7 +630,7 @@ body.edit-mode .glass-card:hover { transform: none !important; }
 
 /* ─── Book-opening transition ───────────────────────────────
    An old tome raised out of a dark room: the shelf dims, a warm
-   light gathers, the modern card takes on a patina of tooled
+   light gathers, the volume turns from spine to front board, a cloth cover tooled in
    leather, and the cover swings fully open onto aged parchment.
    Only transform and opacity are animated: everything textural
    is painted once and composited. */
@@ -622,7 +656,7 @@ body.edit-mode .glass-card:hover { transform: none !important; }
   filter: blur(28px);
 }
 
-.bk { position: fixed; perspective: 2000px; will-change: transform, opacity; }
+.bk { position: fixed; transform-style: preserve-3d; will-change: transform, opacity; }
 .bk-inner { position: absolute; inset: 0; transform-style: preserve-3d; }
 
 /* ── the page block: aged parchment, dimly lit ── */
@@ -701,34 +735,55 @@ body.edit-mode .glass-card:hover { transform: none !important; }
   transform-style: preserve-3d;
   will-change: transform;
 }
+/* the spine, standing at the hinge and reaching back into the book's thickness;
+   it is what faces the reader while the volume is still on the shelf */
+.bk-spine3d {
+  position: absolute; left: 0; top: 0; height: 100%;
+  transform-origin: left center;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
 .bk-face {
   position: absolute; inset: 0;
   border-radius: 18px; overflow: hidden;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
 }
-/* the patina: fades in over the clicked card so it ages as it rises */
-.bk-patina {
-  position: absolute; inset: 0; opacity: 0; will-change: opacity;
-  border-radius: 18px; overflow: hidden;
+/* the front board: cloth in the volume's colour, a tooled gilt frame, the title */
+.bk-art {
+  position: absolute; inset: 0; border-radius: 3px 14px 14px 3px; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 14% 12% 18% 16%; text-align: center; color: #f7eed8;
   background:
-    radial-gradient(ellipse 30% 40% at 12% 20%, rgba(0,0,0,0.30), transparent 70%),
-    radial-gradient(ellipse 40% 50% at 88% 84%, rgba(0,0,0,0.34), transparent 72%),
-    linear-gradient(103deg, rgba(28,18,10,0.90), rgba(58,38,20,0.72) 46%, rgba(20,13,7,0.92));
+    radial-gradient(ellipse 70% 55% at 50% 28%, rgba(255,255,255,0.16), transparent 70%),
+    linear-gradient(90deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.18) 8%, transparent 15%),
+    linear-gradient(135deg, rgba(0,0,0,0.22), transparent 45%, rgba(0,0,0,0.50)),
+    repeating-linear-gradient(180deg, rgba(255,255,255,0.025) 0 1px, rgba(0,0,0,0.03) 1px 3px),
+    var(--spine);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
 }
-/* gilt double-rule border tooled into the leather */
-.bk-patina::before {
-  content: ''; position: absolute; inset: 7%;
-  border: 1px solid rgba(206,172,98,0.55); border-radius: 3px;
-  box-shadow: inset 0 0 0 3px rgba(0,0,0,0.30), inset 0 0 0 4px rgba(206,172,98,0.28);
+.bk-art::before {                 /* gilt double rule tooled into the board */
+  content: ''; position: absolute; inset: 6% 7% 6% 13%;
+  border: 1px solid rgba(240,214,140,0.62); border-radius: 3px;
+  box-shadow: inset 0 0 0 3px rgba(0,0,0,0.26), inset 0 0 0 4px rgba(240,214,140,0.30);
 }
-/* raised bands along the spine edge */
-.bk-patina::after {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 13%;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.10) 60%, transparent),
-    repeating-linear-gradient(180deg,
-      transparent 0 13%, rgba(206,172,98,0.14) 13% 14.4%,
-      rgba(0,0,0,0.34) 14.4% 16%, transparent 16% 29%);
+.bk-art-ico {
+  width: 34px; height: 34px; border-radius: 50%; margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: #f3e4bf; background: rgba(0,0,0,0.28);
+  border: 1px solid rgba(240,214,140,0.62);
+}
+.bk-art-title {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-size: 16px; font-weight: 700; line-height: 1.22; color: #f8efd9;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.65);
+}
+.bk-art-sub {
+  margin-top: 5px; font-size: 6.5px; font-weight: 800; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(246,228,176,0.82);
+}
+.bk-art-num {
+  position: absolute; bottom: 10%; left: 13%; right: 7%; text-align: center;
+  font-family: 'Cormorant SC', serif; font-size: 10px; letter-spacing: 0.22em;
+  color: rgba(246,228,176,0.88);
 }
 .bk-back {
   transform: rotateY(180deg);
@@ -801,8 +856,8 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
 
 /* ─── Reduced motion ─── */
 @media(prefers-reduced-motion:reduce) {
-  .glass-card, .tool-btn { transition: none !important; }
-  .glass-card:hover { transform: none !important; }
+  .book, .tool-btn { transition: none !important; animation: none !important; }
+  .book:hover { transform: rotate(var(--lean)) !important; }
   .mote { animation: none !important; }
   @keyframes pulse{0%,100%{opacity:1;}}
 }
@@ -895,6 +950,7 @@ button:focus-visible { outline: 2px solid rgba(201,168,92,0.58); outline-offset:
   <!-- Shelves (one grid per category): note: #shelves is taken by the
        fixed decorative shelf-line layer, so this container uses its own id -->
   <div id="shelf-stack"></div>
+  <div id="book-tip" role="tooltip" aria-hidden="true"></div>
 
   <div id="no-results">
     <i class="fa-solid fa-book-open-reader"
@@ -1303,30 +1359,46 @@ function renderGrid() {
   renderCatFilter(shown);
 
   shelves.innerHTML = '';
+  hideTip();
   let visible = 0, animIdx = 0;
 
-  CATEGORIES.forEach(cat => {
-    if (activeCat !== 'all' && activeCat !== cat.id) return;
-    const inCat = shown.filter(m => catOf(m) === cat.id);
-    if (!inCat.length) return;
-    visible += inCat.length;
+  /* the bays that have something on them, two to a row */
+  const bays = CATEGORIES
+    .filter(cat => activeCat === 'all' || activeCat === cat.id)
+    .map(cat => ({ cat, inCat: shown.filter(m => catOf(m) === cat.id) }))
+    .filter(b => b.inCat.length);
 
+  if (bays.length) {                      /* the top board of the case */
+    const top = document.createElement('div');
+    top.className = 'plank top';
+    shelves.appendChild(top);
+  }
+
+  for (let i = 0; i < bays.length; i += 2) {
+    const pair = bays.slice(i, i + 2);
     const shelf = document.createElement('section');
-    shelf.className = 'shelf';
-    shelf.dataset.cat = cat.id;
-    shelf.innerHTML = `
-      <div class="shelf-header">
-        <div class="sh-icon"><i class="fa-solid ${cat.icon}"></i></div>
-        <span class="sh-name">${catLabel(cat)}</span>
-        <div class="sh-rule"></div>
-        <span class="sh-count">${inCat.length} ${UI[currentLang].volumes}</span>
-      </div>
-      <div class="shelf-grid"></div>`;
-
-    const grid = shelf.querySelector('.shelf-grid');
-    inCat.forEach(mod => grid.appendChild(buildCard(mod, animIdx++)));
+    shelf.className = 'shelf' + (pair.length === 1 ? ' single' : '');
+    pair.forEach(({ cat, inCat }) => {
+      visible += inCat.length;
+      const unit = document.createElement('div');
+      unit.className = 'bay-unit';
+      unit.dataset.cat = cat.id;
+      unit.innerHTML = `
+        <div class="bay"><div class="books"></div></div>
+        <div class="plank">
+          <span class="plaque"><i class="fa-solid ${cat.icon}"></i><span>${catLabel(cat)}</span></span>
+          <span class="sh-count">${inCat.length} ${UI[currentLang].volumes}</span>
+        </div>`;
+      const row = unit.querySelector('.books');
+      inCat.forEach((mod, k) => {
+        /* the last volume on a fuller shelf leans against its neighbour */
+        const lean = (inCat.length >= 3 && k === inCat.length - 1) ? -6 : 0;
+        row.appendChild(buildBook(mod, animIdx++, lean));
+      });
+      shelf.appendChild(unit);
+    });
     shelves.appendChild(shelf);
-  });
+  }
 
   noRes.style.display = visible ? 'none' : 'block';
 }
@@ -1356,101 +1428,87 @@ function setCategory(id) {
   renderGrid();
 }
 
-/* ─── Card ─── */
-function buildCard(mod, animIdx) {
-  {
-    const card = document.createElement('div');
-    card.className = 'glass-card';
-    card.dataset.id = mod.id;
-    card.style.animationDelay = (animIdx * 0.07) + 's';
-
-    const spineGrad = SPINE[mod.color] || SPINE['from-violet-400 to-indigo-600'];
-    const glowClr   = GLOW[mod.color]  || 'rgba(139,92,246,0.18)';
-    const roman     = romanOf(mod);
-
-    if (!editMode) {
-      card.onclick = () => openModule(mod, card);
-      card.setAttribute('tabindex','0');
-      card.setAttribute('role','button');
-      card.setAttribute('aria-label','Open '+loc(mod.title));
-      card.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod, card); } };
-    }
-
-    card.innerHTML = `
-      <button class="delete-btn" onclick="deleteModule('${mod.id}',event)">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="book-spine" style="background:${spineGrad};"></div>
-      <div class="page-edge"></div>
-      <div class="card-glare"></div>
-      <div class="card-body">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
-          <div class="icon-box bg-gradient-to-br ${mod.color}">
-            <i class="fa-solid ${mod.icon}"></i>
-          </div>
-          <div style="text-align:right;">
-            <div class="chapter-num">${roman}</div>
-            <div class="open-arr"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-          </div>
-        </div>
-        <h3 class="card-title">${loc(mod.title)}</h3>
-        <p class="card-tag">${loc(mod.subtitle)}</p>
-        <div class="ruled-sep"></div>
-        <p class="card-desc">${loc(mod.description)}</p>
-        <div class="status-pill">
-          <div class="pulse-dot"
-               style="background:${mod.custom?'#60a5fa':'#a07838'};
-                      box-shadow:0 0 6px ${mod.custom?'rgba(96,165,250,.42)':'rgba(160,120,56,.48)'}">
-          </div>
-          <span>${mod.custom ? UI[currentLang].customStatus : UI[currentLang].readyStatus}</span>
-        </div>
-      </div>`;
-
-    /* ── 3D book-lift on mouse move ── */
-    if (!editMode) {
-      let tiltActive = false;
-
-      card.addEventListener('mouseenter', () => {
-        tiltActive = true;
-        card.style.transition = 'transform 0.08s ease, box-shadow 0.35s ease, border-color 0.28s ease, background 0.28s ease';
-        card.style.borderColor = 'var(--gl-border-h)';
-        card.style.background  = 'var(--gl-hover)';
-        card.style.boxShadow   =
-          `0 44px 100px rgba(0,0,0,0.68),`+
-          `0 16px 40px rgba(0,0,0,0.44),`+
-          `0 0 64px ${glowClr},`+
-          `3px 3px 0 -1px rgba(20,14,6,0.50),`+
-          `5px 6px 0 -2px rgba(20,14,6,0.36),`+
-          `7px 9px 0 -3px rgba(20,14,6,0.24),`+
-          `inset 0 1.5px 0 rgba(255,242,170,0.46),`+
-          `inset 0 -1px 0 rgba(0,0,0,0.22)`;
-      });
-
-      card.addEventListener('mousemove', e => {
-        if (!tiltActive) return;
-        const r  = card.getBoundingClientRect();
-        const x  = (e.clientX - r.left) / r.width  - 0.5;
-        const y  = (e.clientY - r.top)  / r.height - 0.5;
-        const rX = -y * 9;
-        const rY =  x * 7;
-        const tY = -13 - Math.abs(y) * 4;
-        card.style.transform =
-          `translateY(${tY}px) scale(1.018) perspective(900px) rotateX(${rX}deg) rotateY(${rY}deg)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        tiltActive = false;
-        card.style.transition = 'transform 0.48s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.35s ease, border-color 0.28s ease, background 0.28s ease';
-        card.style.transform   = '';
-        card.style.borderColor = '';
-        card.style.background  = '';
-        card.style.boxShadow   = '';
-      });
-    }
-
-    return card;
-  }
+/* ─── A volume on the shelf ─── */
+function hashOf(str) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  return h;
 }
+function buildBook(mod, animIdx, lean) {
+  const book = document.createElement('div');
+  book.className = 'book';
+  book.dataset.id = mod.id;
+  const h = hashOf(String(mod.id));
+  book.style.setProperty('--w', (66 + h % 27) + 'px');
+  book.style.setProperty('--h', (224 + (h >>> 5) % 40) + 'px');
+  book.style.setProperty('--lean', lean + 'deg');
+  book.style.setProperty('--spine', SPINE[mod.color] || SPINE['from-violet-400 to-indigo-600']);
+  book.style.setProperty('--glow',  GLOW[mod.color]  || 'rgba(139,92,246,0.18)');
+  book.style.animationDelay = (animIdx * 0.05) + 's';
+  if (lean) book.style.marginLeft = '10px';
+
+  book.innerHTML = `
+    <button class="delete-btn" onclick="deleteModule('${mod.id}',event)" aria-label="Remove">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="book-ico"><i class="fa-solid ${mod.icon}"></i></div>
+    <div class="book-title"><span>${loc(mod.title)}</span></div>
+    <div class="book-num">${romanOf(mod)}</div>`;
+
+  if (!editMode) {
+    book.onclick = () => openModule(mod, book);
+    book.setAttribute('tabindex','0');
+    book.setAttribute('role','button');
+    book.setAttribute('aria-label','Open '+loc(mod.title));
+    book.onkeydown = e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModule(mod, book); } };
+    book.addEventListener('mouseenter', () => showTip(mod, book));
+    book.addEventListener('focus',      () => showTip(mod, book));
+    book.addEventListener('mouseleave', hideTip);
+    book.addEventListener('blur',       hideTip);
+  }
+  return book;
+}
+
+/* the slip of paper that rises above the book under the pointer */
+function showTip(mod, book) {
+  if (bookBusy) return;
+  const tip = document.getElementById('book-tip');
+  tip.innerHTML = `
+    <div class="tip-head">
+      <div class="icon-box bg-gradient-to-br ${mod.color}"><i class="fa-solid ${mod.icon}"></i></div>
+      <div>
+        <div class="chapter-num">${romanOf(mod)}</div>
+        <h3 class="card-title" style="font-size:19px;margin:0;">${loc(mod.title)}</h3>
+      </div>
+    </div>
+    <p class="card-tag">${loc(mod.subtitle)}</p>
+    <div class="ruled-sep" style="margin:10px 0;"></div>
+    <p class="card-desc" style="-webkit-line-clamp:4;">${loc(mod.description)}</p>
+    <div class="status-pill" style="margin-top:12px;">
+      <div class="pulse-dot"
+           style="background:${mod.custom?'#60a5fa':'#a07838'};
+                  box-shadow:0 0 6px ${mod.custom?'rgba(96,165,250,.42)':'rgba(160,120,56,.48)'}"></div>
+      <span>${mod.custom ? UI[currentLang].customStatus : UI[currentLang].readyStatus}</span>
+    </div>`;
+  const r = book.getBoundingClientRect();
+  tip.style.left = '0px'; tip.style.top = '0px';
+  tip.classList.add('on');
+  tip.setAttribute('aria-hidden', 'false');
+  const w = tip.offsetWidth, hgt = tip.offsetHeight;
+  let x = r.left + r.width / 2 - w / 2;
+  x = Math.max(12, Math.min(innerWidth - w - 12, x));
+  let y = r.top - 20 - hgt - 16;            /* above the lifted book */
+  if (y < 8) y = r.bottom + 14;             /* no room: below the shelf */
+  tip.style.left = x + 'px';
+  tip.style.top  = y + 'px';
+}
+function hideTip() {
+  const tip = document.getElementById('book-tip');
+  if (!tip) return;
+  tip.classList.remove('on');
+  tip.setAttribute('aria-hidden', 'true');
+}
+addEventListener('scroll', hideTip, { passive: true });
 
 /* ─── Search ─── */
 function handleSearch(val) {
@@ -1527,9 +1585,10 @@ const OPEN_KEY = 'kb_open_module';
 let currentModId = null;
 
 /* ─── Book-opening transition ───────────────────────────────
-   Clones the clicked card into a fixed overlay, swings its cover
-   open on the left edge to reveal the leaves, then expands into
-   the viewer. Skipped entirely when the reader prefers less motion. */
+   Builds a tome in a fixed overlay whose spine lies over the clicked
+   one, turns it on its hinge to show the front board, swings the cover
+   open on the left edge to reveal the leaves, then expands into the
+   viewer. Skipped entirely when the reader prefers less motion. */
 const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const EASE_BOOK = 'cubic-bezier(0.22,1,0.36,1)';
 let bookBusy = false;
@@ -1541,8 +1600,9 @@ const EASE_LIFT  = 'cubic-bezier(0.16,1,0.30,1)';   /* expo-out: fast away, long
 const EASE_BOARD = 'cubic-bezier(0.34,0.02,0.16,1)'; /* weight, then a long settle */
 const OPEN_DEG   = -172;                             /* essentially flat, not stopped short */
 
-function buildBook(cardEl) {
-  const r = cardEl.getBoundingClientRect();
+function buildTome(bookEl, mod) {
+  const r = bookEl.getBoundingClientRect();
+  const H = r.height, D = Math.max(r.width, 36), W = Math.round(H * 0.70);
   const layer = document.getElementById('book-fx');
   layer.innerHTML = '';
   layer.classList.add('on');
@@ -1551,19 +1611,15 @@ function buildBook(cardEl) {
   const halo = document.createElement('div'); halo.className = 'bk-halo';
   layer.appendChild(veil); layer.appendChild(halo);
 
+  /* The tome is the size of the front board. Its hinge sits at the right
+     edge of the shelved spine, so that, turned 90° on its hinge, the spine
+     face lies exactly over the one the reader just clicked. */
   const bk = document.createElement('div');
   bk.className = 'bk';
   bk.style.cssText =
-    `left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;`;
+    `left:${r.right - W / 2}px;top:${r.top}px;width:${W}px;height:${H}px;`;
 
-  /* the clicked card becomes the front of the cover */
-  const clone = cardEl.cloneNode(true);
-  clone.querySelectorAll('.delete-btn').forEach(n => n.remove());
-  ['transform','boxShadow','background','borderColor','transition']
-    .forEach(p => clone.style[p] = '');
-  clone.style.cssText +=
-    ';position:absolute;inset:0;width:100%;height:100%;margin:0;animation:none;transition:none;';
-
+  const spineGrad = SPINE[mod.color] || SPINE['from-violet-400 to-indigo-600'];
   bk.innerHTML =
     `<div class="bk-inner">
        <div class="bk-pages">
@@ -1574,12 +1630,25 @@ function buildBook(cardEl) {
        </div>
        <div class="bk-leaf"></div>
        <div class="bk-cover">
-         <div class="bk-face bk-front"><div class="bk-patina"></div></div>
+         <div class="bk-face bk-front">
+           <div class="bk-art" style="--spine:${spineGrad}">
+             <div class="bk-art-ico"><i class="fa-solid ${mod.icon}"></i></div>
+             <div class="bk-art-title">${loc(mod.title)}</div>
+             <div class="bk-art-sub">${loc(mod.subtitle)}</div>
+             <div class="bk-art-num">${romanOf(mod)}</div>
+           </div>
+         </div>
          <div class="bk-face bk-back"></div>
        </div>
+       <div class="bk-spine3d" style="width:${D}px;transform:translateZ(${-D}px) rotateY(-90deg);"></div>
      </div>`;
-  /* the card sits under the patina, so it ages rather than vanishing */
-  bk.querySelector('.bk-front').insertBefore(clone, bk.querySelector('.bk-patina'));
+
+  /* the clicked spine becomes the spine of the tome */
+  const clone = bookEl.cloneNode(true);
+  clone.querySelectorAll('.delete-btn').forEach(n => n.remove());
+  clone.style.cssText +=
+    ';position:absolute;inset:0;width:100%;height:100%;margin:0;animation:none;transition:none;transform:none;filter:none;';
+  bk.querySelector('.bk-spine3d').appendChild(clone);
   layer.appendChild(bk);
 
   const vw = innerWidth, vh = innerHeight;
@@ -1588,11 +1657,10 @@ function buildBook(cardEl) {
     cover: bk.querySelector('.bk-cover'),
     pages: bk.querySelector('.bk-pages'),
     leaf:  bk.querySelector('.bk-leaf'),
-    patina: bk.querySelector('.bk-patina'),
     /* lift the book to the middle of the screen, comfortably enlarged */
-    scale: Math.min(vw * 0.40 / r.width, vh * 0.60 / r.height, 2.4),
-    tx: vw / 2 - (r.left + r.width / 2),
-    ty: vh / 2 - (r.top + r.height / 2)
+    scale: Math.min(vw * 0.40 / W, vh * 0.60 / H, 2.4),
+    tx: vw / 2 - r.right,
+    ty: vh / 2 - (r.top + H / 2)
   };
 }
 function clearBook() {
@@ -1601,8 +1669,9 @@ function clearBook() {
   layer.innerHTML = '';
 }
 
-function playBookOpen(cardEl, onDissolve) {
-  const b = buildBook(cardEl);
+function playBookOpen(bookEl, mod, onDissolve) {
+  hideTip();
+  const b = buildTome(bookEl, mod);
   /* settle into a slight three-quarter view: dead-on reads flat */
   const tilt = 'rotateY(7deg) rotateX(-3deg)';
   const at   = k => `translate(${b.tx}px,${b.ty}px) scale(${b.scale * k}) ${tilt}`;
@@ -1610,24 +1679,21 @@ function playBookOpen(cardEl, onDissolve) {
   /* Timing. The hand-off to the document starts while the cover is still
      settling, so the motion never comes to rest before the page appears;
      waiting for every animation to finish first is what made it stall. */
-  const LIFT = 560, FLIP = 520, FLIP_AT = 40, LEAF = 400, LEAF_AT = 150;
-  const HANDOFF = 420, DISSOLVE = 360;
+  const LIFT = 760, FLIP = 520, FLIP_AT = 330, LEAF = 400, LEAF_AT = 440;
+  const HANDOFF = 700, DISSOLVE = 360;
 
   b.veil.animate([{ opacity: 0 }, { opacity: 1 }],
     { duration: 380, easing: 'ease-out', fill: 'forwards' });
   b.halo.animate([{ opacity: 0, transform: 'scale(0.72)' }, { opacity: 1, transform: 'scale(1)' }],
     { duration: 520, delay: 30, easing: EASE_LIFT, fill: 'forwards' });
 
-  /* One continuous lift: the book keeps drifting while the cover swings */
+  /* One continuous motion: the volume slides off the shelf, turns on its
+     hinge from spine to front board, and keeps drifting while the cover swings */
   b.bk.animate([
-      { transform: `translate(0,0) scale(1) rotateY(0deg) rotateX(0deg)`, offset: 0 },
+      { transform: `translate(0,0) scale(1) rotateY(90deg) rotateX(0deg)`, offset: 0 },
       { transform: at(1), offset: 0.62 },
       { transform: at(1.04), offset: 1 },
     ], { duration: LIFT, easing: EASE_LIFT, fill: 'forwards' });
-
-  /* the modern card acquires its patina on the way up */
-  b.patina.animate([{ opacity: 0 }, { opacity: 1 }],
-    { duration: 380, delay: 20, easing: 'ease-out', fill: 'forwards' });
 
   /* the cover: heavy at the start, opens past flat, settles */
   b.cover.animate([
@@ -1657,39 +1723,39 @@ function playBookOpen(cardEl, onDissolve) {
   return dissolve.finished.catch(() => {});
 }
 
-function playBookClose(cardEl) {
-  const b = buildBook(cardEl);
+function playBookClose(bookEl, mod) {
+  hideTip();
+  const b = buildTome(bookEl, mod);
   const mid  = `translate(${b.tx}px,${b.ty}px) scale(${b.scale}) rotateY(7deg) rotateX(-3deg)`;
   const near = `translate(${b.tx}px,${b.ty}px) scale(${b.scale * 1.5}) rotateY(7deg) rotateX(-3deg)`;
   b.cover.style.transform = `translateZ(2px) rotateY(${OPEN_DEG}deg)`;
   b.leaf.style.opacity = '0';
-  b.patina.style.opacity = '1';
   b.veil.style.opacity = '1';
   b.halo.style.opacity = '1';
 
+  /* the book comes back, shuts, turns spine-out and slides home on the shelf */
   const settle = b.bk.animate([
       { transform: near, opacity: 0, offset: 0 },
-      { transform: mid, opacity: 1, offset: 0.30 },
-      { transform: 'translate(0,0) scale(1) rotateY(0deg) rotateX(0deg)', opacity: 1, offset: 1 },
-    ], { duration: 500, easing: 'cubic-bezier(0.36,0,0.24,1)', fill: 'forwards' });
+      { transform: mid, opacity: 1, offset: 0.26 },
+      { transform: mid, opacity: 1, offset: 0.48 },
+      { transform: 'translate(0,0) scale(1) rotateY(90deg) rotateX(0deg)', opacity: 1, offset: 1 },
+    ], { duration: 720, easing: 'cubic-bezier(0.36,0,0.24,1)', fill: 'forwards' });
 
   const shut = b.cover.animate(
     [{ transform: `translateZ(2px) rotateY(${OPEN_DEG}deg)` }, { transform: 'translateZ(2px) rotateY(0deg)' }],
-    { duration: 400, delay: 80, easing: 'cubic-bezier(0.42,0,0.22,1)', fill: 'forwards' });
+    { duration: 360, delay: 60, easing: 'cubic-bezier(0.42,0,0.22,1)', fill: 'forwards' });
 
-  b.patina.animate([{ opacity: 1 }, { opacity: 0 }],
-    { duration: 280, delay: 260, easing: 'ease-in', fill: 'forwards' });
   b.veil.animate([{ opacity: 1 }, { opacity: 0 }],
-    { duration: 460, delay: 80, easing: 'ease-in', fill: 'forwards' });
+    { duration: 520, delay: 180, easing: 'ease-in', fill: 'forwards' });
   b.halo.animate([{ opacity: 1 }, { opacity: 0 }],
-    { duration: 380, delay: 80, easing: 'ease-in', fill: 'forwards' });
+    { duration: 420, delay: 180, easing: 'ease-in', fill: 'forwards' });
 
   return Promise.all([settle.finished, shut.finished]).catch(() => {});
 }
 
-/* the card a given module is currently shelved on, if it is still rendered */
+/* the spine a given module currently stands on, if it is still rendered and on screen */
 function cardOf(id) {
-  const el = document.querySelector(`.glass-card[data-id="${id}"]`);
+  const el = document.querySelector(`.book[data-id="${id}"]`);
   if (!el) return null;
   const r = el.getBoundingClientRect();
   return (r.bottom > 0 && r.top < innerHeight) ? el : null;
@@ -1740,7 +1806,7 @@ function openModule(mod, cardEl) {
   viewer.classList.add('from-book');
   /* the document is raised the instant the book begins to dissolve,
      so the two cross-fade instead of showing the shelf in between */
-  const opening = playBookOpen(cardEl, () => { viewer.style.display = 'block'; });
+  const opening = playBookOpen(cardEl, mod, () => { viewer.style.display = 'block'; });
 
   /* 讓封面先動起來，再開始載入 iframe, , 否則載入的同步成本會卡住開場那一刻 */
   requestAnimationFrame(() => requestAnimationFrame(() => { frame.src = mod.file; }));
@@ -1767,6 +1833,7 @@ function viewerSwitchLang(l) {
 function closeViewer() {
   if (bookBusy) return;
   const card = currentModId ? cardOf(currentModId) : null;
+  const mod  = currentModId ? modules.find(m => m.id === currentModId) : null;
 
   document.getElementById('module-viewer').style.display = 'none';
   document.getElementById('viewer-frame').src = '';
@@ -1776,7 +1843,7 @@ function closeViewer() {
 
   if (!card || REDUCE_MOTION) return;      /* 卡片已被篩掉或不在畫面上就不播 */
   bookBusy = true;
-  playBookClose(card).then(() => { clearBook(); bookBusy = false; });
+  playBookClose(card, mod).then(() => { clearBook(); bookBusy = false; });
 }
 
 /* ─── Modal ─── */
