@@ -1161,25 +1161,25 @@ function switchLang(l) {
 /* ─── Data ─── */
 const STORAGE_KEY = 'knowledge_galaxy_modules';
 
-const SPINE = {
-  'from-violet-400 to-indigo-600':  'linear-gradient(180deg,#a78bfa,#4f46e5)',
-  'from-emerald-400 to-teal-600':   'linear-gradient(180deg,#34d399,#0d9488)',
-  'from-pink-400 to-rose-600':      'linear-gradient(180deg,#f472b6,#e11d48)',
-  'from-amber-400 to-orange-500':   'linear-gradient(180deg,#fbbf24,#f97316)',
-  'from-sky-400 to-blue-600':       'linear-gradient(180deg,#38bdf8,#2563eb)',
-  'from-fuchsia-400 to-purple-700': 'linear-gradient(180deg,#e879f9,#7e22ce)',
-  'from-lime-400 to-green-600':     'linear-gradient(180deg,#a3e635,#16a34a)',
-  'from-cyan-400 to-sky-600':       'linear-gradient(180deg,#22d3ee,#0284c7)',
+const SPINE = {   /* muted bookcloth: low saturation, like an old library's shelves */
+  'from-violet-400 to-indigo-600':  'linear-gradient(180deg,#76668a,#4b415e)',  /* dusty plum */
+  'from-emerald-400 to-teal-600':   'linear-gradient(180deg,#5f8270,#3a5446)',  /* sage */
+  'from-pink-400 to-rose-600':      'linear-gradient(180deg,#9a6670,#64404a)',  /* faded rose */
+  'from-amber-400 to-orange-500':   'linear-gradient(180deg,#b09160,#7c6038)',  /* ochre */
+  'from-sky-400 to-blue-600':       'linear-gradient(180deg,#647d96,#3f5268)',  /* slate blue */
+  'from-fuchsia-400 to-purple-700': 'linear-gradient(180deg,#8a6884,#5a4058)',  /* mauve */
+  'from-lime-400 to-green-600':     'linear-gradient(180deg,#8a9160,#5a6038)',  /* olive */
+  'from-cyan-400 to-sky-600':       'linear-gradient(180deg,#5f8a8e,#3b5c60)',  /* teal grey */
 };
 const GLOW = {
-  'from-violet-400 to-indigo-600':  'rgba(139,92,246,0.18)',
-  'from-emerald-400 to-teal-600':   'rgba(52,211,153,0.16)',
-  'from-pink-400 to-rose-600':      'rgba(244,114,182,0.16)',
-  'from-amber-400 to-orange-500':   'rgba(251,191,36,0.16)',
-  'from-sky-400 to-blue-600':       'rgba(56,189,248,0.16)',
-  'from-fuchsia-400 to-purple-700': 'rgba(232,121,249,0.16)',
-  'from-lime-400 to-green-600':     'rgba(163,230,53,0.15)',
-  'from-cyan-400 to-sky-600':       'rgba(34,211,238,0.15)',
+  'from-violet-400 to-indigo-600':  'rgba(118,102,138,0.22)',
+  'from-emerald-400 to-teal-600':   'rgba(95,130,112,0.22)',
+  'from-pink-400 to-rose-600':      'rgba(154,102,112,0.22)',
+  'from-amber-400 to-orange-500':   'rgba(176,145,96,0.24)',
+  'from-sky-400 to-blue-600':       'rgba(100,125,150,0.22)',
+  'from-fuchsia-400 to-purple-700': 'rgba(138,104,132,0.22)',
+  'from-lime-400 to-green-600':     'rgba(138,145,96,0.22)',
+  'from-cyan-400 to-sky-600':       'rgba(95,138,142,0.22)',
 };
 const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X',
                'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
@@ -1475,7 +1475,7 @@ function showTip(mod, book) {
   const tip = document.getElementById('book-tip');
   tip.innerHTML = `
     <div class="tip-head">
-      <div class="icon-box bg-gradient-to-br ${mod.color}"><i class="fa-solid ${mod.icon}"></i></div>
+      <div class="icon-box" style="background:${SPINE[mod.color] || SPINE['from-violet-400 to-indigo-600']}"><i class="fa-solid ${mod.icon}"></i></div>
       <div>
         <div class="chapter-num">${romanOf(mod)}</div>
         <h3 class="card-title" style="font-size:19px;margin:0;">${loc(mod.title)}</h3>
