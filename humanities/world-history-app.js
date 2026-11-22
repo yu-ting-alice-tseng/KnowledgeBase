@@ -342,7 +342,7 @@ let currentView = 'timeline';
 function showView(v) {
   if (!document.getElementById('view-' + v)) return;
   currentView = v;
-  ['timeline', 'movements', 'study'].forEach(k => {
+  ['timeline', 'movements', 'countries', 'study'].forEach(k => {
     document.getElementById('view-' + k).classList.toggle('view-hidden', k !== v);
     const t = document.getElementById('vtab-' + k);
     t.classList.toggle('active', k === v);
@@ -493,6 +493,7 @@ function switchLang(l) {
   setFilter(regionFilter);
   renderHistoryIndex();
   renderStudy();
+  if (typeof renderCountries === 'function') renderCountries();
   if (selectedId) selectHistory(selectedId, false);
   sc.scrollLeft = keepScroll;
 }
