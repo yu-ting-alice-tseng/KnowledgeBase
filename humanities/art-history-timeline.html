@@ -1032,6 +1032,7 @@ ma: {
     { name: "Rembrandt van Rijn", y: "1606–1669", n: "Soul of the Dutch Golden Age; nearly a hundred self-portraits form his most honest autobiography.", w: [["The Night Watch","1642"],["The Anatomy Lesson of Dr. Tulp","1632"],["Late self-portraits","1650s–60s"]] },
     { name: "Johannes Vermeer", y: "1632–1675", n: "The quiet master of Delft; barely thirty works survive, signed in daylight and pearl.", w: [["Girl with a Pearl Earring","c. 1665"],["The Milkmaid","c. 1658"]] },
     { name: "Gian Lorenzo Bernini", y: "1598–1680", n: "Director-general of Baroque Rome; marble given skin and wind-blown cloth.", w: [["Ecstasy of Saint Teresa","1652"],["Apollo and Daphne","1625"]] },
+    { name: "Francisco de Zurbarán", y: "1598–1664", n: "Painter of monks; white habits carved out of darkness, prayer made almost tangible.", w: [["Saint Serapion","1628"],["Agnus Dei","c. 1635–40"],["Still Life with Lemons, Oranges and a Rose","1633"]] },
   ],
   rococo: [
     { name: "Antoine Watteau", y: "1684–1721", n: "Invented the fête galante — joy always tinged with farewell.", w: [["Pilgrimage to Cythera","1717"],["Pierrot (Gilles)","c. 1719"]] },
@@ -1268,6 +1269,7 @@ ma: {
     { name: "Rembrandt van Rijn", y: "1606–1669", n: "Âme du Siècle d'or hollandais ; près de cent autoportraits, la plus honnête des autobiographies.", w: [["La Ronde de nuit","1642"],["La Leçon d'anatomie du docteur Tulp","1632"],["Autoportraits tardifs","1650–60"]] },
     { name: "Johannes Vermeer", y: "1632–1675", n: "Maître silencieux de Delft ; à peine trente œuvres, signées de lumière et de perle.", w: [["La Jeune Fille à la perle","v. 1665"],["La Laitière","v. 1658"]] },
     { name: "Le Bernin", y: "1598–1680", n: "Metteur en scène de la Rome baroque ; le marbre doté de peau et d'étoffes au vent.", w: [["L'Extase de sainte Thérèse","1652"],["Apollon et Daphné","1625"]] },
+    { name: "Francisco de Zurbarán", y: "1598–1664", n: "Peintre des moines ; bures blanches taillées dans l'ombre, la prière rendue presque palpable.", w: [["Saint Sérapion","1628"],["Agnus Dei","v. 1635–40"],["Nature morte aux citrons, oranges et rose","1633"]] },
   ],
   rococo: [
     { name: "Antoine Watteau", y: "1684–1721", n: "Inventeur de la fête galante — la joie toujours teintée d'adieu.", w: [["Pèlerinage à l'île de Cythère","1717"],["Pierrot, dit Gilles","v. 1719"]] },
@@ -1404,6 +1406,8 @@ const MASTERS = {
       works:[['戴珍珠耳環的少女','約1665'],['倒牛奶的女僕','約1658']] },
     { name:'貝尼尼', en:'Gian Lorenzo Bernini', years:'1598–1680', note:'巴洛克羅馬的總導演，讓大理石擁有肌膚的溫度與布料的飄動。',
       works:[['聖泰瑞莎的狂喜','1652'],['阿波羅與達芙妮','1625']] },
+    { name:'蘇巴朗', en:'Francisco de Zurbarán', years:'1598–1664', note:'「修士的畫家」，白色僧袍從黑暗中雕刻而出，讓祈禱幾乎觸手可及。',
+      works:[['聖塞拉皮翁','1628'],['神的羔羊','約1635–40'],['檸檬、柳橙與玫瑰靜物','1633']] },
   ],
   rococo: [
     { name:'華托', en:'Antoine Watteau', years:'1684–1721', note:'開創「雅宴畫」，在歡愉中總帶著一絲憂鬱的告別感。',
@@ -1881,6 +1885,9 @@ baroque: [
   { zh: "八歲即能刻大理石的神童，歷仕八任教宗，聖彼得廣場的環抱柱廊即其手筆。戲劇、佈景、噴泉無所不能，讓整座羅馬成為巴洛克的舞台；對手波洛米尼的每一座教堂，都是與他競技的回聲。",
     en: "A prodigy carving marble at eight, he served eight popes and designed the embracing colonnade of St Peter’s Square. Playwright, stage designer, fountain-maker, he turned all Rome into a Baroque theatre; every church by his rival Borromini echoes their duel.",
     fr: "Prodige taillant le marbre à huit ans, il servit huit papes et dessina la colonnade de la place Saint-Pierre. Dramaturge, scénographe, fontainier, il fit de Rome entière un théâtre baroque ; chaque église de son rival Borromini résonne de leur duel." },
+  { zh: "生於西班牙西部埃斯特雷馬杜拉的商人家庭，在塞維亞學藝，為加爾都西會、聖哲羅姆會等修會繪製大量祭壇畫，被稱為「西班牙的卡拉瓦喬」。1634 年經好友維拉斯奎茲引薦赴馬德里為王宮作畫；晚年塞維亞品味轉向牟利羅的柔美畫風，訂單流失，只能大量外銷畫作至美洲，最後在馬德里困頓辭世。",
+    en: "Born to a merchant family in Extremadura and trained in Seville, he painted cycle after cycle for Carthusian, Jeronymite and other orders, earning the name “the Spanish Caravaggio.” In 1634 his friend Velázquez brought him to Madrid to work on the royal palace. Later, as Seville’s taste turned to Murillo’s softer manner, commissions dried up; he shipped canvases by the crate to the Americas and died in straitened circumstances in Madrid.",
+    fr: "Né dans une famille de marchands d’Estrémadure et formé à Séville, il peignit cycle après cycle pour les chartreux, les hiéronymites et d’autres ordres, ce qui lui valut le surnom de « Caravage espagnol ». En 1634, son ami Velázquez le fit venir à Madrid pour décorer le palais royal. Plus tard, Séville préférant la douceur de Murillo, les commandes se tarirent ; il expédia ses toiles par caisses vers les Amériques et mourut dans la gêne à Madrid." },
 ],
 rococo: [
   { zh: "法蘭德斯邊城瓦朗謝訥出身，體弱多病。他發明「雅宴畫」這一新畫種，學院為此破格增設類別；筆下的遊園盛會總籠罩著離別的微光。三十六歲死於肺癆，臨終前仍要求畫筆。",
