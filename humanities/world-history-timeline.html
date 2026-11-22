@@ -498,6 +498,24 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
   .cx-facets { grid-template-columns: 1fr; }
 }
 
+
+/* trivia cards: a fact plus where to go and see it */
+.cx-trivia { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.cx-tv { position: relative; border-radius: 12px; padding: 12px 15px 12px; background: rgba(255,243,210,0.035);
+  border: 1px solid rgba(201,168,92,0.16); border-top: 2px solid var(--tc); display: flex; flex-direction: column; }
+.cx-tv-h { display: flex; gap: 9px; align-items: flex-start; font-size: 13.5px; font-weight: 800; line-height: 1.45; color: #efe3c8; }
+.cx-tv-ic { font-size: 18px; line-height: 1.2; }
+.cx-tv-tag { align-self: flex-start; margin: 5px 0 0 27px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; color: var(--tc); }
+.cx-tv p { font-size: 12.5px !important; line-height: 1.8 !important; margin: 6px 0 10px; flex: 1; }
+.cx-where { display: block; font-size: 11.5px; font-weight: 700; line-height: 1.6; color: var(--gold-hi); text-decoration: none;
+  padding: 7px 11px; border-radius: 9px; background: rgba(201,168,92,0.09); border: 1px solid rgba(201,168,92,0.26); transition: all .2s; }
+a.cx-where:hover { background: rgba(201,168,92,0.18); border-color: rgba(201,168,92,0.55); }
+.cx-where.plain { cursor: default; }
+.cx-where-go { display: block; margin-top: 2px; font-size: 9.5px; letter-spacing: 0.06em; color: var(--gold-lo); }
+a.cx-where:hover .cx-where-go { color: var(--gold-hi); }
+.cx-card.slim .cx-label { margin-top: 12px; }
+@media (max-width: 640px) { .cx-trivia { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 <body>
@@ -654,6 +672,7 @@ function esc(s) { return s.replace(/</g, '&lt;'); }
 </script>
 <script src="world-history-data.js"></script>
 <script src="world-history-app.js"></script>
+<script src="world-history-trivia.js"></script>
 <script src="world-history-countries.js"></script>
 <script src="../assets/edit-mode.js" defer></script>
 </body>

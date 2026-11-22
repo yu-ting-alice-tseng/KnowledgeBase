@@ -1,0 +1,155 @@
+/* ═══════════ 國別史小知識：每則附「在哪裡看得到」 ═══════════
+   CX_TRIVIA[countryId][periodId] = [ { theme, icon, q, title, text, at } ]
+   theme : one of CX_THEMES ids, so the thematic narrative can show it too
+   q     : search text for the map link (omit when there is no single place)
+   at    : where to see it, in three languages */
+const CX_TRIVIA = { france: {
+
+gaul: [
+  { theme:'society', icon:'🌉', q:'Pont du Gard',
+    title:{ zh:'羅馬水道橋：靠重力引水五十公里', en:'A Roman aqueduct that runs on gravity alone', fr:'Un aqueduc romain qui ne doit rien qu’à la gravité' },
+    text:{ zh:'尼姆的羅馬水道全長約 50 公里，每公里只下降約 34 公分，全靠重力把泉水送進城。跨越加爾河的三層石橋高約 49 公尺，石塊之間沒有用灰漿，兩千年後仍然屹立。',
+      en:'The aqueduct serving Nîmes ran for about 50 km and fell only some 34 cm per kilometre, bringing spring water to the city by gravity alone. Its three-tier bridge over the Gard stands about 49 m high, and its great stones were laid without mortar.',
+      fr:'L’aqueduc de Nîmes courait sur environ 50 km avec une pente d’à peine 34 cm par kilomètre : l’eau de source arrivait en ville par la seule gravité. Son pont à trois niveaux sur le Gardon culmine à environ 49 m, et ses grands blocs sont posés sans mortier.' },
+    at:{ zh:'Pont du Gard，近尼姆（Nîmes）', en:'Pont du Gard, near Nîmes', fr:'Pont du Gard, près de Nîmes' } },
+  { theme:'culture', icon:'🏟️', q:'Arènes de Lutèce Paris',
+    title:{ zh:'巴黎的羅馬競技場：雨果幫忙保住的', en:'The Roman arena of Paris that Victor Hugo helped save', fr:'L’arène romaine de Paris sauvée avec l’aide de Victor Hugo' },
+    text:{ zh:'羅馬時期的盧泰西亞（巴黎舊名）有一座可容納上萬人的競技場，1860 年代修路時被重新挖出。保存運動中，雨果也出聲聲援；今天附近居民在裡面踢球、玩滾球。',
+      en:'Roman Lutetia, as Paris was then called, had an arena that held over ten thousand spectators. Rediscovered in the 1860s during roadworks, it was saved with the help of Victor Hugo, and today locals play football and pétanque inside it.',
+      fr:'Lutèce, nom romain de Paris, possédait des arènes de plus de dix mille places. Redécouvertes dans les années 1860 lors de travaux de voirie, elles ont été sauvées avec l’appui de Victor Hugo ; les riverains y jouent aujourd’hui au foot et à la pétanque.' },
+    at:{ zh:'Arènes de Lutèce，巴黎五區', en:'Arènes de Lutèce, Paris 5th arrondissement', fr:'Arènes de Lutèce, Paris 5ᵉ' } },
+],
+
+franks: [
+  { theme:'state', icon:'⚰️', q:'Basilique Saint-Denis',
+    title:{ zh:'聖德尼：法國國王的墓園', en:'Saint-Denis, the burial place of the kings', fr:'Saint-Denis, nécropole des rois' },
+    text:{ zh:'從七世紀的達戈貝爾一世起，法國多數國王與王后都安葬在聖德尼。大革命時王室墳墓被掘開、遺骸丟進集體墓穴，1817 年才重新集中安葬在地下墓室；精雕的臥像則大多保存下來，仍在教堂裡。',
+      en:'From Dagobert I in the seventh century, most French kings and queens were buried at Saint-Denis. In the Revolution the royal tombs were opened and the remains thrown into common pits; they were gathered in the crypt only in 1817, while most of the carved effigies survived and still lie in the church.',
+      fr:'Dès Dagobert Iᵉʳ, au VIIᵉ siècle, la plupart des rois et reines de France y sont enterrés. Sous la Révolution, les tombes royales sont ouvertes et les restes jetés dans des fosses communes ; ils ne sont regroupés dans la crypte qu’en 1817, tandis que la plupart des gisants ont survécu et reposent toujours dans la basilique.' },
+    at:{ zh:'Basilique Saint-Denis，巴黎北郊（地鐵 13 號線可達）', en:'Basilique Saint-Denis, just north of Paris (metro line 13)', fr:'Basilique Saint-Denis, au nord de Paris (métro ligne 13)' } },
+],
+
+capetian: [
+  { theme:'faith', icon:'🪟', q:'Sainte-Chapelle Paris',
+    title:{ zh:'聖禮拜堂：為一頂荊棘冠而建', en:'Sainte-Chapelle, built for a crown of thorns', fr:'La Sainte-Chapelle, écrin d’une couronne d’épines' },
+    text:{ zh:'路易九世在 1239 年向君士坦丁堡買下據傳是耶穌受難時的荊棘冠冕，並在王宮裡蓋了這座禮拜堂安放聖物，1248 年完工。上層牆面幾乎全是彩色玻璃，十三世紀的原件仍占近三分之二。',
+      en:'In 1239 Louis IX bought from Constantinople what was believed to be Christ’s Crown of Thorns, and built this chapel in his palace to house it, finishing in 1248. The upper walls are almost entirely stained glass, about two thirds of it original thirteenth-century work.',
+      fr:'En 1239, Louis IX achète à Constantinople ce que l’on croyait être la couronne d’épines du Christ et fait bâtir cette chapelle dans son palais pour l’abriter ; elle est achevée en 1248. La chapelle haute est presque entièrement vitrée, et près des deux tiers des verrières sont d’origine, du XIIIᵉ siècle.' },
+    at:{ zh:'Sainte-Chapelle，巴黎西堤島，與 Conciergerie 同在古王宮範圍內', en:'Sainte-Chapelle, Île de la Cité, Paris, in the same old royal palace as the Conciergerie', fr:'Sainte-Chapelle, île de la Cité, Paris, dans l’ancien palais royal, à côté de la Conciergerie' } },
+],
+
+valois: [
+  { theme:'society', icon:'🍲', q:'Conciergerie Paris',
+    title:{ zh:'1378 年的三王宴會：「potages」不只是湯', en:'The banquet of the three kings, 1378: “potages” were not just soup', fr:'Le banquet des trois rois, 1378 : les « potages » ne sont pas qu’une soupe' },
+    text:{ zh:'查理五世在王宮大廳宴請神聖羅馬皇帝查理四世與他的兒子文策爾，三位國王同席，這場宴會被畫進了《法蘭西大編年史》。第一道上桌的「potages」，指的是各種燉煮的菜餚，從清湯到濃稠的燉肉都算，例如煮熟的牡蠣配上番紅花色的香料濃湯。',
+      en:'Charles V feasted the Holy Roman Emperor Charles IV and his son Wenceslas in the great hall of the royal palace, three kings at one table, and the scene was later painted in the Grandes Chroniques de France. The first service, the “potages”, meant all manner of simmered dishes, from light broth to thick stew, such as oysters cooked in a spiced, saffron-coloured broth.',
+      fr:'Charles V reçoit l’empereur Charles IV et son fils Wenceslas dans la grande salle du palais : trois rois à la même table, scène plus tard peinte dans les Grandes Chroniques de France. Le premier service, celui des « potages », désigne toutes sortes de plats mijotés, du bouillon léger au ragoût consistant, par exemple des huîtres cuites dans un bouillon épicé couleur safran.' },
+    at:{ zh:'Conciergerie（古王宮 Palais de la Cité），巴黎西堤島。館內的互動平板導覽可看到這場宴會的重現', en:'Conciergerie (the old Palais de la Cité), Île de la Cité, Paris. The interactive tablet guide recreates the banquet', fr:'Conciergerie (ancien Palais de la Cité), île de la Cité, Paris. Le parcours à tablette recrée ce banquet' } },
+  { theme:'culture', icon:'🏰', q:'Château de Chinon',
+    title:{ zh:'希農城堡：貞德認出王太子的地方', en:'Chinon, where Joan of Arc found the Dauphin', fr:'Chinon, où Jeanne d’Arc reconnaît le dauphin' },
+    text:{ zh:'1429 年，貞德在希農城堡的大廳見到王太子查理。傳說王太子故意混在人群裡，她仍一眼認出。這座城堡也是英王亨利二世 1189 年去世的地方。',
+      en:'In 1429 Joan of Arc met the Dauphin Charles in the great hall of Chinon castle. Legend says he hid among the courtiers and she picked him out at once. Henry II of England had died in the same castle in 1189.',
+      fr:'En 1429, Jeanne d’Arc rencontre le dauphin Charles dans la grande salle du château de Chinon. Selon la légende, il se cache parmi les courtisans et elle le reconnaît aussitôt. Henri II d’Angleterre était mort dans ce même château en 1189.' },
+    at:{ zh:'Château de Chinon，羅亞爾河谷', en:'Château de Chinon, Loire Valley', fr:'Château de Chinon, vallée de la Loire' } },
+],
+
+renaissance: [
+  { theme:'culture', icon:'🖼️', q:'Musée du Louvre',
+    title:{ zh:'蒙娜麗莎為什麼在羅浮宮', en:'Why the Mona Lisa hangs in Paris', fr:'Pourquoi la Joconde est au Louvre' },
+    text:{ zh:'達文西在 1516 年應法蘭索瓦一世之邀來到法國，隨身帶著《蒙娜麗莎》，1519 年在昂布瓦斯去世。這幅畫後來進入法國王室收藏，成為羅浮宮的鎮館之寶。',
+      en:'Leonardo came to France in 1516 at the invitation of Francis I, bringing the Mona Lisa with him, and died at Amboise in 1519. The painting later entered the French royal collection and became the star of the Louvre.',
+      fr:'Léonard arrive en France en 1516 à l’invitation de François Iᵉʳ, avec la Joconde dans ses bagages, et meurt à Amboise en 1519. Le tableau entre ensuite dans les collections royales et devient la vedette du Louvre.' },
+    at:{ zh:'Musée du Louvre，巴黎；達文西最後居住的 Clos Lucé 在昂布瓦斯', en:'Musée du Louvre, Paris; Leonardo’s last home, the Clos Lucé, is at Amboise', fr:'Musée du Louvre, Paris ; la dernière demeure de Léonard, le Clos Lucé, est à Amboise' } },
+  { theme:'culture', icon:'📜', q:'Château de Villers-Cotterêts',
+    title:{ zh:'1539：法語成為官方語言', en:'1539: French becomes the language of the state', fr:'1539 : le français devient langue de l’État' },
+    text:{ zh:'法蘭索瓦一世簽署的維萊科特雷敕令，規定法庭與官方文件改用法語、不再用拉丁語，是以語言統一國家的重要一步。簽署敕令的城堡，2023 年改建成「法語國際城」對外開放。',
+      en:'The ordinance signed by Francis I at Villers-Cotterêts required courts and official documents to use French rather than Latin, a major step in unifying the country through language. The château where it was signed opened in 2023 as the Cité internationale de la langue française.',
+      fr:'L’ordonnance signée par François Iᵉʳ à Villers-Cotterêts impose le français, et non plus le latin, aux tribunaux et aux actes officiels : une étape majeure de l’unification par la langue. Le château où elle fut signée a ouvert en 2023 sous le nom de Cité internationale de la langue française.' },
+    at:{ zh:'Château de Villers-Cotterêts，巴黎東北約 80 公里', en:'Château de Villers-Cotterêts, about 80 km north-east of Paris', fr:'Château de Villers-Cotterêts, à environ 80 km au nord-est de Paris' } },
+],
+
+absolutism: [
+  { theme:'state', icon:'🪞', q:'Château de Versailles',
+    title:{ zh:'凡爾賽鏡廳：從太陽王的舞台到簽約現場', en:'The Hall of Mirrors: from the Sun King’s stage to a treaty room', fr:'La galerie des Glaces : de la scène du Roi-Soleil à la salle des traités' },
+    text:{ zh:'鏡廳在 1680 年代完工，用大量鏡子與窗外的花園向各國使節炫耀王權。1871 年德意志帝國在這裡宣布成立，1919 年結束一戰的《凡爾賽條約》也在這裡簽署。',
+      en:'Finished in the 1680s, the gallery used mirrors and views of the gardens to dazzle foreign ambassadors. The German Empire was proclaimed here in 1871, and the Treaty of Versailles ending the First World War was signed here in 1919.',
+      fr:'Achevée dans les années 1680, la galerie éblouissait les ambassadeurs par ses miroirs et sa vue sur les jardins. L’Empire allemand y est proclamé en 1871, et le traité de Versailles qui clôt la Première Guerre mondiale y est signé en 1919.' },
+    at:{ zh:'Château de Versailles，巴黎西南郊', en:'Château de Versailles, south-west of Paris', fr:'Château de Versailles, au sud-ouest de Paris' } },
+  { theme:'culture', icon:'☕', q:'Le Procope Paris',
+    title:{ zh:'Procope：啟蒙思想家的咖啡館', en:'Le Procope: the café of the Enlightenment', fr:'Le Procope : le café des Lumières' },
+    text:{ zh:'1686 年開張的 Procope 是巴黎歷史最悠久的咖啡館之一，伏爾泰、狄德羅與盧梭都曾是常客，百科全書派的點子常在這裡的桌邊醞釀。這家店今天仍在營業。',
+      en:'Opened in 1686, Le Procope is among the oldest cafés in Paris. Voltaire, Diderot and Rousseau were regulars, and ideas for the Encyclopédie were argued over its tables. It still serves customers today.',
+      fr:'Ouvert en 1686, Le Procope est l’un des plus anciens cafés de Paris. Voltaire, Diderot et Rousseau y avaient leurs habitudes, et les idées de l’Encyclopédie s’y discutaient entre deux tasses. Il accueille toujours des clients aujourd’hui.' },
+    at:{ zh:'Le Procope，巴黎六區 Ancienne Comédie 街 13 號', en:'Le Procope, 13 rue de l’Ancienne Comédie, Paris 6th', fr:'Le Procope, 13 rue de l’Ancienne Comédie, Paris 6ᵉ' } },
+],
+
+revolution: [
+  { theme:'state', icon:'⛓️', q:'Conciergerie Paris',
+    title:{ zh:'古監獄 Conciergerie：通往斷頭台的前一站', en:'The Conciergerie: the last stop before the guillotine', fr:'La Conciergerie : dernière étape avant la guillotine' },
+    text:{ zh:'這座建築原是王宮，名字來自管理王宮的「宮廷總管」concierge。大革命時它成了監獄，革命法庭就在同一座王宮裡開庭，關過瑪麗·安托瓦內特、丹東與羅伯斯比爾。館內重現了她的牢房。',
+      en:'Once part of the royal palace, it takes its name from the concierge, the officer who ran the palace. In the Revolution it became a prison, with the Revolutionary Tribunal sitting in the same palace, and held Marie Antoinette, Danton and Robespierre. A reconstruction of her cell can be visited.',
+      fr:'Ancienne partie du palais royal, elle doit son nom au concierge, l’officier chargé de l’administrer. Sous la Révolution, elle devient prison, le Tribunal révolutionnaire siégeant dans le même palais, et détient Marie-Antoinette, Danton et Robespierre. On peut y visiter une reconstitution de la cellule de la reine.' },
+    at:{ zh:'Conciergerie，巴黎西堤島', en:'Conciergerie, Île de la Cité, Paris', fr:'Conciergerie, île de la Cité, Paris' } },
+  { theme:'faith', icon:'🏛️', q:'Panthéon Paris',
+    title:{ zh:'教堂變成偉人祠：Panthéon', en:'From church to temple of great men: the Panthéon', fr:'D’église à temple des grands hommes : le Panthéon' },
+    text:{ zh:'路易十五為了還願而建的聖日內維耶教堂，1791 年被革命政府改成「偉人祠」，門楣刻著「祖國感念偉人」。伏爾泰、盧梭、雨果、居禮夫婦等人長眠於此，是政教關係變化的縮影。',
+      en:'Begun by Louis XV in fulfilment of a vow as the church of Sainte-Geneviève, it was turned into a “temple of great men” by the Revolution in 1791, its pediment reading “To great men, the grateful homeland”. Voltaire, Rousseau, Hugo and the Curies rest here, a symbol of the shifting bond between church and state.',
+      fr:'Commencée par Louis XV en accomplissement d’un vœu comme église Sainte-Geneviève, elle est transformée par la Révolution en 1791 en « temple des grands hommes », avec sur son fronton « Aux grands hommes la patrie reconnaissante ». Voltaire, Rousseau, Hugo et les Curie y reposent : un symbole des rapports changeants entre l’Église et l’État.' },
+    at:{ zh:'Panthéon，巴黎五區', en:'Panthéon, Paris 5th arrondissement', fr:'Panthéon, Paris 5ᵉ' } },
+  { theme:'society', icon:'📏', q:'36 rue de Vaugirard Paris',
+    title:{ zh:'街邊的大理石公尺', en:'The marble metres set into Paris walls', fr:'Les mètres étalons de marbre dans les rues de Paris' },
+    text:{ zh:'革命政府把「一公尺」定為經過巴黎的子午線，北極到赤道距離的一千萬分之一。1796 至 1797 年，十六把大理石標準尺被嵌進巴黎街頭，讓市民對照。如今只剩兩把仍在原處。',
+      en:'The revolutionary government defined the metre as one ten-millionth of the distance from the North Pole to the equator along the meridian through Paris. In 1796-97 sixteen marble metre rules were set into the walls of Paris so citizens could check measures, and only two remain in place.',
+      fr:'Le gouvernement révolutionnaire définit le mètre comme la dix-millionième partie de la distance du pôle Nord à l’équateur, le long du méridien de Paris. En 1796-1797, seize mètres étalons de marbre sont scellés dans les murs de Paris pour que chacun puisse vérifier les mesures ; il n’en reste que deux en place.' },
+    at:{ zh:'巴黎六區 Vaugirard 街 36 號（參議院外牆），以及 Vendôme 廣場 13 號', en:'36 rue de Vaugirard (Senate wall, Paris 6th) and 13 place Vendôme', fr:'36 rue de Vaugirard (mur du Sénat, Paris 6ᵉ) et 13 place Vendôme' } },
+],
+
+c19: [
+  { theme:'society', icon:'🚇', q:'Musée des Égouts de Paris',
+    title:{ zh:'巴黎下水道：奧斯曼改造的看不見那一面', en:'The sewers of Paris: Haussmann’s hidden half', fr:'Les égouts de Paris : la face cachée d’Haussmann' },
+    text:{ zh:'奧斯曼改造巴黎時，工程師貝爾格朗同時建成現代化的下水道系統，地下的通道依照地面街道命名，連路牌都一樣。雨果在《悲慘世界》裡把這座地下城市寫得很有名。',
+      en:'While Haussmann rebuilt the streets, the engineer Eugène Belgrand gave Paris a modern sewer system whose tunnels carry the same names and street signs as the roads above. Victor Hugo made this underground city famous in Les Misérables.',
+      fr:'Pendant qu’Haussmann refait les rues, l’ingénieur Eugène Belgrand dote Paris d’un réseau d’égouts moderne, dont les galeries portent les mêmes noms et plaques que les rues au-dessus. Victor Hugo a rendu cette ville souterraine célèbre dans Les Misérables.' },
+    at:{ zh:'Musée des Égouts de Paris，巴黎七區，阿爾瑪橋（Pont de l’Alma）旁', en:'Musée des Égouts de Paris, Paris 7th, by the Pont de l’Alma', fr:'Musée des Égouts de Paris, Paris 7ᵉ, près du pont de l’Alma' } },
+],
+
+third: [
+  { theme:'culture', icon:'🗼', q:'Tour Eiffel',
+    title:{ zh:'艾菲爾鐵塔本來只准留二十年', en:'The Eiffel Tower was meant to stay only twenty years', fr:'La tour Eiffel ne devait durer que vingt ans' },
+    text:{ zh:'鐵塔為 1889 年世界博覽會而建，許可期限到 1909 年，當年許多藝文界人士還連署反對。它後來成為無線電報的天線，軍方與科學家都用得上，才逃過拆除。',
+      en:'Built for the 1889 World’s Fair, it had a permit running to 1909, and many artists signed a protest against it. It escaped demolition because it proved useful as a radio-telegraphy antenna.',
+      fr:'Construite pour l’Exposition universelle de 1889, elle disposait d’un permis courant jusqu’en 1909, et de nombreux artistes avaient signé une protestation. Elle échappe à la démolition parce qu’elle sert d’antenne de radiotélégraphie.' },
+    at:{ zh:'Tour Eiffel，巴黎七區', en:'Tour Eiffel, Paris 7th arrondissement', fr:'Tour Eiffel, Paris 7ᵉ' } },
+  { theme:'world', icon:'🌫️', q:'Mémorial de Verdun',
+    title:{ zh:'凡爾登：被戰爭抹去的村莊', en:'Verdun: the villages war erased', fr:'Verdun : les villages effacés par la guerre' },
+    text:{ zh:'1916 年的凡爾登戰役持續近十個月，雙方傷亡合計約七十萬人。戰場上有九個村莊被夷平後再也沒有重建，被稱為「為法國而亡的村莊」，至今每個仍設有名義上的鎮長。',
+      en:'The Battle of Verdun in 1916 lasted nearly ten months and cost about 700,000 casualties on both sides. Nine villages on the battlefield were destroyed and never rebuilt; they are called “villages that died for France”, and each still has a mayor in name.',
+      fr:'La bataille de Verdun, en 1916, dure près de dix mois et fait environ 700 000 victimes des deux côtés. Neuf villages du champ de bataille, détruits, n’ont jamais été reconstruits : ce sont les « villages morts pour la France », qui ont chacun encore un maire.' },
+    at:{ zh:'Mémorial de Verdun 與 Ossuaire de Douaumont，默茲省（Meuse）', en:'Mémorial de Verdun and the Douaumont ossuary, Meuse', fr:'Mémorial de Verdun et ossuaire de Douaumont, Meuse' } },
+],
+
+war: [
+  { theme:'world', icon:'🕯️', q:'Musée de la Libération de Paris',
+    title:{ zh:'地下碉堡：巴黎解放的指揮所', en:'The underground bunker that commanded the liberation of Paris', fr:'Le bunker souterrain d’où fut dirigée la libération de Paris' },
+    text:{ zh:'1944 年 8 月巴黎起義時，抵抗運動指揮官亨利·羅爾-唐吉把指揮所設在丹費爾-羅什洛廣場地下的舊防空碉堡。這個碉堡如今是巴黎解放博物館的一部分，可以入內參觀。',
+      en:'During the Paris uprising of August 1944, the Resistance commander Henri Rol-Tanguy ran operations from an old air-raid bunker beneath Place Denfert-Rochereau. It is now part of the Museum of the Liberation of Paris and can be visited.',
+      fr:'Lors de l’insurrection parisienne d’août 1944, le chef de la Résistance Henri Rol-Tanguy dirige les opérations depuis un ancien abri sous la place Denfert-Rochereau. Il fait aujourd’hui partie du musée de la Libération de Paris et se visite.' },
+    at:{ zh:'Musée de la Libération de Paris，丹費爾-羅什洛廣場，巴黎十四區', en:'Musée de la Libération de Paris, place Denfert-Rochereau, Paris 14th', fr:'Musée de la Libération de Paris, place Denfert-Rochereau, Paris 14ᵉ' } },
+],
+
+fifth: [
+  { theme:'culture', icon:'🚪',
+    title:{ zh:'一年一次，連總統府都開放', en:'Once a year, even the presidential palace opens its doors', fr:'Une fois par an, même l’Élysée ouvre ses portes' },
+    text:{ zh:'每年九月的第三個週末，平常不對外開放的愛麗舍宮、參議院與各部會，都會免費開放參觀。這項活動 1984 年從法國開始，後來推廣成全歐洲的「文化遺產日」。',
+      en:'On the third weekend of September, places normally closed to the public, such as the Élysée Palace, the Senate and government ministries, open free of charge. The event began in France in 1984 and grew into Europe-wide Heritage Days.',
+      fr:'Le troisième week-end de septembre, des lieux habituellement fermés au public, comme l’Élysée, le Sénat et les ministères, ouvrent gratuitement. Née en France en 1984, cette fête est devenue les Journées européennes du patrimoine.' },
+    at:{ zh:'全法國，每年九月第三個週末（愛麗舍宮在巴黎八區）', en:'All over France, third weekend of September (the Élysée is in Paris 8th)', fr:'Partout en France, le troisième week-end de septembre (l’Élysée est dans le 8ᵉ arrondissement de Paris)' } },
+  { theme:'state', icon:'🔺', q:'Pyramide du Louvre',
+    title:{ zh:'羅浮宮的玻璃金字塔', en:'The glass pyramid of the Louvre', fr:'La pyramide de verre du Louvre' },
+    text:{ zh:'1989 年啟用，由貝聿銘設計，當時引來強烈批評，如今已是羅浮宮的入口與象徵。它是密特朗任內一系列大型文化工程之一，同期還有巴士底歌劇院與國家圖書館。',
+      en:'Opened in 1989 and designed by I. M. Pei, it was fiercely criticised at first and is now the museum’s entrance and emblem. It was one of the large cultural projects of Mitterrand’s presidency, alongside the Opéra Bastille and the national library.',
+      fr:'Inaugurée en 1989 et conçue par I. M. Pei, elle a d’abord été violemment critiquée et constitue aujourd’hui l’entrée et l’emblème du musée. Elle fait partie des grands chantiers culturels du septennat de Mitterrand, avec l’Opéra Bastille et la Bibliothèque nationale.' },
+    at:{ zh:'Musée du Louvre，巴黎一區', en:'Musée du Louvre, Paris 1st arrondissement', fr:'Musée du Louvre, Paris 1ᵉʳ' } },
+],
+
+} };

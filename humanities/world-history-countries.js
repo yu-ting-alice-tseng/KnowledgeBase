@@ -392,17 +392,17 @@ const CX_UI = {
   zh:{ tab:'國別史', head:'國別史', sub:'挑一個國家，沿著「時代」與「主題」兩條軸線閱讀它的歷史。',
        more:'更多國家陸續加入', linear:'線性敘事', linearDesc:'依時代順序閱讀，每個時期附上五個主題切面。',
        thematic:'主題敘事', thematicDesc:'挑一條主題線索，看它如何貫穿每個時代。',
-       events:'關鍵事件', facets:'主題切面', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
+       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
        follow:'沿這條主題讀下去', periods:'個時期', c:'約 ' },
   en:{ tab:'Countries', head:'Country Histories', sub:'Pick a country and read its history along two axes: time and theme.',
        more:'More countries coming', linear:'Linear', linearDesc:'Read period by period, each with five thematic facets.',
        thematic:'Thematic', thematicDesc:'Follow one theme as it runs through every period.',
-       events:'Key events', facets:'Thematic facets', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
+       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
        follow:'Follow this theme', periods:'periods', c:'c. ' },
   fr:{ tab:'Par pays', head:'Histoires nationales', sub:'Choisissez un pays et lisez son histoire selon deux axes : le temps et les thèmes.',
        more:'D’autres pays à venir', linear:'Récit linéaire', linearDesc:'Lire période par période, chacune avec cinq angles thématiques.',
        thematic:'Récit thématique', thematicDesc:'Suivre un thème à travers toutes les périodes.',
-       events:'Événements clés', facets:'Angles thématiques', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
+       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
        follow:'Suivre ce thème', periods:'périodes', c:'v. ' },
 };
 
@@ -429,6 +429,27 @@ function cxYear(y, approx) {
 }
 function cxRange(p) { return fmtYear(p.start) + ' — ' + fmtYear(p.end); }
 function cxTheme(id) { return CX_THEMES.find(t => t.id === id); }
+
+/* little-known facts, each tagged with the place where you can still see the thing */
+function cxTrivia(pid, themeId) {
+  const all = ((typeof CX_TRIVIA !== 'undefined' && CX_TRIVIA[cx.country]) || {})[pid] || [];
+  const list = themeId ? all.filter(x => x.theme === themeId) : all;
+  if (!list.length) return '';
+  return '<div class="cx-label">' + cxU('trivia') + '</div><div class="cx-trivia">'
+    + list.map(x => {
+        const th = cxTheme(x.theme);
+        const url = x.q ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(x.q) : '';
+        const at = T(x.at);
+        return '<div class="cx-tv" style="--tc:' + th.color + '">'
+          + '<div class="cx-tv-h"><span class="cx-tv-ic">' + x.icon + '</span>' + T(x.title) + '</div>'
+          + (themeId ? '' : '<div class="cx-tv-tag">' + T(th.name) + '</div>')
+          + '<p>' + T(x.text) + '</p>'
+          + (url
+              ? '<a class="cx-where" href="' + url + '" target="_blank" rel="noopener noreferrer" title="' + cxU('where') + '">📍 ' + at + '<span class="cx-where-go">' + cxU('where') + ' ↗</span></a>'
+              : '<div class="cx-where plain">📍 ' + at + '</div>')
+          + '</div>';
+      }).join('') + '</div>';
+}
 
 /* ─── render ─── */
 function renderCountries() {
@@ -500,6 +521,7 @@ function cxLinear(P) {
         + '<button class="cx-facet-h" onclick="cxSet({mode:\'thematic\',theme:\'' + t.id + '\'},\'' + p.id + '\')" title="' + cxU('follow') + '">'
         + '<span>' + t.icon + '</span>' + T(t.name) + '<span class="cx-arr">⇢</span></button>'
         + '<p>' + T(p.themes[t.id]) + '</p></div>').join('') + '</div>'
+    + cxTrivia(p.id, null)
     + (p.world ? '<button class="cx-link" onclick="goHist(\'' + p.world + '\')">◷ ' + cxU('seeWorld') + '</button>' : '')
     + '</div></section>').join('') + '</div>';
 }
@@ -519,6 +541,7 @@ function cxThematic(P) {
         + '<div class="cx-card slim">'
         + '<div class="cx-yrs">' + cxRange(p) + ' · ' + T(p.name) + '</div>'
         + '<p>' + T(p.themes[th.id]) + '</p>'
+        + cxTrivia(p.id, th.id)
         + '<button class="cx-link" onclick="cxSet({mode:\'linear\'},\'' + p.id + '\')">↑ ' + cxU('toPeriod') + '</button>'
         + '</div></section>').join('') + '</div>';
 }
