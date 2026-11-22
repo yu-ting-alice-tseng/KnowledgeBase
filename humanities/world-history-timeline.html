@@ -527,6 +527,29 @@ a.cx-where:hover .cx-where-go { color: var(--gold-hi); }
 .cx-card.slim .cx-rulers li { padding: 6px 0; }
 @media (max-width: 640px) { .cx-rulers li { grid-template-columns: 1fr; gap: 2px; } .cx-ru-y { text-align: left; } }
 
+
+/* stages of one period, folded */
+.cx-stages-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.cx-stages-h .cx-link { margin-top: 0; }
+.cx-stage { border: 1px solid rgba(201,168,92,0.16); border-radius: 12px; margin-bottom: 8px; background: rgba(255,243,210,0.025); overflow: hidden; }
+.cx-stage[open] { border-color: rgba(201,168,92,0.38); background: rgba(255,243,210,0.045); }
+.cx-stage summary { display: flex; align-items: center; gap: 12px; padding: 11px 15px; cursor: pointer; list-style: none; flex-wrap: wrap; }
+.cx-stage summary::-webkit-details-marker { display: none; }
+.cx-stage summary::after { content: '+'; margin-left: auto; font-size: 18px; line-height: 1; color: var(--gold-lo); transition: transform .2s; }
+.cx-stage[open] summary::after { content: '−'; color: var(--gold-hi); }
+.cx-stage summary:hover .cx-st-t { color: var(--gold-hi); }
+.cx-st-n { flex: 0 0 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: var(--gold-hi); border: 1px solid rgba(201,168,92,0.5); background: #1d160e; }
+.cx-st-t { font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; font-size: 16.5px; font-weight: 700; color: #f0e6cf; transition: color .2s; }
+.cx-st-y { font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em; color: var(--gold-lo); }
+.cx-st-body { padding: 2px 18px 16px 53px; }
+.cx-st-power, .cx-st-turn { font-size: 12.5px; line-height: 1.75; color: var(--cream2, #b8a48a); }
+.cx-st-power b, .cx-st-turn b { display: inline-block; margin-right: 8px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; color: var(--gold); }
+.cx-st-turn { margin-top: 10px; padding: 8px 12px; border-left: 2px solid rgba(201,168,92,0.45); background: rgba(201,168,92,0.06); border-radius: 0 8px 8px 0; }
+.cx-st-body > p { margin: 8px 0 10px; }
+.cx-st-ev .cx-ev-y { flex: 0 0 130px; }
+@media (max-width: 640px) { .cx-st-body { padding: 2px 14px 14px 14px; } .cx-st-ev .cx-ev-y { flex: none; } .cx-stage summary { gap: 8px; } }
+
 </style>
 </head>
 <body>
@@ -683,6 +706,7 @@ function esc(s) { return s.replace(/</g, '&lt;'); }
 </script>
 <script src="world-history-data.js"></script>
 <script src="world-history-app.js"></script>
+<script src="world-history-stages.js"></script>
 <script src="world-history-rulers.js"></script>
 <script src="world-history-trivia.js"></script>
 <script src="world-history-countries.js"></script>

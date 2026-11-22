@@ -392,17 +392,17 @@ const CX_UI = {
   zh:{ tab:'國別史', head:'國別史', sub:'挑一個國家，沿著「時代」與「主題」兩條軸線閱讀它的歷史。',
        more:'更多國家陸續加入', linear:'線性敘事', linearDesc:'依時代順序閱讀，每個時期附上五個主題切面。',
        thematic:'主題敘事', thematicDesc:'挑一條主題線索，看它如何貫穿每個時代。',
-       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
+       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', power:'誰掌權', turn:'轉折', stagesOpen:'展開全部', stagesClose:'收合全部', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
        follow:'沿這條主題讀下去', periods:'個時期', c:'約 ' },
   en:{ tab:'Countries', head:'Country Histories', sub:'Pick a country and read its history along two axes: time and theme.',
        more:'More countries coming', linear:'Linear', linearDesc:'Read period by period, each with five thematic facets.',
        thematic:'Thematic', thematicDesc:'Follow one theme as it runs through every period.',
-       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
+       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', power:'Who held power', turn:'Turning point', stagesOpen:'Expand all', stagesClose:'Collapse all', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
        follow:'Follow this theme', periods:'periods', c:'c. ' },
   fr:{ tab:'Par pays', head:'Histoires nationales', sub:'Choisissez un pays et lisez son histoire selon deux axes : le temps et les thèmes.',
        more:'D’autres pays à venir', linear:'Récit linéaire', linearDesc:'Lire période par période, chacune avec cinq angles thématiques.',
        thematic:'Récit thématique', thematicDesc:'Suivre un thème à travers toutes les périodes.',
-       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
+       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', power:'Qui détient le pouvoir', turn:'Tournant', stagesOpen:'Tout déplier', stagesClose:'Tout replier', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
        follow:'Suivre ce thème', periods:'périodes', c:'v. ' },
 };
 
@@ -429,6 +429,46 @@ function cxYear(y, approx) {
 }
 function cxRange(p) { return fmtYear(p.start) + ' — ' + fmtYear(p.end); }
 function cxTheme(id) { return CX_THEMES.find(t => t.id === id); }
+
+/* a date written for the reader's language: 14 July 1789, 1789年7月14日, 14 juillet 1789 */
+function cxDate(s) {
+  const p = s.split('-').map(Number);
+  const loc = { zh:'zh-TW', en:'en-GB', fr:'fr-FR' }[LANG] || 'zh-TW';
+  const o = { year:'numeric', timeZone:'UTC' };
+  if (p[1]) o.month = 'long';
+  if (p[2]) o.day = 'numeric';
+  return new Intl.DateTimeFormat(loc, o).format(new Date(Date.UTC(p[0], (p[1] || 1) - 1, p[2] || 1)));
+}
+
+/* one period read in finer stages, each folded open on demand */
+function cxStages(pid) {
+  const data = ((typeof CX_STAGES !== 'undefined' && CX_STAGES[cx.country]) || {})[pid];
+  if (!data) return '';
+  const L = Math.max(0, ['zh', 'en', 'fr'].indexOf(LANG));
+  return '<div class="cx-stages"><div class="cx-label cx-stages-h"><span>' + T(data.title) + '</span>'
+    + '<button class="cx-link cx-st-all" onclick="cxToggleStages(\'' + pid + '\')">' + cxU('stagesOpen') + '</button></div>'
+    + data.list.map((s, i) =>
+        '<details class="cx-stage"><summary><span class="cx-st-n">' + (i + 1) + '</span>'
+        + '<span class="cx-st-t">' + T(s.name) + '</span>'
+        + '<span class="cx-st-y">' + cxDate(s.a) + ' – ' + cxDate(s.b) + '</span></summary>'
+        + '<div class="cx-st-body">'
+        + '<div class="cx-st-power"><b>' + cxU('power') + '</b>' + T(s.power) + '</div>'
+        + '<p>' + T(s.summary) + '</p>'
+        + '<ul class="cx-ev cx-st-ev">' + s.ev.map(e =>
+            '<li><span class="cx-ev-y">' + cxDate(e[0]) + '</span><span>' + e[1][L] + '</span></li>').join('') + '</ul>'
+        + (s.turn ? '<div class="cx-st-turn"><b>' + cxU('turn') + '</b>' + T(s.turn) + '</div>' : '')
+        + '</div></details>').join('')
+    + '</div>';
+}
+function cxToggleStages(pid) {
+  const root = document.getElementById('cx-p-' + pid);
+  if (!root) return;
+  const ds = [...root.querySelectorAll('details.cx-stage')];
+  const open = ds.some(d => !d.open);
+  ds.forEach(d => { d.open = open; });
+  const b = root.querySelector('.cx-st-all');
+  if (b) b.textContent = cxU(open ? 'stagesClose' : 'stagesOpen');
+}
 
 /* who ruled in this period, and what they did */
 function cxRulers(pid) {
@@ -524,6 +564,7 @@ function cxLinear(P) {
     + '<div class="cx-yrs">' + cxRange(p) + '</div>'
     + '<h3>' + T(p.name) + '</h3>'
     + '<p class="cx-sum">' + T(p.summary) + '</p>'
+    + cxStages(p.id)
     + cxRulers(p.id)
     + '<div class="cx-label">' + cxU('events') + '</div>'
     + '<ul class="cx-ev">' + p.events.map(e =>
