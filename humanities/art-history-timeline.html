@@ -189,6 +189,15 @@ h1 .gold { color: var(--gold); font-weight: 300; }
   position: absolute; left: 17px; top: 50%; transform: translateY(-50%);
   color: var(--muted); font-size: 13px; pointer-events: none;
 }
+#work-hits { display: none; max-width: 720px; margin: -12px auto 30px; }
+.wh-lb { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
+.wh-list { display: grid; gap: 8px; }
+.wh-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 11px 14px; border: 1px solid var(--gold-lo); border-radius: 12px; background: rgba(201,168,92,0.06); cursor: zoom-in; transition: all .2s; }
+.wh-item:hover, .wh-item:focus { border-color: var(--gold-hi); background: rgba(201,168,92,0.12); outline: none; }
+.wh-t { color: var(--gold-hi); font-weight: 700; font-size: 14px; }
+.wh-m { color: var(--cream2); font-size: 12px; display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.wh-m .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.work-chip.hit { color: var(--gold-hi); border-color: var(--gold-hi); box-shadow: 0 0 0 1px rgba(232,204,132,0.45); }
 #artist-none { display: none; text-align: center; color: var(--muted); padding: 48px 0; font-size: 13.5px; font-style: italic; font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; }
 .ac-bio { font-size: 12px; line-height: 1.85; color: var(--muted); margin-top: 8px; font-weight: 500; }
 .ac-style { font-size: 12px; line-height: 1.85; color: var(--cream2); margin-top: 12px; padding: 10px 12px; border-left: 2px solid var(--gold, #c9a24a); background: rgba(201,162,74,.06); border-radius: 0 8px 8px 0; font-weight: 500; }
@@ -713,9 +722,10 @@ const UI = {
     tabMuseums: '博物館',
     tabStudy: '學習路徑',
     tabArtists: '藝術家',
-    artistsSub: '七十位藝術家的生平與代表作——點擊作品籤章即可查看畫作圖片。',
+    artistsSub: '七十二位藝術家的生平與代表作——可直接搜尋作品名稱，點擊作品籤章即可查看畫作圖片。',
     searchPH: '搜尋藝術家、流派或作品…',
-    searchNone: '找不到符合的藝術家。',
+    searchNone: '找不到符合的藝術家或作品。',
+    worksHit: '符合的作品',
     lbLoading: '正在搜尋畫作圖片…',
     lbNone: '未能找到這件作品的圖片。',
     lbWiki: '在 Wikipedia 檢視 ↗',
@@ -749,9 +759,10 @@ const UI = {
     tabMuseums: 'Museums',
     tabStudy: 'Study Path',
     tabArtists: 'Artists',
-    artistsSub: 'Lives and masterpieces of seventy artists — click any work chip to see the picture.',
+    artistsSub: 'Lives and masterpieces of seventy-two artists — search by artwork title, or click any work chip to see the picture.',
     searchPH: 'Search artists, movements or works…',
-    searchNone: 'No artists match your search.',
+    searchNone: 'No artists or works match your search.',
+    worksHit: 'Matching works',
     lbLoading: 'Fetching the artwork image…',
     lbNone: 'No image could be found for this work.',
     lbWiki: 'View on Wikipedia ↗',
@@ -785,9 +796,10 @@ const UI = {
     tabMuseums: 'Musées',
     tabStudy: 'Parcours',
     tabArtists: 'Artistes',
-    artistsSub: 'Vies et chefs-d’œuvre de soixante-dix artistes — cliquez une pastille d’œuvre pour voir l’image.',
+    artistsSub: 'Vies et chefs-d’œuvre de soixante-douze artistes — recherchez par titre d’œuvre, ou cliquez une pastille pour voir l’image.',
     searchPH: 'Rechercher artistes, mouvements ou œuvres…',
-    searchNone: 'Aucun artiste ne correspond à votre recherche.',
+    searchNone: 'Aucun artiste ni aucune œuvre ne correspond à votre recherche.',
+    worksHit: 'Œuvres correspondantes',
     lbLoading: 'Recherche de l’image en cours…',
     lbNone: 'Aucune image trouvée pour cette œuvre.',
     lbWiki: 'Voir sur Wikipédia ↗',
@@ -2966,6 +2978,7 @@ function workChipHtml(mvId, ai, wi, featTitle) {
   const tr = trMa(mvId, ai);
   const w = ((tr && tr.w) || MASTERS[mvId][ai].works)[wi];
   return '<span class="work-chip wk-btn' + (w[0] === featTitle ? ' feat' : '') + '" role="button" tabindex="0"'
+    + ' data-w="' + workKeys(mvId, ai, wi).replace(/"/g, '') + '"'
     + ' onclick="openWork(\'' + mvId + '\',' + ai + ',' + wi + ')"'
     + ' onkeydown="if(event.key===\'Enter\'){openWork(\'' + mvId + '\',' + ai + ',' + wi + ')}">'
     + qtitle(w[0]) + (w[1] ? '<span class="wy">' + w[1] + '</span>' : '') + '</span>';
@@ -2981,7 +2994,8 @@ function renderArtistIndex() {
     + '<p>' + uiStr('artistsSub') + '</p>'
     + '</div>'
     + '<div id="artist-search-wrap"><span id="artist-search-ic">⌕</span>'
-    + '<input id="artist-search" type="search" placeholder="' + uiStr('searchPH') + '" oninput="filterArtists(this.value)"></div>';
+    + '<input id="artist-search" type="search" placeholder="' + uiStr('searchPH') + '" oninput="filterArtists(this.value)"></div>'
+    + '<div id="work-hits"></div>';
   ordered.forEach(m => {
     const arr = MASTERS[m.id] || [];
     if (!arr.length) return;
@@ -3027,9 +3041,53 @@ function renderArtistIndex() {
   box.innerHTML = html;
 }
 
+/* 作品搜尋：比對三語作品標題（中文、英文、法文），列出命中的畫作 */
+function workKeys(mvId, ai, wi) {
+  const ks = [];
+  const zh = MASTERS[mvId][ai].works[wi];
+  if (zh) ks.push(zh[0]);
+  ['en', 'fr'].forEach(l => {
+    const t = TR[l].ma[mvId] && TR[l].ma[mvId][ai];
+    if (t && t.w && t.w[wi]) ks.push(t.w[wi][0]);
+  });
+  return ks.join(' | ').toLowerCase();
+}
+function renderWorkHits(q) {
+  const box = document.getElementById('work-hits');
+  if (!box) return 0;
+  if (!q) { box.innerHTML = ''; box.style.display = 'none'; return 0; }
+  const hits = [];
+  [...MOVEMENTS].sort((a, b) => a.start - b.start).forEach(m => {
+    (MASTERS[m.id] || []).forEach((a, ai) => {
+      a.works.forEach((_, wi) => {
+        if (workKeys(m.id, ai, wi).indexOf(q) === -1) return;
+        const tr = trMa(m.id, ai);
+        const w = ((tr && tr.w) || a.works)[wi];
+        const artist = LANG === 'zh' ? a.name : ((tr && tr.name) || a.en);
+        hits.push('<div class="wh-item" role="button" tabindex="0"'
+          + ' onclick="openWork(\'' + m.id + '\',' + ai + ',' + wi + ')"'
+          + ' onkeydown="if(event.key===\'Enter\'){openWork(\'' + m.id + '\',' + ai + ',' + wi + ')}">'
+          + '<span class="wh-t">' + qtitle(w[0]) + '</span>'
+          + '<span class="wh-m">' + artist + (w[1] ? ' · ' + w[1] : '') + ' · '
+          + '<span class="dot" style="background:' + m.color + '"></span>' + mvName(m) + '</span>'
+          + '</div>');
+      });
+    });
+  });
+  box.innerHTML = hits.length
+    ? '<div class="wh-lb">' + uiStr('worksHit') + ' · ' + hits.length + '</div><div class="wh-list">' + hits.join('') + '</div>'
+    : '';
+  box.style.display = hits.length ? 'block' : 'none';
+  return hits.length;
+}
+
 function filterArtists(q) {
   q = (q || '').trim().toLowerCase();
-  let anyAtAll = false;
+  const nWorks = renderWorkHits(q);
+  document.querySelectorAll('#view-artists .work-chip[data-w]').forEach(ch => {
+    ch.classList.toggle('hit', !!q && ch.dataset.w.indexOf(q) !== -1);
+  });
+  let anyAtAll = nWorks > 0;
   document.querySelectorAll('#view-artists .artist-group').forEach(g => {
     let any = false;
     g.querySelectorAll('.artist-card').forEach(c => {
