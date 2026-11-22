@@ -392,17 +392,17 @@ const CX_UI = {
   zh:{ tab:'國別史', head:'國別史', sub:'挑一個國家，沿著「時代」與「主題」兩條軸線閱讀它的歷史。',
        more:'更多國家陸續加入', linear:'線性敘事', linearDesc:'依時代順序閱讀，每個時期附上五個主題切面。',
        thematic:'主題敘事', thematicDesc:'挑一條主題線索，看它如何貫穿每個時代。',
-       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
+       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
        follow:'沿這條主題讀下去', periods:'個時期', c:'約 ' },
   en:{ tab:'Countries', head:'Country Histories', sub:'Pick a country and read its history along two axes: time and theme.',
        more:'More countries coming', linear:'Linear', linearDesc:'Read period by period, each with five thematic facets.',
        thematic:'Thematic', thematicDesc:'Follow one theme as it runs through every period.',
-       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
+       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
        follow:'Follow this theme', periods:'periods', c:'c. ' },
   fr:{ tab:'Par pays', head:'Histoires nationales', sub:'Choisissez un pays et lisez son histoire selon deux axes : le temps et les thèmes.',
        more:'D’autres pays à venir', linear:'Récit linéaire', linearDesc:'Lire période par période, chacune avec cinq angles thématiques.',
        thematic:'Récit thématique', thematicDesc:'Suivre un thème à travers toutes les périodes.',
-       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
+       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
        follow:'Suivre ce thème', periods:'périodes', c:'v. ' },
 };
 
@@ -429,6 +429,18 @@ function cxYear(y, approx) {
 }
 function cxRange(p) { return fmtYear(p.start) + ' — ' + fmtYear(p.end); }
 function cxTheme(id) { return CX_THEMES.find(t => t.id === id); }
+
+/* who ruled in this period, and what they did */
+function cxRulers(pid) {
+  const list = ((typeof CX_RULERS !== 'undefined' && CX_RULERS[cx.country]) || {})[pid] || [];
+  if (!list.length) return '';
+  const L = ['zh', 'en', 'fr'].indexOf(LANG) < 0 ? 0 : ['zh', 'en', 'fr'].indexOf(LANG);
+  return '<div class="cx-label">' + cxU('rulers') + '</div><ul class="cx-rulers">'
+    + list.map(r => {
+        const yrs = r[0] === r[1] ? cxYear(r[0]) : cxYear(r[0]) + '–' + (r[1] >= 2026 ? fmtYear(r[1]) : cxYear(r[1]));
+        return '<li><span class="cx-ru-y">' + yrs + '</span><div><b>' + r[2][L] + '</b><p>' + r[3][L] + '</p></div></li>';
+      }).join('') + '</ul>';
+}
 
 /* little-known facts, each tagged with the place where you can still see the thing */
 function cxTrivia(pid, themeId) {
@@ -512,6 +524,7 @@ function cxLinear(P) {
     + '<div class="cx-yrs">' + cxRange(p) + '</div>'
     + '<h3>' + T(p.name) + '</h3>'
     + '<p class="cx-sum">' + T(p.summary) + '</p>'
+    + cxRulers(p.id)
     + '<div class="cx-label">' + cxU('events') + '</div>'
     + '<ul class="cx-ev">' + p.events.map(e =>
         '<li><span class="cx-ev-y">' + cxYear(e.y, e.c) + '</span><span>' + (e[LANG] || e.zh) + '</span></li>').join('') + '</ul>'
@@ -541,6 +554,7 @@ function cxThematic(P) {
         + '<div class="cx-card slim">'
         + '<div class="cx-yrs">' + cxRange(p) + ' · ' + T(p.name) + '</div>'
         + '<p>' + T(p.themes[th.id]) + '</p>'
+        + (th.id === 'state' ? cxRulers(p.id) : '')
         + cxTrivia(p.id, th.id)
         + '<button class="cx-link" onclick="cxSet({mode:\'linear\'},\'' + p.id + '\')">↑ ' + cxU('toPeriod') + '</button>'
         + '</div></section>').join('') + '</div>';

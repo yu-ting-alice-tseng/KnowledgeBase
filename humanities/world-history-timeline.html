@@ -516,6 +516,17 @@ a.cx-where:hover .cx-where-go { color: var(--gold-hi); }
 .cx-card.slim .cx-label { margin-top: 12px; }
 @media (max-width: 640px) { .cx-trivia { grid-template-columns: 1fr; } }
 
+
+/* rulers */
+.cx-rulers { list-style: none; padding: 0; margin: 0; }
+.cx-rulers li { display: grid; grid-template-columns: 104px 1fr; gap: 14px; padding: 8px 0; border-bottom: 1px dashed rgba(201,168,92,0.12); }
+.cx-rulers li:last-child { border-bottom: none; }
+.cx-ru-y { font-size: 11px; font-weight: 800; letter-spacing: 0.03em; color: var(--gold-hi); text-align: right; padding-top: 2px; }
+.cx-rulers b { font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; font-size: 15px; font-weight: 700; color: #f0e6cf; }
+.cx-rulers p { font-size: 12.8px !important; line-height: 1.8 !important; margin-top: 2px; }
+.cx-card.slim .cx-rulers li { padding: 6px 0; }
+@media (max-width: 640px) { .cx-rulers li { grid-template-columns: 1fr; gap: 2px; } .cx-ru-y { text-align: left; } }
+
 </style>
 </head>
 <body>
@@ -672,6 +683,7 @@ function esc(s) { return s.replace(/</g, '&lt;'); }
 </script>
 <script src="world-history-data.js"></script>
 <script src="world-history-app.js"></script>
+<script src="world-history-rulers.js"></script>
 <script src="world-history-trivia.js"></script>
 <script src="world-history-countries.js"></script>
 <script src="../assets/edit-mode.js" defer></script>

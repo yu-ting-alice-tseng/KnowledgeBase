@@ -51,6 +51,12 @@ valois: [
       en:'In 1429 Joan of Arc met the Dauphin Charles in the great hall of Chinon castle. Legend says he hid among the courtiers and she picked him out at once. Henry II of England had died in the same castle in 1189.',
       fr:'En 1429, Jeanne d’Arc rencontre le dauphin Charles dans la grande salle du château de Chinon. Selon la légende, il se cache parmi les courtisans et elle le reconnaît aussitôt. Henri II d’Angleterre était mort dans ce même château en 1189.' },
     at:{ zh:'Château de Chinon，羅亞爾河谷', en:'Château de Chinon, Loire Valley', fr:'Château de Chinon, vallée de la Loire' } },
+  { theme:'culture', icon:'🍽️', q:'Conciergerie Paris',
+    title:{ zh:'三次上菜：中世紀王室宴會的順序', en:'Three services: the order of a medieval royal banquet', fr:'Trois services : l’ordonnance d’un banquet royal médiéval' },
+    text:{ zh:'中世紀的宴會不是一道一道上菜，而是分成幾次「service」，每一次把同類的菜一起擺滿桌。大致的順序是：第一次上「potages」（燉煮的濃湯與肉菜）和冷肉；第二次是烤肉與烤禽的「rôts」；第三次是「entremets」，字面意思是「菜與菜之間」，指精緻的菜餚與餘興表演；最後以香料酒 hypocras 與糕點收尾，稱為「issue de table」。1378 年的宴會上，entremets 還推出一艘機關船，演出十字軍攻占耶路撒冷。',
+      en:'A medieval feast was not served dish by dish but in a few “services”, each one a whole set of similar dishes laid on the table at once. The usual order ran roughly like this: first the “potages” (simmered broths and stews) with cold meats; then the “rôts”, roast meat and fowl; then the “entremets”, literally “between dishes”, refined dishes mixed with spectacle; and finally the “issue de table”, spiced wine called hypocras and sweet wafers. At the 1378 banquet the entremets included a mechanical ship staging the capture of Jerusalem by the crusaders.',
+      fr:'Un festin médiéval ne se sert pas plat après plat mais en quelques « services », chacun réunissant d’un coup tout un ensemble de mets semblables. L’ordre habituel est à peu près le suivant : d’abord les « potages » (bouillons et plats mijotés) et les viandes froides ; puis les « rôts », viandes et volailles rôties ; puis les « entremets », littéralement « entre les plats », mets raffinés mêlés de spectacle ; enfin l’« issue de table », avec l’hypocras et des gaufrettes. Au banquet de 1378, les entremets comprenaient un navire mécanique figurant la prise de Jérusalem par les croisés.' },
+    at:{ zh:'Conciergerie（古王宮 Palais de la Cité），巴黎西堤島。館內的互動平板導覽可看到這場宴會的重現', en:'Conciergerie (the old Palais de la Cité), Île de la Cité, Paris. The interactive tablet guide recreates the banquet', fr:'Conciergerie (ancien Palais de la Cité), île de la Cité, Paris. Le parcours à tablette recrée ce banquet' } },
 ],
 
 renaissance: [
@@ -81,6 +87,18 @@ absolutism: [
       en:'Opened in 1686, Le Procope is among the oldest cafés in Paris. Voltaire, Diderot and Rousseau were regulars, and ideas for the Encyclopédie were argued over its tables. It still serves customers today.',
       fr:'Ouvert en 1686, Le Procope est l’un des plus anciens cafés de Paris. Voltaire, Diderot et Rousseau y avaient leurs habitudes, et les idées de l’Encyclopédie s’y discutaient entre deux tasses. Il accueille toujours des clients aujourd’hui.' },
     at:{ zh:'Le Procope，巴黎六區 Ancienne Comédie 街 13 號', en:'Le Procope, 13 rue de l’Ancienne Comédie, Paris 6th', fr:'Le Procope, 13 rue de l’Ancienne Comédie, Paris 6ᵉ' } },
+  { theme:'culture', icon:'🍽️', q:'Château de Versailles',
+    title:{ zh:'「service à la française」：整批菜同時上桌', en:'Service à la française: a whole course on the table at once', fr:'Le service à la française : tout un service posé d’un coup' },
+    text:{ zh:'「service」原指一整批同時上桌的菜。把整個階段的菜對稱地擺滿桌，在十七世紀的法國宮廷定型，後來被稱為「法式服務」。典型是三個 service：第一次有湯品、開胃小菜與熱前菜；第二次是烤肉與沙拉；第三次是水果、果醬與糕點的「dessert」，字面意思是「撤桌」（desservir），因為得先把前面的菜撤掉。客人只能吃到自己面前的菜，其他的要請人傳遞。路易十四還把用餐變成公開儀式，在凡爾賽的「grand couvert」讓朝臣圍觀他吃飯。',
+      en:'In this sense a “service” was a whole set of dishes put on the table together. Covering the table with symmetrically arranged dishes was settled at the French court in the seventeenth century and later called service à la française. Three services were typical: first soups, small appetisers and hot entrées; then roasts and salads; then fruit, jams and pastries, the “dessert”, a word that literally means “clearing the table” (desservir), because the earlier dishes had to be removed first. Guests could reach only the dishes in front of them and asked others to pass the rest. Louis XIV even made dining a public ritual, eating his grand couvert at Versailles before watching courtiers.',
+      fr:'Au sens ancien, un « service » est un ensemble de plats posés ensemble sur la table. L’habitude de couvrir la table de plats disposés symétriquement se fixe à la cour de France au XVIIᵉ siècle et sera appelée service à la française. Trois services sont typiques : d’abord potages, hors-d’œuvre et entrées chaudes ; puis rôts et salades ; enfin fruits, confitures et pâtisseries, le « dessert », mot qui signifie littéralement « desservir », car il faut d’abord enlever les plats précédents. Chacun n’atteint que les plats placés devant lui et fait passer les autres. Louis XIV fait même du repas un rituel public : son grand couvert se déroule à Versailles sous les yeux des courtisans.' },
+    at:{ zh:'Château de Versailles，王后寢宮裡的 Antichambre du Grand Couvert（公開用餐的前廳）', en:'Château de Versailles, the Antichambre du Grand Couvert in the Queen’s Apartment (where the public meals were held)', fr:'Château de Versailles, antichambre du Grand Couvert dans l’appartement de la Reine (où se tenaient les repas publics)' } },
+  { theme:'culture', icon:'🐟', q:'Château de Chantilly',
+    title:{ zh:'Vatel：為一場宴會的魚付出生命的總管', en:'Vatel: the steward who died over a banquet’s fish', fr:'Vatel : le maître d’hôtel mort pour le poisson d’un banquet' },
+    text:{ zh:'1671 年，孔代親王的總管 Vatel 在尚蒂伊城堡籌備款待路易十四的盛宴。據塞維涅夫人的信記載，海魚遲遲未到，他在清晨絕望自盡，不久魚貨就送到了。故事細節仍有爭議，但很能說明法式宴會的規模與壓力。',
+      en:'In 1671 Vatel, steward to the Prince de Condé, was preparing a great feast for Louis XIV at Chantilly. According to a letter of Madame de Sévigné, the sea fish was late and he killed himself at dawn in despair, just before it arrived. The details are disputed, but the story shows the scale and pressure of a French banquet.',
+      fr:'En 1671, Vatel, maître d’hôtel du prince de Condé, prépare à Chantilly un grand festin pour Louis XIV. Selon une lettre de Madame de Sévigné, la marée tarde et il se donne la mort à l’aube, juste avant l’arrivée du poisson. Les détails restent discutés, mais l’histoire dit l’ampleur et la pression d’un banquet à la française.' },
+    at:{ zh:'Château de Chantilly（含孔代博物館），巴黎以北約 40 公里', en:'Château de Chantilly (with the Musée Condé), about 40 km north of Paris', fr:'Château de Chantilly (avec le musée Condé), à environ 40 km au nord de Paris' } },
 ],
 
 revolution: [
@@ -111,6 +129,12 @@ c19: [
       en:'While Haussmann rebuilt the streets, the engineer Eugène Belgrand gave Paris a modern sewer system whose tunnels carry the same names and street signs as the roads above. Victor Hugo made this underground city famous in Les Misérables.',
       fr:'Pendant qu’Haussmann refait les rues, l’ingénieur Eugène Belgrand dote Paris d’un réseau d’égouts moderne, dont les galeries portent les mêmes noms et plaques que les rues au-dessus. Victor Hugo a rendu cette ville souterraine célèbre dans Les Misérables.' },
     at:{ zh:'Musée des Égouts de Paris，巴黎七區，阿爾瑪橋（Pont de l’Alma）旁', en:'Musée des Égouts de Paris, Paris 7th, by the Pont de l’Alma', fr:'Musée des Égouts de Paris, Paris 7ᵉ, près du pont de l’Alma' } },
+  { theme:'culture', icon:'🥂',
+    title:{ zh:'一道一道上菜，其實是十九世紀才流行的', en:'Dish by dish: a nineteenth-century fashion', fr:'Plat après plat : une mode du XIXᵉ siècle' },
+    text:{ zh:'今天習慣的「吃完一道再上下一道」叫 service à la russe（俄式服務）。1810 年前後，俄國駐巴黎大使庫拉金把它帶進法國，十九世紀中葉才逐漸取代法式服務。好處是菜上桌時還是熱的，也方便依每位客人分菜，因此成為今日餐廳與正式晚宴的標準。',
+      en:'The habit of one course at a time is called service à la russe. The Russian ambassador in Paris, Prince Kourakine, brought it to France around 1810, and it slowly replaced service à la française by the mid-nineteenth century. Dishes reach the table hot and can be served to each guest in turn, which is why it became the norm in today’s restaurants and formal dinners.',
+      fr:'L’habitude de servir un plat à la fois s’appelle le service à la russe. L’ambassadeur de Russie à Paris, le prince Kourakine, l’introduit en France vers 1810, et il supplante peu à peu le service à la française vers le milieu du XIXᵉ siècle. Les plats arrivent chauds et se servent à chaque convive tour à tour, d’où son triomphe dans les restaurants et les dîners officiels d’aujourd’hui.' },
+    at:{ zh:'今天幾乎每一家正式餐廳的上菜方式', en:'The way almost every formal restaurant serves today', fr:'La façon dont sert presque tout restaurant aujourd’hui' } },
 ],
 
 third: [
@@ -149,7 +173,12 @@ fifth: [
     text:{ zh:'1989 年啟用，由貝聿銘設計，當時引來強烈批評，如今已是羅浮宮的入口與象徵。它是密特朗任內一系列大型文化工程之一，同期還有巴士底歌劇院與國家圖書館。',
       en:'Opened in 1989 and designed by I. M. Pei, it was fiercely criticised at first and is now the museum’s entrance and emblem. It was one of the large cultural projects of Mitterrand’s presidency, alongside the Opéra Bastille and the national library.',
       fr:'Inaugurée en 1989 et conçue par I. M. Pei, elle a d’abord été violemment critiquée et constitue aujourd’hui l’entrée et l’emblème du musée. Elle fait partie des grands chantiers culturels du septennat de Mitterrand, avec l’Opéra Bastille et la Bibliothèque nationale.' },
-    at:{ zh:'Musée du Louvre，巴黎一區', en:'Musée du Louvre, Paris 1st arrondissement', fr:'Musée du Louvre, Paris 1ᵉʳ' } },
+    at:{ zh:'Musée du Louvre，巴黎一區', en:'Musée du Louvre, Paris 1st arrondissement', fr:'Musée du Louvre, Paris 1ᵉʳ' } },  { theme:'culture', icon:'🥖', q:'Cité internationale de la gastronomie et du vin Dijon',
+    title:{ zh:'UNESCO 認證的「法式美食饗宴」', en:'The UNESCO-listed “gastronomic meal of the French”', fr:'Le « repas gastronomique des Français » classé à l’UNESCO' },
+    text:{ zh:'2010 年，「法國人的美食饗宴」列入聯合國教科文組織非物質文化遺產。它不是某一道菜，而是一套用餐習俗：以開胃酒開始，中間至少有四道菜（前菜、搭配蔬菜的魚或肉、起司、甜點），並重視餐酒搭配、共享與交談。這套有順序的用餐方式，與歷史上一次次的 service 一脈相承。',
+      en:'In 2010 the “gastronomic meal of the French” was inscribed on UNESCO’s intangible heritage list. It is not a dish but a set of customs: it opens with an aperitif and has at least four courses (a starter, fish or meat with vegetables, cheese and dessert), with attention to pairing wine, sharing and conversation. This ordered way of dining descends from the historic “services”.',
+      fr:'En 2010, le « repas gastronomique des Français » est inscrit au patrimoine immatériel de l’UNESCO. Ce n’est pas un plat mais un ensemble de pratiques : il s’ouvre sur un apéritif et comporte au moins quatre plats (entrée, poisson ou viande avec légumes, fromage, dessert), avec le souci de l’accord des vins, du partage et de la conversation. Cet ordonnancement descend des « services » de l’histoire.' },
+    at:{ zh:'Cité internationale de la gastronomie et du vin，第戎（Dijon）', en:'Cité internationale de la gastronomie et du vin, Dijon', fr:'Cité internationale de la gastronomie et du vin, Dijon' } },
 ],
 
 } };
