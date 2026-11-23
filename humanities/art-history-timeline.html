@@ -126,7 +126,7 @@ h1 .gold { color: var(--gold); font-weight: 300; }
 }
 .mvx-era .yrs { font-size: 10px; font-weight: 700; color: var(--muted); white-space: nowrap; }
 .mvx-era .ln { flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,92,0.28), transparent); }
-.mvx-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 13px; }
+.mvx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 13px; }
 .mvx-card {
   display: flex; gap: 15px; align-items: flex-start;
   background: rgba(255,243,210,0.035);
@@ -189,7 +189,7 @@ h1 .gold { color: var(--gold); font-weight: 300; }
   position: absolute; left: 17px; top: 50%; transform: translateY(-50%);
   color: var(--muted); font-size: 13px; pointer-events: none;
 }
-#work-hits { display: none; max-width: 720px; margin: -12px auto 30px; }
+#work-hits { display: none; margin: -12px auto 30px; }
 .wh-lb { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
 .wh-list { display: grid; gap: 8px; }
 .wh-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 11px 14px; border: 1px solid var(--gold-lo); border-radius: 12px; background: rgba(201,168,92,0.06); cursor: zoom-in; transition: all .2s; }
@@ -438,7 +438,7 @@ h1 .gold { color: var(--gold); font-weight: 300; }
 .d-sec-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,92,0.2), transparent); }
 /* masters & works */
 #d-masters { margin-top: 30px; }
-.masters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 13px; }
+.masters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 13px; }
 .artist-card {
   background: rgba(255,243,210,0.035);
   border: 1px solid rgba(201,168,92,0.14);
@@ -599,15 +599,15 @@ footer p { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacin
 @media(prefers-reduced-motion:reduce){ .bar, #detail { transition: none !important; animation: none !important; } }
 
 /* ── 學習路徑 ── */
-.study-wrap{max-width:860px;margin:0 auto;padding:0 18px 60px;}
-.study-stage{margin-bottom:26px;padding:20px 22px;border:1px solid rgba(190,160,90,.22);
+.study-wrap{margin:0 auto;padding:0 18px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(440px,100%),1fr));gap:22px;align-items:start;}
+.study-stage{margin-bottom:0;padding:20px 22px;border:1px solid rgba(190,160,90,.22);
   border-top:2px solid rgba(190,160,90,.55);border-radius:4px;background:rgba(255,250,235,.03);}
 .study-stage h3{margin:0 0 12px;font-size:15px;letter-spacing:.06em;color:#d9c18a;font-weight:600;}
 .study-stage ul{margin:0;padding-left:20px;}
 .study-stage li{margin-bottom:9px;line-height:1.85;font-size:14px;}
 .study-stage p{margin:0;line-height:1.85;font-size:14px;}
 .study-proj{background:rgba(190,160,90,.07);}
-.study-note{max-width:860px;margin:0 auto;padding:0 22px;font-size:13px;line-height:1.9;opacity:.75;
+.study-note{grid-column:1/-1;margin:4px 0 0;padding:0 22px;font-size:13px;line-height:1.9;opacity:.75;
   border-left:2px solid rgba(190,160,90,.4);}
 </style>
 </head>

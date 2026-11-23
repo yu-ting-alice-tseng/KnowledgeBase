@@ -90,8 +90,8 @@ function chrome() {
 <main class="max-w-[1760px] mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
   <div id="backlink"></div>
   <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
-    <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>
-    <p data-i18n="intro2" class="text-slate-400 leading-relaxed max-w-4xl mt-4 text-sm"></p>
+    <p data-i18n="intro" class="text-slate-300 leading-relaxed"></p>
+    <p data-i18n="intro2" class="text-slate-400 leading-relaxed mt-4 text-sm"></p>
   </section>
   <div id="sections" class="space-y-12"></div>
   <footer class="pt-6 border-t border-slate-900">
@@ -106,7 +106,7 @@ function ui(k){ return (C.ui[LANG] && C.ui[LANG][k]) || C.ui.en[k] || ''; }
 const list = (l, c) => l ? `<ul class="mt-3 space-y-1.5">${l.map(x => `<li class="text-xs text-slate-300 leading-relaxed flex gap-2"><span style="color:${c}">▸</span><span>${t(x)}</span></li>`).join('')}</ul>` : '';
 
 const BLOCK = {
-  lead: (b) => `<p class="text-slate-300 leading-relaxed max-w-4xl">${t(b.p)}</p>`,
+  lead: (b) => `<p class="text-slate-300 leading-relaxed">${t(b.p)}</p>`,
   h3:   (b, s) => `<h3 class="text-base font-black text-white pt-2 flex items-center gap-2"><span class="w-1.5 h-4 rounded-full" style="background:${s.c}"></span>${t(b.t)}</h3>`,
   note: (b, s) => `<p class="text-sm text-slate-300 leading-relaxed rounded-2xl p-4 border" style="background:${s.c}0f;border-color:${s.c}40"><i class="fa-solid fa-lightbulb mr-2" style="color:${s.c}"></i>${t(b.p)}</p>`,
   warn: (b) => `<p class="text-sm text-slate-300 leading-relaxed rounded-2xl p-4 border" style="background:#f43f5e0f;border-color:#f43f5e40"><i class="fa-solid fa-triangle-exclamation mr-2" style="color:#fb7185"></i>${t(b.p)}</p>`,

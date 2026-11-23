@@ -191,7 +191,7 @@
         </div>
 
         <!-- 分支子節點網格區 -->
-        <div id="nodes-grid" class="grid grid-cols-2 md:grid-cols-5 gap-4 lg:gap-6 w-full max-w-[1600px] mt-2">
+        <div id="nodes-grid" class="grid grid-cols-2 md:grid-cols-5 gap-4 lg:gap-6 w-full mt-2">
           <!-- 節點資料將由 JS 動態渲染並計算連線 -->
         </div>
 
@@ -4216,7 +4216,7 @@
       grid.innerHTML = '';
 
       const branches = Object.values(data.branches);
-      grid.className = `grid grid-cols-2 md:grid-cols-${branches.length} gap-4 lg:gap-6 w-full max-w-[1600px] mt-2`;
+      grid.className = `grid grid-cols-2 md:grid-cols-${branches.length} gap-4 lg:gap-6 w-full mt-2`;
 
       branches.forEach((branch) => {
         const btn = document.createElement('button');
