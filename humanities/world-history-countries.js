@@ -392,17 +392,17 @@ const CX_UI = {
   zh:{ tab:'國別史', head:'國別史', sub:'挑一個國家，沿著「時代」與「主題」兩條軸線閱讀它的歷史。',
        more:'更多國家陸續加入', linear:'線性敘事', linearDesc:'依時代順序閱讀，每個時期附上五個主題切面。',
        thematic:'主題敘事', thematicDesc:'挑一條主題線索，看它如何貫穿每個時代。',
-       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', power:'誰掌權', turn:'轉折', stagesOpen:'展開全部', stagesClose:'收合全部', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
+       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', chron:'統治者與大事', power:'誰掌權', turn:'轉折', stagesOpen:'展開全部', stagesClose:'收合全部', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
        follow:'沿這條主題讀下去', periods:'個時期', c:'約 ' },
   en:{ tab:'Countries', head:'Country Histories', sub:'Pick a country and read its history along two axes: time and theme.',
        more:'More countries coming', linear:'Linear', linearDesc:'Read period by period, each with five thematic facets.',
        thematic:'Thematic', thematicDesc:'Follow one theme as it runs through every period.',
-       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', power:'Who held power', turn:'Turning point', stagesOpen:'Expand all', stagesClose:'Collapse all', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
+       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', chron:'Rulers and key events', power:'Who held power', turn:'Turning point', stagesOpen:'Expand all', stagesClose:'Collapse all', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
        follow:'Follow this theme', periods:'periods', c:'c. ' },
   fr:{ tab:'Par pays', head:'Histoires nationales', sub:'Choisissez un pays et lisez son histoire selon deux axes : le temps et les thèmes.',
        more:'D’autres pays à venir', linear:'Récit linéaire', linearDesc:'Lire période par période, chacune avec cinq angles thématiques.',
        thematic:'Récit thématique', thematicDesc:'Suivre un thème à travers toutes les périodes.',
-       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', power:'Qui détient le pouvoir', turn:'Tournant', stagesOpen:'Tout déplier', stagesClose:'Tout replier', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
+       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', chron:'Souverains et événements clés', power:'Qui détient le pouvoir', turn:'Tournant', stagesOpen:'Tout déplier', stagesClose:'Tout replier', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
        follow:'Suivre ce thème', periods:'périodes', c:'v. ' },
 };
 
@@ -479,6 +479,35 @@ function cxRulers(pid) {
     + list.map(r => {
         const yrs = r[0] === r[1] ? cxYear(r[0]) : cxYear(r[0]) + '–' + (r[1] >= 2026 ? fmtYear(r[1]) : cxYear(r[1]));
         return '<li><span class="cx-ru-y">' + yrs + '</span><div><b>' + r[2][L] + '</b><p>' + r[3][L] + '</p></div></li>';
+      }).join('') + '</ul>';
+}
+
+/* rulers and key events woven into one chronology: each event sits under
+   whoever ruled when it happened (the most recent accession wins on overlaps);
+   events outside every reign stand on their own, in date order */
+function cxChron(p) {
+  const rulers = (((typeof CX_RULERS !== 'undefined' && CX_RULERS[cx.country]) || {})[p.id] || [])
+    .map((r, i) => ({ r, i, ev: [] }));
+  const L = ['zh', 'en', 'fr'].indexOf(LANG) < 0 ? 0 : ['zh', 'en', 'fr'].indexOf(LANG);
+  const evLi = e => '<li><span class="cx-ev-y">' + cxYear(e.y, e.c) + '</span><span>' + (e[LANG] || e.zh) + '</span></li>';
+  const loose = [];
+  p.events.forEach(e => {
+    let host = null;
+    rulers.forEach(x => { if (e.y >= x.r[0] && e.y <= x.r[1] && (!host || x.r[0] >= host.r[0])) host = x; });
+    (host ? host.ev : loose).push(e);
+  });
+  if (!rulers.length) return '<div class="cx-label">' + cxU('events') + '</div><ul class="cx-ev">' + loose.map(evLi).join('') + '</ul>';
+  const items = rulers.map(x => ({ y: x.r[0], o: 0, i: x.i, x }))
+    .concat(loose.map((e, i) => ({ y: e.y, o: 1, i, e })))
+    .sort((a, b) => a.y - b.y || a.o - b.o || a.i - b.i);
+  return '<div class="cx-label">' + cxU('chron') + '</div><ul class="cx-rulers cx-chron">'
+    + items.map(it => {
+        if (it.e) return '<li class="cx-ch-ev"><span class="cx-ru-y">' + cxYear(it.e.y, it.e.c) + '</span><div><span>' + (it.e[LANG] || it.e.zh) + '</span></div></li>';
+        const r = it.x.r;
+        const yrs = r[0] === r[1] ? cxYear(r[0]) : cxYear(r[0]) + '–' + (r[1] >= 2026 ? fmtYear(r[1]) : cxYear(r[1]));
+        return '<li><span class="cx-ru-y">' + yrs + '</span><div><b>' + r[2][L] + '</b><p>' + r[3][L] + '</p>'
+          + (it.x.ev.length ? '<ul class="cx-ev cx-ch-sub">' + it.x.ev.map(evLi).join('') + '</ul>' : '')
+          + '</div></li>';
       }).join('') + '</ul>';
 }
 
@@ -565,10 +594,7 @@ function cxLinear(P) {
     + '<h3>' + T(p.name) + '</h3>'
     + '<p class="cx-sum">' + T(p.summary) + '</p>'
     + cxStages(p.id)
-    + cxRulers(p.id)
-    + '<div class="cx-label">' + cxU('events') + '</div>'
-    + '<ul class="cx-ev">' + p.events.map(e =>
-        '<li><span class="cx-ev-y">' + cxYear(e.y, e.c) + '</span><span>' + (e[LANG] || e.zh) + '</span></li>').join('') + '</ul>'
+    + cxChron(p)
     + '<div class="cx-label">' + cxU('facets') + '</div>'
     + '<div class="cx-facets">' + CX_THEMES.map(t =>
         '<div class="cx-facet" style="--tc:' + t.color + '">'

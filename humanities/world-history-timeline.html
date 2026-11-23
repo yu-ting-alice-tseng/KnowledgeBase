@@ -526,6 +526,13 @@ a.cx-where:hover .cx-where-go { color: var(--gold-hi); }
 .cx-rulers p { font-size: 12.8px !important; line-height: 1.8 !important; margin-top: 2px; }
 .cx-card.slim .cx-rulers li { padding: 6px 0; }
 @media (max-width: 640px) { .cx-rulers li { grid-template-columns: 1fr; gap: 2px; } .cx-ru-y { text-align: left; } }
+/* rulers + events in one chronology */
+.cx-ch-sub { margin-top: 8px; padding-left: 12px; border-left: 2px solid rgba(201,168,92,0.3); }
+.cx-ch-sub li { display: flex; gap: 12px; padding: 2px 0; border-bottom: none; }
+.cx-ch-sub .cx-ev-y { flex: 0 0 56px; text-align: left; }
+.cx-chron li.cx-ch-ev { padding: 6px 0; }
+.cx-chron li.cx-ch-ev span:not(.cx-ru-y) { font-size: 13px; line-height: 1.7; color: var(--cream2, #b8a48a); }
+@media (max-width: 640px) { .cx-ch-sub li { flex-direction: row; gap: 10px; } .cx-ch-sub .cx-ev-y { flex: 0 0 auto; } }
 
 
 /* stages of one period, folded */
