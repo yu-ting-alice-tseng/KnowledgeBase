@@ -15,7 +15,7 @@
 | `science/` | 科學與自然 | 觀星、啤酒大師課 |
 | `body-beauty/` | 身體與美感 | 健身、化妝、保養活性成分，以及 `dance/`（舞蹈總覽與七個舞種） |
 | `career/` | 職涯與規劃 | 職業技能心智圖、法國職涯檔案、履歷提示詞產生器 |
-| `assets/` | 共用程式 | `course-kit.js`（三語課程頁的渲染器）、`edit-mode.js`（全站編輯模式） |
+| `assets/` | 共用程式 | `course-kit.js`（三語課程頁的渲染器） |
 | `archive/drafts/` | 不上架 | 已被正式版取代的草稿（啤酒、保養心智圖 v1／v2） |
 
 **新增卷冊時**：把 HTML 放進對應的分類資料夾，共用腳本一律用相對路徑引用（一層深用 `../assets/…`，`body-beauty/dance/` 這種兩層深用 `../../assets/…`），再到 `index.html` 的 `DEFAULT_MODULES` 加一筆，`file` 填含資料夾的相對路徑、`cat` 填對應的分類 id（`humanities`、`politics`、`business`、`arts`、`science`、`body`、`career`）。

@@ -64,7 +64,7 @@ function chrome() {
   <div style="position:absolute;width:520px;height:520px;top:-120px;right:-110px;background:radial-gradient(circle,${b}1c 0%,transparent 70%);border-radius:50%;filter:blur(100px);"></div>
 </div>
 <header class="border-b border-slate-900/80 backdrop-blur-md sticky top-0 z-50 px-4 py-4 md:px-8" style="background:${bg}d9">
-  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+  <div class="max-w-[1760px] mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
     <div class="flex items-center gap-3">
       <div class="relative">
         <div class="absolute -inset-1 rounded-xl blur opacity-70 animate-pulse" style="background:linear-gradient(90deg,${a},${b})"></div>
@@ -87,7 +87,7 @@ function chrome() {
     </div>
   </div>
 </header>
-<main class="max-w-7xl mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
+<main class="max-w-[1760px] mx-auto px-4 md:px-8 mt-10 space-y-12 relative z-10">
   <div id="backlink"></div>
   <section class="gradient-border bg-slate-950/40 rounded-3xl p-6 md:p-10 border border-slate-900 shadow-2xl">
     <p data-i18n="intro" class="text-slate-300 leading-relaxed max-w-4xl"></p>

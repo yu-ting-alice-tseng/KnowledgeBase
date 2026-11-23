@@ -73,7 +73,7 @@ body {
   </div>
 </header>
 
-<main class="relative z-10 max-w-7xl mx-auto px-6 py-8">
+<main class="relative z-10 max-w-[1760px] mx-auto px-6 py-8">
   <div class="bg-slate-950/40 border border-slate-900 rounded-2xl p-6 mb-6">
     <div class="flex items-center gap-2 mb-5 text-sm text-fuchsia-400 font-bold">
       <i class="fa-solid fa-bezier-curve"></i>
@@ -151,6 +151,5 @@ function switchLanguage(lang) {
 const _saved = localStorage.getItem('kb_lang');
 switchLanguage(_saved && ['zh','en','fr'].includes(_saved) ? _saved : 'en');
 </script>
-<script src="../assets/edit-mode.js" defer></script>
 </body>
 </html>

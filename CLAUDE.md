@@ -17,5 +17,5 @@
 ## 檔案結構：依分類放進資料夾
 
 - 每本卷冊都放在分類資料夾裡（`humanities/`、`politics-law/`、`business/`、`arts-media/`、`science/`、`body-beauty/`、`career/`），對應 `index.html` 的書架；共用腳本在 `assets/`，淘汰的草稿在 `archive/drafts/`。完整對照表見 `README.md`。
-- 新增或搬移頁面時，`index.html` 的 `file` 要填含資料夾的路徑，頁內引用 `course-kit.js`／`edit-mode.js` 與其他卷冊一律用相對路徑（`../assets/…`、`../career/…`），搬動後用瀏覽器實際開一次確認沒有 404。
+- 新增或搬移頁面時，`index.html` 的 `file` 要填含資料夾的路徑，頁內引用 `course-kit.js` 與其他卷冊一律用相對路徑（`../assets/…`、`../career/…`），搬動後用瀏覽器實際開一次確認沒有 404。
 - 根目錄只留 `index.html`、說明檔與自動同步腳本；內容頁不要再直接放在根目錄。
