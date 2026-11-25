@@ -277,4 +277,94 @@ stuart: {
 },
 
 },
+germany: {
+
+divided: {
+  title:{ zh:'從和平革命到統一的六個階段', en:'From peaceful revolution to unity in six stages', fr:'De la révolution pacifique à l’unité en six étapes' },
+  list:[
+  { a:'1989-05', b:'1989-10',
+    name:{ zh:'鐵幕開了一道縫', en:'A crack in the Iron Curtain', fr:'Une brèche dans le rideau de fer' },
+    power:{ zh:'東德統一社會黨總書記何內克；蘇聯的戈巴契夫不再支持強硬鎮壓', en:'Erich Honecker of the Socialist Unity Party, while Gorbachev’s Soviet Union no longer backed hard-line repression', fr:'Erich Honecker, du Parti socialiste unifié, tandis que l’URSS de Gorbatchev ne soutient plus la répression' },
+    summary:{ zh:'匈牙利在 1989 年 5 月開始拆除與奧地利邊界的鐵絲網。夏天，數千名東德人以度假為名前往匈牙利，8 月在「泛歐野餐」中越境；9 月匈牙利正式放行。另有數千人擠進西德駐布拉格大使館，9 月 30 日西德外長根舍在陽台上宣布他們可以前往西德，歡呼聲淹沒了他的話。',
+      en:'In May 1989 Hungary began taking down the barbed wire on its border with Austria. That summer thousands of East Germans went to Hungary “on holiday”, crossing during the Pan-European Picnic in August; in September Hungary let them go openly. Thousands more crammed into the West German embassy in Prague, and on 30 September Foreign Minister Genscher told them from the balcony that they could leave for the West, his words drowned by cheers.',
+      fr:'En mai 1989, la Hongrie commence à démanteler les barbelés de sa frontière avec l’Autriche. Cet été-là, des milliers d’Allemands de l’Est partent « en vacances » en Hongrie et passent la frontière lors du pique-nique paneuropéen d’août ; en septembre, la Hongrie les laisse partir ouvertement. D’autres milliers s’entassent à l’ambassade de RFA à Prague, et le 30 septembre le ministre Genscher leur annonce du balcon qu’ils peuvent partir à l’Ouest, sa voix couverte par les acclamations.' },
+    ev:[
+      ['1989-05-02', ['匈牙利開始拆除邊界鐵絲網','Hungary begins dismantling its border fence','La Hongrie commence à démanteler sa clôture frontalière']],
+      ['1989-08-19', ['泛歐野餐：數百名東德人越境奧地利','Pan-European Picnic: hundreds of East Germans cross into Austria','Pique-nique paneuropéen : des centaines d’Allemands de l’Est passent en Autriche']],
+      ['1989-09-11', ['匈牙利開放東德人出境到西方','Hungary opens its border to East Germans','La Hongrie ouvre sa frontière aux Allemands de l’Est']],
+      ['1989-09-30', ['根舍在布拉格大使館陽台宣布難民可前往西德','Genscher tells refugees at the Prague embassy they may go West','Genscher annonce aux réfugiés de l’ambassade de Prague qu’ils peuvent partir à l’Ouest']],
+    ],
+    turn:{ zh:'人民用腳投票，東德政權再也無法把人民關在國境之內。', en:'People were voting with their feet, and the regime could no longer keep them in.', fr:'Les gens votent avec leurs pieds, et le régime ne peut plus les retenir.' } },
+
+  { a:'1989-10', b:'1989-11',
+    name:{ zh:'萊比錫與和平革命', en:'Leipzig and the peaceful revolution', fr:'Leipzig et la révolution pacifique' },
+    power:{ zh:'統一社會黨內部動搖：何內克下台，克倫茨接任', en:'The Socialist Unity Party wavers: Honecker falls and Egon Krenz takes over', fr:'Le Parti socialiste unifié vacille : Honecker tombe, Egon Krenz lui succède' },
+    summary:{ zh:'東德在 10 月 7 日大肆慶祝建國四十週年，戈巴契夫卻提醒「遲到的人會被生活懲罰」。兩天後，約七萬人從萊比錫的尼古拉教堂出發遊行，高喊「我們是人民！」，荷槍實彈的軍警最後沒有開槍。何內克被黨內逼退，11 月 4 日柏林亞歷山大廣場聚集了數十萬人。',
+      en:'East Germany celebrated its fortieth anniversary with pomp on 7 October, while Gorbachev warned that “life punishes those who come too late”. Two days later some 70,000 people marched from Leipzig’s St Nicholas Church chanting “We are the people!”, and the armed security forces did not open fire. Honecker was pushed out by his own party, and on 4 November hundreds of thousands gathered on Berlin’s Alexanderplatz.',
+      fr:'La RDA fête en grande pompe ses quarante ans le 7 octobre, tandis que Gorbatchev avertit que « la vie punit ceux qui arrivent trop tard ». Deux jours plus tard, quelque 70 000 personnes défilent depuis l’église Saint-Nicolas de Leipzig en scandant « Nous sommes le peuple ! », et les forces armées ne tirent pas. Honecker est poussé dehors par son parti, et le 4 novembre des centaines de milliers de personnes se rassemblent sur l’Alexanderplatz.' },
+    ev:[
+      ['1989-10-07', ['東德建國四十週年慶典，戈巴契夫到訪','East Germany’s fortieth anniversary; Gorbachev visits','Quarantième anniversaire de la RDA ; visite de Gorbatchev']],
+      ['1989-10-09', ['萊比錫七萬人遊行，軍警沒有開槍','70,000 march in Leipzig and no shots are fired','70 000 manifestants à Leipzig, aucun coup de feu']],
+      ['1989-10-18', ['何內克下台，克倫茨接任','Honecker is ousted and Egon Krenz takes over','Honecker est évincé ; Egon Krenz lui succède']],
+      ['1989-11-04', ['亞歷山大廣場數十萬人集會','Hundreds of thousands rally on Alexanderplatz','Des centaines de milliers de manifestants sur l’Alexanderplatz']],
+    ],
+    turn:{ zh:'政權選擇不開槍，革命從此不可逆轉。', en:'The regime chose not to shoot, and the revolution became irreversible.', fr:'Le régime choisit de ne pas tirer, et la révolution devient irréversible.' } },
+
+  { a:'1989-11', b:'1989-12',
+    name:{ zh:'圍牆倒下', en:'The Wall falls', fr:'La chute du Mur' },
+    power:{ zh:'克倫茨與莫德羅領導的東德政府，西德總理柯爾開始主導統一議程', en:'The East German government of Krenz and Modrow, with Chancellor Kohl beginning to set the agenda for unity', fr:'Le gouvernement est-allemand de Krenz et Modrow, le chancelier Kohl commençant à fixer l’agenda de l’unité' },
+    summary:{ zh:'11 月 9 日晚上，政治局委員沙博夫斯基在記者會上宣讀新的出境規定，被問到何時生效時，他翻著紙條說「據我所知……立即」。數萬人湧向邊境檢查站，守衛最後打開柵欄，柏林圍牆在當晚倒下。月底柯爾提出統一的十點計畫，東德人民議會也刪除了統一社會黨的領導地位。',
+      en:'On the evening of 9 November Politburo member Günter Schabowski read out new travel rules at a press conference; asked when they took effect, he shuffled his notes and said, “As far as I know… immediately.” Tens of thousands rushed to the checkpoints, the guards finally opened the barriers, and the Berlin Wall fell that night. At the end of the month Kohl presented a ten-point plan for unity, and the East German parliament struck the party’s leading role from the constitution.',
+      fr:'Le soir du 9 novembre, Günter Schabowski, membre du Politburo, lit en conférence de presse un nouveau règlement de voyage ; à la question de son entrée en vigueur, il fouille ses notes et répond : « À ma connaissance… immédiatement. » Des dizaines de milliers de personnes se ruent aux postes-frontières, les gardes finissent par ouvrir les barrières, et le mur de Berlin tombe dans la nuit. Fin novembre, Kohl présente un plan en dix points pour l’unité, et le Parlement est-allemand supprime de la Constitution le rôle dirigeant du parti.' },
+    ev:[
+      ['1989-11-09', ['沙博夫斯基記者會，柏林圍牆開放','Schabowski’s press conference; the Berlin Wall opens','Conférence de presse de Schabowski ; ouverture du mur de Berlin']],
+      ['1989-11-28', ['柯爾提出統一的十點計畫','Kohl presents his ten-point plan','Kohl présente son plan en dix points']],
+      ['1989-12-01', ['東德憲法刪除統一社會黨的領導地位','The party’s leading role is struck from the GDR constitution','Le rôle dirigeant du parti est retiré de la Constitution de la RDA']],
+      ['1989-12-22', ['布蘭登堡門重新開放通行','The Brandenburg Gate reopens','Réouverture de la porte de Brandebourg']],
+    ],
+    turn:{ zh:'口號從「我們是人民」變成「我們是一個民族」，問題不再是改革東德，而是統一。', en:'The chant shifted from “We are the people” to “We are one people”: the question was no longer reforming East Germany but unity.', fr:'Le slogan passe de « Nous sommes le peuple » à « Nous sommes un peuple » : il ne s’agit plus de réformer la RDA, mais de l’unité.' } },
+
+  { a:'1990-01', b:'1990-05',
+    name:{ zh:'第一次也是最後一次自由選舉', en:'The first and last free election', fr:'La première et dernière élection libre' },
+    power:{ zh:'圓桌會議與莫德羅過渡政府；3 月後由德梅齊埃領導的民選政府', en:'The Round Table and Modrow’s caretaker government; from March, the elected government of Lothar de Maizière', fr:'La Table ronde et le gouvernement de transition de Modrow ; à partir de mars, le gouvernement élu de Lothar de Maizière' },
+    summary:{ zh:'民眾佔領各地的史塔西辦公室，阻止特務銷毀檔案。3 月 18 日東德舉行唯一一次的自由選舉，主張快速統一的「德國聯盟」大勝。新政府由基民盟的德梅齊埃領導，開始與西德談判統一的具體方式。',
+      en:'Citizens occupied Stasi offices across the country to stop agents destroying their files. On 18 March East Germany held its only free election, won decisively by the “Alliance for Germany”, which wanted swift unity. The new government, led by the Christian Democrat Lothar de Maizière, began negotiating the terms of unification with Bonn.',
+      fr:'Des citoyens occupent les bureaux de la Stasi dans tout le pays pour empêcher la destruction des dossiers. Le 18 mars, la RDA tient sa seule élection libre, nettement remportée par l’« Alliance pour l’Allemagne », favorable à une unité rapide. Le nouveau gouvernement, dirigé par le chrétien-démocrate Lothar de Maizière, négocie avec Bonn les modalités de l’unification.' },
+    ev:[
+      ['1990-01-15', ['民眾衝進柏林的史塔西總部','Citizens storm the Stasi headquarters in Berlin','Des citoyens envahissent le siège de la Stasi à Berlin']],
+      ['1990-03-18', ['東德第一次自由選舉','East Germany’s first free election','Première élection libre en RDA']],
+      ['1990-04-12', ['德梅齊埃政府成立','The de Maizière government takes office','Le gouvernement de Maizière entre en fonctions']],
+    ],
+    turn:{ zh:'選民選擇了快速統一，剩下的問題是速度與條件。', en:'Voters had chosen swift unity; what remained was the pace and the terms.', fr:'Les électeurs ont choisi l’unité rapide ; restent le rythme et les conditions.' } },
+
+  { a:'1990-05', b:'1990-09',
+    name:{ zh:'貨幣聯盟與二加四條約', en:'Monetary union and the Two Plus Four Treaty', fr:'L’union monétaire et le traité Deux plus Quatre' },
+    power:{ zh:'兩德政府，以及美、蘇、英、法四個戰勝國', en:'The two German governments and the four wartime Allies: the US, the USSR, Britain and France', fr:'Les deux gouvernements allemands et les quatre Alliés : États-Unis, URSS, Royaume-Uni et France' },
+    summary:{ zh:'7 月 1 日西德馬克成為東德的貨幣，工資與小額存款以一比一兌換，商店一夜之間擺滿西方商品，東德企業卻失去競爭力。柯爾與戈巴契夫在高加索會面，蘇聯同意統一後的德國留在北約。8 月兩德簽訂《統一條約》，9 月在莫斯科簽署「二加四條約」，四國放棄對德國的權利。',
+      en:'On 1 July the West German mark became East Germany’s currency, with wages and small savings exchanged one for one; shops filled overnight with western goods, while East German firms lost their competitiveness. Kohl and Gorbachev met in the Caucasus, where the Soviet Union agreed that a united Germany could stay in NATO. In August the two states signed the Unification Treaty, and in September the Two Plus Four Treaty was signed in Moscow, ending the four powers’ rights over Germany.',
+      fr:'Le 1ᵉʳ juillet, le deutschemark devient la monnaie de la RDA, salaires et petites épargnes étant convertis à un pour un ; les magasins se remplissent du jour au lendemain de produits occidentaux, tandis que les entreprises est-allemandes perdent toute compétitivité. Kohl et Gorbatchev se rencontrent dans le Caucase, où l’URSS accepte qu’une Allemagne unie reste dans l’OTAN. En août, les deux États signent le traité d’unification, et en septembre le traité Deux plus Quatre est signé à Moscou, mettant fin aux droits des quatre puissances sur l’Allemagne.' },
+    ev:[
+      ['1990-05-18', ['兩德簽訂貨幣、經濟與社會聯盟條約','The two states sign the treaty on monetary, economic and social union','Signature du traité d’union monétaire, économique et sociale']],
+      ['1990-07-01', ['西德馬克在東德開始流通','The Deutsche Mark arrives in East Germany','Le deutschemark arrive en RDA']],
+      ['1990-07-16', ['柯爾與戈巴契夫在高加索達成北約協議','Kohl and Gorbachev reach agreement on NATO in the Caucasus','Kohl et Gorbatchev s’accordent sur l’OTAN dans le Caucase']],
+      ['1990-08-31', ['簽訂《統一條約》','The Unification Treaty is signed','Signature du traité d’unification']],
+      ['1990-09-12', ['在莫斯科簽署「二加四條約」','The Two Plus Four Treaty is signed in Moscow','Signature du traité Deux plus Quatre à Moscou']],
+    ],
+    turn:{ zh:'戰後四十五年的占領權正式結束，德國重新取得完整主權。', en:'Forty-five years of occupation rights came to an end, and Germany regained full sovereignty.', fr:'Quarante-cinq ans de droits d’occupation prennent fin, et l’Allemagne recouvre sa pleine souveraineté.' } },
+
+  { a:'1990-10', b:'1990-12',
+    name:{ zh:'統一', en:'Unity', fr:'L’unité' },
+    power:{ zh:'統一後的德國聯邦政府，總理柯爾', en:'The government of united Germany under Chancellor Kohl', fr:'Le gouvernement de l’Allemagne unie, sous le chancelier Kohl' },
+    summary:{ zh:'10 月 3 日零時，東德的五個邦加入德意志聯邦共和國，東德不復存在。這一天成為德國的國慶日「德國統一日」。12 月舉行統一後第一次全國大選，柯爾的聯合政府勝選。',
+      en:'At midnight on 3 October the five eastern states joined the Federal Republic and East Germany ceased to exist. The day became Germany’s national holiday, the Day of German Unity. In December the first all-German election since the war returned Kohl’s coalition.',
+      fr:'À minuit, le 3 octobre, les cinq Länder de l’Est rejoignent la République fédérale, et la RDA cesse d’exister. Ce jour devient la fête nationale, le Jour de l’unité allemande. En décembre, les premières élections de l’Allemagne unie reconduisent la coalition de Kohl.' },
+    ev:[
+      ['1990-10-03', ['兩德統一，東德不復存在','Germany is reunited and the GDR ceases to exist','Réunification : la RDA cesse d’exister']],
+      ['1990-12-02', ['統一後第一次全國大選','The first all-German federal election','Premières élections fédérales de l’Allemagne unie']],
+    ],
+    turn:{ zh:'政治上的統一在一年內完成，社會與經濟上的統一卻花了數十年，至今仍在進行。', en:'Political unity took less than a year; social and economic unity has taken decades and is still under way.', fr:'L’unité politique a pris moins d’un an ; l’unité sociale et économique prend des décennies et se poursuit encore.' } },
+  ]
+},
+
+},
 };
