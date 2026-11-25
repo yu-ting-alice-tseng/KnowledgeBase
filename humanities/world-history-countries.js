@@ -386,6 +386,412 @@ const COUNTRIES = [
   },
   ]
 },
+{
+  id:'uk', flag:'flag-gb', color:'#b8433f',
+  name:{ zh:'英國', en:'United Kingdom', fr:'Royaume-Uni' },
+  intro:{ zh:'英國其實是由英格蘭、蘇格蘭、威爾斯與北愛爾蘭組成的聯合王國。它的歷史一面是島嶼一再被羅馬人、維京人與諾曼人征服，再轉身向全世界擴張；另一面是權力一步步從國王手中轉到議會。這裡同樣用十一個時期與五條主題線索，閱讀這五千年。',
+    en:'The United Kingdom is a union of England, Scotland, Wales and Northern Ireland. Its history is on one side the story of an island conquered again and again, by Romans, Vikings and Normans, that then turned outward to the whole world; on the other, the story of power passing step by step from the crown to Parliament. Here too, eleven periods and five thematic threads take you through five thousand years.',
+    fr:'Le Royaume-Uni réunit l’Angleterre, l’Écosse, le pays de Galles et l’Irlande du Nord. Son histoire est d’un côté celle d’une île conquise tour à tour par les Romains, les Vikings et les Normands, qui se tourne ensuite vers le monde entier ; de l’autre, celle d’un pouvoir passé pas à pas de la couronne au Parlement. Ici aussi, onze périodes et cinq fils thématiques parcourent cinq mille ans.' },
+  threads:{
+    state:{ intro:{ zh:'從七國並立、諾曼王權到議會主權：看權力如何從國王手中轉到西敏的議會。',
+      en:'From rival kingdoms and Norman kingship to parliamentary sovereignty: how power passed from the crown to Parliament at Westminster.',
+      fr:'Des royaumes rivaux et de la royauté normande à la souveraineté parlementaire : comment le pouvoir est passé de la couronne au Parlement de Westminster.' } },
+    faith:{ name:{ zh:'宗教與國教', en:'Religion & the Established Church', fr:'Religion et Église établie' },
+      intro:{ zh:'國王自立教會，新教與天主教之爭塑造了王位繼承、政黨與愛爾蘭問題。',
+        en:'A king founded his own Church, and the struggle between Protestant and Catholic shaped the succession, party politics and the Irish question.',
+        fr:'Un roi fonde sa propre Église, et la lutte entre protestants et catholiques façonne la succession, les partis et la question irlandaise.' } },
+    society:{ intro:{ zh:'從莊園與羊毛，到世界第一個工業國家，再到福利國家與倫敦金融城。',
+      en:'From manors and wool to the world’s first industrial nation, then to the welfare state and the City of London.',
+      fr:'Des domaines et de la laine à la première nation industrielle, puis à l’État-providence et à la City de Londres.' } },
+    culture:{ intro:{ zh:'英語、莎士比亞、科學與議會傳統：一個島國如何把語言與制度帶到全世界。',
+      en:'English, Shakespeare, science and parliamentary tradition: how an island carried its language and institutions round the world.',
+      fr:'L’anglais, Shakespeare, la science et la tradition parlementaire : comment une île a diffusé sa langue et ses institutions dans le monde.' } },
+    world:{ name:{ zh:'英國與世界', en:'Britain & the World', fr:'Le Royaume-Uni et le monde' },
+      intro:{ zh:'從被羅馬、維京與諾曼人征服的島嶼，到日不落帝國，再到脫歐後重新尋找定位。',
+        en:'From an island conquered by Romans, Vikings and Normans to an empire on which the sun never set, and a new search for a role after Brexit.',
+        fr:'D’une île conquise par les Romains, les Vikings et les Normands à un empire sur lequel le soleil ne se couchait jamais, puis à la recherche d’un nouveau rôle après le Brexit.' } },
+  },
+  periods:[
+  {
+    id:'britannia', icon:'🪨', start:-3000, end:410, world:'roman',
+    name:{ zh:'史前與羅馬不列顛', en:'Prehistoric and Roman Britain', fr:'La Bretagne préhistorique et romaine' },
+    summary:{ zh:'在巨石陣的建造者之後，凱爾特部族在島上建立山堡與王國。西元 43 年羅馬入侵，把英格蘭與威爾斯納入帝國將近四百年，蘇格蘭則始終在羅馬的掌控之外。410 年羅馬軍團撤離，不列顛只能自求多福。',
+      en:'After the builders of Stonehenge, Celtic peoples raised hillforts and kingdoms across the island. Rome invaded in AD 43 and held England and Wales for nearly four centuries, while Scotland stayed beyond its grasp. By 410 the legions were gone and Britain was left to fend for itself.',
+      fr:'Après les bâtisseurs de Stonehenge, des peuples celtes élèvent oppida et royaumes dans l’île. Rome envahit en 43 apr. J.-C. et tient l’Angleterre et le pays de Galles près de quatre siècles, tandis que l’Écosse échappe à son emprise. En 410, les légions sont parties et la Bretagne est livrée à elle-même.' },
+    events:[
+      { y:-3000, c:true, zh:'巨石陣開始興建', en:'Building of Stonehenge begins', fr:'Début de la construction de Stonehenge' },
+      { y:-55, zh:'凱撒首次渡海遠征不列顛', en:'Julius Caesar’s first expedition to Britain', fr:'Première expédition de César en Bretagne' },
+      { y:43,  zh:'克勞狄烏斯派兵入侵，羅馬征服開始', en:'Claudius sends an army: the Roman conquest begins', fr:'Claude envoie une armée : début de la conquête romaine' },
+      { y:60,  c:true, zh:'布狄卡起義，倫敦被焚', en:'Boudica’s revolt: London is burned', fr:'Révolte de Boadicée : Londres est incendiée' },
+      { y:122, zh:'哈德良長城開始興建', en:'Construction of Hadrian’s Wall begins', fr:'Début de la construction du mur d’Hadrien' },
+      { y:410, zh:'羅馬統治結束，不列顛須自行防衛', en:'Roman rule ends: Britain must see to its own defence', fr:'Fin de la domination romaine : la Bretagne doit assurer sa propre défense' },
+    ],
+    themes:{
+      state:{ zh:'鐵器時代的不列顛由許多部族王國組成。羅馬把南部劃為行省，以倫底紐姆（倫敦）為中心，北方以哈德良長城為界，一度推進到安東尼長城。',
+        en:'Iron Age Britain was a patchwork of tribal kingdoms. Rome made the south a province centred on Londinium and drew its northern frontier at Hadrian’s Wall, for a time pushing on to the Antonine Wall.',
+        fr:'La Bretagne de l’âge du fer est une mosaïque de royaumes tribaux. Rome fait du sud une province centrée sur Londinium et fixe sa frontière nord au mur d’Hadrien, poussant un temps jusqu’au mur d’Antonin.' },
+      faith:{ zh:'德魯伊主持凱爾特宗教，羅馬在 60 年左右攻入安格爾西島，摧毀德魯伊的據點。基督教在羅馬晚期傳入，314 年已有不列顛主教出席高盧的宗教會議。',
+        en:'Druids led Celtic religion, and around 60 Rome stormed their stronghold on Anglesey. Christianity arrived under late Rome, and by 314 British bishops were attending a church council in Gaul.',
+        fr:'Les druides dirigent la religion celtique ; vers 60, Rome prend d’assaut leur sanctuaire d’Anglesey. Le christianisme arrive à la fin de l’époque romaine, et dès 314 des évêques bretons siègent à un concile en Gaule.' },
+      society:{ zh:'羅馬帶來道路、城鎮、別墅莊園與浴場，倫敦、約克、巴斯因此興起。不列顛出口錫、鉛、羊毛與穀物，鄉村大多仍維持原本的部族生活。',
+        en:'Rome brought roads, towns, villa estates and baths, and London, York and Bath grew up. Britain exported tin, lead, wool and grain, while much of the countryside kept its tribal ways.',
+        fr:'Rome apporte routes, villes, villae et thermes ; Londres, York et Bath se développent. La Bretagne exporte étain, plomb, laine et céréales, tandis qu’une grande partie des campagnes garde ses usages tribaux.' },
+      culture:{ zh:'凱爾特語在鄉間延續下來，是今日威爾斯語的祖先。拉丁語只在城市與軍營通行，沒有像在高盧那樣取代本地語言。',
+        en:'Celtic speech survived in the countryside and is the ancestor of Welsh. Latin was used in towns and forts but never replaced the local language as it did in Gaul.',
+        fr:'La langue celtique se maintient dans les campagnes et donne le gallois. Le latin, parlé dans les villes et les camps, ne remplace pas la langue locale comme en Gaule.' },
+      world:{ zh:'不列顛是羅馬帝國最西北的邊陲，駐軍一度占帝國總兵力的十分之一左右。三世紀起，撒克遜海盜與北方的皮克特人不斷侵擾海岸與邊界。',
+        en:'Britain was Rome’s north-western edge and at times held around a tenth of the empire’s army. From the third century Saxon raiders and the Picts of the north harried its coasts and frontier.',
+        fr:'La Bretagne est la marche nord-ouest de l’Empire et abrite parfois près d’un dixième de son armée. Dès le IIIᵉ siècle, pirates saxons et Pictes du nord harcèlent côtes et frontière.' },
+    }
+  },
+  {
+    id:'anglosaxon', icon:'🗡️', start:410, end:1066, world:'medieval',
+    name:{ zh:'盎格魯撒克遜與維京', en:'Anglo-Saxons and Vikings', fr:'Anglo-Saxons et Vikings' },
+    summary:{ zh:'盎格魯人、撒克遜人與朱特人渡海定居，建立數個王國，原本的不列顛人被推往威爾斯與康瓦耳。維京人入侵時，威塞克斯的阿佛烈大帝領導抵抗，他的孫子艾塞斯坦成為第一位統治全英格蘭的國王。1066 年，諾曼第公爵威廉在哈斯丁擊敗哈洛德二世。',
+      en:'Angles, Saxons and Jutes crossed the sea and founded a cluster of kingdoms, pushing the Britons west into Wales and Cornwall. When the Vikings came, Alfred the Great of Wessex led the resistance, and his grandson Æthelstan became the first king of all England. In 1066 Duke William of Normandy defeated Harold II at Hastings.',
+      fr:'Angles, Saxons et Jutes traversent la mer et fondent plusieurs royaumes, repoussant les Bretons vers le pays de Galles et la Cornouailles. Face aux Vikings, Alfred le Grand de Wessex mène la résistance, et son petit-fils Æthelstan devient le premier roi de toute l’Angleterre. En 1066, le duc Guillaume de Normandie bat Harold II à Hastings.' },
+    events:[
+      { y:597,  zh:'奧古斯丁抵達坎特伯里，向肯特王國傳教', en:'Augustine reaches Canterbury to convert Kent', fr:'Augustin arrive à Cantorbéry pour évangéliser le Kent' },
+      { y:793,  zh:'維京人劫掠林迪斯法恩修道院', en:'Vikings raid the monastery of Lindisfarne', fr:'Les Vikings pillent le monastère de Lindisfarne' },
+      { y:878,  zh:'阿佛烈在埃丁頓擊敗維京大軍', en:'Alfred defeats the Viking army at Edington', fr:'Alfred bat l’armée viking à Edington' },
+      { y:927,  zh:'艾塞斯坦統一英格蘭', en:'Æthelstan unites England', fr:'Æthelstan unifie l’Angleterre' },
+      { y:1016, zh:'丹麥的克努特成為英格蘭國王', en:'Cnut of Denmark becomes king of England', fr:'Le Danois Cnut devient roi d’Angleterre' },
+      { y:1066, zh:'哈斯丁之戰，諾曼人征服英格蘭', en:'Battle of Hastings: the Norman Conquest', fr:'Bataille d’Hastings : la conquête normande' },
+    ],
+    themes:{
+      state:{ zh:'諾森布里亞、麥西亞、威塞克斯等王國彼此爭霸，最後由威塞克斯統一英格蘭。國王與「賢人會議」共同議事，全國劃分為郡，郡制沿用至今。北方則在 843 年前後由肯尼思·麥克亞爾平合併為蘇格蘭王國。',
+        en:'Rival kingdoms such as Northumbria, Mercia and Wessex fought for supremacy until Wessex united England. Kings ruled with a council of wise men, the witan, and divided the land into shires that still exist. In the north, around 843, Kenneth MacAlpin joined its peoples into a single Scottish kingdom.',
+        fr:'Des royaumes rivaux, Northumbrie, Mercie, Wessex, se disputent la suprématie jusqu’à ce que le Wessex unifie l’Angleterre. Les rois gouvernent avec un conseil des sages, le witan, et découpent le pays en comtés qui existent toujours. Au nord, vers 843, Kenneth MacAlpin réunit les peuples en un seul royaume d’Écosse.' },
+      faith:{ zh:'盎格魯撒克遜人原本信奉日耳曼諸神，597 年起由羅馬與愛爾蘭兩路傳教士改宗。664 年的惠特比會議決定採用羅馬的復活節算法，英格蘭教會從此向羅馬看齊。',
+        en:'The Anglo-Saxons worshipped Germanic gods until missionaries from Rome and Ireland converted them from 597. At the Synod of Whitby in 664 the English church chose the Roman date for Easter and turned towards Rome.',
+        fr:'Les Anglo-Saxons vénèrent les dieux germaniques jusqu’à leur conversion, à partir de 597, par des missionnaires venus de Rome et d’Irlande. Au synode de Whitby, en 664, l’Église anglaise adopte la date romaine de Pâques et se tourne vers Rome.' },
+      society:{ zh:'羅馬城鎮多半荒廢，人們住在木造村落，以農耕為生。阿佛烈興建稱為「堡」的設防城鎮；維京人控制的「丹麥法區」則帶來新的地名、法律與貿易網路。',
+        en:'Most Roman towns fell into ruin and people lived by farming in timber villages. Alfred built fortified towns called burhs, and the Viking-ruled Danelaw brought new place names, laws and trading links.',
+        fr:'La plupart des villes romaines tombent en ruine et l’on vit de l’agriculture dans des villages de bois. Alfred fonde des bourgs fortifiés, les burhs, et le Danelaw sous domination viking apporte noms de lieux, lois et réseaux commerciaux nouveaux.' },
+      culture:{ zh:'古英語在這個時期成形，史詩《貝奧武夫》與比德的《英吉利教會史》都出自這幾個世紀。阿佛烈下令把拉丁文經典譯成英語，並開始編寫《盎格魯撒克遜編年史》。',
+        en:'Old English took shape; the epic Beowulf and Bede’s Ecclesiastical History of the English People date from these centuries. Alfred had Latin classics translated into English and began the Anglo-Saxon Chronicle.',
+        fr:'Le vieil anglais prend forme ; l’épopée de Beowulf et l’Histoire ecclésiastique du peuple anglais de Bède datent de ces siècles. Alfred fait traduire des classiques latins en anglais et lance la Chronique anglo-saxonne.' },
+      world:{ zh:'不列顛被捲入北海世界：維京人從斯堪地那維亞而來，十一世紀初的克努特一度把英格蘭、丹麥與挪威合為一個北海帝國。',
+        en:'Britain was drawn into the North Sea world: the Vikings came from Scandinavia, and in the early eleventh century Cnut briefly joined England, Denmark and Norway in a North Sea empire.',
+        fr:'La Bretagne est entraînée dans le monde de la mer du Nord : les Vikings viennent de Scandinavie et, au début du XIᵉ siècle, Cnut réunit un temps l’Angleterre, le Danemark et la Norvège en un empire de la mer du Nord.' },
+    }
+  },
+  {
+    id:'norman', icon:'🏰', start:1066, end:1216, world:'medieval',
+    name:{ zh:'諾曼與安茹王朝', en:'Normans and Angevins', fr:'Normands et Angevins' },
+    summary:{ zh:'征服者威廉以城堡與封建制度控制英格蘭：貴族講法語，教會用拉丁語，百姓說英語。亨利二世開創金雀花王朝，領地從蘇格蘭邊境延伸到庇里牛斯山。約翰王失去諾曼第，又被貴族逼著在 1215 年接受《大憲章》。',
+      en:'William the Conqueror held England down with castles and feudal lordship: the nobles spoke French, the Church Latin and the people English. Henry II founded the Plantagenet line, ruling from the Scottish border to the Pyrenees. King John lost Normandy and in 1215 was forced by his barons to seal Magna Carta.',
+      fr:'Guillaume le Conquérant tient l’Angleterre par les châteaux et la féodalité : la noblesse parle français, l’Église latin et le peuple anglais. Henri II fonde la dynastie Plantagenêt, qui règne de la frontière écossaise aux Pyrénées. Jean sans Terre perd la Normandie et doit, en 1215, sceller la Grande Charte sous la pression de ses barons.' },
+    events:[
+      { y:1066, zh:'威廉在聖誕節於西敏寺加冕', en:'William is crowned at Westminster Abbey on Christmas Day', fr:'Guillaume est couronné à Westminster le jour de Noël' },
+      { y:1086, zh:'編成《末日審判書》，普查全國土地', en:'The Domesday Book surveys the land of England', fr:'Le Domesday Book recense les terres d’Angleterre' },
+      { y:1154, zh:'亨利二世即位，金雀花王朝開始', en:'Henry II becomes king: the Plantagenet era begins', fr:'Avènement d’Henri II : début des Plantagenêts' },
+      { y:1170, zh:'坎特伯里大主教貝克特在大教堂內遇刺', en:'Archbishop Thomas Becket is murdered in Canterbury Cathedral', fr:'L’archevêque Thomas Becket est assassiné dans la cathédrale de Cantorbéry' },
+      { y:1204, zh:'約翰王失去諾曼第', en:'King John loses Normandy', fr:'Jean sans Terre perd la Normandie' },
+      { y:1215, zh:'約翰王在蘭尼米德接受《大憲章》', en:'King John seals Magna Carta at Runnymede', fr:'Jean sans Terre scelle la Grande Charte à Runnymede' },
+    ],
+    themes:{
+      state:{ zh:'威廉把土地分給追隨他的諾曼貴族，換取軍事效忠，並以《末日審判書》掌握全國財產。亨利二世派法官巡迴各地、採用陪審制度，奠定了普通法的基礎。',
+        en:'William granted land to his Norman followers in return for military service and recorded the kingdom’s wealth in the Domesday Book. Henry II sent judges on circuit and used juries, laying the foundations of the common law.',
+        fr:'Guillaume distribue les terres à ses compagnons normands en échange du service militaire et recense la richesse du royaume dans le Domesday Book. Henri II envoie des juges itinérants et recourt aux jurys, posant les bases de la common law.' },
+      faith:{ zh:'諾曼人重建大教堂與修道院，教會勢力大增。亨利二世想讓犯罪的教士接受王室法庭審判，與大主教貝克特決裂；貝克特遇刺後，成為歐洲最受朝拜的聖人之一。',
+        en:'The Normans rebuilt cathedrals and monasteries and the Church grew powerful. Henry II’s attempt to try criminous clerks in royal courts led to his quarrel with Archbishop Becket, whose murder made him one of Europe’s most venerated saints.',
+        fr:'Les Normands rebâtissent cathédrales et abbayes, et l’Église gagne en puissance. La volonté d’Henri II de juger les clercs criminels devant ses tribunaux le brouille avec l’archevêque Becket, dont l’assassinat fait l’un des saints les plus vénérés d’Europe.' },
+      society:{ zh:'莊園制度把大多數農民綁在領主的土地上。羊毛出口到法蘭德斯的紡織城市，成為英格蘭最重要的財富來源。',
+        en:'The manorial system tied most peasants to their lord’s land. Wool exported to the cloth towns of Flanders became England’s main source of wealth.',
+        fr:'Le régime seigneurial attache la plupart des paysans à la terre de leur seigneur. La laine, exportée vers les villes drapières de Flandre, devient la principale richesse de l’Angleterre.' },
+      culture:{ zh:'宮廷與法庭使用諾曼法語，英語因此吸收了大量法語詞彙，例如 beef、court、justice。十二世紀末，牛津已經以大學的形式授課。',
+        en:'Court and law spoke Norman French, and English absorbed a flood of French words such as beef, court and justice. By the late twelfth century Oxford was teaching as a university.',
+        fr:'La cour et la justice parlent le français normand, et l’anglais absorbe quantité de mots français comme beef, court ou justice. Dès la fin du XIIᵉ siècle, Oxford enseigne comme une université.' },
+      world:{ zh:'英格蘭國王同時是法國的諾曼第公爵與安茹伯爵，安茹帝國的大半土地在法國境內，英法兩國王室數百年的糾葛由此開始。理查一世參加了第三次十字軍東征。',
+        en:'England’s kings were also dukes of Normandy and counts of Anjou, and most of the Angevin empire lay in France, the root of centuries of Anglo-French entanglement. Richard I fought in the Third Crusade.',
+        fr:'Les rois d’Angleterre sont aussi ducs de Normandie et comtes d’Anjou, et l’essentiel de l’empire angevin se trouve en France, origine de siècles d’imbrication franco-anglaise. Richard Cœur de Lion participe à la troisième croisade.' },
+    }
+  },
+  {
+    id:'plantagenet', icon:'⚔️', start:1216, end:1485, world:'medieval',
+    name:{ zh:'金雀花晚期與玫瑰戰爭', en:'Later Plantagenets and the Wars of the Roses', fr:'Les derniers Plantagenêts et la guerre des Deux-Roses' },
+    summary:{ zh:'國王需要錢打仗，只好召集貴族、騎士與市民開會，議會由此成形。愛德華一世征服威爾斯，卻在蘇格蘭受挫；接著是百年戰爭與黑死病。最後蘭開斯特與約克兩大家族爭奪王位，三十年的玫瑰戰爭以亨利·都鐸在博斯沃思獲勝告終。',
+      en:'Kings needed money for war and summoned lords, knights and townsmen to grant it, and Parliament took shape. Edward I conquered Wales but failed in Scotland; the Hundred Years’ War and the Black Death followed. At the end the houses of Lancaster and York fought for the crown, and thirty years of the Wars of the Roses ended with Henry Tudor’s victory at Bosworth.',
+      fr:'Les rois ont besoin d’argent pour la guerre et convoquent seigneurs, chevaliers et bourgeois pour l’accorder : le Parlement prend forme. Édouard Iᵉʳ conquiert le pays de Galles mais échoue en Écosse ; viennent la guerre de Cent Ans et la peste noire. Enfin les maisons de Lancastre et d’York se disputent la couronne, et trente ans de guerre des Deux-Roses s’achèvent par la victoire d’Henri Tudor à Bosworth.' },
+    events:[
+      { y:1265, zh:'西蒙·德·孟福爾召集包含市民代表的議會', en:'Simon de Montfort’s parliament includes townsmen', fr:'Le parlement de Simon de Montfort inclut des bourgeois' },
+      { y:1284, zh:'《羅德蘭法令》把威爾斯納入英格蘭王室統治', en:'The Statute of Rhuddlan places Wales under the English crown', fr:'Le statut de Rhuddlan place le pays de Galles sous la couronne anglaise' },
+      { y:1314, zh:'班諾克本之戰，蘇格蘭大敗英格蘭', en:'Battle of Bannockburn: Scotland routs England', fr:'Bataille de Bannockburn : l’Écosse écrase l’Angleterre' },
+      { y:1337, zh:'百年戰爭爆發', en:'The Hundred Years’ War begins', fr:'Début de la guerre de Cent Ans' },
+      { y:1348, zh:'黑死病傳入英格蘭', en:'The Black Death reaches England', fr:'La peste noire atteint l’Angleterre' },
+      { y:1381, zh:'農民起義，起義者攻入倫敦', en:'The Peasants’ Revolt: rebels enter London', fr:'Révolte des paysans : les insurgés entrent dans Londres' },
+      { y:1415, zh:'阿金庫爾戰役，英軍長弓手大勝', en:'Battle of Agincourt: triumph of the English longbowmen', fr:'Bataille d’Azincourt : triomphe des archers anglais' },
+      { y:1455, zh:'玫瑰戰爭開始', en:'The Wars of the Roses begin', fr:'Début de la guerre des Deux-Roses' },
+      { y:1485, zh:'博斯沃思之戰，理查三世戰死', en:'Battle of Bosworth: Richard III is killed', fr:'Bataille de Bosworth : Richard III est tué' },
+    ],
+    themes:{
+      state:{ zh:'1295 年愛德華一世的「模範議會」確立了貴族、教士與各郡各城代表一同開會的模式，十四世紀再分成上議院與下議院。國王徵稅必須取得議會同意，成為英國政治的長期規則。',
+        en:'Edward I’s “Model Parliament” of 1295 set the pattern of lords, clergy and representatives of shires and towns meeting together, and in the fourteenth century it split into Lords and Commons. Taxes needed Parliament’s consent, a rule that would shape English politics for good.',
+        fr:'Le « Parlement modèle » d’Édouard Iᵉʳ, en 1295, fixe le principe d’une réunion des seigneurs, du clergé et des représentants des comtés et des villes ; au XIVᵉ siècle, il se divise en Lords et Communes. L’impôt exige le consentement du Parlement, règle durable de la vie politique anglaise.' },
+      faith:{ zh:'牛津學者威克里夫批評教會的財富與權威，他的追隨者「羅拉德派」把聖經譯成英文。他們遭到教會打壓，常被視為宗教改革的先聲。',
+        en:'The Oxford scholar John Wycliffe attacked the Church’s wealth and authority, and his followers, the Lollards, put the Bible into English. They were suppressed, but are often seen as forerunners of the Reformation.',
+        fr:'Le théologien d’Oxford John Wycliffe dénonce la richesse et l’autorité de l’Église ; ses disciples, les lollards, traduisent la Bible en anglais. Réprimés, ils sont souvent vus comme des précurseurs de la Réforme.' },
+      society:{ zh:'黑死病奪走三分之一到一半的人口，勞力短缺讓農民要求更高的工資，1381 年人頭稅引爆農民起義。此後農奴制逐漸瓦解，羊毛與毛織品貿易持續繁榮。',
+        en:'The Black Death killed between a third and a half of the population. Labour grew scarce and peasants demanded higher wages, and a poll tax sparked the revolt of 1381. Serfdom slowly withered away while the wool and cloth trades thrived.',
+        fr:'La peste noire tue entre un tiers et la moitié de la population. La main-d’œuvre se raréfie, les paysans réclament de meilleurs salaires, et une capitation déclenche la révolte de 1381. Le servage s’éteint peu à peu tandis que prospèrent laine et draperie.' },
+      culture:{ zh:'英語重新成為法庭與議會的語言。喬叟用英語寫成《坎特伯里故事集》，1476 年卡克斯頓在西敏設立英格蘭第一台印刷機。',
+        en:'English returned as the language of the law courts and Parliament. Chaucer wrote The Canterbury Tales in English, and in 1476 William Caxton set up England’s first printing press at Westminster.',
+        fr:'L’anglais redevient la langue des tribunaux et du Parlement. Chaucer écrit les Contes de Canterbury en anglais, et en 1476 William Caxton installe la première presse d’Angleterre à Westminster.' },
+      world:{ zh:'英王以法國王位繼承人自居，在百年戰爭中贏得克雷西與阿金庫爾等大勝，最後卻幾乎失去所有法國領土，只剩加萊。北方的蘇格蘭則與法國維持「古老同盟」。',
+        en:'English kings claimed the French throne and won great victories at Crécy and Agincourt in the Hundred Years’ War, yet ended by losing almost all their French lands except Calais. Scotland, to the north, kept its “Auld Alliance” with France.',
+        fr:'Les rois d’Angleterre revendiquent le trône de France et remportent Crécy et Azincourt pendant la guerre de Cent Ans, mais finissent par perdre presque toutes leurs terres françaises, sauf Calais. Au nord, l’Écosse maintient l’« Auld Alliance » avec la France.' },
+    }
+  },
+  {
+    id:'tudor', icon:'🌹', start:1485, end:1603, world:'reformation',
+    name:{ zh:'都鐸王朝', en:'The Tudors', fr:'Les Tudors' },
+    summary:{ zh:'亨利七世結束內戰，重建王室財政。亨利八世為了離婚與羅馬教廷決裂，自任英格蘭教會最高領袖，並解散修道院。經過愛德華六世與瑪麗一世在新舊教之間來回擺盪，伊莉莎白一世確立了英格蘭國教，擊退西班牙無敵艦隊，開啟英格蘭的海上時代。',
+      en:'Henry VII ended the civil wars and rebuilt royal finances. Henry VIII broke with Rome to end his marriage, made himself supreme head of the Church of England and dissolved the monasteries. After Edward VI and Mary I swung the country between Protestant and Catholic, Elizabeth I settled the Church of England, beat off the Spanish Armada and opened England’s age of the sea.',
+      fr:'Henri VII met fin aux guerres civiles et restaure les finances royales. Henri VIII rompt avec Rome pour mettre fin à son mariage, se proclame chef suprême de l’Église d’Angleterre et dissout les monastères. Après les revirements d’Édouard VI et de Marie Iʳᵉ entre protestantisme et catholicisme, Élisabeth Iʳᵉ fixe l’Église anglicane, repousse l’Invincible Armada et ouvre l’âge maritime de l’Angleterre.' },
+    events:[
+      { y:1534, zh:'《至尊法案》：國王成為英格蘭教會最高領袖', en:'Act of Supremacy: the king becomes head of the Church of England', fr:'Acte de suprématie : le roi devient chef de l’Église d’Angleterre' },
+      { y:1536, zh:'開始解散修道院；威爾斯在法律上併入英格蘭', en:'The dissolution of the monasteries begins; Wales is joined to England in law', fr:'Début de la dissolution des monastères ; le pays de Galles est uni juridiquement à l’Angleterre' },
+      { y:1549, zh:'第一部英文《公禱書》頒行', en:'The first English Book of Common Prayer', fr:'Premier Book of Common Prayer en anglais' },
+      { y:1555, zh:'瑪麗一世開始燒死新教徒', en:'Mary I begins burning Protestants', fr:'Marie Iʳᵉ commence à faire brûler des protestants' },
+      { y:1559, zh:'伊莉莎白宗教協議', en:'The Elizabethan religious settlement', fr:'Le compromis religieux élisabéthain' },
+      { y:1587, zh:'蘇格蘭女王瑪麗被處決', en:'Mary, Queen of Scots, is executed', fr:'Exécution de Marie Stuart' },
+      { y:1588, zh:'擊退西班牙無敵艦隊', en:'Defeat of the Spanish Armada', fr:'Défaite de l’Invincible Armada' },
+      { y:1600, zh:'東印度公司成立', en:'The East India Company is chartered', fr:'Fondation de la Compagnie des Indes orientales' },
+    ],
+    themes:{
+      state:{ zh:'都鐸君主透過樞密院與議會統治。亨利八世的宗教改革全靠議會立法完成，反而提高了議會的地位。1536 年與 1543 年的法案把威爾斯併入英格蘭的郡制與法律。',
+        en:'The Tudors governed through the Privy Council and Parliament, and because Henry VIII’s Reformation was carried out by Acts of Parliament, it raised Parliament’s standing. Acts of 1536 and 1543 brought Wales into England’s shires and law.',
+        fr:'Les Tudors gouvernent par le Conseil privé et le Parlement ; comme la Réforme d’Henri VIII passe par des lois votées au Parlement, elle renforce son autorité. Les lois de 1536 et 1543 intègrent le pays de Galles aux comtés et au droit anglais.' },
+      faith:{ zh:'英格蘭在三十年內四度改變國教。伊莉莎白採取折衷路線：教義偏向新教，主教制與部分禮儀保留天主教的形式，這就是英格蘭國教會（聖公會）。蘇格蘭則在諾克斯帶領下走向長老會。',
+        en:'England changed its official religion four times in thirty years. Elizabeth chose a middle way, Protestant in doctrine but Catholic in its bishops and much of its ritual: the Church of England. Scotland, led by John Knox, went Presbyterian.',
+        fr:'L’Angleterre change quatre fois de religion officielle en trente ans. Élisabeth choisit une voie moyenne, protestante par la doctrine mais catholique par l’épiscopat et une partie du rite : l’Église d’Angleterre. L’Écosse, sous John Knox, devient presbytérienne.' },
+      society:{ zh:'修道院的土地被賣給鄉紳，造就一批新的地主階級。圈地養羊讓許多農民失去土地，1601 年的《濟貧法》首次規定由各教區負責救濟窮人。',
+        en:'Monastic lands were sold to the gentry, creating a new landed class. Enclosure for sheep pushed many peasants off the land, and the Poor Law of 1601 made each parish responsible for its poor.',
+        fr:'Les terres monastiques sont vendues à la gentry, qui forme une nouvelle classe de propriétaires. Les enclosures pour l’élevage ovin chassent de nombreux paysans, et la loi sur les pauvres de 1601 charge chaque paroisse de secourir ses indigents.' },
+      culture:{ zh:'伊莉莎白時代是英國文學的黃金時期：莎士比亞與馬洛的戲劇在環球劇場等公共劇院上演，史賓賽寫下《仙后》。',
+        en:'The Elizabethan age was a golden age of English letters: plays by Shakespeare and Marlowe filled public theatres such as the Globe, and Spenser wrote The Faerie Queene.',
+        fr:'L’époque élisabéthaine est un âge d’or des lettres anglaises : les pièces de Shakespeare et de Marlowe remplissent des théâtres publics comme le Globe, et Spenser écrit La Reine des fées.' },
+      world:{ zh:'英格蘭從歐陸的小角色轉向海洋：德瑞克環球航行並劫掠西班牙船隻，1588 年擊退無敵艦隊。1600 年成立的東印度公司，日後成為統治印度的工具。',
+        en:'England turned from minor continental player to seafaring power: Drake sailed round the world raiding Spanish ships, and the Armada was beaten in 1588. The East India Company, founded in 1600, would later become the instrument of rule in India.',
+        fr:'D’acteur continental modeste, l’Angleterre devient une puissance maritime : Drake fait le tour du monde en pillant les navires espagnols, et l’Armada est repoussée en 1588. La Compagnie des Indes orientales, fondée en 1600, deviendra l’instrument de la domination sur l’Inde.' },
+    }
+  },
+  {
+    id:'stuart', icon:'⚖️', start:1603, end:1688, world:'reformation',
+    name:{ zh:'斯圖亞特王朝與內戰', en:'The Stuarts and the Civil War', fr:'Les Stuarts et la guerre civile' },
+    summary:{ zh:'蘇格蘭國王詹姆士六世繼承英格蘭王位，兩國從此共戴一君。查理一世與議會為了稅收與宗教衝突，1642 年爆發內戰；1649 年國王被處死，英格蘭短暫成為由克倫威爾主導的共和國。1660 年王政復辟，但國王與議會之間的權力之爭並未結束。',
+      en:'James VI of Scotland inherited the English crown, and the two kingdoms came to share one king. Charles I clashed with Parliament over taxes and religion, and civil war broke out in 1642; in 1649 the king was executed and England briefly became a republic dominated by Oliver Cromwell. The monarchy was restored in 1660, but the struggle between king and Parliament went on.',
+      fr:'Jacques VI d’Écosse hérite de la couronne d’Angleterre : les deux royaumes partagent désormais un même roi. Charles Iᵉʳ s’oppose au Parlement sur l’impôt et la religion, et la guerre civile éclate en 1642 ; en 1649, le roi est exécuté et l’Angleterre devient brièvement une république dominée par Oliver Cromwell. La monarchie est restaurée en 1660, mais la lutte entre roi et Parlement continue.' },
+    events:[
+      { y:1603, zh:'王冠聯合：英格蘭與蘇格蘭共戴一君', en:'Union of the Crowns: England and Scotland share a king', fr:'Union des couronnes : l’Angleterre et l’Écosse partagent un roi' },
+      { y:1605, zh:'火藥陰謀，企圖炸毀議會', en:'The Gunpowder Plot to blow up Parliament', fr:'La Conspiration des poudres contre le Parlement' },
+      { y:1611, zh:'欽定版聖經出版', en:'The King James Bible is published', fr:'Publication de la Bible du roi Jacques' },
+      { y:1620, zh:'五月花號載著清教徒前往北美', en:'The Mayflower carries the Pilgrims to America', fr:'Le Mayflower emmène les Pères pèlerins en Amérique' },
+      { y:1642, zh:'內戰爆發', en:'Civil war breaks out', fr:'Début de la guerre civile' },
+      { y:1649, zh:'查理一世被處死，英格蘭成為共和國', en:'Charles I is executed; England becomes a republic', fr:'Exécution de Charles Iᵉʳ ; l’Angleterre devient une république' },
+      { y:1653, zh:'克倫威爾就任護國公', en:'Cromwell becomes Lord Protector', fr:'Cromwell devient Lord Protecteur' },
+      { y:1660, zh:'王政復辟', en:'The Restoration', fr:'La Restauration' },
+      { y:1666, zh:'倫敦大火', en:'The Great Fire of London', fr:'Le Grand Incendie de Londres' },
+    ],
+    themes:{
+      state:{ zh:'斯圖亞特國王相信君權神授，與議會在徵稅權上衝突。內戰後英格蘭經歷了唯一一次的共和，但軍事統治不得人心；復辟後議會分成托利與輝格兩派，成為政黨的起源。',
+        en:'The Stuart kings believed in divine right and clashed with Parliament over the power to tax. After the Civil War England had its only experiment as a republic, but military rule proved unpopular; after the Restoration, Parliament divided into Tories and Whigs, the origin of party politics.',
+        fr:'Les rois Stuarts croient au droit divin et s’opposent au Parlement sur le droit de lever l’impôt. Après la guerre civile, l’Angleterre connaît sa seule expérience républicaine, mais le régime militaire est impopulaire ; après la Restauration, le Parlement se divise en tories et whigs, origine des partis.' },
+      faith:{ zh:'清教徒希望進一步「淨化」國教，查理一世與大主教勞德卻推行講究儀式的禮拜，這場衝突是內戰的導火線之一。共和時期清教徒禁止聖誕節慶祝並關閉劇場；復辟後國教恢復，不從國教者受到限制。',
+        en:'Puritans wanted to “purify” the Church further, while Charles I and Archbishop Laud pushed elaborate ritual, a clash that helped spark the Civil War. Under the republic Puritans banned Christmas festivities and closed the theatres. The Restoration brought the established Church back and put limits on Dissenters.',
+        fr:'Les puritains veulent « purifier » davantage l’Église, tandis que Charles Iᵉʳ et l’archevêque Laud imposent un rituel solennel : ce conflit contribue à la guerre civile. Sous la république, les puritains interdisent les réjouissances de Noël et ferment les théâtres. La Restauration rétablit l’Église officielle et restreint les dissidents.' },
+      society:{ zh:'倫敦快速成長為歐洲最大的城市之一。1665 年大瘟疫與 1666 年大火重創倫敦，重建時改用磚石，聖保羅大教堂由雷恩重新設計。',
+        en:'London grew into one of Europe’s largest cities. The Great Plague of 1665 and the Great Fire of 1666 devastated it, and it was rebuilt in brick and stone, with a new St Paul’s Cathedral by Christopher Wren.',
+        fr:'Londres devient l’une des plus grandes villes d’Europe. La Grande Peste de 1665 et le Grand Incendie de 1666 la ravagent ; elle est rebâtie en brique et en pierre, avec une nouvelle cathédrale Saint-Paul de Christopher Wren.' },
+      culture:{ zh:'欽定版聖經塑造了英語的節奏。霍布斯在內戰後寫下《利維坦》，彌爾頓寫出《失樂園》；1660 年成立的皇家學會，則是牛頓等人推動科學革命的舞台。',
+        en:'The King James Bible shaped the rhythm of English. After the Civil War Hobbes wrote Leviathan and Milton Paradise Lost, and the Royal Society, founded in 1660, became the home of Newton and the Scientific Revolution.',
+        fr:'La Bible du roi Jacques façonne le rythme de la langue anglaise. Après la guerre civile, Hobbes écrit le Léviathan et Milton Le Paradis perdu ; la Royal Society, fondée en 1660, devient le foyer de Newton et de la révolution scientifique.' },
+      world:{ zh:'英國人在北美的維吉尼亞與新英格蘭建立殖民地，並在加勒比海種植甘蔗。英格蘭與荷蘭三度爆發海戰，1664 年奪下新阿姆斯特丹，改名紐約。',
+        en:'English settlers founded colonies in Virginia and New England and planted sugar in the Caribbean. Three naval wars were fought with the Dutch, and in 1664 New Amsterdam was taken and renamed New York.',
+        fr:'Des colons anglais fondent la Virginie et la Nouvelle-Angleterre et plantent la canne à sucre aux Antilles. Trois guerres navales sont livrées contre les Provinces-Unies, et en 1664 la Nouvelle-Amsterdam, prise, devient New York.' },
+    }
+  },
+  {
+    id:'georgian', icon:'🏛️', start:1688, end:1815, world:'enlightenment_revolution',
+    name:{ zh:'光榮革命與大不列顛', en:'The Glorious Revolution and Great Britain', fr:'La Glorieuse Révolution et la Grande-Bretagne' },
+    summary:{ zh:'1688 年議會迎立威廉與瑪麗，確立議會高於國王的原則。1707 年英格蘭與蘇格蘭合併為大不列顛王國，首相與內閣逐漸成為真正的權力中心。英國贏得海上霸權，卻失去北美十三州；十八世紀後半，工業革命在這裡展開。',
+      en:'In 1688 Parliament invited William and Mary to take the throne, establishing that Parliament stood above the king. In 1707 England and Scotland merged into the Kingdom of Great Britain, and the prime minister and cabinet gradually became the real centre of power. Britain won mastery of the seas but lost the thirteen American colonies, and in the later eighteenth century it became the birthplace of the Industrial Revolution.',
+      fr:'En 1688, le Parlement appelle Guillaume et Marie au trône et affirme sa primauté sur le roi. En 1707, l’Angleterre et l’Écosse s’unissent en royaume de Grande-Bretagne, et le Premier ministre et le cabinet deviennent peu à peu le vrai centre du pouvoir. La Grande-Bretagne conquiert la maîtrise des mers mais perd les treize colonies américaines, et devient dans la seconde moitié du XVIIIᵉ siècle le berceau de la révolution industrielle.' },
+    events:[
+      { y:1688, zh:'光榮革命，詹姆士二世出逃', en:'The Glorious Revolution: James II flees', fr:'Glorieuse Révolution : Jacques II s’enfuit' },
+      { y:1689, zh:'《權利法案》', en:'The Bill of Rights', fr:'Le Bill of Rights' },
+      { y:1694, zh:'英格蘭銀行成立', en:'The Bank of England is founded', fr:'Fondation de la Banque d’Angleterre' },
+      { y:1707, zh:'《聯合法案》，大不列顛王國成立', en:'The Acts of Union create the Kingdom of Great Britain', fr:'Les Actes d’Union créent le royaume de Grande-Bretagne' },
+      { y:1721, zh:'沃波爾成為實質上的第一任首相', en:'Walpole becomes in effect the first prime minister', fr:'Walpole devient de fait le premier Premier ministre' },
+      { y:1746, zh:'卡洛登戰役，詹姆士黨最後一次起事失敗', en:'Culloden: the last Jacobite rising is crushed', fr:'Culloden : écrasement du dernier soulèvement jacobite' },
+      { y:1763, zh:'七年戰爭結束，英國取得加拿大', en:'The Seven Years’ War ends; Britain gains Canada', fr:'Fin de la guerre de Sept Ans : la Grande-Bretagne obtient le Canada' },
+      { y:1776, zh:'北美殖民地宣布獨立', en:'The American colonies declare independence', fr:'Les colonies américaines déclarent leur indépendance' },
+      { y:1801, zh:'大不列顛與愛爾蘭聯合王國成立', en:'The United Kingdom of Great Britain and Ireland is formed', fr:'Création du Royaume-Uni de Grande-Bretagne et d’Irlande' },
+      { y:1805, zh:'特拉法加海戰，納爾遜在勝利中戰死', en:'Trafalgar: Nelson dies in victory', fr:'Trafalgar : Nelson meurt dans la victoire' },
+      { y:1815, zh:'滑鐵盧戰役', en:'The Battle of Waterloo', fr:'La bataille de Waterloo' },
+    ],
+    themes:{
+      state:{ zh:'《權利法案》規定國王不得未經議會同意徵稅或維持常備軍；1701 年的《王位繼承法》排除天主教徒繼位，德國的漢諾威家族因此入主。國王漸漸退居幕後，由掌握下議院多數的首相領導政府。',
+        en:'The Bill of Rights barred the king from raising taxes or keeping a standing army without Parliament’s consent, and the Act of Settlement of 1701 excluded Catholics from the throne, bringing the Hanoverians over from Germany. Kings slowly withdrew behind a prime minister who commanded the Commons.',
+        fr:'Le Bill of Rights interdit au roi de lever l’impôt ou d’entretenir une armée permanente sans le Parlement, et l’Acte d’établissement de 1701 écarte les catholiques du trône, faisant venir d’Allemagne la maison de Hanovre. Le roi s’efface peu à peu derrière un Premier ministre appuyé sur les Communes.' },
+      faith:{ zh:'1689 年的《寬容法》容許新教的不從國教者公開禮拜，天主教徒則仍被排除在公職之外。十八世紀衛斯理兄弟發起循道運動，把信仰帶進工人與礦工之間。',
+        en:'The Toleration Act of 1689 let Protestant Dissenters worship openly, while Catholics stayed barred from public office. In the eighteenth century John and Charles Wesley’s Methodist movement carried religion to workers and miners.',
+        fr:'L’Acte de tolérance de 1689 permet aux dissidents protestants de célébrer leur culte, tandis que les catholiques restent exclus des charges publiques. Au XVIIIᵉ siècle, le méthodisme des frères Wesley porte la foi parmi ouvriers et mineurs.' },
+      society:{ zh:'英格蘭銀行與國債制度讓政府能借錢打仗。農業革命提高了糧食產量；十八世紀後半，瓦特改良蒸汽機，紡織工廠與運河遍布英格蘭北部，工業革命由此展開。',
+        en:'The Bank of England and the national debt let the state borrow for war. An agricultural revolution raised food output, and in the later eighteenth century James Watt improved the steam engine while textile mills and canals spread across northern England: the Industrial Revolution had begun.',
+        fr:'La Banque d’Angleterre et la dette publique permettent à l’État d’emprunter pour la guerre. Une révolution agricole accroît la production, et dans la seconde moitié du XVIIIᵉ siècle James Watt perfectionne la machine à vapeur, tandis que filatures et canaux se multiplient dans le nord de l’Angleterre : la révolution industrielle commence.' },
+      culture:{ zh:'洛克的政治哲學，以及休謨與亞當·斯密代表的蘇格蘭啟蒙運動影響深遠，斯密的《國富論》在 1776 年出版。倫敦的咖啡館與報紙培養出公共輿論，約翰生編出第一部權威的英語詞典。',
+        en:'Locke’s political philosophy and the Scottish Enlightenment of Hume and Adam Smith had lasting influence; Smith’s Wealth of Nations appeared in 1776. London’s coffee houses and newspapers created public opinion, and Samuel Johnson compiled the first great English dictionary.',
+        fr:'La philosophie politique de Locke et les Lumières écossaises de Hume et d’Adam Smith exercent une influence durable ; La Richesse des nations paraît en 1776. Cafés et journaux londoniens font naître l’opinion publique, et Samuel Johnson compile le premier grand dictionnaire anglais.' },
+      world:{ zh:'英國與法國在歐洲、北美與印度反覆交戰。七年戰爭後英國取得加拿大並在印度占上風，卻在 1783 年被迫承認美國獨立。拿破崙戰爭中，英國以海權與資金支撐反法同盟，最後在滑鐵盧獲勝。',
+        en:'Britain fought France again and again in Europe, North America and India. The Seven Years’ War won it Canada and the upper hand in India, but in 1783 it had to recognise American independence. In the Napoleonic Wars British sea power and money sustained the coalitions until victory at Waterloo.',
+        fr:'La Grande-Bretagne affronte la France à maintes reprises en Europe, en Amérique du Nord et en Inde. La guerre de Sept Ans lui donne le Canada et l’avantage en Inde, mais en 1783 elle doit reconnaître l’indépendance américaine. Pendant les guerres napoléoniennes, sa flotte et son argent soutiennent les coalitions jusqu’à Waterloo.' },
+    }
+  },
+  {
+    id:'victorian', icon:'🚂', start:1815, end:1901, world:'industrial',
+    name:{ zh:'工業時代與維多利亞時代', en:'The Industrial and Victorian Age', fr:'L’ère industrielle et victorienne' },
+    summary:{ zh:'英國成為「世界工廠」，鐵路、煤礦與工廠改變了城市與生活。議會一步步擴大選舉權，廢除奴隸制與穀物法，走向自由貿易。維多利亞女王在位六十三年，大英帝國擴張到全球約四分之一的陸地。',
+      en:'Britain became the “workshop of the world”, and railways, coal mines and factories transformed towns and lives. Parliament widened the vote step by step, abolished slavery and the Corn Laws, and embraced free trade. Queen Victoria reigned for sixty-three years as the empire grew to cover about a quarter of the world’s land.',
+      fr:'La Grande-Bretagne devient « l’atelier du monde » : chemins de fer, mines de charbon et usines transforment villes et modes de vie. Le Parlement élargit le droit de vote pas à pas, abolit l’esclavage et les Corn Laws et adopte le libre-échange. La reine Victoria règne soixante-trois ans, tandis que l’empire s’étend sur environ un quart des terres émergées.' },
+    events:[
+      { y:1819, zh:'彼得盧屠殺：騎兵衝散要求改革的集會', en:'Peterloo: cavalry charge a rally for reform', fr:'Peterloo : la cavalerie charge un rassemblement réformateur' },
+      { y:1825, zh:'斯托克頓至達靈頓鐵路通車', en:'The Stockton and Darlington Railway opens', fr:'Ouverture du chemin de fer Stockton–Darlington' },
+      { y:1832, zh:'《改革法案》擴大選舉權', en:'The Great Reform Act widens the vote', fr:'Le Reform Act élargit le droit de vote' },
+      { y:1833, zh:'大英帝國廢除奴隸制', en:'Slavery is abolished across the British Empire', fr:'Abolition de l’esclavage dans l’Empire britannique' },
+      { y:1846, zh:'廢除穀物法', en:'Repeal of the Corn Laws', fr:'Abrogation des Corn Laws' },
+      { y:1851, zh:'倫敦萬國工業博覽會', en:'The Great Exhibition in London', fr:'La Grande Exposition de Londres' },
+      { y:1858, zh:'英國王室直接統治印度', en:'The Crown takes direct rule of India', fr:'La Couronne prend le gouvernement direct de l’Inde' },
+      { y:1867, zh:'第二次改革法案，城市工人取得投票權', en:'The Second Reform Act gives the vote to urban workers', fr:'Le second Reform Act donne le vote aux ouvriers des villes' },
+      { y:1877, zh:'維多利亞宣布為印度女皇', en:'Victoria is proclaimed Empress of India', fr:'Victoria est proclamée impératrice des Indes' },
+      { y:1901, zh:'維多利亞女王去世', en:'Death of Queen Victoria', fr:'Mort de la reine Victoria' },
+    ],
+    themes:{
+      state:{ zh:'1832 年的改革法案把選舉權擴大到中產階級，1867 與 1884 年再擴及大部分男性工人，1872 年改採祕密投票。自由黨的格萊斯頓與保守黨的迪斯雷利輪流執政，兩黨制由此成形。',
+        en:'The Reform Act of 1832 gave the vote to much of the middle class, those of 1867 and 1884 extended it to most working men, and the secret ballot arrived in 1872. Gladstone’s Liberals and Disraeli’s Conservatives alternated in power, and two-party politics took shape.',
+        fr:'Le Reform Act de 1832 accorde le vote à une grande partie des classes moyennes, ceux de 1867 et 1884 l’étendent à la plupart des ouvriers, et le scrutin secret arrive en 1872. Les libéraux de Gladstone et les conservateurs de Disraeli alternent au pouvoir : le bipartisme prend forme.' },
+      faith:{ zh:'1829 年天主教徒獲得解放，可以進入議會。福音派推動廢奴、主日學與社會改革；1859 年達爾文出版《物種起源》，引發科學與信仰的激烈辯論。',
+        en:'Catholic Emancipation in 1829 let Catholics sit in Parliament. Evangelicals drove the campaigns against slavery and for Sunday schools and social reform, and Darwin’s On the Origin of Species, in 1859, set off a fierce debate between science and faith.',
+        fr:'L’émancipation des catholiques, en 1829, leur ouvre le Parlement. Les évangéliques portent l’abolition de l’esclavage, les écoles du dimanche et les réformes sociales, et L’Origine des espèces de Darwin, en 1859, déclenche un vif débat entre science et foi.' },
+      society:{ zh:'曼徹斯特等工業城市爆炸性成長，童工、貧民窟與霍亂成為迫切的社會問題，催生了工廠法、公共衛生法與工會。1846 年廢除保護地主的穀物法，英國全面走向自由貿易。',
+        en:'Industrial cities such as Manchester grew explosively, and child labour, slums and cholera became pressing problems, prompting Factory Acts, public health laws and trade unions. In 1846 the Corn Laws protecting landowners were repealed, and Britain went over to free trade.',
+        fr:'Les villes industrielles comme Manchester connaissent une croissance explosive ; travail des enfants, taudis et choléra suscitent lois sur les fabriques, lois d’hygiène publique et syndicats. En 1846, les Corn Laws qui protégeaient les propriétaires sont abrogées, et le pays passe au libre-échange.' },
+      culture:{ zh:'狄更斯的小說揭露工業社會的貧困，勃朗特姊妹、喬治·艾略特與哈代寫出鄉村生活與女性的處境。法拉第與麥克斯威的電磁學研究、達爾文的演化論，讓英國站上科學的最前線。',
+        en:'Dickens’s novels exposed the poverty of industrial society, while the Brontës, George Eliot and Hardy wrote of rural life and women’s lot. Faraday and Maxwell’s work on electromagnetism and Darwin’s theory of evolution put Britain at the forefront of science.',
+        fr:'Les romans de Dickens dénoncent la misère de la société industrielle, tandis que les sœurs Brontë, George Eliot et Hardy décrivent les campagnes et la condition des femmes. Les travaux de Faraday et Maxwell sur l’électromagnétisme et la théorie de l’évolution de Darwin placent le pays à l’avant-garde de la science.' },
+      world:{ zh:'皇家海軍維持著「不列顛治世」：英國在鴉片戰爭中取得香港，1858 年直接統治印度，並在瓜分非洲時取得大片殖民地。愛爾蘭大饑荒（1845–1852）造成約一百萬人死亡、上百萬人移民。',
+        en:'The Royal Navy upheld a “Pax Britannica”: Britain took Hong Kong in the Opium War, assumed direct rule of India in 1858 and seized vast territories in the Scramble for Africa. The Great Famine in Ireland (1845–1852) killed about a million people and drove over a million to emigrate.',
+        fr:'La Royal Navy assure une « Pax Britannica » : le pays obtient Hong Kong lors de la guerre de l’opium, gouverne directement l’Inde dès 1858 et s’empare de vastes territoires lors du partage de l’Afrique. La Grande Famine irlandaise (1845-1852) fait environ un million de morts et pousse plus d’un million de personnes à émigrer.' },
+    }
+  },
+  {
+    id:'worldwars', icon:'🎖️', start:1901, end:1945, world:'worldwar',
+    name:{ zh:'兩次世界大戰', en:'The Era of the World Wars', fr:'L’époque des guerres mondiales' },
+    summary:{ zh:'二十世紀初英國仍擁有世界最大的帝國，卻面臨德國與美國的挑戰。第一次世界大戰奪走近九十萬英國軍人的生命；戰後女性取得投票權，愛爾蘭南部獨立，經濟陷入長期蕭條。1940 年英國在邱吉爾領導下獨力對抗納粹德國，最後與美蘇一同獲勝，國力卻已大幅消耗。',
+      en:'At the start of the century Britain still ruled the largest empire in the world, but faced challengers in Germany and the United States. The First World War killed nearly 900,000 British servicemen; afterwards women won the vote, southern Ireland became independent and the economy sank into long depression. In 1940, under Churchill, Britain stood alone against Nazi Germany, and it ended on the winning side with the United States and the Soviet Union, but drained of its strength.',
+      fr:'Au début du siècle, la Grande-Bretagne possède encore le plus vaste empire du monde, mais l’Allemagne et les États-Unis la défient. La Première Guerre mondiale tue près de 900 000 soldats britanniques ; ensuite les femmes obtiennent le vote, le sud de l’Irlande devient indépendant et l’économie s’enlise dans la dépression. En 1940, sous Churchill, le pays tient seul face à l’Allemagne nazie et finit dans le camp des vainqueurs avec les États-Unis et l’URSS, mais épuisé.' },
+    events:[
+      { y:1903, zh:'潘克斯特創立婦女社會政治聯盟，爭取女性投票權', en:'Emmeline Pankhurst founds the WSPU to win votes for women', fr:'Emmeline Pankhurst fonde la WSPU pour le vote des femmes' },
+      { y:1911, by:'H. H. Asquith', zh:'《議會法》限制上議院的權力', en:'The Parliament Act curbs the House of Lords', fr:'Le Parliament Act limite les pouvoirs des Lords' },
+      { y:1914, by:'H. H. Asquith', zh:'英國對德宣戰', en:'Britain declares war on Germany', fr:'La Grande-Bretagne déclare la guerre à l’Allemagne' },
+      { y:1916, by:'H. H. Asquith', zh:'索姆河戰役；都柏林復活節起義', en:'The Somme; the Easter Rising in Dublin', fr:'La Somme ; l’insurrection de Pâques à Dublin' },
+      { y:1918, zh:'三十歲以上女性取得投票權', en:'Women over thirty win the vote', fr:'Les femmes de plus de trente ans obtiennent le vote' },
+      { y:1922, zh:'愛爾蘭自由邦成立', en:'The Irish Free State is founded', fr:'Création de l’État libre d’Irlande' },
+      { y:1926, zh:'全國大罷工', en:'The General Strike', fr:'La grève générale' },
+      { y:1936, zh:'愛德華八世退位', en:'Edward VIII abdicates', fr:'Abdication d’Édouard VIII' },
+      { y:1940, zh:'敦克爾克大撤退與不列顛空戰', en:'Dunkirk and the Battle of Britain', fr:'Dunkerque et la bataille d’Angleterre' },
+      { y:1945, zh:'歐戰勝利', en:'Victory in Europe', fr:'Victoire en Europe' },
+    ],
+    themes:{
+      state:{ zh:'1911 年的議會法剝奪了上議院否決預算的權力。工黨在 1924 年首次組閣，取代自由黨成為兩大黨之一；兩次大戰期間則由聯合政府領導。1928 年起女性與男性享有相同的投票權。',
+        en:'The Parliament Act of 1911 stripped the Lords of their veto over the budget. Labour formed its first government in 1924 and replaced the Liberals as one of the two great parties, while both wars were run by coalitions. From 1928 women voted on the same terms as men.',
+        fr:'Le Parliament Act de 1911 retire aux Lords leur veto sur le budget. Les travaillistes forment leur premier gouvernement en 1924 et supplantent les libéraux comme l’un des deux grands partis, tandis que les deux guerres sont conduites par des coalitions. Dès 1928, les femmes votent aux mêmes conditions que les hommes.' },
+      faith:{ zh:'上教堂的人持續減少，社會逐漸世俗化。愛爾蘭的分裂大致沿著宗教界線：天主教為主的南部獨立，新教徒占多數的北部六郡留在聯合王國。',
+        en:'Church attendance kept falling and society grew more secular. Ireland was partitioned largely along religious lines: the Catholic south became independent, while six mostly Protestant northern counties stayed in the United Kingdom.',
+        fr:'La pratique religieuse continue de reculer et la société se sécularise. L’Irlande est partagée en grande partie selon des lignes religieuses : le sud catholique devient indépendant, tandis que six comtés du nord, majoritairement protestants, restent dans le Royaume-Uni.' },
+      society:{ zh:'自由黨政府推出養老金與國民保險，是福利國家的雛形。兩次大戰之間，煤礦與造船等傳統產業衰退，1926 年大罷工與 1930 年代的大蕭條讓北方工業區失業嚴重。',
+        en:'Liberal governments introduced old-age pensions and national insurance, early foundations of the welfare state. Between the wars the old industries of coal and shipbuilding declined, and the General Strike of 1926 and the Depression of the 1930s left the industrial north with mass unemployment.',
+        fr:'Les gouvernements libéraux créent retraites et assurance nationale, premières pierres de l’État-providence. Entre les deux guerres, charbon et construction navale déclinent, et la grève générale de 1926 puis la crise des années 1930 laissent le nord industriel frappé par un chômage de masse.' },
+      culture:{ zh:'吳爾芙與艾略特引領現代主義文學；BBC 在 1922 年開播，成為全國共同的聲音。歐文與沙遜等戰爭詩人，記錄了壕溝戰的殘酷。',
+        en:'Virginia Woolf and T. S. Eliot led literary modernism, and the BBC, broadcasting from 1922, became a shared national voice. War poets such as Wilfred Owen and Siegfried Sassoon recorded the horror of the trenches.',
+        fr:'Virginia Woolf et T. S. Eliot mènent le modernisme littéraire, et la BBC, qui émet dès 1922, devient une voix nationale partagée. Des poètes de guerre comme Wilfred Owen et Siegfried Sassoon témoignent de l’horreur des tranchées.' },
+      world:{ zh:'大英帝國在一戰後達到最大範圍，但各自治領日益獨立，1931 年《西敏法令》讓加拿大、澳洲等成為大英國協的平等成員。二戰中英國仰賴美國援助，戰後債台高築，帝國已難以維持。',
+        en:'The empire reached its greatest extent after the First World War, but the dominions grew more independent, and the Statute of Westminster in 1931 made Canada, Australia and others equal members of the Commonwealth. In the Second World War Britain relied on American aid, and it emerged deep in debt with an empire it could no longer sustain.',
+        fr:'L’empire atteint son extension maximale après la Première Guerre mondiale, mais les dominions s’émancipent, et le statut de Westminster de 1931 fait du Canada, de l’Australie et d’autres des membres égaux du Commonwealth. Pendant la Seconde Guerre mondiale, le pays dépend de l’aide américaine et en sort lourdement endetté, avec un empire qu’il ne peut plus soutenir.' },
+    }
+  },
+  {
+    id:'welfare', icon:'🏥', start:1945, end:1979, world:'coldwar',
+    name:{ zh:'福利國家與帝國終結', en:'The Welfare State and the End of Empire', fr:'L’État-providence et la fin de l’empire' },
+    summary:{ zh:'1945 年工黨大勝，建立國民保健署（NHS），並把煤礦、鐵路等產業收歸國有。印度在 1947 年獨立，其後二十年非洲與亞洲殖民地相繼獨立；1956 年的蘇伊士危機證明英國已不再是超級強權。1973 年英國加入歐洲共同體，七十年代卻陷入通膨與罷工潮。',
+      en:'Labour’s landslide in 1945 created the National Health Service and nationalised coal, the railways and other industries. India became independent in 1947 and most colonies in Africa and Asia followed within twenty years, while the Suez Crisis of 1956 showed that Britain was no longer a superpower. Britain joined the European Community in 1973, but the decade sank into inflation and waves of strikes.',
+      fr:'La victoire écrasante des travaillistes en 1945 crée le National Health Service et nationalise charbon, chemins de fer et d’autres industries. L’Inde devient indépendante en 1947, et la plupart des colonies d’Afrique et d’Asie suivent en vingt ans, tandis que la crise de Suez, en 1956, montre que le pays n’est plus une superpuissance. Le Royaume-Uni entre dans la Communauté européenne en 1973, mais la décennie s’enlise dans l’inflation et les grèves.' },
+    events:[
+      { y:1947, zh:'印度與巴基斯坦獨立', en:'India and Pakistan become independent', fr:'Indépendance de l’Inde et du Pakistan' },
+      { y:1948, zh:'國民保健署成立；帝國疾風號載來加勒比海移民', en:'The NHS is founded; the Empire Windrush brings Caribbean migrants', fr:'Création du NHS ; l’Empire Windrush amène des immigrés antillais' },
+      { y:1953, zh:'伊莉莎白二世加冕', en:'Coronation of Elizabeth II', fr:'Couronnement d’Élisabeth II' },
+      { y:1956, zh:'蘇伊士危機', en:'The Suez Crisis', fr:'La crise de Suez' },
+      { y:1960, zh:'麥克米倫發表「變革之風」演說', en:'Macmillan’s “Wind of Change” speech', fr:'Discours du « vent du changement » de Macmillan' },
+      { y:1969, zh:'英軍進駐北愛爾蘭，北愛動亂擴大', en:'Troops are sent to Northern Ireland as the Troubles escalate', fr:'Envoi de troupes en Irlande du Nord alors que les Troubles s’aggravent' },
+      { y:1973, zh:'加入歐洲共同體', en:'Britain joins the European Community', fr:'Le Royaume-Uni entre dans la Communauté européenne' },
+      { y:1978, zh:'「不滿之冬」罷工潮', en:'The “Winter of Discontent” strikes', fr:'Les grèves de « l’hiver du mécontentement »' },
+    ],
+    themes:{
+      state:{ zh:'戰後兩大黨形成「共識政治」，都接受混合經濟與福利國家。1969 年投票年齡降為十八歲；蘇格蘭與威爾斯的民族主義開始抬頭。',
+        en:'Both main parties accepted a mixed economy and the welfare state in a post-war “consensus”. The voting age fell to eighteen in 1969, and Scottish and Welsh nationalism began to rise.',
+        fr:'Les deux grands partis acceptent l’économie mixte et l’État-providence dans un « consensus » d’après-guerre. La majorité électorale passe à dix-huit ans en 1969, et les nationalismes écossais et gallois montent.' },
+      faith:{ zh:'社會快速世俗化，1967 年同性性行為在英格蘭與威爾斯除罪化。北愛爾蘭天主教徒爭取民權，與新教效忠派衝突，演變成長達三十年的暴力「動亂」。',
+        en:'Society secularised rapidly, and in 1967 homosexual acts were decriminalised in England and Wales. Catholic civil-rights campaigns in Northern Ireland collided with Protestant loyalism and turned into thirty years of violence, the Troubles.',
+        fr:'La société se sécularise rapidement, et en 1967 l’homosexualité est dépénalisée en Angleterre et au pays de Galles. Les revendications des catholiques d’Irlande du Nord pour les droits civiques se heurtent au loyalisme protestant et débouchent sur trente ans de violences, les « Troubles ».' },
+      society:{ zh:'NHS 讓所有人免費就醫，國宅大量興建。來自加勒比海與南亞的移民改變了城市的面貌；七十年代石油危機後通膨高漲，1978 至 1979 年的「不滿之冬」罷工讓工黨政府垮台。',
+        en:'The NHS gave everyone free medical care and council housing was built on a vast scale. Migrants from the Caribbean and South Asia reshaped the cities; after the oil shocks of the 1970s inflation soared, and the strikes of the 1978–79 “Winter of Discontent” brought down the Labour government.',
+        fr:'Le NHS offre des soins gratuits à tous et les logements sociaux se multiplient. Les immigrés des Antilles et d’Asie du Sud transforment les villes ; après les chocs pétroliers des années 1970, l’inflation s’envole, et les grèves de « l’hiver du mécontentement » de 1978-1979 font tomber le gouvernement travailliste.' },
+      culture:{ zh:'六十年代的「搖擺倫敦」讓英國成為流行文化的中心：披頭四、滾石樂團、迷你裙與 007 電影風靡全球。',
+        en:'The “Swinging London” of the sixties made Britain a capital of pop culture: the Beatles, the Rolling Stones, the miniskirt and James Bond films swept the world.',
+        fr:'Le « Swinging London » des années 1960 fait du pays une capitale de la culture pop : les Beatles, les Rolling Stones, la minijupe et les films de James Bond conquièrent le monde.' },
+      world:{ zh:'英國是北約創始成員與核武國家，與美國維持「特殊關係」。帝國改組為大英國協；英國兩度申請加入歐洲共同體都被法國的戴高樂否決，1973 年才成功加入。',
+        en:'Britain was a founding member of NATO and a nuclear power, bound to the United States by a “special relationship”. The empire became the Commonwealth, and two bids to join the European Community were vetoed by de Gaulle before entry finally came in 1973.',
+        fr:'Membre fondateur de l’OTAN et puissance nucléaire, le pays entretient une « relation spéciale » avec les États-Unis. L’empire devient le Commonwealth, et deux candidatures à la Communauté européenne se heurtent au veto de De Gaulle avant l’adhésion de 1973.' },
+    }
+  },
+  {
+    id:'modern', icon:'🎡', start:1979, end:2026, world:'contemporary',
+    name:{ zh:'柴契爾以後的英國', en:'Britain since Thatcher', fr:'Le Royaume-Uni depuis Thatcher' },
+    summary:{ zh:'柴契爾推動私有化、削弱工會並解除金融管制，倫敦金融城重新成為全球金融中心。布萊爾的「新工黨」把權力下放給蘇格蘭、威爾斯與北愛爾蘭，並促成北愛和平。2016 年公投決定脫離歐盟，2020 年正式脫歐，英國至今仍在重新尋找自己的位置。',
+      en:'Thatcher privatised industries, curbed the unions and deregulated finance, and the City of London became a global financial centre again. Blair’s New Labour devolved power to Scotland, Wales and Northern Ireland and helped bring peace to Northern Ireland. A 2016 referendum chose to leave the European Union, Britain left in 2020, and it is still searching for its place.',
+      fr:'Thatcher privatise, affaiblit les syndicats et dérégule la finance, et la City redevient une place financière mondiale. Le New Labour de Blair transfère des pouvoirs à l’Écosse, au pays de Galles et à l’Irlande du Nord et contribue à la paix en Irlande du Nord. Le référendum de 2016 choisit de quitter l’Union européenne, la sortie a lieu en 2020, et le pays cherche encore sa place.' },
+    events:[
+      { y:1982, zh:'福克蘭戰爭', en:'The Falklands War', fr:'La guerre des Malouines' },
+      { y:1984, zh:'礦工大罷工開始', en:'The miners’ strike begins', fr:'Début de la grande grève des mineurs' },
+      { y:1997, zh:'香港主權移交；蘇格蘭與威爾斯公投通過地方分權', en:'Hong Kong is handed over; Scotland and Wales vote for devolution', fr:'Rétrocession de Hong Kong ; l’Écosse et le pays de Galles votent la dévolution' },
+      { y:1998, zh:'北愛爾蘭《耶穌受難日協議》', en:'The Good Friday Agreement in Northern Ireland', fr:'L’accord du Vendredi saint en Irlande du Nord' },
+      { y:2003, zh:'英國參與入侵伊拉克', en:'Britain joins the invasion of Iraq', fr:'Le Royaume-Uni participe à l’invasion de l’Irak' },
+      { y:2014, zh:'蘇格蘭獨立公投，55% 選擇留在英國', en:'Scottish independence referendum: 55% vote to stay', fr:'Référendum sur l’indépendance écossaise : 55 % pour rester' },
+      { y:2016, by:'David Cameron', zh:'脫歐公投，52% 選擇離開歐盟', en:'Brexit referendum: 52% vote to leave the EU', fr:'Référendum sur le Brexit : 52 % pour quitter l’UE' },
+      { y:2020, zh:'英國正式離開歐盟', en:'Britain leaves the European Union', fr:'Le Royaume-Uni quitte l’Union européenne' },
+      { y:2022, zh:'伊莉莎白二世去世，查理三世即位', en:'Elizabeth II dies; Charles III becomes king', fr:'Mort d’Élisabeth II ; Charles III devient roi' },
+    ],
+    themes:{
+      state:{ zh:'1999 年蘇格蘭議會、威爾斯議會與北愛爾蘭議會相繼成立，聯合王國從高度中央集權轉向分權。2014 年蘇格蘭獨立公投以 55% 對 45% 留下，但脫歐後獨立議題再度升溫。',
+        en:'In 1999 the Scottish Parliament and the Welsh and Northern Irish assemblies opened, and the United Kingdom moved from tight centralisation to devolution. Scotland voted 55 to 45 per cent to stay in 2014, but Brexit revived the independence question.',
+        fr:'En 1999 s’ouvrent le Parlement écossais et les assemblées galloise et nord-irlandaise : le Royaume-Uni passe d’une forte centralisation à la dévolution. L’Écosse vote à 55 % contre 45 % pour rester en 2014, mais le Brexit relance la question de l’indépendance.' },
+      faith:{ zh:'英國已是歐洲最世俗化的社會之一，自認無宗教信仰的人數逐漸超過基督徒。1998 年的和平協議結束北愛動亂，宗教與身分的分界仍深刻影響當地政治。',
+        en:'Britain became one of Europe’s most secular societies, with people of no religion coming to outnumber Christians. The 1998 peace agreement ended the Troubles, though religious and communal lines still shape politics in Northern Ireland.',
+        fr:'Le pays devient l’une des sociétés les plus sécularisées d’Europe, les sans-religion finissant par dépasser les chrétiens. L’accord de paix de 1998 met fin aux Troubles, mais les lignes religieuses et communautaires structurent encore la politique en Irlande du Nord.' },
+      society:{ zh:'製造業與煤礦大幅萎縮，服務業與金融業成為經濟主力，南北差距擴大。2008 年金融危機後政府推行緊縮政策；2020 年的新冠疫情對 NHS 造成巨大壓力。',
+        en:'Manufacturing and coal shrank dramatically, services and finance came to dominate the economy, and the gap between north and south widened. After the 2008 financial crisis governments imposed austerity, and the Covid pandemic of 2020 put the NHS under immense strain.',
+        fr:'L’industrie manufacturière et le charbon s’effondrent, les services et la finance dominent l’économie, et l’écart nord-sud se creuse. Après la crise financière de 2008, l’austérité s’impose, et la pandémie de Covid de 2020 met le NHS à rude épreuve.' },
+      culture:{ zh:'從龐克、英倫搖滾到《哈利波特》，英國持續輸出流行文化。2012 年倫敦奧運開幕式以 NHS、工業革命與流行音樂講述國家故事，展現新的多元認同。',
+        en:'From punk and Britpop to Harry Potter, Britain kept exporting popular culture. The opening ceremony of the 2012 London Olympics told the national story through the NHS, the Industrial Revolution and pop music, showcasing a new, diverse identity.',
+        fr:'Du punk à la britpop et à Harry Potter, le pays continue d’exporter sa culture populaire. La cérémonie d’ouverture des Jeux de Londres en 2012 raconte l’histoire nationale par le NHS, la révolution industrielle et la pop, affichant une identité nouvelle et diverse.' },
+      world:{ zh:'英國在 1997 年把香港交還中國，大英帝國的時代畫下句點。它追隨美國參與阿富汗與伊拉克戰爭；2020 年離開歐盟後，與歐洲的關係與在世界上的角色，仍在重新協商之中。',
+        en:'The handover of Hong Kong in 1997 closed the age of empire. Britain followed the United States into Afghanistan and Iraq, and since leaving the EU in 2020 its relations with Europe and its role in the world are still being renegotiated.',
+        fr:'La rétrocession de Hong Kong en 1997 clôt l’ère impériale. Le pays suit les États-Unis en Afghanistan et en Irak, et depuis sa sortie de l’UE en 2020, ses relations avec l’Europe et son rôle dans le monde restent à redéfinir.' },
+    }
+  },
+  ]
+},
 ];
 
 const CX_UI = {
@@ -428,7 +834,15 @@ function cxYear(y, approx) {
   return pre + y;
 }
 function cxRange(p) { return fmtYear(p.start) + ' — ' + fmtYear(p.end); }
-function cxTheme(id) { return CX_THEMES.find(t => t.id === id); }
+/* a theme as the current country tells it: a country may rename a thread or
+   rewrite its intro through `threads` (e.g. “France & the World” → “Britain & the World”) */
+function cxTheme(id) {
+  const base = CX_THEMES.find(t => t.id === id);
+  const c = COUNTRIES.find(k => k.id === cx.country);
+  const o = c && c.threads && c.threads[id];
+  return o ? Object.assign({}, base, o) : base;
+}
+function cxThemes() { return CX_THEMES.map(t => cxTheme(t.id)); }
 
 /* a date written for the reader's language: 14 July 1789, 1789年7月14日, 14 juillet 1789 */
 function cxDate(s) {
@@ -483,8 +897,11 @@ function cxRulers(pid) {
 }
 
 /* rulers and key events woven into one chronology: each event sits under
-   whoever ruled when it happened (the most recent accession wins on overlaps);
-   events outside every reign stand on their own, in date order */
+   whoever ruled when it happened. On overlaps the most recent accession wins;
+   a ruler marked { side:true } (a king of Scotland beside the English line)
+   only hosts events no main ruler covers, and an event may name its host with
+   `by` (the ruler's English name) where the year alone is ambiguous.
+   Events outside every reign stand on their own, in date order. */
 function cxChron(p) {
   const rulers = (((typeof CX_RULERS !== 'undefined' && CX_RULERS[cx.country]) || {})[p.id] || [])
     .map((r, i) => ({ r, i, ev: [] }));
@@ -492,8 +909,12 @@ function cxChron(p) {
   const evLi = e => '<li><span class="cx-ev-y">' + cxYear(e.y, e.c) + '</span><span>' + (e[LANG] || e.zh) + '</span></li>';
   const loose = [];
   p.events.forEach(e => {
-    let host = null;
-    rulers.forEach(x => { if (e.y >= x.r[0] && e.y <= x.r[1] && (!host || x.r[0] >= host.r[0])) host = x; });
+    let host = e.by ? rulers.find(x => x.r[2][1] === e.by) || null : null;
+    if (!host) {
+      const inReign = rulers.filter(x => e.y >= x.r[0] && e.y <= x.r[1]);
+      const main = inReign.filter(x => !(x.r[4] && x.r[4].side));
+      (main.length ? main : inReign).forEach(x => { if (!host || x.r[0] >= host.r[0]) host = x; });
+    }
     (host ? host.ev : loose).push(e);
   });
   if (!rulers.length) return '<div class="cx-label">' + cxU('events') + '</div><ul class="cx-ev">' + loose.map(evLi).join('') + '</ul>';
@@ -596,7 +1017,7 @@ function cxLinear(P) {
     + cxStages(p.id)
     + cxChron(p)
     + '<div class="cx-label">' + cxU('facets') + '</div>'
-    + '<div class="cx-facets">' + CX_THEMES.map(t =>
+    + '<div class="cx-facets">' + cxThemes().map(t =>
         '<div class="cx-facet" style="--tc:' + t.color + '">'
         + '<button class="cx-facet-h" onclick="cxSet({mode:\'thematic\',theme:\'' + t.id + '\'},\'' + p.id + '\')" title="' + cxU('follow') + '">'
         + '<span>' + t.icon + '</span>' + T(t.name) + '<span class="cx-arr">⇢</span></button>'
@@ -608,7 +1029,7 @@ function cxLinear(P) {
 
 function cxThematic(P) {
   const th = cxTheme(cx.theme);
-  return '<div class="cx-themes">' + CX_THEMES.map(t =>
+  return '<div class="cx-themes">' + cxThemes().map(t =>
       '<button class="chip' + (t.id === cx.theme ? ' active' : '') + '" onclick="cxSet({theme:\'' + t.id + '\'})"'
       + ' aria-pressed="' + (t.id === cx.theme) + '">'
       + '<span class="dot" style="background:' + t.color + '"></span>' + t.icon + ' ' + T(t.name) + '</button>').join('')

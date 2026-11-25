@@ -177,4 +177,104 @@ revolution: {
   ]
 },
 
-} };
+},
+
+uk: {
+
+stuart: {
+  title:{ zh:'內戰與共和的六個階段', en:'The Civil War and the Republic in six stages', fr:'La guerre civile et la république en six étapes' },
+  list:[
+  { a:'1628-06', b:'1640-11',
+    name:{ zh:'個人統治：沒有議會的十一年', en:'Personal Rule: eleven years without Parliament', fr:'Le gouvernement personnel : onze ans sans Parlement' },
+    power:{ zh:'查理一世與坎特伯里大主教勞德', en:'Charles I and William Laud, Archbishop of Canterbury', fr:'Charles Iᵉʳ et William Laud, archevêque de Cantorbéry' },
+    summary:{ zh:'議會在 1628 年逼國王接受《權利請願書》，隔年查理一世乾脆解散議會，改以「船稅」等舊稅籌錢。勞德大主教推行講究祭壇與儀式的禮拜，清教徒認為這是暗中恢復天主教。1637 年國王強迫蘇格蘭使用新的祈禱書，愛丁堡爆發暴動，蘇格蘭人簽下《國民誓約》起兵；國王沒錢打仗，只好重新召開議會。',
+      en:'In 1628 Parliament forced the Petition of Right on the king; the next year Charles I dissolved it and raised money through old levies such as Ship Money. Archbishop Laud imposed altars and ceremony that Puritans saw as Catholicism by the back door. In 1637 the king forced a new prayer book on Scotland; Edinburgh rioted, the Scots signed the National Covenant and took up arms, and the king, short of money for war, had to recall Parliament.',
+      fr:'En 1628, le Parlement impose au roi la pétition des droits ; l’année suivante, Charles Iᵉʳ le dissout et lève de l’argent par d’anciennes taxes comme le Ship Money. L’archevêque Laud impose autels et cérémonial, que les puritains jugent un retour déguisé au catholicisme. En 1637, le roi impose un nouveau livre de prières à l’Écosse ; Édimbourg se soulève, les Écossais signent le Covenant national et prennent les armes, et le roi, à court d’argent, doit rappeler le Parlement.' },
+    ev:[
+      ['1628-06-07', ['國王接受《權利請願書》','The king accepts the Petition of Right','Le roi accepte la pétition des droits']],
+      ['1629-03-10', ['查理一世解散議會，個人統治開始','Charles I dissolves Parliament; the Personal Rule begins','Charles Iᵉʳ dissout le Parlement : début du gouvernement personnel']],
+      ['1637-07-23', ['愛丁堡聖吉爾斯大教堂因新祈禱書爆發暴動','Riot in St Giles’ Cathedral, Edinburgh, over the new prayer book','Émeute à la cathédrale St Giles d’Édimbourg contre le nouveau livre de prières']],
+      ['1638-02-28', ['蘇格蘭人簽署《國民誓約》','The Scots sign the National Covenant','Les Écossais signent le Covenant national']],
+      ['1640-11-03', ['長期議會召開','The Long Parliament meets','Réunion du Long Parlement']],
+    ],
+    turn:{ zh:'長期議會一開會就清算國王的大臣，國王再也回不到不需要議會的統治。', en:'The Long Parliament at once turned on the king’s ministers, and there was no going back to rule without Parliament.', fr:'Le Long Parlement s’en prend aussitôt aux ministres du roi : plus question de gouverner sans le Parlement.' } },
+
+  { a:'1640-11', b:'1642-08',
+    name:{ zh:'長期議會與決裂', en:'The Long Parliament and the breach', fr:'Le Long Parlement et la rupture' },
+    power:{ zh:'長期議會（由約翰·皮姆領導）與國王對峙', en:'The Long Parliament, led by John Pym, against the king', fr:'Le Long Parlement, mené par John Pym, face au roi' },
+    summary:{ zh:'議會處死國王的親信斯特拉福伯爵，廢除特權法庭，並規定國王至少每三年召開一次議會。1641 年愛爾蘭天主教徒起事，傳出大批新教徒被殺，誰來指揮鎮壓的軍隊成了爭奪的焦點。1642 年 1 月，查理一世帶兵闖入下議院想逮捕五名議員，卻撲了空；他離開倫敦，8 月在諾丁漢升起王旗。',
+      en:'Parliament had the king’s chief minister, the Earl of Strafford, executed, abolished the prerogative courts and required a Parliament at least every three years. In 1641 Irish Catholics rose in revolt amid reports of massacred Protestants, and control of the army to crush them became the crux of the quarrel. In January 1642 Charles I marched into the Commons to arrest five members, who had already fled; he left London and in August raised his standard at Nottingham.',
+      fr:'Le Parlement fait exécuter le principal ministre du roi, le comte de Strafford, abolit les tribunaux de prérogative et impose sa réunion au moins tous les trois ans. En 1641, les catholiques d’Irlande se soulèvent, et l’on rapporte des massacres de protestants : le commandement de l’armée chargée de la répression devient l’enjeu central. En janvier 1642, Charles Iᵉʳ entre aux Communes pour arrêter cinq députés, déjà enfuis ; il quitte Londres et lève son étendard à Nottingham en août.' },
+    ev:[
+      ['1641-05-12', ['斯特拉福伯爵被處決','The Earl of Strafford is executed','Exécution du comte de Strafford']],
+      ['1641-10-23', ['愛爾蘭天主教徒起事','The Irish Catholic rising begins','Début du soulèvement catholique en Irlande']],
+      ['1641-11-22', ['下議院通過《大抗議書》','The Commons pass the Grand Remonstrance','Les Communes adoptent la Grande Remontrance']],
+      ['1642-01-04', ['國王闖入下議院逮捕五名議員，撲了空','The king fails to arrest five members in the Commons','Le roi échoue à arrêter cinq députés aux Communes']],
+      ['1642-08-22', ['國王在諾丁漢升起王旗，內戰開始','The king raises his standard at Nottingham; the war begins','Le roi lève son étendard à Nottingham : la guerre commence']],
+    ],
+    turn:{ zh:'國王與議會各自招兵，英格蘭分裂成兩個陣營。', en:'King and Parliament each raised armies, and England split into two camps.', fr:'Le roi et le Parlement lèvent chacun des troupes, et l’Angleterre se divise en deux camps.' } },
+
+  { a:'1642-08', b:'1646-06',
+    name:{ zh:'第一次內戰', en:'The First Civil War', fr:'La première guerre civile' },
+    power:{ zh:'國王以牛津為大本營，議會控制倫敦與海軍；蘇格蘭誓約派加入議會一方', en:'The king at Oxford, Parliament holding London and the navy; the Scottish Covenanters joined Parliament', fr:'Le roi à Oxford, le Parlement tenant Londres et la flotte ; les covenantaires écossais rejoignent le Parlement' },
+    summary:{ zh:'雙方在埃奇山的第一場大戰不分勝負。1643 年議會與蘇格蘭結盟換取蘇格蘭出兵，1644 年聯軍在馬斯頓荒原大勝，拿下北英格蘭。議會隨後把各地部隊整編成職業化的「新模範軍」，1645 年在內斯比擊潰王軍。隔年國王向蘇格蘭軍隊投降。',
+      en:'The first great battle, at Edgehill, was indecisive. In 1643 Parliament allied with the Scots in return for their army, and in 1644 the allies won at Marston Moor and took the north. Parliament then merged its forces into the professional New Model Army, which shattered the royalists at Naseby in 1645. The next year the king surrendered to the Scots.',
+      fr:'La première grande bataille, à Edgehill, est indécise. En 1643, le Parlement s’allie aux Écossais en échange de leur armée, et en 1644 les alliés l’emportent à Marston Moor et prennent le nord. Le Parlement fond alors ses forces dans la New Model Army, armée de métier, qui écrase les royalistes à Naseby en 1645. L’année suivante, le roi se rend aux Écossais.' },
+    ev:[
+      ['1642-10-23', ['埃奇山戰役','Battle of Edgehill','Bataille d’Edgehill']],
+      ['1643-09-25', ['議會與蘇格蘭簽訂《神聖盟約》','Parliament and the Scots sign the Solemn League and Covenant','Le Parlement et les Écossais signent la Ligue et Covenant solennels']],
+      ['1644-07-02', ['馬斯頓荒原戰役','Battle of Marston Moor','Bataille de Marston Moor']],
+      ['1645-06-14', ['內斯比戰役，新模範軍大勝','Battle of Naseby: victory for the New Model Army','Bataille de Naseby : victoire de la New Model Army']],
+      ['1646-05-05', ['國王向蘇格蘭軍隊投降','The king surrenders to the Scottish army','Le roi se rend à l’armée écossaise']],
+    ],
+    turn:{ zh:'國王戰敗，但打贏的議會、軍隊與蘇格蘭人，對接下來該怎麼辦意見分歧。', en:'The king was beaten, but Parliament, the army and the Scots disagreed about what came next.', fr:'Le roi est vaincu, mais le Parlement, l’armée et les Écossais ne s’entendent pas sur la suite.' } },
+
+  { a:'1646-06', b:'1649-01',
+    name:{ zh:'從談判到審判', en:'From negotiation to trial', fr:'De la négociation au procès' },
+    power:{ zh:'議會、新模範軍與蘇格蘭三方角力，國王在其間周旋', en:'Parliament, the New Model Army and the Scots, with the king playing them off against each other', fr:'Le Parlement, la New Model Army et les Écossais, le roi jouant des uns contre les autres' },
+    summary:{ zh:'查理一世一邊談判，一邊暗中與蘇格蘭人結盟，1648 年引發第二次內戰，很快在普雷斯頓被克倫威爾擊敗。軍隊認定國王不可信，派普萊德上校把仍想談判的議員擋在門外，剩下的「殘餘議會」設立特別法庭審判國王。查理拒絕承認法庭的權威，1649 年 1 月 30 日被斬首。',
+      en:'While negotiating, Charles I secretly allied with the Scots, unleashing a Second Civil War in 1648 that Cromwell quickly won at Preston. Convinced the king could not be trusted, the army sent Colonel Pride to bar the members still willing to negotiate, and the remaining “Rump” set up a special court to try the king. Charles refused to recognise it and was beheaded on 30 January 1649.',
+      fr:'Tout en négociant, Charles Iᵉʳ s’allie en secret aux Écossais, déclenchant en 1648 une seconde guerre civile que Cromwell remporte vite à Preston. Convaincue que le roi n’est pas digne de confiance, l’armée envoie le colonel Pride écarter les députés encore favorables à la négociation, et le « Parlement croupion » restant crée une cour spéciale pour juger le roi. Charles refuse d’en reconnaître l’autorité et est décapité le 30 janvier 1649.' },
+    ev:[
+      ['1647-10-28', ['普特尼辯論：士兵討論男性普選','The Putney Debates: soldiers argue for manhood suffrage','Débats de Putney : les soldats débattent du suffrage masculin']],
+      ['1648-08-17', ['普雷斯頓戰役，第二次內戰結束','Battle of Preston ends the Second Civil War','La bataille de Preston clôt la seconde guerre civile']],
+      ['1648-12-06', ['普萊德清洗：軍隊把議員擋在議會門外','Pride’s Purge: the army bars members from Parliament','Purge de Pride : l’armée écarte des députés du Parlement']],
+      ['1649-01-20', ['國王受審','The king’s trial opens','Ouverture du procès du roi']],
+      ['1649-01-30', ['查理一世在白廳被斬首','Charles I is beheaded in Whitehall','Charles Iᵉʳ est décapité à Whitehall']],
+    ],
+    turn:{ zh:'一國之君被自己的臣民公開審判處死，歐洲各國王室為之震驚。', en:'A king had been publicly tried and executed by his own subjects, to the horror of Europe’s monarchs.', fr:'Un roi a été jugé et exécuté publiquement par ses propres sujets, à l’effroi des monarchies d’Europe.' } },
+
+  { a:'1649-01', b:'1658-09',
+    name:{ zh:'共和國與護國公', en:'Commonwealth and Protectorate', fr:'Commonwealth et Protectorat' },
+    power:{ zh:'殘餘議會；1653 年起由護國公克倫威爾統治', en:'The Rump Parliament; from 1653, Oliver Cromwell as Lord Protector', fr:'Le Parlement croupion ; à partir de 1653, Oliver Cromwell, Lord Protecteur' },
+    summary:{ zh:'議會廢除君主制與上議院，宣布英格蘭為共和國。克倫威爾率軍征服愛爾蘭，在德羅赫達屠城，又擊敗擁立查理二世的蘇格蘭人。1653 年他驅散殘餘議會，以護國公身分統治，一度把全國分區交給少將治理。清教道德被強制推行，但政權始終仰賴軍隊。',
+      en:'Parliament abolished the monarchy and the House of Lords and declared England a Commonwealth. Cromwell conquered Ireland, massacring the garrison and townspeople of Drogheda, then beat the Scots who had crowned Charles II. In 1653 he expelled the Rump and ruled as Lord Protector, at one point through major-generals in charge of districts. Puritan morals were enforced, but the regime always rested on the army.',
+      fr:'Le Parlement abolit la monarchie et la Chambre des lords et proclame le Commonwealth. Cromwell conquiert l’Irlande, massacrant la garnison et les habitants de Drogheda, puis bat les Écossais qui ont couronné Charles II. En 1653, il chasse le Parlement croupion et gouverne en Lord Protecteur, un temps par des majors-généraux chargés de districts. La morale puritaine est imposée, mais le régime repose toujours sur l’armée.' },
+    ev:[
+      ['1649-05-19', ['英格蘭宣布為共和國','England is declared a Commonwealth','L’Angleterre est proclamée Commonwealth']],
+      ['1649-09-11', ['德羅赫達屠城','The sack of Drogheda','Le sac de Drogheda']],
+      ['1651-09-03', ['伍斯特戰役，查理二世逃往歐陸','Battle of Worcester; Charles II escapes abroad','Bataille de Worcester ; Charles II s’enfuit à l’étranger']],
+      ['1653-04-20', ['克倫威爾驅散殘餘議會','Cromwell expels the Rump Parliament','Cromwell chasse le Parlement croupion']],
+      ['1653-12-16', ['克倫威爾就任護國公','Cromwell becomes Lord Protector','Cromwell devient Lord Protecteur']],
+      ['1658-09-03', ['克倫威爾去世','Death of Oliver Cromwell','Mort d’Oliver Cromwell']],
+    ],
+    turn:{ zh:'政權繫於克倫威爾一人，他一死，共和國就失去了重心。', en:'The regime hung on Cromwell alone; with his death the republic lost its centre.', fr:'Le régime ne tient qu’à Cromwell ; à sa mort, la république perd son centre.' } },
+
+  { a:'1658-09', b:'1660-05',
+    name:{ zh:'共和瓦解與王政復辟', en:'Collapse and Restoration', fr:'L’effondrement et la Restauration' },
+    power:{ zh:'理查·克倫威爾，其後軍隊將領相互爭權；蒙克將軍主導復辟', en:'Richard Cromwell, then rival army generals; General Monck engineered the Restoration', fr:'Richard Cromwell, puis des généraux rivaux ; le général Monck orchestre la Restauration' },
+    summary:{ zh:'克倫威爾的兒子理查繼任護國公，卻得不到軍隊支持，不到一年就下台。軍隊與殘餘議會反覆爭吵，局勢一片混亂。駐蘇格蘭的蒙克將軍率軍南下進入倫敦，主持新的議會選舉；查理二世在《布雷達宣言》中承諾大赦與宗教寬容，議會隨即迎他回國。',
+      en:'Cromwell’s son Richard succeeded as Lord Protector but lacked the army’s backing and fell within a year. Army and Rump quarrelled and chaos spread. General Monck marched south from Scotland into London and oversaw fresh elections; in the Declaration of Breda Charles II promised pardon and religious toleration, and Parliament invited him home.',
+      fr:'Richard, fils de Cromwell, lui succède comme Lord Protecteur, mais sans l’appui de l’armée il tombe en moins d’un an. Armée et Parlement croupion se querellent, et le désordre s’installe. Le général Monck descend d’Écosse jusqu’à Londres et organise de nouvelles élections ; dans la déclaration de Breda, Charles II promet amnistie et tolérance religieuse, et le Parlement le rappelle.' },
+    ev:[
+      ['1659-05-25', ['理查·克倫威爾辭去護國公','Richard Cromwell resigns as Lord Protector','Richard Cromwell renonce au Protectorat']],
+      ['1660-01-01', ['蒙克將軍從蘇格蘭南下','General Monck marches south from Scotland','Le général Monck quitte l’Écosse vers le sud']],
+      ['1660-04-04', ['查理二世發表《布雷達宣言》','Charles II issues the Declaration of Breda','Charles II publie la déclaration de Breda']],
+      ['1660-05-29', ['查理二世在生日當天進入倫敦','Charles II enters London on his birthday','Charles II entre dans Londres le jour de son anniversaire']],
+    ],
+    turn:{ zh:'君主制回來了，但國王從此知道，沒有議會的支持就無法統治。', en:'The monarchy was back, but kings now knew they could not rule without Parliament.', fr:'La monarchie revient, mais les rois savent désormais qu’ils ne peuvent gouverner sans le Parlement.' } },
+  ]
+},
+
+},
+};
