@@ -1233,28 +1233,32 @@ const CX_UI = {
        more:'更多國家陸續加入', linear:'線性敘事', linearDesc:'依時代順序閱讀，每個時期附上五個主題切面。',
        thematic:'主題敘事', thematicDesc:'挑一條主題線索，看它如何貫穿每個時代。',
        events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', chron:'統治者與大事', power:'誰掌權', turn:'轉折', stagesOpen:'展開全部', stagesClose:'收合全部', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
-       follow:'沿這條主題讀下去', periods:'個時期', c:'約 ' },
+       follow:'沿這條主題讀下去', periods:'個時期', c:'約 ',
+       cities:'城市地圖', citiesDesc:'點選地圖上的城市，看它的歷史與旅遊時值得看的地方。', cityTl:'城市年表', citySee:'旅遊時看這些', cityMap:'城市地圖', cityNone:'這個國家的城市還在整理中。' },
   en:{ tab:'Countries', head:'Country Histories', sub:'Pick a country and read its history along two axes: time and theme.',
        more:'More countries coming', linear:'Linear', linearDesc:'Read period by period, each with five thematic facets.',
        thematic:'Thematic', thematicDesc:'Follow one theme as it runs through every period.',
        events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', chron:'Rulers and key events', power:'Who held power', turn:'Turning point', stagesOpen:'Expand all', stagesClose:'Collapse all', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
-       follow:'Follow this theme', periods:'periods', c:'c. ' },
+       follow:'Follow this theme', periods:'periods', c:'c. ',
+       cities:'City map', citiesDesc:'Tap a city on the map to read its history and what to see when you visit.', cityTl:'City timeline', citySee:'What to see', cityMap:'City map', cityNone:'Cities for this country are on the way.' },
   fr:{ tab:'Par pays', head:'Histoires nationales', sub:'Choisissez un pays et lisez son histoire selon deux axes : le temps et les thèmes.',
        more:'D’autres pays à venir', linear:'Récit linéaire', linearDesc:'Lire période par période, chacune avec cinq angles thématiques.',
        thematic:'Récit thématique', thematicDesc:'Suivre un thème à travers toutes les périodes.',
        events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', chron:'Souverains et événements clés', power:'Qui détient le pouvoir', turn:'Tournant', stagesOpen:'Tout déplier', stagesClose:'Tout replier', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
-       follow:'Suivre ce thème', periods:'périodes', c:'v. ' },
+       follow:'Suivre ce thème', periods:'périodes', c:'v. ',
+       cities:'Carte des villes', citiesDesc:'Touchez une ville sur la carte pour lire son histoire et ce qu’il faut y voir.', cityTl:'Chronologie de la ville', citySee:'À voir sur place', cityMap:'Carte des villes', cityNone:'Les villes de ce pays arrivent bientôt.' },
 };
 
 /* ─── state ─── */
 const CX_KEY = 'wh_country_view';
-let cx = { country:'france', mode:'linear', theme:'state' };
+let cx = { country:'france', mode:'linear', theme:'state', city:'' };
 try {
   const s = JSON.parse(localStorage.getItem(CX_KEY) || 'null');
   if (s && typeof s === 'object') cx = Object.assign(cx, s);
 } catch (e) { /* storage unavailable */ }
 if (!COUNTRIES.some(c => c.id === cx.country)) cx.country = COUNTRIES[0].id;
 if (!CX_THEMES.some(t => t.id === cx.theme)) cx.theme = CX_THEMES[0].id;
+if (['linear', 'thematic', 'cities'].indexOf(cx.mode) < 0) cx.mode = 'linear';
 function cxSave() { try { localStorage.setItem(CX_KEY, JSON.stringify(cx)); } catch (e) {} }
 
 function cxU(k) { return (CX_UI[LANG] || CX_UI.zh)[k]; }
@@ -1429,14 +1433,14 @@ function renderCountries() {
 
   /* narrative mode */
   html += '<div class="cx-modes" role="tablist">'
-    + ['linear', 'thematic'].map(m =>
+    + ['linear', 'thematic', 'cities'].map(m =>
         '<button class="cx-mode' + (cx.mode === m ? ' active' : '') + '" role="tab" aria-selected="' + (cx.mode === m) + '"'
         + ' onclick="cxSet({mode:\'' + m + '\'})">'
-        + '<span class="cx-mode-t">' + (m === 'linear' ? '↓ ' : '⇢ ') + cxU(m) + '</span>'
+        + '<span class="cx-mode-t">' + ({ linear:'↓ ', thematic:'⇢ ', cities:'⌖ ' })[m] + cxU(m) + '</span>'
         + '<span class="cx-mode-d">' + cxU(m + 'Desc') + '</span></button>').join('')
     + '</div>';
 
-  html += cx.mode === 'linear' ? cxLinear(P) : cxThematic(P);
+  html += cx.mode === 'linear' ? cxLinear(P) : cx.mode === 'thematic' ? cxThematic(P) : cxCities(c, P);
   box.innerHTML = html;
 }
 
@@ -1482,6 +1486,63 @@ function cxThematic(P) {
         + '</div></section>').join('') + '</div>';
 }
 
+/* the city map: an outline of the country with a pin per city, and a panel
+   with the chosen city's story, its timeline (each line linked back to the
+   national period) and the places worth seeing on a visit */
+function cxCities(c, P) {
+  const list = (typeof CX_CITIES !== 'undefined' && CX_CITIES[c.id]) || [];
+  const map = typeof CX_MAPS !== 'undefined' && CX_MAPS[c.id];
+  if (!list.length || !map) return '<p class="cx-city-none">' + cxU('cityNone') + '</p>';
+  const city = list.find(k => k.id === cx.city) || list[0];
+  const [x0, y0, x1, y1] = map.box;
+  const cos = Math.cos((y0 + y1) / 2 * Math.PI / 180), sc = map.w / ((x1 - x0) * cos);
+  const pt = ([lon, lat]) => [(lon - x0) * cos * sc, (y1 - lat) * sc];
+  const per = id => P.find(p => p.id === id);
+  const go = id => 'cxSet({city:\'' + id + '\'})';
+  const lab = { r:[12, 5, 'start'], l:[-12, 5, 'end'], t:[0, -13, 'middle'], b:[0, 23, 'middle'] };
+
+  const pins = list.map(k => {
+    const [x, y] = pt(k.ll).map(v => Math.round(v * 10) / 10);
+    const [dx, dy, anchor] = lab[k.lab] || lab.r;
+    return '<g class="cx-pin' + (k === city ? ' active' : '') + '" tabindex="0" role="button" aria-label="' + T(k.name) + '"'
+      + ' onclick="' + go(k.id) + '" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();' + go(k.id) + '}">'
+      + '<circle class="cx-pin-halo" cx="' + x + '" cy="' + y + '" r="15"/>'
+      + '<circle class="cx-pin-dot" cx="' + x + '" cy="' + y + '" r="6"/>'
+      + '<text x="' + (x + dx) + '" y="' + (y + dy) + '" text-anchor="' + anchor + '">' + T(k.name) + '</text></g>';
+  }).join('');
+
+  const mapBox = '<div class="cx-map-box">'
+    + '<svg class="cx-map" viewBox="0 0 ' + map.w + ' ' + map.h + '" role="group" aria-label="' + cxU('cityMap') + ' · ' + T(c.name) + '">'
+    + '<path class="cx-map-o" d="' + map.others + '"/><path class="cx-map-l" d="' + map.land + '"/>' + pins + '</svg>'
+    + '<div class="cx-city-chips">' + list.map(k =>
+        '<button class="chip' + (k === city ? ' active' : '') + '" aria-pressed="' + (k === city) + '" onclick="' + go(k.id) + '">' + T(k.name) + '</button>').join('')
+    + '</div></div>';
+
+  const tl = '<div class="cx-label">' + cxU('cityTl') + '</div><ul class="cx-ctl">' + city.tl.map(e => {
+      const p = per(e.p);
+      return '<li><span class="cx-ev-y">' + cxYear(e.y, e.c) + '</span><span class="cx-ctl-t">' + (e[LANG] || e.zh) + '</span>'
+        + (p ? '<button class="cx-ctl-p" onclick="cxSet({mode:\'linear\'},\'' + p.id + '\')" title="' + cxU('toPeriod') + '">' + p.icon + ' ' + T(p.name) + '</button>' : '')
+        + '</li>';
+    }).join('') + '</ul>';
+
+  const see = '<div class="cx-label">' + cxU('citySee') + '</div><div class="cx-trivia cx-see">' + city.see.map(x => {
+      const p = per(x.p);
+      const url = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(x.q);
+      return '<div class="cx-tv" style="--tc:#c9a85c">'
+        + '<div class="cx-tv-h"><span class="cx-tv-ic">' + x.icon + '</span>' + T(x.n) + '</div>'
+        + (p ? '<div class="cx-tv-tag">' + p.icon + ' ' + T(p.name) + '</div>' : '')
+        + '<p>' + (x[LANG] || x.zh) + '</p>'
+        + '<a class="cx-where" href="' + url + '" target="_blank" rel="noopener noreferrer">📍 ' + T(x.n) + '<span class="cx-where-go">' + cxU('where') + ' ↗</span></a>'
+        + '</div>';
+    }).join('') + '</div>';
+
+  return '<div class="cx-cities">' + mapBox
+    + '<section class="cx-city" id="cx-city-panel">'
+    + '<div class="cx-city-head"><h3>' + T(city.name) + '</h3><div class="cx-city-tag">' + T(city.tag) + '</div></div>'
+    + '<p class="cx-city-intro">' + T(city.intro) + '</p>'
+    + tl + see + '</section></div>';
+}
+
 /* change state, re-render, and optionally bring one period into view */
 function cxSet(patch, focusPeriod) {
   const modeChanged = patch.mode && patch.mode !== cx.mode;
@@ -1491,6 +1552,10 @@ function cxSet(patch, focusPeriod) {
   const keep = box.getBoundingClientRect().top;
   renderCountries();
   if (focusPeriod) cxScrollTo(focusPeriod);
+  else if (patch.city && window.innerWidth < 900) {
+    const panel = document.getElementById('cx-city-panel');
+    if (panel) panel.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
   else if (modeChanged || patch.theme) {
     const modes = box.querySelector('.cx-modes');
     if (modes && modes.getBoundingClientRect().top < 0) modes.scrollIntoView({ block:'start' });
