@@ -8,7 +8,7 @@
 
 | 資料夾 | 書架分類 | 內容 |
 |---|---|---|
-| `humanities/` | 人文與歷史 | 世界藝術史、世界歷史（含 `world-history-*.js`；國別史資料在 `world-history-countries.js`，各時期的小知識與「在哪裡看得到」在 `world-history-trivia.js`，各時期的統治者在 `world-history-rulers.js`，把單一時期再拆成階段細讀的資料在 `world-history-stages.js`，國別史「城市地圖」的城市資料在 `world-history-cities.js`、國界輪廓在 `world-history-maps.js`）、希臘羅馬神話 |
+| `humanities/` | 人文與歷史 | 世界藝術史、世界歷史（含 `world-history-*.js`；國別史資料在 `world-history-countries.js`，各時期的小知識與「在哪裡看得到」在 `world-history-trivia.js`，各時期的統治者在 `world-history-rulers.js`，把單一時期再拆成階段細讀的資料在 `world-history-stages.js`，國別史「城市地圖」的城市資料在 `world-history-cities.js`、國界輪廓在 `world-history-maps.js`）、希臘羅馬神話、世界文學（`world-literature.html`；流派與入門書單在 `world-literature-data.js`，作家資料分在 `world-literature-authors-1/2/3.js`） |
 | `politics-law/` | 政治與法律 | 國際關係理論、國際法 |
 | `business/` | 商業與產業 | 商業與金融、投資理財、生活風格與精品、電影產業、香水市場情報 |
 | `arts-media/` | 藝術與創作 | 古箏、鉤針編織、攝影、修圖、影片剪輯 |

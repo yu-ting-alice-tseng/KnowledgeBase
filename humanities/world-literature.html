@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界文學 | Litterae Mundi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+SC:wght@400;500;600&family=Nunito:wght@400;500;600;700;800&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0b0807; --gold: #c9a85c; --gold-hi: #e8cc84; --gold-lo: rgba(201,168,92,0.40);
+  --wine: #b0485a; --cream: #ede2cc; --cream2: #b8a48a; --muted: #7a6850;
+  --panel: rgba(255,243,210,0.045); --panel-bd: rgba(201,168,92,0.16);
+}
+html, body { min-height: 100%; }
+body {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% -10%, rgba(140,40,60,0.20), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 95% 5%, rgba(120,90,30,0.14), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 110%, rgba(30,50,80,0.14), transparent 60%),
+    var(--bg);
+  color: var(--cream);
+  font-family: 'Nunito', 'Noto Serif TC', sans-serif;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+#wrap { max-width: 1240px; margin: 0 auto; padding: 44px 34px 90px; }
+@media (max-width: 680px) { #wrap { padding: 30px 16px 60px; } }
+
+header { text-align: center; margin-bottom: 38px; position: relative; }
+#lang-switch { position: absolute; top: 0; right: 0; z-index: 20; display: flex; gap: 3px; padding: 4px;
+  background: rgba(255,242,200,0.038); border: 1px solid rgba(201,168,92,0.12); border-radius: 11px; }
+#lang-switch button { padding: 5px 13px; font-size: 10px; font-weight: 800; letter-spacing: .06em; border-radius: 7px;
+  border: none; cursor: pointer; font-family: 'Nunito', sans-serif; background: transparent; color: var(--muted); transition: all .2s; }
+#lang-switch button:hover { color: var(--cream); }
+#lang-switch button.active { background: rgba(201,168,92,0.18); color: var(--gold); }
+.eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: 'Cormorant SC', serif; font-size: 13px; letter-spacing: .32em; color: var(--gold); margin-bottom: 14px; }
+.eyebrow .rule { width: 34px; height: 1px; background: var(--gold-lo); }
+h1 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: clamp(44px, 8vw, 78px); line-height: 1; color: var(--cream); }
+h1 em { color: var(--gold-hi); }
+.orn { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 16px 0; color: var(--gold); font-size: 11px; }
+.orn .l { width: 56px; height: 1px; background: linear-gradient(to right, transparent, var(--gold-lo)); }
+.orn .r { width: 56px; height: 1px; background: linear-gradient(to left, transparent, var(--gold-lo)); }
+#subtitle { font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; font-style: italic; font-size: 19px; color: var(--cream2); max-width: 720px; margin: 0 auto; line-height: 1.6; }
+#stats { margin-top: 14px; font-size: 12px; letter-spacing: .12em; color: var(--muted); font-weight: 700; }
+@media (max-width: 680px) { #lang-switch { position: static; display: inline-flex; margin-bottom: 18px; } #subtitle { font-size: 16px; } }
+
+#tabs { display: flex; justify-content: center; gap: 6px; padding: 5px; margin: 0 auto 36px; width: fit-content; max-width: 100%;
+  background: rgba(255,243,210,0.04); border: 1px solid var(--panel-bd); border-radius: 16px; flex-wrap: wrap; }
+#tabs button { padding: 10px 20px; border: none; border-radius: 12px; cursor: pointer; background: transparent; color: var(--muted);
+  font-family: 'Noto Serif TC', serif; font-size: 14px; font-weight: 700; letter-spacing: .08em; transition: all .2s; }
+#tabs button:hover { color: var(--cream); }
+#tabs button.active { background: linear-gradient(180deg, rgba(201,168,92,0.22), rgba(160,125,50,0.13)); color: var(--gold-hi); box-shadow: inset 0 0 0 1px rgba(201,168,92,0.3); }
+.view { display: none; } .view.active { display: block; }
+
+.sec-head { text-align: center; margin-bottom: 26px; }
+.sec-head h2 { font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; font-style: italic; font-weight: 500; font-size: 34px; color: var(--cream); }
+.sec-head p { color: var(--cream2); font-size: 13.5px; margin-top: 6px; line-height: 1.7; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 26px; }
+.chip { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--panel-bd); background: transparent; color: var(--cream2);
+  font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all .2s; }
+.chip:hover { color: var(--cream); border-color: var(--gold-lo); }
+.chip.active { color: var(--gold-hi); border-color: var(--gold); background: rgba(201,168,92,0.1); }
+
+/* 流派年表 */
+#mv-list { position: relative; display: grid; gap: 16px; }
+.mv-card { position: relative; padding: 20px 22px 18px 26px; border-radius: 18px; background: var(--panel); border: 1px solid var(--panel-bd); overflow: hidden; }
+.mv-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c); }
+.mv-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 8px; }
+.mv-name { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; color: var(--cream); }
+.mv-yrs { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: .06em; }
+.mv-reg { font-size: 10.5px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--panel-bd); color: var(--cream2); font-weight: 700; }
+.mv-desc { font-size: 13.5px; line-height: 1.85; color: var(--cream2); }
+.mv-keys { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.mv-keys span { font-size: 11px; padding: 2px 9px; border-radius: 6px; background: rgba(255,255,255,0.04); color: var(--cream2); }
+.mv-authors { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.au-link { font-size: 12.5px; padding: 5px 12px; border-radius: 10px; border: 1px solid var(--gold-lo); color: var(--gold-hi); background: rgba(201,168,92,0.06);
+  cursor: pointer; font-family: inherit; font-weight: 700; transition: all .2s; }
+.au-link:hover { background: rgba(201,168,92,0.16); }
+
+/* 作家 */
+#search-wrap { position: relative; max-width: 520px; margin: 0 auto 22px; }
+#search { width: 100%; padding: 13px 18px 13px 44px; border-radius: 14px; border: 1px solid var(--panel-bd); background: rgba(255,242,200,0.045);
+  color: var(--cream); font-size: 15px; font-family: inherit; outline: none; transition: border-color .2s; }
+#search:focus { border-color: var(--gold); }
+#search::placeholder { color: var(--muted); font-style: italic; }
+#search-ic { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 17px; }
+#work-hits { display: none; max-width: 760px; margin: 0 auto 28px; }
+.wh-lb, .style-lb { font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); font-weight: 800; margin-bottom: 8px; }
+.wh-list { display: grid; gap: 8px; }
+.wh-item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 11px 14px; border: 1px solid var(--gold-lo); border-radius: 12px;
+  background: rgba(201,168,92,0.06); cursor: pointer; transition: all .2s; }
+.wh-item:hover, .wh-item:focus { border-color: var(--gold-hi); background: rgba(201,168,92,0.12); outline: none; }
+.wh-t { color: var(--gold-hi); font-weight: 700; font-size: 14px; }
+.wh-m { color: var(--cream2); font-size: 12px; }
+.mv-group-head { display: flex; align-items: baseline; gap: 14px; margin: 34px 0 14px; }
+.mv-group-head .t { font-family: 'Noto Serif TC', serif; font-size: 17px; letter-spacing: .14em; color: var(--gold); font-weight: 700; }
+.mv-group-head .y { font-size: 12px; color: var(--muted); font-weight: 700; }
+.mv-group-head .ln { flex: 1; height: 1px; background: linear-gradient(to right, rgba(201,168,92,0.28), transparent); }
+.au-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+@media (max-width: 420px) { .au-grid { grid-template-columns: 1fr; } }
+.au-card { padding: 22px 22px 18px; border-radius: 18px; background: var(--panel); border: 1px solid var(--panel-bd); transition: border-color .3s, box-shadow .3s; scroll-margin-top: 20px; }
+.au-card.flash { border-color: var(--gold-hi); box-shadow: 0 0 0 2px rgba(232,204,132,0.35); }
+.au-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.au-name { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 700; color: var(--cream); }
+.au-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: var(--muted); }
+.au-yrs { margin-left: auto; font-size: 12px; color: var(--cream2); font-weight: 700; letter-spacing: .04em; }
+.au-mv { display: inline-flex; align-items: center; gap: 7px; margin-top: 10px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--panel-bd);
+  font-size: 12px; color: var(--cream2); cursor: pointer; font-weight: 700; background: transparent; font-family: inherit; }
+.au-mv .dot { width: 7px; height: 7px; border-radius: 50%; }
+.au-note { font-size: 14px; line-height: 1.75; color: var(--cream); margin-top: 10px; font-weight: 600; }
+.au-bio { font-size: 12.5px; line-height: 1.9; color: var(--cream2); opacity: .85; margin-top: 8px; }
+.au-style { font-size: 12.5px; line-height: 1.9; color: var(--cream2); margin-top: 12px; padding: 10px 13px; border-left: 2px solid var(--gold);
+  background: rgba(201,168,92,0.06); border-radius: 0 10px 10px 0; }
+.au-works { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+.wk { padding: 6px 12px; border-radius: 10px; border: 1px solid var(--panel-bd); color: var(--cream); font-size: 12.5px; cursor: pointer;
+  background: rgba(255,255,255,0.02); font-family: inherit; font-weight: 600; transition: all .2s; text-align: left; }
+.wk:hover { border-color: var(--gold-lo); color: var(--gold-hi); }
+.wk.hit { color: var(--gold-hi); border-color: var(--gold-hi); box-shadow: 0 0 0 1px rgba(232,204,132,0.45); }
+.wk .y { color: var(--muted); font-size: 11px; margin-left: 6px; }
+#none { display: none; text-align: center; color: var(--muted); padding: 48px 0; font-style: italic; }
+
+/* 入門書單 */
+#reading-list { display: grid; gap: 14px; max-width: 860px; margin: 0 auto; }
+.rd { display: grid; grid-template-columns: 48px 1fr; gap: 14px; padding: 18px 20px; border-radius: 16px; background: var(--panel); border: 1px solid var(--panel-bd);
+  cursor: pointer; transition: border-color .2s; }
+.rd:hover { border-color: var(--gold-lo); }
+.rd .n { font-family: 'Cormorant Garamond', serif; font-size: 38px; line-height: 1; color: var(--gold); font-style: italic; }
+.rd .t { font-weight: 700; color: var(--cream); font-size: 16px; }
+.rd .a { font-size: 12.5px; color: var(--gold); margin-top: 2px; font-weight: 700; }
+.rd .w { font-size: 13px; color: var(--cream2); margin-top: 6px; line-height: 1.75; }
+
+/* 作品視窗 */
+#modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(5,3,2,0.78); backdrop-filter: blur(6px); }
+#modal.open { display: flex; }
+#modal-box { position: relative; max-width: 560px; width: 100%; max-height: 86vh; overflow: auto; padding: 30px 28px 24px; border-radius: 20px;
+  background: #15100c; border: 1px solid var(--gold-lo); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+#modal-x { position: absolute; top: 12px; right: 14px; border: none; background: transparent; color: var(--cream2); font-size: 22px; cursor: pointer; }
+.m-title { font-family: 'Noto Serif TC', serif; font-size: 24px; font-weight: 700; color: var(--gold-hi); padding-right: 24px; }
+.m-meta { font-size: 13px; color: var(--cream2); margin-top: 6px; font-weight: 700; }
+.m-orig { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 16px; margin-top: 2px; }
+.m-syn { font-size: 14px; line-height: 1.95; color: var(--cream); margin-top: 16px; }
+.m-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.m-links a, .m-links button { font-size: 12.5px; color: var(--gold); text-decoration: none; padding: 7px 12px; border-radius: 10px; border: 1px solid var(--gold-lo);
+  background: transparent; cursor: pointer; font-family: inherit; font-weight: 700; }
+.m-links a:hover, .m-links button:hover { background: rgba(201,168,92,0.1); }
+
+footer { text-align: center; margin-top: 60px; font-family: 'Cormorant SC', serif; font-size: 12px; letter-spacing: .22em; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <div id="lang-switch">
+      <button id="lang-zh" onclick="setLanguage('zh')">繁中</button>
+      <button id="lang-en" onclick="setLanguage('en')">EN</button>
+      <button id="lang-fr" onclick="setLanguage('fr')">FR</button>
+    </div>
+    <div class="eyebrow"><span class="rule"></span><span id="eyebrow"></span><span class="rule"></span></div>
+    <h1>Litterae <em>Mundi</em></h1>
+    <div class="orn"><div class="l"></div><span>✦</span><div class="r"></div></div>
+    <p id="subtitle"></p>
+    <div id="stats"></div>
+  </header>
+
+  <nav id="tabs">
+    <button data-v="movements" onclick="showView('movements')"></button>
+    <button data-v="authors" onclick="showView('authors')"></button>
+    <button data-v="reading" onclick="showView('reading')"></button>
+  </nav>
+
+  <section id="view-movements" class="view"></section>
+  <section id="view-authors" class="view"></section>
+  <section id="view-reading" class="view"></section>
+
+  <footer id="footer"></footer>
+</div>
+
+<div id="modal" onclick="if(event.target===this)closeModal()">
+  <div id="modal-box" role="dialog" aria-modal="true">
+    <button id="modal-x" onclick="closeModal()" aria-label="Close">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="world-literature-data.js"></script>
+<script src="world-literature-authors-1.js"></script>
+<script src="world-literature-authors-2.js"></script>
+<script src="world-literature-authors-3.js"></script>
+<script>
+var LANG = 'zh';
+var LI = { zh: 0, en: 1, fr: 2 };
+var UI = {
+  zh: { eyebrow:'個人知識庫 · 文學卷', subtitle:'從荷馬到村上春樹：世界文學的流派、作家與名著，<br>讀懂每位作家的生平、文風與代表作。',
+        stats:'{m} 個流派 · {a} 位作家 · {w} 部作品', tabMv:'流派年表', tabAu:'作家', tabRd:'入門書單',
+        mvSub:'依時間排列的文學流派與時代，點作家名字可跳到他的介紹。', all:'全部',
+        auSub:'生平、文風與代表作；可用作家或作品名稱搜尋，點作品看簡介。', search:'搜尋作家、流派或作品…',
+        worksHit:'符合的作品', none:'找不到符合的作家或作品。', styleLb:'文風與特色', bioLb:'生平',
+        rdSub:'第一次讀世界文學？從這十本開始，篇幅與難度都適合入門。', wiki:'在維基百科查看', toAuthor:'看作家介紹',
+        footer:'© 2026 個人知識庫 · LITTERAE MUNDI · 世界文學圖譜', title:'世界文學 | Litterae Mundi' },
+  en: { eyebrow:'Personal Library · Literature', subtitle:'From Homer to Murakami: the movements, writers and masterpieces of world literature,<br>with each author’s life, style and key works.',
+        stats:'{m} movements · {a} authors · {w} works', tabMv:'Movements', tabAu:'Authors', tabRd:'Reading List',
+        mvSub:'Literary movements and ages in chronological order; click a name to jump to the author.', all:'All',
+        auSub:'Lives, styles and key works; search by author or title, and click a work for a synopsis.', search:'Search authors, movements or works…',
+        worksHit:'Matching works', none:'No authors or works match your search.', styleLb:'Style & signature', bioLb:'Life',
+        rdSub:'New to world literature? Start with these ten books, all approachable in length and difficulty.', wiki:'View on Wikipedia', toAuthor:'About the author',
+        footer:'© 2026 Personal Library · Litterae Mundi · Atlas of World Literature', title:'World Literature | Litterae Mundi' },
+  fr: { eyebrow:'Bibliothèque personnelle · Littérature', subtitle:'D’Homère à Murakami : mouvements, écrivains et chefs-d’œuvre de la littérature mondiale,<br>avec la vie, le style et les œuvres majeures de chaque auteur.',
+        stats:'{m} mouvements · {a} auteurs · {w} œuvres', tabMv:'Mouvements', tabAu:'Auteurs', tabRd:'Premières lectures',
+        mvSub:'Mouvements et époques littéraires par ordre chronologique ; cliquez un nom pour rejoindre l’auteur.', all:'Tous',
+        auSub:'Vies, styles et œuvres majeures ; recherchez par auteur ou par titre, cliquez une œuvre pour son résumé.', search:'Rechercher auteurs, mouvements ou œuvres…',
+        worksHit:'Œuvres correspondantes', none:'Aucun auteur ni aucune œuvre ne correspond à votre recherche.', styleLb:'Style et signature', bioLb:'Vie',
+        rdSub:'Vous découvrez la littérature mondiale ? Commencez par ces dix livres, accessibles par leur longueur et leur difficulté.', wiki:'Voir sur Wikipédia', toAuthor:'Voir l’auteur',
+        footer:'© 2026 Bibliothèque personnelle · Litterae Mundi · Atlas de la littérature mondiale', title:'Littérature mondiale | Litterae Mundi' },
+};
+function ui(k) { return UI[LANG][k]; }
+function T(v) {
+  if (v == null) return '';
+  if (typeof v === 'string') return v;
+  if (Array.isArray(v)) return v[LI[LANG]] || v[1] || v[0];
+  return v[LANG] || v.en || v.zh || '';
+}
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+function qt(s) { return LANG === 'zh' ? '《' + s + '》' : s; }
+
+var MV = {}; LIT_MOVEMENTS.forEach(function (m) { MV[m.id] = m; });
+var AU = {}; LIT_AUTHORS.forEach(function (a) { AU[a.id] = a; });
+var MV_SORTED = LIT_MOVEMENTS.slice().sort(function (a, b) { return a.start - b.start || a.end - b.end; });
+var currentView = 'movements', mvRegion = 'all';
+
+function authorsOf(mvId) { return LIT_AUTHORS.filter(function (a) { return a.mv === mvId; }); }
+function auName(a) { return T(a.name); }
+function auSub(a) { return LANG === 'zh' ? a.name[1] : (a.name[0] !== T(a.name) ? a.name[0] : ''); }
+
+/* ── 流派年表 ── */
+function renderMovements() {
+  var regions = ['all', 'europe', 'eastasia', 'americas', 'world'];
+  var html = '<div class="sec-head"><h2>' + ui('tabMv') + '</h2><p>' + ui('mvSub') + '</p></div><div class="chips">'
+    + regions.map(function (r) {
+        return '<button class="chip' + (r === mvRegion ? ' active' : '') + '" onclick="mvRegion=\'' + r + '\';renderMovements()">'
+          + (r === 'all' ? ui('all') : T(LIT_REGIONS[r])) + '</button>';
+      }).join('') + '</div><div id="mv-list">';
+  MV_SORTED.forEach(function (m) {
+    if (mvRegion !== 'all' && m.region !== mvRegion) return;
+    html += '<article class="mv-card" style="--c:' + m.color + '" id="mv-' + m.id + '">'
+      + '<div class="mv-top"><span class="mv-name">' + T(m.name) + '</span><span class="mv-yrs">' + T(m.yrs) + '</span>'
+      + '<span class="mv-reg">' + T(LIT_REGIONS[m.region]) + '</span></div>'
+      + '<p class="mv-desc">' + T(m.desc) + '</p>'
+      + '<div class="mv-keys">' + T(m.keys).map(function (k) { return '<span>' + k + '</span>'; }).join('') + '</div>'
+      + '<div class="mv-authors">' + authorsOf(m.id).map(function (a) {
+          return '<button class="au-link" onclick="goAuthor(\'' + a.id + '\')">' + auName(a) + '</button>';
+        }).join('') + '</div></article>';
+  });
+  document.getElementById('view-movements').innerHTML = html + '</div>';
+}
+
+/* ── 作家 ── */
+function workKeys(a, wi) { return a.works[wi][0].join(' | ').toLowerCase(); }
+function searchText(a) {
+  var m = MV[a.mv], parts = [].concat(a.name, a.note, a.bio, a.style, m.name.zh, m.name.en, m.name.fr);
+  a.works.forEach(function (w) { parts = parts.concat(w[0]); });
+  return parts.join(' ').toLowerCase().replace(/"/g, '');
+}
+function renderAuthors() {
+  var html = '<div class="sec-head"><h2>' + ui('tabAu') + '</h2><p>' + ui('auSub') + '</p></div>'
+    + '<div id="search-wrap"><span id="search-ic">⌕</span><input id="search" type="search" placeholder="' + ui('search') + '" oninput="filterAuthors(this.value)"></div>'
+    + '<div id="work-hits"></div>';
+  MV_SORTED.forEach(function (m) {
+    var list = authorsOf(m.id);
+    if (!list.length) return;
+    html += '<div class="mv-group-head" data-g="' + m.id + '"><span class="t">' + T(m.name) + '</span><span class="y">' + T(m.yrs) + '</span><span class="ln"></span></div>'
+      + '<div class="au-grid" data-g="' + m.id + '">' + list.map(function (a) {
+        var sub = auSub(a);
+        return '<article class="au-card" id="au-' + a.id + '" data-s="' + esc(searchText(a)) + '">'
+          + '<div class="au-head"><span class="au-name">' + auName(a) + '</span>' + (sub ? '<span class="au-sub">' + sub + '</span>' : '')
+          + '<span class="au-yrs">' + T(a.years) + '</span></div>'
+          + '<button class="au-mv" onclick="goMovement(\'' + m.id + '\')"><span class="dot" style="background:' + m.color + '"></span>' + T(m.name) + '</button>'
+          + '<p class="au-note">' + T(a.note) + '</p>'
+          + '<p class="au-bio">' + T(a.bio) + '</p>'
+          + '<div class="au-style"><div class="style-lb">' + ui('styleLb') + '</div>' + T(a.style) + '</div>'
+          + '<div class="au-works">' + a.works.map(function (w, wi) {
+              return '<button class="wk" data-w="' + esc(workKeys(a, wi)) + '" onclick="openWork(\'' + a.id + '\',' + wi + ')">'
+                + qt(T(w[0])) + '<span class="y">' + T(w[1]) + '</span></button>';
+            }).join('') + '</div></article>';
+      }).join('') + '</div>';
+  });
+  html += '<div id="none">' + ui('none') + '</div>';
+  document.getElementById('view-authors').innerHTML = html;
+}
+function renderWorkHits(q) {
+  var box = document.getElementById('work-hits');
+  if (!q) { box.innerHTML = ''; box.style.display = 'none'; return 0; }
+  var hits = [];
+  MV_SORTED.forEach(function (m) {
+    authorsOf(m.id).forEach(function (a) {
+      a.works.forEach(function (w, wi) {
+        if (workKeys(a, wi).indexOf(q) === -1) return;
+        hits.push('<div class="wh-item" role="button" tabindex="0" onclick="openWork(\'' + a.id + '\',' + wi + ')"'
+          + ' onkeydown="if(event.key===\'Enter\'){openWork(\'' + a.id + '\',' + wi + ')}">'
+          + '<span class="wh-t">' + qt(T(w[0])) + '</span><span class="wh-m">' + auName(a) + ' · ' + T(w[1]) + ' · ' + T(m.name) + '</span></div>');
+      });
+    });
+  });
+  box.innerHTML = hits.length ? '<div class="wh-lb">' + ui('worksHit') + ' · ' + hits.length + '</div><div class="wh-list">' + hits.join('') + '</div>' : '';
+  box.style.display = hits.length ? 'block' : 'none';
+  return hits.length;
+}
+function filterAuthors(q) {
+  q = (q || '').trim().toLowerCase();
+  var any = renderWorkHits(q) > 0;
+  document.querySelectorAll('#view-authors .wk').forEach(function (b) { b.classList.toggle('hit', !!q && b.dataset.w.indexOf(q) !== -1); });
+  document.querySelectorAll('#view-authors .au-grid').forEach(function (g) {
+    var shown = 0;
+    g.querySelectorAll('.au-card').forEach(function (c) {
+      var ok = !q || c.dataset.s.indexOf(q) !== -1;
+      c.style.display = ok ? '' : 'none'; if (ok) shown++;
+    });
+    g.style.display = shown ? '' : 'none';
+    document.querySelector('.mv-group-head[data-g="' + g.dataset.g + '"]').style.display = shown ? '' : 'none';
+    if (shown) any = true;
+  });
+  document.getElementById('none').style.display = any ? 'none' : 'block';
+}
+
+/* ── 入門書單 ── */
+function renderReading() {
+  var html = '<div class="sec-head"><h2>' + ui('tabRd') + '</h2><p>' + ui('rdSub') + '</p></div><div id="reading-list">';
+  LIT_READING.forEach(function (r, i) {
+    var a = AU[r.a], w = a.works[r.w];
+    html += '<div class="rd" role="button" tabindex="0" onclick="openWork(\'' + a.id + '\',' + r.w + ')"'
+      + ' onkeydown="if(event.key===\'Enter\'){openWork(\'' + a.id + '\',' + r.w + ')}">'
+      + '<div class="n">' + (i + 1) + '</div><div><div class="t">' + qt(T(w[0])) + '</div>'
+      + '<div class="a">' + auName(a) + ' · ' + T(w[1]) + '</div><div class="w">' + T(r.why) + '</div></div></div>';
+  });
+  document.getElementById('view-reading').innerHTML = html + '</div>';
+}
+
+/* ── 作品視窗 ── */
+function openWork(aid, wi) {
+  var a = AU[aid], w = a.works[wi], m = MV[a.mv];
+  var wikiHost = { zh:'zh.wikipedia.org', en:'en.wikipedia.org', fr:'fr.wikipedia.org' }[LANG];
+  var title = T(w[0]);
+  var orig = LANG === 'zh' ? w[0][1] : '';
+  document.getElementById('modal-body').innerHTML =
+    '<div class="m-title">' + qt(title) + '</div>'
+    + (orig && orig !== title ? '<div class="m-orig">' + orig + '</div>' : '')
+    + '<div class="m-meta">' + auName(a) + ' · ' + T(w[1]) + ' · ' + T(m.name) + '</div>'
+    + '<p class="m-syn">' + T(w[2]) + '</p>'
+    + '<div class="m-links"><a href="https://' + wikiHost + '/w/index.php?search=' + encodeURIComponent(title) + '" target="_blank" rel="noopener">' + ui('wiki') + ' ↗</a>'
+    + '<button onclick="closeModal();goAuthor(\'' + a.id + '\')">' + ui('toAuthor') + '</button></div>';
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); document.body.style.overflow = ''; }
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+/* ── 導覽 ── */
+function showView(v) {
+  currentView = v;
+  document.querySelectorAll('.view').forEach(function (s) { s.classList.toggle('active', s.id === 'view-' + v); });
+  document.querySelectorAll('#tabs button').forEach(function (b) { b.classList.toggle('active', b.dataset.v === v); });
+  try { localStorage.setItem('kb_lit_view', v); } catch (e) {}
+}
+function goAuthor(id) {
+  showView('authors');
+  var s = document.getElementById('search'); if (s && s.value) { s.value = ''; filterAuthors(''); }
+  var el = document.getElementById('au-' + id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  el.classList.add('flash'); setTimeout(function () { el.classList.remove('flash'); }, 1800);
+}
+function goMovement(id) {
+  mvRegion = 'all'; renderMovements(); showView('movements');
+  var el = document.getElementById('mv-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function setLanguage(lang) {
+  if (!UI[lang]) return;
+  LANG = lang;
+  try { localStorage.setItem('kb_lang', lang); } catch (e) {}
+  ['zh', 'en', 'fr'].forEach(function (l) { document.getElementById('lang-' + l).classList.toggle('active', l === lang); });
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : lang;
+  document.title = ui('title');
+  document.getElementById('eyebrow').textContent = ui('eyebrow');
+  document.getElementById('subtitle').innerHTML = ui('subtitle');
+  var nw = LIT_AUTHORS.reduce(function (n, a) { return n + a.works.length; }, 0);
+  document.getElementById('stats').textContent = ui('stats').replace('{m}', LIT_MOVEMENTS.length).replace('{a}', LIT_AUTHORS.length).replace('{w}', nw);
+  document.getElementById('footer').textContent = ui('footer');
+  document.querySelector('#tabs [data-v="movements"]').textContent = ui('tabMv');
+  document.querySelector('#tabs [data-v="authors"]').textContent = ui('tabAu');
+  document.querySelector('#tabs [data-v="reading"]').textContent = ui('tabRd');
+  var q = document.getElementById('search') ? document.getElementById('search').value : '';
+  renderMovements(); renderAuthors(); renderReading();
+  if (q) { document.getElementById('search').value = q; filterAuthors(q); }
+  if (document.getElementById('modal').classList.contains('open')) closeModal();
+}
+
+(function init() {
+  var saved = 'zh', v = 'movements';
+  try { saved = localStorage.getItem('kb_lang') || 'zh'; v = localStorage.getItem('kb_lit_view') || 'movements'; } catch (e) {}
+  setLanguage(UI[saved] ? saved : 'zh');
+  showView(['movements', 'authors', 'reading'].indexOf(v) >= 0 ? v : 'movements');
+})();
+</script>
+</body>
+</html>

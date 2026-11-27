@@ -1214,6 +1214,10 @@ const DEFAULT_MODULES = [
     description:{ zh:'三語希臘羅馬神話與史詩入門：眾神譜系、創世神話、英雄傳說、荷馬與維吉爾、羅馬建城神話與奧維德《變形記》。每段都附上藝術作品作為補充，呈現後世如何重述這些故事。', en:'Trilingual introduction to Greek and Roman myth and epic: the pantheon, cosmogony, the heroic cycles, Homer and Virgil, Rome\'s foundation myths and Ovid\'s Metamorphoses. Artworks accompany each passage as a supplement, showing how later ages retold the stories.', fr:'Introduction trilingue aux mythes et épopées grecs et romains : le panthéon, la cosmogonie, les cycles héroïques, Homère et Virgile, les mythes de fondation de Rome et les Métamorphoses d\'Ovide. Des œuvres d\'art accompagnent chaque passage pour montrer comment les époques suivantes ont raconté ces histoires.' },
     icon:'fa-bolt', color:'from-amber-400 to-orange-500',
     cat:'humanities', file:'humanities/greek-roman-mythology.html', custom:false },
+  { id:'literature', title:{ zh:'世界文學', en:'Litterae Mundi: World Literature', fr:'Litterae Mundi : littérature mondiale' }, subtitle:{ zh:'流派、作家與名著', en:'Movements, Authors & Masterpieces', fr:'Mouvements, auteurs & chefs-d\'œuvre' },
+    description:{ zh:'三語世界文學圖譜：16 個文學流派與時代、52 位作家的生平與文風、代表作簡介與入門書單，從荷馬、杜甫到村上春樹，可依作家或作品名稱搜尋。', en:'Trilingual atlas of world literature: 16 movements and ages, the lives and styles of 52 authors, synopses of key works and a starter reading list, from Homer and Du Fu to Murakami, searchable by author or title.', fr:'Atlas trilingue de la littérature mondiale : 16 mouvements et époques, la vie et le style de 52 auteurs, résumés des œuvres majeures et premières lectures, d\'Homère et Du Fu à Murakami, avec recherche par auteur ou par titre.' },
+    icon:'fa-book-open', color:'from-rose-400 to-amber-500',
+    cat:'humanities', file:'humanities/world-literature.html', custom:false },
   { id:'ir-theory',  title:{ zh:'國際關係理論', en:'International Relations Theory', fr:'Théories des relations internationales' }, subtitle:{ zh:'典範、學者與研究', en:'Paradigms, Scholars & Studies', fr:'Paradigmes, auteurs & études' },
     description:{ zh:'國際關係理論參考圖譜：現實主義、自由主義、建構主義、批判／馬克思主義、英國學派與女性主義，附重要學者、經典研究與並列比較。', en:'Reference atlas of Realism, Liberalism, Constructivism, Critical/Marxist theory, English School and Feminist IR, with key scholars, studies, and a side-by-side comparison.', fr:'Atlas de référence du réalisme, du libéralisme, du constructivisme, des théories critiques et marxistes, de l\'École anglaise et du féminisme en RI, avec les auteurs clés, les études et une comparaison côte à côte.' },
     icon:'fa-globe', color:'from-sky-400 to-blue-600',
@@ -1557,6 +1561,7 @@ const BAR_ACCENTS = {
 const BAR_ACCENT_OVERRIDE = {
   art: ['201,168,92', '#e8cc84'],
   worldhistory: ['201,168,92', '#e8cc84'],
+  literature: ['201,168,92', '#e8cc84'],
 };
 
 /* 支援多語的模組：切換函式名稱 + 內頁切換鈕（取其父容器隱藏） */
@@ -1571,6 +1576,7 @@ const MODULE_I18N = {
   skincare:     { fn: 'switchLang',     btn: 'hdr-zh' },
   perfume:      { fn: 'switchLanguage', btn: 'hdr-zh' },
   mythology:    { fn: 'setLanguage',    btn: 'lang-zh' },
+  literature:   { fn: 'setLanguage',    btn: 'lang-zh' },
   crochet:      { fn: 'setLanguage',    btn: 'lang-zh' },
   guzheng:      { fn: 'setLanguage',    btn: 'lang-zh' },
   photo:        { fn: 'setLanguage',    btn: 'lang-zh' },
