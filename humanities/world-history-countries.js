@@ -1833,13 +1833,13 @@ function cxParties(pid) {
       + ' onclick="document.getElementById(\'cx-pt-' + p.id + '\').scrollIntoView({behavior:\'smooth\',block:\'center\'})" title="' + T(p.name) + '">' + p.abbr + '</button>';
   }).join('');
   const axis = ['ptFarL', 'ptL', 'ptC', 'ptR', 'ptFarR'].map(k => '<span>' + cxU(k) + '</span>').join('');
-  const row = (k, v) => v ? '<dt>' + cxU(k) + '</dt><dd>' + T(v) + '</dd>' : '';
+  const row = (k, v, label) => v ? '<dt>' + (label ? T(label) : cxU(k)) + '</dt><dd>' + T(v) + '</dd>' : '';
   const cards = list.map(p =>
     '<article class="cx-pt' + (p.hist ? ' hist' : '') + '" id="cx-pt-' + p.id + '" style="--pc:' + p.color + '">'
     + '<header><span class="cx-pt-abbr">' + p.abbr + '</span><div><h4>' + T(p.name) + '</h4>'
     + '<div class="cx-pt-meta">' + p.years + ' · ' + T(p.lean) + (p.hist ? ' · ' + cxU('ptHist') : '') + '</div></div></header>'
     + '<p>' + T(p.text) + '</p>'
-    + '<dl>' + row('ptRoots', p.roots) + row('ptLeaders', p.leaders) + row('ptPres', p.pres) + row('ptNow', p.now) + '</dl>'
+    + '<dl>' + row('ptRoots', p.roots) + row('ptLeaders', p.leaders) + row('ptPres', p.pres, d.presLabel) + row('ptNow', p.now) + '</dl>'
     + '</article>').join('');
   return '<div class="cx-label">' + T(d.title) + '</div>'
     + '<p class="cx-pt-intro">' + T(d.intro) + '</p>'
@@ -1848,6 +1848,23 @@ function cxParties(pid) {
     + '<div class="cx-pt-bar"></div><div class="cx-pt-axis">' + axis + '</div></div>'
     + '<div class="cx-pt-grid">' + cards + '</div>';
 }
+
+/* place spectrum labels in rows using their real rendered widths, so that
+   long labels (CDU/CSU, UDF・MoDem) never overlap on narrow screens */
+function cxLayoutParties() {
+  document.querySelectorAll('.cx-pt-dots').forEach(box => {
+    const W = box.clientWidth, ends = [];
+    box.querySelectorAll('.cx-pt-dot').forEach(dot => {
+      const c = parseFloat(dot.style.left) / 100 * W, w = dot.offsetWidth;
+      let r = ends.findIndex(e => e + 6 < c - w / 2);
+      if (r < 0) { r = ends.length; ends.push(0); }
+      ends[r] = c + w / 2;
+      dot.style.top = (r * 30) + 'px';
+    });
+    box.style.height = (ends.length * 30 + 6) + 'px';
+  });
+}
+window.addEventListener('resize', () => requestAnimationFrame(cxLayoutParties));
 
 /* little-known facts, each tagged with the place where you can still see the thing */
 function cxTrivia(pid, themeId) {
@@ -1921,6 +1938,7 @@ function renderCountries() {
 
   html += cx.mode === 'linear' ? cxLinear(P) : cx.mode === 'thematic' ? cxThematic(P) : cxCities(c, P);
   box.innerHTML = html;
+  requestAnimationFrame(cxLayoutParties);
 }
 
 function cxLinear(P) {
