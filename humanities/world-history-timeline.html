@@ -529,6 +529,41 @@ a.cx-where:hover .cx-where-go { color: var(--gold-hi); }
 .cx-rulers p { font-size: 12.8px !important; line-height: 1.8 !important; margin-top: 2px; }
 .cx-card.slim .cx-rulers li { padding: 6px 0; }
 @media (max-width: 640px) { .cx-rulers li { grid-template-columns: 1fr; gap: 2px; } .cx-ru-y { text-align: left; } }
+/* political parties */
+.cx-pt-intro { font-size: 13px !important; line-height: 1.85 !important; color: var(--cream2, #b8a48a); margin: 2px 0 14px; }
+.cx-pt-spec-l { font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; color: var(--gold-lo); margin-bottom: 8px; }
+.cx-pt-spec { position: relative; margin: 0 8% 22px; }
+.cx-pt-dots { position: relative; }
+.cx-pt-dot { position: absolute; transform: translateX(-50%); font: inherit; font-size: 11px; font-weight: 800; letter-spacing: 0.03em;
+  white-space: nowrap; color: #fff; background: var(--pc); border: 1px solid rgba(255,255,255,0.25); border-radius: 999px;
+  padding: 3px 10px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.35); transition: transform .15s; }
+.cx-pt-dot:hover, .cx-pt-dot:focus-visible { transform: translateX(-50%) scale(1.08); outline: none; }
+.cx-pt-dot.hist { background: transparent; color: var(--pc); border: 1px dashed var(--pc); box-shadow: none; }
+.cx-pt-bar { height: 6px; border-radius: 3px; margin-top: 4px;
+  background: linear-gradient(90deg, #a83232, #d9718f 30%, #d8c27a 50%, #5f86c9 70%, #3a4a8f); opacity: .75; }
+.cx-pt-axis { display: flex; justify-content: space-between; margin-top: 6px; font-size: 10.5px; font-weight: 700; color: var(--muted); }
+.cx-pt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 12px; }
+.cx-pt { border: 1px solid rgba(201,168,92,0.16); border-left: 4px solid var(--pc); border-radius: 12px; padding: 14px 16px;
+  background: rgba(255,243,210,0.03); scroll-margin-top: 80px; }
+.cx-pt.hist { border-left-style: dashed; }
+.cx-pt header { display: flex; gap: 12px; align-items: flex-start; text-align: left; margin: 0; padding: 0; border: none; background: none; }
+.cx-pt header::before, .cx-pt header::after { content: none; }
+.cx-pt-abbr { flex: none; min-width: 44px; text-align: center; font-size: 11px; font-weight: 800; color: #fff; background: var(--pc);
+  border-radius: 8px; padding: 5px 7px; }
+.cx-pt.hist .cx-pt-abbr { background: transparent; color: var(--pc); border: 1px dashed var(--pc); }
+.cx-pt h4 { margin: 0; font-family: 'Cormorant Garamond', 'Noto Serif TC', serif; font-size: 16px; font-weight: 700; color: #f0e6cf; line-height: 1.35; }
+.cx-pt-meta { font-size: 11px; font-weight: 700; color: var(--gold-lo); margin-top: 2px; }
+.cx-pt p { font-size: 12.8px !important; line-height: 1.8 !important; color: var(--cream2, #b8a48a); margin: 10px 0 8px; }
+.cx-pt dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 12px; line-height: 1.7; }
+.cx-pt dt { font-weight: 800; color: var(--gold); white-space: nowrap; }
+.cx-pt dd { margin: 0; color: var(--cream2, #b8a48a); }
+@media (max-width: 640px) {
+  .cx-pt-spec { margin: 0 4% 22px; }
+  .cx-pt-dot { font-size: 10px; padding: 2px 7px; }
+  .cx-pt dl { grid-template-columns: 1fr; gap: 0; }
+  .cx-pt dt { margin-top: 6px; }
+}
+
 /* city map */
 .cx-cities { display: grid; grid-template-columns: minmax(280px, 0.9fr) 1.45fr; gap: 26px; align-items: start; }
 .cx-map-box { position: sticky; top: 16px; background: rgba(255,243,210,0.03); border: 1px solid rgba(201,168,92,0.16);
@@ -770,6 +805,7 @@ function esc(s) { return s.replace(/</g, '&lt;'); }
 <script src="world-history-trivia.js"></script>
 <script src="world-history-maps.js"></script>
 <script src="world-history-cities.js"></script>
+<script src="world-history-parties.js"></script>
 <script src="world-history-countries.js"></script>
 </body>
 </html>

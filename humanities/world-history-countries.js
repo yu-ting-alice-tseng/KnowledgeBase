@@ -1677,18 +1677,21 @@ const CX_UI = {
        more:'更多國家陸續加入', linear:'線性敘事', linearDesc:'依時代順序閱讀，每個時期附上五個主題切面。',
        thematic:'主題敘事', thematicDesc:'挑一條主題線索，看它如何貫穿每個時代。',
        events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', chron:'統治者與大事', power:'誰掌權', turn:'轉折', stagesOpen:'展開全部', stagesClose:'收合全部', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期', now:'至今',
+       ptFarL:'極左', ptL:'左派', ptC:'中間', ptR:'右派', ptFarR:'極右', ptRoots:'前身與演變', ptLeaders:'代表人物', ptPres:'出身的總統', ptNow:'現況', ptHist:'歷史政黨', ptSpec:'政治光譜（點選政黨看介紹）',
        follow:'沿這條主題讀下去', periods:'個時期', c:'約 ',
        cities:'城市地圖', citiesDesc:'點選地圖上的城市，看它的歷史與旅遊時值得看的地方。', cityTl:'城市年表', citySee:'旅遊時看這些', cityMap:'城市地圖', cityNone:'這個國家的城市還在整理中。' },
   en:{ tab:'Countries', head:'Country Histories', sub:'Pick a country and read its history along two axes: time and theme.',
        more:'More countries coming', linear:'Linear', linearDesc:'Read period by period, each with five thematic facets.',
        thematic:'Thematic', thematicDesc:'Follow one theme as it runs through every period.',
        events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', chron:'Rulers and key events', power:'Who held power', turn:'Turning point', stagesOpen:'Expand all', stagesClose:'Collapse all', seeWorld:'See in the world timeline', toPeriod:'Back to this period', now:'present',
+       ptFarL:'Far left', ptL:'Left', ptC:'Centre', ptR:'Right', ptFarR:'Far right', ptRoots:'Origins and lineage', ptLeaders:'Key figures', ptPres:'Presidents', ptNow:'Today', ptHist:'Historical party', ptSpec:'The political spectrum (tap a party to read about it)',
        follow:'Follow this theme', periods:'periods', c:'c. ',
        cities:'City map', citiesDesc:'Tap a city on the map to read its history and what to see when you visit.', cityTl:'City timeline', citySee:'What to see', cityMap:'City map', cityNone:'Cities for this country are on the way.' },
   fr:{ tab:'Par pays', head:'Histoires nationales', sub:'Choisissez un pays et lisez son histoire selon deux axes : le temps et les thèmes.',
        more:'D’autres pays à venir', linear:'Récit linéaire', linearDesc:'Lire période par période, chacune avec cinq angles thématiques.',
        thematic:'Récit thématique', thematicDesc:'Suivre un thème à travers toutes les périodes.',
        events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', chron:'Souverains et événements clés', power:'Qui détient le pouvoir', turn:'Tournant', stagesOpen:'Tout déplier', stagesClose:'Tout replier', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période', now:'aujourd’hui',
+       ptFarL:'Extrême gauche', ptL:'Gauche', ptC:'Centre', ptR:'Droite', ptFarR:'Extrême droite', ptRoots:'Origines et filiation', ptLeaders:'Figures', ptPres:'Présidents issus du parti', ptNow:'Aujourd’hui', ptHist:'Parti historique', ptSpec:'L’échiquier politique (touchez un parti pour le découvrir)',
        follow:'Suivre ce thème', periods:'périodes', c:'v. ',
        cities:'Carte des villes', citiesDesc:'Touchez une ville sur la carte pour lire son histoire et ce qu’il faut y voir.', cityTl:'Chronologie de la ville', citySee:'À voir sur place', cityMap:'Carte des villes', cityNone:'Les villes de ce pays arrivent bientôt.' },
 };
@@ -1814,6 +1817,38 @@ function cxChron(p) {
       }).join('') + '</ul>';
 }
 
+/* political parties of one period: a left-right spectrum with a dot per
+   party (staggered into rows so labels do not collide), then a card each */
+function cxParties(pid) {
+  const d = typeof CX_PARTIES !== 'undefined' && CX_PARTIES[cx.country];
+  if (!d || d.period !== pid) return '';
+  const list = [...d.list].sort((a, b) => a.pos - b.pos);
+  const x = p => (p.pos + 3) / 6 * 100;
+  const rows = [];
+  const dots = list.map(p => {
+    let r = rows.findIndex(last => x(p) - last > 13);
+    if (r < 0) { r = rows.length; rows.push(0); }
+    rows[r] = x(p);
+    return '<button class="cx-pt-dot' + (p.hist ? ' hist' : '') + '" style="left:' + x(p).toFixed(1) + '%;top:' + (r * 30) + 'px;--pc:' + p.color + '"'
+      + ' onclick="document.getElementById(\'cx-pt-' + p.id + '\').scrollIntoView({behavior:\'smooth\',block:\'center\'})" title="' + T(p.name) + '">' + p.abbr + '</button>';
+  }).join('');
+  const axis = ['ptFarL', 'ptL', 'ptC', 'ptR', 'ptFarR'].map(k => '<span>' + cxU(k) + '</span>').join('');
+  const row = (k, v) => v ? '<dt>' + cxU(k) + '</dt><dd>' + T(v) + '</dd>' : '';
+  const cards = list.map(p =>
+    '<article class="cx-pt' + (p.hist ? ' hist' : '') + '" id="cx-pt-' + p.id + '" style="--pc:' + p.color + '">'
+    + '<header><span class="cx-pt-abbr">' + p.abbr + '</span><div><h4>' + T(p.name) + '</h4>'
+    + '<div class="cx-pt-meta">' + p.years + ' · ' + T(p.lean) + (p.hist ? ' · ' + cxU('ptHist') : '') + '</div></div></header>'
+    + '<p>' + T(p.text) + '</p>'
+    + '<dl>' + row('ptRoots', p.roots) + row('ptLeaders', p.leaders) + row('ptPres', p.pres) + row('ptNow', p.now) + '</dl>'
+    + '</article>').join('');
+  return '<div class="cx-label">' + T(d.title) + '</div>'
+    + '<p class="cx-pt-intro">' + T(d.intro) + '</p>'
+    + '<div class="cx-pt-spec-l">' + cxU('ptSpec') + '</div>'
+    + '<div class="cx-pt-spec"><div class="cx-pt-dots" style="height:' + (rows.length * 30 + 6) + 'px">' + dots + '</div>'
+    + '<div class="cx-pt-bar"></div><div class="cx-pt-axis">' + axis + '</div></div>'
+    + '<div class="cx-pt-grid">' + cards + '</div>';
+}
+
 /* little-known facts, each tagged with the place where you can still see the thing */
 function cxTrivia(pid, themeId) {
   const all = ((typeof CX_TRIVIA !== 'undefined' && CX_TRIVIA[cx.country]) || {})[pid] || [];
@@ -1898,6 +1933,7 @@ function cxLinear(P) {
     + '<p class="cx-sum">' + T(p.summary) + '</p>'
     + cxStages(p.id)
     + cxChron(p)
+    + cxParties(p.id)
     + '<div class="cx-label">' + cxU('facets') + '</div>'
     + '<div class="cx-facets">' + cxThemes().map(t =>
         '<div class="cx-facet" style="--tc:' + t.color + '">'
