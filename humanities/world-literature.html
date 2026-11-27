@@ -120,6 +120,24 @@ h1 em { color: var(--gold-hi); }
 .wk .y { color: var(--muted); font-size: 11px; margin-left: 6px; }
 #none { display: none; text-align: center; color: var(--muted); padding: 48px 0; font-style: italic; }
 
+/* 法國文學 */
+#fr-list { position: relative; max-width: 920px; margin: 0 auto; padding-left: 26px; }
+#fr-list::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--gold-lo), rgba(201,168,92,0.05)); }
+.fr-era { position: relative; margin-bottom: 34px; }
+.fr-era::before { content: ''; position: absolute; left: -25px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px var(--bg); }
+.fr-yrs { font-size: 12px; color: var(--gold); font-weight: 800; letter-spacing: .1em; }
+.fr-name { font-family: 'Noto Serif TC', serif; font-size: 21px; font-weight: 700; color: var(--cream); margin-top: 2px; }
+.fr-desc { font-size: 13.5px; line-height: 1.85; color: var(--cream2); margin-top: 8px; }
+.fr-authors { display: grid; gap: 10px; margin-top: 14px; }
+.fr-au { padding: 14px 16px; border-radius: 14px; background: var(--panel); border: 1px solid var(--panel-bd); }
+.fr-au-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.fr-au-name { font-family: 'Noto Serif TC', serif; font-size: 17px; font-weight: 700; color: var(--gold-hi); background: none; border: none; cursor: pointer; padding: 0; text-align: left; }
+.fr-au-name:hover { text-decoration: underline; }
+.fr-au-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 15px; }
+.fr-au-yrs { margin-left: auto; font-size: 12px; color: var(--cream2); font-weight: 700; }
+.fr-au-note { font-size: 13px; color: var(--cream2); margin-top: 4px; line-height: 1.7; }
+.fr-au .au-works { margin-top: 10px; }
+
 /* 入門書單 */
 #reading-list { display: grid; gap: 14px; max-width: 860px; margin: 0 auto; }
 .rd { display: grid; grid-template-columns: 48px 1fr; gap: 14px; padding: 18px 20px; border-radius: 16px; background: var(--panel); border: 1px solid var(--panel-bd);
@@ -166,11 +184,13 @@ footer { text-align: center; margin-top: 60px; font-family: 'Cormorant SC', seri
   <nav id="tabs">
     <button data-v="movements" onclick="showView('movements')"></button>
     <button data-v="authors" onclick="showView('authors')"></button>
+    <button data-v="france" onclick="showView('france')"></button>
     <button data-v="reading" onclick="showView('reading')"></button>
   </nav>
 
   <section id="view-movements" class="view"></section>
   <section id="view-authors" class="view"></section>
+  <section id="view-france" class="view"></section>
   <section id="view-reading" class="view"></section>
 
   <footer id="footer"></footer>
@@ -187,26 +207,27 @@ footer { text-align: center; margin-top: 60px; font-family: 'Cormorant SC', seri
 <script src="world-literature-authors-1.js"></script>
 <script src="world-literature-authors-2.js"></script>
 <script src="world-literature-authors-3.js"></script>
+<script src="world-literature-authors-4.js"></script>
 <script>
 var LANG = 'zh';
 var LI = { zh: 0, en: 1, fr: 2 };
 var UI = {
-  zh: { eyebrow:'個人知識庫 · 文學卷', subtitle:'從荷馬到村上春樹：世界文學的流派、作家與名著，<br>讀懂每位作家的生平、文風與代表作。',
-        stats:'{m} 個流派 · {a} 位作家 · {w} 部作品', tabMv:'流派年表', tabAu:'作家', tabRd:'入門書單',
+  zh: { eyebrow:'個人知識庫 · 文學卷', subtitle:'從荷馬到村上春樹：世界文學的流派、作家與名著，<br>讀懂每位作家的生平、文風與代表作，並特別走過法國文學的千年。',
+        stats:'{m} 個流派 · {a} 位作家 · {w} 部作品', tabMv:'流派年表', tabAu:'作家', tabRd:'入門書單', tabFr:'法國文學', frSub:'從中世紀的騎士傳奇到當代的諾貝爾獎得主，依時期走過法語文學的千年。也收錄以法語寫作、生於他國的盧梭與貝克特。點作家名字看完整介紹，點作品看簡介。',
         mvSub:'依時間排列的文學流派與時代，點作家名字可跳到他的介紹。', all:'全部',
         auSub:'生平、文風與代表作；可用作家或作品名稱搜尋，點作品看簡介。', search:'搜尋作家、流派或作品…',
         worksHit:'符合的作品', none:'找不到符合的作家或作品。', styleLb:'文風與特色', bioLb:'生平',
         rdSub:'第一次讀世界文學？從這十本開始，篇幅與難度都適合入門。', wiki:'在維基百科查看', toAuthor:'看作家介紹',
         footer:'© 2026 個人知識庫 · LITTERAE MUNDI · 世界文學圖譜', title:'世界文學 | Litterae Mundi' },
   en: { eyebrow:'Personal Library · Literature', subtitle:'From Homer to Murakami: the movements, writers and masterpieces of world literature,<br>with each author’s life, style and key works.',
-        stats:'{m} movements · {a} authors · {w} works', tabMv:'Movements', tabAu:'Authors', tabRd:'Reading List',
+        stats:'{m} movements · {a} authors · {w} works', tabMv:'Movements', tabAu:'Authors', tabRd:'Reading List', tabFr:'French Literature', frSub:'From medieval romance to today’s Nobel laureates, a thousand years of literature in French, period by period, including Rousseau and Beckett, born elsewhere but writing in French. Click a name for the full profile, a work for its synopsis.',
         mvSub:'Literary movements and ages in chronological order; click a name to jump to the author.', all:'All',
         auSub:'Lives, styles and key works; search by author or title, and click a work for a synopsis.', search:'Search authors, movements or works…',
         worksHit:'Matching works', none:'No authors or works match your search.', styleLb:'Style & signature', bioLb:'Life',
         rdSub:'New to world literature? Start with these ten books, all approachable in length and difficulty.', wiki:'View on Wikipedia', toAuthor:'About the author',
         footer:'© 2026 Personal Library · Litterae Mundi · Atlas of World Literature', title:'World Literature | Litterae Mundi' },
   fr: { eyebrow:'Bibliothèque personnelle · Littérature', subtitle:'D’Homère à Murakami : mouvements, écrivains et chefs-d’œuvre de la littérature mondiale,<br>avec la vie, le style et les œuvres majeures de chaque auteur.',
-        stats:'{m} mouvements · {a} auteurs · {w} œuvres', tabMv:'Mouvements', tabAu:'Auteurs', tabRd:'Premières lectures',
+        stats:'{m} mouvements · {a} auteurs · {w} œuvres', tabMv:'Mouvements', tabAu:'Auteurs', tabRd:'Premières lectures', tabFr:'Lettres françaises', frSub:'Du roman courtois aux Nobel d’aujourd’hui, mille ans de littérature de langue française, époque par époque, avec Rousseau et Beckett, nés ailleurs mais écrivant en français. Cliquez un nom pour la fiche complète, une œuvre pour son résumé.',
         mvSub:'Mouvements et époques littéraires par ordre chronologique ; cliquez un nom pour rejoindre l’auteur.', all:'Tous',
         auSub:'Vies, styles et œuvres majeures ; recherchez par auteur ou par titre, cliquez une œuvre pour son résumé.', search:'Rechercher auteurs, mouvements ou œuvres…',
         worksHit:'Œuvres correspondantes', none:'Aucun auteur ni aucune œuvre ne correspond à votre recherche.', styleLb:'Style et signature', bioLb:'Vie',
@@ -322,6 +343,26 @@ function filterAuthors(q) {
   document.getElementById('none').style.display = any ? 'none' : 'block';
 }
 
+/* ── 法國文學 ── */
+function renderFrance() {
+  var html = '<div class="sec-head"><h2>' + ui('tabFr') + '</h2><p>' + ui('frSub') + '</p></div><div id="fr-list">';
+  LIT_FRANCE.forEach(function (era) {
+    html += '<section class="fr-era" style="--c:' + era.color + '"><div class="fr-yrs">' + T(era.yrs) + '</div>'
+      + '<div class="fr-name">' + T(era.name) + '</div><p class="fr-desc">' + T(era.desc) + '</p><div class="fr-authors">'
+      + era.authors.map(function (id) {
+          var a = AU[id]; if (!a) return '';
+          var sub = auSub(a);
+          return '<div class="fr-au"><div class="fr-au-top"><button class="fr-au-name" onclick="goAuthor(\'' + a.id + '\')">' + auName(a) + '</button>'
+            + (sub ? '<span class="fr-au-sub">' + sub + '</span>' : '') + '<span class="fr-au-yrs">' + T(a.years) + '</span></div>'
+            + '<div class="fr-au-note">' + T(a.note) + '</div><div class="au-works">'
+            + a.works.map(function (w, wi) {
+                return '<button class="wk" onclick="openWork(\'' + a.id + '\',' + wi + ')">' + qt(T(w[0])) + '<span class="y">' + T(w[1]) + '</span></button>';
+              }).join('') + '</div></div>';
+        }).join('') + '</div></section>';
+  });
+  document.getElementById('view-france').innerHTML = html + '</div>';
+}
+
 /* ── 入門書單 ── */
 function renderReading() {
   var html = '<div class="sec-head"><h2>' + ui('tabRd') + '</h2><p>' + ui('rdSub') + '</p></div><div id="reading-list">';
@@ -389,9 +430,10 @@ function setLanguage(lang) {
   document.getElementById('footer').textContent = ui('footer');
   document.querySelector('#tabs [data-v="movements"]').textContent = ui('tabMv');
   document.querySelector('#tabs [data-v="authors"]').textContent = ui('tabAu');
+  document.querySelector('#tabs [data-v="france"]').textContent = ui('tabFr');
   document.querySelector('#tabs [data-v="reading"]').textContent = ui('tabRd');
   var q = document.getElementById('search') ? document.getElementById('search').value : '';
-  renderMovements(); renderAuthors(); renderReading();
+  renderMovements(); renderAuthors(); renderFrance(); renderReading();
   if (q) { document.getElementById('search').value = q; filterAuthors(q); }
   if (document.getElementById('modal').classList.contains('open')) closeModal();
 }
@@ -400,7 +442,7 @@ function setLanguage(lang) {
   var saved = 'zh', v = 'movements';
   try { saved = localStorage.getItem('kb_lang') || 'zh'; v = localStorage.getItem('kb_lit_view') || 'movements'; } catch (e) {}
   setLanguage(UI[saved] ? saved : 'zh');
-  showView(['movements', 'authors', 'reading'].indexOf(v) >= 0 ? v : 'movements');
+  showView(['movements', 'authors', 'france', 'reading'].indexOf(v) >= 0 ? v : 'movements');
 })();
 </script>
 </body>
