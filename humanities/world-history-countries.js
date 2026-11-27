@@ -364,7 +364,13 @@ const COUNTRIES = [
       { y:1981, zh:'密特朗當選總統，廢除死刑', en:'Mitterrand elected president; death penalty abolished', fr:'Élection de François Mitterrand ; abolition de la peine de mort' },
       { y:1992, zh:'公投通過《馬斯垂克條約》', en:'Referendum approves the Maastricht Treaty', fr:'Le référendum approuve le traité de Maastricht' },
       { y:2002, zh:'歐元紙幣與硬幣開始流通', en:'Euro notes and coins enter circulation', fr:'Mise en circulation des billets et pièces en euros' },
+      { y:1973, zh:'第一次石油危機，輝煌三十年結束', en:'The first oil shock ends the Thirty Glorious Years', fr:'Le premier choc pétrolier met fin aux Trente Glorieuses' },
+      { y:1975, zh:'《韋伊法》通過，墮胎合法化', en:'The Veil law legalises abortion', fr:'La loi Veil légalise l’IVG' },
+      { y:2005, zh:'公投否決歐盟憲法條約', en:'Voters reject the European constitutional treaty', fr:'Le « non » l’emporte au référendum sur la Constitution européenne' },
+      { y:2008, zh:'修憲強化國會權力；全球金融危機', en:'A constitutional reform strengthens parliament; the global financial crisis', fr:'Révision constitutionnelle renforçant le Parlement ; crise financière mondiale' },
       { y:2015, zh:'巴黎恐怖攻擊', en:'Terrorist attacks in Paris', fr:'Attentats de Paris' },
+      { y:2017, zh:'三十九歲的馬克宏當選，成為最年輕的總統', en:'Macron is elected at thirty-nine, the youngest president', fr:'Emmanuel Macron est élu à trente-neuf ans, plus jeune président de la Vᵉ' },
+      { y:2024, zh:'解散國會後出現三派僵持的懸峙國會；巴黎奧運', en:'A snap election produces a deadlocked parliament; the Paris Olympics', fr:'La dissolution produit une Assemblée sans majorité ; Jeux olympiques de Paris' },
     ],
     themes:{
       state:{ zh:'1962年起總統由人民直選，主導外交與國防。左右兩派曾多次「共治」，2017年馬克宏以中間路線打破傳統的左右格局。',
@@ -1670,19 +1676,19 @@ const CX_UI = {
   zh:{ tab:'國別史', head:'國別史', sub:'挑一個國家，沿著「時代」與「主題」兩條軸線閱讀它的歷史。',
        more:'更多國家陸續加入', linear:'線性敘事', linearDesc:'依時代順序閱讀，每個時期附上五個主題切面。',
        thematic:'主題敘事', thematicDesc:'挑一條主題線索，看它如何貫穿每個時代。',
-       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', chron:'統治者與大事', power:'誰掌權', turn:'轉折', stagesOpen:'展開全部', stagesClose:'收合全部', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期',
+       events:'關鍵事件', facets:'主題切面', trivia:'小知識．在哪裡看得到', where:'在地圖上查看', rulers:'統治者與領導人', chron:'統治者與大事', power:'誰掌權', turn:'轉折', stagesOpen:'展開全部', stagesClose:'收合全部', seeWorld:'在世界時間軸中查看', toPeriod:'回到這個時期', now:'至今',
        follow:'沿這條主題讀下去', periods:'個時期', c:'約 ',
        cities:'城市地圖', citiesDesc:'點選地圖上的城市，看它的歷史與旅遊時值得看的地方。', cityTl:'城市年表', citySee:'旅遊時看這些', cityMap:'城市地圖', cityNone:'這個國家的城市還在整理中。' },
   en:{ tab:'Countries', head:'Country Histories', sub:'Pick a country and read its history along two axes: time and theme.',
        more:'More countries coming', linear:'Linear', linearDesc:'Read period by period, each with five thematic facets.',
        thematic:'Thematic', thematicDesc:'Follow one theme as it runs through every period.',
-       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', chron:'Rulers and key events', power:'Who held power', turn:'Turning point', stagesOpen:'Expand all', stagesClose:'Collapse all', seeWorld:'See in the world timeline', toPeriod:'Back to this period',
+       events:'Key events', facets:'Thematic facets', trivia:'Did you know? Where to see it', where:'Open on the map', rulers:'Rulers and leaders', chron:'Rulers and key events', power:'Who held power', turn:'Turning point', stagesOpen:'Expand all', stagesClose:'Collapse all', seeWorld:'See in the world timeline', toPeriod:'Back to this period', now:'present',
        follow:'Follow this theme', periods:'periods', c:'c. ',
        cities:'City map', citiesDesc:'Tap a city on the map to read its history and what to see when you visit.', cityTl:'City timeline', citySee:'What to see', cityMap:'City map', cityNone:'Cities for this country are on the way.' },
   fr:{ tab:'Par pays', head:'Histoires nationales', sub:'Choisissez un pays et lisez son histoire selon deux axes : le temps et les thèmes.',
        more:'D’autres pays à venir', linear:'Récit linéaire', linearDesc:'Lire période par période, chacune avec cinq angles thématiques.',
        thematic:'Récit thématique', thematicDesc:'Suivre un thème à travers toutes les périodes.',
-       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', chron:'Souverains et événements clés', power:'Qui détient le pouvoir', turn:'Tournant', stagesOpen:'Tout déplier', stagesClose:'Tout replier', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période',
+       events:'Événements clés', facets:'Angles thématiques', trivia:'Le saviez-vous ? Où le voir', where:'Voir sur la carte', rulers:'Souverains et dirigeants', chron:'Souverains et événements clés', power:'Qui détient le pouvoir', turn:'Tournant', stagesOpen:'Tout déplier', stagesClose:'Tout replier', seeWorld:'Voir dans la frise mondiale', toPeriod:'Revenir à cette période', now:'aujourd’hui',
        follow:'Suivre ce thème', periods:'périodes', c:'v. ',
        cities:'Carte des villes', citiesDesc:'Touchez une ville sur la carte pour lire son histoire et ce qu’il faut y voir.', cityTl:'Chronologie de la ville', citySee:'À voir sur place', cityMap:'Carte des villes', cityNone:'Les villes de ce pays arrivent bientôt.' },
 };
@@ -1740,7 +1746,7 @@ function cxStages(pid) {
     + data.list.map((s, i) =>
         '<details class="cx-stage"><summary><span class="cx-st-n">' + (i + 1) + '</span>'
         + '<span class="cx-st-t">' + T(s.name) + '</span>'
-        + '<span class="cx-st-y">' + cxDate(s.a) + ' – ' + cxDate(s.b) + '</span></summary>'
+        + '<span class="cx-st-y">' + cxDate(s.a) + ' – ' + (s.b ? cxDate(s.b) : cxU('now')) + '</span></summary>'
         + '<div class="cx-st-body">'
         + '<div class="cx-st-power"><b>' + cxU('power') + '</b>' + T(s.power) + '</div>'
         + '<p>' + T(s.summary) + '</p>'
@@ -1784,7 +1790,7 @@ function cxChron(p) {
   const L = ['zh', 'en', 'fr'].indexOf(LANG) < 0 ? 0 : ['zh', 'en', 'fr'].indexOf(LANG);
   const evLi = e => '<li><span class="cx-ev-y">' + cxYear(e.y, e.c) + '</span><span>' + (e[LANG] || e.zh) + '</span></li>';
   const loose = [];
-  p.events.forEach(e => {
+  [...p.events].sort((x, y) => x.y - y.y).forEach(e => {
     let host = e.by ? rulers.find(x => x.r[2][1] === e.by) || null : null;
     if (!host) {
       const inReign = rulers.filter(x => e.y >= x.r[0] && e.y <= x.r[1]);
