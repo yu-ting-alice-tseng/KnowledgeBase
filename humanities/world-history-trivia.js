@@ -486,4 +486,139 @@ berlinrepublic: [
 ],
 
 },
+italy: {
+
+origins: [
+  { theme:'society', icon:'🕳️', q:'Cloaca Maxima Roma',
+    title:{ zh:'馬克西姆下水道：兩千五百年後還在排水', en:'The Cloaca Maxima, still draining after 2,500 years', fr:'La Cloaca Maxima, qui draine encore après 2 500 ans' },
+    text:{ zh:'羅馬最早的大排水溝，傳說在前六世紀由伊特拉斯坎國王開挖，用來排乾羅馬廣場一帶的沼澤。後來加蓋成地下水道，部分段落至今仍在把雨水排入台伯河。',
+      en:'Rome’s first great drain, said to have been dug under its Etruscan kings in the sixth century BC to dry out the marsh where the Forum would stand. Later vaulted over, parts of it still carry rainwater into the Tiber today.',
+      fr:'Le premier grand égout de Rome, creusé selon la tradition sous les rois étrusques au VIᵉ siècle av. J.-C. pour assécher le marais du futur Forum. Voûté par la suite, il évacue encore en partie les eaux de pluie vers le Tibre.' },
+    at:{ zh:'出水口位於羅馬真理之口廣場附近、帕拉蒂諾橋下方的台伯河岸', en:'Its outlet can be seen on the Tiber embankment below the Ponte Palatino, near the Bocca della Verità', fr:'Son débouché est visible sur la berge du Tibre sous le Ponte Palatino, près de la Bouche de la Vérité' } },
+  { theme:'culture', icon:'🎨', q:'Necropoli di Tarquinia',
+    title:{ zh:'塔爾奎尼亞的彩繪墓：伊特拉斯坎人的宴會', en:'The painted tombs of Tarquinia: Etruscan banquets', fr:'Les tombes peintes de Tarquinia : les banquets étrusques' },
+    text:{ zh:'伊特拉斯坎人沒有留下多少可以讀懂的文字，但在地下墓室的牆上畫滿了宴會、音樂、舞蹈與競技，讓我們看到他們的生活。男女一起躺著用餐，讓希臘人十分驚訝。',
+      en:'The Etruscans left little writing we can read, but they covered the walls of their underground tombs with banquets, music, dance and games that show us their lives. Men and women reclined together at meals, to the astonishment of the Greeks.',
+      fr:'Les Étrusques ont laissé peu de textes lisibles, mais ils ont couvert les murs de leurs tombes de banquets, de musique, de danses et de jeux qui nous montrent leur vie. Hommes et femmes y banquettent allongés ensemble, au grand étonnement des Grecs.' },
+    at:{ zh:'Necropoli dei Monterozzi，塔爾奎尼亞（UNESCO 世界遺產），從羅馬搭火車約一個半小時', en:'Necropolis of Monterozzi, Tarquinia (UNESCO World Heritage), about 90 minutes by train from Rome', fr:'Nécropole de Monterozzi, Tarquinia (patrimoine mondial de l’UNESCO), à environ 1 h 30 de Rome en train' } },
+],
+
+empire: [
+  { theme:'culture', icon:'🏛️', q:'Pantheon Roma',
+    title:{ zh:'萬神殿：兩千年來最大的無鋼筋混凝土圓頂', en:'The Pantheon: the largest unreinforced concrete dome for two thousand years', fr:'Le Panthéon : la plus grande coupole en béton non armé depuis deux mille ans' },
+    text:{ zh:'哈德良時代重建的萬神殿，圓頂直徑約 43 公尺，至今仍是世界最大的無鋼筋混凝土圓頂。頂端的圓孔直徑約 9 公尺，沒有玻璃，下雨時雨水會直接落進殿內，再由地板上的排水孔流走。',
+      en:'Rebuilt under Hadrian, the Pantheon’s dome, about 43 m across, is still the largest unreinforced concrete dome in the world. The oculus at the top, some 9 m wide, is open to the sky: rain falls straight in and drains away through holes in the floor.',
+      fr:'Reconstruit sous Hadrien, le Panthéon possède une coupole d’environ 43 m de diamètre, toujours la plus grande coupole en béton non armé du monde. L’oculus, large d’environ 9 m, est ouvert : la pluie tombe à l’intérieur et s’écoule par des trous dans le sol.' },
+    at:{ zh:'Pantheon，羅馬圓形廣場；2023 年起需購票入場', en:'Pantheon, Piazza della Rotonda, Rome; tickets required since 2023', fr:'Panthéon, piazza della Rotonda, Rome ; entrée payante depuis 2023' } },
+  { theme:'society', icon:'🚽', q:'Ostia Antica',
+    title:{ zh:'奧斯提亞古城：羅馬人並排坐著上的公共廁所', en:'Ostia Antica, where Romans sat side by side in the public latrines', fr:'Ostia Antica, où les Romains s’asseyaient côte à côte dans les latrines' },
+    text:{ zh:'羅馬的外港奧斯提亞後來被淤沙掩埋，因此保存得很好：有多層公寓、酒館、麵包店與商會的馬賽克招牌。公共廁所是一長排並排的大理石座位，沒有隔間，下方有流水沖走穢物。',
+      en:'Rome’s port of Ostia was later buried by silt and so survives remarkably well: multi-storey apartment blocks, taverns, bakeries and the mosaic signs of trading guilds. The public latrine is a long row of marble seats with no partitions and running water below.',
+      fr:'Ostie, le port de Rome, ensablé par la suite, est remarquablement conservé : immeubles à étages, tavernes, boulangeries et mosaïques des corporations marchandes. Les latrines publiques alignent des sièges de marbre sans cloisons, au-dessus d’une eau courante.' },
+    at:{ zh:'Parco archeologico di Ostia Antica，從羅馬市中心搭火車約四十分鐘', en:'Archaeological Park of Ostia Antica, about forty minutes by train from central Rome', fr:'Parc archéologique d’Ostia Antica, à une quarantaine de minutes de Rome en train' } },
+],
+
+earlymedieval: [
+  { theme:'state', icon:'👑', q:'Duomo di Monza',
+    title:{ zh:'鐵王冠：據說嵌著一根十字架的釘子', en:'The Iron Crown, said to hold a nail from the Cross', fr:'La Couronne de fer, qui contiendrait un clou de la Croix' },
+    text:{ zh:'倫巴底國王的鐵王冠外表是黃金與寶石，內側有一圈細鐵環，傳說是用耶穌受難的釘子打成的。中世紀多位國王以它加冕為「義大利國王」，1805 年拿破崙戴上它時說：「上帝把它給了我，誰碰它誰倒楣。」',
+      en:'The Iron Crown of the Lombards is gold and jewels on the outside, with a thin iron band inside said to be beaten from a nail of the Crucifixion. Many medieval kings were crowned King of Italy with it, and in 1805 Napoleon put it on declaring, “God gave it to me, beware whoever touches it.”',
+      fr:'La Couronne de fer des Lombards est d’or et de pierreries, avec à l’intérieur un mince cercle de fer qui serait forgé dans un clou de la Crucifixion. De nombreux rois médiévaux sont couronnés rois d’Italie avec elle, et en 1805 Napoléon la pose sur sa tête en déclarant : « Dieu me l’a donnée, gare à qui la touche. »' },
+    at:{ zh:'Duomo di Monza 的泰奧德琳達禮拜堂，米蘭近郊', en:'Theodelinda Chapel, Monza Cathedral, near Milan', fr:'Chapelle de Théodelinde, cathédrale de Monza, près de Milan' } },
+],
+
+communes: [
+  { theme:'culture', icon:'🗼', q:'Torre di Pisa',
+    title:{ zh:'比薩斜塔：蓋到第三層就開始歪了', en:'The Leaning Tower of Pisa began to tilt at the third storey', fr:'La tour de Pise penchait dès le troisième étage' },
+    text:{ zh:'比薩斜塔在 1173 年動工，蓋到第三層時就因為地基太軟而傾斜，工程因戰爭停了將近一百年，反而讓土壤有時間壓實，塔才沒倒。後來的工匠把上層刻意蓋得往反方向彎，所以塔其實是微微彎曲的。2001 年完成加固後，傾斜度減少了約四十公分。',
+      en:'Work on the tower began in 1173, and by the third storey it was already leaning on soft ground. Wars halted building for nearly a century, giving the soil time to settle, which probably saved it. Later builders angled the upper floors back the other way, so the tower is actually slightly curved. Stabilisation work completed in 2001 reduced the lean by about 40 cm.',
+      fr:'La construction commence en 1173, et dès le troisième étage la tour penche sur un sol trop meuble. Les guerres interrompent les travaux près d’un siècle, laissant le sol se tasser, ce qui l’a sans doute sauvée. Les bâtisseurs suivants inclinent les étages supérieurs dans l’autre sens : la tour est en fait légèrement courbe. Les travaux achevés en 2001 ont réduit l’inclinaison d’environ 40 cm.' },
+    at:{ zh:'Piazza dei Miracoli，比薩；登塔需預約時段票', en:'Piazza dei Miracoli, Pisa; climbing the tower requires a timed ticket', fr:'Piazza dei Miracoli, Pise ; montée à la tour sur créneau réservé' } },
+  { theme:'society', icon:'🏙️', q:'San Gimignano',
+    title:{ zh:'聖吉米尼亞諾：中世紀的「曼哈頓」', en:'San Gimignano, the “Manhattan” of the Middle Ages', fr:'San Gimignano, le « Manhattan » du Moyen Âge' },
+    text:{ zh:'中世紀的富裕家族互相較勁，在城裡蓋起一座比一座高的塔樓，既能防禦，也能炫耀財富。全盛時期小城裡有七十多座塔，今天還留下十四座。',
+      en:'Rich medieval families competed to build ever taller towers, for defence and to show off their wealth. At its peak this small town had more than seventy towers; fourteen still stand.',
+      fr:'Les riches familles médiévales rivalisent en construisant des tours toujours plus hautes, pour se défendre et afficher leur fortune. À son apogée, la petite ville compte plus de soixante-dix tours ; quatorze sont encore debout.' },
+    at:{ zh:'San Gimignano 舊城，托斯卡納（UNESCO 世界遺產）', en:'Historic centre of San Gimignano, Tuscany (UNESCO World Heritage)', fr:'Centre historique de San Gimignano, Toscane (patrimoine mondial de l’UNESCO)' } },
+],
+
+renaissance: [
+  { theme:'state', icon:'⚖️', q:'Palazzo Pubblico Siena',
+    title:{ zh:'錫耶納市政廳：好政府與壞政府的寓言', en:'Siena’s town hall: the Allegory of Good and Bad Government', fr:'L’hôtel de ville de Sienne : l’Allégorie du bon et du mauvais gouvernement' },
+    text:{ zh:'1338 至 1339 年，洛倫采蒂在議事廳的牆上畫下好政府與壞政府的寓言：在好政府下，城裡商人做生意、少女跳舞、農民耕田；在壞政府下，城市殘破、田地荒蕪。這是市政官員開會時每天都要看著的提醒。',
+      en:'In 1338 and 1339 Ambrogio Lorenzetti painted the council chamber with allegories of good and bad government: under good government merchants trade, girls dance and farmers till the fields; under bad government the city crumbles and the land lies waste. The magistrates met beneath it every day.',
+      fr:'En 1338 et 1339, Ambrogio Lorenzetti peint dans la salle du conseil les allégories du bon et du mauvais gouvernement : sous le bon, les marchands commercent, les jeunes filles dansent et les paysans labourent ; sous le mauvais, la ville se délabre et les champs sont abandonnés. Les magistrats siégeaient chaque jour sous ces fresques.' },
+    at:{ zh:'Palazzo Pubblico 內的市立博物館，錫耶納田野廣場', en:'Museo Civico in the Palazzo Pubblico, Piazza del Campo, Siena', fr:'Museo Civico du Palazzo Pubblico, piazza del Campo, Sienne' } },
+],
+
+italianwars: [
+  { theme:'world', icon:'🛡️', q:'Vatican City',
+    title:{ zh:'瑞士衛隊：每年 5 月 6 日宣誓', en:'The Swiss Guard swears its oath every 6 May', fr:'La Garde suisse prête serment chaque 6 mai' },
+    text:{ zh:'瑞士衛隊從 1506 年起保護教宗。1527 年 5 月 6 日羅馬之劫時，一百四十七名衛兵為掩護教宗撤到聖天使堡而戰死。今天的新兵每年都在這一天宣誓，紀念他們。',
+      en:'The Swiss Guard has protected the Pope since 1506. On 6 May 1527, during the Sack of Rome, 147 guards died covering the Pope’s escape to Castel Sant’Angelo, and new recruits are sworn in on that date every year in their memory.',
+      fr:'La Garde suisse protège le pape depuis 1506. Le 6 mai 1527, pendant le sac de Rome, 147 gardes meurent en couvrant la fuite du pape vers le château Saint-Ange ; chaque année, les nouvelles recrues prêtent serment ce jour-là en leur mémoire.' },
+    at:{ zh:'梵蒂岡；衛兵站崗處在聖彼得廣場旁的銅門與聖安娜門', en:'Vatican City; guards stand at the Bronze Door and St Anne’s Gate beside St Peter’s Square', fr:'Cité du Vatican ; les gardes sont postés à la Porte de bronze et à la porte Sainte-Anne' } },
+],
+
+spanish: [
+  { theme:'faith', icon:'🔭', q:'Museo Galileo Firenze',
+    title:{ zh:'伽利略的手指被放在展示瓶裡', en:'Galileo’s finger is on display in a glass jar', fr:'Le doigt de Galilée est exposé dans un bocal' },
+    text:{ zh:'伽利略因支持地動說而被判罪，死後起初只能葬在不起眼的地方。1737 年遺體遷入聖十字教堂時，有人取下了他的幾根手指，其中一根中指至今陳列在博物館裡，旁邊是他親手製作的望遠鏡。',
+      en:'Condemned for teaching that the Earth moves, Galileo was at first buried in an obscure corner. When his body was moved to Santa Croce in 1737, some fingers were removed, and one middle finger is still displayed in the museum, next to telescopes he made himself.',
+      fr:'Condamné pour avoir soutenu le mouvement de la Terre, Galilée est d’abord inhumé dans un coin discret. Lors du transfert de son corps à Santa Croce en 1737, on prélève quelques doigts ; un majeur est toujours exposé au musée, à côté de lunettes qu’il a fabriquées.' },
+    at:{ zh:'Museo Galileo，佛羅倫斯烏菲茲美術館旁', en:'Museo Galileo, Florence, beside the Uffizi', fr:'Museo Galileo, Florence, à côté des Offices' } },
+],
+
+risorgimento: [
+  { theme:'state', icon:'🏝️', q:'Compendio Garibaldino Caprera',
+    title:{ zh:'卡普雷拉島：英雄退休去種田', en:'Caprera, where the hero retired to farm', fr:'Caprera, où le héros se retira pour cultiver la terre' },
+    text:{ zh:'加里波底征服南義後拒絕所有封賞，帶著一袋種子回到薩丁尼亞外海的小島卡普雷拉。他在島上蓋了白色的房子，種地、養動物，晚年就在這裡去世並安葬。',
+      en:'After conquering the south Garibaldi refused all rewards and went home with a sack of seed to the little island of Caprera off Sardinia. He built a white house, farmed and kept animals, and died and was buried there.',
+      fr:'Après la conquête du Sud, Garibaldi refuse toute récompense et rentre avec un sac de semences sur la petite île de Caprera, au large de la Sardaigne. Il y bâtit une maison blanche, cultive et élève des bêtes, et y meurt et y est enterré.' },
+    at:{ zh:'Compendio Garibaldino，薩丁尼亞的卡普雷拉島（經馬達萊納島由橋相連）', en:'Compendio Garibaldino, Caprera, Sardinia (linked by bridge to La Maddalena)', fr:'Compendio Garibaldino, Caprera, Sardaigne (reliée par un pont à La Maddalena)' } },
+],
+
+liberal: [
+  { theme:'society', icon:'🧳', q:'Galata Museo del Mare Genova',
+    title:{ zh:'熱那亞海洋博物館：從移民的角度看義大利', en:'Genoa’s Galata museum: Italy seen through its emigrants', fr:'Le musée Galata de Gênes : l’Italie vue par ses émigrés' },
+    text:{ zh:'數百萬名義大利移民從熱那亞港出發，搭船前往紐約與布宜諾斯艾利斯。博物館的移民展區重建了三等艙與美國艾利斯島的入境檢查，參觀時會拿到一位真實移民的身分。',
+      en:'Millions of Italian emigrants sailed from Genoa for New York and Buenos Aires. The museum’s emigration section recreates steerage and the Ellis Island inspection, and visitors take on the identity of a real emigrant.',
+      fr:'Des millions d’émigrés italiens embarquent à Gênes pour New York et Buenos Aires. La section consacrée à l’émigration reconstitue l’entrepont et le contrôle d’Ellis Island, et chaque visiteur prend l’identité d’un émigré réel.' },
+    at:{ zh:'Galata Museo del Mare，熱那亞舊港', en:'Galata Museo del Mare, Old Port of Genoa', fr:'Galata Museo del Mare, Vieux-Port de Gênes' } },
+],
+
+fascism: [
+  { theme:'culture', icon:'⬜', q:'Palazzo della Civiltà Italiana',
+    title:{ zh:'「方形競技場」：法西斯建築今天是精品總部', en:'The “Square Colosseum”: a fascist building now a fashion headquarters', fr:'Le « Colisée carré » : un bâtiment fasciste devenu siège d’une maison de mode' },
+    text:{ zh:'羅馬南郊的 EUR 新區原本是為 1942 年萬國博覽會建造的，戰爭讓博覽會取消。最有名的「義大利文明宮」有六層、每層九個拱門，外形像方形的競技場，2015 年起成為芬迪的總部。',
+      en:'Rome’s EUR district was built for a 1942 World’s Fair that the war cancelled. Its most famous building, the Palace of Italian Civilisation, has six storeys of nine arches each, like a square Colosseum, and since 2015 has housed Fendi’s headquarters.',
+      fr:'Le quartier de l’EUR, au sud de Rome, est bâti pour une exposition universelle de 1942 annulée par la guerre. Son édifice le plus célèbre, le palais de la Civilisation italienne, aligne six étages de neuf arcades, tel un Colisée carré ; il abrite depuis 2015 le siège de Fendi.' },
+    at:{ zh:'Palazzo della Civiltà Italiana，羅馬 EUR 區（地鐵 B 線）', en:'Palazzo della Civiltà Italiana, EUR district, Rome (Metro line B)', fr:'Palazzo della Civiltà Italiana, quartier de l’EUR, Rome (métro ligne B)' } },
+  { theme:'world', icon:'🕯️', q:'Mausoleo Fosse Ardeatine',
+    title:{ zh:'阿爾德阿汀洞窟：三百三十五個名字', en:'The Ardeatine Caves: 335 names', fr:'Les Fosses ardéatines : 335 noms' },
+    text:{ zh:'1944 年 3 月，抵抗運動在羅馬炸死三十三名德軍，德軍隨即以一換十報復，在城郊的採石洞裡槍殺了三百三十五名平民與囚犯。紀念館內排列著每一位遇難者的墓。',
+      en:'In March 1944 a Resistance bomb in Rome killed 33 German soldiers; in reprisal, ten for one, the Germans shot 335 civilians and prisoners in quarry caves on the edge of the city. Each victim has a tomb in the memorial.',
+      fr:'En mars 1944, une bombe de la Résistance tue 33 soldats allemands à Rome ; en représailles, à raison de dix pour un, les Allemands fusillent 335 civils et prisonniers dans des carrières aux portes de la ville. Chaque victime a sa tombe dans le mémorial.' },
+    at:{ zh:'Mausoleo delle Fosse Ardeatine，羅馬阿庇亞古道附近（免費）', en:'Mausoleo delle Fosse Ardeatine, near the Appian Way, Rome (free)', fr:'Mausolée des Fosses ardéatines, près de la via Appia, Rome (gratuit)' } },
+],
+
+firstrepublic: [
+  { theme:'culture', icon:'🎬', q:'Cinecittà Roma',
+    title:{ zh:'電影城：從墨索里尼的宣傳片廠到《賓漢》', en:'Cinecittà: from Mussolini’s propaganda studio to Ben-Hur', fr:'Cinecittà : du studio de propagande de Mussolini à Ben-Hur' },
+    text:{ zh:'電影城在 1937 年由墨索里尼創立，用來拍宣傳片。戰後它成為「台伯河上的好萊塢」，《賓漢》與費里尼的許多電影都在這裡拍攝。現在部分片廠與佈景開放參觀。',
+      en:'Mussolini opened Cinecittà in 1937 to make propaganda films. After the war it became “Hollywood on the Tiber”, where Ben-Hur and many of Fellini’s films were shot; some studios and sets are now open to visitors.',
+      fr:'Mussolini inaugure Cinecittà en 1937 pour tourner des films de propagande. Après la guerre, elle devient « Hollywood-sur-Tibre », où l’on tourne Ben-Hur et de nombreux films de Fellini ; certains plateaux et décors se visitent aujourd’hui.' },
+    at:{ zh:'Cinecittà Si Mostra，羅馬（地鐵 A 線 Cinecittà 站）', en:'Cinecittà Si Mostra, Rome (Metro line A, Cinecittà station)', fr:'Cinecittà Si Mostra, Rome (métro ligne A, station Cinecittà)' } },
+],
+
+secondrepublic: [
+  { theme:'state', icon:'🌳', q:'Albero Falcone Palermo',
+    title:{ zh:'法爾科內之樹：寫滿紙條的木蘭樹', en:'The Falcone Tree, covered in notes', fr:'L’arbre Falcone, couvert de messages' },
+    text:{ zh:'法官法爾科內遇害後，巴勒莫市民在他家門前的木蘭樹上貼滿紙條、照片與標語，這棵樹從此成為反黑手黨的象徵，每年 5 月 23 日都有大批學生來此紀念。',
+      en:'After Judge Falcone was murdered, people in Palermo covered the magnolia outside his home with notes, photos and slogans. The tree became a symbol of the fight against the Mafia, and every 23 May crowds of students gather there.',
+      fr:'Après l’assassinat du juge Falcone, les Palermitains couvrent le magnolia devant sa maison de messages, de photos et de slogans. L’arbre devient le symbole de la lutte antimafia, et chaque 23 mai des foules d’élèves s’y rassemblent.' },
+    at:{ zh:'Via Notarbartolo 的 Albero Falcone，巴勒莫', en:'Albero Falcone, Via Notarbartolo, Palermo', fr:'Albero Falcone, via Notarbartolo, Palerme' } },
+],
+
+},
 };

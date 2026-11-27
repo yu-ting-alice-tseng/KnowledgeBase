@@ -367,4 +367,102 @@ divided: {
 },
 
 },
+italy: {
+
+risorgimento: {
+  title:{ zh:'從分裂到統一：復興運動的六個階段', en:'From division to unity: the Risorgimento in six stages', fr:'De la division à l’unité : le Risorgimento en six étapes' },
+  list:[
+  { a:'1848-01', b:'1849-08',
+    name:{ zh:'1848 年的春天與失敗', en:'The spring of 1848 and its defeat', fr:'Le printemps de 1848 et son échec' },
+    power:{ zh:'各邦君主與奧地利；革命政府在米蘭、威尼斯與羅馬短暫掌權', en:'The princes and Austria, with revolutionary governments briefly in power in Milan, Venice and Rome', fr:'Les princes et l’Autriche ; des gouvernements révolutionnaires tiennent brièvement Milan, Venise et Rome' },
+    summary:{ zh:'革命從巴勒莫開始，蔓延到整個半島。米蘭市民經過「五日起義」趕走奧地利軍隊，撒丁尼亞國王卡洛·阿爾貝托隨即宣戰，卻在庫斯托札與諾瓦拉兩度戰敗而退位。羅馬趕走教宗，成立由馬志尼與加里波底守衛的羅馬共和國，最後被法軍攻陷；威尼斯在霍亂與砲火中撐到 8 月才投降。',
+      en:'Revolution began in Palermo and spread across the peninsula. Milan drove out the Austrians in the Five Days, and Charles Albert of Sardinia declared war, only to be beaten at Custoza and Novara and abdicate. Rome expelled the Pope and set up a Republic defended by Mazzini and Garibaldi, finally taken by French troops; Venice held out under cholera and bombardment until August.',
+      fr:'La révolution part de Palerme et gagne toute la péninsule. Milan chasse les Autrichiens lors des Cinq Journées, et Charles-Albert de Sardaigne déclare la guerre, mais il est battu à Custoza puis à Novare et abdique. Rome chasse le pape et proclame une République défendue par Mazzini et Garibaldi, finalement prise par les Français ; Venise tient sous le choléra et les bombardements jusqu’en août.' },
+    ev:[
+      ['1848-01-12', ['巴勒莫起義','Rising in Palermo','Insurrection de Palerme']],
+      ['1848-03-18', ['米蘭「五日起義」開始','The Five Days of Milan begin','Début des Cinq Journées de Milan']],
+      ['1848-03-23', ['撒丁尼亞向奧地利宣戰','Sardinia declares war on Austria','La Sardaigne déclare la guerre à l’Autriche']],
+      ['1849-02-09', ['羅馬共和國宣告成立','The Roman Republic is proclaimed','Proclamation de la République romaine']],
+      ['1849-03-23', ['諾瓦拉戰敗，卡洛·阿爾貝托退位','Defeat at Novara; Charles Albert abdicates','Défaite de Novare ; Charles-Albert abdique']],
+      ['1849-07-03', ['法軍進入羅馬','French troops enter Rome','Les troupes françaises entrent dans Rome']],
+      ['1849-08-22', ['威尼斯投降','Venice surrenders','Venise capitule']],
+    ],
+    turn:{ zh:'只有撒丁尼亞保住了憲法，愛國者開始把希望寄託在薩伏依王室身上。', en:'Only Sardinia kept its constitution, and patriots began to pin their hopes on the House of Savoy.', fr:'Seule la Sardaigne conserve sa constitution, et les patriotes commencent à placer leurs espoirs dans la maison de Savoie.' } },
+
+  { a:'1849-08', b:'1859-04',
+    name:{ zh:'加富爾的準備', en:'Cavour prepares', fr:'Cavour prépare le terrain' },
+    power:{ zh:'撒丁尼亞國王維托里奧·埃馬努埃萊二世與首相加富爾', en:'King Victor Emmanuel II of Sardinia and his prime minister Cavour', fr:'Le roi de Sardaigne Victor-Emmanuel II et son président du Conseil Cavour' },
+    summary:{ zh:'加富爾把撒丁尼亞打造成自由派的模範國家，修鐵路、改革財政，接納各地流亡的愛國者。他派兵參加克里米亞戰爭，換得在巴黎和會上提出「義大利問題」；1858 年又與拿破崙三世在普隆比耶爾祕密約定，聯手對付奧地利。',
+      en:'Cavour made Sardinia a model liberal state, building railways, reforming finances and welcoming patriot exiles from everywhere. He sent troops to the Crimean War to win the right to raise the “Italian question” at the Paris peace congress, and in 1858 secretly agreed with Napoleon III at Plombières to take on Austria together.',
+      fr:'Cavour fait de la Sardaigne un modèle d’État libéral : chemins de fer, réforme des finances, accueil des exilés patriotes. Il envoie des troupes en Crimée pour pouvoir soulever la « question italienne » au congrès de Paris, et convient en secret avec Napoléon III, à Plombières en 1858, d’affronter ensemble l’Autriche.' },
+    ev:[
+      ['1852-11-04', ['加富爾出任首相','Cavour becomes prime minister','Cavour devient président du Conseil']],
+      ['1855-01-26', ['撒丁尼亞加入克里米亞戰爭','Sardinia joins the Crimean War','La Sardaigne entre dans la guerre de Crimée']],
+      ['1858-01-14', ['奧爾西尼刺殺拿破崙三世未遂','Orsini’s attempt on Napoleon III','Attentat d’Orsini contre Napoléon III']],
+      ['1858-07-21', ['普隆比耶爾密約','The secret agreement of Plombières','Accords secrets de Plombières']],
+    ],
+    turn:{ zh:'有了法國的承諾，加富爾開始設法讓奧地利先開戰。', en:'With France’s promise in hand, Cavour set about provoking Austria into firing first.', fr:'Fort de la promesse française, Cavour cherche à pousser l’Autriche à attaquer la première.' } },
+
+  { a:'1859-04', b:'1860-03',
+    name:{ zh:'第二次獨立戰爭', en:'The Second War of Independence', fr:'La deuxième guerre d’indépendance' },
+    power:{ zh:'法國與撒丁尼亞聯軍對抗奧地利', en:'France and Sardinia against Austria', fr:'La France et la Sardaigne contre l’Autriche' },
+    summary:{ zh:'奧地利發出最後通牒後開戰，法撒聯軍在馬振塔與索爾費里諾獲勝。索爾費里諾的慘烈傷亡讓目擊者杜南後來創立了紅十字會。拿破崙三世卻突然與奧地利停戰，只讓撒丁尼亞取得倫巴底；中義各邦則自行驅逐君主，以公投加入撒丁尼亞，代價是把尼斯與薩伏依割讓給法國。',
+      en:'Austria’s ultimatum started the war, and the Franco-Sardinian army won at Magenta and Solferino; the carnage at Solferino moved the witness Henri Dunant to found the Red Cross. Napoleon III abruptly made peace with Austria, leaving Sardinia only Lombardy, but the central Italian states expelled their rulers and voted to join Sardinia, at the price of ceding Nice and Savoy to France.',
+      fr:'L’ultimatum autrichien déclenche la guerre, et l’armée franco-sarde l’emporte à Magenta et Solférino ; le carnage de Solférino pousse le témoin Henry Dunant à fonder la Croix-Rouge. Napoléon III signe brusquement la paix avec l’Autriche, ne laissant à la Sardaigne que la Lombardie, mais les États du Centre chassent leurs souverains et votent leur rattachement, au prix de la cession de Nice et de la Savoie à la France.' },
+    ev:[
+      ['1859-06-04', ['馬振塔戰役','Battle of Magenta','Bataille de Magenta']],
+      ['1859-06-24', ['索爾費里諾戰役','Battle of Solferino','Bataille de Solférino']],
+      ['1859-07-11', ['維拉弗蘭卡停戰','The armistice of Villafranca','Armistice de Villafranca']],
+      ['1860-03-11', ['中義各邦公投加入撒丁尼亞','Central Italian states vote to join Sardinia','Les États du Centre votent leur rattachement']],
+      ['1860-03-24', ['尼斯與薩伏依割讓給法國','Nice and Savoy are ceded to France','Nice et la Savoie sont cédées à la France']],
+    ],
+    turn:{ zh:'北義與中義已經統一，但南方的兩西西里王國仍在波旁王朝手中。', en:'North and centre were united, but the Kingdom of the Two Sicilies in the south remained in Bourbon hands.', fr:'Le Nord et le Centre sont unis, mais le royaume des Deux-Siciles, au sud, reste aux Bourbons.' } },
+
+  { a:'1860-05', b:'1861-03',
+    name:{ zh:'千人遠征', en:'The Expedition of the Thousand', fr:'L’expédition des Mille' },
+    power:{ zh:'加里波底的紅衫軍與撒丁尼亞政府，對抗那不勒斯的波旁王朝', en:'Garibaldi’s Redshirts and the Sardinian government against the Bourbons of Naples', fr:'Les Chemises rouges de Garibaldi et le gouvernement sarde contre les Bourbons de Naples' },
+    summary:{ zh:'加里波底帶著約一千名志願軍從熱那亞附近出發，在西西里登陸，以寡擊眾拿下巴勒莫，再渡海北上，9 月進入那不勒斯。加富爾擔心他繼續攻打羅馬會引來法國干預，派撒丁尼亞軍隊南下；兩人在泰阿諾會面，加里波底把南方交給國王。',
+      en:'Garibaldi sailed from near Genoa with about a thousand volunteers, landed in Sicily, took Palermo against the odds, crossed to the mainland and entered Naples in September. Fearing he would march on Rome and bring in the French, Cavour sent the Sardinian army south; the two forces met at Teano, and Garibaldi handed the south to the king.',
+      fr:'Garibaldi part des environs de Gênes avec environ mille volontaires, débarque en Sicile, prend Palerme malgré l’infériorité numérique, passe sur le continent et entre dans Naples en septembre. Craignant qu’il ne marche sur Rome et n’attire les Français, Cavour envoie l’armée sarde vers le sud ; les deux se rejoignent à Teano, et Garibaldi remet le Sud au roi.' },
+    ev:[
+      ['1860-05-06', ['千人隊從熱那亞附近的夸爾托出發','The Thousand sail from Quarto near Genoa','Les Mille partent de Quarto, près de Gênes']],
+      ['1860-05-27', ['加里波底攻入巴勒莫','Garibaldi fights his way into Palermo','Garibaldi entre dans Palerme']],
+      ['1860-09-07', ['加里波底進入那不勒斯','Garibaldi enters Naples','Garibaldi entre dans Naples']],
+      ['1860-10-26', ['泰阿諾會面','The meeting at Teano','La rencontre de Teano']],
+      ['1861-03-17', ['義大利王國宣告成立','The Kingdom of Italy is proclaimed','Proclamation du royaume d’Italie']],
+    ],
+    turn:{ zh:'義大利王國誕生，但羅馬與威尼斯仍在外面。', en:'The Kingdom of Italy was born, but Rome and Venice were still outside it.', fr:'Le royaume d’Italie est né, mais Rome et Venise restent en dehors.' } },
+
+  { a:'1861-06', b:'1866-10',
+    name:{ zh:'威尼斯', en:'Venice', fr:'Venise' },
+    power:{ zh:'義大利王國政府；加富爾去世後由繼任者接手', en:'The government of the new kingdom, led by Cavour’s successors after his death', fr:'Le gouvernement du nouveau royaume, dirigé par les successeurs de Cavour' },
+    summary:{ zh:'加富爾在王國成立不到三個月就去世。加里波底兩度想攻打羅馬，1862 年在阿斯普羅蒙特被政府軍阻止並受傷。1864 年義大利與法國約定把首都遷到佛羅倫斯，換取法軍撤出羅馬。1866 年義大利與普魯士結盟對奧地利作戰，自己雖然戰敗，卻因普魯士獲勝而取得威尼斯。',
+      en:'Cavour died less than three months after the kingdom was proclaimed. Garibaldi tried to march on Rome and in 1862 was stopped and wounded by government troops at Aspromonte. In 1864 Italy agreed with France to move its capital to Florence in exchange for the withdrawal of French troops from Rome. In 1866 Italy allied with Prussia against Austria; beaten on its own fronts, it still gained Venice thanks to Prussia’s victory.',
+      fr:'Cavour meurt moins de trois mois après la proclamation du royaume. Garibaldi tente de marcher sur Rome et est arrêté et blessé par l’armée à l’Aspromonte en 1862. En 1864, l’Italie convient avec la France de transférer sa capitale à Florence en échange du retrait des troupes françaises de Rome. En 1866, alliée à la Prusse contre l’Autriche, l’Italie est battue sur ses fronts mais obtient Venise grâce à la victoire prussienne.' },
+    ev:[
+      ['1861-06-06', ['加富爾去世','Death of Cavour','Mort de Cavour']],
+      ['1862-08-29', ['阿斯普羅蒙特：加里波底被政府軍擊傷','Aspromonte: Garibaldi is wounded by government troops','Aspromonte : Garibaldi est blessé par l’armée royale']],
+      ['1864-09-15', ['《九月公約》，首都將遷往佛羅倫斯','The September Convention moves the capital to Florence','La convention de septembre transfère la capitale à Florence']],
+      ['1866-06-24', ['第二次庫斯托札戰役戰敗','Defeat at the second battle of Custoza','Défaite à la seconde bataille de Custoza']],
+      ['1866-10-21', ['威尼托公投加入義大利','Venetia votes to join Italy','La Vénétie vote son rattachement à l’Italie']],
+    ],
+    turn:{ zh:'只剩下羅馬，而保護教宗的是法國。', en:'Only Rome was left, and it was protected by France.', fr:'Il ne reste que Rome, protégée par la France.' } },
+
+  { a:'1867-11', b:'1871-07',
+    name:{ zh:'羅馬', en:'Rome', fr:'Rome' },
+    power:{ zh:'教宗庇護九世與法國駐軍；義大利政府等待時機', en:'Pope Pius IX and his French garrison, with the Italian government biding its time', fr:'Le pape Pie IX et sa garnison française, le gouvernement italien attendant son heure' },
+    summary:{ zh:'1867 年加里波底再度進攻羅馬，在門塔納被法國與教宗的軍隊擊退。1870 年普法戰爭爆發，法軍撤回本國，拿破崙三世在色當被俘；義大利軍隊在 9 月 20 日轟開庇亞門進入羅馬。教宗退入梵蒂岡，自稱囚徒，羅馬在隔年正式成為首都。',
+      en:'In 1867 Garibaldi attacked Rome again and was driven back at Mentana by French and papal troops. In 1870 the Franco-Prussian War called the French garrison home and Napoleon III was captured at Sedan; on 20 September Italian troops breached the Porta Pia and entered Rome. The Pope withdrew into the Vatican as a self-styled prisoner, and Rome officially became the capital the following year.',
+      fr:'En 1867, Garibaldi attaque de nouveau Rome et est repoussé à Mentana par les troupes françaises et pontificales. En 1870, la guerre franco-prussienne rappelle la garnison française et Napoléon III est pris à Sedan ; le 20 septembre, les troupes italiennes ouvrent une brèche à la Porta Pia et entrent dans Rome. Le pape se retire au Vatican en se disant prisonnier, et Rome devient officiellement la capitale l’année suivante.' },
+    ev:[
+      ['1867-11-03', ['門塔納戰役，加里波底再度失敗','Battle of Mentana: Garibaldi is defeated again','Bataille de Mentana : nouvel échec de Garibaldi']],
+      ['1870-09-20', ['攻破庇亞門，義軍進入羅馬','Italian troops breach the Porta Pia and enter Rome','Brèche de la Porta Pia : les Italiens entrent dans Rome']],
+      ['1870-10-02', ['羅馬公投加入義大利','Rome votes to join Italy','Rome vote son rattachement à l’Italie']],
+      ['1871-07-01', ['首都正式遷往羅馬','The capital officially moves to Rome','La capitale est officiellement transférée à Rome']],
+    ],
+    turn:{ zh:'領土上的統一完成了，教會與國家之間的和解，卻要等到 1929 年。', en:'Territorial unity was complete, but reconciliation between Church and state had to wait until 1929.', fr:'L’unité territoriale est achevée, mais la réconciliation entre l’Église et l’État attendra 1929.' } },
+  ]
+},
+
+},
 };
