@@ -748,4 +748,246 @@ contemporary: [
 
 },
 
+china: {
+
+shangzhou: [
+  { theme:'culture', icon:'🐢', q:'殷墟博物館 安陽',
+    title:{ zh:'甲骨文是因為中藥才被發現的', en:'Oracle bones were found in a medicine cabinet', fr:'Les os oraculaires découverts chez l’apothicaire' },
+    text:{ zh:'1899 年金石學家王懿榮據說在中藥材「龍骨」上看到刻字，才認出這是商代的文字。之後在河南安陽小屯村一帶發掘出大量甲骨與商王陵墓，殷墟成為中國考古的起點。',
+      en:'In 1899 the scholar Wang Yirong is said to have noticed carved signs on “dragon bones” sold as medicine and recognised them as Shang writing. Excavations at Xiaotun near Anyang then uncovered masses of oracle bones and royal tombs, making Yinxu the cradle of Chinese archaeology.',
+      fr:'En 1899, le lettré Wang Yirong aurait remarqué des signes gravés sur des « os de dragon » vendus comme remède et reconnu l’écriture des Shang. Les fouilles de Xiaotun, près d’Anyang, livrent ensuite des milliers d’os et des tombes royales : Yinxu devient le berceau de l’archéologie chinoise.' },
+    at:{ zh:'殷墟遺址與殷墟博物館，河南安陽', en:'Yinxu site and museum, Anyang, Henan', fr:'Site et musée de Yinxu, Anyang (Henan)' } },
+],
+
+warring: [
+  { theme:'faith', icon:'📜', q:'曲阜 孔廟',
+    title:{ zh:'曲阜三孔：孔家住了兩千多年', en:'Qufu: two thousand years of the Kong family', fr:'Qufu, deux mille ans de la famille Kong' },
+    text:{ zh:'山東曲阜的孔廟、孔府與孔林合稱「三孔」。孔府是孔子嫡系後代「衍聖公」的府邸，孔林埋葬了孔家七十多代子孫，是世界上延續最久的家族墓地之一。',
+      en:'The temple, mansion and cemetery of Confucius at Qufu in Shandong are known as the “Three Kongs”. The mansion housed his direct heirs, the Dukes Yansheng, and the cemetery holds more than seventy generations of descendants, one of the longest-used family graveyards in the world.',
+      fr:'Le temple, la demeure et le cimetière de Confucius à Qufu, au Shandong, forment les « trois Kong ». La demeure abritait ses héritiers directs, les ducs Yansheng, et le cimetière accueille plus de soixante-dix générations de descendants, l’un des plus anciens cimetières familiaux du monde.' },
+    at:{ zh:'曲阜孔廟、孔府、孔林，山東', en:'Temple, Mansion and Cemetery of Confucius, Qufu, Shandong', fr:'Temple, demeure et cimetière de Confucius, Qufu (Shandong)' } },
+],
+
+qinhan: [
+  { theme:'state', icon:'🗿', q:'秦始皇帝陵博物院 兵馬俑',
+    title:{ zh:'兵馬俑：每一張臉都不一樣', en:'The Terracotta Army, no two faces alike', fr:'L’armée de terre cuite, pas deux visages pareils' },
+    text:{ zh:'1974 年農民打井時意外發現。目前已出土兩千多尊陶俑，據估計總數約八千，每一尊的五官、髮型都不同，原本還塗有鮮豔的彩繪。秦始皇陵本身至今尚未開挖。',
+      en:'Discovered by farmers digging a well in 1974. More than two thousand figures have been excavated of an estimated eight thousand, each with different features and hairstyles and originally brightly painted. The emperor’s tomb itself remains unopened.',
+      fr:'Découverte en 1974 par des paysans qui creusaient un puits. Plus de deux mille statues ont été dégagées sur environ huit mille, chacune avec ses traits et sa coiffure, jadis peintes de couleurs vives. Le tombeau de l’empereur n’a toujours pas été ouvert.' },
+    at:{ zh:'秦始皇帝陵博物院，西安臨潼', en:'Emperor Qinshihuang’s Mausoleum Site Museum, Lintong, Xi’an', fr:'Musée du mausolée de Qin Shi Huang, Lintong (Xi’an)' } },
+],
+
+division: [
+  { theme:'faith', icon:'🗿', q:'龍門石窟',
+    title:{ zh:'龍門石窟：據說以武則天為模特兒的大佛', en:'Longmen: a Buddha said to resemble Wu Zetian', fr:'Longmen, un Bouddha au visage de Wu Zetian ?' },
+    text:{ zh:'北魏孝文帝遷都洛陽後開始開鑿，延續四百多年，共有兩千多個窟龕。最著名的奉先寺盧舍那大佛建於唐代，武則天曾捐出脂粉錢，民間相傳佛像的面容就是依她的樣貌雕成。',
+      en:'Begun after Emperor Xiaowen moved his capital to Luoyang and carved over four centuries, the site has more than two thousand caves and niches. Its most famous statue, the Vairocana Buddha of Fengxian Temple, dates from the Tang; Wu Zetian donated her “cosmetics money” to it, and tradition says its face is hers.',
+      fr:'Commencées après le transfert de la capitale à Luoyang et creusées pendant plus de quatre siècles, les grottes comptent plus de deux mille cavités et niches. La plus célèbre statue, le Bouddha Vairocana du temple Fengxian, date des Tang ; Wu Zetian y aurait consacré son « argent de toilette », et l’on dit que le visage est le sien.' },
+    at:{ zh:'龍門石窟，河南洛陽', en:'Longmen Grottoes, Luoyang, Henan', fr:'Grottes de Longmen, Luoyang (Henan)' } },
+],
+
+suitang: [
+  { theme:'world', icon:'🛕', q:'大雁塔 西安',
+    title:{ zh:'大雁塔：玄奘的藏經塔', en:'The Big Wild Goose Pagoda, Xuanzang’s library', fr:'La grande pagode de l’Oie sauvage, bibliothèque de Xuanzang' },
+    text:{ zh:'玄奘從印度帶回六百多部佛經後，在大慈恩寺翻譯經典，並建塔收藏。這段旅程後來被改編成小說《西遊記》。塔前廣場晚上有音樂噴泉。',
+      en:'After bringing back more than six hundred sutras from India, Xuanzang translated them at the Great Ci’en Temple and built the pagoda to house them. His journey later inspired the novel Journey to the West. A musical fountain plays in the square at night.',
+      fr:'Rentré d’Inde avec plus de six cents sutras, Xuanzang les traduit au grand temple Ci’en et fait bâtir la pagode pour les abriter. Son voyage inspirera le roman La Pérégrination vers l’Ouest. Le soir, une fontaine musicale anime la place.' },
+    at:{ zh:'大慈恩寺大雁塔，西安', en:'Big Wild Goose Pagoda, Da Ci’en Temple, Xi’an', fr:'Grande pagode de l’Oie sauvage, temple Da Ci’en, Xi’an' } },
+],
+
+song: [
+  { theme:'society', icon:'🖼️', q:'清明上河園 開封',
+    title:{ zh:'〈清明上河圖〉裡的開封', en:'Kaifeng in “Along the River during the Qingming Festival”', fr:'Kaifeng dans « Le Jour de Qingming au bord de la rivière »' },
+    text:{ zh:'張擇端的長卷畫了八百多個人物，從郊外、汴河虹橋到城門街市，是北宋首都汴京的生活紀錄。原畫收藏在北京故宮，很少展出；開封的清明上河園則依畫重建了街景。',
+      en:'Zhang Zeduan’s scroll shows more than eight hundred people, from the countryside to the Rainbow Bridge over the Bian and the city-gate markets, a record of life in the Northern Song capital. The original, in the Palace Museum in Beijing, is rarely shown; Kaifeng’s Qingming Riverside Park recreates its streets.',
+      fr:'Le rouleau de Zhang Zeduan montre plus de huit cents personnages, de la campagne au pont arc-en-ciel sur la Bian et aux marchés des portes : un témoignage de la vie dans la capitale des Song du Nord. L’original, au musée du Palais à Pékin, est rarement exposé ; le parc Qingming de Kaifeng en reconstitue les rues.' },
+    at:{ zh:'清明上河園，河南開封', en:'Qingming Riverside Park, Kaifeng, Henan', fr:'Parc Qingming, Kaifeng (Henan)' } },
+],
+
+yuan: [
+  { theme:'state', icon:'🔔', q:'北京鐘鼓樓',
+    title:{ zh:'北京的中軸線是元大都留下的', en:'Beijing’s central axis began with Yuan Dadu', fr:'L’axe central de Pékin vient de Dadu' },
+    text:{ zh:'忽必烈依《周禮》規劃大都，棋盤式的街道與「胡同」一詞都源自元代。今天北京的鐘鼓樓與中軸線位置，就是在元大都的基礎上發展的；北三環外還留有元大都城牆的土城遺址。',
+      en:'Kublai planned Dadu according to the Rites of Zhou; its grid of streets and even the word hutong date from the Yuan. Beijing’s Drum and Bell Towers and central axis grew on Dadu’s foundations, and earthen remains of its walls survive beyond the Third Ring Road.',
+      fr:'Kubilai fait tracer Dadu selon les Rites des Zhou ; son plan en damier et jusqu’au mot hutong datent des Yuan. Tours du Tambour et de la Cloche et axe central de Pékin reposent sur les fondations de Dadu, dont des remparts de terre subsistent au-delà du 3ᵉ périphérique.' },
+    at:{ zh:'北京鐘鼓樓、元大都城垣遺址公園', en:'Drum and Bell Towers; Yuan Dadu city wall park, Beijing', fr:'Tours du Tambour et de la Cloche ; parc des remparts de Dadu, Pékin' } },
+],
+
+ming: [
+  { theme:'state', icon:'🏯', q:'故宮博物院 北京',
+    title:{ zh:'紫禁城：九千多間房？', en:'The Forbidden City: 9,999 rooms?', fr:'La Cité interdite, 9 999 pièces ?' },
+    text:{ zh:'俗稱紫禁城有「九千九百九十九間半」房間，實際調查約八千多間。永樂年間花了十四年建成，明清兩代共二十四位皇帝住過這裡。現在是故宮博物院，需要實名預約。',
+      en:'Legend gives it “9,999 and a half rooms”; surveys count around eight thousand. Built in fourteen years under Yongle, it housed twenty-four Ming and Qing emperors. Today it is the Palace Museum, and tickets must be booked in advance with ID.',
+      fr:'La légende lui prête « 9 999 pièces et demie » ; on en compte environ huit mille. Bâtie en quatorze ans sous Yongle, elle a abrité vingt-quatre empereurs Ming et Qing. C’est aujourd’hui le musée du Palais, à réserver à l’avance avec une pièce d’identité.' },
+    at:{ zh:'故宮博物院，北京（午門入、神武門出）', en:'Palace Museum, Beijing (enter by the Meridian Gate)', fr:'Musée du Palais, Pékin (entrée par la porte du Midi)' } },
+  { theme:'world', icon:'🧱', q:'慕田峪長城',
+    title:{ zh:'長城：太空看不到', en:'The Great Wall is not visible from space', fr:'La Grande Muraille n’est pas visible de l’espace' },
+    text:{ zh:'今天看到的磚石長城大多是明朝修的。「在月球上能看到長城」是流傳很廣的誤解，太空人也證實肉眼很難辨認。北京近郊的慕田峪與金山嶺比八達嶺人少，風景更好。',
+      en:'Most of the brick-and-stone wall seen today was built by the Ming. The idea that it can be seen from the Moon is a popular myth, and astronauts confirm it is hard to make out with the naked eye. Near Beijing, Mutianyu and Jinshanling are less crowded and more scenic than Badaling.',
+      fr:'L’essentiel de la muraille de briques et de pierres visible aujourd’hui date des Ming. L’idée qu’on la voit depuis la Lune est un mythe, et les astronautes confirment qu’elle se distingue à peine à l’œil nu. Près de Pékin, Mutianyu et Jinshanling sont moins fréquentés et plus beaux que Badaling.' },
+    at:{ zh:'慕田峪長城、金山嶺長城（北京近郊）', en:'Mutianyu and Jinshanling, near Beijing', fr:'Mutianyu et Jinshanling, près de Pékin' } },
+],
+
+qing: [
+  { theme:'world', icon:'🏚️', q:'圓明園遺址公園',
+    title:{ zh:'圓明園：西洋樓只剩斷柱', en:'The Old Summer Palace, now broken columns', fr:'L’ancien Palais d’été, des colonnes brisées' },
+    text:{ zh:'圓明園有耶穌會士設計的歐式「西洋樓」與十二生肖獸首噴泉。1860 年英法聯軍劫掠後焚毀，殘存的石柱與噴泉遺跡現在是遺址公園，流失海外的獸首至今仍有部分下落不明。',
+      en:'The palace had European-style pavilions designed by Jesuits and a fountain with twelve zodiac heads. Looted and burned by British and French troops in 1860, its surviving columns and fountain ruins now form a heritage park; some of the bronze heads are still missing.',
+      fr:'Le palais comptait des pavillons européens dessinés par des jésuites et une fontaine aux douze têtes du zodiaque. Pillé et incendié par les troupes franco-britanniques en 1860, il n’en reste que colonnes et ruines de fontaines, aujourd’hui parc patrimonial ; certaines têtes de bronze restent introuvables.' },
+    at:{ zh:'圓明園遺址公園，北京海淀區', en:'Yuanmingyuan ruins park, Haidian, Beijing', fr:'Parc des ruines du Yuanmingyuan, Haidian (Pékin)' } },
+],
+
+republic: [
+  { theme:'culture', icon:'🌃', q:'上海外灘',
+    title:{ zh:'外灘：萬國建築博覽', en:'The Bund, a museum of architecture', fr:'Le Bund, musée d’architecture à ciel ouvert' },
+    text:{ zh:'黃浦江邊的外灘排列著二十多棟 1920、30 年代的銀行、海關與飯店大樓，新古典、裝飾藝術風格都有。對岸就是浦東陸家嘴的摩天大樓，一邊是民國的上海，一邊是改革開放的上海。',
+      en:'More than twenty banks, customs houses and hotels from the 1920s and 1930s line the Huangpu, in neoclassical and Art Deco styles. Across the river rise the towers of Pudong’s Lujiazui: Republican Shanghai faces the Shanghai of reform.',
+      fr:'Plus de vingt banques, douanes et hôtels des années 1920-1930, néoclassiques ou Art déco, bordent le Huangpu. En face s’élèvent les tours de Lujiazui à Pudong : le Shanghai républicain face au Shanghai des réformes.' },
+    at:{ zh:'上海外灘（地鐵南京東路站）', en:'The Bund, Shanghai (Metro East Nanjing Road)', fr:'Le Bund, Shanghai (métro Nanjing Road Est)' } },
+  { theme:'world', icon:'🕯️', q:'侵華日軍南京大屠殺遇難同胞紀念館',
+    title:{ zh:'南京大屠殺紀念館', en:'The Nanjing Massacre Memorial Hall', fr:'Le mémorial du massacre de Nankin' },
+    text:{ zh:'1937 年 12 月日軍攻占南京後展開大規模屠殺與性暴力。紀念館建在江東門的遇難者叢葬地上，每年 12 月 13 日舉行國家公祭。',
+      en:'After taking Nanjing in December 1937, Japanese troops committed mass killings and sexual violence. The memorial stands on a mass grave at Jiangdongmen, and a national commemoration is held every 13 December.',
+      fr:'Après la prise de Nankin en décembre 1937, les troupes japonaises commettent massacres et violences sexuelles de masse. Le mémorial se dresse sur une fosse commune à Jiangdongmen, et une commémoration nationale a lieu chaque 13 décembre.' },
+    at:{ zh:'侵華日軍南京大屠殺遇難同胞紀念館，南京', en:'Memorial Hall of the Victims of the Nanjing Massacre, Nanjing', fr:'Mémorial des victimes du massacre de Nankin, Nankin' } },
+],
+
+mao: [
+  { theme:'state', icon:'🏛️', q:'天安門廣場',
+    title:{ zh:'天安門城樓與毛主席紀念堂', en:'Tiananmen Gate and Mao’s Mausoleum', fr:'La porte Tian’anmen et le mausolée de Mao' },
+    text:{ zh:'1949 年毛澤東在天安門城樓宣布建國，城樓上至今掛著他的畫像。廣場南側的紀念堂內安放著他的遺體，排隊參觀需要事先預約並寄存包包。',
+      en:'Mao proclaimed the People’s Republic from Tiananmen Gate in 1949, and his portrait still hangs there. His embalmed body lies in the mausoleum at the south of the square; visits require advance booking and leaving bags in a cloakroom.',
+      fr:'Mao proclame la République populaire depuis la porte Tian’anmen en 1949, où son portrait est toujours accroché. Son corps embaumé repose dans le mausolée au sud de la place ; la visite exige une réservation et le dépôt des sacs.' },
+    at:{ zh:'天安門廣場，北京', en:'Tiananmen Square, Beijing', fr:'Place Tian’anmen, Pékin' } },
+],
+
+reform: [
+  { theme:'society', icon:'🏙️', q:'深圳 蓮花山公園',
+    title:{ zh:'深圳：四十年從漁村到大都會？', en:'Shenzhen: from fishing village to megacity?', fr:'Shenzhen, du village de pêcheurs à la mégapole ?' },
+    text:{ zh:'常說深圳原本是個小漁村，其實設立特區前的寶安縣已有約三十萬人口。但四十多年間成長為近兩千萬人的城市，仍是世界城市史上少見的速度。蓮花山頂有鄧小平的銅像，可以俯瞰市中心。',
+      en:'Shenzhen is often called a former fishing village, though Bao’an county already had about 300,000 people before the zone was created. Even so, growing to almost twenty million people in four decades is almost unmatched in urban history. A statue of Deng Xiaoping on Lianhuashan looks over the centre.',
+      fr:'On dit souvent que Shenzhen était un village de pêcheurs, alors que le district de Bao’an comptait déjà quelque 300 000 habitants avant la zone spéciale. Atteindre près de vingt millions d’habitants en quatre décennies reste presque sans équivalent. Une statue de Deng Xiaoping domine le centre depuis le mont Lianhua.' },
+    at:{ zh:'蓮花山公園，深圳福田區', en:'Lianhuashan Park, Futian, Shenzhen', fr:'Parc du mont Lianhua, Futian (Shenzhen)' } },
+],
+
+xi: [
+  { theme:'society', icon:'🚄', q:'北京南站',
+    title:{ zh:'全世界最長的高鐵網', en:'The world’s largest high-speed rail network', fr:'Le plus grand réseau à grande vitesse du monde' },
+    text:{ zh:'中國第一條時速三百公里以上的高鐵京津城際在 2008 年通車，到 2020 年代高鐵里程已超過四萬公里，占全球大半。北京到上海最快約四個半小時，旅遊時是很方便的選擇。',
+      en:'China’s first 300 km/h line, Beijing–Tianjin, opened in 2008; by the 2020s the network exceeded 40,000 km, more than the rest of the world combined. Beijing to Shanghai takes about four and a half hours at best, a convenient choice for travellers.',
+      fr:'La première ligne chinoise à 300 km/h, Pékin–Tianjin, ouvre en 2008 ; dans les années 2020, le réseau dépasse 40 000 km, plus que le reste du monde réuni. Pékin–Shanghai se fait en quatre heures et demie environ : un choix pratique pour voyager.' },
+    at:{ zh:'北京南站、上海虹橋站', en:'Beijing South and Shanghai Hongqiao stations', fr:'Gares de Pékin-Sud et de Shanghai-Hongqiao' } },
+],
+
+},
+
+usa: {
+
+native: [
+  { theme:'state', icon:'⛰️', q:'Cahokia Mounds State Historic Site',
+    title:{ zh:'卡霍基亞：比倫敦還大的土丘城市', en:'Cahokia, a mound city larger than London', fr:'Cahokia, une ville de tertres plus grande que Londres' },
+    text:{ zh:'在今天聖路易附近，十二世紀的卡霍基亞人口估計有一到兩萬，可能比同時期的倫敦還多。城中心的「僧侶丘」底面積比埃及大金字塔還大，是北美洲最大的史前土方建築。',
+      en:'Near today’s St Louis, twelfth-century Cahokia had perhaps ten to twenty thousand people, possibly more than London at the time. Its central Monks Mound has a larger base than the Great Pyramid of Giza and is the largest prehistoric earthwork in North America.',
+      fr:'Près de l’actuel Saint-Louis, Cahokia comptait peut-être dix à vingt mille habitants au XIIᵉ siècle, sans doute plus que Londres à la même époque. Son tertre central, Monks Mound, a une base plus vaste que la grande pyramide de Gizeh : le plus grand terrassement préhistorique d’Amérique du Nord.' },
+    at:{ zh:'卡霍基亞土丘州立歷史遺址，伊利諾州（聖路易東方）', en:'Cahokia Mounds State Historic Site, Illinois (east of St Louis)', fr:'Site historique de Cahokia Mounds, Illinois (à l’est de Saint-Louis)' } },
+  { theme:'culture', icon:'🏜️', q:'Mesa Verde National Park',
+    title:{ zh:'梅薩維德：懸崖下的村落', en:'Mesa Verde, villages under the cliffs', fr:'Mesa Verde, des villages sous les falaises' },
+    text:{ zh:'科羅拉多州的梅薩維德保存了六百多處崖居，最大的「懸崖宮」有一百五十多個房間。普韋布洛人在十三世紀末離開，可能與長期乾旱有關；部分崖居要跟隨巡山員爬梯子才能進入。',
+      en:'Mesa Verde in Colorado preserves more than six hundred cliff dwellings; the largest, Cliff Palace, has over 150 rooms. The Ancestral Puebloans left in the late thirteenth century, perhaps because of long drought; some dwellings can be visited only with a ranger, climbing ladders.',
+      fr:'Mesa Verde, au Colorado, conserve plus de six cents habitations troglodytiques ; la plus grande, Cliff Palace, compte plus de 150 pièces. Les Ancestral Puebloans partent à la fin du XIIIᵉ siècle, peut-être à cause d’une longue sécheresse ; certaines ne se visitent qu’avec un ranger, en grimpant à des échelles.' },
+    at:{ zh:'梅薩維德國家公園，科羅拉多州', en:'Mesa Verde National Park, Colorado', fr:'Parc national de Mesa Verde, Colorado' } },
+],
+
+colonial: [
+  { theme:'faith', icon:'🦃', q:'Plimoth Patuxet Museums',
+    title:{ zh:'第一個感恩節其實沒有火雞？', en:'No turkey at the first Thanksgiving?', fr:'Pas de dinde au premier Thanksgiving ?' },
+    text:{ zh:'1621 年秋天，普利茅斯的殖民者與萬帕諾亞格族一起慶祝豐收三天。唯一的文字紀錄提到鹿肉與「野禽」，火雞與南瓜派是十九世紀後才成為感恩節的標準菜色。',
+      en:'In autumn 1621 the Plymouth settlers and the Wampanoag celebrated the harvest together for three days. The only written account mentions venison and “fowl”; turkey and pumpkin pie became Thanksgiving standards only in the nineteenth century.',
+      fr:'À l’automne 1621, les colons de Plymouth et les Wampanoags fêtent la récolte pendant trois jours. Le seul récit écrit parle de gibier et de « volailles » ; dinde et tarte à la citrouille ne s’imposent qu’au XIXᵉ siècle.' },
+    at:{ zh:'普利茅斯的 Plimoth Patuxet 博物館與五月花二號，麻薩諸塞州', en:'Plimoth Patuxet Museums and Mayflower II, Plymouth, Massachusetts', fr:'Plimoth Patuxet Museums et Mayflower II, Plymouth (Massachusetts)' } },
+  { theme:'society', icon:'🧙', q:'Salem Witch Trials Memorial',
+    title:{ zh:'塞勒姆女巫審判', en:'The Salem witch trials', fr:'Les sorcières de Salem' },
+    text:{ zh:'1692 年塞勒姆幾個女孩出現怪異症狀，引發獵巫恐慌，兩百多人被指控，十九人被絞死。今天塞勒姆以女巫為觀光主題，萬聖節時特別熱鬧。',
+      en:'In 1692 strange fits among girls in Salem set off a witch panic; more than two hundred people were accused and nineteen hanged. Salem now trades on its witch history and is especially busy at Halloween.',
+      fr:'En 1692, d’étranges crises chez des jeunes filles de Salem déclenchent une chasse aux sorcières ; plus de deux cents personnes sont accusées et dix-neuf pendues. Salem vit aujourd’hui de ce passé, surtout à Halloween.' },
+    at:{ zh:'塞勒姆女巫審判紀念碑，麻薩諸塞州', en:'Salem Witch Trials Memorial, Salem, Massachusetts', fr:'Mémorial des procès de Salem, Massachusetts' } },
+],
+
+revolution: [
+  { theme:'state', icon:'🔔', q:'Independence National Historical Park',
+    title:{ zh:'自由鐘的裂縫', en:'The crack in the Liberty Bell', fr:'La fêlure de la cloche de la Liberté' },
+    text:{ zh:'費城獨立廳是《獨立宣言》與憲法簽署的地方。旁邊的自由鐘上刻著「在全地宣告自由」，十九世紀出現裂痕後不再敲響，後來被廢奴運動當作象徵，「自由鐘」這個名字也是廢奴人士取的。',
+      en:'Philadelphia’s Independence Hall is where the Declaration and the Constitution were signed. The nearby Liberty Bell, inscribed “Proclaim liberty throughout all the land”, cracked in the nineteenth century and was never rung again; abolitionists adopted it as a symbol and gave it its name.',
+      fr:'L’Independence Hall de Philadelphie est le lieu de la signature de la Déclaration et de la Constitution. La cloche voisine, gravée « Proclamez la liberté dans tout le pays », s’est fêlée au XIXᵉ siècle et ne sonne plus ; les abolitionnistes en ont fait un symbole et lui ont donné son nom.' },
+    at:{ zh:'獨立國家歷史公園，費城', en:'Independence National Historical Park, Philadelphia', fr:'Parc historique national de l’Indépendance, Philadelphie' } },
+  { theme:'world', icon:'🚶', q:'Freedom Trail Boston',
+    title:{ zh:'自由之路：地上的紅線', en:'The Freedom Trail, a red line on the ground', fr:'Le Freedom Trail, une ligne rouge au sol' },
+    text:{ zh:'波士頓市中心的人行道上鋪著一條約四公里的紅磚線，串起十六個獨立革命的地點，包括波士頓屠殺現場、老北教堂與保羅·列維爾的故居。',
+      en:'A red-brick line about four kilometres long runs through downtown Boston, linking sixteen sites of the Revolution, including the Boston Massacre site, Old North Church and Paul Revere’s house.',
+      fr:'Une ligne de briques rouges d’environ quatre kilomètres traverse le centre de Boston et relie seize lieux de la Révolution, dont le site du massacre de Boston, l’Old North Church et la maison de Paul Revere.' },
+    at:{ zh:'自由之路，從波士頓公園出發', en:'Freedom Trail, starting at Boston Common', fr:'Freedom Trail, départ de Boston Common' } },
+],
+
+expansion: [
+  { theme:'world', icon:'🌉', q:'Gateway Arch National Park',
+    title:{ zh:'聖路易拱門：通往西部的大門', en:'The Gateway Arch, door to the West', fr:'La Gateway Arch, porte de l’Ouest' },
+    text:{ zh:'高 192 公尺的不鏽鋼拱門紀念傑佛遜的路易斯安那購地與西進運動，路易斯與克拉克的探險就從聖路易出發。可以搭小小的膠囊電車到頂端。',
+      en:'The 192-metre stainless steel arch commemorates Jefferson’s Louisiana Purchase and westward expansion; Lewis and Clark set out from St Louis. Tiny capsule trams carry visitors to the top.',
+      fr:'L’arche d’acier inoxydable de 192 mètres commémore l’achat de la Louisiane et la conquête de l’Ouest ; Lewis et Clark partirent de Saint-Louis. De minuscules capsules mènent les visiteurs au sommet.' },
+    at:{ zh:'拱門國家公園，密蘇里州聖路易', en:'Gateway Arch National Park, St Louis, Missouri', fr:'Parc national de la Gateway Arch, Saint-Louis (Missouri)' } },
+],
+
+civilwar: [
+  { theme:'state', icon:'🎩', q:'Gettysburg National Military Park',
+    title:{ zh:'只有兩分鐘的演說', en:'A speech of two minutes', fr:'Un discours de deux minutes' },
+    text:{ zh:'1863 年蓋茨堡國家公墓落成時，主講人演說了兩個小時，林肯接著只講了兩百七十多個字、約兩分鐘，卻成為美國最著名的演說。戰場上有博物館與巨幅的環形全景畫。',
+      en:'At the dedication of the Gettysburg cemetery in 1863 the main speaker talked for two hours; Lincoln followed with about 270 words, some two minutes, which became the most famous speech in American history. The battlefield has a museum and a vast cyclorama painting.',
+      fr:'À l’inauguration du cimetière de Gettysburg en 1863, l’orateur principal parle deux heures ; Lincoln enchaîne avec quelque 270 mots, environ deux minutes, devenus le discours le plus célèbre de l’histoire américaine. Le champ de bataille abrite un musée et un immense cyclorama.' },
+    at:{ zh:'蓋茨堡國家軍事公園，賓夕法尼亞州', en:'Gettysburg National Military Park, Pennsylvania', fr:'Parc militaire national de Gettysburg, Pennsylvanie' } },
+],
+
+gilded: [
+  { theme:'society', icon:'🗽', q:'Ellis Island National Museum of Immigration',
+    title:{ zh:'艾利斯島：四成美國人的祖先從這裡入境', en:'Ellis Island, gateway for the ancestors of 40 per cent of Americans', fr:'Ellis Island, porte d’entrée des ancêtres de 40 % des Américains' },
+    text:{ zh:'1892 到 1954 年間約一千兩百萬移民在這裡接受檢查，據估計約四成美國人有祖先經此入境。搭渡輪可以一起參觀自由女神像，移民博物館的資料庫可以查詢入境紀錄。',
+      en:'Between 1892 and 1954 some twelve million immigrants were processed here, and an estimated 40 per cent of Americans have an ancestor who passed through. The same ferry serves the Statue of Liberty, and the museum’s database lets you search arrival records.',
+      fr:'Entre 1892 et 1954, quelque douze millions d’immigrants y sont contrôlés, et environ 40 % des Américains auraient un ancêtre passé par là. Le même ferry dessert la statue de la Liberté, et la base de données du musée permet de chercher les registres d’arrivée.' },
+    at:{ zh:'艾利斯島移民博物館，紐約港（自炮台公園搭渡輪）', en:'Ellis Island National Museum of Immigration, New York Harbor (ferry from Battery Park)', fr:'Musée de l’immigration d’Ellis Island, port de New York (ferry depuis Battery Park)' } },
+],
+
+wars: [
+  { theme:'world', icon:'⚓', q:'Pearl Harbor National Memorial',
+    title:{ zh:'亞利桑那號仍在滲油', en:'The USS Arizona still leaks oil', fr:'L’USS Arizona fuit encore' },
+    text:{ zh:'1941 年 12 月 7 日被擊沉的亞利桑那號戰艦，至今仍有一千多名船員長眠艦內，每天還有少量燃油從艦體滲出，被稱為「黑色的眼淚」。紀念館就跨建在沉船之上。',
+      en:'Sunk on 7 December 1941, the battleship Arizona still entombs more than a thousand crewmen, and small drops of oil still rise from the hull each day, the “black tears”. The memorial straddles the wreck.',
+      fr:'Coulé le 7 décembre 1941, le cuirassé Arizona abrite encore plus d’un millier de marins, et de petites gouttes de mazout remontent chaque jour de l’épave, les « larmes noires ». Le mémorial enjambe l’épave.' },
+    at:{ zh:'珍珠港國家紀念地，夏威夷歐胡島', en:'Pearl Harbor National Memorial, Oahu, Hawaii', fr:'Mémorial national de Pearl Harbor, Oahu (Hawaï)' } },
+],
+
+coldwar: [
+  { theme:'society', icon:'🚌', q:'Rosa Parks Museum Montgomery',
+    title:{ zh:'羅莎·帕克斯不讓座', en:'Rosa Parks stays seated', fr:'Rosa Parks reste assise' },
+    text:{ zh:'1955 年 12 月，蒙哥馬利的裁縫羅莎·帕克斯拒絕在公車上讓座給白人而被捕，引發長達一年多的公車抵制運動，年輕的金恩牧師因此成為民權運動的領袖。她搭乘的那輛公車現在收藏在底特律近郊的亨利·福特博物館。',
+      en:'In December 1955 Rosa Parks, a seamstress in Montgomery, was arrested for refusing to give up her bus seat to a white passenger, sparking a bus boycott of more than a year that made the young Reverend King a leader of the civil rights movement. The bus itself is now in the Henry Ford Museum near Detroit.',
+      fr:'En décembre 1955, Rosa Parks, couturière à Montgomery, est arrêtée pour avoir refusé de céder sa place à un Blanc dans le bus, déclenchant un boycott de plus d’un an qui fait du jeune pasteur King un chef du mouvement des droits civiques. Le bus est aujourd’hui exposé au musée Henry Ford, près de Détroit.' },
+    at:{ zh:'羅莎·帕克斯博物館，阿拉巴馬州蒙哥馬利', en:'Rosa Parks Museum, Montgomery, Alabama', fr:'Musée Rosa Parks, Montgomery (Alabama)' } },
+  { theme:'culture', icon:'🚀', q:'Kennedy Space Center Visitor Complex',
+    title:{ zh:'登月火箭就在眼前', en:'A Moon rocket up close', fr:'Une fusée lunaire à portée de main' },
+    text:{ zh:'佛羅里達的甘迺迪太空中心展示一枚完整的農神五號火箭，長度超過一百公尺，平躺在館內。阿波羅 11 號就是從這裡升空，運氣好還能看到現役火箭發射。',
+      en:'Florida’s Kennedy Space Center displays a complete Saturn V rocket, over a hundred metres long, lying in its hall. Apollo 11 launched from here, and with luck you can watch a modern launch.',
+      fr:'Le centre spatial Kennedy, en Floride, expose une fusée Saturn V complète de plus de cent mètres, couchée dans un hall. Apollo 11 est parti d’ici, et avec de la chance on peut assister à un lancement actuel.' },
+    at:{ zh:'甘迺迪太空中心遊客中心，佛羅里達州', en:'Kennedy Space Center Visitor Complex, Florida', fr:'Centre spatial Kennedy, Floride' } },
+],
+
+contemporary: [
+  { theme:'world', icon:'🕊️', q:'9/11 Memorial & Museum',
+    title:{ zh:'九一一紀念池', en:'The 9/11 memorial pools', fr:'Les bassins du mémorial du 11 Septembre' },
+    text:{ zh:'世貿雙塔原址上有兩座方形的瀑布水池，邊緣刻著近三千名罹難者的名字，生日當天會有人在名字上插一朵白玫瑰。旁邊的一號世貿中心高 1,776 英尺，呼應獨立宣言的年份。',
+      en:'Two square waterfall pools fill the footprints of the Twin Towers, their parapets inscribed with nearly three thousand names; on each victim’s birthday a white rose is placed in the name. One World Trade Center nearby stands 1,776 feet tall, echoing the year of independence.',
+      fr:'Deux bassins carrés en cascade occupent l’emprise des tours jumelles ; leurs parapets portent près de trois mille noms, et une rose blanche est glissée dans chaque nom le jour de l’anniversaire de la victime. Le One World Trade Center voisin mesure 1 776 pieds, en écho à l’année de l’indépendance.' },
+    at:{ zh:'九一一國家紀念館與博物館，紐約曼哈頓下城', en:'National September 11 Memorial & Museum, Lower Manhattan', fr:'Mémorial et musée du 11 Septembre, Lower Manhattan' } },
+],
+
+},
+
 };

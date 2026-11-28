@@ -1991,6 +1991,587 @@ const COUNTRIES = [
   },
   ]
 },
+{
+  id:'china', flag:'flag-cn', color:'#c0392b',
+  name:{ zh:'中國', en:'China', fr:'Chine' },
+  intro:{ zh:'中國是世界上延續最久的文明之一。從商周的青銅禮器、秦漢的統一帝國、唐宋的繁華，到明清的專制與閉關，王朝在「分久必合、合久必分」之間更替。十九世紀起，中國在列強衝擊下走過帝制崩潰、民國、戰爭與革命，1949 年後的中華人民共和國又經歷了文革的動盪與改革開放後的快速崛起。這裡用十三個時期與五條主題線索，閱讀這段三千多年的歷史。',
+    en:'China is one of the world’s longest-lasting civilisations. From the ritual bronzes of Shang and Zhou, the unified empire of Qin and Han and the splendour of Tang and Song to the autocracy and seclusion of Ming and Qing, dynasties rose and fell in a rhythm of union and division. From the nineteenth century, under the pressure of the Western powers and Japan, China went through the fall of the empire, the Republic, war and revolution, and after 1949 the People’s Republic lived through the turmoil of the Cultural Revolution and a rapid rise after reform and opening. Thirteen periods and five thematic threads cover more than three thousand years.',
+    fr:'La Chine est l’une des plus anciennes civilisations continues du monde. Des bronzes rituels des Shang et des Zhou à l’empire unifié des Qin et des Han, de la splendeur des Tang et des Song à l’autocratie et à la fermeture des Ming et des Qing, les dynasties se succèdent au rythme de l’union et de la division. À partir du XIXᵉ siècle, sous la pression des puissances occidentales et du Japon, la Chine traverse la chute de l’empire, la République, la guerre et la révolution ; après 1949, la République populaire connaît les convulsions de la Révolution culturelle puis un essor rapide avec la réforme et l’ouverture. Treize périodes et cinq fils thématiques parcourent plus de trois mille ans.' },
+  threads:{
+    state:{ intro:{ zh:'從封建諸侯到中央集權的郡縣與科舉官僚，再到黨國體制：中國的政治一再在統一與分裂之間擺盪。',
+      en:'From feudal lords to centralised commanderies, examination-recruited bureaucrats and finally the party-state: Chinese politics has swung again and again between unity and division.',
+      fr:'Des seigneurs féodaux aux commanderies centralisées, aux mandarins recrutés par concours, puis au parti-État : la politique chinoise oscille sans cesse entre unité et division.' } },
+    faith:{ name:{ zh:'思想與信仰', en:'Thought & Belief', fr:'Pensée et croyances' },
+      intro:{ zh:'祖先崇拜、儒家、道家與外來的佛教交融成中國的精神世界；近代又有基督教、馬克思主義與民族主義的衝擊。',
+        en:'Ancestor worship, Confucianism, Daoism and Buddhism from abroad blended into China’s spiritual world; modern times brought the shocks of Christianity, Marxism and nationalism.',
+        fr:'Culte des ancêtres, confucianisme, taoïsme et bouddhisme venu de l’étranger forment le monde spirituel chinois ; l’époque moderne apporte le choc du christianisme, du marxisme et du nationalisme.' } },
+    society:{ intro:{ zh:'以農立國的帝國，靠運河、絲綢、瓷器與茶葉連結世界；二十世紀後半從計畫經濟轉向「世界工廠」。',
+      en:'An agrarian empire linked to the world by canals, silk, porcelain and tea; in the later twentieth century it moved from a planned economy to become the “workshop of the world”.',
+      fr:'Un empire agraire relié au monde par les canaux, la soie, la porcelaine et le thé ; à la fin du XXᵉ siècle, il passe de l’économie planifiée à « l’atelier du monde ».' } },
+    culture:{ intro:{ zh:'漢字、詩詞、書畫與四大發明，以及歷代對經典的反覆詮釋。',
+      en:'Chinese characters, poetry, calligraphy and painting, the great inventions, and the endless reinterpretation of the classics.',
+      fr:'L’écriture chinoise, la poésie, la calligraphie et la peinture, les grandes inventions et la relecture sans fin des classiques.' } },
+    world:{ name:{ zh:'中國與世界', en:'China & the World', fr:'La Chine et le monde' },
+      intro:{ zh:'從朝貢體系與絲綢之路，到鴉片戰爭的屈辱，再到今日的大國競爭。',
+        en:'From the tribute system and the Silk Roads to the humiliation of the Opium Wars and today’s great-power rivalry.',
+        fr:'Du système tributaire et des routes de la soie à l’humiliation des guerres de l’opium et à la rivalité des grandes puissances aujourd’hui.' } },
+  },
+  periods:[
+  {
+    id:'shangzhou', icon:'🏺', start:-1600, end:-771, world:'egypt',
+    name:{ zh:'商與西周', en:'Shang and Western Zhou', fr:'Les Shang et les Zhou de l’Ouest' },
+    summary:{ zh:'傳說中的夏朝之後，商朝是第一個有文字紀錄證實的王朝，留下大量甲骨文與青銅器。約前 1046 年周武王在牧野之戰滅商，以「天命」解釋政權更替，並實行分封制，把土地分給宗室與功臣建立諸侯國。前 771 年犬戎攻破鎬京，周室東遷，西周結束。',
+      en:'After the legendary Xia, the Shang is the first dynasty confirmed by written records, leaving vast numbers of oracle bones and bronzes. Around 1046 BC King Wu of Zhou overthrew the Shang at the Battle of Muye, justifying the change by the “Mandate of Heaven”, and divided the land among kinsmen and allies as feudal states. In 771 BC the Quanrong sacked the capital Haojing and the Zhou court moved east, ending the Western Zhou.',
+      fr:'Après la légendaire dynastie Xia, les Shang sont la première dynastie attestée par l’écrit, laissant d’innombrables os oraculaires et bronzes. Vers 1046 av. J.-C., le roi Wu des Zhou renverse les Shang à la bataille de Muye, justifiant ce changement par le « mandat du Ciel », et partage la terre entre parents et alliés en fiefs. En 771 av. J.-C., les Quanrong saccagent la capitale Haojing, et la cour des Zhou part vers l’est : fin des Zhou de l’Ouest.' },
+    events:[
+      { y:-1300, c:true, zh:'盤庚遷都於殷（今河南安陽）', en:'King Pangeng moves the capital to Yin (Anyang)', fr:'Le roi Pangeng installe la capitale à Yin (Anyang)' },
+      { y:-1046, c:true, zh:'牧野之戰，周滅商', en:'Battle of Muye: Zhou overthrows Shang', fr:'Bataille de Muye : les Zhou renversent les Shang' },
+      { y:-841, zh:'國人暴動，共和行政；中國歷史有確切紀年的開始', en:'Revolt in the capital and the Gonghe regency, the start of exact Chinese chronology', fr:'Révolte de la capitale et régence Gonghe, début de la chronologie chinoise exacte' },
+      { y:-771, zh:'犬戎攻破鎬京，周幽王被殺', en:'The Quanrong sack Haojing and kill King You', fr:'Les Quanrong saccagent Haojing et tuent le roi You' },
+    ],
+    themes:{
+      state:{ zh:'商王以占卜決定國事，周則以宗法與分封建立秩序：天子之下有諸侯，各自統治封國，透過血緣與禮制維繫。', en:'Shang kings governed by divination; the Zhou built order through lineage and enfeoffment, with the Son of Heaven above feudal lords bound by kinship and ritual.', fr:'Les rois Shang gouvernent par la divination ; les Zhou fondent l’ordre sur le lignage et l’inféodation, le Fils du Ciel dominant des seigneurs liés par la parenté et les rites.' },
+      faith:{ zh:'商人崇拜「帝」與祖先，用牛骨龜甲占卜；周人提出「天命靡常，惟德是輔」，統治的正當性取決於德行。', en:'The Shang worshipped Di and their ancestors and divined with bones and shells; the Zhou held that Heaven’s mandate is not fixed but goes to the virtuous.', fr:'Les Shang vénèrent Di et les ancêtres et pratiquent la divination sur os et carapaces ; les Zhou affirment que le mandat du Ciel n’est pas acquis mais revient aux vertueux.' },
+      society:{ zh:'黃河流域的粟作農業與青銅鑄造發達，貴族使用大型青銅禮器，殉葬與人牲在商代相當普遍。', en:'Millet farming along the Yellow River and bronze casting flourished; nobles used great ritual bronzes, and human sacrifice was common under the Shang.', fr:'Culture du millet le long du fleuve Jaune et fonte du bronze prospèrent ; les nobles usent de grands bronzes rituels, et les sacrifices humains sont courants sous les Shang.' },
+      culture:{ zh:'甲骨文是今日漢字的直接祖先；《詩經》中最早的篇章與「周禮」的傳統都源自這個時代。', en:'Oracle-bone script is the direct ancestor of today’s characters; the earliest poems of the Book of Songs and the Zhou ritual tradition date from this age.', fr:'L’écriture oraculaire est l’ancêtre direct des caractères actuels ; les plus anciens poèmes du Livre des Odes et la tradition rituelle des Zhou datent de cette époque.' },
+      world:{ zh:'商周與周邊的游牧與農耕部族時戰時和，「華夏」與「夷狄」的區分逐漸成形。', en:'Shang and Zhou alternately fought and traded with neighbouring nomadic and farming peoples, and the distinction between “Huaxia” and “barbarians” took shape.', fr:'Shang et Zhou combattent ou commercent tour à tour avec les peuples voisins, et la distinction entre « Huaxia » et « barbares » se forme.' },
+    }
+  },
+  {
+    id:'warring', icon:'⚔️', start:-770, end:-221, world:'greek',
+    name:{ zh:'春秋戰國', en:'Spring and Autumn and Warring States', fr:'Printemps et Automnes, Royaumes combattants' },
+    summary:{ zh:'周室東遷後王權衰落，諸侯互相兼併。春秋時期齊桓公、晉文公等霸主「尊王攘夷」；戰國時期七雄並立，各國變法圖強，戰爭規模越來越大。思想上則是百家爭鳴：孔子、老子、墨子、孟子、莊子、韓非都在這個時代。最後秦國憑商鞅變法累積的國力，在前 221 年統一天下。',
+      en:'After the move east, royal power faded and the feudal states swallowed one another. In the Spring and Autumn period hegemons such as Duke Huan of Qi led the states “in the king’s name”; in the Warring States seven kingdoms competed through reforms and ever larger wars. It was also the age of the Hundred Schools: Confucius, Laozi, Mozi, Mencius, Zhuangzi and Han Fei. Qin, strengthened by Shang Yang’s reforms, finally unified the realm in 221 BC.',
+      fr:'Après le transfert vers l’est, le pouvoir royal décline et les fiefs s’absorbent les uns les autres. Aux Printemps et Automnes, des hégémons comme le duc Huan de Qi dominent « au nom du roi » ; aux Royaumes combattants, sept États rivalisent par des réformes et des guerres toujours plus vastes. C’est aussi l’âge des Cent Écoles : Confucius, Laozi, Mozi, Mencius, Zhuangzi, Han Fei. Le Qin, renforcé par les réformes de Shang Yang, unifie le pays en 221 av. J.-C.' },
+    events:[
+      { y:-679, zh:'齊桓公成為第一位霸主', en:'Duke Huan of Qi becomes the first hegemon', fr:'Le duc Huan de Qi devient le premier hégémon' },
+      { y:-551, zh:'孔子出生', en:'Confucius is born', fr:'Naissance de Confucius' },
+      { y:-453, zh:'三家分晉，戰國時代開始', en:'Jin is partitioned by three families: the Warring States begin', fr:'Partage de Jin entre trois familles : début des Royaumes combattants' },
+      { y:-356, zh:'商鞅在秦國變法', en:'Shang Yang’s reforms in Qin', fr:'Réformes de Shang Yang au Qin' },
+      { y:-260, zh:'長平之戰，秦大敗趙', en:'Battle of Changping: Qin crushes Zhao', fr:'Bataille de Changping : Qin écrase Zhao' },
+      { y:-221, zh:'秦滅齊，統一六國', en:'Qin conquers Qi and unifies the six states', fr:'Qin conquiert Qi et unifie les six royaumes' },
+    ],
+    themes:{
+      state:{ zh:'分封制逐漸被郡縣制取代，國君直接任命官員；法家主張以嚴刑峻法、獎勵耕戰來富國強兵。', en:'Enfeoffment gave way to centrally appointed officials in counties; Legalists urged harsh laws and rewards for farming and fighting to enrich and strengthen the state.', fr:'L’inféodation recule devant des districts administrés par des fonctionnaires nommés ; les légistes prônent des lois sévères et la récompense des paysans et des soldats.' },
+      faith:{ zh:'儒家講仁與禮，道家講自然無為，墨家講兼愛非攻，陰陽家與法家也各有主張，奠定了中國思想的基本格局。', en:'Confucians taught humaneness and ritual, Daoists naturalness and non-action, Mohists universal love and opposition to aggressive war; together with the Yin-Yang and Legalist schools they set the framework of Chinese thought.', fr:'Les confucéens enseignent l’humanité et les rites, les taoïstes le naturel et le non-agir, les moïstes l’amour universel et le refus de la guerre offensive ; avec les écoles du yin-yang et des légistes, ils posent le cadre de la pensée chinoise.' },
+      society:{ zh:'鐵器與牛耕普及，井田制瓦解，土地可以買賣；商業城市興起，出現鑄幣。', en:'Iron tools and ox-ploughs spread, the old well-field system broke down and land could be bought and sold; commercial cities and coinage appeared.', fr:'Outils de fer et labour à bœufs se diffusent, l’ancien système des champs carrés disparaît et la terre devient vendable ; villes marchandes et monnaies apparaissent.' },
+      culture:{ zh:'《論語》、《道德經》、《孟子》、《莊子》、《孫子兵法》等經典成書；屈原寫下《楚辭》。', en:'Classics such as the Analects, the Daodejing, Mencius, Zhuangzi and Sunzi’s Art of War were compiled, and Qu Yuan wrote the Songs of Chu.', fr:'Entretiens, Daodejing, Mencius, Zhuangzi et Art de la guerre de Sunzi sont compilés, et Qu Yuan écrit les Chants de Chu.' },
+      world:{ zh:'北方諸國修築長城防禦游牧民族；趙武靈王推行「胡服騎射」學習游牧騎兵。', en:'Northern states built walls against the nomads, and King Wuling of Zhao adopted nomad dress and mounted archery.', fr:'Les États du nord bâtissent des murs contre les nomades, et le roi Wuling de Zhao adopte le costume et l’archerie montée des nomades.' },
+    }
+  },
+  {
+    id:'qinhan', icon:'🏯', start:-221, end:220, world:'qin_han',
+    name:{ zh:'秦漢', en:'Qin and Han', fr:'Les Qin et les Han' },
+    summary:{ zh:'秦始皇建立第一個中央集權帝國，統一文字、度量衡與貨幣，修築長城，卻因暴政在十五年內滅亡。劉邦建立的漢朝延續四百年，漢武帝獨尊儒術、北擊匈奴、派張騫通西域；中間經王莽篡位而分為西漢與東漢。東漢末年外戚與宦官爭權，黃巾之亂後群雄割據，漢朝名存實亡。',
+      en:'The First Emperor of Qin created the first centralised empire, standardising script, weights and measures and coinage and building the Great Wall, but his harsh rule collapsed within fifteen years. The Han, founded by Liu Bang, lasted four centuries: Emperor Wu made Confucianism state orthodoxy, fought the Xiongnu and sent Zhang Qian to Central Asia; Wang Mang’s usurpation split it into Western and Eastern Han. In the late Eastern Han, consort clans and eunuchs fought for power, and after the Yellow Turban rebellion warlords divided the empire.',
+      fr:'Le Premier Empereur des Qin crée le premier empire centralisé, unifie l’écriture, les poids et mesures et la monnaie et bâtit la Grande Muraille, mais son régime brutal s’effondre en quinze ans. Les Han, fondés par Liu Bang, durent quatre siècles : l’empereur Wu fait du confucianisme l’orthodoxie d’État, combat les Xiongnu et envoie Zhang Qian en Asie centrale ; l’usurpation de Wang Mang sépare Han occidentaux et orientaux. À la fin des Han orientaux, clans des impératrices et eunuques se disputent le pouvoir, et après la révolte des Turbans jaunes les seigneurs de guerre se partagent l’empire.' },
+    events:[
+      { y:-221, zh:'秦始皇稱帝，推行郡縣制', en:'The First Emperor takes the imperial title and imposes commanderies', fr:'Le Premier Empereur prend le titre impérial et impose les commanderies' },
+      { y:-213, zh:'焚書；隔年坑儒', en:'Burning of the books; scholars buried the next year', fr:'Autodafé des livres ; lettrés enterrés l’année suivante' },
+      { y:-209, zh:'陳勝、吳廣起義', en:'Chen Sheng and Wu Guang rise in revolt', fr:'Révolte de Chen Sheng et Wu Guang' },
+      { y:-202, zh:'劉邦擊敗項羽，建立漢朝', en:'Liu Bang defeats Xiang Yu and founds the Han', fr:'Liu Bang bat Xiang Yu et fonde les Han' },
+      { y:-138, zh:'張騫出使西域', en:'Zhang Qian sets out for the Western Regions', fr:'Zhang Qian part pour les Régions de l’Ouest' },
+      { y:-91, c:true, zh:'司馬遷完成《史記》', en:'Sima Qian completes the Records of the Grand Historian', fr:'Sima Qian achève les Mémoires historiques' },
+      { y:9, zh:'王莽篡漢，建立新朝', en:'Wang Mang usurps the throne and founds the Xin', fr:'Wang Mang usurpe le trône et fonde les Xin' },
+      { y:25, zh:'劉秀建立東漢', en:'Liu Xiu founds the Eastern Han', fr:'Liu Xiu fonde les Han orientaux' },
+      { y:105, zh:'蔡倫改良造紙術', en:'Cai Lun improves papermaking', fr:'Cai Lun perfectionne la fabrication du papier' },
+      { y:184, zh:'黃巾之亂', en:'The Yellow Turban rebellion', fr:'Révolte des Turbans jaunes' },
+      { y:208, zh:'赤壁之戰', en:'Battle of Red Cliffs', fr:'Bataille de la Falaise rouge' },
+    ],
+    themes:{
+      state:{ zh:'皇帝制度、郡縣制與官僚體系從此延續兩千年；漢代以察舉制選拔官員，「外儒內法」成為帝國統治的基調。', en:'The imperial system, commanderies and bureaucracy endured for two thousand years; the Han recruited officials by recommendation, and “Confucian outside, Legalist inside” became the keynote of imperial rule.', fr:'Le système impérial, les commanderies et la bureaucratie durent deux mille ans ; les Han recrutent par recommandation, et « confucéen au-dehors, légiste au-dedans » devient le ton du gouvernement impérial.' },
+      faith:{ zh:'董仲舒結合儒學與陰陽五行，提出天人感應；東漢時佛教從西域傳入，道教也在民間成形。', en:'Dong Zhongshu fused Confucianism with Yin-Yang and the Five Phases into a theory of correspondence between Heaven and man; Buddhism arrived from Central Asia under the Eastern Han, and religious Daoism took shape.', fr:'Dong Zhongshu fusionne confucianisme, yin-yang et cinq phases en une théorie des correspondances entre Ciel et homme ; le bouddhisme arrive d’Asie centrale sous les Han orientaux, et le taoïsme religieux prend forme.' },
+      society:{ zh:'鹽鐵官營、修築道路與運河，人口在西漢末年達到約六千萬；豪強地主勢力逐漸坐大。', en:'Salt and iron became state monopolies, roads and canals were built, and the population reached about sixty million by the end of the Western Han, while powerful landed clans grew.', fr:'Sel et fer deviennent monopoles d’État, routes et canaux se construisent, la population atteint environ soixante millions à la fin des Han occidentaux, tandis que les grands clans terriens s’affirment.' },
+      culture:{ zh:'司馬遷《史記》開創紀傳體史書；漢賦、隸書與造紙術發展，「漢人」、「漢字」的名稱都來自這個朝代。', en:'Sima Qian’s Records created the biographical form of history; Han rhapsodies, clerical script and paper developed, and the very words for Chinese people and characters, “Han”, come from this dynasty.', fr:'Les Mémoires de Sima Qian inventent l’histoire en biographies ; poèmes fu, écriture des scribes et papier se développent, et les mots « Han » pour le peuple et l’écriture chinois viennent de cette dynastie.' },
+      world:{ zh:'漢武帝反擊匈奴並開通河西走廊，絲綢之路連結中國與中亞、羅馬，中國的影響也擴及朝鮮與越南北部。', en:'Emperor Wu struck back at the Xiongnu and opened the Hexi Corridor; the Silk Road linked China with Central Asia and Rome, and Chinese influence reached Korea and northern Vietnam.', fr:'L’empereur Wu riposte aux Xiongnu et ouvre le corridor du Hexi ; la route de la soie relie la Chine à l’Asie centrale et à Rome, et l’influence chinoise atteint la Corée et le nord du Vietnam.' },
+    }
+  },
+  {
+    id:'division', icon:'🏹', start:220, end:589, world:'roman',
+    name:{ zh:'三國兩晉南北朝', en:'Three Kingdoms to Northern and Southern Dynasties', fr:'Des Trois Royaumes aux dynasties du Nord et du Sud' },
+    summary:{ zh:'漢朝滅亡後魏、蜀、吳三國鼎立，西晉短暫統一後因八王之亂而崩潰，北方游牧民族紛紛建國，晉室與大批士族南渡，形成南北對峙近三百年。北方的北魏孝文帝推行漢化，南方則在宋、齊、梁、陳之間更替。這是政治分裂的時代，卻也是民族融合、佛教興盛與江南開發的時代。',
+      en:'After the Han fell, the Three Kingdoms of Wei, Shu and Wu divided China. The Western Jin briefly reunified it before collapsing in the War of the Eight Princes; nomadic peoples founded states in the north while the Jin court and great families fled south, beginning almost three centuries of north–south division. In the north Emperor Xiaowen of Northern Wei promoted sinicisation, while the south passed through the Song, Qi, Liang and Chen. An age of political division, it was also one of ethnic fusion, flourishing Buddhism and the development of the Yangzi delta.',
+      fr:'Après la chute des Han, les Trois Royaumes de Wei, Shu et Wu se partagent la Chine. Les Jin de l’Ouest la réunifient brièvement avant de s’effondrer dans la guerre des Huit Princes ; des peuples nomades fondent des États au nord tandis que la cour Jin et les grandes familles fuient au sud, ouvrant près de trois siècles de division. Au nord, l’empereur Xiaowen des Wei du Nord promeut la sinisation ; au sud se succèdent Song, Qi, Liang et Chen. Âge de division politique, c’est aussi celui du métissage des peuples, de l’essor du bouddhisme et de la mise en valeur du bas Yangzi.' },
+    events:[
+      { y:220, zh:'曹丕代漢稱帝，三國時代開始', en:'Cao Pi ends the Han and becomes emperor of Wei', fr:'Cao Pi met fin aux Han et devient empereur de Wei' },
+      { y:280, zh:'西晉滅吳，短暫統一', en:'Western Jin conquers Wu and briefly reunifies China', fr:'Les Jin de l’Ouest conquièrent Wu et réunifient brièvement la Chine' },
+      { y:311, zh:'永嘉之亂，匈奴攻破洛陽', en:'The Yongjia disaster: the Xiongnu sack Luoyang', fr:'Désastre de Yongjia : les Xiongnu saccagent Luoyang' },
+      { y:383, zh:'淝水之戰，東晉擊敗前秦', en:'Battle of the Fei River: Eastern Jin defeats Former Qin', fr:'Bataille de la Fei : les Jin de l’Est battent les Qin antérieurs' },
+      { y:494, zh:'北魏孝文帝遷都洛陽，推行漢化', en:'Emperor Xiaowen moves the Northern Wei capital to Luoyang and promotes sinicisation', fr:'L’empereur Xiaowen transfère la capitale des Wei du Nord à Luoyang et promeut la sinisation' },
+    ],
+    themes:{
+      state:{ zh:'九品中正制讓官位被門閥士族壟斷，「上品無寒門，下品無勢族」。北朝的均田制與府兵制，後來被隋唐繼承。', en:'The nine-rank system let great clans monopolise office: “no humble family in the upper ranks, no great family in the lower”. The equal-field and militia systems of the north were later inherited by Sui and Tang.', fr:'Le système des neuf rangs livre les charges aux grands clans : « pas de famille modeste en haut, pas de grande famille en bas ». Les systèmes du nord, terres égales et milices, seront repris par les Sui et les Tang.' },
+      faith:{ zh:'佛教大盛，雲岡、龍門石窟開鑿，南朝「四百八十寺」；士人崇尚玄學與清談。', en:'Buddhism flourished: the Yungang and Longmen caves were carved and the south boasted “four hundred and eighty temples”; scholars favoured Neo-Daoist “dark learning” and pure conversation.', fr:'Le bouddhisme s’épanouit : grottes de Yungang et Longmen, « quatre cent quatre-vingts temples » au sud ; les lettrés cultivent la « science du mystère » et la conversation pure.' },
+      society:{ zh:'北方戰亂使人口大量南遷，江南逐漸開發成富庶地區；莊園經濟與依附農民增加。', en:'War drove masses south, and the lower Yangzi became a rich region; manorial estates and dependent peasants spread.', fr:'Les guerres poussent des foules vers le sud, et le bas Yangzi devient une région riche ; grands domaines et paysans dépendants se multiplient.' },
+      culture:{ zh:'王羲之的書法、陶淵明的田園詩、顧愷之的繪畫與《世說新語》，展現了士族的審美與個性。', en:'Wang Xizhi’s calligraphy, Tao Yuanming’s pastoral poems, Gu Kaizhi’s painting and A New Account of Tales of the World show the taste and individuality of the aristocracy.', fr:'La calligraphie de Wang Xizhi, la poésie champêtre de Tao Yuanming, la peinture de Gu Kaizhi et le Shishuo xinyu montrent le goût et l’individualité de l’aristocratie.' },
+      world:{ zh:'匈奴、鮮卑、羯、氐、羌等民族入主中原，最後與漢人融合；法顯西行到印度取經。', en:'Xiongnu, Xianbei, Jie, Di and Qiang peoples ruled the north and in time merged with the Han; the monk Faxian travelled to India for scriptures.', fr:'Xiongnu, Xianbei, Jie, Di et Qiang dominent le nord et se fondent peu à peu dans les Han ; le moine Faxian part chercher les écritures en Inde.' },
+    }
+  },
+  {
+    id:'suitang', icon:'🐎', start:589, end:907, world:'tang_song',
+    name:{ zh:'隋唐', en:'Sui and Tang', fr:'Les Sui et les Tang' },
+    summary:{ zh:'隋朝在 589 年重新統一中國，開鑿大運河、創立科舉，卻因過度役使民力而二世而亡。唐朝在太宗「貞觀之治」與玄宗「開元盛世」時達到顛峰，長安是當時世界上最大的城市之一，武則天更成為中國唯一的女皇帝。755 年安史之亂後唐朝由盛轉衰，藩鎮割據，最後在黃巢之亂後滅亡。',
+      en:'The Sui reunified China in 589, dug the Grand Canal and created the civil examinations, but exhausted the people and fell under its second emperor. The Tang peaked under Taizong’s Zhenguan reign and Xuanzong’s Kaiyuan era; Chang’an was among the largest cities in the world, and Wu Zetian became China’s only empress regnant. After the An Lushan rebellion of 755 the Tang declined, regional military governors gained autonomy, and the dynasty fell after Huang Chao’s rebellion.',
+      fr:'Les Sui réunifient la Chine en 589, creusent le Grand Canal et créent les examens, mais épuisent le peuple et tombent dès le deuxième empereur. Les Tang culminent sous l’ère Zhenguan de Taizong et l’ère Kaiyuan de Xuanzong ; Chang’an est l’une des plus grandes villes du monde, et Wu Zetian devient la seule impératrice régnante de Chine. Après la révolte d’An Lushan en 755, les Tang déclinent, les gouverneurs militaires s’émancipent, et la dynastie tombe après la révolte de Huang Chao.' },
+    events:[
+      { y:605, zh:'開鑿大運河；科舉制度建立', en:'The Grand Canal is dug; the civil examinations are created', fr:'Creusement du Grand Canal ; création des examens' },
+      { y:618, zh:'李淵建立唐朝', en:'Li Yuan founds the Tang', fr:'Li Yuan fonde les Tang' },
+      { y:626, zh:'玄武門之變，李世民即位', en:'The Xuanwu Gate incident; Li Shimin takes the throne', fr:'Incident de la porte Xuanwu ; Li Shimin monte sur le trône' },
+      { y:645, zh:'玄奘從印度取經歸來', en:'Xuanzang returns from India with the scriptures', fr:'Xuanzang revient d’Inde avec les écritures' },
+      { y:690, zh:'武則天稱帝，改國號為周', en:'Wu Zetian proclaims herself emperor of Zhou', fr:'Wu Zetian se proclame empereur des Zhou' },
+      { y:751, zh:'怛羅斯之戰，唐軍敗於阿拉伯', en:'Battle of Talas: the Tang lose to the Abbasids', fr:'Bataille de Talas : les Tang battus par les Abbassides' },
+      { y:755, zh:'安史之亂爆發', en:'The An Lushan rebellion breaks out', fr:'Début de la révolte d’An Lushan' },
+      { y:845, zh:'會昌滅佛', en:'The Huichang persecution of Buddhism', fr:'Persécution du bouddhisme de l’ère Huichang' },
+      { y:875, zh:'黃巢之亂', en:'Huang Chao’s rebellion', fr:'Révolte de Huang Chao' },
+      { y:907, zh:'朱溫篡唐，五代開始', en:'Zhu Wen ends the Tang: the Five Dynasties begin', fr:'Zhu Wen renverse les Tang : début des Cinq Dynasties' },
+    ],
+    themes:{
+      state:{ zh:'三省六部制分工明確，科舉讓寒門子弟有機會入仕；唐代律令成為東亞各國的範本。', en:'The Three Departments and Six Ministries divided government clearly, and the examinations opened office to humbler men; Tang law codes became the model for East Asia.', fr:'Les Trois Départements et Six Ministères structurent l’État, et les examens ouvrent les charges aux familles modestes ; les codes Tang servent de modèle à l’Asie orientale.' },
+      faith:{ zh:'佛教各宗派興盛，禪宗、淨土宗本土化；景教、祆教、摩尼教與伊斯蘭教也傳入長安。', en:'Buddhist schools flourished and Chan and Pure Land became thoroughly Chinese; Nestorian Christianity, Zoroastrianism, Manichaeism and Islam also reached Chang’an.', fr:'Les écoles bouddhiques prospèrent, Chan et Terre pure se sinisent ; nestorianisme, zoroastrisme, manichéisme et islam atteignent aussi Chang’an.' },
+      society:{ zh:'大運河連結南北，均田制與租庸調制在安史之亂後瓦解，改行兩稅法。', en:'The Grand Canal linked north and south; the equal-field and tax systems collapsed after An Lushan and were replaced by the two-tax system.', fr:'Le Grand Canal relie nord et sud ; terres égales et impôts en nature s’effondrent après An Lushan, remplacés par le système des deux impôts.' },
+      culture:{ zh:'唐詩是中國詩歌的高峰：李白、杜甫、王維、白居易；顏真卿的書法與吳道子的繪畫也影響深遠。', en:'Tang poetry is the summit of Chinese verse: Li Bai, Du Fu, Wang Wei, Bai Juyi; Yan Zhenqing’s calligraphy and Wu Daozi’s painting also left a deep mark.', fr:'La poésie Tang est le sommet de la poésie chinoise : Li Bai, Du Fu, Wang Wei, Bai Juyi ; la calligraphie de Yan Zhenqing et la peinture de Wu Daozi marquent aussi profondément.' },
+      world:{ zh:'唐朝被稱為「天可汗」，日本派遣遣唐使學習制度與文化；文成公主入藏，絲路貿易繁盛。', en:'Tang emperors were hailed as “Heavenly Khan”; Japan sent embassies to learn its institutions and culture, Princess Wencheng married into Tibet, and Silk Road trade boomed.', fr:'Les empereurs Tang sont salués « Khan céleste » ; le Japon envoie des ambassades apprendre institutions et culture, la princesse Wencheng épouse le roi du Tibet, et le commerce de la soie prospère.' },
+    }
+  },
+  {
+    id:'song', icon:'🖌️', start:907, end:1279, world:'tang_song',
+    name:{ zh:'五代與宋', en:'Five Dynasties and Song', fr:'Les Cinq Dynasties et les Song' },
+    summary:{ zh:'唐亡後北方五個短命王朝更替，南方十國並立。960 年趙匡胤陳橋兵變建立宋朝，以「重文輕武」防止軍人奪權。宋朝經濟與文化極為繁榮，卻長期受遼、西夏與金的軍事壓力：1127 年靖康之變後失去北方，南宋以杭州為都，最後在 1279 年崖山海戰中被蒙古所滅。',
+      en:'After the Tang, five short-lived dynasties followed one another in the north while ten kingdoms shared the south. In 960 Zhao Kuangyin seized power and founded the Song, favouring civil officials over generals to prevent coups. Song China was extraordinarily prosperous and cultured but under constant military pressure from the Liao, Western Xia and Jin; after the Jingkang disaster of 1127 it lost the north, ruled from Hangzhou as the Southern Song, and was finally destroyed by the Mongols at the naval battle of Yamen in 1279.',
+      fr:'Après les Tang, cinq dynasties éphémères se succèdent au nord et dix royaumes se partagent le sud. En 960, Zhao Kuangyin fonde les Song et privilégie les lettrés sur les militaires pour prévenir les coups d’État. La Chine des Song est d’une prospérité et d’un raffinement extraordinaires, mais subit la pression militaire des Liao, des Xia et des Jin ; après la catastrophe de Jingkang en 1127, elle perd le nord, gouverne depuis Hangzhou sous les Song du Sud, puis est anéantie par les Mongols à la bataille navale de Yamen en 1279.' },
+    events:[
+      { y:960, zh:'陳橋兵變，宋朝建立', en:'The Chenqiao mutiny: the Song is founded', fr:'Mutinerie de Chenqiao : fondation des Song' },
+      { y:1005, zh:'宋遼簽訂澶淵之盟', en:'The Treaty of Chanyuan between Song and Liao', fr:'Traité de Chanyuan entre Song et Liao' },
+      { y:1069, zh:'王安石變法', en:'Wang Anshi’s reforms', fr:'Réformes de Wang Anshi' },
+      { y:1127, zh:'靖康之變，北宋滅亡，南宋建立', en:'The Jingkang disaster ends the Northern Song; the Southern Song begins', fr:'Catastrophe de Jingkang : fin des Song du Nord, début des Song du Sud' },
+      { y:1142, by:'Yue Fei', zh:'岳飛被殺，宋金和議', en:'Yue Fei is executed and peace is made with the Jin', fr:'Exécution de Yue Fei et paix avec les Jin' },
+      { y:1279, zh:'崖山海戰，南宋滅亡', en:'Battle of Yamen: the end of the Southern Song', fr:'Bataille de Yamen : fin des Song du Sud' },
+    ],
+    themes:{
+      state:{ zh:'科舉大幅擴大，士大夫成為統治階層，皇帝與文官「共治天下」；但冗官、冗兵與財政負擔日益沉重。', en:'The examinations expanded greatly and scholar-officials became the ruling class, “sharing rule” with the emperor; but swollen ranks of officials and soldiers weighed ever more on finances.', fr:'Les examens s’élargissent, les lettrés-fonctionnaires deviennent la classe dirigeante et « gouvernent avec » l’empereur ; mais pléthore de fonctionnaires et de soldats pèse de plus en plus sur les finances.' },
+      faith:{ zh:'周敦頤、程顥、程頤到朱熹發展出理學，把儒學與宇宙論結合，成為之後七百年的官方正統。', en:'From Zhou Dunyi and the Cheng brothers to Zhu Xi, Neo-Confucianism united ethics and cosmology and became official orthodoxy for the next seven centuries.', fr:'De Zhou Dunyi et des frères Cheng à Zhu Xi, le néo-confucianisme unit éthique et cosmologie et devient l’orthodoxie officielle pour sept siècles.' },
+      society:{ zh:'占城稻、商業城市、紙幣「交子」與海外貿易興盛，開封與杭州人口都超過百萬。', en:'Champa rice, commercial cities, the first paper money (jiaozi) and overseas trade flourished, and Kaifeng and Hangzhou each passed a million people.', fr:'Riz de Champa, villes marchandes, premier papier-monnaie (jiaozi) et commerce maritime prospèrent, et Kaifeng comme Hangzhou dépassent le million d’habitants.' },
+      culture:{ zh:'活字印刷、火藥與指南針廣泛應用；宋詞、蘇軾、李清照、山水畫與〈清明上河圖〉代表了宋代的文化高峰。', en:'Movable type, gunpowder and the compass came into wide use; ci lyrics, Su Shi, Li Qingzhao, landscape painting and Along the River during the Qingming Festival mark the cultural summit of the Song.', fr:'Caractères mobiles, poudre et boussole se répandent ; poèmes ci, Su Shi, Li Qingzhao, peinture de paysage et Le Jour de Qingming au bord de la rivière marquent l’apogée culturel des Song.' },
+      world:{ zh:'契丹的遼、党項的西夏與女真的金先後與宋對峙，宋以「歲幣」換取和平；泉州成為國際大港。', en:'The Khitan Liao, Tangut Xia and Jurchen Jin confronted the Song in turn, and the Song bought peace with annual payments; Quanzhou became a great international port.', fr:'Liao khitans, Xia tangoutes et Jin jürchen affrontent tour à tour les Song, qui achètent la paix par des tributs annuels ; Quanzhou devient un grand port international.' },
+    }
+  },
+  {
+    id:'yuan', icon:'🐎', start:1271, end:1368, world:'mongol',
+    name:{ zh:'元朝', en:'The Yuan Dynasty', fr:'La dynastie Yuan' },
+    summary:{ zh:'成吉思汗統一蒙古後，蒙古帝國橫掃歐亞。忽必烈在 1271 年定國號為元，以大都（今北京）為首都，1279 年滅南宋，中國第一次被游牧民族完全統治。元朝實行族群分等，漢人地位低落；中後期政局動盪、紙幣濫發、黃河氾濫，終於爆發紅巾軍起義，1368 年朱元璋攻入大都，元朝退回草原。',
+      en:'After Genghis Khan united the Mongols, their empire swept across Eurasia. Kublai Khan proclaimed the Yuan dynasty in 1271 with its capital at Dadu (Beijing) and destroyed the Southern Song in 1279, the first time all of China was ruled by a steppe people. The Yuan ranked its subjects by ethnicity, leaving the Han at the bottom; later decades brought political turmoil, runaway paper money and Yellow River floods, and the Red Turban rebellion followed. In 1368 Zhu Yuanzhang took Dadu and the Yuan retreated to the steppe.',
+      fr:'Après l’unification des Mongols par Gengis Khan, leur empire balaie l’Eurasie. Kubilai proclame la dynastie Yuan en 1271, avec Dadu (Pékin) pour capitale, et anéantit les Song du Sud en 1279 : pour la première fois, toute la Chine est gouvernée par un peuple des steppes. Les Yuan classent leurs sujets par origine, reléguant les Han au bas de l’échelle ; troubles politiques, inflation du papier-monnaie et crues du fleuve Jaune mènent à la révolte des Turbans rouges. En 1368, Zhu Yuanzhang prend Dadu et les Yuan se replient dans la steppe.' },
+    events:[
+      { y:1271, zh:'忽必烈定國號為元', en:'Kublai Khan proclaims the Yuan dynasty', fr:'Kubilai proclame la dynastie Yuan' },
+      { y:1275, zh:'馬可·波羅抵達元朝（依其遊記）', en:'Marco Polo reaches the Yuan court (by his own account)', fr:'Marco Polo arrive à la cour Yuan (selon son récit)' },
+      { y:1281, zh:'第二次東征日本失敗', en:'The second invasion of Japan fails', fr:'Échec de la seconde invasion du Japon' },
+      { y:1351, zh:'紅巾軍起義', en:'The Red Turban rebellion', fr:'Révolte des Turbans rouges' },
+      { y:1368, zh:'明軍攻入大都，元帝北逃', en:'Ming troops take Dadu and the Yuan emperor flees north', fr:'Les Ming prennent Dadu et l’empereur Yuan fuit au nord' },
+    ],
+    themes:{
+      state:{ zh:'設中書省與行省，奠定今日省級行政區的雛形；人分蒙古、色目、漢人、南人四等，科舉長期停辦。', en:'The Secretariat and branch secretariats laid the basis of today’s provinces; subjects were ranked Mongols, Semu, Han and Southerners, and the examinations were long suspended.', fr:'Le Secrétariat et ses antennes provinciales préfigurent les provinces actuelles ; les sujets sont classés en Mongols, Semu, Han et Méridionaux, et les examens longtemps suspendus.' },
+      faith:{ zh:'蒙古統治者對宗教寬容，藏傳佛教受到尊崇，八思巴被封為帝師；伊斯蘭教與基督教也有發展。', en:'The Mongol rulers were tolerant of religion; Tibetan Buddhism was honoured and Phags-pa made Imperial Preceptor, while Islam and Christianity also grew.', fr:'Les souverains mongols sont tolérants ; le bouddhisme tibétain est honoré et Phags-pa nommé précepteur impérial, tandis qu’islam et christianisme progressent.' },
+      society:{ zh:'驛站與運河貫通歐亞，大都是國際城市；紙幣「中統鈔」通行，但後期濫發造成通膨。', en:'Relay stations and canals spanned Eurasia and Dadu was an international city; paper money circulated widely, but later over-issue caused inflation.', fr:'Relais de poste et canaux traversent l’Eurasie, et Dadu est une ville internationale ; le papier-monnaie circule largement, mais son émission excessive cause l’inflation.' },
+      culture:{ zh:'讀書人仕途受阻，轉而創作雜劇與散曲，關漢卿《竇娥冤》、王實甫《西廂記》是代表；黃公望等畫家開啟文人畫高峰。', en:'Barred from office, scholars turned to drama and songs: Guan Hanqing’s Injustice to Dou E and Wang Shifu’s Romance of the Western Chamber; painters such as Huang Gongwang raised literati painting to a peak.', fr:'Écartés des charges, les lettrés se tournent vers le théâtre et la chanson : Le Ressentiment de Dou E de Guan Hanqing, L’Histoire du pavillon d’Occident de Wang Shifu ; des peintres comme Huang Gongwang portent la peinture lettrée à son sommet.' },
+      world:{ zh:'蒙古帝國讓歐亞交流空前頻繁：伊斯蘭的天文與醫學傳入中國，中國的印刷與火藥知識傳往西方；黑死病也可能沿著這些路線擴散。', en:'The Mongol empire brought unprecedented exchange across Eurasia: Islamic astronomy and medicine reached China, Chinese printing and gunpowder travelled west, and the Black Death may have spread along the same routes.', fr:'L’empire mongol entraîne des échanges inédits en Eurasie : astronomie et médecine islamiques gagnent la Chine, imprimerie et poudre chinoises partent vers l’ouest, et la peste noire a pu emprunter les mêmes routes.' },
+    }
+  },
+  {
+    id:'ming', icon:'🏮', start:1368, end:1644, world:'renaissance_exploration',
+    name:{ zh:'明朝', en:'The Ming Dynasty', fr:'La dynastie Ming' },
+    summary:{ zh:'出身貧農的朱元璋建立明朝，廢除宰相，加強皇權。明成祖朱棣奪位後遷都北京、興建紫禁城，派鄭和七下西洋。明朝中期以後實施海禁，修築今日所見的長城，對抗蒙古與倭寇；張居正改革一度振興國勢，但晚明宦官專權、黨爭激烈，又逢小冰期饑荒，李自成在 1644 年攻破北京，崇禎皇帝自縊，清軍隨即入關。',
+      en:'Zhu Yuanzhang, born a poor peasant, founded the Ming, abolished the post of chancellor and concentrated power in the throne. His son Zhu Di seized the throne, moved the capital to Beijing, built the Forbidden City and sent Zheng He on seven voyages to the western ocean. Later the Ming banned private sea trade and built the Great Wall we see today against Mongols and pirates; Zhang Juzheng’s reforms briefly revived the state, but eunuch power, factional strife and famine in the Little Ice Age brought rebellion. Li Zicheng took Beijing in 1644, the Chongzhen Emperor hanged himself, and the Qing marched through the passes.',
+      fr:'Zhu Yuanzhang, né paysan pauvre, fonde les Ming, supprime la charge de chancelier et concentre le pouvoir. Son fils Zhu Di usurpe le trône, transfère la capitale à Pékin, bâtit la Cité interdite et envoie Zheng He en sept expéditions vers l’océan occidental. Ensuite les Ming interdisent le commerce maritime privé et construisent la Grande Muraille actuelle contre Mongols et pirates ; les réformes de Zhang Juzheng redressent un temps l’État, mais pouvoir des eunuques, luttes de factions et famines du petit âge glaciaire mènent à la révolte. Li Zicheng prend Pékin en 1644, l’empereur Chongzhen se pend, et les Qing franchissent les passes.' },
+    events:[
+      { y:1368, zh:'朱元璋在南京稱帝', en:'Zhu Yuanzhang proclaims himself emperor in Nanjing', fr:'Zhu Yuanzhang se proclame empereur à Nankin' },
+      { y:1405, by:'Zheng He', zh:'鄭和第一次下西洋', en:'Zheng He’s first voyage', fr:'Premier voyage de Zheng He' },
+      { y:1421, zh:'正式遷都北京', en:'The capital officially moves to Beijing', fr:'La capitale est officiellement transférée à Pékin' },
+      { y:1449, zh:'土木堡之變，明英宗被蒙古俘虜', en:'The Tumu crisis: the Zhengtong Emperor is captured by the Oirats', fr:'Crise de Tumu : l’empereur Zhengtong est capturé par les Oïrats' },
+      { y:1557, zh:'葡萄牙人取得澳門居留權', en:'The Portuguese settle in Macau', fr:'Les Portugais s’installent à Macao' },
+      { y:1582, zh:'張居正去世；利瑪竇抵達澳門', en:'Zhang Juzheng dies; Matteo Ricci arrives in Macau', fr:'Mort de Zhang Juzheng ; Matteo Ricci arrive à Macao' },
+      { y:1592, zh:'萬曆朝鮮之役，援朝抗日', en:'The Imjin War: Ming troops help Korea against Japan', fr:'Guerre d’Imjin : les Ming aident la Corée contre le Japon' },
+      { y:1644, zh:'李自成攻破北京，崇禎自縊', en:'Li Zicheng takes Beijing and the Chongzhen Emperor hangs himself', fr:'Li Zicheng prend Pékin et l’empereur Chongzhen se pend' },
+    ],
+    themes:{
+      state:{ zh:'廢宰相後由內閣協助皇帝，錦衣衛與東廠負責監控；八股文科舉選拔官員。', en:'With the chancellorship abolished, Grand Secretaries assisted the emperor, while the Embroidered Uniform Guard and Eastern Depot spied on officials; examinations used the rigid eight-legged essay.', fr:'Sans chancelier, des grands secrétaires assistent l’empereur, tandis que la Garde en uniforme brodé et le Dépôt de l’Est surveillent les fonctionnaires ; les examens imposent la dissertation en huit parties.' },
+      faith:{ zh:'王陽明提出「心即理」與「知行合一」，挑戰朱熹理學；利瑪竇等耶穌會士以西方科學向士大夫傳教。', en:'Wang Yangming taught that “the mind is principle” and the unity of knowledge and action, challenging Zhu Xi; Jesuits such as Matteo Ricci approached scholars through Western science.', fr:'Wang Yangming enseigne que « l’esprit est le principe » et l’unité du savoir et de l’action, défiant Zhu Xi ; des jésuites comme Matteo Ricci approchent les lettrés par la science occidentale.' },
+      society:{ zh:'美洲白銀經由菲律賓大量流入，一條鞭法以銀納稅；江南的絲織與景德鎮瓷器遠銷海外，市民文化興起。', en:'American silver poured in via the Philippines and the Single Whip reform let taxes be paid in silver; Jiangnan silks and Jingdezhen porcelain were exported worldwide, and urban culture flourished.', fr:'L’argent américain afflue par les Philippines et la réforme du « fouet unique » permet de payer l’impôt en argent ; soieries du Jiangnan et porcelaines de Jingdezhen s’exportent partout, et la culture urbaine s’épanouit.' },
+      culture:{ zh:'《三國演義》、《水滸傳》、《西遊記》與《金瓶梅》等長篇小說成書；《本草綱目》與《天工開物》記錄了醫藥與技術。', en:'The great novels, Romance of the Three Kingdoms, Water Margin, Journey to the West and The Plum in the Golden Vase, took shape; the Compendium of Materia Medica and The Exploitation of the Works of Nature recorded medicine and technology.', fr:'Les grands romans, Les Trois Royaumes, Au bord de l’eau, La Pérégrination vers l’Ouest et Fleur en fiole d’or, prennent forme ; le Bencao gangmu et le Tiangong kaiwu consignent médecine et techniques.' },
+      world:{ zh:'鄭和船隊遠達東非，但之後明朝轉向內斂；倭寇與葡萄牙、荷蘭商人在沿海活動，女真在東北崛起。', en:'Zheng He’s fleets reached East Africa, but the Ming then turned inward; pirates and Portuguese and Dutch traders worked the coasts, and the Jurchens rose in the north-east.', fr:'Les flottes de Zheng He atteignent l’Afrique de l’Est, puis les Ming se replient ; pirates et marchands portugais et hollandais fréquentent les côtes, et les Jürchen montent au nord-est.' },
+    }
+  },
+  {
+    id:'qing', icon:'🐉', start:1644, end:1912, world:'industrial',
+    name:{ zh:'清朝', en:'The Qing Dynasty', fr:'La dynastie Qing' },
+    summary:{ zh:'滿洲人建立的清朝入關後統一中國，康熙、雍正、乾隆三朝擴張版圖，奠定今日中國疆域的基礎。十九世紀人口壓力與吏治敗壞引發內亂，兩次鴉片戰爭讓中國被迫開放通商、割讓香港；太平天國戰爭造成數千萬人死亡。洋務運動與戊戌變法未能挽救危局，甲午戰敗與八國聯軍後清廷推行新政，但 1911 年武昌起義爆發，隔年宣統皇帝退位，兩千多年的帝制結束。',
+      en:'The Manchu Qing conquered China after 1644, and under Kangxi, Yongzheng and Qianlong expanded the empire to roughly the borders of today’s China. In the nineteenth century population pressure and corrupt government bred rebellion, two Opium Wars forced China open and cost it Hong Kong, and the Taiping war killed tens of millions. The Self-Strengthening Movement and the Hundred Days’ Reform failed to stem the crisis; after defeat by Japan and the Boxer intervention the court attempted reforms, but the Wuchang uprising broke out in 1911 and the Xuantong Emperor abdicated the next year, ending two thousand years of imperial rule.',
+      fr:'Les Qing mandchous conquièrent la Chine après 1644 et, sous Kangxi, Yongzheng et Qianlong, étendent l’empire à peu près aux frontières actuelles. Au XIXᵉ siècle, pression démographique et corruption suscitent des révoltes, deux guerres de l’opium ouvrent la Chine de force et lui coûtent Hong Kong, et la guerre des Taiping fait des dizaines de millions de morts. Le mouvement d’auto-renforcement et la réforme des Cent Jours échouent ; après la défaite face au Japon et l’intervention contre les Boxers, la cour tente des réformes, mais le soulèvement de Wuchang éclate en 1911 et l’empereur Xuantong abdique l’année suivante, mettant fin à deux mille ans d’empire.' },
+    events:[
+      { y:1644, zh:'清軍入關，定都北京', en:'The Qing enter China and make Beijing their capital', fr:'Les Qing entrent en Chine et s’installent à Pékin' },
+      { y:1681, zh:'平定三藩之亂', en:'The Revolt of the Three Feudatories is crushed', fr:'Écrasement de la révolte des Trois Feudataires' },
+      { y:1689, zh:'與俄國簽訂《尼布楚條約》', en:'Treaty of Nerchinsk with Russia', fr:'Traité de Nertchinsk avec la Russie' },
+      { y:1759, zh:'平定準噶爾與回部，設新疆', en:'Conquest of Dzungaria and the Tarim basin: Xinjiang', fr:'Conquête de la Dzoungarie et du Tarim : le Xinjiang' },
+      { y:1793, zh:'英國馬戛爾尼使團來華', en:'The British Macartney embassy', fr:'Ambassade britannique de Macartney' },
+      { y:1842, zh:'鴉片戰爭後簽訂《南京條約》，割讓香港', en:'After the Opium War, the Treaty of Nanjing cedes Hong Kong', fr:'Après la guerre de l’opium, le traité de Nankin cède Hong Kong' },
+      { y:1851, by:'Hong Xiuquan', zh:'太平天國起事', en:'The Taiping rebellion begins', fr:'Début de la révolte des Taiping' },
+      { y:1860, zh:'英法聯軍火燒圓明園', en:'Anglo-French troops burn the Old Summer Palace', fr:'Les troupes franco-britanniques incendient le Palais d’été' },
+      { y:1895, zh:'甲午戰敗，簽訂《馬關條約》', en:'Defeat by Japan and the Treaty of Shimonoseki', fr:'Défaite face au Japon et traité de Shimonoseki' },
+      { y:1898, by:'The Guangxu Emperor', zh:'戊戌變法百日而終', en:'The Hundred Days’ Reform ends after a hundred days', fr:'La réforme des Cent Jours échoue' },
+      { y:1900, zh:'義和團事件與八國聯軍', en:'The Boxer uprising and the Eight-Nation Alliance', fr:'Révolte des Boxers et intervention des huit puissances' },
+      { y:1905, zh:'廢除科舉', en:'The civil examinations are abolished', fr:'Abolition des examens impériaux' },
+      { y:1911, zh:'武昌起義', en:'The Wuchang uprising', fr:'Soulèvement de Wuchang' },
+    ],
+    themes:{
+      state:{ zh:'清朝沿用明制，又設軍機處強化皇權，以滿漢並用的方式統治；對蒙古、西藏與新疆則透過理藩院與宗教領袖間接治理。', en:'The Qing kept the Ming system, added the Grand Council to strengthen the throne and shared office between Manchus and Han; Mongolia, Tibet and Xinjiang were governed indirectly through the Court of Colonial Affairs and religious leaders.', fr:'Les Qing gardent le système Ming, ajoutent le Grand Conseil pour renforcer le trône et partagent les charges entre Mandchous et Han ; Mongolie, Tibet et Xinjiang sont gouvernés indirectement par le Lifanyuan et les chefs religieux.' },
+      faith:{ zh:'朝廷尊崇理學，也扶持藏傳佛教；太平天國以自創的拜上帝教起事，義和團則以「扶清滅洋」仇視基督教。', en:'The court upheld Neo-Confucianism and patronised Tibetan Buddhism; the Taipings rose under their own Christian-inspired faith, while the Boxers attacked Christianity in the name of “support the Qing, destroy the foreign”.', fr:'La cour soutient le néo-confucianisme et le bouddhisme tibétain ; les Taiping se soulèvent au nom d’une foi d’inspiration chrétienne, et les Boxers attaquent le christianisme pour « soutenir les Qing, détruire l’étranger ».' },
+      society:{ zh:'玉米、番薯等美洲作物讓人口從一億多增加到四億；茶葉與絲綢出口換回白銀，鴉片走私卻讓白銀外流。', en:'American crops such as maize and sweet potato helped the population grow from about 150 million to 400 million; tea and silk exports brought in silver, but opium smuggling drained it away.', fr:'Maïs et patate douce américains font passer la population d’environ 150 millions à 400 millions ; thé et soie font entrer l’argent, que la contrebande d’opium fait ressortir.' },
+      culture:{ zh:'《四庫全書》編纂的同時大興文字獄；曹雪芹《紅樓夢》是古典小說的巔峰；京劇在北京成形。', en:'The Complete Library of the Four Treasuries was compiled amid literary inquisitions; Cao Xueqin’s Dream of the Red Chamber crowned the classical novel, and Peking opera took shape.', fr:'La Bibliothèque complète des quatre trésors est compilée en pleine inquisition littéraire ; Le Rêve dans le pavillon rouge de Cao Xueqin couronne le roman classique, et l’opéra de Pékin prend forme.' },
+      world:{ zh:'從廣州一口通商到被迫簽訂一連串不平等條約，中國失去香港、台灣與大片東北領土，朝貢體系瓦解。', en:'From the single port of Canton to a string of unequal treaties, China lost Hong Kong, Taiwan and vast lands in the north-east, and the tribute system collapsed.', fr:'Du port unique de Canton à une série de traités inégaux, la Chine perd Hong Kong, Taïwan et d’immenses territoires au nord-est, et le système tributaire s’effondre.' },
+    }
+  },
+  {
+    id:'republic', icon:'🎌', start:1912, end:1949, world:'worldwar',
+    name:{ zh:'中華民國時期', en:'The Republic of China', fr:'La République de Chine' },
+    summary:{ zh:'1912 年中華民國成立，孫中山讓位給袁世凱，袁卻試圖稱帝，死後中國陷入軍閥割據。1919 年五四運動帶來新文化與民族主義，國民黨與共產黨先合作北伐，再於 1927 年分裂。蔣介石建立南京國民政府，共產黨則轉入農村，經長征到達陝北。1937 年日本全面侵華，八年抗戰後國共內戰再起，1949 年共產黨取得大陸，國民政府撤退到台灣。',
+      en:'The Republic of China was founded in 1912; Sun Yat-sen gave way to Yuan Shikai, who tried to make himself emperor, and after his death China fell to the warlords. The May Fourth Movement of 1919 brought new culture and nationalism; the Nationalists and Communists first allied for the Northern Expedition and then split in 1927. Chiang Kai-shek set up the Nanjing government while the Communists took to the countryside and, after the Long March, reached northern Shaanxi. Japan launched full-scale invasion in 1937; after eight years of war the civil war resumed, and in 1949 the Communists won the mainland and the Nationalist government retreated to Taiwan.',
+      fr:'La République de Chine naît en 1912 ; Sun Yat-sen cède la place à Yuan Shikai, qui tente de se faire empereur, et à sa mort la Chine tombe aux mains des seigneurs de guerre. Le mouvement du 4 mai 1919 apporte une nouvelle culture et le nationalisme ; nationalistes et communistes s’allient pour l’expédition du Nord puis rompent en 1927. Tchang Kaï-chek installe le gouvernement de Nankin, tandis que les communistes gagnent les campagnes et, après la Longue Marche, le nord du Shaanxi. Le Japon envahit la Chine en 1937 ; après huit ans de guerre, la guerre civile reprend, et en 1949 les communistes l’emportent sur le continent, le gouvernement nationaliste se repliant à Taïwan.' },
+    events:[
+      { y:1912, by:'Sun Yat-sen', zh:'中華民國成立；清帝退位', en:'The Republic is founded; the Qing emperor abdicates', fr:'Fondation de la République ; abdication de l’empereur Qing' },
+      { y:1916, zh:'袁世凱稱帝失敗後去世，軍閥時代開始', en:'Yuan Shikai dies after his failed monarchy: the warlord era begins', fr:'Mort de Yuan Shikai après l’échec de sa monarchie : début de l’ère des seigneurs de guerre' },
+      { y:1919, zh:'五四運動', en:'The May Fourth Movement', fr:'Le mouvement du 4 mai' },
+      { y:1921, zh:'中國共產黨在上海成立', en:'The Chinese Communist Party is founded in Shanghai', fr:'Fondation du Parti communiste chinois à Shanghai' },
+      { y:1927, zh:'四一二事件，國共分裂', en:'The April 12 purge splits Nationalists and Communists', fr:'La purge du 12 avril sépare nationalistes et communistes' },
+      { y:1934, zh:'紅軍開始長征', en:'The Red Army begins the Long March', fr:'L’Armée rouge entame la Longue Marche' },
+      { y:1937, zh:'盧溝橋事變，全面抗戰；南京大屠殺', en:'The Marco Polo Bridge incident and full-scale war; the Nanjing Massacre', fr:'Incident du pont Marco Polo et guerre totale ; massacre de Nankin' },
+      { y:1945, zh:'日本投降', en:'Japan surrenders', fr:'Capitulation du Japon' },
+      { y:1949, zh:'國民政府撤退到台灣', en:'The Nationalist government retreats to Taiwan', fr:'Le gouvernement nationaliste se replie à Taïwan' },
+    ],
+    themes:{
+      state:{ zh:'從共和到軍閥割據，再到國民黨「以黨治國」的訓政體制；共產黨則在根據地建立自己的政權。', en:'From republic to warlordism, then the KMT’s “tutelage” under one-party rule, while the Communists built their own state in their base areas.', fr:'De la république aux seigneurs de guerre, puis à la « tutelle » du KMT en parti unique, tandis que les communistes bâtissent leur propre pouvoir dans leurs bases.' },
+      faith:{ zh:'新文化運動喊出「打倒孔家店」，提倡民主與科學；馬克思主義與三民主義成為兩大政治信仰。', en:'The New Culture Movement cried “down with the Confucian shop” and championed democracy and science; Marxism and the Three Principles of the People became the two great political creeds.', fr:'Le mouvement de la Nouvelle Culture lance « à bas la boutique de Confucius » et prône démocratie et science ; marxisme et Trois Principes du peuple deviennent les deux grandes croyances politiques.' },
+      society:{ zh:'上海等通商口岸工業化與都市化，但農村貧困、戰亂不斷；抗戰後期的惡性通膨嚴重打擊國民政府。', en:'Treaty ports such as Shanghai industrialised and urbanised, but the countryside stayed poor and war-torn; late-war hyperinflation gravely weakened the Nationalists.', fr:'Les ports ouverts comme Shanghai s’industrialisent et s’urbanisent, mais les campagnes restent pauvres et ravagées ; l’hyperinflation de fin de guerre affaiblit gravement les nationalistes.' },
+      culture:{ zh:'胡適提倡白話文，魯迅寫下〈狂人日記〉與〈阿Q正傳〉；上海成為電影、出版與流行音樂的中心。', en:'Hu Shi championed the vernacular and Lu Xun wrote A Madman’s Diary and The True Story of Ah Q; Shanghai became the centre of film, publishing and popular music.', fr:'Hu Shi défend la langue vernaculaire, et Lu Xun écrit Le Journal d’un fou et La Véritable Histoire d’Ah Q ; Shanghai devient le centre du cinéma, de l’édition et de la musique populaire.' },
+      world:{ zh:'日本從二十一條、九一八事變到全面侵華，中國成為二戰的主要戰場之一，也成為聯合國安理會常任理事國。', en:'From the Twenty-One Demands and the Mukden Incident to full-scale invasion, Japan made China a major theatre of the Second World War, and China became a permanent member of the UN Security Council.', fr:'Des Vingt et Une Demandes à l’incident de Moukden puis à l’invasion totale, le Japon fait de la Chine un théâtre majeur de la Seconde Guerre mondiale, et la Chine devient membre permanent du Conseil de sécurité.' },
+    }
+  },
+  {
+    id:'mao', icon:'⭐', start:1949, end:1976, world:'coldwar',
+    name:{ zh:'毛澤東時代', en:'The Mao Era', fr:'L’ère de Mao' },
+    summary:{ zh:'1949 年 10 月 1 日毛澤東宣布中華人民共和國成立。土地改革、韓戰與社會主義改造之後，反右運動壓制了知識分子；大躍進與人民公社造成大饑荒，數千萬人死亡。1966 年毛澤東發動文化大革命，紅衛兵批鬥、破四舊，社會陷入十年動亂。1972 年尼克森訪華，中美關係解凍；1976 年毛澤東去世，「四人幫」隨即被捕。',
+      en:'On 1 October 1949 Mao Zedong proclaimed the People’s Republic of China. Land reform, the Korean War and the socialist transformation were followed by the Anti-Rightist Campaign against intellectuals; the Great Leap Forward and the people’s communes caused a famine that killed tens of millions. In 1966 Mao launched the Cultural Revolution, and Red Guards’ struggle sessions and attacks on the “Four Olds” plunged society into a decade of chaos. Nixon’s visit in 1972 thawed Sino-American relations; Mao died in 1976 and the Gang of Four was arrested soon after.',
+      fr:'Le 1ᵉʳ octobre 1949, Mao Zedong proclame la République populaire de Chine. Réforme agraire, guerre de Corée et transformation socialiste sont suivies de la campagne antidroitière contre les intellectuels ; le Grand Bond en avant et les communes populaires provoquent une famine qui tue des dizaines de millions de personnes. En 1966, Mao lance la Révolution culturelle : séances de lutte des Gardes rouges et destruction des « Quatre Vieilleries » plongent le pays dans dix ans de chaos. La visite de Nixon en 1972 dégèle les relations sino-américaines ; Mao meurt en 1976 et la Bande des Quatre est arrêtée peu après.' },
+    events:[
+      { y:1949, zh:'中華人民共和國成立', en:'The People’s Republic of China is founded', fr:'Fondation de la République populaire de Chine' },
+      { y:1950, zh:'土地改革；參加韓戰', en:'Land reform; China enters the Korean War', fr:'Réforme agraire ; la Chine entre dans la guerre de Corée' },
+      { y:1957, zh:'反右運動', en:'The Anti-Rightist Campaign', fr:'La campagne antidroitière' },
+      { y:1958, zh:'大躍進與人民公社', en:'The Great Leap Forward and the people’s communes', fr:'Le Grand Bond en avant et les communes populaires' },
+      { y:1959, zh:'大饑荒開始（至 1961 年）；達賴喇嘛流亡印度', en:'The great famine begins (until 1961); the Dalai Lama flees to India', fr:'Début de la grande famine (jusqu’en 1961) ; le dalaï-lama s’exile en Inde' },
+      { y:1964, zh:'第一顆原子彈試爆成功', en:'China’s first atomic bomb test', fr:'Premier essai nucléaire chinois' },
+      { y:1966, zh:'文化大革命開始', en:'The Cultural Revolution begins', fr:'Début de la Révolution culturelle' },
+      { y:1971, by:'Lin Biao', zh:'林彪事件；取得聯合國席位', en:'The Lin Biao affair; the PRC takes the UN seat', fr:'Affaire Lin Biao ; la RPC obtient le siège à l’ONU' },
+      { y:1972, zh:'尼克森訪華', en:'Nixon visits China', fr:'Visite de Nixon en Chine' },
+      { y:1976, zh:'周恩來、毛澤東去世；唐山大地震；四人幫被捕', en:'Zhou Enlai and Mao die; the Tangshan earthquake; the Gang of Four is arrested', fr:'Mort de Zhou Enlai et de Mao ; séisme de Tangshan ; arrestation de la Bande des Quatre' },
+    ],
+    themes:{
+      state:{ zh:'中國共產黨一黨執政，以群眾運動推動政策；毛澤東的個人崇拜在文革時達到頂點。', en:'The Communist Party ruled alone and drove policy through mass campaigns; the cult of Mao peaked in the Cultural Revolution.', fr:'Le Parti communiste gouverne seul et impose ses politiques par des campagnes de masse ; le culte de Mao culmine pendant la Révolution culturelle.' },
+      faith:{ zh:'宗教受到嚴格控制，文革時寺廟、教堂與文物大量被毀；毛澤東思想成為事實上的國家信仰。', en:'Religion was tightly controlled, and temples, churches and relics were widely destroyed in the Cultural Revolution; Mao Zedong Thought became a de facto state faith.', fr:'La religion est étroitement contrôlée, et temples, églises et vestiges sont massivement détruits pendant la Révolution culturelle ; la pensée Mao Zedong devient une foi d’État de fait.' },
+      society:{ zh:'計畫經濟、農業集體化與戶籍制度把城鄉分隔；工業化以重工業為主，生活水準長期停滯。', en:'Planning, collectivised farming and household registration divided city from country; industrialisation focused on heavy industry and living standards long stagnated.', fr:'Planification, collectivisation et livret de résidence séparent villes et campagnes ; l’industrialisation privilégie l’industrie lourde, et le niveau de vie stagne longtemps.' },
+      culture:{ zh:'推行簡體字與普通話；文藝必須「為工農兵服務」，文革時只剩八個樣板戲。', en:'Simplified characters and Putonghua were promoted; art had to “serve workers, peasants and soldiers”, and in the Cultural Revolution only eight model operas were allowed.', fr:'Caractères simplifiés et putonghua sont imposés ; l’art doit « servir les ouvriers, paysans et soldats », et pendant la Révolution culturelle ne restent que huit opéras modèles.' },
+      world:{ zh:'先與蘇聯結盟，1960 年代中蘇交惡；1970 年代轉向與美國和解，取代中華民國在聯合國的席位。', en:'First allied with the Soviet Union, China split with Moscow in the 1960s, then turned to rapprochement with the United States in the 1970s and took the ROC’s seat at the UN.', fr:'D’abord alliée à l’URSS, la Chine rompt avec Moscou dans les années 1960, puis se rapproche des États-Unis dans les années 1970 et prend le siège de la République de Chine à l’ONU.' },
+    }
+  },
+  {
+    id:'reform', icon:'🏗️', start:1976, end:2012, world:'contemporary',
+    name:{ zh:'改革開放', en:'Reform and Opening', fr:'La réforme et l’ouverture' },
+    summary:{ zh:'1978 年十一屆三中全會後，鄧小平主導改革開放：農村實行家庭聯產承包責任制，沿海設立經濟特區，引進外資。1989 年天安門廣場的學生運動在 6 月 4 日遭軍隊鎮壓，政治改革停滯；1992 年鄧小平南巡後經濟改革加速。香港與澳門先後回歸，2001 年加入世界貿易組織，中國成為「世界工廠」，2008 年舉辦北京奧運，2010 年經濟規模超越日本成為世界第二。',
+      en:'After the Third Plenum of 1978, Deng Xiaoping led reform and opening: the household responsibility system in the countryside, special economic zones on the coast and foreign investment. The student movement in Tiananmen Square was crushed by the army on 4 June 1989 and political reform stalled; after Deng’s southern tour in 1992 economic reform accelerated. Hong Kong and Macau returned to Chinese sovereignty, China joined the WTO in 2001 and became the “workshop of the world”, hosted the Beijing Olympics in 2008 and in 2010 overtook Japan as the world’s second-largest economy.',
+      fr:'Après le 3ᵉ plénum de 1978, Deng Xiaoping lance la réforme et l’ouverture : responsabilité des ménages dans les campagnes, zones économiques spéciales sur la côte, investissements étrangers. Le mouvement étudiant de la place Tian’anmen est écrasé par l’armée le 4 juin 1989, et la réforme politique s’arrête ; après la tournée dans le Sud de Deng en 1992, la réforme économique s’accélère. Hong Kong et Macao reviennent à la Chine, la Chine entre à l’OMC en 2001 et devient « l’atelier du monde », accueille les Jeux de Pékin en 2008 et dépasse le Japon en 2010 comme deuxième économie mondiale.' },
+    events:[
+      { y:1978, zh:'十一屆三中全會，改革開放開始', en:'The Third Plenum launches reform and opening', fr:'Le 3ᵉ plénum lance la réforme et l’ouverture' },
+      { y:1980, zh:'設立深圳等經濟特區；一胎化政策全面推行', en:'Special economic zones such as Shenzhen; the one-child policy is enforced nationwide', fr:'Zones économiques spéciales comme Shenzhen ; politique de l’enfant unique généralisée' },
+      { y:1989, by:'Zhao Ziyang', zh:'六四天安門事件', en:'The Tiananmen Square crackdown of 4 June', fr:'La répression de Tian’anmen du 4 juin' },
+      { y:1992, by:'Deng Xiaoping', zh:'鄧小平南巡', en:'Deng Xiaoping’s southern tour', fr:'Tournée de Deng Xiaoping dans le Sud' },
+      { y:1997, zh:'鄧小平去世；香港回歸', en:'Deng dies; Hong Kong returns to China', fr:'Mort de Deng ; rétrocession de Hong Kong' },
+      { y:1999, zh:'澳門回歸', en:'Macau returns to China', fr:'Rétrocession de Macao' },
+      { y:2001, zh:'加入世界貿易組織', en:'China joins the WTO', fr:'Entrée de la Chine à l’OMC' },
+      { y:2008, zh:'汶川大地震；北京奧運', en:'The Wenchuan earthquake; the Beijing Olympics', fr:'Séisme du Wenchuan ; Jeux olympiques de Pékin' },
+      { y:2010, zh:'經濟規模超越日本，世界第二', en:'China overtakes Japan as the second-largest economy', fr:'La Chine dépasse le Japon et devient la deuxième économie' },
+    ],
+    themes:{
+      state:{ zh:'在「堅持四項基本原則」下維持共產黨領導，同時推動幹部年輕化與集體領導，最高領導人設有任期。', en:'Party rule was upheld under the Four Cardinal Principles, while cadres were rejuvenated and collective leadership and term limits for top leaders introduced.', fr:'La direction du Parti est maintenue au nom des Quatre Principes cardinaux, tandis que les cadres se rajeunissent et qu’apparaissent direction collective et limites de mandat.' },
+      faith:{ zh:'宗教活動有限度地恢復，佛教、道教與基督教信徒增加；1999 年起法輪功遭到取締。', en:'Religious life partially revived and Buddhist, Daoist and Christian believers grew in number; Falun Gong was banned from 1999.', fr:'La vie religieuse renaît en partie, et bouddhistes, taoïstes et chrétiens se multiplient ; le Falun Gong est interdit à partir de 1999.' },
+      society:{ zh:'數億人脫離貧困，上億農民工湧入沿海城市；國企改革造成大量下崗，貧富差距與環境污染加劇。', en:'Hundreds of millions escaped poverty and over a hundred million migrant workers poured into coastal cities; state-firm reforms laid off millions, and inequality and pollution worsened.', fr:'Des centaines de millions de personnes sortent de la pauvreté et plus de cent millions de travailleurs migrants affluent vers les villes côtières ; la réforme des entreprises d’État licencie des millions de personnes, et inégalités et pollution s’aggravent.' },
+      culture:{ zh:'恢復高考，「傷痕文學」與第五代導演（張藝謀、陳凱歌）崛起，港台流行文化大量流入。', en:'University entrance exams resumed; “scar literature” and the Fifth Generation of film-makers (Zhang Yimou, Chen Kaige) emerged, and Hong Kong and Taiwanese pop culture flooded in.', fr:'Le concours d’entrée à l’université est rétabli ; la « littérature des cicatrices » et la cinquième génération de cinéastes (Zhang Yimou, Chen Kaige) émergent, et la culture pop de Hong Kong et de Taïwan déferle.' },
+      world:{ zh:'1979 年與美國建交，「韜光養晦」的外交方針下融入全球經濟，以「一國兩制」收回香港與澳門。', en:'China established relations with the United States in 1979 and, under the low-profile policy of “hiding one’s strength”, joined the global economy and recovered Hong Kong and Macau under “one country, two systems”.', fr:'La Chine établit des relations avec les États-Unis en 1979 et, selon la ligne discrète de « cacher ses forces », s’intègre à l’économie mondiale et récupère Hong Kong et Macao selon « un pays, deux systèmes ».' },
+    }
+  },
+  {
+    id:'xi', icon:'🚄', start:2012, end:2026, world:'contemporary',
+    name:{ zh:'習近平時代', en:'The Xi Jinping Era', fr:'L’ère de Xi Jinping' },
+    summary:{ zh:'2012 年習近平接任中共總書記，以大規模反腐鞏固權力，2018 年修憲取消國家主席任期限制，2022 年開始第三個任期。對外提出「一帶一路」，對內強化黨對社會、經濟與網路的控制；新疆的拘押營、香港《國安法》與對台軍事壓力引發國際批評。新冠疫情期間實施長達近三年的「清零」政策。近年則面臨房地產危機、人口開始減少與中美科技競爭。',
+      en:'Xi Jinping became Party general secretary in 2012, consolidating power through a sweeping anti-corruption drive; a 2018 constitutional amendment removed the presidential term limit, and he began a third term in 2022. Abroad he launched the Belt and Road Initiative; at home he tightened Party control over society, the economy and the internet. Detention camps in Xinjiang, Hong Kong’s National Security Law and military pressure on Taiwan drew international criticism, and a “zero-Covid” policy lasted almost three years. China now faces a property crisis, a shrinking population and technological rivalry with the United States.',
+      fr:'Xi Jinping devient secrétaire général du Parti en 2012 et consolide son pouvoir par une vaste campagne anticorruption ; une révision constitutionnelle supprime en 2018 la limite des mandats présidentiels, et il entame un troisième mandat en 2022. À l’extérieur, il lance les « nouvelles routes de la soie » ; à l’intérieur, il renforce le contrôle du Parti sur la société, l’économie et Internet. Camps du Xinjiang, loi sur la sécurité nationale à Hong Kong et pression militaire sur Taïwan suscitent les critiques internationales, et la politique « zéro Covid » dure près de trois ans. La Chine affronte aujourd’hui une crise immobilière, une population en déclin et la rivalité technologique avec les États-Unis.' },
+    events:[
+      { y:2012, zh:'習近平成為中共總書記', en:'Xi Jinping becomes general secretary', fr:'Xi Jinping devient secrétaire général' },
+      { y:2013, zh:'提出「一帶一路」', en:'The Belt and Road Initiative is announced', fr:'Lancement des nouvelles routes de la soie' },
+      { y:2015, zh:'結束一胎化，改為全面二孩', en:'The one-child policy ends; two children allowed', fr:'Fin de l’enfant unique ; deux enfants autorisés' },
+      { y:2018, zh:'修憲取消國家主席任期限制', en:'The constitution drops presidential term limits', fr:'La Constitution supprime la limite des mandats présidentiels' },
+      { y:2019, zh:'香港反修例運動', en:'Hong Kong’s anti-extradition protests', fr:'Manifestations contre la loi d’extradition à Hong Kong' },
+      { y:2020, zh:'新冠疫情爆發；香港《國安法》', en:'The Covid-19 outbreak; Hong Kong’s National Security Law', fr:'Épidémie de Covid-19 ; loi sur la sécurité nationale à Hong Kong' },
+      { y:2022, zh:'習近平第三個任期；清零政策結束', en:'Xi begins a third term; zero-Covid ends', fr:'Troisième mandat de Xi ; fin du zéro Covid' },
+      { y:2023, zh:'人口連續第二年減少，印度人口超越中國', en:'The population falls for a second year and India overtakes China', fr:'La population baisse pour la deuxième année ; l’Inde dépasse la Chine' },
+    ],
+    themes:{
+      state:{ zh:'權力重新集中於最高領導人，「習近平新時代中國特色社會主義思想」寫入黨章與憲法，監察與數位監控擴大。', en:'Power was re-centralised around the top leader; Xi Jinping Thought was written into the Party charter and the constitution, and supervision and digital surveillance expanded.', fr:'Le pouvoir se recentre sur le dirigeant suprême ; la pensée de Xi Jinping entre dans les statuts du Parti et la Constitution, et la surveillance, notamment numérique, s’étend.' },
+      faith:{ zh:'推動「宗教中國化」，加強對教會、清真寺與藏傳佛教寺院的管控；傳統文化與儒家被重新強調。', en:'The “sinicisation of religion” tightened control over churches, mosques and Tibetan monasteries, while traditional culture and Confucianism were re-emphasised.', fr:'La « sinisation des religions » renforce le contrôle des églises, mosquées et monastères tibétains, tandis que culture traditionnelle et confucianisme sont remis en avant.' },
+      society:{ zh:'高鐵網絡、電子支付與電動車領先全球；但房地產泡沫破裂、青年失業與人口老化成為重大挑戰。', en:'China leads the world in high-speed rail, mobile payments and electric vehicles, but the bursting property bubble, youth unemployment and an ageing population are major challenges.', fr:'La Chine mène le monde en trains à grande vitesse, paiement mobile et voitures électriques, mais l’éclatement de la bulle immobilière, le chômage des jeunes et le vieillissement pèsent lourdement.' },
+      culture:{ zh:'網路文學、短影音與國產遊戲蓬勃發展，但審查更加嚴格；「國潮」帶動傳統元素的流行。', en:'Online fiction, short video and home-grown games boom under tighter censorship, while the “guochao” trend makes traditional motifs fashionable.', fr:'Littérature en ligne, vidéos courtes et jeux nationaux prospèrent sous une censure plus stricte, et la vogue « guochao » remet les motifs traditionnels à la mode.' },
+      world:{ zh:'中美貿易戰與科技競爭升高，南海與台海情勢緊張；中國在全球南方擴大影響力，與俄羅斯關係密切。', en:'Trade war and technological rivalry with the United States intensified, tensions rose in the South China Sea and the Taiwan Strait, and China expanded its influence in the Global South and drew close to Russia.', fr:'Guerre commerciale et rivalité technologique avec les États-Unis s’intensifient, les tensions montent en mer de Chine méridionale et dans le détroit de Taïwan, et la Chine étend son influence dans le Sud global et se rapproche de la Russie.' },
+    }
+  },
+  ]
+},
+{
+  id:'usa', flag:'flag-us', color:'#34508f',
+  name:{ zh:'美國', en:'United States', fr:'États-Unis' },
+  intro:{ zh:'美國是一個以理念建立的國家：1776 年的《獨立宣言》宣稱「人人生而平等」，但同一個國家長期容許奴隸制度，並一路向西奪取原住民的土地。從十三個殖民地、南北戰爭、工業化與移民潮，到二十世紀成為超級強國，美國的歷史一直在理想與現實之間拉扯。這裡用九個時期與五條主題線索，閱讀美國的歷史。',
+    en:'The United States was founded on an idea: in 1776 the Declaration of Independence proclaimed that “all men are created equal”, yet the same nation long tolerated slavery and seized Indigenous land as it moved west. From thirteen colonies through the Civil War, industrialisation and mass immigration to superpower status in the twentieth century, American history has been a tug of war between ideals and reality. Nine periods and five thematic threads take you through it.',
+    fr:'Les États-Unis sont nés d’une idée : en 1776, la Déclaration d’indépendance proclame que « tous les hommes sont créés égaux », mais la même nation tolère longtemps l’esclavage et s’empare des terres autochtones en avançant vers l’ouest. Des treize colonies à la guerre de Sécession, à l’industrialisation et aux grandes vagues d’immigration, puis au statut de superpuissance au XXᵉ siècle, l’histoire américaine oscille entre idéal et réalité. Neuf périodes et cinq fils thématiques la parcourent.' },
+  threads:{
+    state:{ intro:{ zh:'從殖民地議會與聯邦憲法，到總統權力擴張與聯邦與州之間的拉扯。', en:'From colonial assemblies and the federal Constitution to the growth of presidential power and the tug of war between Washington and the states.', fr:'Des assemblées coloniales et de la Constitution fédérale à l’essor du pouvoir présidentiel et aux tensions entre Washington et les États.' } },
+    faith:{ name:{ zh:'宗教與信仰', en:'Religion & Belief', fr:'Religion et croyances' },
+      intro:{ zh:'清教徒的「山上之城」、宗教大覺醒、政教分離，以及宗教在政治中的持續影響。', en:'The Puritans’ “city upon a hill”, the Great Awakenings, separation of church and state, and religion’s lasting weight in politics.', fr:'La « cité sur la colline » des puritains, les Grands Réveils, la séparation de l’Église et de l’État, et le poids durable de la religion en politique.' } },
+    society:{ intro:{ zh:'奴隸制度與種族問題、移民、工業化與消費社會。', en:'Slavery and race, immigration, industrialisation and the consumer society.', fr:'Esclavage et question raciale, immigration, industrialisation et société de consommation.' } },
+    culture:{ intro:{ zh:'從《白鯨記》、爵士樂到好萊塢與網路，美國文化如何影響全世界。', en:'From Moby-Dick and jazz to Hollywood and the internet: how American culture shaped the world.', fr:'De Moby Dick et du jazz à Hollywood et Internet : comment la culture américaine a marqué le monde.' } },
+    world:{ name:{ zh:'美國與世界', en:'America & the World', fr:'L’Amérique et le monde' },
+      intro:{ zh:'從孤立主義與門羅主義，到兩次世界大戰、冷戰與反恐戰爭。', en:'From isolationism and the Monroe Doctrine to two world wars, the Cold War and the war on terror.', fr:'De l’isolationnisme et de la doctrine Monroe aux deux guerres mondiales, à la guerre froide et à la guerre contre le terrorisme.' } },
+  },
+  periods:[
+  {
+    id:'native', icon:'🪶', start:-15000, end:1607,
+    name:{ zh:'原住民與歐洲人的到來', en:'Native America and the Arrival of Europeans', fr:'L’Amérique autochtone et l’arrivée des Européens' },
+    summary:{ zh:'至少一萬五千年前，人類從亞洲經白令陸橋或沿海岸進入美洲。北美洲發展出多樣的文化：西南部的普韋布洛人建造崖居，密西西比河流域的卡霍基亞在十二世紀是人口上萬的城市，東北部的易洛魁聯盟以聯邦式議會處理部落事務。1492 年哥倫布抵達美洲後，西班牙人進入佛羅里達與西南部，歐洲帶來的天花等疾病讓原住民人口大幅減少。',
+      en:'At least fifteen thousand years ago, people came from Asia over the Bering land bridge or along the coast. North America developed diverse cultures: the Ancestral Puebloans built cliff dwellings in the Southwest, Cahokia on the Mississippi was a city of over ten thousand in the twelfth century, and the Iroquois Confederacy in the north-east managed tribal affairs through a federal council. After Columbus reached the Americas in 1492, the Spanish entered Florida and the Southwest, and European diseases such as smallpox devastated Native populations.',
+      fr:'Il y a au moins quinze mille ans, des hommes arrivent d’Asie par le pont terrestre de Béring ou le long des côtes. L’Amérique du Nord développe des cultures variées : les Ancestral Puebloans bâtissent des habitations troglodytiques dans le Sud-Ouest, Cahokia, sur le Mississippi, compte plus de dix mille habitants au XIIᵉ siècle, et la Confédération iroquoise gère les affaires des tribus par un conseil fédéral. Après l’arrivée de Colomb en 1492, les Espagnols pénètrent en Floride et dans le Sud-Ouest, et les maladies européennes comme la variole déciment les autochtones.' },
+    events:[
+      { y:-15000, c:true, zh:'人類從亞洲進入美洲', en:'People reach the Americas from Asia', fr:'Des hommes arrivent d’Asie en Amérique' },
+      { y:1050, c:true, zh:'卡霍基亞城達到鼎盛', en:'Cahokia reaches its peak', fr:'Cahokia à son apogée' },
+      { y:1492, zh:'哥倫布抵達加勒比海', en:'Columbus reaches the Caribbean', fr:'Colomb atteint les Caraïbes' },
+      { y:1565, zh:'西班牙人建立聖奧古斯丁，今美國境內最古老的歐洲人城市', en:'The Spanish found St Augustine, the oldest European city in the present US', fr:'Les Espagnols fondent Saint Augustine, la plus ancienne ville européenne des actuels États-Unis' },
+      { y:1585, zh:'英國人在羅阿諾克建立殖民地，後來神祕消失', en:'The English found the Roanoke colony, which mysteriously vanishes', fr:'Les Anglais fondent la colonie de Roanoke, qui disparaît mystérieusement' },
+    ],
+    themes:{
+      state:{ zh:'原住民各族有不同的政治組織：易洛魁聯盟由五個（後來六個）民族組成聯盟議會，影響了部分殖民者對聯邦制度的想像。', en:'Native peoples had varied political forms: the Iroquois Confederacy joined five, later six, nations in a council that shaped some colonists’ ideas of federation.', fr:'Les peuples autochtones ont des formes politiques variées : la Confédération iroquoise réunit cinq, puis six nations dans un conseil qui inspire à certains colons l’idée fédérale.' },
+      faith:{ zh:'原住民信仰重視自然與靈性的連結，各族有不同的儀式；西班牙傳教士則在西南部建立傳教站。', en:'Native religions stressed bonds between people, nature and the spirits, with diverse rituals; Spanish missionaries founded missions in the Southwest.', fr:'Les religions autochtones mettent l’accent sur le lien entre humains, nature et esprits ; les missionnaires espagnols fondent des missions dans le Sud-Ouest.' },
+      society:{ zh:'玉米、豆類與南瓜「三姊妹」農作支撐了許多社會；大平原上的民族以狩獵野牛為生，馬匹則要到西班牙人引進後才普及。', en:'The “Three Sisters” of maize, beans and squash sustained many societies; Plains peoples hunted bison, and horses spread only after the Spanish brought them.', fr:'Les « trois sœurs », maïs, haricot et courge, nourrissent de nombreuses sociétés ; les peuples des Plaines chassent le bison, et le cheval ne se répand qu’après son introduction par les Espagnols.' },
+      culture:{ zh:'各族以口傳故事、圖騰柱、陶器、編織與土丘建築傳承文化，今日美國仍有五百多個聯邦承認的部落。', en:'Peoples passed on culture through oral stories, totem poles, pottery, weaving and earthworks; today the US has more than five hundred federally recognised tribes.', fr:'Récits oraux, mâts totémiques, poterie, tissage et tertres transmettent les cultures ; les États-Unis comptent aujourd’hui plus de cinq cents tribus reconnues par l’État fédéral.' },
+      world:{ zh:'哥倫布交換讓美洲的玉米、馬鈴薯傳到世界，歐洲的馬、牛與疾病進入美洲，改變了兩個大陸。', en:'The Columbian Exchange carried maize and potatoes to the world and brought European horses, cattle and diseases to the Americas, transforming both continents.', fr:'L’échange colombien répand maïs et pomme de terre dans le monde et apporte en Amérique chevaux, bétail et maladies d’Europe, transformant les deux continents.' },
+    }
+  },
+  {
+    id:'colonial', icon:'⛪', start:1607, end:1763, world:'renaissance_exploration',
+    name:{ zh:'英屬殖民地', en:'The British Colonies', fr:'Les colonies britanniques' },
+    summary:{ zh:'1607 年英國人在維吉尼亞建立詹姆斯敦，靠菸草出口存活下來；1620 年清教徒搭五月花號抵達普利茅斯，之後麻薩諸塞成為清教徒的「山上之城」。到十八世紀中葉，大西洋沿岸已有十三個殖民地，各有民選議會。南方的種植園大量使用非洲奴隸。英法兩國在北美爭奪殖民地，1754 年爆發法國印第安戰爭，英國獲勝，但也欠下大筆債務。',
+      en:'In 1607 the English founded Jamestown in Virginia, which survived by exporting tobacco; in 1620 the Pilgrims arrived at Plymouth on the Mayflower, and Massachusetts became the Puritans’ “city upon a hill”. By the mid-eighteenth century thirteen colonies lined the Atlantic coast, each with an elected assembly, while Southern plantations relied heavily on enslaved Africans. Britain and France fought for North America, and in 1754 the French and Indian War broke out; Britain won but was left deep in debt.',
+      fr:'En 1607, les Anglais fondent Jamestown en Virginie, qui survit grâce au tabac ; en 1620, les Pères pèlerins débarquent du Mayflower à Plymouth, et le Massachusetts devient la « cité sur la colline » des puritains. Au milieu du XVIIIᵉ siècle, treize colonies bordent l’Atlantique, chacune avec son assemblée élue, tandis que les plantations du Sud reposent sur les esclaves africains. Britanniques et Français se disputent l’Amérique du Nord ; la guerre de la Conquête éclate en 1754, et la Grande-Bretagne l’emporte, mais lourdement endettée.' },
+    events:[
+      { y:1607, zh:'詹姆斯敦建立', en:'Jamestown is founded', fr:'Fondation de Jamestown' },
+      { y:1619, zh:'維吉尼亞議會首次開會；第一批非洲人被運到維吉尼亞', en:'Virginia’s assembly first meets; the first Africans are brought to Virginia', fr:'Première réunion de l’assemblée de Virginie ; premiers Africains amenés en Virginie' },
+      { y:1620, zh:'五月花號抵達普利茅斯', en:'The Mayflower reaches Plymouth', fr:'Le Mayflower arrive à Plymouth' },
+      { y:1636, zh:'哈佛學院創立', en:'Harvard College is founded', fr:'Fondation du Harvard College' },
+      { y:1664, zh:'英國奪取荷蘭的新阿姆斯特丹，改名紐約', en:'England takes New Amsterdam from the Dutch and renames it New York', fr:'L’Angleterre prend la Nouvelle-Amsterdam aux Hollandais et la rebaptise New York' },
+      { y:1692, zh:'塞勒姆女巫審判', en:'The Salem witch trials', fr:'Les procès des sorcières de Salem' },
+      { y:1754, zh:'法國印第安戰爭爆發', en:'The French and Indian War begins', fr:'Début de la guerre de la Conquête' },
+      { y:1763, zh:'《巴黎條約》，法國失去北美殖民地', en:'Treaty of Paris: France loses its North American empire', fr:'Traité de Paris : la France perd l’Amérique du Nord' },
+    ],
+    themes:{
+      state:{ zh:'各殖民地有總督與民選議會，享有相當程度的自治；英國長期採取「有益的忽視」，少干預殖民地內政。', en:'Each colony had a governor and an elected assembly with substantial self-rule; Britain long practised “salutary neglect”, interfering little in colonial affairs.', fr:'Chaque colonie a un gouverneur et une assemblée élue jouissant d’une large autonomie ; Londres pratique longtemps une « négligence salutaire ».' },
+      faith:{ zh:'清教徒、貴格會、天主教徒在不同殖民地落腳；1730 年代的第一次大覺醒運動掀起宗教熱潮。', en:'Puritans, Quakers and Catholics settled in different colonies; the First Great Awakening of the 1730s stirred religious fervour.', fr:'Puritains, quakers et catholiques s’installent dans différentes colonies ; le Premier Grand Réveil des années 1730 suscite une ferveur religieuse.' },
+      society:{ zh:'北方以小農、漁業與商業為主，南方以菸草、稻米與靛藍種植園為主；奴隸制度在法律上逐步確立。', en:'The North relied on small farms, fishing and trade, the South on tobacco, rice and indigo plantations; slavery was gradually fixed in law.', fr:'Le Nord vit de petites fermes, de pêche et de commerce, le Sud de plantations de tabac, de riz et d’indigo ; l’esclavage s’inscrit peu à peu dans la loi.' },
+      culture:{ zh:'印刷業與報紙發展，富蘭克林的《窮理查年鑑》廣受歡迎，啟蒙思想在殖民地知識分子間流傳。', en:'Printing and newspapers spread, Franklin’s Poor Richard’s Almanack was a hit, and Enlightenment ideas circulated among colonial thinkers.', fr:'L’imprimerie et la presse se développent, l’Almanach du pauvre Richard de Franklin connaît un grand succès, et les Lumières circulent parmi les lettrés coloniaux.' },
+      world:{ zh:'殖民地是大西洋三角貿易的一環：糖、菸草、奴隸與製成品在歐洲、非洲與美洲之間流動。', en:'The colonies were part of the Atlantic triangular trade, with sugar, tobacco, enslaved people and manufactured goods moving between Europe, Africa and America.', fr:'Les colonies participent au commerce triangulaire atlantique : sucre, tabac, esclaves et produits manufacturés circulent entre Europe, Afrique et Amérique.' },
+    }
+  },
+  {
+    id:'revolution', icon:'🔔', start:1763, end:1801, world:'enlightenment_revolution',
+    name:{ zh:'獨立革命與建國', en:'Revolution and Founding', fr:'La Révolution et la fondation' },
+    summary:{ zh:'英國為了償還戰債向殖民地課稅，殖民地人民以「無代表，不納稅」抗議。1773 年波士頓茶黨事件後衝突升高，1775 年在列星頓與康科德開火，隔年大陸會議通過《獨立宣言》。在法國援助下，華盛頓率領的大陸軍最終在約克鎮迫使英軍投降。1787 年制憲會議寫下聯邦憲法，華盛頓成為第一任總統，聯邦黨與民主共和黨的對立也隨之出現。',
+      en:'To pay its war debts Britain taxed the colonies, which protested “no taxation without representation”. After the Boston Tea Party of 1773 tensions escalated; shots were fired at Lexington and Concord in 1775, and the next year the Continental Congress adopted the Declaration of Independence. With French help, Washington’s Continental Army forced the British to surrender at Yorktown. The 1787 Constitutional Convention wrote the federal Constitution, Washington became the first president, and the rivalry of Federalists and Democratic-Republicans followed.',
+      fr:'Pour payer ses dettes de guerre, Londres taxe les colonies, qui protestent : « pas d’imposition sans représentation ». Après la Boston Tea Party de 1773, la tension monte ; on se bat à Lexington et Concord en 1775, et l’année suivante le Congrès continental adopte la Déclaration d’indépendance. Avec l’aide française, l’Armée continentale de Washington contraint les Britanniques à capituler à Yorktown. La convention de 1787 rédige la Constitution fédérale, Washington devient le premier président, et la rivalité des fédéralistes et des républicains-démocrates s’installe.' },
+    events:[
+      { y:1765, zh:'《印花稅法》引發抗議', en:'The Stamp Act provokes protests', fr:'Le Stamp Act provoque des protestations' },
+      { y:1770, zh:'波士頓屠殺', en:'The Boston Massacre', fr:'Le massacre de Boston' },
+      { y:1773, zh:'波士頓茶黨事件', en:'The Boston Tea Party', fr:'La Boston Tea Party' },
+      { y:1775, zh:'列星頓與康科德之戰', en:'The battles of Lexington and Concord', fr:'Batailles de Lexington et Concord' },
+      { y:1776, by:'Thomas Jefferson', zh:'7 月 4 日通過《獨立宣言》', en:'The Declaration of Independence is adopted on 4 July', fr:'Adoption de la Déclaration d’indépendance le 4 juillet' },
+      { y:1781, zh:'約克鎮戰役，英軍投降', en:'Yorktown: the British surrender', fr:'Yorktown : capitulation britannique' },
+      { y:1787, by:'James Madison', zh:'制憲會議', en:'The Constitutional Convention', fr:'La Convention constitutionnelle' },
+      { y:1789, zh:'華盛頓就任第一任總統', en:'Washington becomes the first president', fr:'Washington devient le premier président' },
+      { y:1791, zh:'《權利法案》生效', en:'The Bill of Rights takes effect', fr:'Entrée en vigueur de la Déclaration des droits' },
+    ],
+    themes:{
+      state:{ zh:'《邦聯條例》下的中央政府太弱，制憲會議改採三權分立與聯邦制，並以「大妥協」設計參眾兩院。', en:'Government under the Articles of Confederation was too weak, so the Convention adopted separation of powers and federalism, with the Great Compromise creating a Senate and a House.', fr:'Le gouvernement des Articles de la Confédération étant trop faible, la Convention adopte séparation des pouvoirs et fédéralisme, le Grand Compromis créant un Sénat et une Chambre.' },
+      faith:{ zh:'憲法第一修正案禁止國會設立國教並保障宗教自由，許多開國元勳是自然神論者。', en:'The First Amendment barred Congress from establishing a religion and guaranteed free exercise; many Founders were deists.', fr:'Le premier amendement interdit au Congrès d’établir une religion et garantit la liberté de culte ; de nombreux fondateurs sont déistes.' },
+      society:{ zh:'《獨立宣言》宣稱人人平等，但憲法以「五分之三條款」計算奴隸人口，奴隸制度被保留下來。', en:'The Declaration proclaimed equality, but the Constitution counted enslaved people as three-fifths of a person, preserving slavery.', fr:'La Déclaration proclame l’égalité, mais la Constitution compte les esclaves pour trois cinquièmes de personne, préservant l’esclavage.' },
+      culture:{ zh:'潘恩的《常識》與漢彌爾頓、麥迪遜的《聯邦黨人文集》塑造了共和國的政治語言。', en:'Paine’s Common Sense and the Federalist Papers of Hamilton and Madison shaped the political language of the republic.', fr:'Le Sens commun de Paine et les Federalist Papers de Hamilton et Madison façonnent le langage politique de la république.' },
+      world:{ zh:'法國的援助是勝利的關鍵，美國革命也鼓舞了法國大革命與拉丁美洲的獨立運動。', en:'French aid was key to victory, and the American Revolution inspired the French Revolution and Latin American independence.', fr:'L’aide française est décisive, et la Révolution américaine inspire la Révolution française et les indépendances latino-américaines.' },
+    }
+  },
+  {
+    id:'expansion', icon:'🐂', start:1801, end:1861, world:'industrial',
+    name:{ zh:'西進擴張與南北分裂', en:'Westward Expansion and Sectional Crisis', fr:'L’expansion vers l’ouest et la crise sectionnelle' },
+    summary:{ zh:'傑佛遜在 1803 年向法國買下路易斯安那，國土倍增；1812 年與英國再戰。傑克森時代擴大白人男性的投票權，卻也以《印第安人遷移法》強迫原住民走上「淚之路」。美墨戰爭後美國取得加州與西南部，「昭昭天命」成為擴張的口號。但新領土是否允許奴隸制度，讓南北衝突不斷升高，1860 年林肯當選後南方各州開始脫離聯邦。',
+      en:'In 1803 Jefferson bought Louisiana from France, doubling the country, and war with Britain followed in 1812. The Jacksonian era widened voting rights for white men but forced Native peoples onto the “Trail of Tears” under the Indian Removal Act. The Mexican War brought California and the Southwest, and “Manifest Destiny” became the slogan of expansion. Yet whether new territories would allow slavery set North against South, and after Lincoln’s election in 1860 Southern states began to secede.',
+      fr:'En 1803, Jefferson achète la Louisiane à la France, doublant le territoire, puis vient la guerre de 1812 contre la Grande-Bretagne. L’ère jacksonienne élargit le droit de vote des hommes blancs mais impose aux autochtones la « Piste des larmes » avec l’Indian Removal Act. La guerre contre le Mexique apporte la Californie et le Sud-Ouest, et la « Destinée manifeste » devient le mot d’ordre de l’expansion. Mais la question de l’esclavage dans les nouveaux territoires oppose Nord et Sud, et après l’élection de Lincoln en 1860, les États du Sud font sécession.' },
+    events:[
+      { y:1803, zh:'路易斯安那購地', en:'The Louisiana Purchase', fr:'L’achat de la Louisiane' },
+      { y:1812, zh:'1812 年戰爭，英軍隔年焚燒華盛頓', en:'The War of 1812; British troops burn Washington in 1814', fr:'Guerre de 1812 ; les Britanniques incendient Washington en 1814' },
+      { y:1823, zh:'門羅主義', en:'The Monroe Doctrine', fr:'La doctrine Monroe' },
+      { y:1830, zh:'《印第安人遷移法》', en:'The Indian Removal Act', fr:'L’Indian Removal Act' },
+      { y:1838, zh:'切羅基人的淚之路', en:'The Cherokee Trail of Tears', fr:'La Piste des larmes des Cherokees' },
+      { y:1848, zh:'美墨戰爭結束，取得加州；加州淘金熱開始', en:'The Mexican War ends with California ceded; the Gold Rush begins', fr:'Fin de la guerre contre le Mexique et cession de la Californie ; début de la ruée vers l’or' },
+      { y:1857, zh:'最高法院「德雷德·史考特案」判決', en:'The Dred Scott decision', fr:'L’arrêt Dred Scott' },
+      { y:1860, zh:'林肯當選；南卡羅來納脫離聯邦', en:'Lincoln is elected; South Carolina secedes', fr:'Élection de Lincoln ; la Caroline du Sud fait sécession' },
+    ],
+    themes:{
+      state:{ zh:'最高法院在「馬伯利訴麥迪遜案」確立司法審查權；州權與聯邦權的爭論越來越激烈。', en:'In Marbury v. Madison the Supreme Court established judicial review, and the struggle between states’ rights and federal power grew fiercer.', fr:'Avec Marbury v. Madison, la Cour suprême établit le contrôle de constitutionnalité, et la querelle entre droits des États et pouvoir fédéral s’envenime.' },
+      faith:{ zh:'第二次大覺醒帶動禁酒、廢奴與教育改革運動；摩門教在這個時期創立並遷往猶他。', en:'The Second Great Awakening fed temperance, abolitionist and educational reform movements; the Mormon church was founded and moved to Utah.', fr:'Le Second Grand Réveil nourrit les mouvements de tempérance, d’abolition et de réforme scolaire ; l’Église mormone naît et part pour l’Utah.' },
+      society:{ zh:'軋棉機讓棉花種植園與奴隸人口大增；北方則出現紡織工廠、運河與鐵路，愛爾蘭與德國移民大量湧入。', en:'The cotton gin made cotton plantations and the enslaved population soar, while the North built textile mills, canals and railways and absorbed many Irish and German immigrants.', fr:'L’égreneuse à coton fait exploser les plantations et la population esclave, tandis que le Nord construit filatures, canaux et chemins de fer et accueille Irlandais et Allemands.' },
+      culture:{ zh:'愛默生、梭羅的超驗主義，梅爾維爾的《白鯨記》，以及《湯姆叔叔的小屋》激起北方的廢奴情緒。', en:'The Transcendentalism of Emerson and Thoreau, Melville’s Moby-Dick, and Uncle Tom’s Cabin, which stirred abolitionist feeling in the North.', fr:'Le transcendantalisme d’Emerson et Thoreau, Moby Dick de Melville et La Case de l’oncle Tom, qui enflamme l’abolitionnisme au Nord.' },
+      world:{ zh:'門羅主義宣告歐洲不得干涉美洲；1853 年培里艦隊打開日本門戶。', en:'The Monroe Doctrine warned Europe off the Americas, and in 1853 Perry’s squadron forced Japan open.', fr:'La doctrine Monroe tient l’Europe à l’écart des Amériques, et en 1853 l’escadre de Perry force l’ouverture du Japon.' },
+    }
+  },
+  {
+    id:'civilwar', icon:'⚔️', start:1861, end:1877, world:'industrial',
+    name:{ zh:'南北戰爭與重建', en:'Civil War and Reconstruction', fr:'La guerre de Sécession et la Reconstruction' },
+    summary:{ zh:'1861 年南方邦聯砲擊桑特堡，內戰爆發。林肯在 1863 年發布《解放奴隸宣言》，同年聯邦軍在蓋茨堡獲勝。1865 年南軍投降，林肯幾天後遇刺。約六十萬到七十五萬人死於戰爭。戰後的重建時期通過第十三、十四、十五修正案，廢除奴隸制並賦予黑人公民權與投票權，但 1877 年聯邦軍撤出南方後，南方白人以種族隔離法與暴力剝奪了黑人的權利。',
+      en:'In 1861 the Confederacy fired on Fort Sumter and civil war began. Lincoln issued the Emancipation Proclamation in 1863, the year of the Union victory at Gettysburg. The South surrendered in 1865 and Lincoln was assassinated days later; some 600,000 to 750,000 died. Reconstruction passed the Thirteenth, Fourteenth and Fifteenth Amendments, abolishing slavery and giving Black Americans citizenship and the vote, but after federal troops left the South in 1877, white Southerners stripped those rights away through segregation laws and violence.',
+      fr:'En 1861, la Confédération bombarde Fort Sumter : c’est la guerre civile. Lincoln proclame l’émancipation en 1863, l’année de la victoire nordiste de Gettysburg. Le Sud capitule en 1865, et Lincoln est assassiné quelques jours plus tard ; la guerre fait de 600 000 à 750 000 morts. La Reconstruction adopte les 13ᵉ, 14ᵉ et 15ᵉ amendements, abolissant l’esclavage et accordant citoyenneté et droit de vote aux Noirs, mais après le départ des troupes fédérales en 1877, les Blancs du Sud les en privent par la ségrégation et la violence.' },
+    events:[
+      { y:1861, zh:'桑特堡之戰，內戰爆發', en:'Fort Sumter: the war begins', fr:'Fort Sumter : début de la guerre' },
+      { y:1863, zh:'《解放奴隸宣言》；蓋茨堡戰役與蓋茨堡演說', en:'Emancipation Proclamation; Gettysburg and the Gettysburg Address', fr:'Proclamation d’émancipation ; Gettysburg et son discours' },
+      { y:1865, by:'Abraham Lincoln', zh:'南軍投降；林肯遇刺；第十三修正案廢除奴隸制', en:'Confederate surrender; Lincoln assassinated; the Thirteenth Amendment abolishes slavery', fr:'Capitulation sudiste ; assassinat de Lincoln ; le 13ᵉ amendement abolit l’esclavage' },
+      { y:1868, zh:'第十四修正案；詹森總統彈劾案', en:'The Fourteenth Amendment; President Johnson is impeached', fr:'Le 14ᵉ amendement ; mise en accusation du président Johnson' },
+      { y:1869, zh:'橫貫大陸鐵路完工', en:'The transcontinental railroad is completed', fr:'Achèvement du chemin de fer transcontinental' },
+      { y:1877, zh:'1877 年妥協，重建結束', en:'The Compromise of 1877 ends Reconstruction', fr:'Le compromis de 1877 met fin à la Reconstruction' },
+    ],
+    themes:{
+      state:{ zh:'戰爭確立聯邦不可分裂，聯邦政府的權力大幅擴張，第十四修正案的平等保護條款成為日後民權訴訟的基礎。', en:'The war settled that the Union was indivisible and greatly enlarged federal power; the Fourteenth Amendment’s equal protection clause became the basis of later civil rights cases.', fr:'La guerre établit l’indivisibilité de l’Union et accroît fortement le pouvoir fédéral ; la clause d’égale protection du 14ᵉ amendement fonde les futurs procès pour les droits civiques.' },
+      faith:{ zh:'南北教會都用聖經為自己的立場辯護；黑人教會在戰後成為社區與政治組織的核心。', en:'Churches North and South used the Bible to justify their causes; after the war Black churches became the heart of community and political life.', fr:'Églises du Nord et du Sud invoquent la Bible pour justifier leur cause ; après la guerre, les Églises noires deviennent le cœur de la vie communautaire et politique.' },
+      society:{ zh:'約四百萬奴隸獲得自由，但大多成為佃農，被困在債務之中；三K黨在南方以恐怖手段打壓黑人。', en:'About four million enslaved people were freed, but most became sharecroppers trapped in debt, while the Ku Klux Klan terrorised Black Southerners.', fr:'Environ quatre millions d’esclaves sont libérés, mais la plupart deviennent métayers endettés, tandis que le Ku Klux Klan terrorise les Noirs du Sud.' },
+      culture:{ zh:'戰地攝影首次讓大眾看到戰爭的真實面貌；林肯的蓋茨堡演說成為美國最著名的演說之一。', en:'War photography showed the public the reality of battle for the first time, and the Gettysburg Address became one of the most famous speeches in American history.', fr:'La photographie de guerre montre pour la première fois au public la réalité des combats, et le discours de Gettysburg devient l’un des plus célèbres de l’histoire américaine.' },
+      world:{ zh:'英法一度考慮承認南方邦聯，但解放奴隸宣言讓歐洲輿論轉向北方；1867 年美國向俄國買下阿拉斯加。', en:'Britain and France considered recognising the Confederacy, but emancipation swung European opinion to the North; in 1867 the US bought Alaska from Russia.', fr:'Londres et Paris envisagent de reconnaître la Confédération, mais l’émancipation retourne l’opinion européenne en faveur du Nord ; en 1867, les États-Unis achètent l’Alaska à la Russie.' },
+    }
+  },
+  {
+    id:'gilded', icon:'🏭', start:1877, end:1917, world:'industrial',
+    name:{ zh:'鍍金時代與進步時代', en:'The Gilded Age and the Progressive Era', fr:'L’Âge doré et l’ère progressiste' },
+    summary:{ zh:'鐵路、鋼鐵與石油讓美國在十九世紀末成為世界最大的工業國，卡內基、洛克斐勒等大亨累積巨大財富，數千萬移民從歐洲湧入。貧富懸殊與政治腐敗引發勞工運動與民粹運動，二十世紀初的進步主義者推動反托拉斯法、食品安全與婦女投票權。對外，美國在美西戰爭中取得菲律賓、波多黎各與關島，開始成為海外強權。',
+      en:'Railways, steel and oil made the United States the world’s largest industrial economy by the end of the nineteenth century; tycoons such as Carnegie and Rockefeller amassed vast fortunes, and tens of millions of immigrants arrived from Europe. Inequality and corruption fuelled labour and Populist movements, and early twentieth-century Progressives pushed antitrust laws, food safety and votes for women. Abroad, the Spanish–American War brought the Philippines, Puerto Rico and Guam, and the US became an overseas power.',
+      fr:'Chemins de fer, acier et pétrole font des États-Unis la première puissance industrielle du monde à la fin du XIXᵉ siècle ; des magnats comme Carnegie et Rockefeller accumulent d’immenses fortunes, et des dizaines de millions d’immigrants arrivent d’Europe. Inégalités et corruption nourrissent les mouvements ouvriers et populistes, et les progressistes du début du XXᵉ siècle imposent lois antitrust, sécurité alimentaire et vote des femmes. À l’extérieur, la guerre hispano-américaine apporte les Philippines, Porto Rico et Guam : les États-Unis deviennent une puissance outre-mer.' },
+    events:[
+      { y:1882, zh:'《排華法案》', en:'The Chinese Exclusion Act', fr:'Le Chinese Exclusion Act' },
+      { y:1886, zh:'自由女神像落成；芝加哥乾草市場事件', en:'The Statue of Liberty is dedicated; the Haymarket affair in Chicago', fr:'Inauguration de la statue de la Liberté ; affaire de Haymarket à Chicago' },
+      { y:1890, zh:'傷膝河大屠殺；《謝爾曼反托拉斯法》', en:'Wounded Knee massacre; the Sherman Antitrust Act', fr:'Massacre de Wounded Knee ; loi antitrust Sherman' },
+      { y:1892, zh:'艾利斯島移民站啟用', en:'Ellis Island immigration station opens', fr:'Ouverture de la station d’immigration d’Ellis Island' },
+      { y:1896, zh:'「普萊西訴弗格森案」確立「隔離但平等」', en:'Plessy v. Ferguson upholds “separate but equal”', fr:'Plessy v. Ferguson consacre « séparés mais égaux »' },
+      { y:1898, zh:'美西戰爭；併吞夏威夷', en:'The Spanish–American War; Hawaii is annexed', fr:'Guerre hispano-américaine ; annexion d’Hawaï' },
+      { y:1903, zh:'萊特兄弟首次動力飛行', en:'The Wright brothers’ first powered flight', fr:'Premier vol motorisé des frères Wright' },
+      { y:1908, zh:'福特 T 型車上市', en:'The Ford Model T goes on sale', fr:'Lancement de la Ford T' },
+      { y:1914, zh:'巴拿馬運河通航', en:'The Panama Canal opens', fr:'Ouverture du canal de Panama' },
+    ],
+    themes:{
+      state:{ zh:'兩黨政治被大企業與政治機器操控；進步時代通過所得稅、參議員直選與禁酒等修憲。', en:'Big business and urban political machines dominated both parties; the Progressive Era brought amendments for an income tax, direct election of senators and Prohibition.', fr:'Grandes entreprises et machines politiques dominent les deux partis ; l’ère progressiste adopte des amendements sur l’impôt sur le revenu, l’élection directe des sénateurs et la prohibition.' },
+      faith:{ zh:'新移民帶來大量天主教徒與猶太教徒；「社會福音」運動主張以信仰改善社會問題。', en:'New immigrants brought large numbers of Catholics and Jews, and the Social Gospel movement sought to apply faith to social problems.', fr:'Les nouveaux immigrants amènent de nombreux catholiques et juifs, et le Social Gospel veut appliquer la foi aux problèmes sociaux.' },
+      society:{ zh:'城市快速成長，貧民窟、童工與工廠災害嚴重；西部的邊疆在 1890 年宣告消失，平原原住民被迫進入保留區。', en:'Cities grew fast, with slums, child labour and factory disasters; the frontier was declared closed in 1890, and Plains peoples were confined to reservations.', fr:'Les villes grandissent vite, avec taudis, travail des enfants et catastrophes industrielles ; la frontière est déclarée close en 1890, et les peuples des Plaines sont confinés dans des réserves.' },
+      culture:{ zh:'馬克·吐溫諷刺鍍金時代，愛迪生發明電燈與留聲機，摩天大樓在芝加哥與紐約出現，爵士樂在紐奧良萌芽。', en:'Mark Twain satirised the Gilded Age, Edison invented the electric light and the phonograph, skyscrapers rose in Chicago and New York, and jazz was born in New Orleans.', fr:'Mark Twain raille l’Âge doré, Edison invente l’ampoule et le phonographe, les gratte-ciel s’élèvent à Chicago et New York, et le jazz naît à La Nouvelle-Orléans.' },
+      world:{ zh:'老羅斯福以「大棒外交」介入加勒比海，美國提出對華「門戶開放」政策，並興建巴拿馬運河。', en:'Theodore Roosevelt’s “big stick” diplomacy intervened in the Caribbean, the US proclaimed an “Open Door” in China and built the Panama Canal.', fr:'La diplomatie du « gros bâton » de Theodore Roosevelt intervient dans les Caraïbes, les États-Unis proclament la « porte ouverte » en Chine et construisent le canal de Panama.' },
+    }
+  },
+  {
+    id:'wars', icon:'🎖️', start:1917, end:1945, world:'worldwar',
+    name:{ zh:'兩次大戰與大蕭條', en:'World Wars and the Great Depression', fr:'Guerres mondiales et Grande Dépression' },
+    summary:{ zh:'1917 年美國參加第一次世界大戰，戰後威爾遜提出國際聯盟，參議院卻拒絕加入。1920 年代經濟繁榮、爵士樂與禁酒並存，婦女取得投票權。1929 年股市崩盤引發大蕭條，失業率高達四分之一，小羅斯福以「新政」擴大政府角色。1941 年日本偷襲珍珠港，美國參加第二次世界大戰，以工業實力成為「民主的兵工廠」，最後在 1945 年對日本投下兩顆原子彈。',
+      en:'The US entered the First World War in 1917; afterwards Wilson proposed the League of Nations, but the Senate refused to join. The 1920s combined prosperity, jazz and Prohibition, and women won the vote. The 1929 crash brought the Great Depression, with unemployment reaching a quarter of the workforce, and Franklin Roosevelt’s New Deal expanded the role of government. After Japan attacked Pearl Harbor in 1941, the US entered the Second World War as the “arsenal of democracy” and in 1945 dropped two atomic bombs on Japan.',
+      fr:'Les États-Unis entrent dans la Première Guerre mondiale en 1917 ; Wilson propose ensuite la Société des Nations, mais le Sénat refuse d’y adhérer. Les années 1920 mêlent prospérité, jazz et prohibition, et les femmes obtiennent le droit de vote. Le krach de 1929 ouvre la Grande Dépression, avec un quart de chômeurs, et le New Deal de Franklin Roosevelt élargit le rôle de l’État. Après l’attaque japonaise de Pearl Harbor en 1941, les États-Unis entrent dans la Seconde Guerre mondiale comme « arsenal de la démocratie » et larguent en 1945 deux bombes atomiques sur le Japon.' },
+    events:[
+      { y:1917, zh:'美國對德宣戰', en:'The US declares war on Germany', fr:'Les États-Unis déclarent la guerre à l’Allemagne' },
+      { y:1920, zh:'第十九修正案賦予婦女投票權；禁酒令生效', en:'The Nineteenth Amendment gives women the vote; Prohibition takes effect', fr:'Le 19ᵉ amendement donne le vote aux femmes ; la prohibition entre en vigueur' },
+      { y:1929, zh:'華爾街股市崩盤', en:'The Wall Street Crash', fr:'Le krach de Wall Street' },
+      { y:1933, zh:'小羅斯福推行新政；禁酒令廢除', en:'Roosevelt launches the New Deal; Prohibition is repealed', fr:'Roosevelt lance le New Deal ; abrogation de la prohibition' },
+      { y:1935, zh:'《社會安全法》', en:'The Social Security Act', fr:'Le Social Security Act' },
+      { y:1941, zh:'珍珠港事件，美國參戰', en:'Pearl Harbor: the US enters the war', fr:'Pearl Harbor : les États-Unis entrent en guerre' },
+      { y:1942, zh:'日裔美國人被強制拘禁', en:'Japanese Americans are forcibly interned', fr:'Internement forcé des Américains d’origine japonaise' },
+      { y:1944, zh:'諾曼第登陸', en:'The D-Day landings in Normandy', fr:'Le débarquement de Normandie' },
+      { y:1945, zh:'廣島與長崎原子彈；二戰結束；聯合國成立', en:'Hiroshima and Nagasaki; the war ends; the United Nations is founded', fr:'Hiroshima et Nagasaki ; fin de la guerre ; création de l’ONU' },
+    ],
+    themes:{
+      state:{ zh:'新政建立社會安全、勞工保護與金融監管，聯邦政府的角色從此大幅擴大；小羅斯福連任四屆。', en:'The New Deal created Social Security, labour protections and financial regulation, permanently enlarging the federal government; Roosevelt won four terms.', fr:'Le New Deal crée la sécurité sociale, la protection du travail et la régulation financière, élargissant durablement l’État fédéral ; Roosevelt est élu quatre fois.' },
+      faith:{ zh:'基要主義與現代主義對立，1925 年的「猴子審判」爭論學校能否教授演化論。', en:'Fundamentalists clashed with modernists, and the 1925 “Monkey Trial” fought over teaching evolution in schools.', fr:'Fondamentalistes et modernistes s’opposent, et le « procès du singe » de 1925 porte sur l’enseignement de l’évolution à l’école.' },
+      society:{ zh:'黑人「大遷徙」從南方移往北方城市；沙塵暴讓大平原的農民流離失所；戰時婦女大量投入工廠。', en:'The Great Migration took Black Southerners to Northern cities, the Dust Bowl uprooted Plains farmers, and women poured into wartime factories.', fr:'La Grande Migration mène les Noirs du Sud vers les villes du Nord, le Dust Bowl déracine les fermiers des Plaines, et les femmes affluent dans les usines de guerre.' },
+      culture:{ zh:'哈林文藝復興、爵士時代與費茲傑羅的《大亨小傳》；好萊塢電影與廣播成為大眾娛樂。', en:'The Harlem Renaissance, the Jazz Age and Fitzgerald’s The Great Gatsby; Hollywood films and radio became mass entertainment.', fr:'La Renaissance de Harlem, l’âge du jazz et Gatsby le Magnifique de Fitzgerald ; cinéma hollywoodien et radio deviennent des divertissements de masse.' },
+      world:{ zh:'一戰後回到孤立主義，二戰後成為世界兩大強權之一，主導建立聯合國與布列頓森林體系。', en:'Isolationist after the First World War, the US emerged from the Second as one of two superpowers, leading the creation of the UN and the Bretton Woods system.', fr:'Isolationnistes après 1918, les États-Unis sortent de la Seconde Guerre mondiale comme l’une des deux superpuissances et mènent la création de l’ONU et du système de Bretton Woods.' },
+    }
+  },
+  {
+    id:'coldwar', icon:'🚀', start:1945, end:1991, world:'coldwar',
+    name:{ zh:'冷戰與民權運動', en:'Cold War and Civil Rights', fr:'Guerre froide et droits civiques' },
+    summary:{ zh:'二戰後美國與蘇聯展開冷戰：馬歇爾計畫援助西歐、成立北約、參加韓戰與越戰，國內則有麥卡錫主義的反共清查。戰後經濟繁榮造就郊區化的中產階級。1954 年最高法院判決學校種族隔離違憲，金恩博士領導的民權運動促成 1964 年《民權法》與 1965 年《投票權法》。越戰、水門案與石油危機讓社會陷入分裂與不信任；雷根時代重振保守主義，1991 年蘇聯解體，冷戰結束。',
+      en:'After 1945 the US and the Soviet Union waged the Cold War: the Marshall Plan for Western Europe, NATO, the Korean and Vietnam Wars, and at home McCarthyite anti-communist purges. Post-war prosperity built a suburban middle class. In 1954 the Supreme Court struck down school segregation, and the civil rights movement led by Martin Luther King Jr. won the Civil Rights Act of 1964 and the Voting Rights Act of 1965. Vietnam, Watergate and the oil shocks left a divided and distrustful society; the Reagan years revived conservatism, and the Soviet Union collapsed in 1991, ending the Cold War.',
+      fr:'Après 1945, les États-Unis et l’URSS se livrent à la guerre froide : plan Marshall pour l’Europe occidentale, OTAN, guerres de Corée et du Vietnam, et à l’intérieur la chasse aux communistes du maccarthysme. La prospérité d’après-guerre crée une classe moyenne des banlieues. En 1954, la Cour suprême déclare la ségrégation scolaire inconstitutionnelle, et le mouvement des droits civiques mené par Martin Luther King obtient le Civil Rights Act de 1964 et le Voting Rights Act de 1965. Vietnam, Watergate et chocs pétroliers laissent une société divisée et méfiante ; les années Reagan relancent le conservatisme, et l’URSS s’effondre en 1991, mettant fin à la guerre froide.' },
+    events:[
+      { y:1947, zh:'杜魯門主義；馬歇爾計畫', en:'The Truman Doctrine; the Marshall Plan', fr:'Doctrine Truman ; plan Marshall' },
+      { y:1950, zh:'韓戰爆發；麥卡錫主義', en:'The Korean War; McCarthyism', fr:'Guerre de Corée ; maccarthysme' },
+      { y:1954, zh:'「布朗訴教育局案」判決學校隔離違憲', en:'Brown v. Board of Education outlaws school segregation', fr:'Brown v. Board of Education interdit la ségrégation scolaire' },
+      { y:1955, by:'Martin Luther King Jr.', zh:'蒙哥馬利公車抵制運動', en:'The Montgomery bus boycott', fr:'Le boycott des bus de Montgomery' },
+      { y:1962, zh:'古巴飛彈危機', en:'The Cuban Missile Crisis', fr:'La crise des missiles de Cuba' },
+      { y:1963, by:'John F. Kennedy', zh:'華盛頓大遊行與「我有一個夢」；甘迺迪遇刺', en:'The March on Washington and “I Have a Dream”; Kennedy is assassinated', fr:'La marche sur Washington et « I Have a Dream » ; assassinat de Kennedy' },
+      { y:1964, zh:'《民權法》', en:'The Civil Rights Act', fr:'Le Civil Rights Act' },
+      { y:1968, by:'Martin Luther King Jr.', zh:'金恩博士與羅伯特·甘迺迪遇刺', en:'Martin Luther King Jr. and Robert Kennedy are assassinated', fr:'Assassinats de Martin Luther King et Robert Kennedy' },
+      { y:1969, zh:'阿波羅 11 號登月', en:'Apollo 11 lands on the Moon', fr:'Apollo 11 se pose sur la Lune' },
+      { y:1974, by:'Richard Nixon', zh:'尼克森因水門案辭職', en:'Nixon resigns over Watergate', fr:'Nixon démissionne après le Watergate' },
+      { y:1975, zh:'西貢陷落，越戰結束', en:'Saigon falls: the Vietnam War ends', fr:'Chute de Saïgon : fin de la guerre du Vietnam' },
+      { y:1989, zh:'柏林圍牆倒塌', en:'The Berlin Wall falls', fr:'Chute du mur de Berlin' },
+      { y:1991, zh:'波斯灣戰爭；蘇聯解體', en:'The Gulf War; the Soviet Union dissolves', fr:'Guerre du Golfe ; dissolution de l’URSS' },
+    ],
+    themes:{
+      state:{ zh:'詹森的「大社會」計畫推出聯邦醫療保險與反貧窮政策；水門案後國會加強對總統權力的監督。', en:'Johnson’s Great Society created Medicare and anti-poverty programmes; after Watergate, Congress tightened its oversight of presidential power.', fr:'La Grande Société de Johnson crée Medicare et des programmes contre la pauvreté ; après le Watergate, le Congrès renforce son contrôle du pouvoir présidentiel.' },
+      faith:{ zh:'黑人教會是民權運動的核心；1970 年代後福音派基督徒成為共和黨的重要支持力量。', en:'Black churches were the backbone of the civil rights movement; from the 1970s evangelical Christians became a key Republican constituency.', fr:'Les Églises noires sont l’épine dorsale du mouvement des droits civiques ; à partir des années 1970, les évangéliques deviennent un pilier du Parti républicain.' },
+      society:{ zh:'嬰兒潮、州際公路與郊區住宅改變了生活方式；女權、反戰、同志與環保運動在 1960 年代後興起。', en:'The baby boom, interstate highways and suburban housing changed how people lived; feminist, anti-war, gay rights and environmental movements rose from the 1960s.', fr:'Baby-boom, autoroutes inter-États et pavillons de banlieue changent les modes de vie ; féminisme, pacifisme, mouvement gay et écologie s’affirment à partir des années 1960.' },
+      culture:{ zh:'電視普及，搖滾樂從貓王到披頭四入侵，好萊塢與流行文化席捲全球；矽谷在 1970 年代興起個人電腦。', en:'Television spread, rock’n’roll ran from Elvis to the British Invasion, Hollywood and pop culture swept the globe, and Silicon Valley launched the personal computer in the 1970s.', fr:'La télévision se répand, le rock va d’Elvis à l’invasion britannique, Hollywood et la culture pop conquièrent le monde, et la Silicon Valley lance l’ordinateur personnel dans les années 1970.' },
+      world:{ zh:'圍堵共產主義的政策讓美國捲入韓戰與越戰；尼克森訪華與美蘇緩和，最後雷根與戈巴契夫談判裁軍。', en:'Containment drew the US into Korea and Vietnam; Nixon’s opening to China and détente followed, and finally Reagan and Gorbachev negotiated disarmament.', fr:'L’endiguement entraîne les États-Unis en Corée et au Vietnam ; viennent l’ouverture de Nixon à la Chine et la détente, puis les négociations de désarmement entre Reagan et Gorbatchev.' },
+    }
+  },
+  {
+    id:'contemporary', icon:'🗽', start:1991, end:2026, world:'contemporary',
+    name:{ zh:'冷戰之後', en:'After the Cold War', fr:'Après la guerre froide' },
+    summary:{ zh:'冷戰結束後美國成為唯一的超級強國，1990 年代網路經濟帶來繁榮。2001 年九一一恐怖攻擊後，美國發動阿富汗與伊拉克戰爭。2008 年金融海嘯重創經濟，同年歐巴馬成為第一位黑人總統。政治在二十一世紀日益兩極化：川普在 2016 年當選，2021 年支持者衝進國會大廈；新冠疫情造成上百萬人死亡。2024 年川普再度當選，2025 年開始第二個任期。',
+      en:'After the Cold War the US was the sole superpower, and the internet economy brought boom times in the 1990s. After the terrorist attacks of 11 September 2001 it went to war in Afghanistan and Iraq. The 2008 financial crisis hit the economy hard, and that same year Barack Obama became the first Black president. Politics grew ever more polarised: Donald Trump won in 2016, his supporters stormed the Capitol in 2021, and Covid-19 killed more than a million Americans. Trump won again in 2024 and began a second term in 2025.',
+      fr:'Après la guerre froide, les États-Unis sont la seule superpuissance, et l’économie d’Internet apporte la prospérité des années 1990. Après les attentats du 11 septembre 2001, ils entrent en guerre en Afghanistan et en Irak. La crise financière de 2008 frappe durement l’économie, et la même année Barack Obama devient le premier président noir. La vie politique se polarise : Donald Trump est élu en 2016, ses partisans envahissent le Capitole en 2021, et le Covid-19 fait plus d’un million de morts. Trump est réélu en 2024 et entame un second mandat en 2025.' },
+    events:[
+      { y:1994, zh:'北美自由貿易協定生效', en:'NAFTA takes effect', fr:'Entrée en vigueur de l’ALENA' },
+      { y:1998, zh:'柯林頓遭眾議院彈劾', en:'Clinton is impeached by the House', fr:'Clinton mis en accusation par la Chambre' },
+      { y:2001, zh:'九一一恐怖攻擊；阿富汗戰爭', en:'The 9/11 attacks; the war in Afghanistan', fr:'Attentats du 11 septembre ; guerre d’Afghanistan' },
+      { y:2003, zh:'伊拉克戰爭', en:'The Iraq War', fr:'La guerre d’Irak' },
+      { y:2005, zh:'卡崔娜颶風重創紐奧良', en:'Hurricane Katrina devastates New Orleans', fr:'L’ouragan Katrina dévaste La Nouvelle-Orléans' },
+      { y:2008, zh:'金融海嘯；歐巴馬當選', en:'The financial crisis; Obama is elected', fr:'Crise financière ; élection d’Obama' },
+      { y:2015, zh:'最高法院承認同性婚姻', en:'The Supreme Court recognises same-sex marriage', fr:'La Cour suprême reconnaît le mariage homosexuel' },
+      { y:2016, zh:'川普當選', en:'Trump is elected', fr:'Élection de Trump' },
+      { y:2020, zh:'新冠疫情；佛洛伊德之死引發全國抗議', en:'Covid-19; George Floyd’s murder sparks nationwide protests', fr:'Covid-19 ; la mort de George Floyd provoque des manifestations nationales' },
+      { y:2021, by:'Donald Trump', zh:'1 月 6 日國會大廈遭衝擊；撤出阿富汗', en:'The 6 January storming of the Capitol; withdrawal from Afghanistan', fr:'Assaut du Capitole le 6 janvier ; retrait d’Afghanistan' },
+      { y:2022, zh:'最高法院推翻「羅訴韋德案」', en:'The Supreme Court overturns Roe v. Wade', fr:'La Cour suprême annule Roe v. Wade' },
+      { y:2025, zh:'川普第二任期開始，大幅提高關稅', en:'Trump’s second term begins with sweeping tariffs', fr:'Début du second mandat de Trump, avec de vastes droits de douane' },
+    ],
+    themes:{
+      state:{ zh:'兩黨極化加劇，國會常陷入僵局，總統越來越依賴行政命令；最高法院在墮胎、槍枝與總統權力等議題上作出重大判決。', en:'Polarisation deepened, Congress was often gridlocked and presidents relied more on executive orders; the Supreme Court issued landmark rulings on abortion, guns and presidential power.', fr:'La polarisation s’aggrave, le Congrès est souvent bloqué et les présidents gouvernent par décrets ; la Cour suprême rend des arrêts majeurs sur l’avortement, les armes et les pouvoirs présidentiels.' },
+      faith:{ zh:'無宗教信仰者比例快速上升，同時福音派在政治上的影響力仍然很大。', en:'The share of Americans with no religion rose fast, while evangelicals kept great political influence.', fr:'La part des Américains sans religion augmente vite, tandis que les évangéliques gardent une grande influence politique.' },
+      society:{ zh:'科技巨頭崛起，製造業外移，貧富差距擴大；移民、槍枝暴力與鴉片類藥物危機是長期爭議。', en:'Tech giants rose, manufacturing moved abroad and inequality widened; immigration, gun violence and the opioid crisis remain fierce controversies.', fr:'Les géants de la tech s’imposent, l’industrie se délocalise et les inégalités se creusent ; immigration, violence armée et crise des opioïdes restent des sujets brûlants.' },
+      culture:{ zh:'網路、智慧型手機與社群媒體改變了人們獲取資訊的方式，串流平台與 AI 重塑娛樂與工作。', en:'The internet, smartphones and social media changed how people get information, and streaming and AI are reshaping entertainment and work.', fr:'Internet, smartphones et réseaux sociaux transforment l’accès à l’information, et le streaming et l’IA redéfinissent loisirs et travail.' },
+      world:{ zh:'從單極霸權到反恐戰爭，再到與中國的戰略競爭；美國對盟友、貿易與烏克蘭戰爭的立場在不同政府間大幅擺盪。', en:'From unipolar dominance to the war on terror and strategic rivalry with China, US positions on allies, trade and the war in Ukraine have swung sharply between administrations.', fr:'De l’hégémonie unipolaire à la guerre contre le terrorisme puis à la rivalité stratégique avec la Chine, les positions américaines sur les alliés, le commerce et la guerre en Ukraine varient fortement d’une administration à l’autre.' },
+    }
+  },
+  ]
+},
 ];
 
 const CX_UI = {
@@ -2164,9 +2745,9 @@ function cxParties(pid) {
     + '</article>').join('');
   return '<div class="cx-label">' + T(d.title) + '</div>'
     + '<p class="cx-pt-intro">' + T(d.intro) + '</p>'
-    + '<div class="cx-pt-spec-l">' + (d.spec ? T(d.spec) : cxU('ptSpec')) + '</div>'
+    + (d.noSpec ? '' : '<div class="cx-pt-spec-l">' + (d.spec ? T(d.spec) : cxU('ptSpec')) + '</div>'
     + '<div class="cx-pt-spec"><div class="cx-pt-dots" style="height:' + (rows.length * 30 + 6) + 'px">' + dots + '</div>'
-    + '<div class="cx-pt-bar"' + (d.bar ? ' style="background:' + d.bar + '"' : '') + '></div><div class="cx-pt-axis">' + axis + '</div></div>'
+    + '<div class="cx-pt-bar"' + (d.bar ? ' style="background:' + d.bar + '"' : '') + '></div><div class="cx-pt-axis">' + axis + '</div></div>')
     + '<div class="cx-pt-grid">' + cards + '</div>';
 }
 
@@ -2318,7 +2899,7 @@ function cxCities(c, P) {
   const pt = ([lon, lat]) => [(lon - x0) * cos * sc, (y1 - lat) * sc];
   const per = id => P.find(p => p.id === id);
   const go = id => 'cxSet({city:\'' + id + '\'})';
-  const lab = { r:[12, 5, 'start'], l:[-12, 5, 'end'], t:[0, -13, 'middle'], b:[0, 23, 'middle'] };
+  const lab = { r:[12, 5, 'start'], l:[-12, 5, 'end'], t:[0, -13, 'middle'], b:[0, 23, 'middle'], tl:[-8, -12, 'end'], bl:[-9, 19, 'end'], br:[9, 19, 'start'] };
 
   const pins = list.map(k => {
     const [x, y] = pt(k.ll).map(v => Math.round(v * 10) / 10);
