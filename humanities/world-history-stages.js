@@ -722,4 +722,104 @@ risorgimento: {
 },
 
 },
+taiwan: {
+
+democratization: {
+  title:{ zh:'從美麗島到政黨輪替：民主化的六個階段', en:'From Formosa to the first transfer of power: democratisation in six stages', fr:'De Formose à la première alternance : la démocratisation en six étapes' },
+  list:[
+  { a:'1979-12', b:'1984-10',
+    name:{ zh:'美麗島與鎮壓', en:'The Formosa Incident and the crackdown', fr:'L’incident de Formose et la répression' },
+    power:{ zh:'蔣經國總統與國民黨；黨外以《美麗島》雜誌集結', en:'President Chiang Ching-kuo and the KMT, with the tangwai gathered around Formosa magazine', fr:'Le président Chiang Ching-kuo et le KMT ; les tangwai réunis autour de la revue Formose' },
+    summary:{ zh:'1979 年 12 月 10 日國際人權日，《美麗島》雜誌在高雄舉辦遊行，與軍警爆發衝突。黨外領袖幾乎全數被捕，黃信介、施明德、呂秀蓮等八人以叛亂罪受軍法審判，辯護律師包括陳水扁、謝長廷與蘇貞昌。審判期間發生林義雄家的滅門血案，1981 年留美學者陳文成陳屍台大，1984 年作家江南在美國遇刺，國民黨政府承受巨大的國際壓力。',
+      en:'On Human Rights Day, 10 December 1979, Formosa magazine held a rally in Kaohsiung that ended in clashes with police and troops. Almost all tangwai leaders were arrested, and eight, including Huang Hsin-chieh, Shih Ming-teh and Annette Lu, were court-martialled for sedition, defended by lawyers such as Chen Shui-bian, Frank Hsieh and Su Tseng-chang. During the trial Lin Yi-hsiung’s mother and twin daughters were murdered; in 1981 the US-based scholar Chen Wen-chen was found dead at National Taiwan University, and in 1984 the writer Henry Liu was assassinated in California, putting the government under heavy international pressure.',
+      fr:'Le 10 décembre 1979, Journée des droits de l’homme, la revue Formose organise à Kaohsiung un rassemblement qui tourne à l’affrontement avec la police et l’armée. Presque tous les dirigeants tangwai sont arrêtés, et huit d’entre eux, dont Huang Hsin-chieh, Shih Ming-teh et Annette Lu, passent en cour martiale pour sédition, défendus notamment par Chen Shui-bian, Frank Hsieh et Su Tseng-chang. Pendant le procès, la mère et les jumelles de Lin Yi-hsiung sont assassinées ; en 1981, l’universitaire Chen Wen-chen, établi aux États-Unis, est retrouvé mort à l’université nationale de Taïwan, et en 1984 l’écrivain Henry Liu est assassiné en Californie : la pression internationale devient très forte.' },
+    ev:[
+      ['1979-12-10', ['美麗島事件','The Formosa Incident in Kaohsiung','Incident de Formose à Kaohsiung']],
+      ['1980-02-28', ['林宅血案','The murder of Lin Yi-hsiung’s family','Assassinat de la famille de Lin Yi-hsiung']],
+      ['1980-03-18', ['美麗島軍法大審開庭','The Formosa court-martial opens','Ouverture du procès militaire de Formose']],
+      ['1981-07-03', ['陳文成命案','The death of Chen Wen-chen','Mort de Chen Wen-chen']],
+      ['1984-10-15', ['江南案：作家劉宜良在美國遇刺','Henry Liu is assassinated in California','Assassinat de l’écrivain Henry Liu en Californie']],
+    ],
+    turn:{ zh:'鎮壓沒有讓反對運動消失，受刑人家屬與辯護律師反而在選舉中高票當選，黨外運動迅速擴大。', en:'Repression did not end the opposition: relatives of the defendants and their lawyers won elections by large margins, and the tangwai movement grew fast.', fr:'La répression n’éteint pas l’opposition : proches des accusés et avocats de la défense sont élus triomphalement, et le mouvement tangwai s’étend rapidement.' } },
+
+  { a:'1984-10', b:'1987-07',
+    name:{ zh:'突破黨禁', en:'Breaking the ban on parties', fr:'Briser l’interdiction des partis' },
+    power:{ zh:'晚年的蔣經國；黨外公職人員與編聯會', en:'Chiang Ching-kuo in his last years, facing tangwai office-holders and writers', fr:'Chiang Ching-kuo en fin de vie, face aux élus et aux écrivains tangwai' },
+    summary:{ zh:'江南案讓美國國會強力關切，蔣經國在 1985 年宣布蔣家人「不能也不會」接任總統。1986 年 9 月 28 日，黨外人士在台北圓山飯店宣布成立民主進步黨，當時組黨仍屬違法，但蔣經國選擇不鎮壓，表示「時代在變，環境在變，潮流也在變」。隔年 7 月，實施了三十八年的戒嚴終於解除。',
+      en:'The Henry Liu affair alarmed the US Congress, and in 1985 Chiang Ching-kuo declared that no member of the Chiang family “could or would” succeed him. On 28 September 1986 tangwai figures announced the founding of the Democratic Progressive Party at Taipei’s Grand Hotel; forming a party was still illegal, but Chiang chose not to crack down, saying that “the times are changing, the environment is changing, the tide is changing”. The following July, martial law was lifted after thirty-eight years.',
+      fr:'L’affaire Henry Liu alarme le Congrès américain, et Chiang Ching-kuo annonce en 1985 qu’aucun membre de sa famille « ne peut ni ne veut » lui succéder. Le 28 septembre 1986, des figures tangwai proclament la fondation du Parti démocrate progressiste au Grand Hôtel de Taipei ; fonder un parti reste illégal, mais Chiang renonce à la répression : « les temps changent, l’environnement change, la marée change ». En juillet suivant, la loi martiale est levée après trente-huit ans.' },
+    ev:[
+      ['1985-12-25', ['蔣經國宣布蔣家人不會接班','Chiang Ching-kuo rules out a Chiang family succession','Chiang Ching-kuo exclut une succession familiale']],
+      ['1986-09-28', ['民主進步黨在圓山飯店成立','The DPP is founded at the Grand Hotel','Fondation du DPP au Grand Hôtel']],
+      ['1986-12-06', ['民進黨首次參加立委與國代增額選舉','The DPP contests its first supplementary elections','Le DPP participe à ses premières élections partielles']],
+      ['1987-07-15', ['解除戒嚴','Martial law is lifted','Levée de la loi martiale']],
+    ],
+    turn:{ zh:'反對黨合法存在了，但「萬年國會」與動員戡亂的體制還在。', en:'An opposition party now existed, but the “ten-thousand-year parliament” and the mobilisation regime remained.', fr:'Un parti d’opposition existe désormais, mais le « parlement de dix mille ans » et le régime de mobilisation demeurent.' } },
+
+  { a:'1987-07', b:'1990-03',
+    name:{ zh:'解嚴後的社會力', en:'Society unleashed after martial law', fr:'La société libérée après la loi martiale' },
+    power:{ zh:'蔣經國去世後，李登輝繼任總統與國民黨主席', en:'After Chiang Ching-kuo’s death, Lee Teng-hui as president and KMT chairman', fr:'Après la mort de Chiang Ching-kuo, Lee Teng-hui président et chef du KMT' },
+    summary:{ zh:'解嚴後開放赴大陸探親、解除報禁，街頭抗議與社會運動大量湧現：勞工、農民、原住民、環保與二二八平反運動相繼登場。1988 年 1 月蔣經國去世，台灣出生的李登輝成為總統，但在國民黨內仍受保守派掣肘。1989 年主張「台灣獨立」言論自由的鄭南榕拒捕自焚，震動社會。',
+      en:'After martial law ended, family visits to the mainland were allowed and the ban on new newspapers lifted, and protests and social movements poured onto the streets: labour, farmers, Indigenous peoples, environmentalists and the campaign to redress the 228 Incident. Chiang Ching-kuo died in January 1988 and the Taiwan-born Lee Teng-hui became president, still hemmed in by KMT conservatives. In 1989 Nylon Deng, who championed freedom to advocate Taiwanese independence, set himself on fire rather than be arrested, shaking the country.',
+      fr:'Après la levée de la loi martiale, les visites familiales sur le continent sont autorisées et l’interdiction des nouveaux journaux tombe ; manifestations et mouvements sociaux envahissent la rue : ouvriers, paysans, autochtones, écologistes et campagne pour la réhabilitation du 228. Chiang Ching-kuo meurt en janvier 1988, et Lee Teng-hui, né à Taïwan, devient président, encore entravé par les conservateurs du KMT. En 1989, Nylon Deng, défenseur de la liberté de prôner l’indépendance, s’immole plutôt que d’être arrêté, bouleversant le pays.' },
+    ev:[
+      ['1987-11-02', ['開放赴大陸探親','Family visits to the mainland are allowed','Autorisation des visites familiales sur le continent']],
+      ['1988-01-01', ['解除報禁','The ban on new newspapers ends','Fin de l’interdiction des nouveaux journaux']],
+      ['1988-01-13', ['蔣經國去世，李登輝繼任總統','Chiang Ching-kuo dies; Lee Teng-hui becomes president','Mort de Chiang Ching-kuo ; Lee Teng-hui devient président']],
+      ['1988-05-20', ['五二〇農民運動','The 520 farmers’ protest','La manifestation paysanne du 20 mai']],
+      ['1989-04-07', ['鄭南榕自焚','Nylon Deng sets himself on fire','Nylon Deng s’immole']],
+    ],
+    turn:{ zh:'社會已經改變，國會卻仍由四十年前在中國選出的老代表把持，衝突終於在 1990 年爆發。', en:'Society had changed, but parliament was still held by members elected in China forty years earlier; the clash came in 1990.', fr:'La société a changé, mais le Parlement reste tenu par des élus de Chine vieux de quarante ans ; le conflit éclate en 1990.' } },
+
+  { a:'1990-03', b:'1992-05',
+    name:{ zh:'野百合與國會改革', en:'Wild Lily and parliamentary reform', fr:'Le Lys sauvage et la réforme du Parlement' },
+    power:{ zh:'李登輝總統，在國是會議中與民進黨協商', en:'President Lee Teng-hui, negotiating with the DPP through the National Affairs Conference', fr:'Le président Lee Teng-hui, négociant avec le DPP lors de la Conférence nationale' },
+    summary:{ zh:'1990 年 3 月國民大會老代表準備替自己延長任期並選舉總統，引發野百合學運。李登輝當選總統後接見學生，召開國是會議。1991 年宣布終止動員戡亂時期、廢除臨時條款，大法官解釋要求老代表全數退職，年底國民大會全面改選。1992 年修正刑法一百條，主張台獨不再構成叛亂罪，政治犯黑名單也陸續解除。',
+      en:'In March 1990 the aged National Assembly members prepared to extend their own terms while electing the president, setting off the Wild Lily movement. Newly elected, Lee Teng-hui met the students and convened a National Affairs Conference. In 1991 the period of mobilisation was ended and the Temporary Provisions abolished; a constitutional ruling forced all the old members to retire, and the National Assembly was fully re-elected at year’s end. In 1992 Article 100 of the Criminal Code was amended so that advocating independence was no longer sedition, and the blacklist of exiled dissidents was gradually lifted.',
+      fr:'En mars 1990, les vieux membres de l’Assemblée nationale s’apprêtent à prolonger leur propre mandat tout en élisant le président : c’est le mouvement du Lys sauvage. Tout juste élu, Lee Teng-hui reçoit les étudiants et convoque une Conférence nationale. En 1991, la période de mobilisation prend fin et les dispositions temporaires sont abolies ; une décision constitutionnelle oblige tous les anciens élus à partir, et l’Assemblée est entièrement renouvelée en fin d’année. En 1992, l’article 100 du Code pénal est amendé : prôner l’indépendance n’est plus un crime de sédition, et la liste noire des dissidents exilés est peu à peu levée.' },
+    ev:[
+      ['1990-03-16', ['野百合學運開始','The Wild Lily movement begins','Début du mouvement du Lys sauvage']],
+      ['1990-03-21', ['國民大會選出李登輝為總統','The National Assembly elects Lee Teng-hui president','L’Assemblée nationale élit Lee Teng-hui président']],
+      ['1990-06-21', ['釋字第 261 號：老代表須在隔年底前退職','Constitutional ruling 261 orders the old members to retire','Décision constitutionnelle 261 : retraite des anciens élus']],
+      ['1991-05-01', ['終止動員戡亂時期','The period of mobilisation ends','Fin de la période de mobilisation']],
+      ['1991-12-21', ['國民大會全面改選','The National Assembly is fully re-elected','Réélection intégrale de l’Assemblée nationale']],
+      ['1992-05-15', ['修正刑法一百條','Article 100 of the Criminal Code is amended','Amendement de l’article 100 du Code pénal']],
+    ],
+    turn:{ zh:'威權的法律框架拆除了，接下來要決定的是：總統要由誰來選？', en:'The legal framework of authoritarian rule was gone; the next question was who would elect the president.', fr:'Le cadre juridique autoritaire a disparu ; reste à savoir qui élira le président.' } },
+
+  { a:'1992-05', b:'1996-05',
+    name:{ zh:'走向總統直選', en:'Towards direct presidential elections', fr:'Vers l’élection présidentielle directe' },
+    power:{ zh:'李登輝總統；民進黨在立法院成為穩定的反對黨', en:'President Lee Teng-hui, with the DPP now a solid opposition in the Legislative Yuan', fr:'Le président Lee Teng-hui, face à un DPP solidement installé au Yuan législatif' },
+    summary:{ zh:'1992 年底立法院第一次全面改選，民進黨拿下約三分之一席次。1994 年修憲確定總統由人民直接選舉，同年台北市長改為民選，陳水扁當選。1995 年李登輝代表政府為二二八事件道歉，全民健保開辦。1996 年 3 月第一次總統直選前，中國在台灣附近海域試射飛彈，美國派出兩個航艦戰鬥群；李登輝以 54% 得票當選。',
+      en:'At the end of 1992 the Legislative Yuan was fully re-elected for the first time, the DPP winning about a third of the seats. A 1994 amendment provided for direct election of the president, and that year Taipei’s mayor was elected by popular vote for the first time: Chen Shui-bian. In 1995 Lee Teng-hui apologised on behalf of the government for the 228 Incident, and National Health Insurance began. Before the first direct presidential election in March 1996, China fired missiles into waters near Taiwan and the United States sent two carrier groups; Lee won with 54 per cent.',
+      fr:'Fin 1992, le Yuan législatif est entièrement réélu pour la première fois, le DPP obtenant environ un tiers des sièges. Une révision de 1994 instaure l’élection directe du président, et la même année le maire de Taipei est élu au suffrage direct : Chen Shui-bian. En 1995, Lee Teng-hui présente les excuses du gouvernement pour l’incident 228, et l’assurance maladie universelle voit le jour. Avant la première présidentielle directe de mars 1996, la Chine tire des missiles près de Taïwan et les États-Unis envoient deux groupes aéronavals ; Lee l’emporte avec 54 %.' },
+    ev:[
+      ['1992-12-19', ['立法院第一次全面改選','The Legislative Yuan is fully re-elected for the first time','Première réélection intégrale du Yuan législatif']],
+      ['1994-12-03', ['首次省長與直轄市長民選','First popular elections for provincial governor and big-city mayors','Premières élections directes du gouverneur et des maires des grandes villes']],
+      ['1995-02-28', ['李登輝為二二八事件道歉','Lee Teng-hui apologises for the 228 Incident','Lee Teng-hui présente ses excuses pour le 228']],
+      ['1995-03-01', ['全民健康保險開辦','National Health Insurance begins','Lancement de l’assurance maladie universelle']],
+      ['1996-03-08', ['中國試射飛彈，台海危機','China test-fires missiles: the Strait crisis','Tirs de missiles chinois : crise du détroit']],
+      ['1996-03-23', ['第一次總統直選，李登輝當選','First direct presidential election: Lee Teng-hui wins','Première présidentielle directe : victoire de Lee Teng-hui']],
+    ],
+    turn:{ zh:'人民選出了總統，但國民黨仍未下台過；真正的考驗是政權能否和平移轉。', en:'The people had elected their president, but the KMT had never lost power; the real test was whether power could change hands peacefully.', fr:'Le peuple a élu son président, mais le KMT n’a jamais perdu le pouvoir ; le vrai test sera une alternance pacifique.' } },
+
+  { a:'1996-05', b:'2000-05',
+    name:{ zh:'第一次政黨輪替', en:'The first transfer of power', fr:'La première alternance' },
+    power:{ zh:'李登輝總統；國民黨內部分裂，宋楚瑜脫黨參選', en:'President Lee Teng-hui, with the KMT splitting as James Soong ran as an independent', fr:'Le président Lee Teng-hui ; le KMT se divise, James Soong se présentant en indépendant' },
+    summary:{ zh:'1997 年修憲「精省」，台灣省政府功能大幅縮減，與省長宋楚瑜的關係破裂。1999 年李登輝提出兩岸是「特殊的國與國關係」，同年 9 月九二一大地震造成兩千多人罹難。2000 年總統大選，國民黨的連戰與脫黨參選的宋楚瑜分裂票源，民進黨的陳水扁以 39% 得票當選，國民黨在台灣執政五十多年後首次交出政權。',
+      en:'A 1997 amendment “streamlined” the province, gutting the Taiwan provincial government and breaking Lee’s alliance with Governor James Soong. In 1999 Lee described cross-strait ties as a “special state-to-state relationship”, and in September the 921 earthquake killed more than two thousand people. In the 2000 election the KMT’s Lien Chan and the independent Soong split the vote, and the DPP’s Chen Shui-bian won with 39 per cent; after more than fifty years in Taiwan, the KMT handed over power for the first time.',
+      fr:'Une révision de 1997 « simplifie » la province, vidant de sa substance le gouvernement provincial et brisant l’alliance de Lee avec le gouverneur James Soong. En 1999, Lee qualifie les relations avec la Chine de « relations spéciales d’État à État », et en septembre le séisme 921 fait plus de deux mille morts. À la présidentielle de 2000, Lien Chan (KMT) et Soong, candidat indépendant, se partagent les voix, et Chen Shui-bian (DPP) l’emporte avec 39 % : après plus de cinquante ans à Taïwan, le KMT cède le pouvoir pour la première fois.' },
+    ev:[
+      ['1997-07-18', ['修憲通過精省','A constitutional amendment streamlines the province','Révision constitutionnelle simplifiant la province']],
+      ['1999-07-09', ['李登輝提出「兩國論」','Lee Teng-hui’s “state-to-state” remark','Lee Teng-hui évoque des relations « d’État à État »']],
+      ['1999-09-21', ['九二一大地震','The 921 earthquake','Le séisme du 21 septembre']],
+      ['2000-03-18', ['陳水扁當選總統','Chen Shui-bian is elected president','Chen Shui-bian est élu président']],
+      ['2000-05-20', ['第一次政黨輪替，陳水扁就職','First transfer of power: Chen Shui-bian takes office','Première alternance : investiture de Chen Shui-bian']],
+    ],
+    turn:{ zh:'政權和平移轉，台灣成為完整的民主國家；但國家認同與兩岸路線的分歧，從此成為政治的主軸。', en:'Power changed hands peacefully and Taiwan became a full democracy; but divisions over national identity and China policy became the main axis of its politics.', fr:'Le pouvoir change de mains pacifiquement, et Taïwan devient une démocratie à part entière ; mais l’identité nationale et la politique chinoise deviennent l’axe principal de sa vie politique.' } },
+  ]
+},
+
+},
+
 };
